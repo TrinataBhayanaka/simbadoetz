@@ -1,0 +1,1 @@
+INSERT INTO `simda_to_simbada`.`tbl_user_menu` (`menuID`, `menuDesc`, `menuParent`, `menuPath`, `menuStatus`, `menuAksesLogin`) VALUES (NULL, 'Cetak Dokumen Penyusutan', '17', 'penyusutan/cetak_dokumen_penyusutan.php', '1', '1');
