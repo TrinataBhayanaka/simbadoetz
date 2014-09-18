@@ -1,0 +1,116 @@
+@CHARSET "UTF-8";
+
+.clear{
+	clear: both;
+	height: 0;
+	visibility: hidden;
+	display: block;
+}
+
+#logo{
+	margin-top: 1em;
+	display: block;
+}
+/******* /LOGO  *******/
+/******* MENU *******/
+#container{
+	border: 0px solid green;
+					height: 400px;
+					width: 283px;
+					float: right;
+}
+#container ul{
+	list-style: none;
+	list-style-position: outside;
+}
+#container ul.menu li{
+	float: left;
+	margin-right: 0px;
+	margin-bottom: -1px;
+}
+#container ul.menu li{
+	border: 1px solid #004a33;
+					height: 22px;
+					width: 85;
+					padding: 5px 3px 1px 3px;
+					background-color: #008e63;
+					text-align: center;
+					font-weight:bold;
+					margin-top: 20px;
+					float:left;
+					color: white;
+	cursor: pointer;
+	border-top-left-radius: 3px;
+                        	-webkit-border-top-left-radius: 3px;
+                        	-moz-border-radius-topleft: 3px;
+                           
+                        	border-top-right-radius: 3px;
+                        	-webkit-border-top-right-radius: 3px;
+                        	-moz-border-radius-topright: 3px;
+}
+#container ul.menu li.active{
+	border: 1px solid white;
+					height: 22px;
+					width: 85;
+					padding: 5px 3px 1px 3px;
+					background-color: white;
+					text-align: center;
+					font-weight:bold;
+					margin-top: 20px;
+					float:left;
+					color: #003f2b;
+					border-top-left-radius: 3px;
+                        	-webkit-border-top-left-radius: 3px;
+                        	-moz-border-radius-topleft: 3px;
+                           
+                        	border-top-right-radius: 3px;
+                        	-webkit-border-top-right-radius: 3px;
+                        	-moz-border-radius-topright: 3px;
+}
+/******* /MENU *******/
+/******* CONTENT *******/
+.content{
+	margin: 0pt auto;
+	background: #efefef;
+	background: #fff;
+	border: 1px solid #d0ccc9;
+	text-align: left;
+	padding: 10px;
+	padding-bottom: 20px;
+	font-size: 11px;
+}
+.content h1{
+	line-height: 1em;
+	vertical-align: middle;
+	height: 48px;
+	padding: 10px 10px 10px 52px;
+	font-size: 32px;
+}
+/******* /CONTENT *******/
+/******* NEWS *******/
+.content.news h1{
+	background: transparent url(images/news.jpg) no-repeat scroll left top;
+}
+.content.news{
+	display: block;
+}
+/******* /NEWS *******/
+/******* TUTORIALS *******/
+.content.tutorials h1{
+	background: transparent url(images/tuts.jpg) no-repeat scroll left top;
+}
+.content.tutorials{
+	display: none;
+}
+/******* /TUTORIALS *******/
+/******* LINKS *******/
+.content.links h1{
+	background: transparent url(images/links.jpg) no-repeat scroll left top;
+}
+.content.links{
+	display: none;
+}
+.content.links a{
+	color: #5f95ef;
+}
+/******* /LINKS *******/

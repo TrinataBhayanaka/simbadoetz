@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<?php
+include "../../config/config.php";
+?>
+<html>
+    <head>
+        <title>Help SIMBADA</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <title><?=$title?></title>
+                <!-- include css file -->
+                
+                <link rel="stylesheet" href="../../css/simbada.css" type="text/css" media="screen" />
+                <link rel="stylesheet" href="../../css/jquery-ui.css" type="text/css">
+                <link rel="stylesheet" href="../../css/example.css" TYPE="text/css" MEDIA="screen">
+    </head>
+    <body>
+        <div>
+            <div id="frame_header">
+                <div id="header"></div>
+            </div>
+            <div id="list_header"></div>
+            <div id="kiri">
+            <?php include '../menu_samping.php';?>
+        </div>
+        
+        <div id="tengah1">	
+            <div id="frame_tengah1">
+                <div id="frame_gudang">
+                    <div id='topright'><label>Help &raquo;</label><label>Gudang &raquo; Distribusi Barang <label></div>;
+                        <div id='bottomright' style='border:0px'>
+						
+						<ul type="disc" style="padding-left:20px;">
+							<li>Klik Lanjut untuk menampilkan daftar aset yang akan didistribusikan, seperti gambar di bawah ini :</li><br>
+							
+							<img src = "g8.png"><br><br>
+							
+							<li>Klik kembali ke Halaman Utama : Cari Aset, digunakan untuk kembal ke menu utama Cari Aset dari Distribusi barang.</li><br>
+							<li>Klik Cetak Seluruh Data, digunakan untuk mencetak seluruh daftar aset kedalam bentuk file PDF.</li><br>
+							<li>Klik Cetak dari Daftar Anda, digunakan untuk mencetak daftar aset kedalam bentuk file PDF berdasarkan 
+								daftar aset yang diinginkan dengan memberikan checklist (V) pada daftar yang akan dicetak.</li><br>
+							<li>Berikan tanda (V) lalu klik Pengeluaran Barang, untuk mendistribusikan barang, yang nantinya akan 
+							muncul form isian untuk memberikan keterangan siapakah yang menjadi pelaku hingga barang tersebut 
+							didistribusikan, seperti gambar di bawah ini:</li><br>
+							
+							<img src = "g9.png"><br><br>
+						</ul>
+                  
+				  <table width="100%">
+					<tr>
+						<td width="30%"> <a href="distribusi2.php" style="color:#0000ff;font-size:20px">Prev</a></td>
+						<td style="text-align:center"> <a href="index.php" style="color:#0000ff;font-size:20px">TOC</a></td>
+						<td style="text-align:right"> <a href="distribusi4.php" style="color:#0000ff;font-size:20px">Next</a></td>
+					</tr>
+				</table>
+				  
+				 
+				  
+
+					
+						</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
+            Powered by BBSDM Team 2012
+            </div>
+        </div>
+    </body>
+</html>

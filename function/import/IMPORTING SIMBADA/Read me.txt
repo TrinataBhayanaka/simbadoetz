@@ -1,0 +1,3 @@
+setelah gw liat ternyata di menu perolehan aset, sub menu pengadaan..cuma bagian penghapusan aset aja yg ada import datanya..
+
+cuma lw liat file tim 2 importing.xls, bagian tabel terakhir2 gw bingung bwt bikin list-listnya,contoh tabel jenis barang, tabel SKPD.

@@ -1,0 +1,23 @@
+/*body { font: 14px Helvetica, Sans-Serif; } */
+.menu, .menu * { margin: 0; padding:	0; list-style: none; }
+.menu { line-height:	1.0; }
+.menu ul { position:	absolute; width: 14em; }
+.menu ul li { width: 100%; }
+.menu li { float: left; position: relative; }
+.menu a { display: block; position: relative; }
+.menu li:hover ul, .menu li.sfHover ul { left: 0; }
+ul.menu li li:hover ul, ul.menu li li.sfHover ul { left: 14em; top: 0; }
+.menu { float: left; } 
+.menu a { padding: 0.5em 0.5em; text-decoration: none; }
+.menu li {  border-right: 1px solid #333; }
+.menu li li { background: #004933; border-bottom: 1px solid #ccc; border-right: none; }
+.menu li li li { background: #f6f6f6; border-bottom: 1px solid #ccc; border-right: none; }
+.menu li a, .menu li a:visited { color: #ffca00; font-weight:bold; }
+.menu li li a, .menu li li a:visited { color:	#fff; font-weight:100; }
+.menu li li li a, .menu li li li a:visited { color: #000; font-weight:100; }
+.menu li:hover, .menu li.sfHover, .menu a:focus, .menu a:hover, .menu a:active { background: #003525; outline: 0; }
+.menu a.sf-with-ul { padding-right: 	2.25em; min-width: 1px; }
+.sf-sub-indicator { position: absolute; display: block; right: .75em; top: 1.05em; width: 10px; height:	 10px; text-indent: -999em; 					overflow: hidden; }
+a > .sf-sub-indicator {  top: .8em; background-position: 0 -100px;  }
+.menu ul a > .sf-sub-indicator { background-position: 0 0; }
+

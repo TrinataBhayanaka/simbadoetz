@@ -1,0 +1,66 @@
+#perencanaan_new .style1{
+	padding:2px; 
+	margin-top:0px; 
+	border: 1px solid #004933; 
+	border-width: 1px 1px 1px 1px; 
+	clear:both;
+}
+#perencanaan_new .style2{
+	background-color:#004933; 
+	color:white; 
+	border:1px solid rgb(153,153,204); 
+	padding:2px 3px;
+}
+#perencanaan_new .style3{
+	background-color:white; 
+	color:white; 
+	border:1px solid rgb(153,153,204); 
+	padding:2px 3px;
+}
+#perencanaan_new .style4{
+	border: 1px solid #004933; 
+	height:100px; 
+	color: black; 
+	font-weight: bold;
+}
+#perencanaan_new .style5{
+	border: 1px solid #004933; 
+	height:100px; 
+	color: black; 
+}
+#perencanaan_new .style6{
+	border: 1px solid #004933; 
+	color: black; 
+}
+#perencanaan_new .white{
+	color:white;
+}
+
+#perencanaan_new .w480{
+	width:480px;
+}
+#perencanaan_new .w450{
+	width:450px;
+}
+#perencanaan_new .w300{
+	width:300px;
+}
+#perencanaan_new .w150{
+	width:150px;
+}
+#perencanaan_new .w100{
+	width:100px;
+}
+#perencanaan_new .w50{
+	width:50px;
+}
+#perencanaan_new .w30{
+	width:30px;
+}
+#perencanaan_new .tabel th {
+	background-color: #eeeeee;
+	border: 1px solid #dddddd;
+}
+#perencanaan_new .tabel td {
+	border: 1px solid #dddddd;
+}
