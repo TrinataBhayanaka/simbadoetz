@@ -1,0 +1,7 @@
+config/*
+doc/*
+foto/*
+fotonota/*
+log/*
+simbada_bimtek/*
+report/output/*.pdf
