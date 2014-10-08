@@ -59,8 +59,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_kelompok1" id="lda_kelompok1" class="w480" readonly="readonly" value="(semua Kelompok)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_kelompok1" id="lda_kelompok1" class="span5" readonly="readonly" value="(semua Kelompok)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;"> 
 										
 
@@ -109,8 +109,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_kelompok2" id="lda_kelompok2" class="w480" readonly="readonly" value="(semua Kelompok)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_kelompok2" id="lda_kelompok2" class="span5" readonly="readonly" value="(semua Kelompok)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;"> 
 										
 										<?php
@@ -149,8 +149,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_kelompok3" id="lda_kelompok3" class="w480" readonly="readonly" value="(semua Kelompok)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_kelompok3" id="lda_kelompok3" class="span5" readonly="readonly" value="(semua Kelompok)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;"> 
 							
 										<?php
@@ -168,8 +168,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd1" id="lda_skpd1" class="w450" readonly="readonly" value="(semua SKPD)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_skpd1" id="lda_skpd1" class="span5" readonly="readonly" value="(semua SKPD)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 										
 										<?php
@@ -186,8 +186,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetlokasi" id="idgetlokasi" value="">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="w450" readonly="readonly" value="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" class="btn" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										
 										<?php
@@ -260,8 +260,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd2" id="lda_skpd2" class="w450" readonly="readonly" value="(semua SKPD)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_skpd2" id="lda_skpd2" class="span5" readonly="readonly" value="(semua SKPD)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 										
 										<?php
@@ -278,8 +278,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetlokasi" id="idgetlokasi" value="">
-									<input type="text" name="rkb_lokasi2" id="rkb_lokasi2" class="w450" readonly="readonly" value="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rkb_lokasi2" id="rkb_lokasi2" class="span5" readonly="readonly" value="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										
 										<?php
@@ -297,8 +297,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-									<input type="text" name="lda_kelompok4" id="lda_kelompok4" class="w480" readonly="readonly" value="(semua Kelompok)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="lda_kelompok4" id="lda_kelompok4" class="span5" readonly="readonly" value="(semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;"> 
 									
 
@@ -370,8 +370,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd3" id="lda_skpd3" class="w450" readonly="readonly" value="(semua SKPD)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_skpd3" id="lda_skpd3" class="span5" readonly="readonly" value="(semua SKPD)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 										
 										<?php
@@ -389,8 +389,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetlokasi" id="idgetlokasi" value="">
-									<input type="text" name="rkb_lokasi3" id="rkb_lokasi3" class=""w450" readonly="readonly" value="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rkb_lokasi3" id="rkb_lokasi3" class="span5" readonly="readonly" value="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										
 										<?php
@@ -408,8 +408,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-									<input type="text" name="lda_kelompok5" id="lda_kelompok5" class="w480" readonly="readonly" value="(semua Kelompok)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="lda_kelompok5" id="lda_kelompok5" class="span5" readonly="readonly" value="(semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;"> 
 									
 
@@ -481,8 +481,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd4" id="lda_skpd4" class="w450" readonly="readonly" value="(semua SKPD)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_skpd4" id="lda_skpd4" class="span5" readonly="readonly" value="(semua SKPD)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 										
 										<?php
@@ -499,8 +499,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetlokasi" id="idgetlokasi" value="">
-									<input type="text" name="rkb_lokasi4" id="rkb_lokasi4" class="w450" readonly="readonly" value="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rkb_lokasi4" id="rkb_lokasi4" class="span5" readonly="readonly" value="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" class="btn" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										
 										<?php
@@ -518,8 +518,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-									<input type="text" name="lda_kelompok6" id="lda_kelompok6" class="w480"readonly="readonly" value="(semua Kelompok)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="lda_kelompok6" id="lda_kelompok6" class="span5"readonly="readonly" value="(semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;"> 
 									
 
@@ -591,8 +591,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd5" id="lda_skpd5" class="w450" readonly="readonly" value="(semua SKPD)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_skpd5" id="lda_skpd5" class="span5" readonly="readonly" value="(semua SKPD)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 										
 										<?php
@@ -608,8 +608,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetlokasi" id="idgetlokasi" value="">
-									<input type="text" name="rkb_lokasi5" id="rkb_lokasi5" class="w450" readonly="readonly" value="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rkb_lokasi5" id="rkb_lokasi5" class="span5" readonly="readonly" value="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										
 										<?php
@@ -627,8 +627,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-									<input type="text" name="lda_kelompok7" id="lda_kelompok7" class="w480" readonly="readonly" value="(semua Kelompok)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="lda_kelompok7" id="lda_kelompok7" class="span5" readonly="readonly" value="(semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;"> 
 									
 
@@ -699,8 +699,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd6" id="lda_skpd6" class="w450" readonly="readonly" value="(semua SKPD)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_skpd6" id="lda_skpd6" class="span5" readonly="readonly" value="(semua SKPD)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 										
 										<?php
@@ -717,8 +717,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetlokasi" id="idgetlokasi" value="">
-									<input type="text" name="rkb_lokasi6" id="rkb_lokasi6" class="w450" readonly="readonly" value="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rkb_lokasi6" id="rkb_lokasi6" class="span5" readonly="readonly" value="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										
 										<?php
@@ -736,8 +736,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-									<input type="text" name="lda_kelompok8" id="lda_kelompok8" class="w480" readonly="readonly" value="(semua Kelompok)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="lda_kelompok8" id="lda_kelompok8" class="span5" readonly="readonly" value="(semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;"> 
 									
 									<?php
@@ -807,8 +807,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd7" id="lda_skpd7" class="w450" readonly="readonly" value="(semua SKPD)">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="lda_skpd7" id="lda_skpd7" class="span5" readonly="readonly" value="(semua SKPD)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 										
 
@@ -826,8 +826,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetlokasi" id="idgetlokasi" value="">
-									<input type="text" name="rkb_lokasi7" id="rkb_lokasi7" class="w450" readonly="readonly" value="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rkb_lokasi7" id="rkb_lokasi7" class="span5" readonly="readonly" value="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										
 										<?php
@@ -845,8 +845,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
 									<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-									<input type="text" name="lda_kelompok9" id="lda_kelompok9" class="w480" readonly="readonly" value="(semua Kelompok)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="lda_kelompok9" id="lda_kelompok9" class="span5" readonly="readonly" value="(semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;"> 
 									
 

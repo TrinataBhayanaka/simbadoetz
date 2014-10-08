@@ -144,7 +144,7 @@ radiokelompok($style2,"kelompok_id",'kelompok','skl');
 
 <tr>
 <td></td>
-<td><input type="submit"  name="kartu1"value="Lanjut"><input type="reset"  value="Bersihkan Filter"></td>
+<td><input type="submit"  name="kartu1" value="Lanjut"><input type="reset"  value="Bersihkan Filter"></td>
 </tr>
 
 <tr>
@@ -728,12 +728,12 @@ $style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dd
 checkboxlokasi($style2,"lokasi_id1",'lokasi1','l1');
 ?>
 
+</div>
 <tr>
 <td colspan="3"></td>
 </tr>
 
 
-</div>
 </td>
 <td></td>
 </tr>
@@ -989,7 +989,7 @@ radiokelompok($style2,'kelompok_id11','kelompok11','skl11');
 </tr>	
 <tr>
 <td>Tanggal Awal</td>
-<td><input type="text" id="tanggal23"name="gdg_cdg_lapem_tglawal"value="""></td>
+<td><input type="text" id="tanggal23"name="gdg_cdg_lapem_tglawal"value=""></td>
 </tr>
 <tr>
 <td>Tanggal Akhir</td>
