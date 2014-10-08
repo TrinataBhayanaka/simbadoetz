@@ -104,19 +104,26 @@ $menu_id = 1;
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
-					<span class="text">SP2D</span>
+					<span class="text">Rincian Barang</span>
 				</a>
 				<a class="shortcut-link" href="#">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
 				    </span>
-					<span class="text">Penunjang</span>
+					<span class="text">SP2D</span>
 				</a>
 				<a class="shortcut-link" href="#">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">4</i>
+				    </span>
+					<span class="text">Penunjang</span>
+				</a>
+				<a class="shortcut-link" href="#">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">5</i>
 				    </span>
 					<span class="text">Posting</span>
 				</a>
@@ -126,8 +133,8 @@ $menu_id = 1;
 			
 			<p><a data-toggle="modal" href="#myModal" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Kontrak</a>
 			&nbsp;
-			<a class="btn btn-danger btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Kontrak Simral</a>
-			&nbsp;</p>	
+			<!-- <a class="btn btn-danger btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Kontrak Simral</a>
+			&nbsp; --></p>	
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
@@ -135,11 +142,9 @@ $menu_id = 1;
 						<th>No</th>
 						<th>No. SPK/Perjanjian Kontrak</th>
 						<th>Tanggal</th>
-						<th>Keterangan</th>
-						<th>Rincian Barang</th>
-						<th>SP2D</th>
-						<th>SP2D Penunjang</th>
-						<th>Posting</th>
+						<th>Tipe Aset</th>
+						<th>Nilai</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -184,12 +189,12 @@ $menu_id = 1;
 		<div id="myModal" class="modal hide fade modalkontrak" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div id="titleForm" class="modal-header" >
 				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				  <h3 id="myModalLabel">Form Tambah Kontrak</h3>
+				  <h3 id="myModalLabel"><i class="fa fa-plus-square"></i>&nbsp;Form Tambah Kontrak</h3>
 				</div>
 				<form action="" method="POST">
 				<div class="modal-body">
 				 <div class="formKontrak">
-						<h3 class="grs-bottom"><span class="titleForm">Kontrak</span></h3>
+						<h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Kontrak</span></h3>
 						<ul>
 							<li>
 								<span class="labelkontrak">No.SPK/Perjanjian Kontrak</span>
@@ -215,13 +220,15 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span  class="labelkontrak">Jenis Posting</span>
-								<input type="radio" name="s_posting"/>&nbsp;Aset Baru&nbsp;&nbsp;&nbsp;<input type="radio" name="s_posting" />&nbsp;Kapitalisasi
+								<input type="radio" name="s_posting"/>&nbsp;Aset Baru
+								<input type="radio" name="s_posting" />&nbsp;Kapitalisasi
+								<input type="radio" name="s_posting" />&nbsp;Ubah Status
 							</li>
 						</ul>
 							
 					</div>
 					<div class="formPerusahaan">
-						<h3 class="grs-bottom"><span class="titleForm">Perusahaan</span></h3>
+						<h3 class="grs-bottom"><i class="fa fa-briefcase"></i>&nbsp;<span>Perusahaan</span></h3>
 						<ul>
 							<li>
 								<span class="labelperusahaan">Nama</span>

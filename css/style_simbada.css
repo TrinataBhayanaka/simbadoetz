@@ -171,7 +171,7 @@ section.formLegend .titleSp2dRPenunjang{
 	list-style:none;
 }
 #titleForm{
-	background-color:#15422E;
+	background-color:#145C38;
 	color:#fff;
 	border-top-left-radius:4px;
 	border-top-right-radius:4px;
@@ -213,7 +213,7 @@ section.formLegend .titleSp2dRPenunjang{
 	display:inline-block;
 }
 .formKontrak h3.grs-bottom{
-	border-bottom:1px solid #000;
+	border-bottom:1px solid #EEEEEE;
 }
 .formKontrak span.titleForm{
 	background-color:#A3CE4B;
@@ -222,7 +222,7 @@ section.formLegend .titleSp2dRPenunjang{
 	border-top-right-radius:60px 40px;
 }
 .formPerusahaan h3.grs-bottom{
-	border-bottom:1px solid #000;
+	border-bottom:1px solid #EEEEEE;
 }
 .formPerusahaan span.titleForm{
 	background-color:#A3CE4B;
@@ -369,3 +369,4 @@ footer{
   -ms-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
 }
+
