@@ -89,13 +89,14 @@ js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd
 $style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
 radiopengadaanskpd($style2,"skpd_id",'skpd','sk');
 ?>
+
+</div>
 <table width="100%" align="left" border="0" class="tabel">
 
 <tr>
 <td colspan="3"></td>
 </tr>
 </table>
-</div>
 </div>
 </td>
 </tr>
