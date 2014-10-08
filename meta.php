@@ -32,32 +32,32 @@
 			} );
 		</script>
 		
-		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/addtr.js"></script>             
-        <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/addtr2.js"></script>                                  
-        <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/addtr3.js"></script>   
-    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/control.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.cookie.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.ui.core.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.ui.datepicker.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.ui.datepicker-id.js"></script>
+		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr.js"></script>             
+        <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr2.js"></script>                                  
+        <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr3.js"></script>   
+    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/control.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.ui.datepicker-id.js"></script>
 	
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.min.js"></script>
 	
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/multiple.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/multiple.js"></script>
 	
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/packed.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/script.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/select.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabber.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabber-minimized.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabs.js"></script>
-    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/ajax_checkbox.js"></script>
-    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/ajax_radio.js"></script>
-      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/show_penerimaan.js"></script>
-      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/ajax_radio_pengadaan.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/packed.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/script.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/select.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tabber.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tabber-minimized.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tabel.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tabs.js"></script>
+    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_checkbox.js"></script>
+    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_radio.js"></script>
+      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/show_penerimaan.js"></script>
+      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_radio_pengadaan.js"></script>
 
-      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/paging-helper.js"></script>
+      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
 	  
 	   <script>
 	function change_pemilik() 

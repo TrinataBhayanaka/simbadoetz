@@ -77,8 +77,8 @@ else
 						<?php 
            
 							if(isset($_SESSION['ses_utoken'])){ ?>
-							   <i class="fa fa-sign-out"></i>
-							   <a href="<?php echo $url_rewrite.'/logout.php?utoken='.str_shuffle('bcsabbjahj131');?>"> [Logout] </a>
+							   
+							   <a href="<?php echo $url_rewrite.'/logout.php?utoken='.str_shuffle('bcsabbjahj131');?>"><i class="fa fa-sign-out"></i> Logout </a>
 									<?php
 							}
 							else
@@ -140,7 +140,7 @@ else
 					
 			</div>
 			<div class="modal-footer">
-			  <button class="btn" data-dismiss="modal">Kembali</button>
+			  <button class="btn" type="button" data-dismiss="modal">Kembali</button>
 			  <input type="submit" value="Login" name="login" class="btn btn-success" id="drop_sebagai" />
 			</div>
 			</form>

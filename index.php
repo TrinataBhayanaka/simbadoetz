@@ -59,8 +59,8 @@ $USERAUTH->check_sys_log();
 	<section id="main">
 		<ul class="breadcrumb">
 					  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-					  <li><a href="#">Electronics</a><span class="divider"><b>&raquo;</b></span></li>
-					  <li class="active">Flat Screens</li>
+					  <!-- <li><a href="#">Electronics</a><span class="divider"><b>&raquo;</b></span></li>
+					  <li class="active">Flat Screens</li> -->
 					  <?php SignInOut();?>
 					</ul>
 					<div class="title">Headline News</div>
