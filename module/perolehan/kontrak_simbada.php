@@ -49,7 +49,7 @@ $menu_id = 1;
 				<div class="title">Kontrak</div>
 				<div class="subtitle">Daftar Kontrak</div>
 			</div>	
-			<div id="tmm-form-wizard" class="container substrate">
+			<!-- <div id="tmm-form-wizard" class="container substrate">
 
 					<div class="row stage-container">
 
@@ -59,7 +59,7 @@ $menu_id = 1;
 								<h3 class="stage-title">Unit Organisasi</h3>
 								
 							</div>
-						</div><!--/ .stage-->
+						</div>
 						
 						<div class="stage tmm-current col-md-3 col-sm-3">
 							<div class="stage-header"></div>
@@ -68,7 +68,7 @@ $menu_id = 1;
 								<h3 class="stage-title">Kontrak / SPK</h3>
 								
 							</div>
-						</div><!--/ .stage-->
+						</div>
 
 						<div class="stage col-md-3 col-sm-3">
 							<div class="stage-header"></div>
@@ -76,7 +76,7 @@ $menu_id = 1;
 								<h3 class="stage-title">SP2D Termin</h3>
 								
 							</div>
-						</div><!--/ .stage-->
+						</div>
 						
 						<div class="stage col-md-2 col-sm-2">
 							<div class="stage-header"></div>
@@ -84,12 +84,44 @@ $menu_id = 1;
 								<h3 class="stage-title">SP2D Penunjang</h3>
 								
 							</div>
-						</div><!--/ .stage-->
+						</div>
 											
 
-					</div><!--/ .row-->
+					</div>
 
-				</div><!--/ .container-->
+				</div> -->
+
+		<div class="grey-container shortcut-wrapper">
+				<a class="shortcut-link" href="#">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">1</i>
+				    </span>
+					<span class="text">Kontrak</span>
+				</a>
+				<a class="shortcut-link" href="#">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">2</i>
+				    </span>
+					<span class="text">SP2D</span>
+				</a>
+				<a class="shortcut-link" href="#">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">3</i>
+				    </span>
+					<span class="text">Penunjang</span>
+				</a>
+				<a class="shortcut-link" href="#">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">4</i>
+				    </span>
+					<span class="text">Posting</span>
+				</a>
+			</div>		
+
 		<section class="formLegend">
 			
 			<p><a data-toggle="modal" href="#myModal" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Kontrak</a>

@@ -48,7 +48,7 @@
 	border: 1px solid #ddd;
 	text-align: center;
 	color: #999;
-	font-size: 14px;
+	font-size: 12px;
 	background-color: white;
 }
 
@@ -134,8 +134,9 @@ table.display {
 	margin: 0 auto;
 	clear: both;
 	width: 100%;
-	border:1px solid #F3C9C9;
+	border:1px solid #EEEEEE;
 	border-radius:5px;
+	font-size: 12px;
 	/* Note Firefox 3.5 and before have a bug with border-collapse
 	 * ( https://bugzilla.mozilla.org/show%5Fbug.cgi?id=155955 ) 
 	 * border-spacing: 0; is one possible option. Conditional-css.com is
@@ -156,25 +157,26 @@ table.display thead th {
 	color:#ffffff;
 	border-bottom: 1px solid black;
 	font-weight: bold;
-	border-left:1px solid #F3C9C9;
+	border-left:0px solid #EEEEEE;
 	cursor: pointer;
 	* cursor: hand;
+	font-size: 13px;
 }
 
 table.display tfoot th {
 	padding: 3px 18px 3px 10px;
-	border-top: 1px solid #F3C9C9;
+	border-top: 1px solid #EEEEEE;
 	font-weight: bold;
 }
 
 table.display tr.heading2 td {
-	border-bottom: 1px solid #F3C9C9;
+	border-bottom: 1px solid #EEEEEE;
 }
 
 table.display td {
 	padding: 6px 10px 13px 10px;
-	border-bottom: 1px solid #F3C9C9;
-	border-left: 1px solid #F3C9C9;
+	border-bottom: 1px solid #EEEEEE;
+	border-left: 1px solid #EEEEEE;
 }
 
 table.display td.center {
