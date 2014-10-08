@@ -1,46 +1,42 @@
 <?php
 include "../../config/config.php";
+$menu_id = 2;
 ?>
 
-<html>
-	<?php
-	include "$path/header.php";
-	?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
 	
-	<body>
-		<div id="content">
-		<?php
-		include "$path/title.php";
-		include "$path/menu.php";
-		?>
-		
-			<div id="tengah1">	
-				<div id="frame_tengah1">
-					<div id="frame_gudang">
-						
-						<div id="topright">
-							Buat Standar Harga Pemeliharaan
-						</div>
-						
-						<div id="bottomright">
-							<p>
-							<br>
-							<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>shpb_daftar_data.php">
-							<input type="button" value="Kembali ke Halaman Sebelumnya" >
-							</a>
-							<div id="upload">		
-								<?php include "../../function/import/module/standar_harga_pemeliharaan/index.php"; ?>	
-								</fieldset>
-							</div>                                                                                              								
-						</div>
-					</div>
-				</div>
+?>
+	<section id="main">
+		<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Buat Standar Harga Pemeliharaan Barang</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Buat Standar Harga Pemeliharaan Barang</div>
+				<div class="subtitle">Import Data</div>
 			</div>
-		</div>
+			
+			<section class="formLegend">
 		
-	<?php 
-    include "$path/footer.php";
-    ?>	
-	</body>
-</html>	
-
+			<div class="detailright">
+				<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>shpb_daftar_data.php" class="btn">
+					Kembali ke Halaman Sebelumnya</a>
+							
+			</div>
+			
+			<div style="height:5px;width:100%;clear:both"></div>
+			<fieldset>
+				<?php include "../../function/import/module/standar_harga_pemeliharaan/index.php"; ?>	
+			</fieldset>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

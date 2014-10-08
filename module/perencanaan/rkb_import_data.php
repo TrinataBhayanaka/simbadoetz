@@ -1,46 +1,40 @@
 <?php
 include "../../config/config.php";
+$menu_id = 2;
 ?>
 
-<html>
-	<?php
-	include "$path/header.php";
-    ?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
 	
-	<body>
-		<div id="content">
-			<?php
-			include "$path/title.php";
-			include "$path/menu.php";
-            ?>
+?>
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Buat Rencana Kebutuhan Barang</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Buat Rencana Kebutuhan Barang</div>
+			<div class="subtitle">Import Data</div>
+		</div><section class="formLegend">
 			
-			<div id="tengah1">	
-				<div id="frame_tengah1">
-					<div id="frame_gudang">
-						<div id="topright">
-							Buat Rencana Kebutuhan Barang
-						</div>
-						<div id="bottomright">
-							<p>
-							<br>
-							<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_daftar_data.php";?>">
-								<input type="button" value="Kembali ke Halaman Sebelumnya" >
-							</a>
-							<div id="upload">		
-								<fieldset>
-									<?php include "$path/function/import/module/rkb/index.php"; ?>	
-								</fieldset>
-							</div>                                                                                                                                                       
-						</div>
-					</div>
-				</div>
+			<div class="detailright">
+				<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_daftar_data.php";?>" class="btn">
+					Kembali ke Halaman Sebelumnya</a>
+							
 			</div>
-		</div>
-		
-	<?php 
-    include "$path/footer.php";
-    ?>	
-		
-	</body>
-</html>	
-
+			
+			<div style="height:5px;width:100%;clear:both"></div>
+			<fieldset>
+				<?php include "$path/function/import/module/rkb/index.php"; ?>	
+			</fieldset>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

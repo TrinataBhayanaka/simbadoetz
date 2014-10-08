@@ -48,9 +48,17 @@ $menu_id = 1;
 ?>
 	
 	<section id="main">
-		<div id="breadcrumb"> Pengadaan / SP2D Termin</div>
+	<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">SP2D Termin</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">SP2D Termin</div>
+				<div class="subtitle">Daftar Kontrak</div>
+			</div>	
 		<section class="formLegend">
-			<div class="titleSp2dTermin">Daftar SP2D Termin</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
 						

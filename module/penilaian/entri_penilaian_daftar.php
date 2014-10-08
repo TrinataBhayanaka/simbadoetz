@@ -1,31 +1,20 @@
 <?php ob_start(); ?>
-<html>
 <?php
-        include "../../config/config.php";
-        
-        include "$path/header.php";
-        include "$path/title.php";
-	
-	
-	$USERAUTH = new UserAuth();
+include "../../config/config.php";
+
+$USERAUTH = new UserAuth();
 $DBVAR = new DB();
 $SESSION = new Session();
 
 $menu_id = 51;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-        ?>    
-<body>
-            <?php
-        
-            include "$path/menu.php";
-        
-            
-        // echo '<pre>';
-	// print_r($_POST);
-	// echo '</pre>';
-	// exit;
-        if (isset($_POST['submit']))
+?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	 if (isset($_POST['submit']))
 	{
 			if($_POST['pen_ID_aset']=="" && $_POST['pen_nama_aset']=="" && $_POST['pen_nomor_kontrak']=="" && $_POST['pen_tahun_perolehan']=="" && $_POST['kelompok_id']=="" && $_POST['lokasi_id']=="" && $_POST['skpd_id']=="" ){
 			?>
@@ -60,44 +49,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 		// }
     	
 	}
-        ?>
-
-<script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$('#example').dataTable( {
-					"aaSorting": [[ 1, "asc" ]]
-				} );
-			} );
-		</script>
-        
-<div id="tengah1">	
-<div id="frame_tengah1">
-<div id="frame_gudang">
-<div id="topright">Entri Hasil Penilaian</div>
-<div id="bottomright">
-
-<table width="100%" height="4%" border="1" style="border-collapse:collapse;">
-    <tr>
-        <th colspan="2" align="left" style="font-weight:bold;">Filter data : <?php echo $_SESSION['parameter_sql_total']?> Record </u></th>
-    </tr>
-</table>
-<br>
-<div align="right">
-<input type="button"
-            value="Kembali ke halaman utama : Cari Aset"
-            onclick="document.location='entri_penilaian_filter.php'"
-            title="Kembali ke halaman utama : Cari Aset">
-<!--<input type="button"
-            value="Cetak daftar aset (PDF)"
-            onclick=""
-            title="Cetak daftar aset (PDF)"><br>
-            Waktu proses: 0.0461 detik. Jumlah 10 aset dalam 1 halaman.-->
-</div>
-<div>
-    <br>
-</div>
-
-
+			?>
 <?php
 $offset = @$_POST['record'];
 
@@ -192,60 +144,76 @@ $offset = @$_POST['record'];
 	
 ?>
 
-<!-- Begin frame -->
-<table width='100%' border='1' style="border-collapse:collapse;border: 1px solid #dddddd;">
-    <tr>
-
-        <td colspan ="3" align="right">
-			<table border="0" width="100%">
-				<tr>
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Penilaian</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Entri Hasil Penilaian</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Entri Hasil Penilaian</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+		<section class="formLegend">
+			
+			<div class="detailLeft">
+					<span class="label label-success">Filter data : <?php echo $_SESSION['parameter_sql_total']?> Record</span>
+			</div>
+		
+			<div class="detailRight" align="right">
+						
+						<ul>
+							
+							<li>
+								<a href="<?php echo"$url_rewrite/module/penilaian/entri_penilaian_filter.php";?>" class="btn">
+									   Kembali ke halaman utama : Cari Aset
+								 </a>
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Informasi Aset</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				<?php
+					if (!empty($row))
+					{
 					
-					<td align="right" width="200px">
-							<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-							<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
-							<span><input type="button" value="<< Prev" class="buttonprev"/>
-							Page
-							<input type="button" value="Next >>" class="buttonnext"/></span>
-					</td>
-				</tr>
-			</table>
-
-        </td>
-    </tr>
-</table>
-
-
-<div id="demo">
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
-	<thead>
-		<tr>
-			<th width="20px" style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
-		</tr>
-	</thead>
-	<?php
-	if (!empty($row))
-    {
-    ?>
-		
-	<tbody>
-		<?php
-		$nomor = 1;
-		$page = @$_GET['pid'];
-		if ($page > 1){
-			$nomor = intval($page - 1 .'01');
-		}else{
-			$nomor = 1;
-		}
-		
-		foreach ($row as $key => $value)
-		{
-		?>
-			<tr class="<?php if($nomor == 1) echo ' '?>">
-				<td align="center" style="border: 1px solid #dddddd;"><?php echo $nomor?></td>
-				<td style="border: 1px solid #dddddd;">
-
-
+						$nomor = 1;
+						$page = @$_GET['pid'];
+						if ($page > 1){
+							$nomor = intval($page - 1 .'01');
+						}else{
+							$nomor = 1;
+						}
+						
+						foreach ($row as $key => $value)
+						{
+						?>	  
+					<tr class="gradeA">
+						<td><?php echo $nomor?></td>
+						<td>
+							
 						<table width='100%'>
 							<tr>
 								<td height="10px"></td>
@@ -276,6 +244,7 @@ $offset = @$_POST['record'];
 							</tr>
 
 						</table>
+						
 
 
 						<br>
@@ -304,39 +273,34 @@ $offset = @$_POST['record'];
 							</tr>
 
 						</table>
-				 </td>
-			</tr>
-		<?php
-			$nomor++;
-		}
+						</td>
+						
+					</tr>
+					
+						<?php
+							$nomor++;
+						}
 
-    }
-    else
-    {
-        $disabled = 'disabled';
-    }
-    ?>
-
-	</tbody>
-	<tfoot>
-		<tr>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
-			
-		</tr>
-	</tfoot>
-
-</table>
+					}
+					else
+					{
+						$disabled = 'disabled';
+					}
+					?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
 			</div>
 			<div class="spacer"></div>
-<!-- End Frame -->
-
-</div>
-</div>
-</div>
-</div>
-	<?php
-        include "$path/footer.php";
-        ?>
-	</body>
-</html>	
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

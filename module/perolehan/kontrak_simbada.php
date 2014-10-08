@@ -39,10 +39,59 @@ $menu_id = 1;
 	?>
 	<!-- End Sql -->
 	<section id="main">
-		<div id="breadcrumb"> Pengadaan / Kontrak</div>
+		<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Kontrak</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Kontrak</div>
+				<div class="subtitle">Daftar Kontrak</div>
+			</div>	
+			<div id="tmm-form-wizard" class="container substrate">
+
+					<div class="row stage-container">
+
+						<div class="stage tmm-current col-md-2 col-sm-2">
+							<div class="stage-header"></div>
+							<div class="stage-content">
+								<h3 class="stage-title">Unit Organisasi</h3>
+								
+							</div>
+						</div><!--/ .stage-->
+						
+						<div class="stage tmm-current col-md-3 col-sm-3">
+							<div class="stage-header"></div>
+
+							<div class="stage-content">
+								<h3 class="stage-title">Kontrak / SPK</h3>
+								
+							</div>
+						</div><!--/ .stage-->
+
+						<div class="stage col-md-3 col-sm-3">
+							<div class="stage-header"></div>
+							<div class="stage-content">
+								<h3 class="stage-title">SP2D Termin</h3>
+								
+							</div>
+						</div><!--/ .stage-->
+						
+						<div class="stage col-md-2 col-sm-2">
+							<div class="stage-header"></div>
+							<div class="stage-content">
+								<h3 class="stage-title">SP2D Penunjang</h3>
+								
+							</div>
+						</div><!--/ .stage-->
+											
+
+					</div><!--/ .row-->
+
+				</div><!--/ .container-->
 		<section class="formLegend">
-			<div class="titleLegend">Daftar Kontrak</div>
-			<p>&nbsp;</p>	
+			
 			<p><a data-toggle="modal" href="#myModal" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Kontrak</a>
 			&nbsp;
 			<a class="btn btn-danger btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Kontrak Simral</a>

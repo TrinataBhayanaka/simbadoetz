@@ -1,25 +1,11 @@
 <?php ob_start(); ?>
-<html>
 <?php
-	include "../../config/config.php";
-	include "$path/header.php";
-	include "$path/title.php";
-?>    
-<body>
-	<?php
-	include "$path/menu.php";
-	/*if($_POST['kd_idaset'] == "" && $_POST['kd_namaaset'] == "" && $_POST['kd_nokontrak'] == "" && $_POST['kd_tahun'] == "" && $_POST['skpd_id'] == ""){
-		?>
-			<script type="text/javascript" charset="utf-8">
-				var r=confirm('Tidak ada isian filter');
-				if (r==false){
-					document.location="<?php echo "$url_rewrite/module/perolehan/";?>validasi.php";
-				}
-			</script>
-		<?php
-	}*/
-	// pr($_POST);
-	// exit;
+include "../../config/config.php";
+?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
 	if ($_POST['submit']){
 		// echo "masuk post";
 		unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'__'.$SessionUser->UserSes['ses_uid']]);
@@ -29,10 +15,7 @@
 		// unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'__'.$SessionUser->UserSes['ses_uid']]);
 		list($row,$dataAsetUser,$explode,$count) = $RETRIEVE->retrieve_hasil_validasi(array('param'=>$_POST));
 	}
-	// echo"<pre>";
-	// pr($count);
-	// pr($dataAsetUser);
-?>
+			?>
 
 
 	<script type="text/javascript" charset="utf-8">
@@ -113,291 +96,166 @@
 	</script>
 
 
-
-		
-<div id="tengah1">	
-<div id="frame_tengah1">
-<div id="frame_gudang">
-<div id="topright">Validasi Barang Pengadaan</div>
-<div id="bottomright">
-
-<table width="100%" height="4%" border="1" style="border-collapse:collapse;">
-    <tr>
-        <th colspan="2" align="left" style="font-weight:bold;">Filter data : <?php echo $count?> Record</u></th>
-    </tr>
-</table>
-<br>
-<div align="right">
-	<input type="button"
-				value="Kembali ke halaman utama : Cari Aset"
-				onclick="document.location='validasi.php'"
-				title="Kembali ke halaman utama : Cari Aset">
-	
-	<input type="button"
-				value="Daftar Validasi Barang"
-				onclick="document.location='daftar_validasi_barang.php?pid=1'"
-				title="Daftar Validasi Barang"><br>
-</div>
-<div>
-    <br>
-</div>
-<!-- Begin frame -->
-<table width='100%' border='1' style="border-collapse:collapse;border: 1px solid #dddddd;">
-    <tr>
-        <td colspan ="3" align="right">
-			<table border="0" width="100%">
-				<tr>
-					<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-					<td  align="left"><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-					<td align="right">
-							<span><input type="button" value="Hapus data" id="hapus" onclick="window.location.href='validasi_data_aset.php?param=delete&pid=1'" disabled></span>
-							<span><input type="button" value="Validasi data" id="validasi" onclick="window.location.href='validasi_data_aset.php?param=validasi&pid=1'" disabled></span>
-					</td>
-					<td align="right" width="200px">
-							<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-							<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
-							<span><input type="button" value="<< Prev" class="buttonprev"/>
-							Page
-							<input type="button" value="Next >>" class="buttonnext"/></span>
-					</td>
-				</tr>
-			</table>
-
-        </td>
-    </tr>
-</table>
-<br />
-
-<div id="demo">
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
-	<thead>
-		<tr>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd;" width="5%">No</th>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd;" width="5%">&nbsp;</th>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
-		</tr>
-	</thead>
-	<?php
-	if (!empty($row))
-    {
-    ?>
-		
-	<tbody>
-		<?php
-		$nomor = 1;
-		$page = @$_GET['pid'];
-		if ($page > 1){
-			$nomor = intval($page - 1 .'01');
-		}else{
-			$nomor = 1;
-		}
-		
-		// pr($_SESSION);
-		foreach ($row as $key => $value)
-		{
-		if($value->Baik != 0){
-			$Baik ="Baik";}
-		else{
-			$Baik ="";
-		}	
-		if($value->RusakRingan != 0){
-			$RusakRingan ="Rusak Ringan";}
-		else{
-			$RusakRingan ="";
-		}
-		if($value->RusakBerat != 0){
-			$RusakBerat ="Rusak Berat";}
-		else{
-			$RusakBerat ="";
-		}	
-		if($value->BelumManfaat != 0){
-			$BelumManfaat ="Belum Manfaat";}
-		else{
-			$BelumManfaat ="";
-		}	
-		if($value->BelumSelesai != 0){
-			$BelumSelesai ="Belum Selesai";}
-		else{
-			$BelumSelesai ="";
-		}	
-		if($value->BelumDikerjakan != 0){
-			$BelumDikerjakan ="Belum Dikerjakan";}
-		else{
-			$BelumDikerjakan="";
-		}	
-		if($value->TidakSempurna != 0){
-			$TidakSempurna ="Tidak Sempurna";}
-		else{	
-			$TidakSempurna ="";
-		}
-		if($value->TidakSesuaiUntuk != 0){
-			$TidakSesuaiUntuk ="Tidak Sesuai Peruntukan";}
-		else{
-			$TidakSesuaiUntuk="";
-		}	
-		
-		if($value->TidakSesuaiSpec != 0){
-			$TidakSesuaiSpec ="Tidak Sesuai Spesifikasi";}
-		else{
-			$TidakSesuaiSpec ="";
-		}	
-		if($value->TidakDikunjungi != 0){
-			$TidakDikunjungi ="Tidak Dapat Dikunjungi";}
-		else{
-			$TidakDikunjungi="";
-		}	
-		if($value->TidakJelas != 0){
-			$TidakJelas ="Alamat Tidak Jelas";}
-		else{
-			$TidakJelas="";
-		}	
-		if($value->TidakDitemukan != 0){
-			$TidakDitemukan ="Aset Tidak Ditemukan";}
-		else{
-			$TidakDitemukan="";
-		}	
-		?>
-			<tr class="<?php if($nomor == 1) echo ' '?>">
-				<td align="center" style="border: 1px solid #dddddd;"><?php echo $nomor?></td>
-				<td width="10px" align="center" style="border: 1px solid #dddddd;">
-						<?php
-							// pr($_SESSION['ses_uaksesadmin']);
-						if (($_SESSION['ses_uaksesadmin'] == 1)){
-							?>
-							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="validasi[]" value="<?php echo $value->Aset_ID;?>" 
-							<?php 
-								for ($i = 0; $i <= count($explode); $i++){
-									if ($explode[$i]==$value->Aset_ID) 
-										echo 'checked';
-								}?>>
-							<?php
-						}else{
-							if ($dataAsetUser){
-							if (in_array($value->Aset_ID, $dataAsetUser)){
-							?>
-							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="validasi[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
-							<?php
-							}
-						}
-						}
-						
-						?>
-				</td>
-				<td style="border: 1px solid #dddddd;">
-
-
-						<table width='100%'>
-							<tr>
-								<td height="10px"></td>
-							</tr>
-
-							<tr>
-								<td>
-									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value->Aset_ID?></span>
-									<span>( Aset ID - System Number )</span>
-								</td>
-							</tr>
-							<?php 
-								$tmp = explode('.',$value->NomorReg);
-								$slice = array_slice($tmp,0, count($tmp)-1, true);
-								$noRegOri = implode('.',$slice);
-								$noReg = end($tmp);
-								// echo "no reg".$noReg; 
-							?>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $noRegOri?></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value->Kode.".".$noReg?></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value->NamaAset?></td>
-							</tr>
-
-						</table>
-
-
-						<br>
-						<hr />
-						<table border=0 width="100%">
-							<tr>
-								<td width="20%">No.Kontrak</td> 
-								<td width="2%">&nbsp;</td>
-								<td width="78%">&nbsp;<?php echo $value->NoKontrak?></td>
-							</tr>
-							
-							<tr>
-								<td>Satker</td> 
-								<td>&nbsp;</td>
-								<td><?php 
-								if($value->KodeSatker !="") $satker = "[".$value->KodeSatker."]"."&nbsp;".$value->NamaSatker;
-								if($value->KodeUnit != "") $satker = "[".$value->KodeSatker.".".$value->KodeUnit."]"."&nbsp;".$value->NamaSatker;
-								if($value->Gudang != "") $satker = "[".$value->KodeSatker.".".$value->KodeUnit.".".$value->Gudang."]"."&nbsp;".$value->NamaSatker;
-								// echo '['.$value->KodeSatker.'.'.$value->KodeUnit.'.'.$value->Gudang.']'."&nbsp;".$value->NamaSatker
-								echo $satker;
-								?></td>
-								
-							</tr>
-							<tr>
-								<td>Lokasi</td> 
-								<td>&nbsp;</td>
-								<td><?php echo $value->NamaLokasi?></td>
-							</tr>
-							<tr>
-								<td>Status</td> 
-								<td>&nbsp;</td>
-								<td><?php 
-									echo $Baik;
-									echo $RusakRingan;
-									echo $RusakBerat;
-									echo $BelumManfaat;
-									echo $BelumSelesai;
-									echo $BelumDikerjakan;
-									echo $TidakSempurna;
-									echo $TidakSesuaiUntuk;
-									echo $TidakSesuaiSpec;
-									echo $TidakDikunjungi;
-									echo $TidakJelas;
-									echo $TidakDitemukan;
-								//echo $value->InfoKondisi?></td>
-							</tr>
-
-						</table>
-				 </td>
-			</tr>
-		<?php
-			$nomor++;
-		}
-
-    }
-    else
-    {
-        $disabled = 'disabled';
-    }
-    ?>
-
-	</tbody>
-	<tfoot>
-		<tr>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd;">&nbsp;</th>
-			<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Validasi Barang Pengadaan</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Validasi Barang Pengadaan</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+		<section class="formLegend">
 			
-		</tr>
-	</tfoot>
+			<div class="detailLeft">
+					<span class="label label-success">Filter data : <?php echo $count?> Record</span>
+			</div>
+		
+			<div class="detailRight" align="right">
+						
+						<ul>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_import_data.php";?>" class="btn">
+								Tambah Data: Import</a>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_tambah_data.php";?>" class="btn">
+								Tambah Data: Manual</a>
+							</li>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_filter.php";?>" class="btn">
+									   Kembali ke halaman utama : Form Filter
+								 </a>
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Keterangan Jenis/Nama Barang</th>
+						<th>Total Harga</th>
+						<th>Tindakan</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				<?php
+						if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
+						if (!empty($get_data_filter))
+						{
+							$disabled = '';
+						//$no = 1;
+						$pid = 0;
+						$check=0;
+						
+						foreach ($get_data_filter as $key => $hsl_data)
 
-</table>
+					//while($hsl_data=mysql_fetch_array($exec))
+						{
+				?>
+						  
+					<tr class="gradeA">
+						<td><?php echo $no;?></td>
+						<td>
+							<table border="0" width=100%>
+								<tr>
+									<td width="20%">Tahun</td>
+									<td><?php echo $hsl_data->Tahun;?></td>
+								</tr>
+								<tr>
+									<td width="20%">SKPD</td>
+									<td><?php echo show_skpd($hsl_data->Satker_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Lokasi</td>
+									<td><?php echo show_lokasi($hsl_data->Lokasi_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Nama/Jenis Barang</td>
+									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Spesifikasi</td>
+									<td><?php echo $hsl_data->Merk;?></td>
+								</tr>
+								<tr>
+									<td>Kode Rekening</td>
+									<td>[<?php echo show_koderekening($hsl_data->KodeRekening);?>]-<?php echo show_namarekening($hsl_data->KodeRekening);?></td>
+								</tr>
+								<tr>
+									<td>Jumlah Barang</td>
+									<td><?php echo $hsl_data->Kuantitas;?></td>
+								</tr>
+								<tr>
+									<td>Harga</td>
+											<td>
+									<?php
+									$query_shpb = "SELECT NilaiStandar FROM StandarHarga WHERE Kelompok_ID IN (".$hsl_data->Kelompok_ID.") AND TglUpdate LIKE '%".$hsl_data->Tahun."%' ";
+									//print_r($query_shpb);
+									$result		= mysql_query($query_shpb);
+									if($result){
+										$hasil		= mysql_fetch_array($result);
+										 //echo $hasil['NilaiStandar']; 
+										 
+									echo number_format($hasil['NilaiStandar'],2,',','.');
+									 
+										
+									}
+									?>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td><?php echo number_format($hsl_data->NilaiAnggaran,2,',','.')?></td>
+						<td>	
+						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
+							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
+							<input type="submit" value="Edit" class="btn btn-success" name="edit"/>
+						</form>
+						<form method="POST" action="rkb-proses.php"  onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin dihapus?'); ">
+							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
+							<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
+						</form>
+						</td>
+					</tr>
+					
+				     <?php
+						$no++;
+						$pid++;
+					 }
+				}
+				?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
 			</div>
 			<div class="spacer"></div>
-<!-- End Frame -->
-
-</div>
-</div>
-</div>
-</div>
-
-	<?php
-        include "$path/footer.php";
-        ?>
-	</body>
-</html>	
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

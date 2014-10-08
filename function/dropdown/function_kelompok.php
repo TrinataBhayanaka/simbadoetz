@@ -158,7 +158,7 @@ function checkboxkelompok($style_div,$save_element,$tbody_name,$prefix){
                <th align=\"left\" border=\"0\" nowrap colspan=\"3\">
                 <input type=\"hidden\" name=\"$save_element\" id=\"$save_element\" value=\"$update\">     
                <input type=\"text\" style=\"width: 70%;\" value=\"\" id=\"search_kelompok$prefix\">
-               <input type=\"button\" id=\"preload_kelompok\" value=\"Cari\" onClick=\"recp$prefix()\">
+               <input type=\"button\" id=\"preload_kelompok\" value=\"Cari\" class=\"btn\" onClick=\"recp$prefix()\">
                </th>
                </tr>
                <tr>

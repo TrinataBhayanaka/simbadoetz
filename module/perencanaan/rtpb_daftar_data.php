@@ -23,113 +23,94 @@ $get_data_filter = $RETRIEVE->retrieve_rtpb_filter(array('param'=>$_POST, 'menuI
 	    }
 
 ?>
-<html>
-	<?php
-    include "$path/header.php";
-    ?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
 	
-	<body>
-		<div id="content">
-		<?php
-		include "$path/title.php";
-		include "$path/menu.php";
-		?>
-		<script type="text/javascript" charset="utf-8">
-				$(document).ready(function() {
-				$('#example').dataTable( {
-						"aaSorting": [[ 0, "asc" ]]
-					} );
-				} );
-			</script>
-			<div id="tengah1">	
-				<div id="frame_tengah1">
-					<div id="frame_gudang">
+			?>
+
+
+          <section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Buat Rencana Tahunan Pemeliharaan Barang</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Buat RTPB</div>
+			<div class="subtitle">Daftar Data </div>
+		</div>		
+		<section class="formLegend">
+			
+			<div class="detailLeft">
+					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+			</div>
+		
+			<div class="detailRight" align="right">
 						
-						<div id="topright">
-							Buat Rencana Tahunan Pemeliharaan Barang
-						</div>
-							
-						<div id="bottomright">
-							<div>
-								<table border=0 width="100%">
-									<tr>
-									<td>
-									<strong><u>Filter data: Tidak ada filter (View seluruh data)</u> </strong>
-									</td>
-									</tr>
-								</table>                                                                                                                        
-                            </div>
-							
-							<div id="perencanaan_new">
-								<table border=0 width=100%>
-									<tr align=right>
-										<td>
-											<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>rtpb_filter.php">
-											<input type="button" value="Kembali ke halaman utama : Form Filter" >
-											<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>rtpb_validasi.php">
-											<input type="button" value="Lakukan Validasi dari data RTB" >
-										</td>
-									</tr>
-									<tr>
-										<td align=right>&nbsp;</td>
-									</tr>
-								</table>
-								<form method="POST" action="rtpb-proses.php" onsubmit="return confirm('Apakah data yang dipilih ingin divalidasi?'); ">
-								<table border="0" width=100% >
-								<td colspan ="2" align="right">
-								<!--<input type="button" value="Prev" <?php echo $disabled?> onclick="window.location.href='?pid=<?php echo $_GET[pid] - 1; ?>'">
-								<input type="button" value="Next" <?php echo $disabled?> onclick="window.location.href='?pid=<?php echo $_GET[pid] + 1; ?>'">-->
+						<ul>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>rtpb_filter.php" class="btn">
+								Kembali ke halaman utama : Form Filter</a>
+							</li>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>rtpb_validasi.php" class="btn">
+								Lakukan Validasi dari data RTPB</a>
+							</li>
+							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-									<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
-									<span><input type="button" value="<< Prev" class="buttonprev"/>
-									Page
-									<input type="button" value="Next >>" class="buttonnext"/></span>
-								</td>
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<td colspan="4" align="right"><input type="submit"  class="btn" value="Batalkan Validasi RTPB" name="novalidasi"></td>
+					</tr>
+					<tr>
+						<th>No</th>
+						<th>Pilih</th>
+						<th>Keterangan Jenis/Nama Barang</th>
+						<th>Total Harga Pemeliharaan</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				<?php
+					if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
+						if (!empty($get_data_filter))
+						{
+							$disabled = '';
+						//$no = 1;
+						$pid = 0;
+						$check=0;
+						
+						foreach ($get_data_filter as $key => $hsl_data)
 
-								</table>
-								<table cellpadding="0" cellspacing="0" border="1" class="display" id="example" width="100%">	
-									<thead>
-										<tr>
-											<td align="right" colspan="7">
-												<input type="submit" value="Batalkan Validasi RTPB" name="novalidasi">
-											</td>
-										</tr>
-
-										<tr>
-											<th align="center" colspan="7" class="style2">Daftar Rencana Tahunan Pemeliharaan Barang</th>
-										</tr>
-										<tr>
-											<th align="right" colspan="7" class="style3">&nbsp;</th>
-										</tr>
-										<tr>
-											<th width=3% align="center" class="style2">No</th>
-											<th width=8% align="center" class="style2">Pilih</th>
-											<th width=50% align="center" class="style2">Keterangan Jenis/Nama Barang</th>
-											<th align="center" class="style2">Total Harga Pemeliharaan</th>
-										</tr>
-										</thead>
-										<tbody>
-										<?php
-												if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
-													if (!empty($get_data_filter))
-													{
-														$disabled = '';
-													//$no = 1;
-													$pid = 0;
-													$check=0;
-													
-													foreach ($get_data_filter as $key => $hsl_data)
-
-												//while($hsl_data=mysql_fetch_array($exec))
-													{
-											?>
-										<tr>
-											<td align="center" class="style5"><?php echo $no;?></td>
-											<td align="center" class="style5">
-												 <input type="checkbox" name="checkbox[]" value="<?php echo $hsl_data->Perencanaan_ID;?>"/>
-											</td>
-											<td align="center" class="style5">
-												<table border=0 width=100%>
+					//while($hsl_data=mysql_fetch_array($exec))
+						{
+				?>
+						  
+					<tr class="gradeA">
+						<td><?php echo $no;?></td>
+						<td>
+							 <input type="checkbox" name="checkbox[]" value="<?php echo $hsl_data->Perencanaan_ID;?>"/>
+						</td>
+						<td>
+							<table border=0 width=100%>
 													<tr>
 														<td width="30%">Tahun</td>
 														<td><?php echo $hsl_data->Tahun;?></td>
@@ -172,42 +153,34 @@ $get_data_filter = $RETRIEVE->retrieve_rtpb_filter(array('param'=>$_POST, 'menuI
 														</td>
 													</tr>
 												</table>
-											</td>
-											<td align="center" class="style5"><?php echo $hsl_data->Pemeliharaan?> </td>
-										
-										</tr>
-										<?php 
-										$no++;
-										$pid++;
-										}
-										} ?>
-									</tbody>
-									<tfoot>
-										<tr>
-											<th colspan="4">Daftar Rencana Tahunan Pemeliharaan Barang</th>
-										</tr>
-									</tfoot>
-								</table>
-								<div class="spacer"></div>
-								
-								<!--<table border="0" width=100% >
-								<td colspan ="2" align="right">
-								<input type="button" value="Prev" <?php echo $disabled?> onclick="window.location.href='?pid=<?php echo $_GET[pid] - 1; ?>'">
-								<input type="button" value="Next" <?php echo $disabled?> onclick="window.location.href='?pid=<?php echo $_GET[pid] + 1; ?>'">
-								</td>
-
-								</table>-->
-								
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>                                                                                                  
+						</td>
+						<td>	
+						<?php echo $hsl_data->Pemeliharaan?>
+						</td>
+					</tr>
+					
+				     <?php
+						$no++;
+						$pid++;
+					 }
+				}
+				?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
 			</div>
-		</div>
-	
-	<?php
-	include "$path/footer.php";
-	?>
-	</body>
-</html>	
+			<div class="spacer"></div>
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

@@ -1,6 +1,29 @@
-
+#errmsg { color:red; }
+.tabel th {
+	background-color: #eeeeee;
+	border: 1px solid #dddddd;
+}
+.tabel td {
+	border: 1px solid #dddddd;
+}
 body{
-	font-family:Helvetica;
+	font-family:Ubuntu;
+}
+div.title{
+	color:#959595;
+	margin-left:30px;
+	font-size:28px;
+}
+div.titleTab{
+	color:#959595;
+	margin-left:10px;
+	font-size:18px;
+}
+div.subtitle{
+	color:#959595;
+	margin-top:10px;
+	margin-left:35px;
+	font-size:14px;
 }
 div#containerSimda{
 	margin-top:-10px;
@@ -44,12 +67,12 @@ header{
 	padding-bottom:0px;
 }
 #breadcrumb{
-	margin-top:5px;
+	/*margin-top:5px;
 	padding-top:7px;
 	padding-bottom:7px;
-	padding-left:16px;
-	background-color:#A2A169;
-	color:#fff;
+	padding-left:16px;*/
+	/*background-color:#A2A169;
+	color:#fff;*/
 }
 section.logo_konten{
 	margin:0 auto;
@@ -61,9 +84,9 @@ section.logo_konten{
 }
 section.formLegend{
 	margin:0 auto;
-	margin-top:50px;
+	margin-top:10px;
 	width:90%;
-	border:1px solid #DDDDDD;
+	border:0px solid #DDDDDD;
 	border-radius:3px;
 	padding:10px;
 	padding-bottom:50px;
@@ -94,17 +117,15 @@ section.formLegend .detailRight{
 section.formLegend .titleLegend{
 	margin-top:-20px;
 	margin-left:10px;
-	font-size:16px;
-	background-color:#A3CE4B;
-	padding:2px 40px;
-	width:130px;
-	border-radius:2px;
-	font-weight:bold;
+}
+.label.Legendtitle{
+	padding:4px 40px;
+	font-size:15px;
 }
 section.formLegend .titleSp2dTermin{
 	margin-top:-20px;
 	margin-left:10px;
-	font-size:16px;
+	font-size:12px;
 	background-color:#A3CE4B;
 	padding:2px 40px;
 	width:150px;
@@ -114,7 +135,7 @@ section.formLegend .titleSp2dTermin{
 section.formLegend .titleSp2dPenunjang{
 	margin-top:-20px;
 	margin-left:10px;
-	font-size:16px;
+	font-size:12px;
 	background-color:#A3CE4B;
 	padding:2px 40px;
 	width:180px;
@@ -124,7 +145,7 @@ section.formLegend .titleSp2dPenunjang{
 section.formLegend .titleSp2dRPenunjang{
 	margin-top:-20px;
 	margin-left:10px;
-	font-size:16px;
+	font-size:12px;
 	background-color:#A3CE4B;
 	padding:2px 40px;
 	width:200px;
@@ -211,7 +232,7 @@ section.formLegend .titleSp2dRPenunjang{
 }
 nav{
 	background-color:#D5D5BB;
-	width:90%;
+	width:100%;
 }
 nav ul{
 	margin:0;
@@ -219,31 +240,42 @@ nav ul{
 	list-style:none;
 }
 nav li h3{
-	background-color:#15422E;
-	color:#fff;
+	background-color:#003C2A;
+	color:#CEE2FA;
 	padding:0px 20px;
 	margin-bottom:0px;
 	margin-top:0px;
 	font-size:14px;
-	border-top-right-radius:2px;
-	border-bottom-right-radius:2px;
-	width:85%;
+	/*border-top-right-radius:2px;
+	border-bottom-right-radius:2px;*/
 }
 nav li li{
-	background-color:#E8F8DD;
-	border-top:1px solid #B1B3B2;
-	border-bottom:1px solid #B1B3B2;
+	background-color:#024d36;
+	border-top:1px solid #046a4b;
+	border-bottom:1px solid #02432f;
 	border-left:2px solid #B1B3B2;
-	border-right:2px solid #B1B3B2;
+	border-right:2px solid #003C2A;
 	font-size:12px;
 	padding:5px 20px;
 }
-nav li a{
-	background-color:#E8F8DD;
-	text-decoration:none;
-	color:#000;
+nav li li table{
+	color:#fff;
 }
+nav li li table a{
+	background-color:#024d36;
 
+}
+nav li a{
+	background-color:#4A5B6D;
+	text-decoration:none;
+	color:#CEE2FA;
+}
+nav li a.iconHOme{
+	background-color:#4A5B6D;
+	text-decoration:none;
+	color:#CEE2FA;
+	text-align:center;
+}
 nav li a:hover{
 	text-decoration:none;
 	color:#000;
@@ -254,7 +286,7 @@ nav li a li:hover{
 	text-decoration:none;
 }
 section#main{
-	background-color:#FFFFFF;
+	background-color:#F9F9F9;
 	width:80%;
 	float:right;
 }
@@ -267,7 +299,8 @@ aside{
 	float:left;
 }
 footer{
-	background-color:#993398;
+	margin-top:30px;
+	background-color:#15422E;
 	height:50px;
 	clear:both;
 }

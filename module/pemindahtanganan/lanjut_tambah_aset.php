@@ -1,291 +1,197 @@
-    <?php
-        include "../../config/config.php";
-        include"$path/header.php";
-        include"$path/title.php";
-        
-        $menu_id = 43;
-        $SessionUser = $SESSION->get_session_user();
-        ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
-        $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-    
-        $kd_idaset = $_POST['idgetasetid'];
-		$kd_namaaset = $_POST['idgetnamaaset'];
-		$kd_nokontrak = $_POST['idgetnokontrak'];
-		$kd_tahun = $_POST['idgettahun'];
-		$kelompok = $_POST['kelompok_id'];
-		$lokasi = $_POST['lokasi_id'];
-		$satker = $_POST['skpd_id'];
-		$submit=$_POST['submit_aset'];
-        
-		$paging = $LOAD_DATA->paging($_GET['pid']);    
-		if (isset($_POST['submit'])){
-				if ($kd_idaset=="" && $kd_namaaset=="" && $kd_nokontrak=="" && $kd_tahun=="" && $kelompok=="" && $lokasi=="" && $satker==""){
-		?>
-                <script>var r=confirm('Tidak ada isian filter');
-                            if (r==false){
-                                document.location="<?php echo "$url_rewrite/module/pemindahtanganan/"; ?>tambah_aset_pemindahtanganan.php";
-                            }
-                    </script>
-			<?php
-				}
-        }
-  
-        if (isset($_POST['submit']))
+<?php
+include "../../config/config.php";
+$menu_id = 5;
+$SessionUser = $SESSION->get_session_user();
+$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
+
+
+$paging = $LOAD_DATA->paging($_GET['pid']);	
+if (isset($_POST['submit']))	
+{
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
+
+	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
+	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+} else
 		{
-			unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
-			$data = $RETRIEVE->retrieve_penetapan_pemindahtanganan($parameter);
-		}else{
-			$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
-			$data = $RETRIEVE->retrieve_penetapan_pemindahtanganan($parameter);
-		}
-	// pr($data);
-	?>
-        
-<html>
-	<body>
-		<script language="Javascript" type="text/javascript">  
-			 $(document).ready(function() {
-				$('#example').dataTable( {
-						"aaSorting": [[ 1, "asc" ]]
-				} );
-				var tes=document.getElementsByTagName('*');
-				var button=document.getElementById('submit');
-				var boxeschecked=0;
-				for(k=0;k<tes.length;k++)
-				{
-					if(tes[k].className=='checkbox')
-						{
-							//
-							tes[k].checked == true  ? boxeschecked++: null;
-						}
-				}
-			//alert(boxeschecked);
-				if(boxeschecked!=0){
-					button.disabled=false;
-				}
-				else {
-					button.disabled=true;
-				}		
-				} );
-				
-			function enable(){  
-				var tes=document.getElementsByTagName('*');
-				var button=document.getElementById('submit');
-				var boxeschecked=0;
-				for(k=0;k<tes.length;k++)
-				{
-					if(tes[k].className=='checkbox')
-						{
-							//
-							tes[k].checked == true  ? boxeschecked++: null;
-						}
-				}
-			   //alert(boxeschecked);
-			   if(boxeschecked!=0)
-				   button.disabled=false;
-			   else
-				   button.disabled=true;
-			}
-			
-			function disable_submit(){
-				var enable = document.getElementById('pilihHalamanIni');
-				var disable = document.getElementById('kosongkanHalamanIni');
-				var button=document.getElementById('submit');
-				if (disable){
-					button.disabled=true;
-				} 
-			}
-			
-			function enable_submit(){
-				var enable = document.getElementById('pilihHalamanIni');
-				var disable = document.getElementById('kosongkanHalamanIni');
-				var button=document.getElementById('submit');
-				if (enable){
-					button.disabled=false;
-				} 
-			}
-		</script>
+	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
+		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+	    }  
 
-                        
-            
-	<div id="content">
-                        <?php
-                            
-                            include"$path/menu.php";
-                        ?>
-                  </div>
-                             <div id="tengah1">	
-                                    <div id="frame_tengah1">
-                                            <div id="frame_gudang">
-												<div id="topright">
-														Penetapan Pemindahtanganan
-												</div>
-													<div id="bottomright">
-														
-														<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemindahtanganan/"; ?>tambah_penetapan_pemindahtanganan.php">
-															<table width="100%" height="4%" border="1" style="border-collapse:collapse;">
-																<tr>
-																	<th colspan="2" align="left" style="font-weight:bold;">Filter data : <?php echo $data['count'] ?> Record</u></th>
-																</tr>
-															</table>
-															<br>
-															<div>
-																<table border=0 width='100%'>
-																	<tr>
-																		<td width='50%'></td>
-																		<td colspan="2" width='25%' align=right>
-																			<input type="button" name="aset_act_btn" value="Kembali ke halaman utama: Cari Aset" onclick="window.location='<?php echo "$url_rewrite";?>/module/pemindahtanganan/tambah_aset_pemindahtanganan.php';"></td>
-																	</tr>
-															</table>
-															
-														</div>         
-														 <br>   
-														<div>  
-														<form method="POST" action="<?php echo"$url_rewrite"?>/module/pemindahtanganan/usulan_pemindahtanganan.php" name="form">   
-															<table width='100%' border='0' style="border-collapse:collapse;border: 1px solid #dddddd;">
-																<tr>
-																	<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-																	<td  align="left"><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-																	<td align="right"><input type="submit" align="right" value="Penetapan Pemindahtanganan" name="submit" id="submit" disabled/></td>
-																	<td align="right" width="200px">
-																		<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-																		<input type="hidden" class="hiddenrecord" value="<?php echo @$data['count']?>">
-																		<span><input type="button" value="<< Prev" class="buttonprev"/>
-																			Page
-																		<input type="button" value="Next >>" class="buttonnext"/></span>
-																	</td>
-																</tr>
-															</table>          
-															<br>
-															<div id="demo">       
-															<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
-																<thead>
-																<tr>
-																	<th style="background-color: #eeeeee; border: 1px solid #dddddd;" width="5%">No</th>
-																	<th style="background-color: #eeeeee; border: 1px solid #dddddd;" width="5%">&nbsp;</th>
-																	<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
-																</tr>
-																</thead>
-																<tbody>
-																<?php 
-																if (!empty($data['dataArr']))
-																{
-																	$nomor = 1;
-																	$page = @$_GET['pid'];
-																	if ($page > 1){
-																		$nomor = intval($page - 1 .'01');
-																	}else{
-																		$nomor = 1;
-																	}
+	// echo '<pre>';	    
+	// print_r($get_data_filter);
+	// echo '</pre>';	
+?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+			?>
+
+
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+		<section class="formLegend">
 			
- 
-																	foreach ($data['dataArr'] as $key => $value)
-																	{
-																	   
-																	
-																	?>
-																		<tr>
-																			
-																		<td align="center" style="border: 1px solid #eeeeee; height:100px; color: black; font-weight: ;"><?php echo "$nomor";?></td>
-																		<td align="center" style="border: 1px solid #eeeeee; height:100px; color: black; font-weight: bold;">
-																			<?php 
-																					if (($_SESSION['ses_uaksesadmin'] == 1)){
-																							?>
-																							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PemindahtangananPenetapan[]" value="<?php echo $value->Aset_ID;?>" 
-																							<?php 
-																								for ($i = 0; $i <= count($data['asetList']); $i++){
-																									if ($data['asetList'][$i]==$value->Aset_ID) 
-																										echo 'checked';
-																								}?>>
-																							<?php
-																						}else{
-																							if ($asetList){
-																							if (in_array($value->Aset_ID, $asetList)){
-																							?>
-																							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PemindahtangananPenetapan[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($data['asetList']); $i++){if ($data['asetList'][$i]==$value->Aset_ID) echo 'checked';}?>>
-																							<?php
-																							}
-																						}
-																					}
-																						
-																				?>	
+			<div class="detailLeft">
+					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+			</div>
+		
+			<div class="detailRight" align="right">
+						
+						<ul>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_import_data.php";?>" class="btn">
+								Tambah Data: Import</a>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_tambah_data.php";?>" class="btn">
+								Tambah Data: Manual</a>
+							</li>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_filter.php";?>" class="btn">
+									   Kembali ke halaman utama : Form Filter
+								 </a>
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Keterangan Jenis/Nama Barang</th>
+						<th>Total Harga</th>
+						<th>Tindakan</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				<?php
+						if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
+						if (!empty($get_data_filter))
+						{
+							$disabled = '';
+						//$no = 1;
+						$pid = 0;
+						$check=0;
+						
+						foreach ($get_data_filter as $key => $hsl_data)
+
+					//while($hsl_data=mysql_fetch_array($exec))
+						{
+				?>
+						  
+					<tr class="gradeA">
+						<td><?php echo $no;?></td>
+						<td>
+							<table border="0" width=100%>
+								<tr>
+									<td width="20%">Tahun</td>
+									<td><?php echo $hsl_data->Tahun;?></td>
+								</tr>
+								<tr>
+									<td width="20%">SKPD</td>
+									<td><?php echo show_skpd($hsl_data->Satker_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Lokasi</td>
+									<td><?php echo show_lokasi($hsl_data->Lokasi_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Nama/Jenis Barang</td>
+									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Spesifikasi</td>
+									<td><?php echo $hsl_data->Merk;?></td>
+								</tr>
+								<tr>
+									<td>Kode Rekening</td>
+									<td>[<?php echo show_koderekening($hsl_data->KodeRekening);?>]-<?php echo show_namarekening($hsl_data->KodeRekening);?></td>
+								</tr>
+								<tr>
+									<td>Jumlah Barang</td>
+									<td><?php echo $hsl_data->Kuantitas;?></td>
+								</tr>
+								<tr>
+									<td>Harga</td>
+											<td>
+									<?php
+									$query_shpb = "SELECT NilaiStandar FROM StandarHarga WHERE Kelompok_ID IN (".$hsl_data->Kelompok_ID.") AND TglUpdate LIKE '%".$hsl_data->Tahun."%' ";
+									//print_r($query_shpb);
+									$result		= mysql_query($query_shpb);
+									if($result){
+										$hasil		= mysql_fetch_array($result);
+										 //echo $hasil['NilaiStandar']; 
+										 
+									echo number_format($hasil['NilaiStandar'],2,',','.');
+									 
+										
+									}
+									?>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td><?php echo number_format($hsl_data->NilaiAnggaran,2,',','.')?></td>
+						<td>	
+						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
+							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
+							<input type="submit" value="Edit" class="btn btn-success" name="edit"/>
+						</form>
+						<form method="POST" action="rkb-proses.php"  onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin dihapus?'); ">
+							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
+							<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
+						</form>
+						</td>
+					</tr>
 					
-																		</td>
-																		 <td align="left" style="border: 1px solid #eeeeee; height:100px; color: black; font-weight: bold;">
-																			
-
-																				<table width='100%'>
-																					<tr>
-																						<td height="10px"></td>
-																					</tr>
-
-																					<tr>
-																						<td>
-																							<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo $value->Aset_ID?></span>
-																							<span>( Aset ID - System Number )</span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td style="font-weight:bold;"><?php echo $value->NomorReg?></td>
-																					</tr>
-																					<tr>
-																						<td style="font-weight:bold;"><?php echo $value->Kode?></td>
-																					</tr>
-																					<tr>
-																						<td style="font-weight:bold;"><?php echo $value->NamaAset?></td>
-																					</tr>
-
-																				</table>
-
-																				<br>
-																				<hr />
-																				<table>
-																					<tr>
-																						<td width="20%"> No.Kontrak</td> 
-																						<td width="2%">&nbsp;</td>
-																						<td width="78%"><?php echo $value->NoKontrak?></td>
-																					</tr>
-																					<tr>
-																						<td>Satker</td> <td>&nbsp;</td><td><?php echo '['.$value->KodeSatker.'] '.$value->NamaSatker?></td>
-																					</tr>
-																					<tr>
-																						<td>Lokasi</td> <td>&nbsp;</td><td><?php echo $value->NamaLokasi?></td>
-																					</tr>
-																					<tr>
-																						<td>Status</td><td>&nbsp;</td> <td><?php echo $value->Kondisi_ID. '-' .$value->InfoKondisi?></td>
-																					</tr>
-
-																				</table>
-																				 </td>
-																			</tr>
-																			<?php
-																					$nomor++;
-																					}}
-																				?> 
-																				
-																				</tbody>	
-																				<tfoot>
-																					<tr>
-																						<th style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-																						<th style="background-color: #eeeeee; border: 1px solid #dddddd;">&nbsp;</th>
-																						<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
-																						
-																					</tr>
-																				</tfoot>       
-																				</table>
-																				</div>
-															
-														</form>
-													</div>
-												</div>
-											</div>
-										</div>
-                                </div>
-   
-          <?php
-            include"$path/footer.php";
-          ?>
-    </body>
-</html>	
+				     <?php
+						$no++;
+						$pid++;
+					 }
+				}
+				?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
+			</div>
+			<div class="spacer"></div>
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

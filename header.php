@@ -69,31 +69,53 @@ else
 }
 
 // pr($_SESSION);
- 
+
+ function SignInOut(){
+	global $url_rewrite;
+ ?>
+	 <li style="margin-right:0px;float:right">
+						<?php 
+           
+							if(isset($_SESSION['ses_utoken'])){ ?>
+							   <i class="fa fa-sign-out"></i>
+							   <a href="<?php echo $url_rewrite.'/logout.php?utoken='.str_shuffle('bcsabbjahj131');?>"> [Logout] </a>
+									<?php
+							}
+							else
+							{
+							?>
+									<a data-toggle="modal" href="#myModal3" class=""> <i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login</a>
+							
+							<?php
+							}
+							?>
+					  </li>
+					  <?php
+ } 
 ?>
 <div id="containerSimda">
-	<div id="ContainerloginSimda">&nbsp;
+	<!--<div id="ContainerloginSimda">&nbsp;
 		<div class="loginSimda">
-			<?php 
+			// <?php 
            
-            if(isset($_SESSION['ses_utoken'])){ ?>
-           Selamat datang <?php echo $_SESSION['ses_uname'];?>
-		   <i class="icon-user icon-white"></i>
-		   <a href="<?php echo $url_rewrite.'/logout.php?utoken='.str_shuffle('bcsabbjahj131');?>"> [Logout] </a>
-                <?php
-		}
-		else
-		{
-		?>
-				<a data-toggle="modal" href="#myModal3" class=""><i class="icon-user icon-white"></i>&nbsp;&nbsp;Login</a>
+            // if(isset($_SESSION['ses_utoken'])){ ?>
+           // Selamat datang <?php echo $_SESSION['ses_uname'];?>
+		   // <i class="icon-user icon-white"></i>
+		   // <a href="<?php echo $url_rewrite.'/logout.php?utoken='.str_shuffle('bcsabbjahj131');?>"> [Logout] </a>
+                // <?php
+		// }
+		// else
+		// {
+		// ?>
+				// <a data-toggle="modal" href="#myModal3" class=""><i class="icon-user icon-white"></i>&nbsp;&nbsp;Login</a>
 		
-        <?php
-		}
-		?>
-			</form>
+        // <?php
+		// }
+		// ?>
+			
 		<!--Selamat Datang Admin | Logout-->
-		</div>
-	</div>
+	<!--	</div>
+	</div>-->
 	<div id="myModal3" class="modal hide fade  login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div id="titleForm" class="modal-header" >
 				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -126,4 +148,4 @@ else
 	<header>
 		<img src="<?php echo "$url_rewrite/"; ?>img/header2.jpg" width="100%"/>
 	</header>
-	<div id="pembatasHeader">&nbsp;</div>
+	<!--<div id="pembatasHeader">&nbsp;</div>-->

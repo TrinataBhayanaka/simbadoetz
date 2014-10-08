@@ -1,185 +1,131 @@
-<?php ob_start() ?>
-<html>
-	<?php
-        include "../../../config/config.php";
-        include "$path/header.php";
-        include "$path/title.php";
-        ?>
-    
-	<body>
-            <?php
-            include "$path/menu.php";
-            ?>
+<?php
+include "../../config/config.php";
 
-        <div id="tengah1">	
-        <div id="frame_tengah1">
-        <div id="frame_gudang">
-        <div id="topright"> Cetak laporan Inventarisasi</div>
-        <div id="bottomright">
-         
-            <form method="post" action="proses_cetak_laporan.php">
-       
-        <script>
-            $(function()
-                {
-                $('#tanggal').datepicker($.datepicker.regional['id']);
-                }
+$USERAUTH = new UserAuth();
+$SESSION = new Session();
+$menu_id = 5;
+$SessionUser = $SESSION->get_session_user();
+$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
+?>
 
-             );
-        </script>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+?>
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Buat Rencana Kebutuhan Barang</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Buat Rencana Kebutuhan Barang</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			<form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
+			<ul>
+							<li>
+								<span class="span2">Tahun</span>
+								<input type="text" size="4" name="rkb_thn" class="span2" value="">
+							</li>
+							<li>
+								<span class="span2">SKPD</span>
+								<div class="input-append">
+										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
+										<div class="inner" style="display:none;">
+											
+											<?php
+												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
+												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
+												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
+												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
+											?>
+										</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Lokasi</span>
+								<div class="input-append">
+									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
+									<div class="inner" style="display:none;">
+										
+										<?php
+											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
+											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
 
+											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
+											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
+											
+										?>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Nama/Jenis Barang</span>
+								<div class="input-append">
+									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
+									<div class="inner" style="display:none;">
+										
+										<?php
+											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
+											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
+											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
+											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
+											
+										?>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+							</li>
+						</ul>
+						<table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
 
-        <strong><span style="text-decoration: underline;">Seleksi Pencarian</span></strong>
-        
-        <table>
-            <tr>
-                <td>Tahun</td>
-                <td>:</td>
-                <td><select>
-                    <option>2007</option>
-                    <option>2008</option>
-                    <option>2009</option>
-                    <option>2010</option>
-                    </select></td>
-                <td></td>
-                <td></td>
-        </tr>
-        </table>
-        SKPD<br>
-        <input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-        <input type="text" name="idkelompok" id="idkelompok"
-        style="width:480px;"
-        readonly="readonly"
-        value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-        <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok"
-        value="pilih"
-        onclick = "Spoiler(document.getElementById('idbtnlookupkelompok').value)"><font size="1" color="grey"><i>&nbsp;*Tekan Tombol Pilih</i></font>
-        <script>
-            function Spoiler(status){
-               // alert(status);
-                if(status=='pilih'){
-                    document.getElementById('spoiler_1').setAttribute('style','display:block');
-                    document.getElementById('idbtnlookupkelompok').value = 'tutup';
-                }
-                if(status=='tutup'){
-                 document.getElementById('spoiler_1').setAttribute('style','display:none');
-                  document.getElementById('idbtnlookupkelompok').value = 'pilih';
-                }
-            }
-           
-    
-        </script>
-        <style>
-            td.checkbox{text-align:center}
-            td.header{text-align:left;font-weight: bold}
-        </style>
-        <div class="inner"  id="spoiler_1" style="display:none">
-        
-        <div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;" >
-         
-     <table width="100%" align="left" border="0" class="tabel">
-        <tr>
-            <th align="left" border="0" nowrap colspan="3">
-            <input type="text" id="kelompok_search" style="width: 70%;" value="">
-            <input type="button" id="kelompok_btn_search" value="Cari" onclick="search_child( 'kelompok', '&prefix=kelompok&tag=' )">
-            </th>
-        </tr>
-        <tr id="kelompok_row_">
-
-            <td width="100px" class="header">&nbsp;</td>
-            <td width="150px" class="header"> <b>Kode</b></td>
-            <td width="500px"  class="header"><b>Nama</b></td>
-        </tr>
-        <tr id="zzzzzzzzzz">
-            <td colspan="3" id="kelompok_data"></td>
-        </tr>
-        <tr>
-            <td class="checkbox"><input type="checkbox"></td>
-            <td class=Item><a href=./ class=Item onClick="processTree (3); return false;" STYLE="text-decoration: none">BID 18</a></td>
-            <td class=Item><a href=./ class=Item onClick="processTree (3); return false;">Kesatuan Bangsa</a></td>
-        </tr>
-        <tr id='sub_3_1' class=SubItemRow>
-            <td class="checkbox" ><input type="checkbox"></td>
-            <td class=SubItem><a href=./ class=Item onClick="processTree (5); return false;">20</a></td>
-            <td class=SubItem><a href=./ class=Item onClick="processTree (5); return false;">Badan Kesatuan Bangsa, Politik dan Perlindungan Masyarakat</a></td>
-        </tr>
-
-        <tr id='sub_5_3_1' class=SubItemRow>
-            <td class="checkbox"><input type="checkbox"></td>
-            <td class=SubItem>20.00</td>
-            <td class=SubItem>Badan Kesatuan Bangsa, Politik dan Perlindungan Masyarakat - Tata Usaha</td>
-
-        </tr>
-
-        <tr>
-            <td class="checkbox"><input type="checkbox"></td>
-            <td class=Item><a href=./ class=Item onClick="processTree (4); return false;" STYLE="text-decoration: none">BID 1</a></td>
-            <td class=Item><a href=./ class=Item onClick="processTree (4); return false;">Sekretariat Daerah</a></td>
-        </tr>
-
-        <tr id='sub_4_1' class=SubItemRow>
-            <td class="checkbox"><input type="checkbox"></td>
-            <td  class=SubItem><a href=./ class=Item onClick="processTree (6); return false;">1</a></td>
-            <td class=SubItem><a href=./ class=Item onClick="processTree (6); return false;">Sekretariat Daerah</a></td>
-        </tr>
-
-        <tr id='sub_6_4_1' class=SubItemRow>
-            <td class="checkbox"><input type="checkbox"></td>
-            <td class=SubItem>1.1</td>
-            <td class=SubItem>Sekretariat Daerah - Biro Hukum dan Humas</td>
-        </tr>
-                 </table>
-            </div> </div>
-   <table>
-          <tr>
-            <td>
-            <script type="text/javascript">
-                function show_confirm()
-                {
-                    var r=confirm("Cetak dokumen");
-                    if (r==true)
-                    {
-                        alert("Dokumen telah dicetak");
-                    }
-                    else
-                    {
-                        alert("Batal cetak dokumen");
-                    }
-                }
-            </script>
-            <input type="submit" onclick="show_confirm()" value="Lanjut" />
-            </td>
-      
-            </tr>
-      
-    </table>
-            
-                    
-    <table>
-        
-        
-        <tr>
-            <td>Tanggal Cetak Report</td>
-            <td>:</td>
-            <td>
-            <input name="" id="tanggal" type="text" value="">
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-
-    </table>
-        </form>
-           </div>
- </div>
-            </div>
-        </div>
-			<?php
-                        include "$path/footer.php";
-                        ?>
-             
-       
-            
-	</body>
-        
-</html>	
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

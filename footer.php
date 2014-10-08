@@ -1,6 +1,6 @@
-
+	
 	<footer>
-		<img src="<?php echo "$url_rewrite/"; ?>img/footer.jpg" width="100%" height="50px"/>
+		
 	</footer>
 </div>
       <!-- Bootstrap javascript -->

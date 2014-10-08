@@ -99,9 +99,17 @@ $menu_id = 1;
 	}
 	</script>
 	<section id="main">
-		<div id="breadcrumb"> Pengadaan / Rincian SP2D Penunjang</div>
+		<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Rincian SP2D Penunjang</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Rincian SP2D Penunjang</div>
+				<div class="subtitle">Daftar Kontrak</div>
+			</div>	
 		<section class="formLegend">
-			<div class="titleSp2dTermin">SP2D Penunjang</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
 						

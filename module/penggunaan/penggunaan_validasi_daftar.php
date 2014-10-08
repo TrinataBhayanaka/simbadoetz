@@ -1,211 +1,197 @@
-    <?php
-        include "../../config/config.php"; 
-        include "$path/header.php";
-        include "$path/title.php";
-        
-        $menu_id = 31;
-        $SessionUser = $SESSION->get_session_user();
-        ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
-        $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-        
-        $tgl_awal=$_POST['penggu_valid_filt_tglpenet_awal'];
-        $tgl_awal_fix=format_tanggal_db2($tgl_awal);
-        $tgl_akhir=$_POST['penggu_valid_filt_tglpenet_akhir'];
-        $tgl_akhir_fix=format_tanggal_db2($tgl_akhir);
-        $no_penetapan_penggunaan=$_POST['penggu_valid_filt_nopenet'];
-        $satker=$_POST['skpd_id'];
-        $submit=$_POST['tampil_validasi'];
-        
-        
-        
-        $paging = $LOAD_DATA->paging($_GET['pid']);    
-        $ses_uid=$_SESSION['ses_uid'];
+<?php
+include "../../config/config.php";
+$menu_id = 5;
+$SessionUser = $SESSION->get_session_user();
+$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 
-        if (isset($submit))
+
+$paging = $LOAD_DATA->paging($_GET['pid']);	
+if (isset($_POST['submit']))	
+{
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
+
+	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
+	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+} else
 		{
-			unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
-			$data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
-		}else{
-			$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
-			$data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
-		}
-       
-        if (isset($submit)){
-            if ($tgl_awal=="" && $tgl_akhir=="" && $no_penetapan_penggunaan=="" && $alasan==""){
-    ?>
-        <script>var r=confirm('Tidak ada isian filter');
-            if (r==false){
-            document.location='penggunaan_validasi_filter.php';
-            }
-        </script>				
-					
+	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
+		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+	    }  
 
-     <?php
-            }
-        }
-    ?>
-
-<html>
-	<script type="text/javascript">
-		function show_confirm()
-		{
-		var r=confirm("Validasi data ?");
-		if (r==true)
-		  {
-		  alert("Data sudah tervalidasi");
-		  document.location="<?php echo "$url_rewrite/module/penggunaan/"; ?>gudang_validasi_filter.php";
-		  }
-		else
-		  {
-		  alert("You pressed Cancel!");
-		  document.location="<?php echo "$url_rewrite/module/penggunaan/"; ?>gudang_validasi_daftar.php";
-		  }
-		}
-	</script>
+	// echo '<pre>';	    
+	// print_r($get_data_filter);
+	// echo '</pre>';	
+?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
 	
-		<script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-				//alert(boxeschecked);
-				if(boxeschecked!=0)
-					button.disabled=false;
-				else
-					button.disabled=true;
-				}
-				function disable_submit(){
-					var enable = document.getElementById('pilihHalamanIni');
-					var disable = document.getElementById('kosongkanHalamanIni');
-					var button=document.getElementById('submit');
-					if (disable){
-						button.disabled=true;
-					} 
-				}
-				function enable_submit(){
-					var enable = document.getElementById('pilihHalamanIni');
-					var disable = document.getElementById('kosongkanHalamanIni');
-					var button=document.getElementById('submit');
-					if (enable){
-						button.disabled=false;
-					} 
-				}
-			</script>
+			?>
+
+
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+		<section class="formLegend">
+			
+			<div class="detailLeft">
+					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+			</div>
+		
+			<div class="detailRight" align="right">
 						
-	   <script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$('#example').dataTable( {
-					"aaSorting": [[ 1, "asc" ]]
-				} );
-			} );
-		</script>
-        <body onload="enable()">
-            <div id="content">
-                    <?php
-                        
-                        include "$path/menu.php";
-						// pr($_SESSION);
-                    ?>
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Validasi Barang
-                            </div>
-                            <div id="bottomright">
-                                <div style="margin-bottom:10px; float:left;">
-                                    <a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_filter.php"><input type="submit" value="Kembali ke Halaman Utama: Cari Aset"></a>
-                                </div>
-								<div style="margin-bottom:10px; float:right; ">
-                                    <a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_daftar_valid.php?pid=1"><input type="submit" value="Daftar Penggunaan Barang"></a>
-                                </div>
-                                <!-- Begin frame -->
-									
-                                <form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_daftar_proses_validasi.php">
-                                <table border=0 width="100%" style="border-collapse:collapse;border: 1px solid #dddddd; clear:both;">
-                                    <tbody>
-										<tr>
-										<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-										<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-										<td>
-												<p style="float:right;"><input type="submit" name="submit" value="Validasi Barang" id="submit" disabled/></p>
-										</td>
-										<td align="right" width="200px">
-											<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-											<input type="hidden" class="hiddenrecord" value="<?php echo @$data['check']?>">
-											<span><input type="button" value="<< Prev" class="buttonprev"/>
-											Page
-											<input type="button" value="Next >>" class="buttonnext"/></span>
-														
-										</td>
-										</tr>
-								</table>	
-								<br>
-                                    <div id="demo">
-									<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
-									<thead>
-										<tr>
-                                            <th width="20px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-                                            <th width="50px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Pilihan</th>
-                                            <th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Nomor SKKDH</th>
-                                            <th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Tanggal SKKDH</th>
-                                            <th width="80px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Keterangan</th>
-                                        </tr>
-                                    </thead>    
+						<ul>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_import_data.php";?>" class="btn">
+								Tambah Data: Import</a>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_tambah_data.php";?>" class="btn">
+								Tambah Data: Manual</a>
+							</li>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_filter.php";?>" class="btn">
+									   Kembali ke halaman utama : Form Filter
+								 </a>
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Keterangan Jenis/Nama Barang</th>
+						<th>Total Harga</th>
+						<th>Tindakan</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				<?php
+						if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
+						if (!empty($get_data_filter))
+						{
+							$disabled = '';
+						//$no = 1;
+						$pid = 0;
+						$check=0;
+						
+						foreach ($get_data_filter as $key => $hsl_data)
+
+					//while($hsl_data=mysql_fetch_array($exec))
+						{
+				?>
+						  
+					<tr class="gradeA">
+						<td><?php echo $no;?></td>
+						<td>
+							<table border="0" width=100%>
+								<tr>
+									<td width="20%">Tahun</td>
+									<td><?php echo $hsl_data->Tahun;?></td>
+								</tr>
+								<tr>
+									<td width="20%">SKPD</td>
+									<td><?php echo show_skpd($hsl_data->Satker_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Lokasi</td>
+									<td><?php echo show_lokasi($hsl_data->Lokasi_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Nama/Jenis Barang</td>
+									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
+								</tr>
+								<tr>
+									<td width="20%">Spesifikasi</td>
+									<td><?php echo $hsl_data->Merk;?></td>
+								</tr>
+								<tr>
+									<td>Kode Rekening</td>
+									<td>[<?php echo show_koderekening($hsl_data->KodeRekening);?>]-<?php echo show_namarekening($hsl_data->KodeRekening);?></td>
+								</tr>
+								<tr>
+									<td>Jumlah Barang</td>
+									<td><?php echo $hsl_data->Kuantitas;?></td>
+								</tr>
+								<tr>
+									<td>Harga</td>
+											<td>
 									<?php
-                                        if (!empty($data['dataArr']))
-										{
-											$disabled = '';
-											$page = @$_GET['pid'];
-											if ($page > 1){
-												$no = intval($page - 1 .'01');
-											}else{
-												$no = 1;
-											}
-										foreach($data['dataArr'] as $key => $hsl_data)
-										{    
-                                            ?>
-                                        <tr>
-                                            <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: ; font-weight: ;"><?php echo "$no.";?></td>
-                                            <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: ; font-weight: ;">
-                                                <input type="checkbox" class="checkbox" onchange="enable()" name="ValidasiPenggunaan[]" value="<?php echo $hsl_data['Penggunaan_ID'];?>" 
-													<?php for ($j = 0; $j <= count($data['asetList']); $j++){
-														if ($data['asetList'][$j]==$hsl_data['Penggunaan_ID']) echo 'checked';}?>/>
-                                            </td>
-                                            <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;"><?php echo $hsl_data['NoSKKDH'];?></td>
-                                            <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;"><?php $change=$hsl_data['TglSKKDH']; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
-                                            <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;"><?php echo $hsl_data['Keterangan'];?></td>
-                                        </tr>
-                                        </tr>
-                                                <?php $no++; //$pid++; 
-											}
-										} ?>
-                                    </tbody>
-                                </table>
-                                    &nbsp;
-								</form> 
-								</div>
-							<div class="spacer"></div>
-							<!-- End Frame -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-        </body>
-</html>	
-
-
+									$query_shpb = "SELECT NilaiStandar FROM StandarHarga WHERE Kelompok_ID IN (".$hsl_data->Kelompok_ID.") AND TglUpdate LIKE '%".$hsl_data->Tahun."%' ";
+									//print_r($query_shpb);
+									$result		= mysql_query($query_shpb);
+									if($result){
+										$hasil		= mysql_fetch_array($result);
+										 //echo $hasil['NilaiStandar']; 
+										 
+									echo number_format($hasil['NilaiStandar'],2,',','.');
+									 
+										
+									}
+									?>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td><?php echo number_format($hsl_data->NilaiAnggaran,2,',','.')?></td>
+						<td>	
+						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
+							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
+							<input type="submit" value="Edit" class="btn btn-success" name="edit"/>
+						</form>
+						<form method="POST" action="rkb-proses.php"  onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin dihapus?'); ">
+							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
+							<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
+						</form>
+						</td>
+					</tr>
+					
+				     <?php
+						$no++;
+						$pid++;
+					 }
+				}
+				?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
+			</div>
+			<div class="spacer"></div>
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

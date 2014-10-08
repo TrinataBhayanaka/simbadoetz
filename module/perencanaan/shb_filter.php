@@ -1,5 +1,6 @@
 <?php
 include "../../config/config.php";
+
 $USERAUTH = new UserAuth();
 $SESSION = new Session();
 $menu_id = 2;
@@ -7,16 +8,19 @@ $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 ?>
 
-<html>
-	<?php
-	include "$path/header.php";
-	?>
-		
-	<!--Script Number Only-->
-    <style>
-        #msg { color:green; }
-    </style>
-	<script type="text/javascript">
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+	 $menu_id = 1;
+     $SessionUser = $SESSION->get_session_user();
+     ($SessionUser['ses_uid'] != '') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title' => 'GuestMenu', 'ses_name' => 'menu_without_login'));
+     $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
+	 $resetDataView = $DBVAR->is_table_exists('lihat_daftar_aset_'.$SessionUser['ses_uoperatorid'], 0);
+	
+?>
+<script type="text/javascript">
         $(document).ready(function(){
 
             //dipanggil ketika diisi
@@ -54,86 +58,57 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 	
 	<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS/ajax_checkbox.js"></script>
 	<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS/jquery.min.js"></script>
-        <body>
-            <div id="content">
-                <?php
-                include "$path/title.php";
-                include "$path/menu.php";
-                ?>
-	    
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                        <div id="topright">
-                        Buat Standar Harga Barang
-                        </div>
-                            <div id="bottomright">
-								<div id="perencanaan_new">
-									<!edit isi content!>
-
-										<!--Form Pencarian -->
-										<form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>shb_daftar_data.php?pid=1" method="post">
-											<table border="0">
-												<script type="text/javascript" src="../../JS/tabel.js"></script>
-												<tr>
-														<td>&nbsp;</td>
-												</tr>
-												<tr>
-														<td>Tahun</td>
-														<td>
-															<input name="shb_thn" type="text" id="shb_thn" type="text" />&nbsp;<span id="errmsg"></span>
-														</td>
-												</tr>
-												<tr>            
-														<td>&nbsp;</td>
-												</tr>
-												<tr>
-														<td>Nama/Jenis Barang</td>
-														<td>
-															<input type="text" name="shb_njb" id="shb_njb"  class="w450"  value="" />
-															<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);" />
-															<div class="inner" style="display:none;">
-																<?php
-																	$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-																	$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-																	js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"shb_njb","kelompok_id",'kelompok','shbkelompokfilter');
-																	$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-																	radiokelompok($style,"kelompok_id",'kelompok','shbkelompokfilter');
-																?>
-															</div>
-														</td>
-												</tr>
-												<tr>
-														<td>&nbsp;</td>
-												</tr>
-												<tr>
-														<td>Keterangan</td>
-														<td>
-															<input type="text" name="shb_ket" id="shb_ket" size="51" value="">
-														</td>
-												</tr>
-												<tr>
-														<td>&nbsp;</td>
-												</tr>
-												<tr>
-														<td></td>
-														<td>
-															<input type="submit" name="submit" value="Tampilkan Data" />
-															<input type="reset" name="reset" value="Bersihkan Data">
-														</td>
-												</tr>
-											</table>
-										</form>
-										<!-- Akhir Form Pencarian -->
-								</div>	
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-         
-     <?php 
-     include "$path/footer.php";
-     ?>
-     </body>
-</html>	
+	
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Buat Standar Harga Barang</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Buat Standar Harga Barang</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			<form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>shb_daftar_data.php?pid=1" method="post">
+			<ul>
+							<li>
+								<span class="span2">Tahun</span>
+								<input name="shb_thn" type="text" class="span2" id="shb_thn" type="text" />&nbsp;<span id="errmsg"></span>
+							</li>
+							<li>
+								<span class="span2">Nama/Jenis Barang</span>
+								<div class="input-append">
+									<input type="text" name="shb_njb" id="shb_njb"  style="width:480px;"  value="" />
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);" />
+									<div class="inner" style="display:none;">
+										<?php
+											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
+											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
+											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"shb_njb","kelompok_id",'kelompok','shbkelompokfilter');
+											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											radiokelompok($style,"kelompok_id",'kelompok','shbkelompokfilter');
+										?>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Keterangan</span>
+								<input type="text" name="shb_ket" id="shb_ket" class="span3" size="51" value="">
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+							</li>
+						</ul>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

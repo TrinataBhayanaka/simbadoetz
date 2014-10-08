@@ -13,12 +13,33 @@ $menuPath = $USERAUTH->FrontEnd_show_menu($SessionUser);
 <aside>
 		<nav>
 			<ul>
-				<li>
+				<li  align="center">
 					<ul>
-						<a href="<?php echo "$url_rewrite";?>"><li class="home"><img src="<?php echo "$url_rewrite";?>/img/home.png" /></li></a>
+						<a href="<?php echo "$url_rewrite";?>" class="iconHOme"><li class="home"><i class="fa fa-home fa-fw fa-3x"></i></li></a>
+					</ul>
+				</li>
+				<?php
+				if(isset($_SESSION['ses_utoken'])){
+				?>
+				<li  align="center">
+					<ul>
+							<li class="home">
+								<table border="0" width="100%">
+									<tr>
+										<td>
+											<a href="#"><i class="fa fa-user fa-fw fa-5x"></i></a> 
+										</td>
+										<td>
+											<?php echo $_SESSION['ses_uname'];?><br/>
+											Welcome Back
+										</td>
+									</tr>
+								</table>
+							</li>
 					</ul>
 				</li>
 				<?php 
+				}
 					$i = 0;
 
 					if(!empty($menuPath))

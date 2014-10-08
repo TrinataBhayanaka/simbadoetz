@@ -183,7 +183,7 @@ function radiopengadaanskpd($style_div, $save_element, $tbody_name, $prefix) {
           echo"
                 <input type=\"hidden\" name=\"$save_element\" id=\"$save_element\" value=\"$update\">     
                <input type=\"text\" style=\"width: 70%;\" value=\"\" id=\"search_skpd$prefix\">
-               <input type=\"button\" id=\"preload_skpd\" value=\"Cari\" onClick=\"recp_skpd$prefix()\">";
+               <input type=\"button\" id=\"preload_skpd\" value=\"Cari\" class=\"btn\" onClick=\"recp_skpd$prefix()\">";
      }
 
 

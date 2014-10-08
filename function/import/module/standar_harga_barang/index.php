@@ -20,7 +20,7 @@ return true;
 <tr>
 <td style="padding:20px" align="center"><form method="post" enctype="multipart/form-data" action="<?php echo $url_rewrite?>/function/import/module/standar_harga_barang/proses.php" onsubmit="return createTarget(this.target)" target="formtarget">
 Silakan Pilih File Excel : <input name="userfile" type="file">
-<input name="upload" type="submit" value="Import">
+<input name="upload" type="submit" value="Import" class="btn btn-primary">
 </form>
 </td>
 </tr>

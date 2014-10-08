@@ -30,11 +30,12 @@ $select_pem	= $hsl_data->Pemeliharaan;
 }
 ?>
 
-<html>
-	<?php
-	include "$path/header.php";
-	?>
-	
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+?>
+		
 		<!-- Script Tangggal -->
 		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
 		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
@@ -61,107 +62,83 @@ $select_pem	= $hsl_data->Pemeliharaan;
 			);
 		</script>   
 		<link href="<?php echo "$url_rewrite/"; ?>css/jquery-ui.css" type="text/css" rel="stylesheet">
-        <!-- Script Tangggal -->
-	<body>
-		<div id="content">
-		<?php
-		include "$path/title.php";
-		include "$path/menu.php";
-		?>
-			<div id="tengah1">	
-				<div id="frame_tengah1">
-					<div id="frame_gudang">
-						<div id="topright">
-							Buat Standar Harga Barang
-						</div>
-						<div id="bottomright">                                                                                                      
-                            <div>
-								<table border="0" width="100%">
-									<tr>		
-										<td width="50%"></td>
-										<td width="25%" align="right">
-											<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>shpb_daftar_data.php">
-											<input type="button" value="Kembali ke Halaman Sebelumnya" >
-										</td>
-									</tr>
-								</table>
-                            </div>
-                                                                                        
-							<div id="perencanaan_new">
-								
-								<!-- Form Edit Data -->
-								
-								<form name="shbeditdata" method="POST" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>shpb-proses.php" method="post">
-									<table width="100%" class="style1">
-										<!-- script untuk js table dropdown-->
-										<script type="text/javascript" src="../../JS/tabel.js"></script> 
-										<tr bgcolor="#004933">
-											<td class="white" colspan="2" align=left>Tambah Data Baru</td>
-										</tr>
-										<tr>
-											<td width="25%" class="style6">Nama/Jenis Barang</td>
-											<td>
-												<input type="text" name="shb_edit_njb" id="shb_edit_njb" class="w450" value="<?php echo show_kelompok($select_njb); ?>" readonly="readonly"/>
-											</td>
-										</tr>
-										<tr>
-											<td width="25%" class="style6">Merk/Tipe</td>
-											<td><input class="w300" name="shb_edit_mat" id="shpb_edit_mat" type="text" value="<?php echo $select_mat; ?>" readonly="readonly"/></td>
-										</tr>
-										<tr>
-											<td width="25%"  class="style6">Tanggal</td>
-											<td><input type="text"  style="text-align:center;" name="shpb_edit_tgl" value="<?php echo $select_tgl; ?>" id="tanggal12" readonly="readonly"/></td>
-										</tr>
-										<tr>
-											<td width="25%" class="style6">Spesifikasi</td>
-											<td><input class="w300" name="shb_edit_bhn" id="shpb_edit_bhn" type="text" value="<?php echo $select_bhn; ?>" readonly="readonly"/></td>
-										</tr>
-										<tr>
-											<td width="25%"  class="style6">Keterangan</td>
-											<td><textarea rows="4" cols="100" name="shb_edit_ket" id="shpb_edit_ket" /><?php echo $select_ket; ?></textarea></td>
-										</tr>
-										<tr>
-											<td width="25%" class="style6">Harga</td>
-											<td><input class="w100" name="shb_edit_hrg" id="shpb_edit_hrg" type="integer" value="<?php echo number_format($select_hrg,2,',','.')?>" readonly="readonly"/></td>
-										</tr>
-										<tr>
-											<td width="25%"  class="style6">Harga Pemeliharaan</td>
-										<!--	<td><input style="width: 100px;" name="shpb_edit_pem" id="shpb_edit_pem" type="integer" value="<?php echo $select_pem; ?>" required="required" /></td> -->
-											<script src="accounting.js"></script>
-														<script type="text/javascript">
-														function format_nilai(){
-														
-														var get_nilai = document.getElementById('shpb_edit_pem2');
-														document.getElementById('shpb_edit_pem').value=get_nilai.value;
-														nilai = accounting.formatMoney(get_nilai.value, "", 2, ".", ",");
-														get_nilai.value=nilai;
-													}
-																							</script>
-													<td><input type="text" onchange="return format_nilai()"; name="shpb_edit_pem2" id="shpb_edit_pem2" required=" required"  value="<?php echo number_format($select_pem,2,',','.')?>"</td>
-													
-													<input type="hidden" name="shpb_edit_pem" id="shpb_edit_pem" value="<?php echo $select_pem; ?>" onload="return format_nilai();"> </td>  
-										</tr>
-										<tr>
-											<td colspan=2 align="right" width="25%"  class="style6">
-												<input type="hidden" name="ID" value="<?php echo $_POST['ID']?>">
-												<input type="submit" name="submit_edit" value="Pelihara" onclick=""/>
-												<input type="reset" name="reset" value="reset" />
-											</td>
-										</tr>
-									</table>
-								
-								<!-- Akhir Form Tambah Data -->
-								</form>
-							</div>	
-						</div>                               
-					</div>
-				</div>
-			</div>
+		
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Buat Standar Harga Pemeliharaan Barang</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Buat Standar Harga Pemeliharaan Barang</div>
+			<div class="subtitle">Edit Data </div>
 		</div>
+		<section class="formLegend">
+			<div class="titleLegend"><span class="label label-info Legendtitle">Buat Standar Harga Pemeliharaan Barang</span></div>
+			<p>&nbsp;</p>
+			<div class="detailright">
+				<a href="<?php echo "$url_rewrite/module/perencanaan/"; ?>shpb_daftar_data.php" class="btn">
+					Kembali ke Halaman Sebelumnya</a>
+							
+			</div>
+			
+			<div style="height:5px;width:100%;clear:both"></div>
+			<form name="shbeditdata" method="POST" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>shpb-proses.php" method="post">
+			<ul>
+							
+							<li>
+								<span class="span2">Nama/Jenis Barang</span>
+								<input type="text" name="shb_edit_njb" id="shb_edit_njb" class="w450" value="<?php echo show_kelompok($select_njb); ?>" readonly="readonly"/>
+								
+							</li>
+							<li>
+								<span class="span2">Merk/Tipe</span>
+								<input class="w300" name="shb_edit_mat" id="shpb_edit_mat" type="text" value="<?php echo $select_mat; ?>" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Tanggal</span>
+								<input type="text"  style="text-align:center;" name="shpb_edit_tgl" value="<?php echo $select_tgl; ?>" id="tanggal12" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Spesifikasi</span>
+								<input class="w300" name="shb_edit_bhn" id="shpb_edit_bhn" type="text" value="<?php echo $select_bhn; ?>" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Keterangan</span>
+								<textarea rows="4" cols="100" name="shb_edit_ket" id="shpb_edit_ket" /><?php echo $select_ket; ?></textarea>
+							</li>
+							<li>
+								<span class="span2">Harga</span>
+								<input class="w100" name="shb_edit_hrg" id="shpb_edit_hrg" type="integer" value="<?php echo number_format($select_hrg,2,',','.')?>" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Harga Pemeliharaan</span>
+								<script src="accounting.js"></script>
+								<script type="text/javascript">
+										function format_nilai(){
+										
+										var get_nilai = document.getElementById('shpb_edit_pem2');
+										document.getElementById('shpb_edit_pem').value=get_nilai.value;
+										nilai = accounting.formatMoney(get_nilai.value, "", 2, ".", ",");
+										get_nilai.value=nilai;
+									}
+								</script>
+								<input type="text" onchange="return format_nilai()"; name="shpb_edit_pem2" id="shpb_edit_pem2" required=" required"  value="<?php echo number_format($select_pem,2,',','.');?>" />
+								<input type="hidden" name="shpb_edit_pem" id="shpb_edit_pem" value="<?php echo $select_pem; ?>" onload="return format_nilai();">
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="hidden" name="ID" value="<?php echo $_POST['ID'];?>">
+								<input type="submit" class="btn btn-primary" name="submit_edit" value="Edit" onclick=""/>
+								<input type="reset" class="btn" name="reset" value="reset" />
+							</li>
+						</ul>
+						</form>
+			
+		</section>     
+	</section>
 	
-	<?php
-	include "$path/footer.php";
-	?>
-	</body>
-</html>	
-
+<?php
+	include"$path/footer.php";
+?>
