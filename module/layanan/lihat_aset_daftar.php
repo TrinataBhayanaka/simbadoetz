@@ -1,6 +1,6 @@
 <?php
 include "../../config/config.php";
-
+pr($_POST);exit;
 $menu_id = 51;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);

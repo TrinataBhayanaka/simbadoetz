@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/style_simbada.css">    
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap.min_simbada.css" rel="stylesheet">
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap-responsive_simbada.css" rel="stylesheet">
+         <link href="<?php echo "$url_rewrite/"; ?>js/select2/select2.css" rel="stylesheet"/>
 		<style type="text/css" title="currentStyle">
 			@import "<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css";
 		</style>
@@ -29,6 +30,34 @@
 				$('#example2').dataTable( {
 					"sPaginationType": "full_numbers"
 				} );
+
+				//fungsi dropselect
+				$("#satker1").select2({
+               		placeholder: "Pilih Unit Pengelola Barang",
+				    minimumInputLength: 2,
+				    ajax: {
+				        url: "<?=$url_rewrite?>/function/api/satker.php",
+				        dataType: 'json',
+				        type: "GET",
+				        quietMillis: 50,
+				        data: function (term) {
+				            return {
+				                term: term
+				            };
+				        },
+				        results: function (data) {
+				            return {
+				                results: $.map(data, function (item) {
+				                    return {
+				                        text: item.kode+" "+item.NamaSatker,
+				                        id: item.kode
+				                    }
+				                })
+				            };
+				        }
+				    }
+				});
+
 			} );
 		</script>
 		
@@ -56,9 +85,9 @@
     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_radio.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/show_penerimaan.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_radio_pengadaan.js"></script>
-
+      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/select2/select2.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
-	  
+	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/maskedinput/jquery.maskedinput.min.js"></script>
 	   <script>
 	function change_pemilik() 
 	{
