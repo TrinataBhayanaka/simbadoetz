@@ -49,7 +49,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							</li>
 							<li>
 								<span class="span2">Merk</span>
-								<input type="text" class="span3" name="merk"/>
+								<input type="text"class="span3" name="merk"/>
 							</li>
 							<li>
 								<span class="span2">Tipe</span>

@@ -1,28 +1,31 @@
 <?php
 include "../../config/config.php";
-$menu_id = 5;
-$SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 
+                    $menu_id = 45;
+                    $SessionUser = $SESSION->get_session_user();
+                    ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+                    $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+                    
+                    $bupt_ppt_tanggalawal = $_POST['bupt_cdpt_tanggalawal'];
+                    $bupt_ppt_tanggalakhir = $_POST['bupt_cdpt_tanggalakhir'];
+                    $tgl_awal_fix=format_tanggal_db2($bupt_ppt_tanggalawal);
+                    $tgl_akhir_fix=format_tanggal_db2($bupt_ppt_tanggalakhir);
+                    $bupt_ppt_noskpemindahtanganan = $_POST['bupt_cdpt_noskpemindahtanganan'];
+                    $satker = $_POST['skpd_id'];
+                    $submit = $_POST['tampil_filter'];
+                    
+                    if (isset($submit)){
+                if ($bupt_ppt_tanggalawal=="" && $bupt_ppt_tanggalakhir=="" && $bupt_ppt_noskpemindahtanganan=="" && $satker==""){
+    ?>
+                <script>var r=confirm('Tidak ada isian filter');
+                            if (r==false){
+                                document.location="<?php echo "$url_rewrite/module/pemindahtanganan/"; ?>penetapan_pemindahtanganan.php";
+                            }
+                    </script>
+    <?php
+            }
+        }
 
-$paging = $LOAD_DATA->paging($_GET['pid']);	
-if (isset($_POST['submit']))	
-{
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
-
-	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-} else
-		{
-	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-	    }  
-
-	// echo '<pre>';	    
-	// print_r($get_data_filter);
-	// echo '</pre>';	
 ?>
 <?php
 	include"$path/meta.php";
@@ -30,17 +33,20 @@ if (isset($_POST['submit']))
 	include"$path/menu.php";
 	
 			?>
-
+					<script type="text/javascript" src="<?php echo "$url_rewrite";?>/js/tabel.js"></script>
+                    <script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/simbada.js"></script>
+                    <script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS/script.js"></script>
+                    <script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/simbada.js"></script>
 
           <section id="main">
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <li><a href="#">Pemindahtanganan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Cetak Pemindahtanganan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="title">Cetak Pemindahtanganan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
