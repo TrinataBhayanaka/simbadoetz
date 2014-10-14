@@ -1,6 +1,6 @@
 <?php
 
-function selectSatker(){
+function selectSatker($name,$size=300){
 
 	global $url_rewrite;
 
@@ -33,11 +33,12 @@ function selectSatker(){
 				        }
 				    }
 				});
+
 	} );
 	</script>
 	<li>
 		<span class="span2">Kode Satker </span>
-		<input id="satker1" name="upb" type="hidden" style="width:300px"/>
+		<input id="satker1" name="<?=$name?>" value="tae" type="hidden" style="width:<?=$size?>px"/>
 	</li>
 	
 	
@@ -82,7 +83,7 @@ function selectAset(){
 	</script>
 	<li>
 		<span class="span2">Kode Satker </span>
-		<input id="aset" name="upb" type="hidden" style="width:300px"/>
+		<input id="aset" name="upb" type="hidden" class="span3"/>
 	</li>
 	
 	

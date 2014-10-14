@@ -20,6 +20,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
   if(isset($_POST['noKontrak'])){
     if($_POST['id'] == "")
     {
+      pr($_POST);exit;
       $dataArr = $STORE->store_kontrak($_POST);
     }  else
     {
@@ -58,6 +59,8 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
          <div class="formKontrak">
             <h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Kontrak</span></h3>
             <ul>
+              <?=selectSatker('kodeSatker','205');?>
+              <li>&nbsp;</li>
               <li>
                 <span class="span2">No.SPK/Perjanjian Kontrak</span>
                 <input type="text" name="noKontrak" value="<?=(isset($kontrak)) ? $kontrak[0]['noKontrak'] : '' ?>" required/>
