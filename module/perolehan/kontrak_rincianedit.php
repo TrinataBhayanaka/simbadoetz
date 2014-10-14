@@ -44,7 +44,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<form action="" method="POST">
 				 <div class="formKontrak">
 						<ul>
-							<?php selectAset(); ?>
+							<?php selectAset('kodeKelompok','205',true,false); ?>
 							<li>&nbsp;
 							</li>
 							<li>

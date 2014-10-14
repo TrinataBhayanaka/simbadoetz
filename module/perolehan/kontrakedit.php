@@ -59,7 +59,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
          <div class="formKontrak">
             <h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Kontrak</span></h3>
             <ul>
-              <?=selectSatker('kodeSatker','205',true);?>
+              <?=selectSatker('kodeSatker','205',true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
               <li>&nbsp;</li>
               <li>
                 <span class="span2">No.SPK/Perjanjian Kontrak</span>
