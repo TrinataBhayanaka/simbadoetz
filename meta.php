@@ -31,32 +31,7 @@
 					"sPaginationType": "full_numbers"
 				} );
 
-				//fungsi dropselect
-				$("#satker1").select2({
-               		placeholder: "Pilih Unit Pengelola Barang",
-				    minimumInputLength: 2,
-				    ajax: {
-				        url: "<?=$url_rewrite?>/function/api/satker.php",
-				        dataType: 'json',
-				        type: "GET",
-				        quietMillis: 50,
-				        data: function (term) {
-				            return {
-				                term: term
-				            };
-				        },
-				        results: function (data) {
-				            return {
-				                results: $.map(data, function (item) {
-				                    return {
-				                        text: item.kode+" "+item.NamaSatker,
-				                        id: item.kode
-				                    }
-				                })
-				            };
-				        }
-				    }
-				});
+				
 
 			} );
 		</script>

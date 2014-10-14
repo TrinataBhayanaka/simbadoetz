@@ -44,7 +44,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<form action="" method="POST">
 				 <div class="formKontrak">
 						<ul>
-							<?php selectSatker(); ?>
+							<?php selectAset(); ?>
 							<li>&nbsp;
 							</li>
 							<li>
@@ -52,7 +52,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 								<input type="text" name="merk"/>
 							</li>
 							<li>
-								<span class="span2">Type</span>
+								<span class="span2">Tipe</span>
 								<input type="text" name="type"/>
 							</li>
 							<li>
@@ -89,7 +89,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							</li>
 							<li>
 								<span class="span2">
-								  <button class="btn" data-dismiss="modal">Kembali</button>
+								  <button class="btn" type="reset">Reset</button>
 								  <button type="submit" class="btn btn-primary">Simpan</button></span>
 							</li>
 						</ul>
