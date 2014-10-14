@@ -90,7 +90,7 @@ $data_admin = $RETRIEVE_ADMIN->admin_retrieve_app_conf($NAMA_KABUPATEN);
                 <li><a href="?page=13">Lokasi</a></li>
         	</ul>
         </li>
-      
+        <li><a href="?page=14">News Update</a></li>
 </ul>
 </div>
                                                 </td>

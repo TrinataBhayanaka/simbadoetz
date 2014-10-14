@@ -90,7 +90,10 @@ class RETRIEVE_ADMIN extends DB {
                 $menu = "Pengaturan";
                 $menu_sub = "Halaman Admin";
                 break;
-            
+            case '14':
+                $menu = "News Update";
+                // $menu_sub = "News Update";
+                break;
         }
         
         if ($menu_sub_sub !='')
@@ -188,6 +191,24 @@ class RETRIEVE_ADMIN extends DB {
         }
         
         return $dataArr;
+    }
+
+    function getNews($id=false)
+    {
+        $filter = "";
+
+        if ($id) $filter = " AND id = {$id}";
+        $sql = "SELECT * FROM tbl_news WHERE 1 ";
+        // pr($sql);
+        $result = $this->query($sql);
+        while ($data = $this->fetch_array($result))
+        {
+            $dataArr [] = $data;
+         
+        }
+        
+        return $dataArr;
+    
     }
 }
 ?>

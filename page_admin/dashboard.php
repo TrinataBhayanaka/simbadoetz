@@ -69,6 +69,10 @@ if (isset($_GET['page'])){
 			include 'adm_change_location.php';
 		
 		break;
+		case '14':
+			include 'adm_news.php';
+		
+		break;
 		default:
 			echo '<script type=text/javascript>alert("Upss...Sorry, Page Not Found"); window.location.href = "./"</script>';
 			//include 'adm_menu.php';

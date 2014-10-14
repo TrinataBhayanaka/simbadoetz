@@ -4,9 +4,11 @@
         <link href="css/style.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="css/style_menu.css" />
 	<script type="text/javascript" src="js_admin.js"></script>
-    <script type="text/javascript" src="<?php echo "$url_rewrite/JS/jquery-1.7.2.min.js"?>"></script>
-    <script type="text/javascript" src="<?php echo "$url_rewrite/JS/superfish.js"?>"></script>
-    <script type="text/javascript" src="<?php echo "$url_rewrite/JS/tabel.js"?>"></script>
+    <script type="text/javascript" src="<?php echo "$url_rewrite/js/jquery-1.7.2.min.js"?>"></script>
+    <script type="text/javascript" src="<?php echo "$url_rewrite/js/superfish.js"?>"></script>
+    <script type="text/javascript" src="<?php echo "$url_rewrite/js/tabel.js"?>"></script>
+    <script type="text/javascript" src="<?php echo "$url_rewrite/js/whizzywig63.js"?>"></script>
+    <script type="text/javascript" src="<?php echo "$url_rewrite/js/ckeditor/ckeditor.js"?>"></script>
 	<link rel="shortcut icon" href="<?php echo "$url_rewrite/"; ?>favicon.ico" type="image/x-icon" />
     <script type="text/javascript">
     jQuery(function(){

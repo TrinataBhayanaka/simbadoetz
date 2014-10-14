@@ -153,5 +153,25 @@ class STORE_ADMIN extends DB {
         return true;
     }
     
+    function saveNews($data=array())
+    {
+
+        $date = "Y-m-d H:i:s";
+        if ($data['id']>0){
+
+            $query = "UPDATE tbl_news SET title = '{$data['title']}', brief = '{$data['brief']}', 
+                    content = '{$data['content']}', n_status = {$data['n_status']} 
+                    WHERE id = {$data['id']}";
+        }else{
+
+            $query = "INSERT INTO tbl_news (title, brief, content, created_date, n_status) 
+                    VALUES ('{$data['title']}', '{$data['brief']}', '{$data['content']}','{$date}', {$data['n_status']})";
+        }
+        
+        // pr($query);
+        $result = $this->query($query) or die ($this->error());
+                
+        return true;
+    }
 }
 ?>
