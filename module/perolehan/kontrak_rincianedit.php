@@ -44,7 +44,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<form action="" method="POST">
 				 <div class="formKontrak">
 						<ul>
-							<?php selectSatker(); ?>
+							<?php selectAset(); ?>
 							<li>&nbsp;
 							</li>
 							<li>
@@ -52,44 +52,44 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 								<input type="text"class="span3" name="merk"/>
 							</li>
 							<li>
-								<span class="span2">Type</span>
-								<input type="text" name="type"/>
+								<span class="span2">Tipe</span>
+								<input type="text" class="span3" name="type"/>
 							</li>
 							<li>
 								<span class="span2">Ukuran</span>
-								<input type="text" name="ukuran" />
+								<input type="text" class="span3" name="ukuran" />
 							</li>
 							<li>
 								<span class="span2">Panjang</span>
-								<input type="text" name="panjang" />
+								<input type="text" class="span3" name="panjang" />
 							</li>
 					 		<li>
 								<span class="span2">Lebar</span>
-								<input type="text" name="lebar" />
+								<input type="text" class="span3" name="lebar" />
 							</li>
 							<li>
 								<span class="span2">luas</span>
-								<input type="text" name="luas" />
+								<input type="text" class="span3" name="luas" />
 							</li>
 							<li>
 								<span class="span2">Jumlah</span>
-								<input type="text" name="jumlah" id="jumlah" onchange="return totalHrg()"/>
+								<input type="text" class="span3" name="jumlah" id="jumlah" onchange="return totalHrg()"/>
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" name="hrgSatuan" id="hrgSatuan" onchange="return totalHrg()"/>
+								<input type="text" class="span3" name="hrgSatuan" id="hrgSatuan" onchange="return totalHrg()"/>
 							</li>
 							<li>
 								<span class="span2">Total</span>
-								<input type="text" name="total" id="total"/>
+								<input type="text" class="span3" name="total" id="total"/>
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>
-								<textarea name="keterangan"></textarea>
+								<textarea name="keterangan" class="span3" ></textarea>
 							</li>
 							<li>
 								<span class="span2">
-								  <button class="btn" data-dismiss="modal">Kembali</button>
+								  <button class="btn" type="reset">Reset</button>
 								  <button type="submit" class="btn btn-primary">Simpan</button></span>
 							</li>
 						</ul>

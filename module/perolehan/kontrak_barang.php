@@ -153,7 +153,7 @@ $menu_id = 10;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 
-			<p><a href="kontrak_rincianedit.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
+			<p><a href="kontrak_rincianedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
 			&nbsp;</p>	
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
