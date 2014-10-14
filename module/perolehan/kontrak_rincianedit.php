@@ -42,84 +42,63 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			
 			<div>
 			<form action="" method="POST">
-				<div class="modal-body">
 				 <div class="formKontrak">
 						<ul>
 							<?php selectSatker(); ?>
-							<li id="libidang" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="bidang" onchange="autoKelompok('bidang','kelompok')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="likelompok" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="kelompok" onchange="autoKelompok('kelompok','sub')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="lisub" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="sub" onchange="autoKelompok('sub','subsub')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="lisubsub" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="subsub" name="kd_brg">
-									<option></option>
-								</select>	
+							<li>&nbsp;
 							</li>
 							<li>
-								<span class="labelkontrak">Merk</span>
+								<span class="span2">Merk</span>
 								<input type="text" name="merk"/>
 							</li>
 							<li>
-								<span class="labelkontrak">Type</span>
+								<span class="span2">Type</span>
 								<input type="text" name="type"/>
 							</li>
 							<li>
-								<span class="labelkontrak">Ukuran</span>
+								<span class="span2">Ukuran</span>
 								<input type="text" name="ukuran" />
 							</li>
 							<li>
-								<span class="labelkontrak">Panjang</span>
+								<span class="span2">Panjang</span>
 								<input type="text" name="panjang" />
 							</li>
 					 		<li>
-								<span class="labelkontrak">Lebar</span>
+								<span class="span2">Lebar</span>
 								<input type="text" name="lebar" />
 							</li>
 							<li>
-								<span class="labelkontrak">luas</span>
+								<span class="span2">luas</span>
 								<input type="text" name="luas" />
 							</li>
 							<li>
-								<span class="labelkontrak">Jumlah</span>
+								<span class="span2">Jumlah</span>
 								<input type="text" name="jumlah" id="jumlah" onchange="return totalHrg()"/>
 							</li>
 							<li>
-								<span class="labelkontrak">Harga Satuan</span>
+								<span class="span2">Harga Satuan</span>
 								<input type="text" name="hrgSatuan" id="hrgSatuan" onchange="return totalHrg()"/>
 							</li>
 							<li>
-								<span class="labelkontrak">Total</span>
+								<span class="span2">Total</span>
 								<input type="text" name="total" id="total"/>
 							</li>
 							<li>
-								<span class="labelkontrak">Keterangan</span>
+								<span class="span2">Keterangan</span>
 								<textarea name="keterangan"></textarea>
+							</li>
+							<li>
+								<span class="span2">
+								  <button class="btn" data-dismiss="modal">Kembali</button>
+								  <button type="submit" class="btn btn-primary">Simpan</button></span>
 							</li>
 						</ul>
 							
 					</div>
 					<!-- hidden -->
 					<input type="hidden" name="idKontrak" value="<?=$idKontrak?>">
-			</div>
-			<div class="modal-footer">
-			  <button class="btn" data-dismiss="modal">Kembali</button>
-			  <button type="submit" class="btn btn-primary">Simpan</button>
-			</div>
+			
+			
 		</form>
 		</div>  
 			    

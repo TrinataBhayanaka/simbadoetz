@@ -59,32 +59,50 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
             <h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Kontrak</span></h3>
             <ul>
               <li>
-                <span class="labelkontrak">No.SPK/Perjanjian Kontrak</span>
+                <span class="span2">No.SPK/Perjanjian Kontrak</span>
                 <input type="text" name="noKontrak" value="<?=(isset($kontrak)) ? $kontrak[0]['noKontrak'] : '' ?>" required/>
               </li>
               <li>
-                <span class="labelkontrak">Tgl.SPK/Perjanjian Kontrak</span>
+                <span class="span2">Tgl.SPK/Perjanjian Kontrak</span>
 
                 <input type="text" name="tglKontrak" id="datepicker" value="<?=(isset($kontrak)) ? $kontrak[0]['tglKontrak'] : '' ?>" required/>
 
               </li>
               <li>
-                <span class="labelkontrak">Keterangan</span>
+                <span class="span2">Keterangan</span>
                 <textarea name="keterangan"><?=(isset($kontrak)) ? $kontrak[0]['keterangan'] : '' ?></textarea>
               </li>
               <li>
-                <span  class="labelkontrak">Jangka Waktu</span>
+                <span  class="span2">Jangka Waktu</span>
                 <input type="text" name="jangkaWkt" value="<?=(isset($kontrak)) ? $kontrak[0]['jangkaWkt'] : '' ?>"/>
               </li>
               <li>
-                <span  class="labelkontrak">Nilai</span>
+                <span  class="span2">Nilai</span>
                 <input type="text" name="nilai" value="<?=(isset($kontrak)) ? $kontrak[0]['nilai'] : '' ?>" required/>
               </li>
               <li>
-                <span  class="labelkontrak">Jenis Posting</span>
-                <input type="radio" name="tipeAset" value="1" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "1") ? 'checked' : '') : '' ?>/>&nbsp;Aset Baru
-                <input type="radio" name="tipeAset" value="2" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "2") ? 'checked' : '') : '' ?>/>&nbsp;Kapitalisasi
-                <input type="radio" name="tipeAset" value="3" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "3") ? 'checked' : '') : '' ?>/>&nbsp;Ubah Status
+                <span  class="span2">Jenis Posting</span>
+				<div class="checkbox">
+					<label>
+					<input type="radio" name="tipeAset" value="1" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "1") ? 'checked' : '') : '' ?>/>&nbsp;Aset Baru
+					</label>
+				</div>
+			</li>
+			<li>
+                <span  class="span2">&nbsp;</span>
+				<div class="checkbox">
+					<label>
+						<input type="radio" name="tipeAset" value="2" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "2") ? 'checked' : '') : '' ?>/>&nbsp;Kapitalisasi
+					</label>
+				</div>
+			</li>
+			<li>
+                <span  class="span2">&nbsp;</span>
+				<div class="checkbox">
+					<label>
+					<input type="radio" name="tipeAset" value="3" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "3") ? 'checked' : '') : '' ?>/>&nbsp;Ubah Status
+					</label>
+				</div>
               </li>
             </ul>
               
@@ -93,37 +111,43 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
             <h3 class="grs-bottom"><i class="fa fa-briefcase"></i>&nbsp;<span>Perusahaan</span></h3>
             <ul>
               <li>
-                <span class="labelperusahaan">Nama</span>
+                <span class="span2">Nama </span>
                 <input type="text" name="nm_p" value="<?=(isset($kontrak)) ? $kontrak[0]['nm_p'] : '' ?>"/>
               </li>
               <li>
-                <span class="labelperusahaan">Bentuk</span>
+                <span class="span2">Bentuk </span>
                 <input type="text" name="bentuk" value="<?=(isset($kontrak)) ? $kontrak[0]['bentuk'] : '' ?>"/>
               </li>
               <li>
-                <span class="labelperusahaan">Alamat</span>
+                <span class="span2">Alamat </span>
                 <input type="text" name="alamat" value="<?=(isset($kontrak)) ? $kontrak[0]['alamat'] : '' ?>"/>
               </li>
               <li>
-                <span class="labelperusahaan">Pimpinan</span>
+                <span class="span2">Pimpinan </span>
                 <input type="text" name="pimpinan_p" value="<?=(isset($kontrak)) ? $kontrak[0]['pimpinan_p'] : '' ?>"/>
               </li>
               <li>
-                <span class="labelperusahaan">NPWP</span>
+                <span class="span2">NPWP </span>
                 <input type="text" name="npwp_p" value="<?=(isset($kontrak)) ? $kontrak[0]['npwp_p'] : '' ?>"/>
               </li>
               <li>
-                <span class="labelperusahaan">Bank</span>
+                <span class="span2">Bank </span>
                 <input type="text" name="bank_p" value="<?=(isset($kontrak)) ? $kontrak[0]['bank_p'] : '' ?>"/>
               </li>
               <li>
-                <span class="labelperusahaan">Atas Nama</span>
+                <span class="span2">Atas Nama </span>
                 <input type="text" name="norek_p" value="<?=(isset($kontrak)) ? $kontrak[0]['norek_p'] : '' ?>"/>
               </li> 
               <li>
-                <span class="labelperusahaan">No.Rekening</span>
+                <span class="span2">No.Rekening </span>
                 <input type="text" name="norek_pemilik" value="<?=(isset($kontrak)) ? $kontrak[0]['norek_pemilik'] : '' ?>"/>
               </li>
+			  <li>
+                <span class="span2">
+				<button class="btn" type="reset">Reset</button>
+				<button type="submit" class="btn btn-primary">Simpan</button>
+				</span>
+			  </li>
             </ul>
           </div>
           
@@ -132,10 +156,6 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
         <!-- Hidden -->
         <input type="hidden" name="id" value="<?=(isset($kontrak)) ? $kontrak[0]['id'] : '' ?>"/>
 
-      <div class="modal-footer">
-        <button class="btn" type="reset">Reset</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-      </div>
       </form>
       
     </section>        
