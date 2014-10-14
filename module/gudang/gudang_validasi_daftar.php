@@ -1,66 +1,116 @@
 <?php
 include "../../config/config.php";
-$menu_id = 5;
+
+
+$menu_id = 16;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 
 
-$paging = $LOAD_DATA->paging($_GET['pid']);	
-if (isset($_POST['submit']))	
-{
-// echo "<pre>";
+$paging = $LOAD_DATA->paging($_GET['pid']);
+//echo '<pre>';
 // print_r($_POST);
-// echo "</pre>";
+if ($_POST['Lanjut']){
+	if ($_POST['gdg_tglpengeluaran'] == "" && $_POST['gdg_nomorpengeluaran'] == "" && $_POST['skpd_id'] == ""){
+	?>
+	 <script type="text/javascript">
+		// alert('coba');
+		var r=confirm('Tidak ada isian filter');
+		if (r==false){
+			// alert('kosong');
+			document.location='validasi.php';
+		}
+	</script>
+	 <?php
+    }
+}
+if (isset($_POST['Lanjut']))
+
+{
 
 	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-} else
-		{
-	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-	    }  
+	list($get_data_filter,$dataAsetUser) = $RETRIEVE->retrieve_gudang_validasi(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'checkbox', 'paging'=>$paging));
+} else{
 
-	// echo '<pre>';	    
-	// print_r($get_data_filter);
-	// echo '</pre>';	
+$sess = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+list($get_data_filter,$dataAsetUser) = $RETRIEVE->retrieve_gudang_validasi(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'checkbox', 'paging'=>$paging));
+
+}
+
 ?>
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+    $offset = @$_POST['record'];
+    $query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'validasiGudang[]'";
+        $result_apl = $DBVAR->query($query_apl) or die ($DBVAR->error());
+        $data_apl = $DBVAR->fetch_object($result_apl);
+        
+        $array = explode(',',$data_apl->aset_list);
+        
+	foreach ($array as $id)
+	{
+	    if ($id !='')
+	    {
+		$dataAsetList[] = $id;
+	    }
+	}
+	
+	if ($dataAsetList !='')
+	{
+	    $explode = array_unique($dataAsetList);
+	}
+	
 			?>
 
 
+<script type="text/javascript">
+	function validate()
+		{
+		var chks = document.getElementsByName('validasiGudang[]');
+		// alert('c);
+		var hasChecked = false;
+		for (var i = 0; i < chks.length; i++)
+		{
+		if (chks[i].checked)
+		{
+		hasChecked = true;
+		break;
+		}
+		}
+		if (hasChecked == false)
+		{
+			alert("Ceklis Pilihan Terlebih Dahulu !");
+		return false;
+		}
+		return true;
+		}
+</script>
           <section id="main">
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <li><a href="#">Gudang</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Validasi Distribusi Barang</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="title">Validasi Distribusi Barang</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
 			
 			<div class="detailLeft">
-					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+					<span class="label label-success">Filter data : <?php echo $_SESSION['parameter_sql_total']?> Record</span>
 			</div>
 		
 			<div class="detailRight" align="right">
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_import_data.php";?>" class="btn">
-								Tambah Data: Import</a>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_tambah_data.php";?>" class="btn">
-								Tambah Data: Manual</a>
-							</li>
-							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_filter.php";?>" class="btn">
-									   Kembali ke halaman utama : Form Filter
+								<a href="<?php echo "$url_rewrite/module/gudang/"; ?>validasi.php" class="btn">
+									   Kembali ke halaman utama : Cari Aset
 								 </a>
 							</li>
 							<li>
@@ -79,113 +129,138 @@ if (isset($_POST['submit']))
 			
 			
 			<div id="demo">
+			<form name='myform' method="POST" action="<?php echo "$url_rewrite/module/gudang/status_validasi.php"; ?>" onsubmit='return validate()'>
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
+						<td width="130px"><span><a href="#" onclick="" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
+						<td  align=left><a href="#" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td align="right">
+								<span><input type="submit" name="submit" class="btn" value="Validasi Distribusi Barang"></span>
+						</td>
+					</tr>
+					<tr>
 						<th>No</th>
-						<th>Keterangan Jenis/Nama Barang</th>
-						<th>Total Harga</th>
-						<th>Tindakan</th>
+						<th>&nbsp;</th>
+						<th>Informasi Aset</th>
 					</tr>
 				</thead>
 				<tbody>		
 							 
 				<?php
-						if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
-						if (!empty($get_data_filter))
+					if (!empty($get_data_filter))
 						{
-							$disabled = '';
-						//$no = 1;
-						$pid = 0;
-						$check=0;
 						
-						foreach ($get_data_filter as $key => $hsl_data)
-
-					//while($hsl_data=mysql_fetch_array($exec))
-						{
+							$nomor = 1;
+							$page = @$_GET['pid'];
+							if ($page > 1){
+								$nomor = intval($page - 1 .'01');
+							}else{
+								$nomor = 1;
+							}
+							
+							// pr()
+							foreach ($get_data_filter as $key => $value)
+							{
 				?>
 						  
 					<tr class="gradeA">
-						<td><?php echo $no;?></td>
+						<td><?php echo $nomor?></td>
 						<td>
-							<table border="0" width=100%>
-								<tr>
-									<td width="20%">Tahun</td>
-									<td><?php echo $hsl_data->Tahun;?></td>
-								</tr>
-								<tr>
-									<td width="20%">SKPD</td>
-									<td><?php echo show_skpd($hsl_data->Satker_ID);?></td>
-								</tr>
-								<tr>
-									<td width="20%">Lokasi</td>
-									<td><?php echo show_lokasi($hsl_data->Lokasi_ID);?></td>
-								</tr>
-								<tr>
-									<td width="20%">Nama/Jenis Barang</td>
-									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
-								</tr>
-								<tr>
-									<td width="20%">Spesifikasi</td>
-									<td><?php echo $hsl_data->Merk;?></td>
-								</tr>
-								<tr>
-									<td>Kode Rekening</td>
-									<td>[<?php echo show_koderekening($hsl_data->KodeRekening);?>]-<?php echo show_namarekening($hsl_data->KodeRekening);?></td>
-								</tr>
-								<tr>
-									<td>Jumlah Barang</td>
-									<td><?php echo $hsl_data->Kuantitas;?></td>
-								</tr>
-								<tr>
-									<td>Harga</td>
-											<td>
-									<?php
-									$query_shpb = "SELECT NilaiStandar FROM StandarHarga WHERE Kelompok_ID IN (".$hsl_data->Kelompok_ID.") AND TglUpdate LIKE '%".$hsl_data->Tahun."%' ";
-									//print_r($query_shpb);
-									$result		= mysql_query($query_shpb);
-									if($result){
-										$hasil		= mysql_fetch_array($result);
-										 //echo $hasil['NilaiStandar']; 
-										 
-									echo number_format($hasil['NilaiStandar'],2,',','.');
-									 
-										
-									}
-									?>
-									</td>
-								</tr>
-							</table>
+						<?php
+							if (($_SESSION['ses_uaksesadmin'] == 1)){
+								?>
+								<input type="checkbox" id="checkbox" class="checkbox" name="validasiGudang[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
+								<?php
+							}else{
+								if ($dataAsetUser){
+								if (in_array($value->Aset_ID, $dataAsetUser)){
+								?>
+								<input type="checkbox" id="checkbox" class="checkbox" name="validasiGudang[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
+								<?php
+								}
+							}
+							}
+							
+							?>
 						</td>
-						<td><?php echo number_format($hsl_data->NilaiAnggaran,2,',','.')?></td>
-						<td>	
-						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
-							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
-							<input type="submit" value="Edit" class="btn btn-success" name="edit"/>
-						</form>
-						<form method="POST" action="rkb-proses.php"  onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin dihapus?'); ">
-							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
-							<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
-						</form>
+						<td>
+							
+						<table width='100%'>
+							<tr>
+								<td height="10px"></td>
+							</tr>
+
+							<tr>
+								<td>
+									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value->Aset_ID?></span>
+									<span>( Aset ID - System Number )</span>
+								</td>
+								<!--
+								<td align="right"><span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;horizontal-align:'right';font-weight:bold;">
+									
+									 <a href='validasi_data_aset.php?id=<?php //echo $value->Aset_ID?>'>Validasi</a></span>
+								</td>-->
+							</tr>
+							<tr>
+								<td style="font-weight:bold;"><?php echo $value->NomorReg?></td>
+							</tr>
+							<tr>
+								<td style="font-weight:bold;"><?php echo $value->Kode?></td>
+							</tr>
+							<tr>
+								<td style="font-weight:bold;"><?php echo $value->NamaAset?></td>
+							</tr>
+
+						</table>
+
+						<br>
+						<hr />
+						<table>
+							<tr>
+								<td width="20%"> No.Kontrak</td> 
+								<td width="2%"> </td>
+								<td width="78%"><?php echo $value->NoKontrak?></td>
+							</tr>
+							<tr>
+								<td width="20%">Satker</td> 
+								<td width="2%"> </td>
+								<td width="78%"><?php echo '['.$value->KodeSatker.'] '.$value->NamaSatker?></td>
+							</tr>
+							<tr>
+								<td width="20%">Lokasi</td> 
+								<td width="2%"> </td>
+								<td width="78%"><?php echo $value->NamaLokasi?></td>
+							</tr>
+							<tr>
+								<td width="20%">Status</td> 
+								<td width="2%"> </td>
+								<td width="78%"><?php echo $value->Kondisi_ID. '-' .$value->InfoKondisi?></td>
+							</tr>
+
+						</table>
 						</td>
 					</tr>
 					
-				     <?php
-						$no++;
-						$pid++;
-					 }
-				}
-				?>
+					<?php
+						$nomor++;
+							}
+						}
+						else
+						{
+							$disabled = 'disabled';
+						}
+						?>
 				</tbody>
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
 					</tr>
 				</tfoot>
 			</table>
+			</form>
 			</div>
 			<div class="spacer"></div>
 			

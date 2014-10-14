@@ -86,7 +86,9 @@ include "../../config/config.php";
                          return false;
                     }	
                });
+
           });
+
      </script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -207,6 +209,8 @@ include "../../config/config.php";
 									</div>
 								</div>	
 							</li>
+
+							<?php selectSatker(); ?>
 							<li>
 								<input type='submit' value='Lanjut'  name="submit" class="btn btn-primary">
 							</li>

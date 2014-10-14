@@ -17,930 +17,327 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Cetak Dokumen Perencanaan</li>
+			  <li><a href="#">Perolehan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Cetak Dokumen Inventaris</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Cetak Dokumen Perencanaan</div>
+				<div class="title">Cetak Dokumen Inventaris</div>
 				<div class="subtitle">Cetak Dokumen</div>
 			</div>	
 		<section class="formLegend">
 			
 			<div class="tabbable" style="margin-bottom: 18px;">
 					  <ul class="nav nav-tabs">
-						<li class="active"><a href="#shb" data-toggle="tab">Standar Harga Barang</a></li>
-						<li><a href="#shpb" data-toggle="tab">Standar Harga Pemeliharaan</a></li>
-						<li><a href="#skb" data-toggle="tab">Standar Kebutuhan Barang</a></li>
-						<li><a href="#rkb" data-toggle="tab">RKB</a></li>
-						<li><a href="#rkpb" data-toggle="tab">RKPB</a></li>
-						<li><a href="#rtb" data-toggle="tab">RTB</a></li>
-						<li><a href="#rtpb" data-toggle="tab">RTPB</a></li>
-						<li><a href="#dkbmd" data-toggle="tab">DKBMD</a></li>
-						<li><a href="#dkpbmd" data-toggle="tab">DKPBMD</a></li>
+						<li class="active"><a href="#kib" data-toggle="tab">KIB</a></li>
+						<li><a href="#kir" data-toggle="tab">KIR</a></li>
+						<li><a href="#biskpd" data-toggle="tab">Buku Inventaris SKPD</a></li>
+						<li><a href="#rbiskpd" data-toggle="tab">Rekapitulasi Buku Inventaris SKPD</a></li>
+						<li><a href="#biid" data-toggle="tab">Buku Induk Inventaris Daerah</a></li>
+						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
 					  </ul>
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
-						<div class="tab-pane active" id="shb">
+						<div class="tab-pane active" id="kib">
 						<div class="breadcrumb">
-							<div class="titleTab">Standar Harga Barang</div>
+							<div class="titleTab">Kartu Inventaris Barang</div>
 						</div>
-						  <form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
+						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kib.php"; ?>">
+						 <script>
+						function show_kelompok(kib){
+						url='<?php echo $url_rewrite?>'+'/module/perolehan/api_kib.php?kib='+kib;
+						ambilData(url,'isi_kib');
+						}
+						</script>
 			<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
+								<input type="radio" name="kib" value="KIB-A" class="inven1" onclick="show_kelompok('KIB-A');">&nbsp; KIB-A
+								<input type="radio" name="kib" value="KIB-B"class="inven2" onclick="show_kelompok('KIB-B');">&nbsp; KIB-B
+								<input type="radio" name="kib" value="KIB-C"class="inven3" onclick="show_kelompok('KIB-C');"> &nbsp; KIB-C
+								<input type="radio" name="kib" value="KIB-D"class="inven4" onclick="show_kelompok('KIB-D');"> &nbsp;KIB-D
+								<input type="radio" name="kib" value="KIB-E"class="inven5" onclick="show_kelompok('KIB-E');"> &nbsp;KIB-E
+								<input type="radio"name="kib" value="KIB-F"class="inven6" onclick="show_kelompok('KIB-F');"> &nbsp;KIB-F
+								<input type="button" name="kib" class="btn btn-info" value="Cetak KIB Kosong">
+								<br/>
+							</li>
+							<li>&nbsp;
 							</li>
 							<li>
-								<span class="span2">SKPD</span>
+								<span class="span2">Tahun</span>
+								<input name="tahun" type="text" value="<?php echo date('Y')?>">
+							</li>
+							<li>
+								<span class="span2">Nama Skpd </span>
 								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
+										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
+										<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
 										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
-											
+					
+										<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
+								   
 											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
+											 $alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
+											 $alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
+											 js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd', 'skpd1');
+											 $style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											 radioskpd($style,"skpd_id",'skpd', 'skpd1');
+											 ?>  
+											
+										</div>
 										</div>
 								</div>
 							</li>
 							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
+								<span class="span2">Tanggal Cetak Report</span>
+								<input type="text" input id="tanggal1"  name="cdi_kib_tglreport" value="" >
+								(format tanggal : dd/mm/yyyy)
 							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
+							
+							
 							<li>
 								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+								<input type="submit" onClick="sendit_5()"name="lanjut" class="btn btn-primary"value="Lanjut" />
+								<input type="reset"name="reset" onClick="sendit_6()" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
+						<input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="1">
 						</form>
 						</div>
-						<div class="tab-pane" id="shpb">
+						<div class="tab-pane" id="kir">
 						<div class="breadcrumb">
-							<div class="titleTab">Standar Harga Pemeliharaan Barang</div>
+							<div class="titleTab">Kartu Inventaris Ruangan</div>
 						</div>
-						  <form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
+						   <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_kir.php"; ?>">
 			<ul>
 							<li>
 								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
+								<input name="tahun_kir" type="text" value="<?php echo date('Y')?>">
 							</li>
 							<li>
-								<span class="span2">SKPD</span>
+								<span class="span2">Nama Skpd </span>
 								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
+										   <input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
+											<input type="text" name="lda_skpd2" id="lda_skpd2" class="span5"creadonly="readonly"value="<?php echo $_SESSION['ses_satkername'] ; ?>">
+											<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih"onclick = "showSpoiler(this);">
+											<div class="inner" style="display:none;">
 											
-											<?php
+											<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
+									   
+												<?php
 												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
 												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
-										</div>
+												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd2","skpd_id2",'skpd_b', 'skpd2');
+												$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+												radioskpd($style,"skpd_id2",'skpd_b', 'skpd2');
+												?>  
+												
+											</div>
+											</div>
 								</div>
 							</li>
 							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
+								<span class="span2">Tanggal Cetak Report</span>
+								<input type="text" input id="tanggal2" name="cdi_kir_tglreport" value="" >(format tanggal : dd/mm/yyyy)
 							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
+						
 							<li>
 								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+								 <input type="submit" onClick="testsendit_5()" class="btn btn-primary" name="kir"value="Lanjut" />
+								<input type="reset"name="reset" onClick="sendit_6()" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
+						 <input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="2">
 						</form>
 						</div>
-						<div class="tab-pane" id="skb">
+						<div class="tab-pane" id="biskpd">
 						<div class="breadcrumb">
-							<div class="titleTab">Standar Kebutuhan Barang</div>
+							<div class="titleTab">Buku Inventaris SKPD</div>
 						</div>
-						  <form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
+						  <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/skpd.php"; ?>">
 			<ul>
 							<li>
 								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
+								<input name="tahun_buku_inventaris_skpd" type="text" value="<?php echo date('Y')?>">
 							</li>
 							<li>
-								<span class="span2">SKPD</span>
+								<span class="span2">Kelompok</span>
 								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-											
-											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
-										</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="lda_kelompok" id="lda_kelompok" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);"><font size="1" color="grey"><i>&nbsp;</i></font>
 									<div class="inner" style="display:none;">
 										
 										<?php
 											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
 											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
+											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok","kelompok_id",'kelompok','ldakelompokfilter');
 											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
+											radiokelompok($style,"kelompok_id",'kelompok','ldakelompokfilter');
 										?>
 									</div>
 								</div>
 							</li>
 							<li>
+								<span class="span2">Nama Skpd </span>
+								<div class="input-append">
+									 <input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
+										<input type="text" name="lda_skpd3" id="lda_skpd3" class="span5" readonly="readonly"value="" placeholder="<?php echo $_SESSION['ses_satkername'] ; ?>">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih"onclick = "showSpoiler(this);">
+										<div class="inner" style="display:none;">
+										<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
+								   
+											<?php
+											$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
+											$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
+											js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd3","skpd_id3",'skpd_c', 'skpd3');
+											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											radioskpd($style,"skpd_id3",'skpd_c', 'skpd3');
+											?>  
+											
+										</div>
+										</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Cetak Report</span>
+								<input type="text"  input id="tanggal3" name="cdi_bukuskpd_tglreport" value="" >(format tanggal : dd/mm/yyyy)
+							</li>
+							<li>
 								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+								 <input type="submit" onClick="sendit_5()" class="btn btn-primary" name="bi_skpd" value="Lanjut" />
+								<input type="reset"name="reset" onClick="sendit_6()" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
+						<input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="3">
 						</form>
 						</div>
 						
-						<div class="tab-pane" id="rkb">
+						<div class="tab-pane" id="rbiskpd">
 						<div class="breadcrumb">
-							<div class="titleTab">Renacana Kebutuhan Barang</div>
+							<div class="titleTab">Rekapitulasi Buku Inventaris SKPD</div>
 						</div>
-						 <form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
+						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_rekapitulasibukuinventarisSKPD.php"; ?>">
+			    
 			<ul>
 							<li>
 								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
+								<input name="tahun_rekap_buku_inventaris_skpd" type="text" value="<?php echo date('Y')?>">
 							</li>
 							<li>
-								<span class="span2">SKPD</span>
+								<span class="span2">Nama Skpd</span>
 								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
+										 <input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
+										<input type="text" name="lda_skpd4" id="lda_skpd4" class="span5" readonly="readonly"value="<?php echo $_SESSION['ses_satkername'] ; ?>">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok"class="btn" value="Pilih"onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
-											
+										<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
+								   
 											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
+											$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
+											$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
+											js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd4","skpd_id4",'skpd_d', 'skpd4');
+											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											radioskpd($style,"skpd_id4",'skpd_d', 'skpd4');
+											?>  
+											
+										</div>
+										</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Cetak Report</span>
+								<input type="text"  input id="tanggal4"  name="cdi_rekskpd_tglreport" value="" >(format tanggal : dd/mm/yyyy)
+							</li>
+							
+							<li>
+								<span class="span2">&nbsp;</span>
+								 <input type="submit" onClick="sendit_5()" class="btn btn-primary" name="rbi_skpd"value="Lanjut" />
+								<input type="reset"name="reset" onClick="sendit_6()" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						 <input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="4">
+						</form>
+						</div>
+						<div class="tab-pane" id="biid">
+						<div class="breadcrumb">
+							<div class="titleTab">Buku Induk Inventaris Daerah</div>
+						</div>
+						<form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/induk.php"; ?>">
+			<ul>
+							<li>
+								<span class="span2">Tahun</span>
+								<input name="tahun_buku_induk_inventaris" type="text" value="<?php echo date('Y')?>">
+							</li>
+							<li>
+								<span class="span2">Kelompok</span>
+								<div class="input-append">
+										<input type="text" name="lda_kelompok2" id="lda_kelompok2" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);"><font size="1" color="grey"><i>&nbsp;</i></font>
+										<div class="inner" style="display:none;">
+										
+											<?php
+												$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
+												$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
+												js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok2","kelompok_id2",'kelompok2','ldakelompokfilter2');
+												$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+												radiokelompok($style,"kelompok_id2",'kelompok2','ldakelompokfilter2');
 											?>
 										</div>
 								</div>
 							</li>
 							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
+								<span class="span2">Tanggal Cetak Report</span>
+								<input type="text"  input id="tanggal6" name="cdi_biid_tglreport" value="">(format tanggal dd/mm/yy)
 							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
+							
 							<li>
 								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								 <input type="submit" name="bi_inventaris_daerah"onClick="sendit_5()" class="btn btn-primary" value="Lanjut" />
 								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
 							</li>
 						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
+						 <input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="5">
 						</form>
 						</div>
-						<div class="tab-pane" id="rkpb">
+						<div class="tab-pane" id="rbiid">
 						<div class="breadcrumb">
-							<div class="titleTab">Rencana Kebutuhan Pemeliharaan Barang</div>
+							<div class="titleTab">Rekapitulasi Buku Induk Inventaris Daerah</div>
 						</div>
-						<form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
+						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_rekapitulasibukuindukinventarisdaerah.php"; ?>">
 			<ul>
 							<li>
 								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
+								<input name="tahun_rekap_buku_induk_inventaris" type="text" value="<?php echo date('Y')?>">
 							</li>
 							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-											
-											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
-										</div>
-								</div>
+								<span class="span2">Tanggal Cetak Report</span>
+								<input  input id="tanggal5"  name="cdi_rbiid_tglreport" value="">(format tanggal dd/mm/yy)
 							</li>
-							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
+							
+							
 							<li>
 								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								 <input type="submit" name="rekap_bi_inventaris_daerah" class="btn btn-primary" onClick="sendit_5()" name="biid"value="Lanjut" />
 								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
 							</li>
 						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
+						<input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="6">
 						</form>
 						</div>
-						<div class="tab-pane" id="rtb">
-						<div class="breadcrumb">
-							<div class="titleTab">Rencana Tahunan Barang</div>
-						</div>
-						 <form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
-			<ul>
-							<li>
-								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
-							</li>
-							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-											
-											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
-										</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
-							</li>
-						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
-						</form>
-						</div>
-						<div class="tab-pane" id="rtpb">
-						<div class="breadcrumb">
-							<div class="titleTab">Rencana Tahunana Pemeliharaan Barang</div>
-						</div>
-						 <form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
-			<ul>
-							<li>
-								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
-							</li>
-							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-											
-											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
-										</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
-							</li>
-						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
-						</form>
-						</div>
-						<div class="tab-pane" id="dkbmd">
-						<div class="breadcrumb">
-							<div class="titleTab">Daftar Kebutuhan Barang Milik Daerah</div>
-						</div>
-						 <form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
-			<ul>
-							<li>
-								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
-							</li>
-							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-											
-											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
-										</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
-							</li>
-						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
-						</form>
-						</div>
-						<div class="tab-pane" id="dkpbmd">
-						<div class="breadcrumb">
-							<div class="titleTab">Daftar Kebutuhan Pemeliharaan Barang Milik Daerah</div>
-						</div>
-						<form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
-			<ul>
-							<li>
-								<span class="span2">Tahun</span>
-								<input type="text" size="4" name="rkb_thn" class="span2" value="">
-							</li>
-							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-											
-											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
-												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
-											?>
-										</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="rkb_lokasi" id="rkb_lokasi" class="span5" readonly="readonly" value="" />
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Nama/Jenis Barang</span>
-								<div class="input-append">
-									<input type="text" name="rkb_njb" id="rkb_njb" class="span5" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-										
-										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"rkb_njb","kelompok_id",'kelompok','rkbkelompokfilter');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id",'kelompok','rkbkelompokfilter');
-											
-										?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">&nbsp;</span>
-								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
-							</li>
-						</ul>
-						<table border="0" cellspacing="6" style="display: none">
-                                                <tr>
-                                                    <td>Desa</td>
-                                                    <td>Kecamatan</td> 
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Kabupaten</td>
-                                                    <td>Provinsi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
-                                                    </td>
-                                                    <td></td>
-                                                </tr>
-                                            </table>
-						</form>
-						</div>
+						
+						
+						
 					  </div>
 			</div> 
 			

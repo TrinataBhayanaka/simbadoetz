@@ -9606,6 +9606,22 @@ $offset = @$_POST['record'];
         
         return $dataArr;
     }
+
+    public function retrieve_kontrak()
+    {
+        $sql = mysql_query("SELECT * FROM kontrak ORDER BY id");
+        while ($dataKontrak = mysql_fetch_assoc($sql)){
+                if($dataKontrak['tipeAset'] == 1) $dataKontrak['tipeAset'] = 'Aset Baru';
+                elseif ($dataKontrak['tipeAset'] == 2) $dataKontrak['tipeAset'] = 'Kapitalisasi';
+                elseif ($dataKontrak['tipeAset'] == 3) $dataKontrak['tipeAset'] = 'Perubahan Status';
+                    
+                $kontrak[] = $dataKontrak;
+            }
+
+        return $kontrak;
+
+    }
+
 	
 	
 }

@@ -200,7 +200,7 @@ $_SESSION['parameter_sql_total']=count($get_data_filter);
 						?>
 				</td>
 				<td style="border: 1px solid #dddddd;">
-
+						
 						<table width='100%'>
 							<tr>
 								<td height="10px"></td>

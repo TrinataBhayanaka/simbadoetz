@@ -171,7 +171,7 @@ section.formLegend .titleSp2dRPenunjang{
 	list-style:none;
 }
 #titleForm{
-	background-color:#15422E;
+	background-color:#145C38;
 	color:#fff;
 	border-top-left-radius:4px;
 	border-top-right-radius:4px;
@@ -213,7 +213,7 @@ section.formLegend .titleSp2dRPenunjang{
 	display:inline-block;
 }
 .formKontrak h3.grs-bottom{
-	border-bottom:1px solid #000;
+	border-bottom:1px solid #EEEEEE;
 }
 .formKontrak span.titleForm{
 	background-color:#A3CE4B;
@@ -222,7 +222,7 @@ section.formLegend .titleSp2dRPenunjang{
 	border-top-right-radius:60px 40px;
 }
 .formPerusahaan h3.grs-bottom{
-	border-bottom:1px solid #000;
+	border-bottom:1px solid #EEEEEE;
 }
 .formPerusahaan span.titleForm{
 	background-color:#A3CE4B;
@@ -304,3 +304,69 @@ footer{
 	height:50px;
 	clear:both;
 }
+
+/* Tambahan dari bayu */
+.grey-container {
+  background: #eee;
+  padding: 15px;
+  border: 1px solid #dfdfdf;
+  border-width: 1px 0 1px 0;
+}
+.shortcut-wrapper {
+  text-align: center;
+}
+@media (max-width: 767px) {
+  .shortcut-wrapper {
+    text-align: left;
+  }
+}
+.shortcut-link {
+  display: inline-block;
+  color: #ccc;
+  margin-right: 20px;
+  text-shadow: 0 1px 0 #fff;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+}
+.shortcut-link .shortcut-icon {
+  position: relative;
+  font-size: 30px;
+}
+.shortcut-link .shortcut-icon .shortcut-alert {
+  position: absolute;
+  border-radius: 50em;
+  -moz-border-radius: 50em;
+  -webkit-border-radius: 50em;
+  font-size: 11px;
+  color: #fff;
+  top: 0;
+  right: 0;
+  background: #ec2525;
+  border: 1px solid #ec2525;
+  text-shadow: none;
+  font-weight: bold;
+  line-height: 16px;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+}
+.shortcut-link .text {
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: -5px;
+  color: #626262;
+  font-weight: 600;
+}
+.shortcut-link:hover {
+  text-decoration: none;
+  color: #626262;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+}
+

@@ -23,3 +23,4 @@ $exec=mysql_query($query) or die(mysql_error());
 
 echo "<script>alert('Data Sudah Terhapus...!!!'); document.location='daftar_validasi_barang.php';</script>";
 ?>
+

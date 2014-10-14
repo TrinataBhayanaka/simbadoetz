@@ -36,8 +36,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>
 								<span class="span2">SKPD</span>
 								<div class="input-append">
-										<input type="text" name="rtb_skpd" id="rtb_skpd" class="w450" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										<input type="text" name="rtb_skpd" id="rtb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 											<?php
 												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
@@ -52,8 +52,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
-									<input type="text" name="rtb_lokasi" id="rtb_lokasi" class="w450" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rtb_lokasi" id="rtb_lokasi" class="span5" readonly="readonly" value="">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										<?php
 											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
@@ -69,8 +69,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
-									<input type="text" name="rtb_njb" id="rtb_njb" class="w450" readonly="readonly" value="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="rtb_njb" id="rtb_njb" class="span5" readonly="readonly" value="">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										<?php
 											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";

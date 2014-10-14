@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/style_simbada.css">    
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap.min_simbada.css" rel="stylesheet">
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap-responsive_simbada.css" rel="stylesheet">
+         <link href="<?php echo "$url_rewrite/"; ?>js/select2/select2.css" rel="stylesheet"/>
 		<style type="text/css" title="currentStyle">
 			@import "<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css";
 		</style>
@@ -18,7 +19,7 @@
 		<script src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.js"></script>
 		 <script>
 			$(function() {
-			$( "#datepicker" ).datepicker();
+			$( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			});
 		</script>
 		<script type="text/javascript" charset="utf-8">
@@ -29,10 +30,13 @@
 				$('#example2').dataTable( {
 					"sPaginationType": "full_numbers"
 				} );
+
+				
+
 			} );
 		</script>
 		
-		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr.js"></script>             
+		<!--<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr.js"></script>             
         <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr2.js"></script>                                  
         <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr3.js"></script>   
     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/control.js"></script>
@@ -41,7 +45,7 @@
 	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.ui.datepicker-id.js"></script>
 	
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.min.js"></script>-->
 	
 	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/multiple.js"></script>
 	
@@ -56,9 +60,9 @@
     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_radio.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/show_penerimaan.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_radio_pengadaan.js"></script>
-
+      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/select2/select2.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
-	  
+	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/maskedinput/jquery.maskedinput.min.js"></script>
 	   <script>
 	function change_pemilik() 
 	{
