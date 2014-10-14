@@ -1,9 +1,9 @@
 <?php
 
-function selectSatker($name,$size=300){
+function selectSatker($name,$size=300,$br=false){
 
 	global $url_rewrite;
-
+	if($br) $span = "span2"; else {$span="";$enter="<br>";}
 	?>
 	<script type="text/javascript">
 	$(document).ready(function() {
@@ -27,7 +27,7 @@ function selectSatker($name,$size=300){
 				                    return {
 				                        text: item.kode+" "+item.NamaSatker,
 				                        id: item.kode
-				                    }
+				                    }	
 				                })
 				            };
 				        }
@@ -37,7 +37,7 @@ function selectSatker($name,$size=300){
 	} );
 	</script>
 	<li>
-		<span class="span2">Kode Satker </span>
+		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
 		<input id="satker1" name="<?=$name?>" value="tae" type="hidden" style="width:<?=$size?>px"/>
 	</li>
 	
