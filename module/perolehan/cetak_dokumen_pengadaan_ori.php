@@ -22,12 +22,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                 include"$path/title.php";
                 include"$path/menu.php";
                 ?>
-                  <script type="text/javascript" src="<?php echo "$url_rewrite"?>/JS/jquery.min.js"></script>                     <!-- end TAnggal-->
-    <script type="text/javascript" src="<?php echo "$url_rewrite"?>/JS/jquery-ui.min.js"></script>                 <!-- end TAnggal-->                  
-    <script type="text/javascript" src="<?php echo "$url_rewrite"?>/JS/jquery.ui.datepicker-id.js"></script>    <!-- end TAnggal-->
-<script type="text/javascript" src="<?php echo "$url_rewrite"?>/JS/tabel.js"></script>
-
-<script type="text/javascript" src="<?php echo "$url_rewrite"?>/JS/script.js"></script>
+            
 
 
                     <div id="tengah1">
@@ -242,7 +237,7 @@ radioskpd($style2,"skpd_id9",'skpd9','sk9');
 		<td>
 			<input type="text" name="kelompok2" id="idkelompok10" style="width:450px;" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
 			<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
-<div class="inner" style="display:none;">
+	<div class="inner" style="display:none;">
 <style>
 .tabel th {
 background-color: #eeeeee;
