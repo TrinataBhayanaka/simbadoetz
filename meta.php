@@ -19,7 +19,7 @@
 		<script src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.js"></script>
 		 <script>
 			$(function() {
-			$( "#datepicker" ).datepicker();
+			$( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			});
 		</script>
 		<script type="text/javascript" charset="utf-8">
@@ -61,7 +61,7 @@
 			} );
 		</script>
 		
-		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr.js"></script>             
+		<!--<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr.js"></script>             
         <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr2.js"></script>                                  
         <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr3.js"></script>   
     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/control.js"></script>
@@ -70,7 +70,7 @@
 	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.ui.datepicker.js"></script>
 	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.ui.datepicker-id.js"></script>
 	
-	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.min.js"></script>-->
 	
 	<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/multiple.js"></script>
 	
