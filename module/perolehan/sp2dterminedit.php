@@ -53,6 +53,7 @@ $menu_id = 1;
 	<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li class="active">SP2D Termin</li>
 			  <?php SignInOut();?>
 			</ul>
@@ -86,9 +87,9 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span class="labelInfo">Total SP2D</span>
-								<input type="text" value="<?=isset($totalsp2d) ? number_format($totalsp2d[0]['total']) : '0'?>" disabled/>
+								<input type="text" value="<?=isset($totalsp2d) ? number_format($totalsp2d[0]['total']-$sp2d['nilai']) : '0'?>" disabled/>
 							</li>
-							<li>
+							<li style="display:none">
 								<span  class="labelInfo">Sisa Kontrak</span>
 								<input type="text" id="sisaKontrak" value="<?=isset($sisaKontrak) ? number_format($sisaKontrak+$sp2d['nilai']) : 0?>" disabled/>
 							</li>
