@@ -95,7 +95,7 @@ function selectAset($name,$size=300,$br=false,$upd=false){
 	} );
 	</script>
 	<li>
-		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
+		<span class="<?=$span?>">Jenis Aset </span><?=$enter?>
 		<input id="aset" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
 	</li>
 	

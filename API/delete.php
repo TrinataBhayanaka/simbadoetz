@@ -556,6 +556,97 @@ class DELETE extends DB
     
     }
 
+    public function delete_aset($data,$id,$idkontrak)
+    {
+
+        global $url_rewrite;
+
+        // pr($data);
+        $query = "DELETE FROM aset WHERE Aset_ID = '{$id}'";
+        $result = $this->query($query) or die ($this->error());
+
+        $data['last_aset_id'] = $data['Aset_ID'];
+        $data['action'] = 'delete';
+        $data['changeDate'] = date('Y/m/d');
+        $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
+
+        foreach ($data as $key => $val) {
+            $tmplogfield[] = $key;
+            $tmplogvalue[] = "'$val'";
+        }
+        $fieldlog = implode(',', $tmplogfield);
+        $valuelog = implode(',', $tmplogvalue);
+
+        $query_log = "INSERT INTO log_aset ({$fieldlog}) VALUES ({$valuelog})";
+        // pr($query_log);exit;
+        $result=  $this->query($query_log) or die($this->error()); 
+        
+        if($data['TipeAset']=="A"){
+                $tabel = "tanah";
+                $logtabel = "log_tanah";
+                $idkey = "Tanah_ID";
+            } elseif ($data['TipeAset']=="B") {
+                $tabel = "mesin";
+                $logtabel = "log_mesin";
+                $idkey = "Mesin_ID";
+            } elseif ($data['TipeAset']=="C") {
+                $tabel = "bangunan";
+                $logtabel = "log_bangunan";
+                $idkey = "Bangunan_ID";
+            } elseif ($data['TipeAset']=="D") {
+                $tabel = "jaringan";
+                $logtabel = "log_jaringan";
+                $idkey = "Jaringan_ID";
+            } elseif ($data['TipeAset']=="E") {
+                $tabel = "asetlain";
+                $logtabel = "log_asetlain";
+                $idkey = "AsetLain_ID";
+            } elseif ($data['TipeAset']=="F") {
+                $tabel = "kdp";
+                $logtabel = "log_kdp";
+                $idkey = "KDP_ID";
+            } elseif ($data['TipeAset']=="G") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$idkontrak}\">";
+                exit;
+            }
+
+             $sql = mysql_query("SELECT * FROM {$tabel} WHERE Aset_ID = '{$id}'");
+                while ($dataAset = mysql_fetch_assoc($sql)){
+                    $log[] = $dataAset;
+                }
+
+            // pr($log);
+
+            $query = "DELETE FROM {$tabel} WHERE Aset_ID = '{$id}'";
+            $result = $this->query($query) or die ($this->error());
+
+            foreach ($log as $key => $value) {
+                $log[$key]['action'] = 'delete';
+                $log[$key]['changeDate'] = date('Y/m/d');
+                $log[$key]['operator'] = "{$_SESSION['ses_uoperatorid']}";
+
+                unset($tmplogfield);
+                unset($tmplogvalue);
+
+                foreach ($log[$key] as $key2 => $val) {
+                    $tmplogfield[] = $key2;
+                    $tmplogvalue[] = "'$val'";
+                }
+                $fieldlog = implode(',', $tmplogfield);
+                $valuelog = implode(',', $tmplogvalue);
+
+                $query_log = "INSERT INTO {$logtabel} ({$fieldlog}) VALUES ({$valuelog})";
+                
+                $result=  $this->query($query_log) or die($this->error());
+
+            }
+
+            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$idkontrak}\">";
+    
+    
+    
+    }
+
 	
 }
 
