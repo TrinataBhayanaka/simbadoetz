@@ -1701,6 +1701,84 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
     }
 
+    public function store_sp2d($data,$id)
+    {
+
+        // pr($data);exit; 
+        global $url_rewrite;
+        unset($data['id']);
+
+
+        $data['n_status'] = 0; 
+            foreach ($data as $key => $val) {
+                $tmpfield[] = $key;
+                $tmpvalue[] = "'$val'";
+            }
+            $field = implode(',', $tmpfield);
+            $value = implode(',', $tmpvalue);
+
+            $query = "INSERT INTO sp2d ({$field}) VALUES ($value)";
+            $result=  $this->query($query) or die($this->error());
+
+        $query_id = mysql_query("SELECT id FROM sp2d ORDER BY id DESC LIMIT 1");
+        while ($row = mysql_fetch_assoc($query_id)){
+             $data['sp2d_id'] = $row['id'];
+        }
+
+        $data['action'] = 'insert';
+        $data['changeDate'] = date('Y/m/d');
+        $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
+        // pr($data);exit;
+        foreach ($data as $key => $val) {
+            $tmplogfield[] = $key;
+            $tmplogvalue[] = "'$val'";
+        }
+        $field = implode(',', $tmplogfield);
+        $value = implode(',', $tmplogvalue);
+
+        $query_log = "INSERT INTO log_sp2d ({$field}) VALUES ($value)";
+
+        $result=  $this->query($query_log) or die($this->error());
+
+        return true;
+    }
+
+    public function store_edit_sp2d($data,$id)
+    {
+
+        // pr($data);exit; 
+        global $url_rewrite;
+
+        $data['n_status'] = 0; 
+            foreach ($data as $key => $val) {
+                $tmpset[] = $key."='".$val."'";
+            }
+            $set = implode(',', $tmpset);
+
+            $query = "UPDATE sp2d SET {$set} WHERE id='{$data['id']}'";
+            // pr($query);exit;
+            $result=  $this->query($query) or die($this->error());
+
+        $data['sp2d_id'] = $data['id'];
+        $data['action'] = 'update';
+        $data['changeDate'] = date('Y/m/d');
+        $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
+        // pr($data);exit;
+        unset($data['id']);
+        foreach ($data as $key => $val) {
+            $tmplogfield[] = $key;
+            $tmplogvalue[] = "'$val'";
+        }
+        $field = implode(',', $tmplogfield);
+        $value = implode(',', $tmplogvalue);
+
+        $query_log = "INSERT INTO log_sp2d ({$field}) VALUES ($value)";
+        // pr($query_log);exit;
+        $result=  $this->query($query_log) or die($this->error());
+
+        return true;
+    }
+
 }
 
 

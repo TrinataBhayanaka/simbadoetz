@@ -1,4 +1,3 @@
-
 <?php
 include "../../config/database.php";  
 open_connection();  
@@ -20,6 +19,5 @@ open_connection();
 	echo json_encode($data);
 
 exit;
-
 
 ?>
