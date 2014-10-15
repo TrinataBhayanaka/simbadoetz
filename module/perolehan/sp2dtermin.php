@@ -56,8 +56,47 @@ $menu_id = 1;
 			</ul>
 			<div class="breadcrumb">
 				<div class="title">SP2D Termin</div>
-				<div class="subtitle">Daftar Kontrak</div>
-			</div>	
+				<div class="subtitle">Daftar SP2D Termin</div>
+			</div>
+
+			<div class="grey-container shortcut-wrapper">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_simbada.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">1</i>
+				    </span>
+					<span class="text">Kontrak</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_rincian.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">2</i>
+				    </span>
+					<span class="text">Rincian Barang</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_sp2d.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">3</i>
+				    </span>
+					<span class="text">SP2D</span>
+				</a>
+				<a class="shortcut-link" href="#">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">4</i>
+				    </span>
+					<span class="text">Penunjang</span>
+				</a>
+				<a class="shortcut-link" href="#">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">5</i>
+				    </span>
+					<span class="text">Posting</span>
+				</a>
+			</div>
+
 		<section class="formLegend">
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
@@ -94,7 +133,7 @@ $menu_id = 1;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
-			<p><a data-toggle="modal" href="#myModal" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah SP2D Termin</a>
+			<p><a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah SP2D Termin</a>
 			&nbsp;</p>	
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
@@ -123,9 +162,8 @@ $menu_id = 1;
 						<td class="center"><?=number_format($value['nilai'])?></td>
 						<td class="center"><?=$value['keterangan']?></td>
 						<td class="center">
-						<a href="#" class="btn btn-info"><i class="icon-edit icon-white"></i></a>
-						<a href="#" class="btn btn-success"><i class="icon-edit icon-white"></i></a>
-						<a href="#" class="btn btn-danger"><i class="icon-trash icon-white"></i></a></td>
+						<a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
+						<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
 					</tr>
 				<?php
 					$i++;

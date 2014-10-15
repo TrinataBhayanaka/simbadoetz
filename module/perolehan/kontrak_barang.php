@@ -83,7 +83,7 @@ $menu_id = 10;
 				    </span>
 					<span class="text">Rincian Barang</span>
 				</a>
-				<a class="shortcut-link" href="#">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_sp2d.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>

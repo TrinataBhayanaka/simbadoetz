@@ -17,55 +17,6 @@ $get_status_menu['adm_menu'] !='' ? $disable_menu = '' : $disable_menu = 'disabl
 
 
 
-if(isset($_POST['simpan']))
-{
-	
-	if ($submit_status == 0) exit ($USERAUTH->show_warning_html('Akses Ditolak'));
-	
-	$arrMenu = $_POST['allMenuID'];
-	$showMenu = $_POST['showMenu'];
-	$accessMenu = $_POST['accessMenu'];
-	
-	$update_menu = $UPDATE_ADMIN->admin_update_menu(array('allMenuID'=>$arrMenu, 'showMenu'=>$showMenu, 'accessMenu'=>$accessMenu));
-	
-	/*
-	$query = "UPDATE tbl_user_menu SET menuStatus = 0 , menuAksesLogin = 0 ";
-	$result = $DBVAR->query($query) or die ($DBVAR->error());
-	
-	if ($result)
-	{
-		if ($_POST['showMenu'] !='')
-		{
-			foreach ($_POST['showMenu'] as $value)
-			{
-				//echo 'ada';
-				
-				$query = "UPDATE tbl_user_menu SET menuStatus = 1 WHERE menuID = $value";
-				//print_r($query);
-				$result = $DBVAR->query($query) or die ($DBVAR->error());
-			}
-		}
-		
-		
-		if ($_POST['accessMenu'] !='')
-		{
-			foreach ($_POST['accessMenu'] as $val)
-			{
-				//echo 'ada';
-				$query = "UPDATE tbl_user_menu SET menuAksesLogin = 1 WHERE menuID = $val";
-				//print_r($query);
-				$result = $DBVAR->query($query) or die ($DBVAR->error());
-			}
-		}
-		
-		
-	}
-	
-	*/
-	
-	
-}
-
 if ($_POST['simpan']){
 
 	$save = $STORE_ADMIN->saveNews($_POST);
