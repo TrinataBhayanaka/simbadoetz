@@ -9622,7 +9622,22 @@ $offset = @$_POST['record'];
 
     }
 
-	
+	function getNews($id=false)
+    {
+        $filter = "";
+
+        if ($id) $filter = " AND id = {$id}";
+        $sql = "SELECT * FROM tbl_news WHERE n_status IN(1) {$filter} ORDER BY created_date DESC LIMIT 1";
+        // pr($sql);
+        $result = $this->query($sql);
+        while ($data = $this->fetch_array($result))
+        {
+            $dataArr [] = $data;
+         
+        }
+        
+        return $dataArr;
+    }
 	
 }
 
