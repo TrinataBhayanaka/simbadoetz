@@ -156,7 +156,7 @@ class STORE_ADMIN extends DB {
     function saveNews($data=array())
     {
 
-        $date = "Y-m-d H:i:s";
+        $date = date("Y-m-d H:i:s");
         if ($data['id']>0){
 
             $query = "UPDATE tbl_news SET title = '{$data['title']}', brief = '{$data['brief']}', 
@@ -170,8 +170,8 @@ class STORE_ADMIN extends DB {
         
         // pr($query);
         $result = $this->query($query) or die ($this->error());
-                
-        return true;
+        if ($result) return true;
+        return false;
     }
 }
 ?>

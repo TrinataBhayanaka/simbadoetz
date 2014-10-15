@@ -68,7 +68,9 @@ if(isset($_POST['simpan']))
 if ($_POST['simpan']){
 
 	$save = $STORE_ADMIN->saveNews($_POST);
-	
+	if ($save){
+		echo '<script type=text/javascript>window.location.href = "?page=14"</script>';
+	}
 }
 
 if (isset($_GET['edit'])){
@@ -104,9 +106,9 @@ if (isset($_GET['edit'])){
             <td>Status </td>
             <td>
             	<select name="n_status">
-            		<option value="0">UnPublish</option>
-            		<option value="1">Publish</option>
-            		<option value="2">Delete</option>
+            		<option value="0" <?php if ($data[0]['n_status']==0) echo 'selected';?>>UnPublish</option>
+            		<option value="1" <?php if ($data[0]['n_status']==1) echo 'selected';?>>Publish</option>
+            		<option value="2" <?php if ($data[0]['n_status']==2) echo 'selected';?>>Delete</option>
             	</select>
            	</td>
         </tr>
@@ -123,6 +125,8 @@ if (isset($_GET['edit'])){
 <?php
 }else{
 ?>
+    
+    <div style="margin-top:15px" align="left" id="tambahberita"><input type="button" value="Tambah Berita"></div>
     <table align="center" width="100%" border="0" cellpadding="0" cellspacing="5" style="margin-top:10px; border: 1px solid #c0c0c0;background-color: white;">
         <tr>
             <?
@@ -141,10 +145,10 @@ if (isset($_GET['edit'])){
         foreach ($data as $key => $value) {
         	?>
         	<tr>
-	        	<td><?php echo $no++?></td>
+	        	<td align="center"><?php echo $no++?></td>
 	            <td><?php echo $value['title']?></td>
-	            <td><?php if ($value['n_status']==1)echo 'Publish'; else 'Unpublish';?></td>
-	            <td><a href="<?php echo "$url_rewrite";?>/page_admin/?page=14&edit=1&id=<?php echo $value[id]?>">Edit</a></td>
+	            <td align="center"><?php if ($value['n_status']==1)echo 'Publish'; else echo 'Unpublish';?></td>
+	            <td align="center"><a href="<?php echo "$url_rewrite";?>/page_admin/?page=14&edit=1&id=<?php echo $value[id]?>">Edit</a></td>
 	        </tr>
         	<?php
         }
@@ -157,3 +161,11 @@ if (isset($_GET['edit'])){
 <?php
 }
 ?>
+
+<script type="text/javascript">
+	var basedomain = "<?php echo $url_rewrite;?>";
+	$('#tambahberita').on('click', function(){
+
+		window.location.href=basedomain+'/page_admin/?page=14&edit=1'
+	})
+</script>
