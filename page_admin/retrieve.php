@@ -198,7 +198,7 @@ class RETRIEVE_ADMIN extends DB {
         $filter = "";
 
         if ($id) $filter = " AND id = {$id}";
-        $sql = "SELECT * FROM tbl_news WHERE 1 ";
+        $sql = "SELECT * FROM tbl_news WHERE n_status IN(0,1) {$filter} ORDER BY created_date DESC";
         // pr($sql);
         $result = $this->query($sql);
         while ($data = $this->fetch_array($result))
