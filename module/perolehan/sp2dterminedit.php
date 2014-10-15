@@ -13,22 +13,24 @@ $menu_id = 1;
 	//SQL Sementara
 	$idKontrak = $_GET['id'];
 	$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}'");
-		while ($dataKontrak = mysql_fetch_array($sql)){
+		while ($dataKontrak = mysql_fetch_assoc($sql)){
 				$kontrak[] = $dataKontrak;
 			}
 
+	if(isset($_GET['idsp2d'])){
+		$sql = mysql_query("SELECT * FROM sp2d WHERE id='{$_GET['idsp2d']}'");
+		while ($datasp2d = mysql_fetch_assoc($sql)){
+				$sp2d = $datasp2d;
+			}
+	}
+
 	//post
 	if(isset($_POST['nosp2d'])){
-
-		foreach ($_POST as $key => $val) {
-				$tmpfield[] = $key;
-				$tmpvalue[] = "'$val'";
-			}
-			$field = implode(',', $tmpfield);
-			$value = implode(',', $tmpvalue);
-
-			$query = mysql_query("INSERT INTO sp2d ({$field}) VALUES ($value)");
-
+		if($_POST['id'] == ""){
+			$dataArr = $STORE->store_sp2d($_POST,$idKontrak);
+		} else {
+			$dataArr = $STORE->store_edit_sp2d($_POST,$idKontrak);
+		}
 			echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dtermin.php?id={$idKontrak}\">";
 
 	}
@@ -60,6 +62,41 @@ $menu_id = 1;
 			</div>	
 		<section class="formLegend">
 			<div style="height:5px;width:100%;clear:both"></div>
+
+			<div class="detailLeft">
+						
+						<ul>
+							<li>
+								<span class="labelInfo">No. Kontrak</span>
+								<input type="text" value="<?=$kontrak[0]['noKontrak']?>" disabled/>
+							</li>
+							<li>
+								<span class="labelInfo">Tgl. Kontrak</span>
+								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
+							</li>
+						</ul>
+							
+					</div>
+			<div class="detailRight">
+						
+						<ul>
+							<li>
+								<span class="labelInfo">Nilai Kontrak</span>
+								<input type="text" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
+							</li>
+							<li>
+								<span class="labelInfo">Total SP2D</span>
+								<input type="text" value="<?=isset($totalsp2d) ? number_format($totalsp2d[0]['total']) : '0'?>" disabled/>
+							</li>
+							<li>
+								<span  class="labelInfo">Sisa Kontrak</span>
+								<input type="text" id="sisaKontrak" value="<?=isset($sisaKontrak) ? number_format($sisaKontrak+$sp2d['nilai']) : 0?>" disabled/>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+
 			<form action="" method="POST">
 				
 				 <div class="formKontrak">
@@ -67,35 +104,49 @@ $menu_id = 1;
 						<ul>
 							<li>
 								<span class="span2">No.SP2D</span>
-								<input type="text" name="nosp2d"/>
+								<input type="text" name="nosp2d" value="<?=(isset($sp2d)) ? $sp2d['nosp2d'] : '' ?>" required/>
 							</li>
 							<li>
 								<span class="span2">Tgl.SP2D</span>
-								<input type="text" name="tglsp2d" />
+								<input type="text" name="tglsp2d" id="datepicker" value="<?=(isset($sp2d)) ? $sp2d['tglsp2d'] : '' ?>" required/>
 							</li>
 							<li>
 								<span  class="span2">Nilai</span>
-								<input type="text" name="nilai"/>
+								<input type="text" name="nilai" id="total" value="<?=(isset($sp2d)) ? $sp2d['nilai'] : '' ?>" required/>
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>
-								<textarea name="keterangan"></textarea>
+								<textarea name="keterangan"><?=(isset($sp2d)) ? $sp2d['keterangan'] : '' ?></textarea>
 							</li>
 							<li>
 								<span class="span2">&nbsp;</span>
-								<button class="btn" data-dismiss="modal">Kembali</button>
+								<button class="btn" type="reset">Reset</button>
 								<button class="btn btn-primary">Simpan</button>
 							</li>
 						</ul>
 							<!-- Hidden -->
 							<input type="hidden" name="idKontrak" value="<?=$idKontrak?>" >
 							<input type="hidden" name="type" value="1" >
+							<input type="hidden" name="id" value="<?=(isset($sp2d)) ? $sp2d['id'] : '' ?>" >
 					</div>
 					
 		</form>
 		</section> 
 		       
 	</section>
+
+	<script type="text/javascript">
+		$(document).on('submit', function(){
+		var perolehan = $("#total").val();
+		var sisaKontrak = $("#sisaKontrak").val();
+		var sk = parseInt(sisaKontrak.replace(/[^0-9\.]+/g, ""));
+
+		if(perolehan > sk) {
+			alert("Total SP2D barang melebihi nilai Kontrak");
+			return false;	
+		}
+	})
+	</script>
 	
 <?php
 	include"$path/footer.php";
