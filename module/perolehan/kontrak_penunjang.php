@@ -29,11 +29,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">SP2D</li>
+			  <li class="active">SP2D Penunjang</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">SP2D</div>
+				<div class="title">SP2D Penunjang</div>
 				<div class="subtitle">Daftar Kontrak</div>
 			</div>	
 
@@ -104,7 +104,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
 						<td class="center">
-						<a href="sp2dtermin.php?id=<?=$val['id']?>" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i>&nbsp;tambah</a>
+						<a href="sp2dpenunjang.php?id=<?=$val['id']?>" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i>&nbsp;tambah</a>
 						</td>
 						
 					</tr>

@@ -81,7 +81,7 @@ $menu_id = 1;
 				    </span>
 					<span class="text">SP2D</span>
 				</a>
-				<a class="shortcut-link" href="#">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_penunjang.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">4</i>

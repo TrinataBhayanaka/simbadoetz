@@ -46,7 +46,55 @@ $menu_id = 1;
 ?>
 	
 	<section id="main">
-		<div id="breadcrumb"> Pengadaan / Posting Kontrak</div>
+		<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Posting</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Posting</div>
+				<div class="subtitle">Daftar Kontrak</div>
+			</div>	
+
+			<div class="grey-container shortcut-wrapper">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_simbada.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">1</i>
+				    </span>
+					<span class="text">Kontrak</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_rincian.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">2</i>
+				    </span>
+					<span class="text">Rincian Barang</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_sp2d.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">3</i>
+				    </span>
+					<span class="text">SP2D</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_penunjang.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">4</i>
+				    </span>
+					<span class="text">Penunjang</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_posting.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">5</i>
+				    </span>
+					<span class="text">Posting</span>
+				</a>
+			</div>		
 		<?php
 				if($kontrak[0]['nilai'] != $sumTotal['total']){
 					pr("<p style='color:red'>* Total Rincian Barang tidak sama dengan total SPK</p>");
@@ -54,7 +102,6 @@ $menu_id = 1;
 				}
 			?>
 		<section class="formLegend">
-			<div class="titleSp2dTermin">Posting</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
 						

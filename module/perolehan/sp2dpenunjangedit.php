@@ -76,7 +76,7 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span class="span2">Tgl.SP2D</span>
-								<input type="text" name="tglsp2d" />
+								<input type="text" name="tglsp2d" id="datepicker"/>
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>

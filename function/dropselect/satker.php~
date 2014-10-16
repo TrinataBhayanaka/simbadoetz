@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2856a3cc33dca5ca74aa7e508ea0ec3991b1e7d1
 <?php
 
 function selectSatker($name,$size=300,$br=false,$upd=false){

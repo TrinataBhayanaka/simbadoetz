@@ -109,6 +109,43 @@ $menu_id = 1;
 				<div class="title">Rincian SP2D Penunjang</div>
 				<div class="subtitle">Daftar Kontrak</div>
 			</div>	
+			<div class="grey-container shortcut-wrapper">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_simbada.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">1</i>
+				    </span>
+					<span class="text">Kontrak</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_rincian.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">2</i>
+				    </span>
+					<span class="text">Rincian Barang</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_sp2d.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">3</i>
+				    </span>
+					<span class="text">SP2D</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_penunjang.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">4</i>
+				    </span>
+					<span class="text">Penunjang</span>
+				</a>
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_posting.php">
+					<span class="fa-stack fa-lg">
+				      <i class="fa fa-circle fa-stack-2x"></i>
+				      <i class="fa fa-inverse fa-stack-1x">5</i>
+				    </span>
+					<span class="text">Posting</span>
+				</a>
+			</div>		
 		<section class="formLegend">
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
@@ -141,7 +178,7 @@ $menu_id = 1;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
-			<p><a data-toggle="modal" href="#myModal" class="btn btn-warning btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian SP2D Penunjang</a>
+			<p><a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjang_rincedit.php/?idsp2d=<?=$idsp2d?>&idkontrak=<?=$idKontrak?>" class="btn btn-warning btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian SP2D Penunjang</a>
 			&nbsp;</p>	
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
