@@ -104,7 +104,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
 						<td class="center">
-						<a href="sp2dtermin.php?id=<?=$val['id']?>" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i>&nbsp;tambah</a>
+						<a href="posting.php?id=<?=$val['id']?>" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i>&nbsp;tambah</a>
 						</td>
 						
 					</tr>
