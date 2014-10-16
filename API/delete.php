@@ -581,7 +581,9 @@ class DELETE extends DB
 
         $result=  $this->query($query_log) or die($this->error());
 
-            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dtermin.php?id={$id}\">";
+        if($data['type'] == "1") $type = "termin"; else $type = "penunjang";
+        
+        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2d{$type}.php?id={$id}\">";
     
     
     

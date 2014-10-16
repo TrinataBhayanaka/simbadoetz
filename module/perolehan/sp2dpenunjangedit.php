@@ -17,21 +17,34 @@ $menu_id = 1;
 				$kontrak[] = $dataKontrak;
 			}
 
+	if(isset($_GET['idsp2d'])){
+		$sql = mysql_query("SELECT * FROM sp2d WHERE id='{$_GET['idsp2d']}'");
+		while ($datasp2d = mysql_fetch_assoc($sql)){
+				$sp2d = $datasp2d;
+			}
+	}
+
 	//post
 	if(isset($_POST['nosp2d'])){
-
-		foreach ($_POST as $key => $val) {
-				$tmpfield[] = $key;
-				$tmpvalue[] = "'$val'";
-			}
-			$field = implode(',', $tmpfield);
-			$value = implode(',', $tmpvalue);
-
-			$query = mysql_query("INSERT INTO sp2d ({$field}) VALUES ($value)");
-
+		if($_POST['id'] == ""){
+			$dataArr = $STORE->store_sp2d($_POST,$idKontrak);
+		} else {
+			$dataArr = $STORE->store_edit_sp2d($_POST,$idKontrak);
+		}
 			echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dpenunjang.php?id={$idKontrak}\">";
 
 	}
+
+	//getdata
+	$sql = mysql_query("SELECT * FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
+		while ($dataSP2D = mysql_fetch_array($sql)){
+				$sp2d[] = $dataSP2D;
+			}
+	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
+		while ($sumsp2d = mysql_fetch_array($sql)){
+				$totalsp2d[] = $sumsp2d;
+			}
+	$sisaKontrak = $kontrak[0]['nilai']-$totalsp2d[0]['total'];
 
 	//end SQL
 ?>
@@ -92,15 +105,15 @@ $menu_id = 1;
 						<ul>
 							<li>
 								<span class="span2">No.SP2D</span>
-								<input type="text" name="nosp2d"/>
+								<input type="text" name="nosp2d" value="<?=(isset($sp2d)) ? $sp2d['nosp2d'] : '' ?>" required/>
 							</li>
 							<li>
 								<span class="span2">Tgl.SP2D</span>
-								<input type="text" name="tglsp2d" id="datepicker"/>
+								<input type="text" name="tglsp2d" id="datepicker" value="<?=(isset($sp2d)) ? $sp2d['tglsp2d'] : '' ?>" required/>
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>
-								<textarea name="keterangan"></textarea>
+								<textarea name="keterangan"><?=(isset($sp2d)) ? $sp2d['keterangan'] : '' ?></textarea>
 							</li>
 							<li>
 							<span class="span2">&nbsp;</span>
@@ -112,6 +125,7 @@ $menu_id = 1;
 							<!-- Hidden -->
 							<input type="hidden" name="idKontrak" value="<?=$idKontrak?>" >
 							<input type="hidden" name="type" value="2" >
+							<input type="hidden" name="id" value="<?=(isset($sp2d)) ? $sp2d['id'] : '' ?>" >
 					</div>
 					
 			
