@@ -59,7 +59,7 @@ $menu_id = 1;
 			</ul>
 			<div class="breadcrumb">
 				<div class="title">SP2D Termin</div>
-				<div class="subtitle">Daftar Kontrak</div>
+				<div class="subtitle">Tambah SP2D Termin</div>
 			</div>	
 		<section class="formLegend">
 			<div style="height:5px;width:100%;clear:both"></div>

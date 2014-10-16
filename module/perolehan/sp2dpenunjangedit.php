@@ -33,22 +33,6 @@ $menu_id = 1;
 
 	}
 
-	//getdata
-	$sql = mysql_query("SELECT * FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
-		while ($dataSP2D = mysql_fetch_array($sql)){
-				$sp2d[] = $dataSP2D;
-			}
-	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '1'");
-		while ($sumsp2d = mysql_fetch_array($sql)){
-				$totalsp2d[] = $sumsp2d;
-			}
-	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
-		while ($sumsp2dP = mysql_fetch_array($sql)){
-				$totalsp2dP[] = $sumsp2dP;
-			}
-
-	$sisaKontrak = $kontrak[0]['nilai']-$totalsp2d[0]['total'];
-
 	//end SQL
 ?>
 	
@@ -56,15 +40,51 @@ $menu_id = 1;
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li class="active">SP2D Penunjang</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Form Tambah SP2D Penunjang</div>
-				<div class="subtitle">Tambah Kontrak</div>
+				<div class="title">SP2D Penunjang</div>
+				<div class="subtitle">Tambah SP2D Penunjang</div>
 			</div>	
 		<section class="formLegend">
 			<div style="height:5px;width:100%;clear:both"></div>
+
+			<div class="detailLeft">
+						
+						<ul>
+							<li>
+								<span class="labelInfo">No. Kontrak</span>
+								<input type="text" value="<?=$kontrak[0]['noKontrak']?>" disabled/>
+							</li>
+							<li>
+								<span class="labelInfo">Tgl. Kontrak</span>
+								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
+							</li>
+						</ul>
+							
+					</div>
+			<div class="detailRight">
+						
+						<ul>
+							<li>
+								<span class="labelInfo">Nilai Kontrak</span>
+								<input type="text" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
+							</li>
+							<li>
+								<span class="labelInfo">Total SP2D Penunjang</span>
+								<input type="text" value="<?=isset($totalsp2d) ? number_format($totalsp2d[0]['total']-$sp2d['nilai']) : '0'?>" disabled/>
+							</li>
+							<li style="display:none">
+								<span  class="labelInfo">Sisa Kontrak</span>
+								<input type="text" id="sisaKontrak" value="<?=isset($sisaKontrak) ? number_format($sisaKontrak+$sp2d['nilai']) : 0?>" disabled/>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+
 			<form action="" method="POST">
 			
 				 <div class="formKontrak">

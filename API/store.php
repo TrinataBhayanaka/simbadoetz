@@ -1779,6 +1779,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         return true;
     }
 
+    
+
 }
 
 
