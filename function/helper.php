@@ -158,4 +158,6 @@ function logAset($asetID=false, $satkerID=false, $lastSatkerID=false, $desc=fals
      return false;
 }
 
+
+
 ?>
