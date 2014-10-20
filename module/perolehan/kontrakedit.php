@@ -20,7 +20,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
   if(isset($_POST['noKontrak'])){
     if($_POST['id'] == "")
     {
-      pr($_POST);exit;
+      // pr($_POST);exit;
       $dataArr = $STORE->store_kontrak($_POST);
     }  else
     {

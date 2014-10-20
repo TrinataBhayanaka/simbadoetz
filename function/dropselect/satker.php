@@ -9,7 +9,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 	<script type="text/javascript">
 	$(document).ready(function() {
 	//fungsi dropselect
-				$("#satker1").select2({
+				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
 				    minimumInputLength: 2,
 				    ajax: {
@@ -37,7 +37,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 				var id = "<?=$upd?>";
 				if(id)
 				{
-					$("#satker1").select2('data', {id: id, text: id});	
+					$("#<?=$name?>").select2('data', {id: id, text: id});	
 				}	
 				
 
@@ -45,7 +45,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
-		<input id="satker1" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
 	</li>
 	
 	
@@ -61,7 +61,7 @@ function selectAset($name,$size=300,$br=false,$upd=false){
 	<script type="text/javascript">
 	$(document).ready(function() {
 	//fungsi dropselect
-				$("#aset").select2({
+				$("#<?=$name?>").select2({
                		placeholder: "Pilih Jenis Aset",
 				    minimumInputLength: 2,
 				    ajax: {
@@ -90,14 +90,14 @@ function selectAset($name,$size=300,$br=false,$upd=false){
 			var id = "<?=$upd?>";
 				if(id)
 				{
-					$("#aset").select2('data', {id: id, text: id});	
+					$("#<?=$name?>").select2('data', {id: id, text: id});	
 				}	
 
 	} );
 	</script>
 	<li>
 		<span class="<?=$span?>">Jenis Aset </span><?=$enter?>
-		<input id="aset" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
 	</li>
 	
 	
