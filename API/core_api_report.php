@@ -2161,9 +2161,10 @@ class core_api_report extends DB {
                                                         //Buku induk Inventaris SKPD
                                                             if($parameter_sql!="" ){
 																	$kel = explode('=',$query_kelompok_fix);
-																	$kel_prs = explode('.',$kel[1]);
-																	
-																	if($kel_prs[1] == '01'){
+																	$temp_kel = str_replace("'", "", $kel);
+																	$kel_prs = explode('.',$temp_kel[1]);
+																    
+																	if($kel_prs[0] == '01'){
 																		// echo "gol 1";
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2183,7 +2184,7 @@ class core_api_report extends DB {
 																					order by 
 																						T.kodeSatker,T.kodeKelompok,T.Tahun $limit";
 																	}
-																	elseif($kel_prs[1] == '02'){
+																	elseif($kel_prs[0] == '02'){
 																		// echo "gol 2";
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2206,7 +2207,7 @@ class core_api_report extends DB {
 																					order by 
 																						M.kodeSatker,M.kodeKelompok,M.Tahun $limit";	
 																	}
-																	elseif($kel_prs[1] == '03'){
+																	elseif($kel_prs[0] == '03'){
 																		// echo "gol 3";
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2232,7 +2233,7 @@ class core_api_report extends DB {
 																					K.Kode, K.Uraian
 																				order by B.kodeSatker,B.kodeKelompok,B.Tahun $limit";	
 																	}
-																	elseif($kel_prs[1] == '04'){
+																	elseif($kel_prs[0] == '04'){
 																		// echo "gol 4";
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2258,7 +2259,7 @@ class core_api_report extends DB {
 																					K.Kode, K.Uraian
 																				order by J.kodeSatker,J.kodeKelompok,J.Tahun $limit";	
 																	}
-																	elseif($kel_prs[1] == '05'){
+																	elseif($kel_prs[0] == '05'){
 																		// echo "gol 5";
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2284,7 +2285,7 @@ class core_api_report extends DB {
 																					K.Kode, K.Uraian
 																				order by AL.kodeSatker,AL.kodeKelompok,AL.Tahun $limit";	
 																	}
-																	elseif($kel_prs[1] == '06'){
+																	elseif($kel_prs[0] == '06'){
 																		// echo "gol 6";
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2310,7 +2311,7 @@ class core_api_report extends DB {
 																					K.Kode, K.Uraian	
 																				order by KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.Tahun $limit";	
 																	}
-																	elseif($kel_prs[1] == '07'){
+																	elseif($kel_prs[0] == '07'){
 																		// echo "gol 7";
 																		/*$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2466,10 +2467,11 @@ class core_api_report extends DB {
 													//Buku Inventaris Gabungan SKPD
 													
 													if($parameter_sql!="" ){
+														//pr($parameter_sql);
 														$kel = explode('=',$query_kelompok_fix);
-														$kel_prs = explode('.',$kel[1]);
-														
-														if($kel_prs[1] == '01'){
+														$temp_kel = str_replace("'", "", $kel);
+														$kel_prs = explode('.',$temp_kel[1]);
+														if($kel_prs[0] == '01'){
 															// echo "gol 1";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
@@ -2489,8 +2491,9 @@ class core_api_report extends DB {
 																		order by 
 																			T.kodeSatker,T.kodeKelompok,T.Tahun $limit";
 														}
-														elseif($kel_prs[1] == '02'){
+														elseif($kel_prs[0] == '02'){
 															// echo "gol 2";
+															// exit;
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
 																$param[]="M.".$pecah[$q];
@@ -2512,7 +2515,7 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeSatker,M.kodeKelompok,M.Tahun $limit";	
 														}
-														elseif($kel_prs[1] == '03'){
+														elseif($kel_prs[0] == '03'){
 															// echo "gol 3";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
@@ -2538,7 +2541,7 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.kodeKelompok,B.Tahun $limit";	
 														}
-														elseif($kel_prs[1] == '04'){
+														elseif($kel_prs[0] == '04'){
 															// echo "gol 4";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
@@ -2564,7 +2567,7 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by J.kodeSatker,J.kodeKelompok,J.Tahun $limit";	
 														}
-														elseif($kel_prs[1] == '05'){
+														elseif($kel_prs[0] == '05'){
 															// echo "gol 5";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
@@ -2590,7 +2593,7 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by AL.kodeSatker, AL.kodeKelompok,AL.Tahun $limit";	
 														}
-														elseif($kel_prs[1] == '06'){
+														elseif($kel_prs[0] == '06'){
 															// echo "gol 6";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
@@ -2616,7 +2619,7 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian	
 																	order by KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.Tahun $limit";	
 														}
-														elseif($kel_prs[1] == '07'){
+														elseif($kel_prs[0] == '07'){
 															// echo "gol 7";
 															/*$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
