@@ -59,12 +59,12 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
-
 $hit = 2;
 $flag = '';
 $TypeRprtr = 'RBIS';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 // exit;
 $result_query = $REPORT->get_report_rekap_inv_skpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
 

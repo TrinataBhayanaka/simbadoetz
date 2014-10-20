@@ -52,6 +52,7 @@ $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan
 //mendapatkan jenis query yang digunakan
 $result=$REPORT->MutasiBarang($skpd_id,$tglawalperolehan,$tglakhirperolehan);
 // pr($result);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 

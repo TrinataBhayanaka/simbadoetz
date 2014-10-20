@@ -55,7 +55,8 @@ if($gol == 01){
 $TypeRprtr = '';
 $Info = '';
 $tglakhirperolehan = $tahun.'-'."12".'-'."31";
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 // exit;
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);

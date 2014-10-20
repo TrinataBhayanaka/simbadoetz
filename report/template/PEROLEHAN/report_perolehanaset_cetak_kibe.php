@@ -70,8 +70,8 @@ $hit = count($query);
 $flag = 'E';
 $TypeRprtr = '';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
-// exit;
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);// exit;
 //mengenerate query
 // $result_query=$REPORT->retrieve_query($query);
 $table_name = "asetlain";

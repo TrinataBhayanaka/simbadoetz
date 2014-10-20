@@ -57,7 +57,8 @@ if($kb == 'KB-D'){
 }
 $TypeRprtr = '';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 // exit;
 $resQuery=$REPORT->kartuBarang($query);
 // pr($resQuery);
