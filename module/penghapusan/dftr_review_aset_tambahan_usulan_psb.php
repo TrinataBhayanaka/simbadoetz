@@ -29,18 +29,25 @@ $menu_id = 10;
 		}
 		
 	}
-	if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
-		$_SESSION['reviewAsetUsulanAdd']=$_POST;
-		$POST=$_SESSION['reviewAsetUsulanAdd'];
-	}else{
-		////pr($_POST);
-		////pr($_SESSION['reviewAsetUsulanAdd']);
-		foreach ($_POST['penghapusanfilter'] as $key => $value) {
-			$_SESSION['reviewAsetUsulanAdd']['penghapusanfilter'][]=$value;
-		}
-		$POST=$_SESSION['reviewAsetUsulanAdd'];
-		////pr($POST);
-	}
+	// if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
+	// 	$_SESSION['reviewAsetUsulanAdd']=$_POST;
+	// 	$POST=$_SESSION['reviewAsetUsulanAdd'];
+	// }else{
+	// 	////pr($_POST);
+	// 	////pr($_SESSION['reviewAsetUsulanAdd']);
+	// 	foreach ($_POST['penghapusanfilter'] as $key => $value) {
+	// 		$_SESSION['reviewAsetUsulanAdd']['penghapusanfilter'][]=$value;
+	// 	}
+	// 	$POST=$_SESSION['reviewAsetUsulanAdd'];
+	// 	////pr($POST);
+	// }
+
+	// pr($POST);
+	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");
+	$POST=$_POST;
+	$POST['penghapusanfilter']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+	
+	// pr($POST);
 	$data = $PENGHAPUSAN->retrieve_tambahan_usulan_penghapusan_eksekusi_psb($POST);
 	// //pr($data);
 	$row=$data['dataRow'][0];
@@ -50,7 +57,29 @@ $menu_id = 10;
             }
 	?>
 	<!-- End Sql -->
-	
+	<script>
+    jQuery(function($) {
+        $('.nilaimask').autoNumeric('init');
+   });
+    function getCurrency(item,dest,nilai,error,idcheck,idaset,kondisi){
+    	var old = $("#"+idcheck).val();
+    	var idasetID=$("#"+idaset).val();
+    	var kondisiOld=$("#"+kondisi).val();
+    	if(parseInt($(item).autoNumeric('get')) > parseInt(nilai)){
+    		$('#'+error).html('Nilai tidak Boleh Lebih');
+    		$('#'+dest).val('0');
+    		$("#submit").attr('style','display:none');
+    		$('#Form2').attr('action',"#");
+    	}else{
+
+    		$('#Form2').attr('action',"<?php echo $url_rewrite;?>/module/penghapusan/daftar_tambahan_usulan_penghapusan_usul_proses_psb.php");
+    		 $("#submit").attr('style','');
+     		 $('#'+dest).val($(item).autoNumeric('get'));
+     		 $('#'+error).html('');
+     		 $("#"+idcheck).val(idasetID+"|"+kondisiOld+"|"+$(item).autoNumeric('get'));
+    	}
+    }
+    </script>
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -58,10 +87,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('USPSB');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('USPSB');
 			}}, 100);
 		}
 		</script>
@@ -144,7 +175,7 @@ $menu_id = 10;
 			
 			<div id="demo">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
 					<tr>
 						<td colspan="10" align="Left">
@@ -199,7 +230,8 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
+							
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>|0" id="chebok<?=$no?>">
 							
 						</td>
 						<td>
@@ -226,7 +258,13 @@ $menu_id = 10;
 							<?php echo number_format($value[NilaiPerolehan]);?>
 						</td>
 						<td>
-							<?php echo $kondisi. ' - ' .$value[AsalUsul]?>
+						
+								<input type="text" class="span2 nilaimask" data-a-sign="Rp " data-a-dec="," data-a-sep="."  onkeyup="return getCurrency(this,'nilaiP<?=$no?>','<?=$value[NilaiPerolehan]?>','error<?=$no?>','chebok<?=$no?>','idaset<?=$no?>','kondisi<?=$no?>');"  placeholder="0" /><br/>
+								<em id="error<?=$no?>"></em>
+
+								<input type="hidden" id="nilaiP<?=$no?>"  >
+								<input type="hidden" id="idaset<?=$no?>"value="<?=$value[Aset_ID];?>"  >
+								<input type="hidden" id="kondisi<?=$no?>"value="<?=$value[kondisi];?>"  >
 						</td>
 							
 					</tr>
