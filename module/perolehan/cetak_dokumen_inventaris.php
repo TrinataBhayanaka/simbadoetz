@@ -37,9 +37,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li><a href="#rbiskpd" data-toggle="tab">Rekapitulasi Buku Inventaris SKPD</a></li>
 						<li><a href="#biid" data-toggle="tab">Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
-						<!--<li><a href="#bkintra" data-toggle="tab">Buku Inventaris Aset</a></li>
-						<li><a href="#bkekstra" data-toggle="tab">Buku Inventaris Non Aset</a></li>-->
 						<li><a href="#label" data-toggle="tab">Label Kode Barang</a></li>
+						<!--<li><a href="#kb" data-toggle="tab">Kartu Barang</a></li>-->
 						</ul>
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 						
@@ -50,9 +49,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kib.php"; ?>">
 						 <script>
 						$(document).ready(function() {
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk").mask('9999-99-99');
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb").mask('9999-99-99');
 							$( "#tahun_label").mask('9999');
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb" ).datepicker({ dateFormat: 'yy-mm-dd' });
 							/*$('#tahun_label').keydown(function (e) {
 								// Allow: backspace, delete, tab, escape, enter and .
 								if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -645,6 +644,83 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="label" value="label">
 						</form>
 						</div>
+						
+						<div class="tab-pane" id="kb">
+						<div class="breadcrumb">
+							<div class="titleTab">Kartu Barang</div>
+						</div>
+						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kb.php"; ?>">
+						<ul>
+							<li>
+								<input type="radio" name="kb" value="KB-A" class="inven1" checked>&nbsp; KB-A
+								<input type="radio" name="kb" value="KB-B" class="inven2" >&nbsp; KB-B
+								<input type="radio" name="kb" value="KB-C" class="inven3" > &nbsp; KB-C
+								<input type="radio" name="kb" value="KB-D" class="inven4" > &nbsp;KB-D
+								<input type="radio" name="kb" value="KB-E" class="inven5" > &nbsp;KB-E
+								<input type="radio"name="kb" value="KB-F" class="inven6" > &nbsp;KB-F
+								<!--<input type="button" name="kib" class="btn btn-info" value="Cetak KIB Kosong">-->
+								<br/>
+							</li>
+							<li>&nbsp;
+							</li>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_kb" id="tglPerolehan_awal_kb" value="" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_akhir_kb" id="tglPerolehan_akhir_kb" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Kelompok</span>
+								<div class="input-append">
+										<input type="text" name="lda_kelompok3" id="lda_kelompok3" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
+										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);"><font size="1" color="grey"><i>&nbsp;</i></font>
+										<div class="inner" style="display:none;">
+										
+											<?php
+												$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
+												$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
+												js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok3","kelompok_id3",'kelompok3','ldakelompokfilter3');
+												$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+												radiokelompok($style,"kelompok_id3",'kelompok3','ldakelompokfilter3');
+											?>
+										</div>
+								</div>
+							</li>
+							<?php selectAllSatker('kodeSatker10','255',true,false,'required'); ?>
+							<br />
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakKb" id="tglCetakKb" value=""/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="lanjut" class="btn btn-primary" value="Lanjut" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						<input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="4">
+						</form>
+						</div>
+						
 					  </div>
 			</div> 
 			

@@ -99,7 +99,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<li>
-								<?php selectAllSatker('kodeSatker11','255',true,false); ?>
+								<?php selectSatker('kodeSatker11','255',true,false); ?>
 								<br>
 							</li>
 							<li>
@@ -152,7 +152,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<li>
-								<?php selectAllSatker('kodeSatker12','255',true,false); ?>
+								<?php selectSatker('kodeSatker12','255',true,false); ?>
 								<br>
 							</li>
 							<li>
