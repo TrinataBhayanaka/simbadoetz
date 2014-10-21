@@ -96,7 +96,6 @@ if($tglcetak != ''){
 
 $html=$REPORT->retrieve_html_bukuinventaris_ekstra($result,$gambar,$tanggalCetak,$thnPejabat);
 $count = count($html);
-
 /*for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
