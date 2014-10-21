@@ -29,17 +29,13 @@ $menu_id = 10;
 					// $data = $RETRIEVE->retrieve_penetapan_penghapusan_edit_data($parameter);
 					
 						// //////pr($_POST);
-						$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_pms($_GET);
+						$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_pmd($_GET);
 						//////pr($data);
 						
 				}
-				pr($data);
-				pr("dataFull");
-				pr($data['dataRow'][0]);
-				pr("data row");
+
 				$row=$data['dataRow'][0];		
-				pr($row);
-				pr("row");
+				//////pr($row);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -63,12 +59,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
-			    updDataCheckbox('DELUSPMS');
+			    updDataCheckbox('DELUSPMD');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
-			    updDataCheckbox('DELUSPMS');
+			    updDataCheckbox('DELUSPMD');
 			}}, 100);
 		}
 		</script>
@@ -76,30 +72,30 @@ $menu_id = 10;
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Aset Usulan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Aset Usulan Penghapusan Pemindahtanganan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemusnahan</div>
+				<div class="title">Usulan Penghapusan Pemindahtanganan</div>
 				<div class="subtitle">Review Aset yang akan dibuat Usulan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -109,7 +105,7 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form method="POST"  action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_upd_pms.php"> 
+			<form method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_upd_pmd.php"> 
 			
 			<div class="detailLeft">
 				<?php
@@ -144,7 +140,6 @@ $menu_id = 10;
 						<span  class="labelInfo">&nbsp;</span>
 						&nbsp;
 					</li>
-
 						<?php
 							
 							$TglUsulanTmp=explode("-", $row['TglUpdate']);
@@ -154,7 +149,11 @@ $menu_id = 10;
 						?>
 					<li>
 						<span  class="labelInfo">Tanggal Usulan</span>
-						<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
+							<div class="input-prepend">
+								<span class="add-on"><i class="fa fa-calendar"></i></span>
+								<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
+							</div>
+						
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -165,7 +164,7 @@ $menu_id = 10;
 			
 			<div style="height:5px;width:100%;clear:both"></div>
 			</form>
-			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_hapus_pms.php"> 
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_hapus_pmd.php"> 
 			<div id="demo">
 			<?php
 				if($row['StatusPenetapan']==0){
@@ -183,7 +182,7 @@ $menu_id = 10;
 							<?php
 								if($row['StatusPenetapan']==0){
 							?>
-								<a href="filter_tambah_aset_usulan_pms.php?usulanID=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Aset Usulan</a>
+								<a href="filter_tambah_aset_usulan_pmd.php?usulanID=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Aset Usulan</a>
 								<span><button type="submit" name="submit"  class="btn btn-danger " id="submit" disabled/><i class="icon-trash icon-white"></i>&nbsp;&nbsp;Delete</button></span>
 								<input type="hidden" name="usulanID" value="<?=$id?>"/>
 							<?php
@@ -234,7 +233,7 @@ $menu_id = 10;
 					if($coo==1){
 					$delete="";
 					}else{
-					$delete="<a href='$url_rewrite/module/penghapusan/usulan_asetid_proses_hapus_pms.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
+					$delete="<a href='$url_rewrite/module/penghapusan/usulan_asetid_proses_hapus_pmd.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
 					 Delete</a>";
 					}
 					if($nilai[kondisi]==2){
@@ -265,7 +264,7 @@ $menu_id = 10;
 								}
 							?>
 						<td>
-							<?php echo "ASET_ID [ ".$nilai[Aset_ID]." ]".$nilai[noRegister]?>
+							<?php echo "ASET_ID [ ".$nilai[noRegister]." ]".$nilai[noRegister]?>
 						</td>
 						<td>
 							<?php echo $nilai[noKontrak]?>
