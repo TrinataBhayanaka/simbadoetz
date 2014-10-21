@@ -279,5 +279,27 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		return true;
 	}
 
+	public function get_diagnose($data){
+		$kodeKelompok = $data['kodeKelompok'];
+		$kodeSatker = $data['kodeSatker'];
+		$tahun = $data['Tahun'];
+		$tabel = $data['tbl'];
+
+		$sql = "SELECT * FROM Aset WHERE kodeKelompok LIKE '{$kodeKelompok}%' AND kodeSatker LIKE '{$kodeSatker}%' AND Tahun = '{$tahun}'";
+		$aset = $this->fetch($sql,1);
+
+		foreach ($aset as $key => $value) {
+			$sql = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$value['Aset_ID']}'";
+			$kib[$key] = $this->fetch($sql);
+
+			$sql = "SELECT * FROM log_{$tabel} WHERE Aset_ID = '{$value['Aset_ID']}'";
+			$log[$key] = $this->fetch($sql);
+		}
+
+		$dataArr = array('aset' => $aset, 'kib' => $kib, 'log' => $log );
+
+		return $dataArr;
+	}
+
 }
 ?>
