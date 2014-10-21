@@ -232,6 +232,71 @@ class DB
 	    }
 	    
 	}
+
+
+	function getFieldName($table=false,$Aset_ID=false)
+	{
+
+		if (!$table) return false;
+		if (!$Aset_ID) return false;
+
+		$sql = "SELECT * FROM {$table} WHERE Aset_ID = {$Aset_ID}";
+    	pr($sql);
+    	$res = $this->query($sql);
+
+        $result = mysql_fetch_assoc($res);
+
+        // while ($data = mysql_fetch_array($res)){
+        // 	pr($data);
+        // }
+  //       $numfields = mysql_num_fields($res);
+  //       for ($i=0; $i < $numfields; $i++) // Header
+		// { 
+		// 	$field[] = mysql_field_name($res,$i);
+		// }
+
+		// pr($result);
+		return $result;
+	}
+
+	function logIt($table=array(),$Aset_ID=false,$action=1)
+	{
+
+	    if (empty($table)) return false;
+	    if (empty($Aset_ID)) return false;
+	    
+	    $date = date('Y-m-d H:i:s');
+	    $actionList = array(1=>'insert',2=>'update');
+	    $addField = array('changeDate'=>$date,'action'=>$actionList[$action],'operator'=>$_SESSION['ses_uoperatorid']);
+
+
+	    foreach ($table as $value) {
+	    	
+	    	// $field['log_id'] = get_auto_increment($value);
+			$field = $this->getFieldName($value,$Aset_ID);
+			$mergeField = array_merge($field, $addField);
+	        
+	        if ($mergeField){
+	        	foreach ($mergeField as $key => $val) {
+	        		$tmpField[] = $key;
+	        		$tmpValue[] = "'".$val."'";
+	        	}
+	        	 
+	        	$fileldImp = implode(',', $tmpField);
+	        	$dataImp = implode(',', $tmpValue);
+
+	        	$sql = "INSERT INTO log_{$value} ({$fileldImp}) VALUES ({$dataImp})";
+	        	// pr($sql); 
+	        	$res = $this->query($sql);
+	        	if ($res)return true;	
+	        	
+	        }
+
+	        
+	    }
+
+	    return false;
+	}
 	
 }
 ?>
