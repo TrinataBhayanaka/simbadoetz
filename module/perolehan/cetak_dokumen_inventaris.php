@@ -599,31 +599,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									selectAllSatker('kodeSatker8','255',true,false,false,true);
 							?>
 							<br>
-							<!--<li>
-								<span class="span2">Nama Skpd </span>
-								<div class="input-append">
-									 <input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd3" id="lda_skpd3" class="span5" readonly="readonly"value="" placeholder="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih"onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-										<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
-								   
-											<?php
-											/*$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-											$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-											js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd3","skpd_id3",'skpd_c', 'skpd3');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radioskpd($style,"skpd_id3",'skpd_c', 'skpd3');*/
-											?>  
-											
-										</div>
-										</div>
-								</div>
-							</li>-->
-							<!--<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input type="text"  input id="tanggal3" name="cdi_bukuskpd_tglreport" value="" >(format tanggal : dd/mm/yyyy)
-							</li>-->
 							<li>
 								<span class="span2">&nbsp;</span>
 								 <input type="submit" onClick="sendit_5()" class="btn btn-primary" name="bi_skpd" value="Lanjut" />
@@ -676,16 +651,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>
 								<span class="span2">Kelompok</span>
 								<div class="input-append">
-										<input type="text" name="lda_kelompok3" id="lda_kelompok3" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
+										<input type="text" name="lda_kelompok4" id="lda_kelompok4" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
 										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);"><font size="1" color="grey"><i>&nbsp;</i></font>
 										<div class="inner" style="display:none;">
 										
 											<?php
 												$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
 												$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-												js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok3","kelompok_id3",'kelompok3','ldakelompokfilter3');
+												js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok4","kelompok_id4",'kelompok4','ldakelompokfilter4');
 												$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiokelompok($style,"kelompok_id3",'kelompok3','ldakelompokfilter3');
+												radiokelompok($style,"kelompok_id4",'kelompok4','ldakelompokfilter4');
 											?>
 										</div>
 								</div>

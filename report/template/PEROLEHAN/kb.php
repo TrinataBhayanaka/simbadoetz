@@ -11,12 +11,12 @@ $tglawalperolehan = $_REQUEST['tglPerolehan_awal_kb'];
 $tglakhirperolehan = $_REQUEST['tglPerolehan_akhir_kb'];
 $tglcetak = $_REQUEST['tglCetakKb'];
 $skpd_id = $_REQUEST['kodeSatker10'];
-$kelompok=$_REQUEST['kelompok_id3'];
+$kelompok=$_REQUEST['kelompok_id4'];
 $tipe=$_REQUEST['tipe_file'];
 $kb = $_REQUEST['kb'];
 $noregAwal = $_REQUEST['noRegisterAwal'];
 $noregAkhir = $_REQUEST['noRegisterAkhir'];
-pr($_REQUEST);
+// pr($_REQUEST);
 // exit;
 $data=array(
     "modul"=>$modul,
