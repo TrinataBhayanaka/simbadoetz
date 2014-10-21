@@ -13349,7 +13349,9 @@ if($dataArr!="")
 											   $noReg=substr($row->NomorReg,0,17);
 											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 												$thnLokasi= substr($row->Tahun,2,4);
-												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+												// $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   
 											   //==end new==//
 													list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
 											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
@@ -13543,7 +13545,7 @@ if($dataArr!="")
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->kodeSatker || $ruangan != $row->kodeRuangan && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $tahun != $row->Tahun || $ruangan != $row->kodeRuangan  && $no>1){
 
                                              $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
                                                $tabletotal="
@@ -13636,6 +13638,7 @@ if($dataArr!="")
                                              $ruangan = $row->kodeRuangan;
 											  $satker_id=$row->kodeSatker;
 											  $tahun = $row->Tahun;
+											  
 												//==add new==//
 											   $NamaRuangan = $this->get_Ruangan($tahun,$satker_id,$ruangan);
 											   if($NamaRuangan == ''){
@@ -13667,7 +13670,8 @@ if($dataArr!="")
 											   $noReg=substr($row->NomorReg,0,17);
 											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 												$thnLokasi= substr($row->Tahun,2,4);
-												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+												// $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
 											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
@@ -22961,7 +22965,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 			$Ruang=$value->NamaSatker;
 		}
 	}
-	
+	// pr($Ruang);
 	return $Ruang;
 }
 
