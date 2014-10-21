@@ -4750,10 +4750,10 @@ class core_api_report extends DB {
 			// $queryALL = array($query_mesin);
 			for ($i = 0; $i < count($queryALL); $i++)
 			{
-				/*echo "<br>";
+				echo "<br>";
 				echo "query_$i =".$queryALL[$i];
 				echo "<br>";
-				echo "<br>";*/
+				echo "<br>";
 				// exit;
 				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
 				

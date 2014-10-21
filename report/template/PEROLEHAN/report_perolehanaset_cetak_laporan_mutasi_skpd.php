@@ -14,7 +14,12 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $tab = $_GET['tab'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tipe=$_GET['tipe_file'];
 // PR($_GET);
@@ -36,27 +41,27 @@ $REPORT->set_data($data);
 
 $satker = $skpd_id;
 
-	if ($tglawalperolehan !='' && $tglakhirperolehan)
+	if ($tglawalperolehan !='' && $tglakhirperolehan != '')
 	{
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
-pr($get_satker);
-exit;	
-$resultParamGol = $REPORT->MutasiSkpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
-// pr($resultParamGol);
-exit;
+// pr($get_satker);
+// exit;	
+$result = $REPORT->MutasiSkpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
+pr($result);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_asetTetapTanah($resultParamGol,$gambar);
-
-/*$count = count($html);
+$html=$REPORT->retrieve_html_laporan_mutasi_skpd($result,$gambar,$tglawalperolehan,$tglakhirperolehan);
+// exit;
+$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
 	}
-exit;*/
+exit;
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();
@@ -83,16 +88,16 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Daftar Aset Tetap Tanah_$waktu.pdf";
+$namafile="$path/report/output/Laporan Mutasi Barang antar SKPD_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Daftar Aset Tetap Tanah_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Laporan Mutasi Barang antar SKPD_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Daftar Aset Tetap Tanah_$waktu.xls";
+	$filename ="Laporan Mutasi Barang antar SKPD_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
