@@ -22948,7 +22948,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	}
 //add new 
 	public function get_Ruangan($tahun,$satker,$kdRuang){
-	if($tahun != '' && $tahun > 2014){
+	if($tahun != '' || $tahun != '0'){
 		$query_getRuangan="SELECT NamaSatker FROM satker WHERE kode ='$satker' and Kd_Ruang ='$kdRuang' and Tahun ='$tahun'";	
 	}else{
 		$query_getRuangan="SELECT NamaSatker FROM satker WHERE kode ='$satker' and Kd_Ruang ='$kdRuang'";	
