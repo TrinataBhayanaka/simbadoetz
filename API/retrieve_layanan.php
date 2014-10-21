@@ -25,7 +25,11 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
        	
        	// pr($data);
 
-        
+        $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
+
          if ($jenisaset){
 
             foreach ($jenisaset as $value) {
@@ -38,7 +42,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 //if ($kd_idaset) $filter .= " AND a.kodeSatker = '{$kd_idaset}' ";
                 //if ($kd_namaaset) $filter .= " AND a.kodeSatker = '{$kd_namaaset}' ";
                 if ($kd_nokontrak) $filter .= " AND a.noKontrak = '{$kd_nokontrak}' ";
-                if ($kd_tahun) $filter .= " AND {$listTableAlias}.Tahun = '{$kd_tahun}' ";
+                if ($kd_tahun) $filter .= " AND {$listTableAlias}.Tahun LIKE '{$kd_tahun}%' ";
                 if ($kelompok_id) $filter .= " AND {$listTableAlias}.kodeKelompok = '{$kelompok_id}' ";
                 if ($satker) $filter .= " AND {$listTableAlias}.kodeSatker = '{$satker}' ";
                 
@@ -56,9 +60,9 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 $TipeAset = 
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k, satker AS s",
-                        'field'=>'a.*, k.Uraian, s.NamaSatker',
-                        'condition' => "{$listTableAlias}.StatusTampil = 1  {$filter} GROUP BY {$listTableAlias}.Aset_ID",
-                        'limit' => '100',
+                        'field'=>'SQL_CALC_FOUND_ROWS a.*, k.Uraian, s.NamaSatker',
+                        'condition' => "{$listTableAlias}.StatusTampil = 1 AND {$listTableAlias}.Aset_ID !='' {$filter} GROUP BY {$listTableAlias}.Aset_ID {$kondisi} {$order}",
+                        'limit' => "{$limit}",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.kodeSatker = s.Kode"
                         );
@@ -132,6 +136,40 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 
             return $res;
         } 
+        return false;
+    }
+
+    function remove_data_aset($data,$debug=false)
+    {
+
+       
+        $layanan = $data['Layanan'];
+
+
+        $arrayTable = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
+        // pr($data);
+        if ($layanan){
+            foreach ($layanan as $key => $value) {
+
+                $asetidTmp = explode('_', $value);
+                $asetid = $asetidTmp[0];
+
+                $table = $this->getTableKibAlias($arrayTable[$asetidTmp[1]]);
+                // pr($table);
+                $sql1 = array(
+                        'table'=>"{$table['listTableReal']}",
+                        'field'=>"StatusTampil = 0",
+                        'condition' => "Aset_ID = '{$value}'",
+                        );
+
+                $res1 = $this->db->lazyQuery($sql1,$debug,2);
+                    
+                
+            }
+
+            return true;
+        }
+        
         return false;
     }
 

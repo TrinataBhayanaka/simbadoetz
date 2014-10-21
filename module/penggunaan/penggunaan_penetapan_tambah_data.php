@@ -66,7 +66,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
       $par_data_table="nokontrak={$dataParam['nokontrak']}&jenisaset={$dataParam['jenisaset'][0]}&kodeSatker={$dataParam['kodeSatker']}&page={$dataParam['page']}";
 
 //$par_data_table=  json_encode($dataParam);
-	 pr($dataPa);
+	 // pr($dataPa);
 	 //exit;
 ?>	
 

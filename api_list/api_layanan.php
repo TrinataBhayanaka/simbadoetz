@@ -27,7 +27,7 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="";
-$aColumns = array('a.Aset_ID','a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kondisi',$merk,);
+$aColumns = array('a.Aset_ID','a.Aset_ID','a.noRegister','k.Uraian');
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -37,9 +37,11 @@ $sTable = "aset";
 $dataParam['nokontrak']=$_GET['nokontrak'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
+$dataParam['statusaset']=$_GET['statusaset'];
+$dataParam['kd_tahun']=$_GET['kd_tahun'];
 $dataParam['page']=$_GET['page'];
 
-$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+$LAYANAN = new RETRIEVE_LAYANAN;
 
 //pr($data);
 //exit;
@@ -124,8 +126,8 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-//pr($dataParam);
-$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($dataParam);	
+// pr($dataParam);exit;
+$data = $LAYANAN->retrieve_layanan_aset_daftar($dataParam);	
 //pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
@@ -163,13 +165,12 @@ $output = array(
     "aaData" => array()
 );
 
-///pr($output);
+ // pr($data);
 //exit;
 $no=$_GET['iDisplayStart']+1;
-  if (!empty($data))
-					{
-foreach ($data as $key => $value)
-						{
+if (!empty($data)){
+
+  foreach ($data as $key => $value){
 							// pr($get_data_filter);
 							if($value[kondisi]==2){
 								$kondisi="Rusak Ringan";
@@ -183,26 +184,27 @@ foreach ($data as $key => $value)
 							// pr($TglPerolehanTmp);
 							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
                                           
-
-                             $row = array();
-                             
-                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"Penggunaan[]\" value=\"{$value['Aset_ID']}\">";
-                             $row[]=$no;
-                             $row[]=$checkbox;
-                             $row[]=$value['noRegister'] ;
-                             $row[]=$value['noKontrak'];
-                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
-                             $row[]="[".$value[kodeSatker] ."]". $value[NamaSatker];
-                             $row[]=$TglPerolehan;
-                             $row[]=number_format($value[NilaiPerolehan]);
-                             $row[]=$kondisi. ' - ' .$value[AsalUsul];
-                             $row[]="{$value[Merk]}$value[Model] ";
-                             
-                             $output['aaData'][] = $row;
-                              $no++;
-                    }
-              }
-
+             $row = array();
+             
+             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"Layanan[]\" value=\"{$value['Aset_ID']}_{$value['TipeAset']}\">";
+             $row[]=$no;
+             $row[]=$checkbox;
+             $row[]=$value['noRegister'] ;
+             $row[]=$value['noKontrak'];
+             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
+             $row[]="[".$value[kodeSatker] ."]". $value[NamaSatker];
+             $row[]=$TglPerolehan;
+             $row[]=number_format($value[NilaiPerolehan]);
+             $detail="<a href=$url_rewrite/module/layanan/history_aset.php?id={$value[Aset_ID]}&jenisaset={$value[TipeAset]}>
+                     <input type='button' name='Lanjut' class='btn' value='Lihat Histori' >
+                 </a>";
+             $row[]=$detail;
+              // $row[]="{$value[Merk]}$value[Model] ";
+             
+             $output['aaData'][] = $row;
+              $no++;
+  }
+}
 echo json_encode($output);
 
 ?>

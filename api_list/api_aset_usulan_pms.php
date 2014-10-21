@@ -27,19 +27,20 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="";
-$aColumns = array('a.Aset_ID','a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kondisi',$merk,);
+$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.kondisi',$merk,);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
 
 /* DB table to use */
 $sTable = "aset";
-$dataParam['nokontrak']=$_GET['nokontrak'];
+$dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
+$dataParam['bup_tahun']=$_GET['bup_tahun'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['page']=$_GET['page'];
 
-$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
 //pr($data);
 //exit;
@@ -124,19 +125,19 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-//pr($dataParam);
-$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($dataParam);	
-//pr($data);
+// pr($dataParam);
+list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($dataParam);	
+// pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
-/* Data set length after filtering */
-$sQuery = "
-		SELECT FOUND_ROWS()
-	";
-$rResultFilterTotal = $DBVAR->query($sQuery);
-$aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
-$iFilteredTotal = $aResultFilterTotal[0];
+// /* Data set length after filtering */
+// $sQuery = "
+// 		SELECT FOUND_ROWS()
+// 	";
+// $rResultFilterTotal = $DBVAR->query($sQuery);
+// $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
+// $iFilteredTotal = $aResultFilterTotal[0];
 
 //echo $iFilteredTotal ;
 
@@ -165,6 +166,27 @@ $output = array(
 
 ///pr($output);
 //exit;
+
+$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMS");
+
+$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+$POST['penghapusanfilter']=$POST;
+    if($POST){
+      // ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+      foreach ($dataSESSION as $keySESSION => $valueSESSION) {
+        // ////pr($valueSESSION['Aset_ID']);
+        if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
+          // echo "stringnot";
+          $data[]=$valueSESSION;
+          $data[$keySESSION]['checked']="";
+        }else{
+
+          $data[]=$valueSESSION;
+          $data[$keySESSION]['checked']="checked";
+        }
+      }
+    
+    }
 $no=$_GET['iDisplayStart']+1;
   if (!empty($data))
 					{
@@ -183,10 +205,9 @@ foreach ($data as $key => $value)
 							// pr($TglPerolehanTmp);
 							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
                                           
-
                              $row = array();
                              
-                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"Penggunaan[]\" value=\"{$value['Aset_ID']}\">";
+                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
                              $row[]=$no;
                              $row[]=$checkbox;
                              $row[]=$value['noRegister'] ;
@@ -202,7 +223,6 @@ foreach ($data as $key => $value)
                               $no++;
                     }
               }
-
 echo json_encode($output);
 
 ?>

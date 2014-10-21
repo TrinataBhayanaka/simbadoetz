@@ -163,8 +163,16 @@ $menu_id = 10;
 			</form>
 			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_hapus_pms.php"> 
 			<div id="demo">
-			
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan11">
+			<?php
+				if($row['StatusPenetapan']==0){
+					$idtable="penghapusan11";
+				}else{
+					$idtable="penghapusan10";
+				}
+
+			// pr($idtable);
+			?>
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="<?=$idtable?>">
 				<thead>
 					<tr>
 						<td colspan="10" align="Left">

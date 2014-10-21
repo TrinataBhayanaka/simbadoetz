@@ -566,6 +566,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             // echo '1';
                             $NilaiPerolehan = ($resultAwal[0]['NilaiPerolehan'] + $result2[0]['NilaiPerolehan']);
 
+                            $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$res[0]['Aset_ID_Tujuan'], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Aset Penambahan kapitalisasi Mutasi",0);
+
                             logFile('Nilai Perolehan awal : '.serialize($resultAwal));
                             logFile('Nilai Perolehan tujuan : '.serialize($result2));
                             logFile('Nilai Perolehan gabungan : '.$NilaiPerolehan);
@@ -659,7 +661,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sql2 = array(
                                     'table'=>"Aset",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = NULL, fixPenggunaan = 0, statusPemanfaatan = 0",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 
