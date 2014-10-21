@@ -60,6 +60,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/menu.php";
 	
 
+	$dataParam = $SESSION->smartFilter('penggunaan_validasi');
 
 	$data = $PENGGUNAAN->retrieve_validasi_penggunaan($datasess);
        	// pr($datasess);

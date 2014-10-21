@@ -61,7 +61,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k, satker AS s",
                         'field'=>'SQL_CALC_FOUND_ROWS a.*, k.Uraian, s.NamaSatker',
-                        'condition' => "{$listTableAlias}.StatusTampil = 1 AND {$listTableAlias}.Aset_ID !='' {$filter} GROUP BY {$listTableAlias}.Aset_ID {$kondisi} {$order}",
+                        'condition' => "{$listTableAlias}.StatusTampil = {$statusaset} AND {$listTableAlias}.Aset_ID !='' {$filter} GROUP BY {$listTableAlias}.Aset_ID {$kondisi} {$order}",
                         'limit' => "{$limit}",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.kodeSatker = s.Kode"
@@ -71,22 +71,37 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 
             }
 
-            
-            foreach ($res as $value) {
+            if ($res){
 
-                if ($value){
+                foreach ($res as $k => $value) {
+
+                    if ($value){
+                        
+                        foreach ($value as $key => $val) {
+                            if ($val['NilaiPerolehan']) $res[$k][$key]['NilaiPerolehan'] = number_format($val['NilaiPerolehan']);
+                        } 
+                    }
                     
-                    foreach ($value as $val) {
-                        $newData[] = $val;
-                    } 
                 }
-                
+
+                foreach ($res as $value) {
+
+                    if ($value){
+                        
+                        foreach ($value as $val) {
+                            $newData[] = $val;
+                        } 
+                    }
+                    
+                }
+
+                if ($newData) return $newData;
             }
+            
 
         }
-
        	
-        if ($newData) return $newData;
+        
         return false;
 
 

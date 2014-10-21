@@ -12,6 +12,7 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 	public function importing_xls2html($files,$post)
 	{
 		global $url_rewrite;
+		// pr($files);exit;
 		$this->begin();
 		$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$post['kontrakid']}' LIMIT 1");
 			while ($dataKontrak = mysql_fetch_assoc($sql)){
@@ -27,9 +28,10 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $execquery = $this->query($sql);
 
 		$data = new Spreadsheet_Excel_Reader($files['myFile']['tmp_name']);
-
+		
 		// membaca jumlah baris dari data excel
 		$baris = $data->rowcount($sheet_index=0);
+
 		$no = 0;
 		$counttosleep = 0;
 		for ($i=10; $i<=$baris; $i++)
@@ -53,6 +55,7 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['uraian'] = $uraian;
 
 		  $xlsdata[$no]['noKontrak'] = $post['noKontrak'];
+		  $xlsdata[$no]['GUID'] = $data->val($i,17);
 		  $xlsdata[$no]['Info'] = $data->val($i,16);
 		  $xlsdata[$no]['kodeRuangan'] = $post['kodeRuangan'];
 		  $xlsdata[$no]['TipeAset'] = 'E';
@@ -68,6 +71,7 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['Alamat'] = $data->val($i,11);
 		  $xlsdata[$no]['Jumlah'] = $data->val($i,12);
 		  $xlsdata[$no]['UserNm'] = $_SESSION['ses_uoperatorid'];
+		  $xlsdata[$no]['Sess'] = $baris-9;
 
 		  if($xlsdata[$no]['NilaiPerolehan'] == '' || $xlsdata[$no]['NilaiPerolehan'] == 0){
 		  	$xlsdata[$no]['other'] = "hidden"; $xlsdata[$no]['style'] = "disabled";
@@ -93,6 +97,10 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
             }
 
 		  $no++;
+		  	$myfile = fopen("count.txt", "w") or die("Unable to open file!");
+			$txt = $no;
+			fwrite($myfile, $txt);
+			fclose($myfile);
 		}
 		$this->commit();
 		echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/import/asetlain.php?id={$kontrak['id']}\">";

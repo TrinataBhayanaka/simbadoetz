@@ -34,10 +34,53 @@ $menu_id = 10;
 		while ($sum = mysql_fetch_array($sqlsum)){
 					$sumTotal = $sum;
 				}
-
 	?>
 	<!-- End Sql -->
 	<script>
+	// $(document).ajaxStart(function() { Pace.restart(); });
+	$body = $("body");
+
+	$(document).on({
+	     ajaxStart: function() { $body.addClass("loading");    },
+	     // ajaxStop: function() { $body.removeClass("loading"); }    
+	});
+	$(document).ready(function() { 
+		var bar = $('.bar');
+		var percent = $('.percent');
+		var status = $('#status');
+	    // bind form using ajaxForm 
+	    $('#myForm').ajaxForm({ 
+	        beforeSend: function() {
+		        status.empty();
+		        var percentVal = 0;
+		        NProgress.set(percentVal);
+		        // Pace.restart();
+		    },
+		    uploadProgress: function(event, position, total, percentComplete) {
+		        testing();
+		        // Pace.start();
+		    },
+		    success: function() {
+		        var percentVal = 1;
+		        // console.log('ada');
+		        NProgress.set(percentVal);
+		    },
+			complete: function(xhr) {
+				window.location.replace("<?=$url_rewrite?>/module/perolehan/import/asetlain.php?id=<?=$_GET['id']?>");
+			}
+	    }); 
+	});
+	function testing(){
+		$.post('<?=$url_rewrite?>/function/api/progressCount.php', { UserNm:'<?=$_SESSION['ses_uoperatorid']?>'}, function(data){
+						var total = data.total;
+						if(!total) total = 1;
+						var percentVal = data.count/total; 
+				        // Pace.restart();
+				        console.log(data.count);
+				        NProgress.set(percentVal);
+						testing();
+					},"JSON");
+	}
     jQuery(function($) {
         $('#hrgmask,#total').autoNumeric('init');
         $("select").select2({});
@@ -52,23 +95,7 @@ $menu_id = 10;
     function chgForm(){
     	$("#myForm").attr('action','import/'+$("#jenisaset").val()+'.php');
     }
-    function repeat(){
-    	progressBar();
-    }
-    var louded = 0;
-    function progressBar(){
-    		louded++;
-	    	NProgress.set(louded/1000);
-	    	console.log(louded);
-	    	repeat();
-    }
-   $(function(){
 
-	$('button.load-one-item').click(function(){
-		NProgress.inc();
-		
-	});
-});
   </script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -166,12 +193,43 @@ $menu_id = 10;
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 		</form>
-		</div>  
-			   	 
+		</div> 
 		</section> 
 		     
 	</section>
-	
+	<style type="text/css">
+	/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+	.modal {
+	    display:    none;
+	    position:   fixed;
+	    z-index:    1000;
+	    top:        0;
+	    left:       21.5%;
+	    height:     100%;
+	    width:      100%;
+	    background: rgba( 255, 255, 255, .8 ) 
+	                url('<?=$url_rewrite?>/js/load.GIF') 
+	                50% 50% 
+	                no-repeat;
+	}
+
+	/* When the body has the loading class, we turn
+	   the scrollbar off with overflow:hidden */
+	body.loading {
+	    overflow: hidden;   
+	}
+
+	/* Anytime the body has the loading class, our
+	   modal element will be visible */
+	body.loading .modal {
+	    display: block;
+	}
+	</style>
+	<div class="modal"></div>
 <?php
 	include"$path/footer.php";
 ?>
