@@ -28495,7 +28495,7 @@ return $hasil_html;
 			WHERE kodeSatker = '$satker_id' and kondisi = '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
 			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
-			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1";
+			and Status_Validasi_Barang =1 and kodeLokasi like '12%' $KodeKaCondt1";
 		}
 		
 		// echo "query =".$query;
@@ -28645,7 +28645,7 @@ return $hasil_html;
 			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1
+			and Status_Validasi_Barang =1 and kodeLokasi like '12%' $KodeKaCondt1
 			";
 		}	
 		
