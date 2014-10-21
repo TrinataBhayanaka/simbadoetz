@@ -205,8 +205,8 @@ $menu_id = 1;
 						<td><?=$value['uraian']?></td>
 						<td class="center"><?=$value['jumlah']?></td>
 						<td class="center">
-						<a href="#" class="btn btn-success"><i class="icon-edit icon-white"></i></a>
-						<a href="#" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
+						<!--<a href="#" class="btn btn-success"><i class="icon-edit icon-white"></i></a>-->
+						<a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjang_rinc_hapus.php/?id=<?=$value['id']?>&idsp2d=<?=$idsp2d?>&idkontrak=<?=$idKontrak?>" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
 						</td>
 					</tr>
 				<?php
