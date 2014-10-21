@@ -19593,7 +19593,7 @@ if($dataArr!="")
                      <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
                      <td style=\"width: 90%; text-align: center;\">
                         <h3>LAPORAN MUTASI BARANG ANTAR SKPD</h3>
-                        <h4>PERIODE</h4>
+                        <h4>Periode $tglawal s/d $tglakhir</h4>
                     </td>
                 </tr>
             </thead>
@@ -19729,7 +19729,8 @@ if($dataArr!="")
 			}else{
 				$ketKondisi = "";
 			} 
-			
+			$NamaKlmpk = $this->get_NamaKelompok($row->kodeKelompok);
+			$NamaSatker = $this->get_NamaSatker($row->kodeSatker);
 			$mutasi = $this->getSatkerMutasiBertambah($asetid,$getSatkerMutasiAwal,$tglawal,$tglakhir);
 			// pr($mutasi);
 			if($mutasi){
@@ -19747,7 +19748,7 @@ if($dataArr!="")
             $body.="
                 <tr>
                     <td style=\"text-align:center;  width: 47px;\">$no</td>
-					<td style=\"text-align:center;  width: 83px;\">$row->Uraian</td>
+					<td style=\"text-align:center;  width: 83px;\">$NamaKlmpk</td>
 					<td style=\"text-align:center;  width: 64px;\">$row->kodeKelompok</td>
 					<td style=\"text-align:center;  width: 118px;\">$row->noRegister</td>
 					<td style=\"text-align:center;  width: 45px;\">$row->Merk</td>
@@ -19755,8 +19756,8 @@ if($dataArr!="")
 					<td style=\"text-align:center;  width: 70px;\">$row->Material</td>
 					<td style=\"text-align:center;  width: 70px;\">$ketKondisi</td>
 					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix<br/><hr>$nilaibertambahFix</td>
-					<td style=\"text-align:center;  width: 72px;\">$row->kode</td>
-					<td style=\"text-align:center;  width: 200px;\">$row->NamaSatker</td>
+					<td style=\"text-align:center;  width: 72px;\">$row->kodeSatker</td>
+					<td style=\"text-align:center;  width: 200px;\">$NamaSatker</td>
                 </tr>";
                                                             
             $no++;
@@ -27800,7 +27801,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	// echo "asetid =".$AsetId;*/
 	
 	// $queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerTujuan ='$kodeSatker'  ";
-	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and SatkerTujuan ='$kodeSatker'  ";
+	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) 
+	and SatkerTujuan ='$kodeSatker' and Status = 1";
 	$resultDataTambah=$this->retrieve_query($queryDataTambah);
 	if($resultDataTambah!=""){
 		foreach($resultDataTambah as $value){
@@ -27810,7 +27812,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	
 	//cek untuk skpd
 	// $queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and Awal ='$kodeSatker'";
-	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and Awal ='$kodeSatker'";
+	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) 
+					    and Awal ='$kodeSatker' and Status = 1";
 	$resultDataKurang=$this->retrieve_query($queryDataKurang);
 	if($resultDataKurang!=""){
 		foreach($resultDataKurang as $value){
@@ -27891,7 +27894,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	}	
    
 	public function getSatkerMutasi($asetid,$skpdeh){
-		$query = "select SatkerAwal from mutasiaset where Aset_ID = '$asetid' and SatkerTujuan ='$skpdeh'";
+		$query = "select SatkerAwal from mutasiaset where Aset_ID = '$asetid' and SatkerTujuan ='$skpdeh'
+					and Status = 1";
 		$resultData=$this->retrieve_query($query);
 		if($resultData!=""){
 			foreach($resultData as $value){
@@ -27903,7 +27907,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	
 	public function getSatkerMutasiBertambah($asetid,$skpdeh,$tglawal,$tglakhir){
 		// echo "masuk";
-		$query = "select count(Aset_ID) as jml from mutasiaset where Aset_ID = '$asetid' and SatkerAwal ='$skpdeh'";
+		$query = "select count(Aset_ID) as jml from mutasiaset where Aset_ID = '$asetid' 
+				and SatkerAwal ='$skpdeh' and Status = 1";
 		// pr($query);
 		$resultData=$this->retrieve_query($query);
 		/*if($resultData!=""){
@@ -28080,14 +28085,14 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 						Kd_Riwayat in ($kdRwyt) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
 						order by log_id asc";
 		}
-		pr($query);
+		// pr($query);
 		$resKap=$this->retrieve_query($query);
 		if($resKap!=""){
 			foreach($resKap as $value){
 				$NilaiKap[]=$value;
 			}
 		}
-		pr($NilaiKap);
+		// pr($NilaiKap);
 	return $NilaiKap;
 	}
 
@@ -28160,6 +28165,19 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 			}
 		}
 	return $NamaSatker;
+	
+	}
+	
+	public function get_NamaKelompok($kode){
+		$queryklmpk = "select Uraian from kelompok where kode ='$kode' ";
+		
+		$resulklmpkt=$this->retrieve_query($queryklmpk);
+		if($resulklmpkt!=""){
+			foreach($resulklmpkt as $valueklmpkt){
+				$NamaKlpk=$valueklmpkt->Uraian;
+			}
+		}
+	return $NamaKlpk;
 	
 	}
 	
@@ -28501,4 +28519,3 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
      
 ?>
  
-?>

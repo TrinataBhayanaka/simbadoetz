@@ -5084,7 +5084,8 @@ class core_api_report extends DB {
 		// pr($satker);
 		// exit;
 		foreach ($satker as $key){
-			$queryBerkurang ="select Aset_ID,SatkerAwal,SatkerTujuan from mutasiaset where  SatkerAwal = '$key'";		
+			$queryBerkurang ="select Aset_ID,SatkerAwal,SatkerTujuan from mutasiaset where  SatkerAwal = '$key' 
+							  and Status = 1";		
 			// pr($queryBerkurang);
 			// exit;
 			$resultBerkurang = $this->query($queryBerkurang) or die ($this->error('error'));	
@@ -5102,6 +5103,13 @@ class core_api_report extends DB {
 		$dataBrkrngSatkerAwal = array_unique($dataBrkrngSatkerAwal);
 		$dataBrkrngSatkerTujuan = array_unique($dataBrkrngSatkerTujuan);
 		
+		/*echo "Aset_ID".$dataBrkrngAset_ID[0];
+		echo "<br>";
+		echo "SatkerAwal".$dataBrkrngSatkerAwal[0];
+		echo "<br>";
+		echo "SatkerTujuan".$dataBrkrngSatkerTujuan[0];
+		echo "<br>";*/
+		// exit;		
 		 if($dataBrkrngAset_ID != '' && $dataBrkrngSatkerTujuan != ''){
 			if(count($dataBrkrngAset_ID) > 1 || count($dataBrkrngSatkerAwal) > 1){
 				// echo "ga kessini ajaaa";
@@ -5127,7 +5135,7 @@ class core_api_report extends DB {
 				pr($param_05);
 				pr($param_06);*/
 					$newparameter_sql_01 = implode(' OR ', $param_01);
-					echo "param1".$newparameter_sql_01;
+					// echo "param1".$newparameter_sql_01;
 					$newparameter_sql_02 = implode(' OR ', $param_02);
 					$newparameter_sql_03 = implode(' OR ', $param_03);
 					$newparameter_sql_04 = implode(' OR ', $param_04);
@@ -5145,40 +5153,41 @@ class core_api_report extends DB {
 				$newparameter_sql_04  = "j.$SatkerAwalFix";
 				$newparameter_sql_05  = "at.$SatkerAwalFix";
 				$newparameter_sql_06  = "kd.$SatkerAwalFix";
+				// exit;
 			}
 			
 			// echo "newparameter_sql_01 ".$newparameter_sql_01; 
 			// exit;
-			$query_tanah = "SELECT t.*,k.Uraian,st.kode,st.NamaSatker FROM log_tanah as t, kelompok as k ,satker as st
-							WHERE t.kodeKelompok = k.Kode and t.Aset_ID in ($Aset_IDFix) 
-							and t.kodeSatker = st.kode and ($newparameter_sql_01) 
+			
+			$query_tanah = "SELECT t.* FROM log_tanah as t
+							WHERE t.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_01) 
 							and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir'";	
 			
-			$query_mesin = "SELECT m.* ,k.Uraian,st.kode,st.NamaSatker FROM log_mesin as m , kelompok as k ,satker as st
-							WHERE m.kodeKelompok = k.Kode and m.Aset_ID in ($Aset_IDFix) 
-							and m.kodeSatker = st.kode and ($newparameter_sql_02)  
+			$query_mesin = "SELECT m.* FROM log_mesin as m 
+							WHERE m.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_02)  
 							and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'";			
 			
-			$query_bangunan = "SELECT b.*,k.Uraian,st.kode,st.NamaSatker FROM log_bangunan as b, kelompok as k ,satker as st
-						    WHERE b.kodeKelompok = k.Kode and b.Aset_ID in ($Aset_IDFix) 
-							and b.kodeSatker = st.kode and ($newparameter_sql_03) 
+			$query_bangunan = "SELECT b.* FROM log_bangunan as b
+						    WHERE b.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_03) 
 							and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'";
 			
-			$query_jaringan = "SELECT j.*,k.Uraian,st.kode,st.NamaSatker FROM log_jaringan as j, kelompok as k ,satker as st
-							WHERE j.kodeKelompok = k.Kode and j.Aset_ID in ($Aset_IDFix) 
-							and j.kodeSatker = st.kode and ($newparameter_sql_04)  
+			$query_jaringan = "SELECT j.* FROM log_jaringan as j
+							WHERE j.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_04)  
 							and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'";	
 			
-			$query_asettetaplainnya = "SELECT at.*,k.Uraian,st.kode,st.NamaSatker FROM log_asetlain as at, kelompok as k ,satker as st
-							WHERE at.kodeKelompok = k.Kode and at.Aset_ID in ($Aset_IDFix) 
-							and at.kodeSatker = st.kode and ($newparameter_sql_05) 
+			$query_asettetaplainnya = "SELECT at.* FROM log_asetlain as at
+							WHERE at.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_05) 
 							and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'";		
 			
-			$query_kdp = "SELECT kd.*,k.Uraian,st.kode,st.NamaSatker FROM log_kdp as kd, kelompok as k ,satker as st
-							WHERE kd.kodeKelompok = k.Kode and kd.Aset_ID in ($Aset_IDFix) 
-							and kd.kodeSatker = st.kode and ($newparameter_sql_06) 
-							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";	
-			
+			$query_kdp = "SELECT kd.* FROM log_kdp as kd
+							WHERE kd.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_06) 
+							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";
 							
 			$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
 			// $queryALL = array($query_mesin);

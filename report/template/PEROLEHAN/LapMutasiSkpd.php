@@ -10,6 +10,7 @@ $tglawalperolehan = $_REQUEST['tglPerolehanAwalLapMutasiSkpd'];
 $tglakhirperolehan = $_REQUEST['tglPerolehanAkhirLapMutasiSkpd'];
 $tipe=$_REQUEST['tipe_file'];
 // pr($_REQUEST);
+// exit;
 $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tglawalperolehan=$tglawalperolehan&tglakhirperolehan=$tglakhirperolehan&tipe_file=$tipe";
 // echo $paramater_url;
 // exit;
