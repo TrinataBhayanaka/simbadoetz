@@ -174,7 +174,7 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 								<?php	
 								}elseif($_SESSION['ses_uoperatorid'] == $hsl_data[UserNm]){
 								?>
-									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+									<!-- <a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a> -->
 									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
 							
 								<?php

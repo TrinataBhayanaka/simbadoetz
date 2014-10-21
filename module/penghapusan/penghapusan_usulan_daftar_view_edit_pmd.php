@@ -92,7 +92,7 @@ include "../../config/config.php";
 					
 				<?php
 				$id=$_GET['id'];
-				// pr($id);
+				pr($id);
 				if (isset($id))
 				{
 					unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);

@@ -275,7 +275,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 						<td>
 							<?php echo $TglPerolehan;?>
 						</td>
-						<td style="font-weight:bold;"><?php echo $value[NilaiPerolehan]?></td>
+						<td style="font-weight:bold;"><?php echo number_format($value[NilaiPerolehan])?></td>
 						<td style="font-weight:bold;"><?php echo $kondisi. ' - ' .$value[AsalUsul]?></td>
 						
 					</tr>

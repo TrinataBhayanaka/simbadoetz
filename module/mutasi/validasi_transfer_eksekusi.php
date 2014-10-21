@@ -192,7 +192,7 @@ include "../../config/config.php";
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_hasil_filter.php";?>" class="btn">
+								<a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_hasil_filter.php?pid=1";?>" class="btn">
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>
@@ -231,13 +231,13 @@ include "../../config/config.php";
 					<?php endif;?>
 					<tr>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						
 						<th>NoSKKDH</th>
-						<th>TglSKKDH</th>
-						<th>Kode Lokasi</th>
+						<th>Kode Barang</th>
+						<th>No Register</th>
+						<th>Nilai Perolehan</th>
 						<th>Satker Awal</th>
 						<th>Satker Tujuan</th>
-						<th>Pemakai</th>
+						<th>Tahun</th>
 						<th>Uraian</th>
 						<th>Status</th>
 					</tr>
@@ -269,11 +269,12 @@ include "../../config/config.php";
 							<?php endif;?>
 						</td>
 						<td><?php echo $data[0]['NoSKKDH']?></td>
-						<td style="font-weight: bold;"> <?php echo $data[0]['TglSKKDH'];?> </td>
-						<td style="font-weight: bold;"> <?php echo $value['kodeLokasi'];?> </td>
-						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwal]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatker]";?></td>	
-						<td style="font-weight: bold;"><?php echo $data[0]['Pemakai'];?></td>	
+						<td><?php echo $value['kode']?></td>
+						<td><?php echo $value['noRegister']?></td>
+						<td style="font-weight: bold;"> <?php echo number_format($value['NilaiPerolehan']);?> </td>
+						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[satkerAwalAset]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatkerTujuan]";?></td>	
+						<td style="font-weight: bold;"><?php echo $value['Tahun'];?></td>	
 						<td>
 							<?php echo "$value[Uraian]";?>
 							<input type="hidden" name="Mutasi_ID" value="<?php echo $data[0]['Mutasi_ID']?>">

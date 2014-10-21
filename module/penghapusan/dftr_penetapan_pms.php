@@ -128,7 +128,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
 						<td align="center">	
 							<?php
-							if($row['Status']==0){
+							if($row['Status']==0 && $_SESSION['ses_uaksesadmin']==1){
 							?>
 						 <!--<a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan.php?menu_id=39&mode=1&id=<?php echo "$row[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||--> 
 						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_pms.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success btn-small"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;

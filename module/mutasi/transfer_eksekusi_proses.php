@@ -24,17 +24,23 @@ $panjang=intval(count($nmaset));
 
 $mutasi_id=get_auto_increment("Mutasi");
 
-if ($panjang > 0){
-
-    $data = $MUTASI->store_usulan_mutasi_barang($_POST);
-    if ($data){
-        echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
-
-    }    
+if ($_POST['Mutasi_ID']){
+    $data = $MUTASI->update_usulan_mutasi_barang($_POST);
+    if ($data) redirect("$url_rewrite/module/mutasi/daftar_usulan_mutasi.php?pid=1");
 }else{
-    echo "<script>alert('Tidak ada data yang dimutasi'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
+    if ($panjang > 0){
 
+        $data = $MUTASI->store_usulan_mutasi_barang($_POST);
+        if ($data){
+            echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
+
+        }    
+    }else{
+        echo "<script>alert('Tidak ada data yang dimutasi'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
+
+    }
 }
+
 
 // exit;
 

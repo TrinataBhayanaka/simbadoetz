@@ -186,7 +186,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
-						<td colspan="10" align="right">
+						<td class="checkbox-column" colspan="10" align="right">
+							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
 								<span><input type="submit" name="submit" class="btn" value="Usulan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
