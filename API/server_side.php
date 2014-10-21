@@ -241,7 +241,7 @@ class ServerSide{
 				case 'checkbox':
 					$checked = "";
 					if ($data['checked']) $checked = "checked = checked";
-					return "<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"{$data['name']}[]\" value=\"{$data['value']}\" {$checked}>";
+					return "<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"{$data['name']}[]\" value=\"{$data['value']}\" {$checked}>";
 					break;
 				
 				case 'detail':

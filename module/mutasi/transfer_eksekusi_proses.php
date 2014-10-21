@@ -24,6 +24,12 @@ $panjang=intval(count($nmaset));
 
 $mutasi_id=get_auto_increment("Mutasi");
 
+$tanggal = $_POST['mutasi_trans_eks_tglproses'];
+if (!$tanggal){
+    echo "<script>alert('Tanggal proses tidak boleh kosong'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
+    exit;
+}
+
 if ($_POST['Mutasi_ID']){
     $data = $MUTASI->update_usulan_mutasi_barang($_POST);
     if ($data) redirect("$url_rewrite/module/mutasi/daftar_usulan_mutasi.php?pid=1");

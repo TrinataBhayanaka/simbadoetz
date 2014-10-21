@@ -37,7 +37,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
                         $('#tanggal9').datepicker($.datepicker.regional['id']);
                         $('#tanggal10').datepicker($.datepicker.regional['id']);
                         $('#tanggal11').datepicker($.datepicker.regional['id']);
-                        $('#tanggal12').datepicker($.datepicker.regional['id']);
+                        $('#tanggal12').datepicker({format:'yyyy-mm-dd'});
                         $('#tanggal13').datepicker($.datepicker.regional['id']);
                         $('#tanggal14').datepicker($.datepicker.regional['id']);
                         $('#tanggal15').datepicker($.datepicker.regional['id']);
@@ -92,6 +92,18 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 						inner.style.display = "none";
 						document.getElementById(obj.id).value="Sub Detail";}
 						}
+
+				function validasiTanggal()
+				{
+					var tanggal = $('#datepicker').val();
+					//console.log(tanggal);
+
+					if (tanggal == ''){
+						alert('Tanggal penetapan tidak boleh kosong');
+						return false;
+					}
+					
+				}
                     </script>
 
                  
@@ -108,7 +120,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 		</div>
 		<section class="formLegend">
 			
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_edit_proses.php">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_edit_proses.php" onsubmit="return validasiTanggal()">
 			<table width="100%">
                                     <tr>
                                         <td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar aset yang akan dibuatkan penetapan penggunaan :</u></td>
@@ -291,7 +303,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 							</li>
 							<li>
 								<span class="span2">Tanggal Penetapan</span>
-								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" value="<?php $change=$data[0]['TglSKKDH']; $hasil=format_tanggal_db3($change); echo "$hasil";?>" style="width:180px;">
+								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="datepicker" value="<?php echo $data[0]['TglSKKDH'];?>" style="width:180px;" readonly="readonly">
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>

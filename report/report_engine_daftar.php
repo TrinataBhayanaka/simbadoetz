@@ -69,7 +69,7 @@ class report_engine_daftar extends report_engine {
                     <td>&nbsp;</td>
                     <td style=\"width: 20%;text-align:right\">&nbsp;</td>
                          <td align=\"right\">
-                              <table>
+                              <table style=\"font-weight:bold;\">
                                    <tr>
                                         <td align=\"left\">Nomor</td>
                                         <td> : </td>

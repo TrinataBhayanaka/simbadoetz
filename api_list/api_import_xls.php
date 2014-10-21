@@ -169,9 +169,13 @@ $data_post=$PENGHAPUSAN->apl_userasetlistHPS("XLSIMP");
 
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
-foreach ($POST as $key => $value) {
-  $tmp = explode("|", $value);
-  $newlist[$key] = $tmp[0];
+if($POST){
+  foreach ($POST as $key => $value) {
+    $tmp = explode("|", $value);
+    $newlist[$key] = $tmp[0];
+  }
+} else {
+  $newlist = array();
 }
     
       // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);

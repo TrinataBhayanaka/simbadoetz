@@ -10,11 +10,13 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 	
     function getAsetList($action)
     {
-
+        // pr($_SESSION);
+        $userid = $_SESSION['ses_uoperatorid'];
+        $token = $_SESSION['ses_utoken'];
         $sql = array(
                 'table'=>"apl_userasetlist",
                 'field'=>"aset_list",
-                'condition'=>"aset_action = '{$action}'",
+                'condition'=>"aset_action = '{$action}' AND UserNm = {$userid} AND UserSes = '{$token}' LIMIT 1",
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -26,6 +28,19 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
         return false;
     }
+
+    function removeAsetList($action)
+    {
+        $userid = $_SESSION['ses_uoperatorid'];
+        $sql = "DELETE FROM apl_userasetlist WHERE aset_action = '{$action}' AND UserNm = {$userid} LIMIT 1";
+
+        $res = $this->db->query($sql);
+        if ($res){
+            return true;
+        }
+
+        return false;
+    } 
 
 	function retrieve_mutasi_filter($data,$debug=false)
 	{
@@ -45,8 +60,10 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         $limit= $data['limit'];
         $order= $data['order'];
 
-        $getAsetList = $this->getAsetList('MUTASI');
 
+        $getAsetList = $this->getAsetList('MUTASI');
+        if (!$getAsetList) $getAsetList = array();
+        // pr($getAsetList);
         
         if ($jenisaset){
             // get data kib
@@ -115,21 +132,23 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             
                 $listAsetID = array_keys($listKibAset);
 
-
+                
                 foreach ($res as $k => $value) {
 
                     if ($value){
 
                         
-                        if (in_array($value['Aset_ID'], $listAsetID)) $res[$k] = $listKibAset[$value['Aset_ID']];
-                        $res[$k]['Uraian'] = $value['Uraian'];    
-                        $res[$k]['kode'] = $value['kode'];
-                        $res[$k]['noKontrak'] = $value['noKontrak'];
-                        $res[$k]['NamaSatker'] = $value['NamaSatker'];
+                        if (in_array($value['Aset_ID'], $getAsetList)) $res[$k]['checked'] = true;
+                        else $res[$k]['checked'] = false;
+                        // $res[$k]['Uraian'] = $value['Uraian'];    
+                        // $res[$k]['kode'] = $value['kode'];
+                        // $res[$k]['noKontrak'] = $value['noKontrak'];
+                        // $res[$k]['NamaSatker'] = $value['NamaSatker'];
                     }
                     
                 }
                 
+                // pr($res);exit;
                 foreach ($res as $k => $value) {
 
                     if ($value){
@@ -601,8 +620,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             if ($result){
                 
+                $removeAsetList = $this->removeAsetList('MUTASI');
+                if (!$removeAsetList) $this->db->rollback();
                 
-
                 logFile('commit transaksi mutasi');
                 $this->db->commit();
                 return true;
@@ -772,7 +792,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sqlKib = array(
                                     'table'=>"{$table['listTableOri']}",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 
@@ -780,7 +800,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sql2 = array(
                                     'table'=>"Aset",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 

@@ -62,10 +62,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    val nilaiP=$("").val();
 			    var checkedValues = $('input:checkbox:checked').map(function() {
-			    	// alert('love');
-				    var data = this.value.split("|");
-				    var nilai = data[1];
+			    	alert('love');
+			    	console.log(checkedValues);
+				    var data = this.val();
+				    var nilai = data;
 				    if(nilai){
 				    	totalnilai = parseInt(totalnilai) + parseInt(nilai);	
 				    }
@@ -294,7 +296,7 @@ $menu_id = 10;
 						?>
 						<!-- <td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
-							<input type="checkbox" class="checkbox" onchange="enable();return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>|<?php echo $nilai[NilaiPerolehan];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[NilaiPerolehan];?>" >
 							
 						</td> -->
 						<?php } ?>
@@ -319,7 +321,7 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<?php echo number_format($nilai[NilaiPerolehan]);?>
+							<span id="NiLaiP<?=$no?>"><?php echo number_format($nilai[NilaiPerolehan]);?></span>
 						</td>
 						<td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>

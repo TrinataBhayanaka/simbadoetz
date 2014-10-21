@@ -1535,15 +1535,15 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['TipeAset'] = $data['TipeAset'];
         if($data['TipeAset'] == 'B'){
             if($tblAset['NilaiPerolehan'] < 300000){
-                $tblAset['kodeKA'] = 1;
-            } else {
                 $tblAset['kodeKA'] = 0;
+            } else {
+                $tblAset['kodeKA'] = 1;
             }
         } elseif ($data['TipeAset'] == 'C') {
             if($tblAset['NilaiPerolehan'] < 10000000){
-                $tblAset['kodeKA'] = 1;
-            } else {
                 $tblAset['kodeKA'] = 0;
+            } else {
+                $tblAset['kodeKA'] = 1;
             }
         }
         $tblAset['AsalUsul'] = $data['AsalUsul'];
@@ -1566,7 +1566,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         {
             $counter++;
             $tblAset['noRegister'] = intval($startreg)+1;
-
+            
             unset($tmpfield); unset($tmpvalue);
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
@@ -2259,17 +2259,21 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        if($data['TipeAset'] == 'B'){
-            if($tblAset['NilaiPerolehan'] < 300000){
-                $tblAset['kodeKA'] = 1;
-            } else {
-                $tblAset['kodeKA'] = 0;
-            }
-        } elseif ($data['TipeAset'] == 'C') {
-            if($tblAset['NilaiPerolehan'] < 10000000){
-                $tblAset['kodeKA'] = 1;
-            } else {
-                $tblAset['kodeKA'] = 0;
+        if(intval($tblAset['Tahun']) <= 2008){
+            $tblAset['kodeKA'] = 1;
+        }else {
+            if($data['TipeAset'] == 'B'){
+                if($tblAset['NilaiPerolehan'] < 300000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
+            } elseif ($data['TipeAset'] == 'C') {
+                if($tblAset['NilaiPerolehan'] < 10000000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
             }
         }
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
@@ -2683,7 +2687,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               $sqlquery = mysql_query($sqlkib);
               while ($dataAset = mysql_fetch_assoc($sqlquery)){
                       $kib = $dataAset;
-                  }      
+                  }
+              $kib['tglPerubahan'] = $data['tglPerubahan'];          
               $kib['changeDate'] = date("Y-m-d");
               $kib['action'] = 'koreksi';
               $kib['operator'] = $_SESSION['ses_uoperatorid'];
@@ -2729,7 +2734,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         global $url_rewrite;
         $newkelompok = explode(".", $data['kodeKelompok']);
         $oldkelompok = explode(".", $data['old_kelompok']);
-        // pr($oldkelompok);exit;
+        // pr($data);
         if ($newkelompok[0] != $oldkelompok[0]){
             $sql = "SELECT MIN(noRegister) AS min,MAX(noRegister) AS max FROM aset WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noKontrak = '{$data['noKontrak']}'";
             $minmax = $this->fetch($sql);
@@ -2737,11 +2742,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $sql = "DELETE FROM aset WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN '{$minmax['min']}' AND {$minmax['max']}";
             // pr($sql);exit;
             $result=  $this->query($sql) or die($this->error());
-
-            $sql = "DELETE FROM {$data['tabel']} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}";
-            // pr($sql);
-            $result=  $this->query($sql) or die($this->error());
-
+            if($data['tabel'] != 'persediaan'){
+                $sql = "DELETE FROM {$data['tabel']} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}";
+                // pr($sql);
+                $result=  $this->query($sql) or die($this->error());
+    
+            }
+            
             if(isset($data['kodeRuangan'])) {
                 $ruangan = explode("_", $data['kodeRuangan']);
                 $data['kodeRuangan'] = $ruangan[1];
