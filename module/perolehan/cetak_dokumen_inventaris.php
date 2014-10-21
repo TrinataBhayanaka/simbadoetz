@@ -40,6 +40,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#label" data-toggle="tab">Label Kode Barang</a></li>
 						<li><a href="#kb" data-toggle="tab">Kartu Barang</a></li>
+						<li><a href="#lpri" data-toggle="tab">Laporan Inventaris</a></li>
 						</ul>
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 						
@@ -50,9 +51,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kib.php"; ?>">
 						 <script>
 						$(document).ready(function() {
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab").mask('9999-99-99');
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li").mask('9999-99-99');
 							$( "#tahun_label,#tahun_rekap_kib").mask('9999');
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li" ).datepicker({ dateFormat: 'yy-mm-dd' });
 							/*$('#tahun_label').keydown(function (e) {
 								// Allow: backspace, delete, tab, escape, enter and .
 								if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -684,6 +685,51 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="tab" value="4">
 						</form>
 						</div>
+						
+						<div class="tab-pane" id="lpri">
+						<div class="breadcrumb">
+							<div class="titleTab">Laporan Inventaris</div>
+						</div>
+						  <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_laporan_inventaris.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglawalPerolehan_li" id="tglawalPerolehan_li" value="" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Pembukuan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglpembukuan_li" id="tglpembukuan_li" value=""/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<?php selectAset('kodeKelompok','255',true,false,''); ?>
+							</li>
+							<br>
+							<li>
+							<?php 
+								selectAllSatker('kodeSatker17','255',true,false,false,true);
+							?>
+							<br>
+							</li>
+							
+							<li>
+								<span class="span2">&nbsp;</span>
+								 <input type="submit" class="btn btn-primary" name="bi_skpd" value="Lanjut" />
+								<input type="reset"name="reset" onClick="sendit_6()" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+						</div>
+						
 						
 					  </div>
 			</div> 
