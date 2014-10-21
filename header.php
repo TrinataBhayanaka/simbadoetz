@@ -116,7 +116,7 @@ else
 		<!--Selamat Datang Admin | Logout-->
 	<!--	</div>
 	</div>-->
-	<div id="myModal3" class="modal hide fade  login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="myModal3" class="modal hide fade  login myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div id="titleForm" class="modal-header" >
 				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				  <h3 id="myModalLabel">Form Login</h3>
@@ -141,6 +141,35 @@ else
 			</div>
 			<div class="modal-footer">
 			  <input type="submit" value="Login" name="login" class="btn btn-default" id="drop_sebagai" />
+			</div>
+			</form>
+		</div>  
+
+		<div id="chgpass" class="modal hide fade  login myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div id="titleForm" class="modal-header" >
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				  <h3 id="myModalLabel">Ubah Password</h3>
+				</div>
+				<form method="POST" action="">
+				<div class="modal-body">
+				
+				 <div class="formLogin">
+						
+						<ul>
+							<li>
+								<span class="labellogin">Password Lama</span>
+								 <input type="text" name="oldpass" required="required"/>
+							</li>
+							<li>
+								<span class="labellogin">Password Baru</span>
+								<input type="password" name="newpass" required="required"/>
+							</li>
+						</ul>
+					</div>
+					
+			</div>
+			<div class="modal-footer">
+			  <input type="submit" value="Simpan" name="ubahpass" class="btn btn-default" id="drop_sebagai" />
 			</div>
 			</form>
 		</div>  

@@ -4,8 +4,9 @@ open_connection();
 		
 	$kodesatker = $_POST['kodesatker'];
 	$ruangan = $_POST['ruangan'];
+	$tahun = $_POST['tahun'];
 
-	$sql = mysql_query("SELECT MAX(Satker_ID) AS id FROM satker WHERE kode LIKE '{$kodesatker}%'");
+	$sql = mysql_query("SELECT MAX(Satker_ID) AS id FROM satker WHERE kode LIKE '{$kodesatker}%' AND Tahun = '{$tahun}'");
 	
 	
 	while ($row = mysql_fetch_assoc($sql)){
@@ -24,6 +25,7 @@ open_connection();
 		$satker['KodeSektor'] = $code[0];
 		$satker['kodeSatker'] = $code[0].".".$code[1];
 		$satker['kode'] = $kodesatker;
+		$satker['Tahun'] = $tahun;
 		$satker['NamaSatker'] = $ruangan;
 		$satker['NGO'] = 0;
 		$satker['KodeUnit'] = $code[2];
