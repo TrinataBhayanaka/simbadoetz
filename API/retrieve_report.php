@@ -91,7 +91,7 @@ class RETRIEVE_REPORT extends DB {
                          $data[Kondisi] = "Rusak Berat";
                          break;
                }
-               $data[Satker] = $this->get_skpd($data[kodeSatker]);
+               // $data[Satker] = $this->get_skpd($data[kodeSatker]);
                $data[Kelompok] = $this->get_kelompok($data[kodeKelompok]);
                $dataArr[] = $data;
           }

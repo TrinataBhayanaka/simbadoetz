@@ -68,7 +68,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $sql = array(
                         'table'=>"{$listTable}, penggunaanaset AS pa",
                         'field'=>"{$listTableAlias}.*" ,
-                        'condition'=>"{$listTableAlias}.StatusTampil = 1 AND {$listTableAlias}.Status_Validasi_Barang = 1 AND pa.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterKib} ",
+                        'condition'=>"{$listTableAlias}.StatusValidasi = 1 AND {$listTableAlias}.StatusTampil = 1 AND {$listTableAlias}.Status_Validasi_Barang = 1 AND pa.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterKib} ",
                         'joinmethod' => 'INNER JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = pa.Aset_ID"
                         );
@@ -85,9 +85,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $asetIDKib = implode(',', array_keys($listKibAset));
             $implodeJenis = implode(',', $alias);
             
-                
+            if ($asetIDKib){
 
-                
                 $paging = paging($data['page'], 100);
                 $merk = "";
                 
@@ -114,36 +113,42 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                 // $total[] = $this->db->countData($sql,1);
             
-            $listAsetID = array_keys($listKibAset);
+                $listAsetID = array_keys($listKibAset);
 
 
-            foreach ($res as $k => $value) {
+                foreach ($res as $k => $value) {
 
-                if ($value){
+                    if ($value){
 
-                    
-                    if (in_array($value['Aset_ID'], $listAsetID)) $res[$k] = $listKibAset[$value['Aset_ID']];
-                    $res[$k]['Uraian'] = $value['Uraian'];    
-                    $res[$k]['kode'] = $value['kode'];
-                    $res[$k]['noKontrak'] = $value['noKontrak'];
-                    $res[$k]['NamaSatker'] = $value['NamaSatker'];
-                }
-                
-            }
-            
-            foreach ($res as $k => $value) {
-
-                if ($value){
-                    
-                    if ($value['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
+                        
+                        if (in_array($value['Aset_ID'], $listAsetID)) $res[$k] = $listKibAset[$value['Aset_ID']];
+                        $res[$k]['Uraian'] = $value['Uraian'];    
+                        $res[$k]['kode'] = $value['kode'];
+                        $res[$k]['noKontrak'] = $value['noKontrak'];
+                        $res[$k]['NamaSatker'] = $value['NamaSatker'];
+                    }
                     
                 }
                 
-            }
+                foreach ($res as $k => $value) {
+
+                    if ($value){
+                        
+                        if ($value['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
+                        
+                    }
+                    
+                }
+
+                if ($res) return $res;
+            }    
+
+                
+                
         }
         
         // pr($res);exit;
-        if ($res) return $res;
+        
         return false;
 	}
 
@@ -326,7 +331,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             // pr($_SESSION);
 
             logFile(serialize($_SESSION));
-            $ses_satkerkode = $_SESSION['ses_mutasi_filter']['kodeSatker'];
+            $ses_satkerkode = $_SESSION['ses_param_mutasi']['kodeSatker'];
 
             $filter = "";
             if ($ses_satkerkode) $filter .= "AND ma.SatkerAwal LIKE '{$ses_satkerkode}%'";
@@ -348,6 +353,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 
 
                 foreach ($result as $key => $value) {
+
+                    $sortByMutasiID[$value['Mutasi_ID']] = $value; 
+
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
@@ -359,28 +367,46 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $tmpRes = $this->db->lazyQuery($sqlSelect,$debug);
                     if ($tmpRes){
 
-                        $res[] = $tmpRes;
-                        $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
-                        $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
-                        $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
-                        $res[$key][0]['Jumlah'] = $value['Jumlah'];
+                        foreach ($tmpRes as $key => $val) {
+                            $mutasiNew[$val['Mutasi_ID']] = $val;
+                        }
+                        // logFile('data res before add '.serialize($tmpRes));
+                        // $res[] = $tmpRes;
+                        // $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
+                        // $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
+                        // $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
+                        // $res[$key][0]['Jumlah'] = intval($value['Jumlah']);
+
+                        // logFile('data res after add '.serialize($tmpRes));
                     }
                     
                 }
                 
-                // pr($res);
-                foreach ($res as $value) {
+                if ($mutasiNew){
 
-                    if ($value){
-                        
-                        foreach ($value as $val) {
-                            $newData[] = $val;
-                        } 
+                    foreach ($mutasiNew as $key => $value) {
+                        $res[$value['Mutasi_ID']] = array_merge($value, $sortByMutasiID[$value['Mutasi_ID']]);
                     }
-                    
+
+                    // pr($res);
+                    // pr($mutasiNew);
+                    if ($res){
+                        foreach ($res as $value) {
+
+                            if ($value){
+                                
+                                
+                                    if ($value['Mutasi_ID'])$newData[] = $value;
+                                 
+                            }
+                            
+                        }
+                        // pr($newData);
+                        return $newData;  
+                    }
                 }
-                // pr($newData);
-                return $newData;  
+                
+                
             } 
             return false;
         }
@@ -409,7 +435,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $asset_id=Array();
             $no_reg=Array();
             $nm_barang=Array();
+            $asetKapitalisasi = array();
             $asetKapitalisasi = array_keys($_POST['asetKapitalisasi']);
+            $asetKapitalisasiOri = array();
             $asetKapitalisasiOri = $_POST['asetKapitalisasi'];
 
             $mutasi_id=get_auto_increment("Mutasi");
@@ -472,6 +500,27 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 
                 $gabung_nomor_reg_tujuan=intval(($result[0]['noRegister'])+1);
 
+                logFile('Asetid = '.$asset_id[$i]);
+                /*
+                // log start
+                $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
+
+                foreach ($_POST as $key => $value) {
+                    if(in_array($value, $noDok)) $noDokumen = $_POST[$value];
+                    else $noDokumen = '-';
+                }
+                
+                logFile('start log');
+                if (!in_array($asset_id[$i], $asetKapitalisasi)){
+                    $this->db->logIt($tabel=array($getKIB['listTableOri']), $Aset_ID=$asset_id[$i], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
+                }else{
+                    $this->db->logIt($tabel=array($getKIB['listTableOri']), $Aset_ID=$asset_id[$i], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
+                }
+                logFile('finish log');
+                
+                // end log
+                */
+
                 if (!in_array($asset_id[$i], $asetKapitalisasi)){
                     $sql1 = array(
                             'table'=>"MutasiAset",
@@ -503,7 +552,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                 $sql2 = array(
                         'table'=>"Aset",
-                        'field'=>"StatusValidasi = 3, Status_Validasi_Barang = 3",
+                        'field'=>"StatusValidasi = 2",
                         'condition'=>"Aset_ID='$asset_id[$i]'",
                         );
 
@@ -516,7 +565,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 // pr($getKIB);
                 $sqlKib = array(
                         'table'=>"{$getKIB['listTableOri']}",
-                        'field'=>"StatusValidasi = 3, Status_Validasi_Barang = 3, StatusTampil = 3",
+                        'field'=>"StatusValidasi = 2",
                         'condition'=>"Aset_ID='$asset_id[$i]'",
                         );
 
@@ -552,22 +601,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             if ($result){
                 
-                $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
-
-                foreach ($_POST as $key => $value) {
-                    if(in_array($value, $noDok)) $noDokumen = $_POST[$value];
-                    else $noDokumen = '-';
-                }
                 
-
-                foreach ($asetid as $key => $value) {
-                    if (!in_array($key, $asetKapitalisasi)){
-                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
-                    }else{
-                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
-                    }
-                    
-                }
 
                 logFile('commit transaksi mutasi');
                 $this->db->commit();
@@ -588,6 +622,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             // pr($data);
             if ($jenisaset){
+
+                $sleep = 1;
                 foreach ($jenisaset as $key => $value) {
                 
                     $table = $this->getTableKibAlias($value);
@@ -655,6 +691,15 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                                 $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
                                 if (!$resKib) {$this->db->rollback(); return false;}
                                 
+                                $sqlKib = array(
+                                        'table'=>"{$table['listTableOri']}",
+                                        'field'=>"StatusTampil=2, Status_Validasi_Barang = 2",
+                                        'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
+                                        );
+
+                                $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+                                if (!$resKib) {$this->db->rollback(); return false;}
+
                                 $sql2 = array(
                                         'table'=>"Aset",
                                         'field'=>"NilaiPerolehan = '{$NilaiPerolehan}'",
@@ -666,7 +711,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                                 $sql3 = array(
                                         'table'=>"Aset",
-                                        'field'=>"StatusValidasi = 2, Status_Validasi_Barang = 2, NotUse = 2",
+                                        'field'=>"Status_Validasi_Barang = 3, NotUse = 3",
                                         'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                         );
 
@@ -700,13 +745,13 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             $postfixkodeSatker = $tmpKodeSatker[2].'.'.$tmpKodeSatker[3];
 
                             $implLokasi = $prefix.'.'.$prefixkodesatker.'.'.$prefixTahun.'.'.$postfixkodeSatker;
-                            // pr($implLokasi);
-
-                            // $lokasiBaru = ubahLokasi("12.11.33",$getLokasiTujuan[0]['SatkerTujuan']);
-                        
-                            //buat gabung nomor registrasi akhir
-                            // $array=array($pemilik,$provinsi,$kabupaten,$row_kode_satker,$tahun,$row_kode_unit);
                             
+                            $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
+                            $nodok = $_POST['noDokumen'];
+                            $olah_tgl =  $_POST['TglSKKDH'];
+                            
+                            $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Data Mutasi sebelum diubah");
+
                             $sql = array(
                                     'table'=>"{$table['listTableOri']}",
                                     'field'=>"MAX(noRegister) AS noRegister",
@@ -727,7 +772,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sqlKib = array(
                                     'table'=>"{$table['listTableOri']}",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 
@@ -735,7 +780,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sql2 = array(
                                     'table'=>"Aset",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 
@@ -751,11 +796,6 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             if ($resAset){
 
-                                $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
-
-                                $nodok = $_POST['noDokumen'];
-                                $olah_tgl =  $_POST['TglSKKDH'];
-                                
                                 $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses Mutasi");
                                 
                                  
@@ -778,7 +818,12 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $res1 = $this->db->lazyQuery($sql,$debug,2); 
 
                     
-                
+                    $sleep++;
+
+                    if ($sleep == 20){
+                        sleep(1);
+                        $sleep = 1;
+                    }
                 } 
                 
 
@@ -798,7 +843,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                                 );
                     $res1 = $this->db->lazyQuery($sql,$debug,2); 
                 }
-                
+                // exit;
                 logFile('Commit transaction mutasi');
                 $this->db->commit();
                 return true;   
@@ -1014,12 +1059,16 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             $result = $this->db->lazyQuery($sqlSelect,$debug);
 
+            // $MutasiID = 
             // pr($result);
             if ($result){
 
                 
 
                 foreach ($result as $key => $value) {
+
+                    $sortByMutasiID[$value['Mutasi_ID']] = $value;
+
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
@@ -1029,28 +1078,55 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                     $tmpRes = $this->db->lazyQuery($sqlSelect,$debug);
+                    logFile(serialize($tmpRes));
+
+                    
                     if ($tmpRes){
+                        // $mutasiTmp[] = $value['Mutasi_ID'];
+                        
+                        foreach ($tmpRes as $key => $val) {
+                            $mutasiNew[$val['Mutasi_ID']] = $val;
+                        }
+
+                        /*
                         $res[] = $tmpRes;
                         $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                         $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
                         $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
                         $res[$key][0]['Jumlah'] = $value['Jumlah'];
-                    }
-                }
-                
-                // pr($res);
-                foreach ($res as $value) {
+                        */
+                        // if (in_array($tmpRes[0]['Mutasi_ID'], haystack))
+                        // $newDataTmp[] = $tmpRes;
 
-                    if ($value){
-                        
-                        foreach ($value as $val) {
-                            $newData[] = $val;
-                        } 
                     }
-                    
                 }
-                // pr($newData);
-                return $newData;  
+
+
+
+                // pr($res);
+                if ($mutasiNew){
+
+                    foreach ($mutasiNew as $key => $value) {
+                        $res[$value['Mutasi_ID']] = array_merge($value, $sortByMutasiID[$value['Mutasi_ID']]);
+                    }
+
+                    // pr($res);
+                    // pr($mutasiNew);
+                    if ($res){
+                        foreach ($res as $value) {
+
+                            if ($value){
+                                
+                                
+                                    if ($value['Mutasi_ID'])$newData[] = $value;
+                                 
+                            }
+                            
+                        }
+                        // pr($newData);
+                        return $newData;  
+                    }
+                }  
             } 
             return false;
         }
@@ -1070,7 +1146,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             
 
-            pr($table);
+            // pr($table);
             $sql = array(
                     'table'=>"mutasi AS m, satker AS s",
                     'field'=>"m.*, s.NamaSatker, s.kode",
@@ -1141,6 +1217,83 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             $result = $this->db->lazyQuery($sqlSelect,$debug,2);
 
+            if ($result){
+
+                foreach ($data['aset_id'] as $key => $value) {
+                    $Aset_ID[] = $value;
+
+                    $sqlSelect = array(
+                        'table'=>"aset",
+                        'field'=>"TipeAset",
+                        'condition'=>"Aset_ID = {$value}",
+                        );
+                    $getKib[] = $this->db->lazyQuery($sqlSelect,$debug);
+
+                }
+
+                foreach ($getKib as $key => $value) {
+                    $kib[] = $value[0]['TipeAset'];
+
+                }
+
+                $arrTabel = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+                foreach ($Aset_ID as $key => $value) {
+                    
+                    $tabel = $this->getTableKibAlias($arrTabel[$kib[$key]]);
+                    
+                    
+                    $kibAset = $tabel['listTableOri'];
+
+                    $updateKib = array(
+                            'table'=>"{$kibAset}",
+                            'field'=>"StatusValidasi = 1",
+                            'condition'=>"Aset_ID = {$value}",
+                            );
+
+                    $result1 = $this->db->lazyQuery($updateKib,$debug,2);
+
+                    $updateAset = array(
+                            'table'=>"aset",
+                            'field'=>"StatusValidasi = 1, NotUse = 1",
+                            'condition'=>"Aset_ID = {$value}",
+                            );
+
+                    $result1 = $this->db->lazyQuery($updateAset,$debug,2);
+
+                    $sqlSelect = array(
+                            'table'=>"mutasiaset",
+                            'field'=>"Status = 3",
+                            'condition'=>"Mutasi_ID = '{$data[mutasiid]}' AND Status = 0 AND Aset_ID IN ({$value})",
+                            );
+
+                    $result = $this->db->lazyQuery($sqlSelect,$debug,2);
+
+                    $sql = array(
+                            'table'=>"penggunaanaset",
+                            'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
+                            'condition'=>"Aset_ID IN ({$value})",
+                            );
+
+                    $result = $this->db->lazyQuery($sql,$debug,2);
+
+                }
+                
+                // $aset_id = implode(',', $Aset_ID);
+
+                
+
+                $sql = array(
+                        'table'=>'mutasi',
+                        'field'=>"FixMutasi = 3",
+                        'condition' => "Mutasi_ID = '{$data[mutasiid]}' ",
+                        'limit' => '1',
+                        );
+                $res = $this->db->lazyQuery($sql,$debug,2);
+                if ($res) return true;
+
+            }
+
+        /*
             $sql = array(
                     'table'=>"penggunaanaset",
                     'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
@@ -1148,10 +1301,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     );
 
             $result = $this->db->lazyQuery($sql,$debug,2);
-
-            if ($result){
-                return true;
-            }
+        */
+            
             return false;
         }
 
