@@ -54,6 +54,9 @@ $USERAUTH->check_sys_log();
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
+
+
+	// $DBVAR->logIt(array('bangunan'),51);
 ?>
 	
 	<section id="main">

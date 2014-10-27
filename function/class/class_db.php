@@ -95,7 +95,8 @@ class DB
 	public function fetch_array($data)
 	{
 		$this->result = $data;
-		return mysql_fetch_array($this->result);
+		if ($this->result)return mysql_fetch_array($this->result);
+		else return false;
 		
 	}
 	
