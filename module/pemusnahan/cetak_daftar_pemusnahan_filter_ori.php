@@ -77,7 +77,7 @@
                     <div id="frame_tengah1">
                         <div id="frame_gudang">
                             <div id="topright">
-                                Cetak Daftar     Pemusnahan
+                                Cetak Daftar Pemusnahan
                             </div>
                             <div id="bottomright">
                                 

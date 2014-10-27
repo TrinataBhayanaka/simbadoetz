@@ -1,11 +1,7 @@
+<?php ob_start() ?>
 <?php
-include "../../config/config.php";
+include "../../../config/config.php";
 
-$USERAUTH = new UserAuth();
-$SESSION = new Session();
-$menu_id = 5;
-$SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 ?>
 
 <?php
@@ -13,21 +9,29 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-?>
+?> <script>
+            $(function()
+                {
+                $('#tanggal').datepicker($.datepicker.regional['id']);
+                }
+
+             );
+        </script>
+
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-		  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Buat Rencana Kebutuhan Barang</li>
+		  <li><a href="#">Inventarisasi</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Cetak laporan Inventarisasi</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Buat Rencana Kebutuhan Barang</div>
+			<div class="title">Cetak laporan Inventarisasi</div>
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
 			
-			<form name="pencarian" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkb_daftar_data.php?pid=1" method="post">
+			<form method="post" action="proses_cetak_laporan.php">
 			<ul>
 							<li>
 								<span class="span2">Tahun</span>

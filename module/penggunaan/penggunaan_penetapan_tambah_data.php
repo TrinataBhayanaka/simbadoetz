@@ -1,29 +1,43 @@
 <?php
+ob_start();
 include "../../config/config.php";
-$menu_id = 5;
-$SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 
-
-$paging = $LOAD_DATA->paging($_GET['pid']);	
-if (isset($_POST['submit']))	
-{
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
-
-	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-} else
-		{
-	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-	    }  
-
-	// echo '<pre>';	    
-	// print_r($get_data_filter);
-	// echo '</pre>';	
-?>
+        $menu_id = 30;
+        $SessionUser = $SESSION->get_session_user();
+		// pr($SessionUser);
+        ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+        // pr($SESSION);
+		$USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+        // pr($USERAUTH);
+        $paging = $LOAD_DATA->paging($_GET['pid']);    
+        $ses_uid = $_SESSION['ses_uid'];
+		// pr($_SESSION);
+		if ($_POST['tampil2']){
+            if ($_POST['penggu_penet_filt_add_nmaset'] =="" && $_POST['penggu_penet_filt_add_nokontrak']=="" && $_POST['skpd_id']==""){
+		  ?>
+        <script>var r=confirm('Tidak ada isian filter');
+            if (r==false){
+            document.location='penggunaan_penetapan_filter2.php';
+            }
+        </script>
+		<?php
+            }
+        }
+        
+        if (isset($_POST['tampil2'])){				
+			unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
+			// pr($parameter);
+			list($data,$dataAsetUser) = $RETRIEVE->retrieve_penetapan_penggunaan($parameter);
+			// echo 'sini';
+		}
+		else {
+			$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
+			list($data,$dataAsetUser) = $RETRIEVE->retrieve_penetapan_penggunaan($parameter);
+			// echo'sana';
+		}  
+         ?>  
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
@@ -31,16 +45,78 @@ if (isset($_POST['submit']))
 	
 			?>
 
+		<script language="Javascript" type="text/javascript">  
+			$(document).ready(function() {
+			$('#example').dataTable( {
+					"aaSorting": [[ 1, "asc" ]]
+				} );
+				
+				var tes=document.getElementsByTagName('*');
+				var button=document.getElementById('submit');
+				var boxeschecked=0;
+				for(k=0;k<tes.length;k++)
+				{
+					if(tes[k].className=='checkbox')
+						{
+							//
+							tes[k].checked == true  ? boxeschecked++: null;
+						}
+				}
+			//alert(boxeschecked);
+				if(boxeschecked!=0){
+					button.disabled=false;
+				}
+				else {
+					button.disabled=true;
+				}
+			
+			} );
+			
+			function enable(){  
+			var tes=document.getElementsByTagName('*');
+			var button=document.getElementById('submit');
+			var boxeschecked=0;
+			for(k=0;k<tes.length;k++)
+			{
+				if(tes[k].className=='checkbox')
+					{
+						//
+						tes[k].checked == true  ? boxeschecked++: null;
+					}
+			}
+			//alert(boxeschecked);
+			if(boxeschecked!=0)
+				button.disabled=false;
+			else
+				button.disabled=true;
+			}
+			function disable_submit(){
+				var enable = document.getElementById('pilihHalamanIni');
+				var disable = document.getElementById('kosongkanHalamanIni');
+				var button=document.getElementById('submit');
+				if (disable){
+					button.disabled=true;
+				} 
+			}
+			function enable_submit(){
+				var enable = document.getElementById('pilihHalamanIni');
+				var disable = document.getElementById('kosongkanHalamanIni');
+				var button=document.getElementById('submit');
+				if (enable){
+					button.disabled=false;
+				} 
+			}
+		</script>
 
           <section id="main">
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <li><a href="#">Penggunaan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Penetapan Penggunaan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="title">Penetapan Penggunaan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">

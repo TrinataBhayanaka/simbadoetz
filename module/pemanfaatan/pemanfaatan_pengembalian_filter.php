@@ -1,12 +1,15 @@
-    <?php
-        include "../../config/config.php"; 
-    ?>
+<?php
+include "../../config/config.php";
 
-<html>
-    <?php
-        include "$path/header.php";
-    ?>
-        
+?>
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+?>
+
                     <!--buat date-->
                     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
                     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
@@ -61,83 +64,76 @@
                                 });
                         });
                     </script>
-                    
-        <body>
-            <div id="content">
-                <?php
-                    include "$path/title.php";
-                    include "$path/menu.php";
-                ?>
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Pengembalian Pemanfaatan
-                            </div>
-                            <div id="bottomright">
-                                
-                                <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_daftar.php?pid=1">
-                                <table>
-                                    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
-                                    <tr>
-                                        <td>Tanggal awal</td>
-										<td>&nbsp;</td>
-                                        <td><input type="text" name="peman_pengem_filt_tglawal" placeholder="" style="width:200px;" id="tanggal12"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanggal akhir</td>
-										<td>&nbsp;</td>
-                                        <td><input type="text" name="peman_pengem_filt_tglakhir" placeholder="" style="width:200px;" id="tanggal13"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>No. Penetapan Pengembalian</td>
-										<td>&nbsp;</td>
-                                        <td>
-                                            <input type="text" name="peman_pengem_filt_nopenet" placeholder="" style="width:450px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lokasi BAST</td>
-										<td>&nbsp;</td>
-                                        <td>
-                                            <input type="text" name="peman_pengem_filt_lokasi" placeholder="" style="width:450px;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td><input type="submit" name="tampil_filter" value="Tampilkan Data"><input type="reset" name="reset" value="Bersihkan Filter"></td>
-                                    </tr>
-                                </table>
-                                </form>    
-                                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-        </body>
-</html>	
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Pemanfaatan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Pengembalian Pemanfaatan</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Pengembalian Pemanfaatan</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_daftar.php?pid=1">
+			<ul>
+							<li>
+								<span class="span2">Tanggal awal</span>
+								<input type="text" name="peman_pengem_filt_tglawal" placeholder="" style="width:200px;" id="tanggal12">
+							</li>
+							<li>
+								<span class="span2">Tanggal akhir</span>
+								<input type="text" name="peman_pengem_filt_tglakhir" placeholder="" style="width:200px;" id="tanggal13">
+							</li>
+							<li>
+								<span class="span2">No. Penetapan Pemanfaatan</span>
+								<input type="text" name="peman_pengem_filt_nopenet" placeholder="" style="width:450px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
+							</li>
+							<li>
+								<span class="span2">Lokasi BAST</span>
+								<input type="text" name="peman_pengem_filt_lokasi" placeholder="" style="width:450px;">
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+							</li>
+						</ul>
+						<table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>
