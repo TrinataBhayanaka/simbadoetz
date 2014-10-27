@@ -1,10 +1,11 @@
 <?php
 include "../../config/config.php";
 
-    $menu_id = 31;
+     $menu_id = 31;
     ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
     $SessionUser = $SESSION->get_session_user();
     $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+
 
         
 ?>
@@ -24,7 +25,7 @@ include "../../config/config.php";
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="title">Daftar Validasi Barang</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
