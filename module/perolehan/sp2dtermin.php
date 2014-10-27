@@ -163,7 +163,7 @@ $menu_id = 1;
 						<td class="center"><?=$value['keterangan']?></td>
 						<td class="center">
 						<a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
-						<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
+						<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
 					</tr>
 				<?php
 					$i++;

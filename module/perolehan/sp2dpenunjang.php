@@ -162,9 +162,9 @@ $menu_id = 1;
 						<td class="center"><?=number_format($value['nilai'])?></td>
 						<td class="center"><?=$value['keterangan']?></td>
 						<td class="center">
-						<a href="#" class="btn btn-success btn-small"><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>
+						<a href="sp2dpenunjangedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>
 						<a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjang_rinc.php?idsp2d=<?=$value['id']?>&idkontrak=<?=$idKontrak?>" class="btn btn-info btn-small"><i class="icon-edit icon-white"></i>&nbsp;Rincian</a>
-						<a href="#" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
 						</td>
 					</tr>
 				<?php

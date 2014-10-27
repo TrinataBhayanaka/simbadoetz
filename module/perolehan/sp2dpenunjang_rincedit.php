@@ -30,15 +30,31 @@ $menu_id = 1;
 		
 	//post
 	if(isset($_POST['kdRekening'])){
+		if($_POST['id'] == ""){
+			$dataArr = $STORE->store_sp2dpenunjang_rinc($_POST,$idKontrak);
+		} else {
+			$dataArr = $STORE->store_edit_sp2dpenunjang_rinc($_POST,$idKontrak);
+		}
+			echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dpenunjang_rinc.php?idsp2d={$idsp2d}&idkontrak={$kontrak[0]['id']}\>";
+
+	}
+	/*if(isset($_POST['kdRekening'])){
 
 		foreach ($_POST as $key => $val) {
 				$tmpfield[] = $key;
 				$tmpvalue[] = "'$val'";
 			}
+			pr($_POST);exit;
 			$field = implode(',', $tmpfield);
 			$value = implode(',', $tmpvalue);
 
 			$query = mysql_query("INSERT INTO sp2d_rinc ({$field}) VALUES ($value)");
+
+			$query_id = mysql_query("SELECT id FROM sp2d ORDER BY id DESC LIMIT 1");
+	        while ($row = mysql_fetch_assoc($query_id)){
+	             $data['sp2d_id'] = $row['id'];
+	        }
+			$query = mysql_query("INSERT INTO log_sp2d_rinc ({$field}) VALUES ($value)");
 
 			//sum total 
 			$sqlsum = mysql_query("SELECT SUM(jumlah) as total FROM sp2d_rinc WHERE idsp2d = '{$_POST['idsp2d']}'");
@@ -51,7 +67,7 @@ $menu_id = 1;
 			echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dpenunjang_rinc.php?idsp2d={$idsp2d}&idkontrak={$kontrak[0]['id']}\">";
 
 	}
-
+*/
 	//getdata
 	//ajax rekening
 	//###Tipe###

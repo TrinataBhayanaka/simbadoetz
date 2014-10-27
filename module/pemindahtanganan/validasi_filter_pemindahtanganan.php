@@ -1,16 +1,22 @@
-    <?php
-        include "../../config/config.php"; 
-        $menu_id = 44;
+<?php
+include "../../config/config.php";
+
+
+ $menu_id = 44;
         $SessionUser = $SESSION->get_session_user();
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
         $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-    ?>
 
-<html>
-    <?php
-        include "$path/header.php";
-    ?>
-        
+
+?>
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+?>
+
                     <!--buat date-->
                     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
                     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
@@ -64,62 +70,36 @@
                                 });
                         });
                     </script>
-                    
-        <body>
-            <div id="content">
-                <?php
-                    include "$path/title.php";
-                    include "$path/menu.php";
-                ?>
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Validasi Pemindahtanganan
-                            </div>
-                            <div id="bottomright">
-                                
-                                <form name="form" method="POST" action="<?php echo "$url_rewrite/"; ?>/module/pemindahtanganan/validasi_pemindahtanganan.php?pid=1">
-                                <table>
-                                    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
-                                    <tr>
-                                        <td>No. SK Pemindahtanganan</td>
-										<td>&nbsp;</td>
-                                        <td>
-                                            <input type="text" name="bupt_val_noskpemindahtanganan" placeholder="" style="width:200px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-										<td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tgl SK Pemindahtanganan</td>
-										<td>&nbsp;</td>
-                                        <td><input type="text" name="bupt_val_tglskpemindahtanganan" placeholder="" style="width:200px;" id="tanggal12"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-										<td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td valign="top">SKPD</td>
-										<td>&nbsp;</td>
-                                        <td>
-                                            <input type="text" name="lda_skpd" id="lda_skpd" style="width:450px;" readonly="readonly" placeholder="(Semua SKPD)">
-                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Pemindahatanganan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active"> Validasi Pemindahtanganan</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Validasi Pemindahtanganan</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			 <form name="form" method="POST" action="<?php echo "$url_rewrite/"; ?>/module/pemindahtanganan/validasi_pemindahtanganan.php?pid=1">
+			<ul>
+							<li>
+								<span class="span2">No. SK Pemindahtanganan</span>
+								<input type="text" name="bupt_val_noskpemindahtanganan" placeholder="" style="width:200px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
+							</li>
+							<li>
+								<span class="span2">Tgl SK Pemindahtanganan</span>
+								<input type="text" name="bupt_val_tglskpemindahtanganan" placeholder="" style="width:200px;" id="tanggal12">
+							</li>
+							<li>
+								<span class="span2">SKPD</span>
+								<div class="input-append">
+										  <input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" placeholder="(Semua SKPD)">
+                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
                                             <div class="inner" style="display:none;">
-                                                <style>
-                                                    .tabel th {
-                                                        background-color: #eeeeee;
-                                                        border: 1px solid #dddddd;
-                                                    }
-                                                    .tabel td {
-                                                        border: 1px solid #dddddd;
-                                                    }
-                                                </style>
+                                                
                                                 <?php
                                                 $alamat_simpul_skpd="$url_rewrite/function/dropdown/simpul_skpd.php";
                                                 $alamat_search_skpd="$url_rewrite/function/dropdown/search_skpd.php";
@@ -128,28 +108,47 @@
                                                 checkboxskpd($style2,"skpd_id",'skpd','yuda');
                                                 ?>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                       <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td><input type="submit" name="tampil_valid_filter" value="Tampilkan Data"><input type="reset" name="reset" value="Bersihkan Filter"></td>
-                                    </tr>
-                                </table>
-                                </form>
-                                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
-                include"$path/footer.php";
-            ?>
-        </body>
-</html>	
+								</div>
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+							</li>
+						</ul>
+						<table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

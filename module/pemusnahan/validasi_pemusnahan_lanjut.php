@@ -1,29 +1,53 @@
 <?php
 include "../../config/config.php";
-$menu_id = 5;
-$SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 
+        $menu_id = 48;
+        ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+        $SessionUser = $SESSION->get_session_user();
+        $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+        
+        $no_penetapan=$_POST['buph_val_noskpemusnahan'];
+        $tgl_penetapan_awal=$_POST['buph_val_tgl_awal'];
+        $tgl_awal_fix=format_tanggal_db2($tgl_penetapan_awal);
+        $tgl_penetapan_akhir=$_POST['buph_val_tgl_akhir'];
+        $tgl_akhir_fix=format_tanggal_db2($tgl_penetapan_akhir);
+        $lokasi=$_POST['lokasi_id'];
+        $submit=$_POST['tampil_filter'];
+        
+        
+        $paging = $LOAD_DATA->paging($_GET['pid']);    
+        $ses_uid=$_SESSION['ses_uid'];
 
-$paging = $LOAD_DATA->paging($_GET['pid']);	
-if (isset($_POST['submit']))	
-{
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
+        if (isset($submit))
+                            {
+                                        unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+                                        $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
+                                        $data = $RETRIEVE->retrieve_validasi_pemusnahan($parameter);
+                            } else {
 
-	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-} else
-		{
-	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-	    }  
-
-	// echo '<pre>';	    
-	// print_r($get_data_filter);
-	// echo '</pre>';	
-?>
+        $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+        $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
+        $data = $RETRIEVE->retrieve_validasi_pemusnahan($parameter);
+		}
+        echo '<pre>';
+        //print_r($data);
+        echo '</pre>';
+        
+        
+         
+        
+        if (isset($submit)){
+                if ($no_penetapan=="" && $tgl_penetapan_awal=="" && $tgl_penetapan_akhir=="" && $lokasi==""){
+    ?>
+                <script>var r=confirm('Tidak ada isian filter');
+                            if (r==false){
+                                document.location="<?php echo "$url_rewrite/module/pemusnahan/"; ?>validasi_pemusnahan_filter.php";
+                            }
+                    </script>
+    <?php
+            }
+        }
+    ?>
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
@@ -35,12 +59,12 @@ if (isset($_POST['submit']))
           <section id="main">
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <li><a href="#">Pemusnahan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Validasi Pemusnahan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="title">Validasi Pemusnahan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
@@ -53,16 +77,36 @@ if (isset($_POST['submit']))
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_import_data.php";?>" class="btn">
-								Tambah Data: Import</a>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_tambah_data.php";?>" class="btn">
-								Tambah Data: Manual</a>
+								<a href="<?php echo "$url_rewrite/module/pemusnahan/"; ?>validasi_pemusnahan_filter.php" class="btn">
+								Kembali ke Halaman Utama: Cari Aset</a>
 							</li>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_filter.php";?>" class="btn">
-									   Kembali ke halaman utama : Form Filter
+								<a href="<?php echo "$url_rewrite/module/pemusnahan/"; ?>pemusnahan_validasi_daftar_valid.php?pid=1" class="btn">
+									   Daftar Barang
 								 </a>
 							</li>
+							 <?php
+								$offset = @$_POST['record'];
+								$query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPemusnahan[]'";
+										$result_apl = $DBVAR->query($query_apl) or die ($DBVAR->error());
+										$data_apl = $DBVAR->fetch_object($result_apl);
+										
+										$array = explode(',',$data_apl->aset_list);
+										
+									foreach ($array as $id)
+									{
+										if ($id !='')
+										{
+										$dataAsetList[] = $id;
+										}
+									}
+									
+									if ($dataAsetList !='')
+									{
+										$explode = array_unique($dataAsetList);
+									}
+									
+								?>
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">

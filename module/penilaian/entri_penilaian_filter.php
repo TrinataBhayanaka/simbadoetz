@@ -53,8 +53,8 @@ $resetDataView = $DBVAR->is_table_exists('penilaian_'.$SessionUser['ses_uoperato
 							<li>
 								<span class="span2">Kelompok</span>
 								<div class="input-append">
-										 <input type="text" name="pem_kelompok" id="pem_kelompok" style="width:450px;" readonly="readonly" value="">
-											<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+										 <input type="text" name="pem_kelompok" id="pem_kelompok" class="span5" readonly="readonly" value="">
+											<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 											<div class="inner" style="display:none;">
 												<?php
 													//include "$path/function/dropdown/function_kelompok.php";
@@ -70,8 +70,8 @@ $resetDataView = $DBVAR->is_table_exists('penilaian_'.$SessionUser['ses_uoperato
 							<li>
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
-									    <input type="text" name="pem_lokasi" id="pem_lokasi" style="width:450px;" readonly="readonly" value="">
-								 <input type="button" name="idbtnlookuplokasi" id="idbtnlookuplokasi" value="Pilih" onclick = "showSpoiler(this);">
+									    <input type="text" name="pem_lokasi" id="pem_lokasi" class="span5" readonly="readonly" value="">
+								 <input type="button" name="idbtnlookuplokasi" id="idbtnlookuplokasi" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 										<div class="inner" style="display:none;">
 											
 														<?php
@@ -90,8 +90,8 @@ $resetDataView = $DBVAR->is_table_exists('penilaian_'.$SessionUser['ses_uoperato
 							<li>
 								<span class="span2">SKPD</span>
 								<div class="input-append">
-									<input type="text" name="pem_skpd" id="pem_skpd" style="width:450px;" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-											<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									<input type="text" name="pem_skpd" id="pem_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
+											<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 											<div class="inner" style="display:none;">
 												
 												<?php

@@ -6,11 +6,11 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 
-	 $sql = mysql_query("SELECT * FROM sp2d WHERE id = '{$_GET['idsp2d']}'");
+	 $sql = mysql_query("SELECT * FROM sp2d_rinc WHERE id = '{$_GET['id']}'");
 	    while ($datasp2d = mysql_fetch_assoc($sql)){
-	        $sp2d = $datasp2d;
+	        $sp2d_rinc = $datasp2d;
 	    }
+// pr($sp2d_rinc);
+	$dataArr = $DELETE->delete_sp2d_rinc($sp2d_rinc,$_GET['idsp2d'],$_GET['idkontrak']);
 
-	$dataArr = $DELETE->delete_sp2d($sp2d,$_GET['id']);
-	
 ?>

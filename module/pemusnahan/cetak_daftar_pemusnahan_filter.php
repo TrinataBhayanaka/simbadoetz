@@ -1,10 +1,10 @@
 <?php
 include "../../config/config.php";
-    
-$menu_id = 49;
-$SessionUser = $SESSION->get_session_user();
-($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
-$USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+  
+        $menu_id = 49;
+        $SessionUser = $SESSION->get_session_user();
+        ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+        $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 ?>
 
 <?php
@@ -42,7 +42,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                     );
                 </script>   
                 <link href="<?php echo "$url_rewrite/"; ?>css/jquery-ui.css" type="text/css" rel="stylesheet">
-				 <script type="text/javascript">
+
+                <!--buat number only-->
+                <style>
+                    #errmsg { color:red; }
+                </style>
+                <!--
+                <script src="../../JS/jquery-latest.js"></script>
+                <script src="../../JS/jquery.js"></script>
+                -->
+                <script type="text/javascript">
                     $(document).ready(function(){
 
                         //called when key is pressed in textbox
@@ -58,6 +67,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                             });
                     });
                 </script>
+        
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -88,8 +98,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							<li>
 								<span class="span2">Lokasi</span>
 								<div class="input-append">
-									 <input type="text" name="lda_lokasi" id="lda_lokasi" style="width:450px;" readonly="readonly" placeholder="(semua Lokasi)">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+									 <input type="text" name="lda_lokasi" id="lda_lokasi" class="span5" readonly="readonly" placeholder="(semua Lokasi)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
 									<div class="inner" style="display:none;">
 										   
 											<?php

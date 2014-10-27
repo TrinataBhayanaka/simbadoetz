@@ -42,8 +42,8 @@ if (isset($_POST['Simpan']))
 	{
 		$tmp_kode = $_POST['KodeSektor'];
 		$query = "INSERT INTO Satker VALUES (NULL, NULL, ".$KodeSektor.", NULL, ".$NamaSatker.", NULL, 
-				0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '$tmp_kode', NULL, 0)";
-		
+				0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '$tmp_kode', NULL, 0, {$KodeRuangan})";
+		// pr($query);
 		$result = mysql_query($query) or die (mysql_error());
 		if ($result > 0) echo "<script type='text/javascript'>alert('Sukses');window.location.href='?page=$_GET[page]&a=v'; </script>" ;else echo '<script type=text/javascript>alert("Gagal");</script>';
 	}
@@ -64,7 +64,7 @@ if (isset($_POST['Simpan']))
 			$data = mysql_fetch_object($result);
 			$tmp_kode = "$data->KodeSektor.$_POST[KodeSektor].$_POST[KodeSatker]";
 			$query = "INSERT INTO Satker VALUES (NULL, NULL, '$data->KodeSektor', ".$KodeSatker.", ".$NamaSatker.", NULL, 
-					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $Gudang, NULL, '$tmp_kode', ".$KotaSatker.", 0)";
+					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $Gudang, NULL, '$tmp_kode', ".$KotaSatker.", 0, {$KodeRuangan})";
 			//print_r($query);
 			$result = mysql_query($query) or die (mysql_error());
 			if ($result > 0) echo "<script type='text/javascript'>alert('Sukses');window.location.href='?page=$_GET[page]&a=v';</script>" ;else echo '<script type=text/javascript>alert("Gagal");</script>';
@@ -93,7 +93,7 @@ if (isset($_POST['Simpan']))
 			$data = mysql_fetch_object($result);
 			$tmp_kode = "$data->KodeSektor.$data->KodeSatker.$_POST[KodeUnit]";
 			$query2 = "INSERT INTO Satker VALUES (NULL, NULL, '$data->KodeSektor', '$data->KodeSatker', ".$NamaSatker.", NULL, 
-					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ".$Gudang.", ".$KodeUnit.", '$tmp_kode', ".$KotaSatker.", ".$BuatKIB.")";
+					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ".$Gudang.", ".$KodeUnit.", '$tmp_kode', ".$KotaSatker.", ".$BuatKIB.", {$KodeRuangan})";
 			$result2 = mysql_query($query2) or die (mysql_error());
 			if ($result2 > 0) echo "<script type='text/javascript'>alert('Sukses'); window.location.href='?page=$_GET[page]&a=v'; </script>" ;else echo '<script type=text/javascript>alert("Gagal");</script>';
 		}
@@ -369,12 +369,12 @@ $shufle = str_shuffle('bhsyd18743');
 		{	
 			//document.getElementById("tes").checked = true;
 			document.getElementById("koderuangan_id").readOnly = true;
-			document.getElementById("namaruangan_id").readOnly = true;
+			// document.getElementById("namaruangan_id").readOnly = true;
 			document.getElementById("upb_id").readOnly = true;
 			document.getElementById("skpd_id").readOnly = true;
 			document.getElementById("unit_id").readOnly = true;
 			document.getElementById("nama_daerah").readOnly = true;
-			document.getElementById("buat_report").readOnly = false;
+			// document.getElementById("buat_report").readOnly = false;
 			
 			
 		}
@@ -382,35 +382,35 @@ $shufle = str_shuffle('bhsyd18743');
 		else if (id == 1)
 		{
 			document.getElementById("koderuangan_id").readOnly = true;
-			document.getElementById("namaruangan_id").readOnly = true;
+			// document.getElementById("namaruangan_id").readOnly = true;
 			document.getElementById("upb_id").readOnly = true;
 			document.getElementById("skpd_id").readOnly = false;
 			document.getElementById("unit_id").readOnly = true;
 			document.getElementById("nama_daerah").readOnly = false;
-			document.getElementById("buat_report").readOnly = true;
+			// document.getElementById("buat_report").readOnly = true;
 			
 		}
 
 		else if (id == 2)
 		{
 			document.getElementById("koderuangan_id").readOnly = true;
-			document.getElementById("namaruangan_id").readOnly = true;
+			// document.getElementById("namaruangan_id").readOnly = true;
 			document.getElementById("upb_id").readOnly = true;
 			document.getElementById("skpd_id").readOnly = false;
 			document.getElementById("unit_id").readOnly = false;
 			document.getElementById("nama_daerah").readOnly = false;
-			document.getElementById("buat_report").readOnly = false;
+			// document.getElementById("buat_report").readOnly = false;
 			
 		}
 		else if (id == 3)
 		{
 			document.getElementById("koderuangan_id").readOnly = false;
-			document.getElementById("namaruangan_id").readOnly = false;
+			// document.getElementById("namaruangan_id").readOnly = false;
 			document.getElementById("upb_id").readOnly = false;
 			document.getElementById("skpd_id").readOnly = false;
 			document.getElementById("unit_id").readOnly = false;
 			document.getElementById("nama_daerah").readOnly = false;
-			document.getElementById("buat_report").readOnly = false;
+			// document.getElementById("buat_report").readOnly = false;
 			
 		}
 	}
@@ -502,117 +502,135 @@ $shufle = str_shuffle('bhsyd18743');
 																$sql1 = "SELECT * FROM Satker WHERE KodeSektor = '{$dataSubParent['KodeSektor']}' 
 																		AND KodeSatker = '{$dataSubParent['KodeSatker']}'
 																		AND KodeUnit = '{$dataSubSubParent['KodeUnit']}'
-																		AND Gudang IS NOT NULL AND Gudang != 0 AND Kd_Ruang IS NULL";
+																		AND Gudang !=0 AND Kd_Ruang IS NULL";
 																// pr($sql1);
 																$result1 = mysql_query($sql1) or die(mysql_error());
 																
-
-																while ($dataRuangan = mysql_fetch_array($result1))
-																{
-																	?>
-																	<div class="<?php if (isset($_GET['sssp']) and !isset($_GET['kr'])){if ($_GET['sssp']==$dataRuangan['Satker_ID']) echo 'datalist_inlist_selected';} ?>">
-																		<a class="datalist_inlist" href="?page=4&pr=<?php echo $data['Satker_ID']?>&sp=<?php echo $dataSubParent['Satker_ID']?>&ssp=<?php echo $dataSubSubParent['Satker_ID']?>&sssp=<?php echo $dataRuangan['Satker_ID']?>&a=v">
-																			<div style="margin-left:45px;">&raquo; <?php echo "<span style='font-size:12px;'>$dataRuangan[KodeSatker].$dataRuangan[KodeUnit].$dataRuangan[Gudang]-$dataRuangan[NamaSatker]</span>"?></div>
-																		</a>
-																	</div>
-																	<?php
-
-																	if (isset($_GET['sssp']))
+																if (mysql_num_rows($result1)){
+																	while ($dataRuangan = mysql_fetch_array($result1))
 																	{
-																		if ($_GET['sssp'] == $dataRuangan['Satker_ID'])
+																		?>
+																		<div class="<?php if (isset($_GET['sssp']) and !isset($_GET['kr'])){if ($_GET['sssp']==$dataRuangan['Satker_ID']) echo 'datalist_inlist_selected';} ?>">
+																			<a class="datalist_inlist" href="?page=4&pr=<?php echo $data['Satker_ID']?>&sp=<?php echo $dataSubParent['Satker_ID']?>&ssp=<?php echo $dataSubSubParent['Satker_ID']?>&sssp=<?php echo $dataRuangan['Satker_ID']?>&a=v">
+																				<div style="margin-left:45px;">&raquo; <?php echo "<span style='font-size:12px;'>$dataRuangan[KodeSatker].$dataRuangan[KodeUnit].$dataRuangan[Gudang]-$dataRuangan[NamaSatker]</span>"?></div>
+																			</a>
+																		</div>
+																		<?php
+
+																		if (isset($_GET['sssp']))
 																		{
+																			if ($_GET['sssp'] == $dataRuangan['Satker_ID'])
+																			{
 
 
-																			$sql1 = "SELECT * FROM Satker WHERE KodeSektor = '{$dataSubParent['KodeSektor']}' 
-																					AND KodeSatker = '{$dataSubParent['KodeSatker']}'
-																					AND KodeUnit = '{$dataSubSubParent['KodeUnit']}'
-																					AND Gudang = '{$dataRuangan['Gudang']}' AND Kd_Ruang IS NOT NULL";
-																			// pr($sql1);
-																			$result1 = mysql_query($sql1) or die(mysql_error());
-																			
-																			if (mysql_num_rows($result1)){
-																				while ($dataSSP = mysql_fetch_array($result1))
-																				{
-																					?>
-																					<div class="<?php if (isset($_GET['kr'])){if ($_GET['kr']==$dataSSP['Satker_ID']) echo 'datalist_inlist_selected';} ?>">
-																						<a class="datalist_inlist" href="?page=4&pr=<?php echo $data['Satker_ID']?>&sp=<?php echo $dataSubParent['Satker_ID']?>&ssp=<?php echo $dataSubSubParent['Satker_ID']?>&sssp=<?php echo $dataRuangan['Satker_ID']?>&kr=<?php echo $dataSSP['Satker_ID']?>&a=v">
-																							<div style="margin-left:60px;">&raquo; <?php echo "<span style='font-size:12px;'>$dataSSP[KodeSatker].$dataSSP[KodeUnit].$dataSSP[Gudang].$dataSSP[Kd_Ruang]-$dataSSP[NamaSatker]</span>"?></div>
-																						</a>
-																					</div>
-																					<?php
-
-																					if (isset($_GET['kr']))
+																				$sql2 = "SELECT * FROM Satker WHERE KodeSektor = '{$dataSubParent['KodeSektor']}' 
+																						AND KodeSatker = '{$dataSubParent['KodeSatker']}'
+																						AND KodeUnit = '{$dataSubSubParent['KodeUnit']}'
+																						AND Gudang = '{$dataRuangan['Gudang']}' AND Kd_Ruang IS NOT NULL";
+																				// pr($sql1);
+																				$result2 = mysql_query($sql2) or die(mysql_error());
+																				
+																				if (mysql_num_rows($result2)){
+																					while ($dataSSP = mysql_fetch_array($result2))
 																					{
-																						if ($_GET['kr'] == $dataSSP['Satker_ID'])
+																						?>
+																						<div class="<?php if (isset($_GET['kr'])){if ($_GET['kr']==$dataSSP['Satker_ID']) echo 'datalist_inlist_selected';} ?>">
+																							<a class="datalist_inlist" href="?page=4&pr=<?php echo $data['Satker_ID']?>&sp=<?php echo $dataSubParent['Satker_ID']?>&ssp=<?php echo $dataSubSubParent['Satker_ID']?>&sssp=<?php echo $dataRuangan['Satker_ID']?>&kr=<?php echo $dataSSP['Satker_ID']?>&a=v">
+																								<div style="margin-left:60px;">&raquo; <?php echo "<span style='font-size:12px;'>$dataSSP[KodeSatker].$dataSSP[KodeUnit].$dataSSP[Gudang].$dataSSP[Kd_Ruang]-$dataSSP[NamaSatker]</span>"?></div>
+																							</a>
+																						</div>
+																						<?php
+
+																						if (isset($_GET['kr']))
 																						{
+																							if ($_GET['kr'] == $dataSSP['Satker_ID'])
+																							{
 
-																							$sql2 = "SELECT * FROM Satker WHERE Satker_ID =".$dataSSP['Satker_ID'];
-																							// pr($sql2);
-																							$res2 = mysql_query($sql2) or die (msyql_error());
+																								$sql2 = "SELECT * FROM Satker WHERE Satker_ID =".$dataSSP['Satker_ID'];
+																								// pr($sql2);
+																								$res2 = mysql_query($sql2) or die (msyql_error());
+																								
+
+																								$dataKR = mysql_fetch_array($res2);
+																								// pr($dataSSP);
+																								$KodeSektor = $data['KodeSektor'];
+																								$oldKodeSatker = explode('.',$dataSubParent['KodeSatker']);
+																								$KodeSatker = $oldKodeSatker[1];
+																								$KodeUnit = $dataKR['KodeUnit'];
+																								$NamaSatker = $dataKR['NamaSatker'];
+																								$KotaSatker = $dataKR['KotaSatker'];
+																								// $Gudang = $dataKR['Gudang'];
+																								$BuatKIB = $dataKR['BuatKIB'];
+																								$KodeUPB = $dataKR['Gudang'];
+																								$KodeRuangan = $dataKR['Kd_Ruang'];
+																							}
+																						}else{
 																							
-
-																							$dataKR = mysql_fetch_array($res2);
-																							// pr($dataSSP);
 																							$KodeSektor = $data['KodeSektor'];
 																							$oldKodeSatker = explode('.',$dataSubParent['KodeSatker']);
 																							$KodeSatker = $oldKodeSatker[1];
-																							$KodeUnit = $dataKR['KodeUnit'];
-																							$NamaSatker = $dataKR['NamaSatker'];
-																							$KotaSatker = $dataKR['KotaSatker'];
-																							// $Gudang = $dataKR['Gudang'];
-																							$BuatKIB = $dataKR['BuatKIB'];
-																							$KodeUPB = $dataKR['Gudang'];
-																							$KodeRuangan = $dataKR['Kd_Ruang'];
+																							$KodeUnit = $dataRuangan['KodeUnit'];
+																							$NamaSatker = $dataRuangan['NamaSatker'];
+																							$KotaSatker = $dataRuangan['KotaSatker'];
+																							// $Gudang = $dataRuangan['Gudang'];
+																							$BuatKIB = $dataRuangan['BuatKIB'];
+																							$KodeUPB = $dataRuangan['Gudang'];
 																						}
-																					}else{
-
-																						$KodeSektor = $data['KodeSektor'];
-																						$oldKodeSatker = explode('.',$dataSubParent['KodeSatker']);
-																						$KodeSatker = $oldKodeSatker[1];
-																						$KodeUnit = $dataSSP['KodeUnit'];
-																						$NamaSatker = $dataSSP['NamaSatker'];
-																						$KotaSatker = $dataSSP['KotaSatker'];
-																						// $Gudang = $dataRuangan['Gudang'];
-																						$BuatKIB = $dataSSP['BuatKIB'];
-																						$KodeUPB = $dataSSP['Gudang'];
+																						
 																					}
+
+																				}else{
+																					
+
+																					// sssp
+																					// echo '1111'; exit;
+																					$KodeSektor = $data['KodeSektor'];
+																							$oldKodeSatker = explode('.',$dataSubParent['KodeSatker']);
+																							$KodeSatker = $oldKodeSatker[1];
+																							$KodeUnit = $dataRuangan['KodeUnit'];
+																							$NamaSatker = $dataRuangan['NamaSatker'];
+																							$KotaSatker = $dataRuangan['KotaSatker'];
+																							// $Gudang = $dataRuangan['Gudang'];
+																							$BuatKIB = $dataRuangan['BuatKIB'];
+																							$KodeUPB = $dataRuangan['Gudang'];
+																					
 																					
 																				}
-																			}else{
-																						
-																				// echo 'a';exit;
-																				$KodeSektor = $data['KodeSektor'];
-																				$oldKodeSatker = explode('.',$dataSubParent['KodeSatker']);
-																				$KodeSatker = $oldKodeSatker[1];
-																				$KodeUnit = $dataRuangan['KodeUnit'];
-																				$NamaSatker = $dataRuangan['NamaSatker'];
-																				$KotaSatker = $dataRuangan['KotaSatker'];
-																				// $Gudang = $dataRuangan['Gudang'];
-																				$BuatKIB = $dataRuangan['BuatKIB'];
-																				$KodeUPB = $dataRuangan['Gudang'];
+
+																				
+
+
+																				
 																			}
+																		}else{
 
-																			
+																			 
+																			$KodeSektor = $data['KodeSektor'];
+																			$oldKodeSatker = explode('.',$dataRuangan['KodeSatker']);
+																			$KodeSatker = $oldKodeSatker[1];
+																			$KodeUnit = $dataRuangan['KodeUnit'];
+	                                                                        $KotaSatker = $dataSubSubParent['KotaSatker'];
+																			$NamaSatker = $dataSubSubParent['NamaSatker'];
+																			$Gudang = $dataSubSubParent['Gudang'];
 
+																			// echo $NamaSatker;exit;
+																		}	
+																		
+																		
+																	}
+																}else{
 
-																			
-																		}
-																	}else{
+																	// echo '2222';exit;
+																	$KodeSektor = $data['KodeSektor'];
+																	$oldKodeSatker = explode('.',$dataSubSubParent['KodeSatker']);
+																	$KodeSatker = $oldKodeSatker[1];
+																	$KodeUnit = $dataSubSubParent['KodeUnit'];
+                                                                    $KotaSatker = $dataSubSubParent['KotaSatker'];
+																	$NamaSatker = $dataSubSubParent['NamaSatker'];
+																	$Gudang = $dataSubSubParent['Gudang'];
 
-																		 
-																		$KodeSektor = $data['KodeSektor'];
-																		$oldKodeSatker = explode('.',$dataRuangan['KodeSatker']);
-																		$KodeSatker = $oldKodeSatker[1];
-																		$KodeUnit = $dataRuangan['KodeUnit'];
-                                                                        $KotaSatker = $dataSubSubParent['KotaSatker'];
-																		$NamaSatker = $dataSubSubParent['NamaSatker'];
-																		$Gudang = $dataSubSubParent['Gudang'];
-
-																		// echo $NamaSatker;exit;
-																	}	
-																	
-																	
 																}
+																
 															
 																// exit;
 																

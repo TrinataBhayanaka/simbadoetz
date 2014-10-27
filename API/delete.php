@@ -581,12 +581,45 @@ class DELETE extends DB
 
         $result=  $this->query($query_log) or die($this->error());
 
-            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dtermin.php?id={$id}\">";
+        if($data['type'] == "1") $type = "termin"; else $type = "penunjang";
+        
+        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2d{$type}.php?id={$id}\">";
     
     
     
     }
+     public function delete_sp2d_rinc($data,$id,$idkontrak)
+    {
 
+        global $url_rewrite;    
+        // pr($data);exit;
+        $query = "DELETE FROM sp2d_rinc WHERE id = '{$data['id']}'";
+        $result = $this->query($query) or die ($this->error());
+        
+        unset($data['id']);
+        $data['sp2d_rinc_id'] = $id;
+        $data['action'] = 'delete';
+        $data['changeDate'] = date('Y/m/d');
+        $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
+        // pr($data);exit;
+        foreach ($data as $key => $val) {
+            $tmplogfield[] = $key;
+            $tmplogvalue[] = "'$val'";
+        }
+        $field = implode(',', $tmplogfield);
+        $value = implode(',', $tmplogvalue);
+
+        $query_log = "INSERT INTO log_sp2d_rinc ({$field}) VALUES ($value)";
+        // pr($query_log);exit;
+        $result=  $this->query($query_log) or die($this->error());
+
+        if($data['type'] == "1") $type = "termin"; else $type = "penunjang";
+        
+        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dpenunjang_rinc.php/?idsp2d={$id}&idkontrak={$idkontrak}\">";
+    
+    
+    
+    }
     public function delete_aset($data,$id,$idkontrak)
     {
 
