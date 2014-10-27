@@ -81,7 +81,6 @@ class report_engine extends core_api_report {
          // echo "masukk";
           if($dataArr!="")
           {
-		  // echo "masukk";
                include ('../../../function/tanggal/tanggal.php');
                $head = "
                          <html>
@@ -112,20 +111,19 @@ class report_engine extends core_api_report {
                           ";
           $no=1;
           $skpdeh="";
-          $status_print=0;
+          $thn="";
+		  $status_print=0;
           $luasTotal=0;
           $perolehanTotal=0;
 		  
           foreach ($dataArr as $row)
           {
-            
-			// $skpdeh = $row->NamaSatker;
-			// echo "skpd=".$skpdeh; 	
           if ($skpdeh =="" && $no==1){
                $body="";
-               $skpdeh = $row->NamaSatker;
-               $satker_id=$row->LastSatker_ID;
-			   
+               $skpdeh = $row->kodeSatker;
+               $satker_id=$row->kodeSatker;
+			   $thn = $row->Tahun;
+			   // echo "satker =".$satker_id;
 			   //==add new==//
 			   $detailSatker=$this->get_satker($satker_id);
 			   $NoBidang = $detailSatker[0];
@@ -149,8 +147,10 @@ class report_engine extends core_api_report {
 			   $UnitOrganisasi = $detailSatker[4][1];
 			   $SubUnitOrganisasi = $detailSatker[4][2];
 			   $UPB = $detailSatker[4][3];
-			   $noReg=substr($row->NomorReg,0,17);
-			   $noKodeLokasi=substr($row->NomorReg,0,5);
+			   $noReg=substr($row->kodeLokasi,0,17);
+			   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+			   $thnLokasi= substr($row->Tahun,2,4);
+			   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 			   //==end new==//
 			   
                list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
@@ -190,21 +190,6 @@ class report_engine extends core_api_report {
                 {
                     $nama_jabatan_pengurus_fix='........................................';
                 }
-
-               
-               list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
-               if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-                       $TglSertifikat = "-";
-                       $tahun="-";
-                       $bulan="-";
-                       $tanggal="-";
-               }else{
-                    if ($tanggal !='' ){
-                         $row->TglSertifikat = "";
-                         
-                    }
-                    $row->TglSertifikat = "$tanggal/$bulan/$tahun";
-               }
 
                $body="<body>
                          <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
@@ -285,7 +270,7 @@ class report_engine extends core_api_report {
 										<p>NO. KODE LOKASI</p> 
 								   </td>
 								   <td width=\"60%\">
-										<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+										<p>:&nbsp;$kodeLokasi</p>
 								   </td>
 								   <td width=\"20%\">&nbsp;</td>
 							  </tr>
@@ -348,15 +333,12 @@ class report_engine extends core_api_report {
 			}
 					   
 				//uda dites footer disini
-			 if ($skpdeh != $row->NamaSatker && $no>1){
-
-			 $printluas=  number_format($luasTotal);
-			 $printperolehanTotal=  number_format($perolehanTotal);
+			 if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
+			 // $printluas=  number_format($luasTotal);
+			 $printperolehanTotal=number_format($perolehanTotal,2,",",".");
 			 $tabletotal="
 							<tr>
-								 <td style=\"text-align: center;\" colspan=\"4\">Total</td>
-								 <td align=\"right\">$printluas</td>
-								 <td colspan=\"7\"></td>
+								 <td style=\"text-align: center;\" colspan=\"12\">Jumlah Harga</td>
 								 <td align=\"right\">$printperolehanTotal</td>
 								 <td></td>
 							</tr>
@@ -372,17 +354,17 @@ class report_engine extends core_api_report {
 			 <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
 				  <tr>
-					   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+					   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
 					   <td>&nbsp;</td>
 					   <td>&nbsp;</td>
 					   <td>&nbsp;</td>
 					   <td>&nbsp;</td>
 					   <td>&nbsp;</td>
-					   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+					   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
 				  </tr>
 				  
 				  <tr>
-					   <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+					   <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
 					   <td>&nbsp;</td>
 					   <td>&nbsp;</td>
 					   <td>&nbsp;</td>
@@ -442,9 +424,9 @@ class report_engine extends core_api_report {
 
 					}
 					
-			 $skpdeh = $row->NamaSatker;
+			 $skpdeh = $row->kodeSatker;
 				
-			$satker_id=$row->LastSatker_ID;
+			$satker_id=$row->kodeSatker;
 			
 			//==add new==//
 		   $detailSatker=$this->get_satker($satker_id);
@@ -469,26 +451,16 @@ class report_engine extends core_api_report {
 		   $UnitOrganisasi = $detailSatker[4][1];
 		   $SubUnitOrganisasi = $detailSatker[4][2];
 		   $UPB = $detailSatker[4][3];
-		   $noReg=substr($row->NomorReg,0,17);
-		   $noKodeLokasi=substr($row->NomorReg,0,5);
+		   $noReg=substr($row->	kodeLokasi,0,17);
+			$noKodeLokasi=substr($row->kodeLokasi,0,8);
+			$thnLokasi= substr($row->Tahun,2,4);
+			$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+			   
 			//==end new==//
 			
 			 list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 			 list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
 			
-			 list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
-			   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-					   $TglSertifikat = "-";
-					   $tahun="-";
-					   $bulan="-";
-					   $tanggal="-";
-			   }else{
-					if ($tanggal !='' ){
-						 $row->TglSertifikat = "";
-						 
-					}
-					$row->TglSertifikat = "$tanggal/$bulan/$tahun";
-			   }
 
                                                   $body="";     
                                                   $body.="
@@ -571,7 +543,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -631,36 +603,47 @@ class report_engine extends core_api_report {
                                                   </thead>";
                                                  //udah dites disini footer 
                                                     
-                                                  
-												$skpdeh = $row->NamaSatker;
+                                                $skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
 												$status_print++;
 
                                              }
                                              //udah dites
-                                                       $hak_tanah =$this->get_hak_pakai($row->HakTanah);
-                                                       $perolehan = number_format($row->NilaiPerolehan);
-                                                       $luas = number_format($row->LuasTotal);
+                                                       // $hak_tanah =$this->get_hak_pakai($row->HakTanah);
+                                                       //$perolehan = number_format($row->NilaiPerolehan);
+													   $perolehan = number_format($row->NilaiPerolehan,2,",",".");
+                                                       $luas = number_format($row->LuasTotal,2,",",".");
                                                        $luasTotal = $luasTotal + $row->LuasTotal;
                                                        $perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-                                                       
+                                                       $length = strlen($row->noRegister);
+													   if($length == 1) $noReg = sprintf("%04s", $length);
+													   if($length == 2) $noReg = sprintf("%03s", $length);
+													   if($length == 3) $noReg = sprintf("%02s", $length);
+													   if($length == 4) $noReg = $row->noRegister;
+													   if($row->TglSertifikat == ''){
+															$tgl = ''; 
+													   }else{
+															list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
+															$tgl = "$tanggal/$bulan/$tahun";
+													   }
                                                        //($row->NoSertifikat == '') ? $dataNoSertifikat = "-" : $dataNoSertifikat = $row->NoSertifikat;
 													   //($row->Info == '') ? $dataInfo = "-" : $dataInfo = $row->Info; 
                                                             // echo "noreg".$row->NomorReg;
-															$temp=explode('.',$row->NomorReg);
-															$noReg=end($temp);
+															// $temp=explode('.',$row->NomorReg);
+															// $noReg=end($temp);
 															// echo $noReg; 
 															// $noReg=substr($row->NomorReg,18);
 															$body.="
                                                             <tr align=\"center\">
                                                                  <td style=\"text-align: center; width: 30px;font-weight: \">$no</td>
-                                                                 <td style=\"width: 160px;font-weight: \" align=\"left\">$row->NamaAset</td>
+                                                                 <td style=\"width: 160px;font-weight: \" align=\"left\">$row->Uraian</td>
                                                                  <td style=\"text-align: center; font-weight: \">$row->Kode</td>
                                                                  <td style=\"font-weight: \">$noReg</td>
                                                                  <td style=\"width: 50px; font-weight: \" align=\"right\">$luas</td>
                                                                  <td style=\"text-align: center; width: 75px; font-weight: \">$row->Tahun</td>
                                                                  <td style=\"width: 110px; font-weight: \">$row->Alamat</td>
-                                                                 <td style=\"text-align: center; width: 85px; font-weight: \">$hak_tanah</td>
-                                                                 <td style=\"width: 75px; font-weight: \">$tanggal/$bulan/$tahun</td>
+                                                                 <td style=\"text-align: center; width: 85px; font-weight: \">$row->HakTanah</td>
+                                                                 <td style=\"width: 75px; font-weight: \">$tgl</td>
                                                                  <td style=\"width: 60px;font-weight: \">$row->NoSertifikat</td>
                                                                  <td style=\"font-weight: width: 140px; \">$row->Penggunaan</td>
                                                                  <td style=\"width: 70px; text-align: center; \">$row->AsalUsul</td>
@@ -675,18 +658,15 @@ class report_engine extends core_api_report {
                                              }
                                              //udah dicoba ga muncul
                                              
-                                             $printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-
-                                                            <tr>
-                                                                 <td style=\"text-align: center;\" colspan=\"4\">Total</td>
-                                                                 <td align=\"right\">$printluas</td>
-                                                                 <td colspan=\"7\"></td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td></td>
-                                                            </tr></table>
-                                                            ";
+                                             // $printluas=  number_format($luasTotal);
+                                             $printperolehanTotal=number_format($perolehanTotal,2,",",".");
+											 $tabletotal=" 
+														<tr>
+															 <td style=\"text-align: center;\" colspan=\"12\">Jumlah Harga</td>
+															 <td align=\"right\">$printperolehanTotal</td>
+															 <td></td>
+														</tr>
+														</table>";	
 										$foot="<table border=\"0\">
 														<tr>
 															<td colspan=\"13\">&nbsp;</td>
@@ -698,17 +678,17 @@ class report_engine extends core_api_report {
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -765,7 +745,6 @@ class report_engine extends core_api_report {
           }
      }
    
-   
 
 //KIB-B (ok)
 	public function retrieve_html_kib_b($dataArr,$gambar){
@@ -803,15 +782,80 @@ class report_engine extends core_api_report {
                                         
 								$no=1;
 								$skpdeh="";
+								$thn="";
 								$status_print=0;
 								$perolehanTotal=0;
+								/*function object_to_array($data)
+								{
+									if (is_array($data) || is_object($data))
+									{
+										$result = array();
+										foreach ($data as $key => $value)
+										{
+											$result[$key] = object_to_array($value);
+										}
+										return $result;
+									}
+									return $data;
+								}
+								
+								// pr($result);
+								// exit;
+								$arrayObj = object_to_array($dataArr);
+								pr($arrayObj);
+								
+								$start = 0;
+								$kodeSatker = array();
+								
+								foreach ($arrayObj as $key => $val){
+									pr($val['Aset_ID']);
 									
+									if($start==0){
+										$kodeSatker = $val['kodeSatker'];
+									}
+									
+									
+								}foreach ($arrayObj as $k => $v){
+											
+									$newLastID[] = $v['kodeSatker'];
+									$newNama[] = $v['Uraian'];
+									$newNama2[][] = $v['Uraian'];
+									
+								}
+								$unique = array_unique($newLastID);
+								$uniqueNama = array_unique($newNama);
+								$temp = array ();
+								foreach ($arrayObj as $k => $v){
+									
+									if (in_array($v['kodeSatker'], $unique)){
+										
+										if (in_array($v['Uraian'], $uniqueNama)){
+											$newData[$v['kodeSatker']][$v['Uraian']][] = $v;
+												if(!in_array($v['Uraian'],$temp)){
+													$GetNewData[$v['kodeSatker']][$v['Uraian']][] = $v;
+													$temp[] = $v['Uraian'];
+												}
+										}
+										
+									}	
+								}
+								pr($newData);
+								// exit;
+								foreach ($arrayObj as $k => $val){
+			
+									$jumlah[$val['kodeSatker']][$val['Uraian']] = count($newData[$val['kodeSatker']][$val['Uraian']]); 
+								}
+								pr($jumlah);		
+								
+								exit;*/	
+								
                                    foreach ($dataArr as $row)
                                    {
                                              if ($skpdeh =="" && $no==1){
 												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												$thn=$row->Tahun;
 												//==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -836,7 +880,9 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -957,7 +1003,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -1011,7 +1057,7 @@ class report_engine extends core_api_report {
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
+                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
 
                                              	$printperolehanTotal=  number_format($perolehanTotal);
 												$tabletotal="
@@ -1096,9 +1142,9 @@ class report_engine extends core_api_report {
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
                                              
-                                             $skpdeh = $row->NamaSatker;
+                                             $skpdeh = $row->kodeSatker;
 												
-                                             $satker_id=$row->LastSatker_ID;
+                                             $satker_id=$row->kodeSatker;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -1123,7 +1169,9 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 											   
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
@@ -1210,7 +1258,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -1264,7 +1312,8 @@ class report_engine extends core_api_report {
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->NamaSatker;
+												$skpdeh = $row->kodeSatker;
+												$thn=$row->Tahun;
 												$status_print++;
 
                                              }
@@ -1289,7 +1338,7 @@ class report_engine extends core_api_report {
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
 																	<td style=\"width: 85px; text-align: center;\">$row->Kode</td>
 																	<td style=\"width: 150px; \">$row->NamaAset</td>
-																	<td style=\"width: 60px; text-align: center; width: 60px; \">$noReg</td>
+																	<td style=\"width: 60px; text-align: center; width: 60px; \">$row->noRegister</td>
 																	<td style=\"width: 43px; font-weight: \">$row->Merk</td>
 																	<td style=\"width: 60px;font-weight: \">$row->Ukuran</td>
 																	<td style=\"width: 60px;font-weight: \">$row->Material</td>
@@ -1395,8 +1444,7 @@ class report_engine extends core_api_report {
          
      }
 
- 
- 
+
 //KIB-C (ok)
 	public function retrieve_html_kib_c($dataArr,$gambar){
          
@@ -1434,6 +1482,7 @@ class report_engine extends core_api_report {
                                         
 									$no=1;
 									$skpdeh="";	
+									$thn="";
 							        $luaslantai=0;
 									$luasTotal=0;
 									$perolehanTotal=0;
@@ -1442,8 +1491,8 @@ class report_engine extends core_api_report {
                                    {
                                              if ($skpdeh =="" && $no==1){
 												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
 												//==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -1468,7 +1517,10 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -1509,7 +1561,7 @@ class report_engine extends core_api_report {
                 }
 
                                         
-												list($tahun, $bulan, $tanggal)= explode('-', $row->TglIMB);
+												list($tahun, $bulan, $tanggal)= explode('-', $row->TglSurat);
 												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
 														   $TglSertifikat = "-";
 														   $tahun="-";
@@ -1517,31 +1569,13 @@ class report_engine extends core_api_report {
 														   $tanggal="-";
 												   }else{
 														if ($tanggal !='' ){
-															 $row->TglIMB = "";
+															 $row->TglSurat = "";
 															 
 														}
-														$row->TglIMB = "$tanggal/$bulan/$tahun";
+														$row->TglSurat = "$tanggal/$bulan/$tahun";
 												   }
 												   
-													$baik= $row->Baik;
-													$ringan= $row->RusakRingan;
-													$rusak= $row->RusakBerat;
-													$tidakditemukan= $row->TidakDitemukan;
-													$kondisi="";
-													if ($baik == '1') {
-														$kondisi = "BB";
-													}
-													else if ($ringan == '1'){
-														$kondisi = "RR";
-													}
-													else if ($rusak == '1'){	
-														$kondisi = "RB";
-													}
-													else if ($tidakditemukan == '1'){
-														$kondisi = "TD";
-													}
-													else 
-														$kondisi = "";   
+														
 																			
                                         $body="
 											<body>
@@ -1623,7 +1657,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -1681,7 +1715,7 @@ class report_engine extends core_api_report {
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
+                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
   
 												$print_luas_lantai=number_format($total_luaslantai);
 												$printluas=  number_format($luasTotal);
@@ -1776,8 +1810,8 @@ class report_engine extends core_api_report {
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
                                              
-                                             $skpdeh = $row->NamaSatker;	
-                                             $satker_id=$row->LastSatker_ID;
+                                             $skpdeh = $row->kodeSatker;	
+                                             $satker_id=$row->kodeSatker;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -1802,13 +1836,15 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
 												
                                                                                                 
-												list($tahun, $bulan, $tanggal)= explode('-', $row->TglIMB);
+												list($tahun, $bulan, $tanggal)= explode('-', $row->TglSurat);
 												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
 														   $TglSertifikat = "-";
 														   $tahun="-";
@@ -1816,31 +1852,12 @@ class report_engine extends core_api_report {
 														   $tanggal="-";
 												   }else{
 														if ($tanggal !='' ){
-															 $row->TglIMB = "";
+															 $row->TglSurat = "";
 															 
 														}
-														$row->TglIMB = "$tanggal/$bulan/$tahun";
+														$row->TglSurat = "$tanggal/$bulan/$tahun";
 												   }
 												   
-												   $kondisi="";
-													if ($baik == '1') {
-														$kondisi = "BB";
-													}
-													else if ($ringan == '1'){
-														$kondisi = "RR";
-													}
-													else if ($rusak == '1'){	
-														$kondisi = "RB";
-													}
-													else if ($tidakditemukan == '1'){
-														$kondisi = "TD";
-													}
-													else 
-														$kondisi = "";   
-														
-												
-												
-                                                  
                                                   $body="";     
                                                   $body.="
                                                <body>
@@ -1922,7 +1939,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -1980,7 +1997,8 @@ class report_engine extends core_api_report {
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->NamaSatker;
+												$skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
 												$status_print++;
 
                                              }
@@ -1998,21 +2016,33 @@ class report_engine extends core_api_report {
 												// $noReg=substr($row->NomorReg,18);	
 												$temp=explode('.',$row->NomorReg);
 												$noReg=end($temp);
+												$kondisi= $row->kondisi;
+												if ($kondisi == '1') {
+													$ketKondisi = "Baik";
+												}
+												elseif ($kondisi == '2') {
+													$ketKondisi = "Kurang Baik";
+												}
+												elseif ($kondisi == '3') {
+													$ketKondisi = "Rusak Berat";
+												}else{
+													$ketKondisi = "";
+												} 	
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
-																	<td style=\"width: 150px\">$row->NamaAset</td>
+																	<td style=\"width: 150px\">$row->Uraian</td>
 																	<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 65px; text-align: center;\">$noReg</td>
-																	<td style=\"width: 70px;\">$kondisi</td>
+																	<td style=\"width: 65px; text-align: center;\">$row->noRegister</td>
+																	<td style=\"width: 70px;\">$ketKondisi</td>
 																	<td style=\"width: 67px; text-align: center;\">$bertingkat</td>
 																	<td style=\"width: 65px; text-align: center;\">$beton</td>
 																	<td style=\"width: 50px; text-align: right;\">$luaslantai </td>
 																	<td style=\"width: 100px;\">$row->Alamat</td>
 																	<td style=\"width: 66px;\">$tanggal/$bulan/$tahun</td>
-																	<td style=\"width: 66px;\">$row->NoIMB</td>
+																	<td style=\"width: 66px;\">$row->NoSurat</td>
 																	<td style=\"width: 50px; text-align: right;\">$luas</td>
-																	<td style=\"width: 70px; text-align: center;\">$status_tanah</td>
+																	<td style=\"width: 70px; text-align: center;\">$row->StatusTanah</td>
 																	<td style=\"width: 67px;\"></td>
 																	<td style=\"width: 65px; text-align: center;\">$row->AsalUsul</td>
 																	<td style=\"width: 50px; text-align: right;\">$perolehan</td>
@@ -2156,6 +2186,7 @@ class report_engine extends core_api_report {
                                      
 									
 									$skpdeh="";
+									$thn="";
 									$no=1;
 									$status_print=0;
 									$luasTotal=0;
@@ -2166,8 +2197,8 @@ class report_engine extends core_api_report {
                                    {
                                              if ($skpdeh == "" && $no==1){
 												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
 												//==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -2192,80 +2223,61 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+											   $thnLokasi= substr($row->Tahun,2,4);
+											   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-                if($nip_pengurus!="")
-                {
-                    $nip_pengurus_fix=$nip_pengurus;
-                }
-                else
-                {
-                    $nip_pengurus_fix='........................................';
-                }
+										   list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+											if($nip_pengurus!="")
+											{
+												$nip_pengurus_fix=$nip_pengurus;
+											}
+											else
+											{
+												$nip_pengurus_fix='........................................';
+											}
 
-                if($nip_pengguna!="")
-                {
-                    $nip_pengguna_fix=$nip_pengguna;
-                }
-                else
-                {
-                    $nip_pengguna_fix='........................................';
-                }
+											if($nip_pengguna!="")
+											{
+												$nip_pengguna_fix=$nip_pengguna;
+											}
+											else
+											{
+												$nip_pengguna_fix='........................................';
+											}
 
-                if($nama_jabatan_pengguna!="")
-                {
-                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
-                }
-                else
-                {
-                    $nama_jabatan_pengguna_fix='........................................';
-                }
+											if($nama_jabatan_pengguna!="")
+											{
+												$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+											}
+											else
+											{
+												$nama_jabatan_pengguna_fix='........................................';
+											}
 
-                if($nama_jabatan_pengurus!="")
-                {
-                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
-                }
-                else
-                {
-                    $nama_jabatan_pengurus_fix='........................................';
-                }
-
-                                        
-													$baik= $row->Baik;
-													$ringan= $row->RusakRingan;
-													$rusak= $row->RusakBerat;
-													$tidakditemukan= $row->TidakDitemukan;
-													$kondisi="";
-													if ($baik == '1') {
-														$kondisi = "BB";
-													}
-													else if ($ringan == '1'){
-														$kondisi = "RR";
-													}
-													else if ($rusak == '1'){	
-														$kondisi = "RB";
-													}
-													else if ($tidakditemukan == '1'){
-														$kondisi = "TD";
-													}
-													else 
-														$kondisi = "";
-														
-													list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
-												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-														   $TglSertifikat = "-";
-														   $tahun="-";
-														   $bulan="-";
-														   $tanggal="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglDokumen = "";
-															 
-														}
-														$row->TglDokumen = "$tanggal/$bulan/$tahun";
-												   }	
+											if($nama_jabatan_pengurus!="")
+											{
+												$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+											}
+											else
+											{
+												$nama_jabatan_pengurus_fix='........................................';
+											}
+			
+											list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
+										   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
+												   $TglSertifikat = "-";
+												   $tahun="-";
+												   $bulan="-";
+												   $tanggal="-";
+										   }else{
+												if ($tanggal !='' ){
+													 $row->TglDokumen = "";
+													 
+												}
+												$row->TglDokumen = "$tanggal/$bulan/$tahun";
+										   }	
                                         
                                         $body="
 											<body>
@@ -2347,7 +2359,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -2420,7 +2432,7 @@ class report_engine extends core_api_report {
 											}
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
+                                             if ($skpdeh != $row->NamaSatker && $thn = $row->Tahun && $no>1){
 												
 												$printluas=  number_format($luasTotal);
 												$printpanjang= number_format($panjangTotal);
@@ -2519,9 +2531,9 @@ class report_engine extends core_api_report {
                                                   $html[]=$head.$body.$tabletotal.$foot.$footer;
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
+                                             
+											 $skpdeh = $row->kodeSatker;
+											 $satker_id=$row->kodeSatker;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -2546,44 +2558,25 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
 												
-													$baik= $row->Baik;
-													$ringan= $row->RusakRingan;
-													$rusak= $row->RusakBerat;
-													$tidakditemukan= $row->TidakDitemukan;
-													$kondisi="";
-													if ($baik == '1') {
-														$kondisi = "BB";
+												list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
+												if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
+												   $TglSertifikat = "-";
+												   $tahun="-";
+												   $bulan="-";
+												   $tanggal="-";
+											   }else{
+													if ($tanggal !='' ){
+													 $row->TglDokumen = "";
 													}
-													else if ($ringan == '1'){
-														$kondisi = "RR";
-													}
-													else if ($rusak == '1'){	
-														$kondisi = "RB";
-													}
-													else if ($tidakditemukan == '1'){
-														$kondisi = "TD";
-													}
-													else 
-														$kondisi = "";
-														
-														list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
-												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-														   $TglSertifikat = "-";
-														   $tahun="-";
-														   $bulan="-";
-														   $tanggal="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglDokumen = "";
-															 
-														}
 														$row->TglDokumen = "$tanggal/$bulan/$tahun";
-												   }	
+											   }	
                                         	
                                                   
                                                   $body="";     
@@ -2667,7 +2660,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasii</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -2740,12 +2733,13 @@ class report_engine extends core_api_report {
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->NamaSatker;
+												$skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
 												$status_print++;
 
                                              }
                                              //udah dites
-													$status_tanah = $this->get_status_tanah($row->StatusTanah);
+													// $status_tanah = $this->get_status_tanah($row->StatusTanah);
 													$luasTotal = $luasTotal + $row->LuasTotal;
 													$panjangTotal = $panjangTotal + $row->Panjang;
 													$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
@@ -2757,30 +2751,42 @@ class report_engine extends core_api_report {
 													$lebar = number_format($dataLebar);
 													($row->Panjang == '') ? $dataPanjang = 0 : $dataPanjang = $row->Panjang;
 													$panjang = number_format($dataPanjang);
-													$konstuksi = $this->get_konstruksi($row->Konstruksi);
+													// $konstuksi = $this->get_konstruksi($row->Konstruksi);
 													//get_konstruksi
 													// $noReg=substr($row->NomorReg,18);
 													$temp=explode('.',$row->NomorReg);
 													$noReg=end($temp);
+													$kondisi= $row->kondisi;
+													if ($kondisi == '1') {
+														$ketKondisi = "Baik";
+													}
+													elseif ($kondisi == '2') {
+														$ketKondisi = "Kurang Baik";
+													}
+													elseif ($kondisi == '3') {
+														$ketKondisi = "Rusak Berat";
+													}else{
+														$ketKondisi = "";
+													} 	
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
-																	<td style=\"width: 106px;\">$row->NamaAset</td>
+																	<td style=\"width: 106px;\">$row->Uraian</td>
 																	<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 50px; text-align: center;\">$noReg</td>
-																	<td style=\"width: 66px;  \">$konstuksi</td>
+																	<td style=\"width: 50px; text-align: center;\">$row->noRegister</td>
+																	<td style=\"width: 66px;  \">$row->Konstruksi</td>
 																	<td style=\"width: 50px; text-align: right;\">$dataPanjang</td>
 																	<td style=\"width: 50px; text-align: right;\">$dataLebar</td>
 																	<td style=\"width: 50px; text-align: right;\">$luas</td>
 																	<td style=\"width: 90px; \">$row->Alamat</td>
 																	<td style=\"width: 61px;  \">$tanggal/$bulan/$tahun</td>
 																	<td style=\"width: 79px; \">$row->NoDokumen</td>
-																	<td style=\"width: 66px;  \">$status_tanah</td>
+																	<td style=\"width: 66px;  \">$row->StatusTanah</td>
 																	<td style=\"width: 66px; \"></td>
 																	<td style=\"width: 67px; text-align: center;\">$row->AsalUsul</td>
 																	<td style=\"width: 80px; text-align: right;\">$perolehan</td>
 																	
-																	<td style=\"width: 80px; \">$kondisi</td>
+																	<td style=\"width: 80px; text-align: center;\">$ketKondisi</td>
 																	<td style=\"width: 60px; \">$row->Info</td>
 																</tr>";
                                                             
@@ -2918,6 +2924,7 @@ class report_engine extends core_api_report {
                                      
 									//$no=1;
 									$skpdeh="";
+									$thn="";
 									$no=1;
 									//$skpdeh="";
 									$status_print=0;
@@ -2929,8 +2936,9 @@ class report_engine extends core_api_report {
                                    {
                                              if ($skpdeh == "" && $no==1){
 												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												$thn=$row->Tahun;
 												//==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -2955,7 +2963,9 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -3075,7 +3085,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -3145,7 +3155,7 @@ class report_engine extends core_api_report {
 											}
                                                        
 											
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
+                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
 												
 												$printjumlahTotal= number_format($jumlahTotal);
 												$printperolehanTotal=  number_format($perolehanTotal);	
@@ -3239,9 +3249,9 @@ class report_engine extends core_api_report {
                                                   $html[]=$head.$body.$tabletotal.$foot.$footer;
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
+                                             $skpdeh = $row->kodeSatker;
 												
-                                             $satker_id=$row->LastSatker_ID;
+                                             $satker_id=$row->kodeSatker;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -3266,7 +3276,9 @@ class report_engine extends core_api_report {
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -3352,7 +3364,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -3421,7 +3433,8 @@ class report_engine extends core_api_report {
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->NamaSatker;
+												$skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
 												$status_print++;
 
                                              }
@@ -3436,9 +3449,9 @@ class report_engine extends core_api_report {
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
-																	<td style=\"width: 150px; \">$row->NamaAset</td>
+																	<td style=\"width: 150px; \">$row->Uraian</td>
 																	<td style=\"width: 79px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 60px; text-align: center;\">$noReg</td>
+																	<td style=\"width: 60px; text-align: center;\">$row->noRegister</td>
 																	<td style=\"width: 150px;  \">$row->Judul</td>
 																	<td style=\"width: 70px;  \">$row->Spesifikasi</td>
 																	<td style=\"width: 70px;  \">$row->AsalDaerah</td>
@@ -3584,6 +3597,7 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                      
 									//$no=1;
 									$skpdeh="";
+									$thn="";
 									$no=1;
 									//$skpdeh="";
 									$status_print=0;
@@ -3595,8 +3609,9 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                    {
                                              if ($skpdeh == "" && $no==1){
 												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												$thn=$row->Tahun;
 												//==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -3621,7 +3636,9 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -3741,7 +3758,7 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -3818,7 +3835,7 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 											}
                                                        
 											
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
+                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
 												
 												$printluas=  number_format($luasTotal);
 													 $printperolehanTotal=  number_format($perolehanTotal);
@@ -3911,9 +3928,9 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                                   $html[]=$head.$body.$tabletotal.$foot.$footer;
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
+                                             $skpdeh = $row->kodeSatker;
 												
-                                             $satker_id=$row->LastSatker_ID;
+                                             $satker_id=$row->kodeSatker;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -3938,7 +3955,9 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -4024,7 +4043,7 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -4100,7 +4119,8 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->NamaSatker;
+												$skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
 												$status_print++;
 
                                              }
@@ -4126,8 +4146,8 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 																	<td style=\"width: 30px;font-weight: \">$no</td>
 																	<td style=\"width: 120px;font-weight: \">$row->NamaAset</td>
 																	<td style=\"width: ; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: ; text-align: center;\">$noReg</td>
-																	<td style=\"width: 79px;font-weight: \">$konstruksi_tanah</td>
+																	<td style=\"width: ; text-align: center;\">$row->noRegister</td>
+																	<td style=\"width: 79px;font-weight: \">$row->Konstruksi</td>
 																	<td style=\"width: 80px;font-weight: \">$bertingkat</td>
 																	<td style=\"width: 78px; font-weight: \">$beton</td>
 																	<td style=\"width: 51px; font-weight: \">$luas</td>
@@ -7246,8 +7266,8 @@ $body="
                                              if ($ruangan=="" && $no==1){
 												$body="";
 												//$skpdeh = $row->NamaSatker;
-												$ruangan = $row->Ruangan;
-												$satker_id=$row->LastSatker_ID;
+												$ruangan = $row->kodeRuangan;
+												$satker_id=$row->kodeSatker;
 												//==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -7272,7 +7292,9 @@ $body="
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 													list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -7325,9 +7347,10 @@ $body="
 															</td>
 															<br>
 															<br>
-															<td  rowspan=\"8\" style=\"width: 205px; text-align: center; padding-bottom:63px;\"><br><br><br>
-																<img style=\"width: 140px; height: 148px;\" alt=\"\" src=\"$gambar\"><br>
+															<td  rowspan=\"7\" style=\"width: 205px; text-align: center; padding-bottom:63px;\"><br><br><br>
+																<img style=\"width: 130px; height: 138px;\" alt=\"\" src=\"$gambar\"><br>
 															</td>
+															
 														</tr>
 														<br>
 														<tbody>
@@ -7365,7 +7388,11 @@ $body="
 														</tr>
 														<tr>
 															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 180px; padding-top:4px;\">RUANGAN</td>
-															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: 240px; padding-top:4px; \" colspan=\"2\">: $UnitOrganisasi</td>	
+															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: 200px; padding-top:4px; \" colspan=\"2\">: $ruangan</td>	
+														</tr>
+														<tr>
+															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 50px; padding-top:4px;\">NO.KODE LOKASI</td>
+															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: ; padding-top:4px; \" colspan=\"2\">: $kodeLokasi</td>	
 															
 														</tr>
 													</tbody>	
@@ -7434,7 +7461,7 @@ $body="
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($ruangan != $row->Ruangan && $no>1){
+                                             if ($ruangan != $row->kodeRuangan && $no>1){
 
                                              $printperolehanTotal=  number_format($perolehanTotal);
                                                $tabletotal="
@@ -7524,9 +7551,9 @@ $body="
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
                                              //$skpdeh = $row->NamaSatker;
-                                             $ruangan = $row->Ruangan;
+                                             $ruangan = $row->kodeRuangan;
 												
-                                             $satker_id=$row->LastSatker_ID;
+                                             $satker_id=$row->kodeSatker;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -7551,7 +7578,9 @@ $body="
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
 											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_penggguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
@@ -7572,8 +7601,8 @@ $body="
 																		</td>
 																		<br>
 																		<br>
-																		<td  rowspan=\"8\" style=\"width: 205px; text-align: center; padding-bottom:63px;\"><br>
-																			<img style=\"width: 140px; height: 148px;\" alt=\"\" src=\"$gambar\"><br>
+																		<td  rowspan=\"7\" style=\"width: 205px; text-align: center; padding-bottom:63px;\"><br>
+																			<img style=\"width: 130px; height: 138px;\" alt=\"\" src=\"$gambar\"><br>
 																		</td>
 																	</tr>
 																	<br>
@@ -7610,9 +7639,15 @@ $body="
 															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $UPB </td>
 															
 														</tr>
+														
 														<tr>
 															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 180px; padding-top:4px;\">RUANGAN</td>
-															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: 240px; padding-top:4px;\" colspan=\"2\">: $UnitOrganisasi</td>	
+															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: 200px; padding-top:4px; \" colspan=\"2\">: $ruangan</td>	
+															
+														</tr>
+														<tr>
+															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 50px; padding-top:4px;\">NO.KODE LOKASI</td>
+															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: ; padding-top:4px; \" colspan=\"2\">: $kodeLokasi</td>	
 															
 														</tr>
 													</tbody>	
@@ -7681,8 +7716,8 @@ $body="
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->NamaSatker;
-												$ruangan = $row->Ruangan;
+												$skpdeh = $row->kodeSatker;
+												$ruangan = $row->kodeRuangan;
 												$status_print++;
 
                                              }
@@ -7697,22 +7732,35 @@ $body="
 												($row->Material == '') ? $material = "-" : $material = $row->Material;
 												($row->TahunBuat == '') ? $tahun = "-" : $tahun = $row->TahunBuat;
 												($row->NoSeri == '') ? $noseri = "-" : $noseri = $row->NoSeri;*/
-					
+												$ketKondisi = $row->kondisi;
+												if($ketKondisi == 1){
+													$baik = "Baik";
+													$kurangBaik ="-";
+													$rusakBerat="-";
+												}elseif($ketKondisi == 2){
+													$baik = "-";
+													$kurangBaik ="KurangBaik";
+													$rusakBerat="-";
+												}elseif(($ketKondisi == 3)){
+													$baik = "-";
+													$kurangBaik ="-";
+													$rusakBerat="Rusak Berat";
+												}
 												$body.="
 												<tr>
 													<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-													<td style=\"width: 120px;font-weight: \">$row->NamaAset</td>
+													<td style=\"width: 120px;font-weight: \">$row->Uraian</td>
 													<td style=\"width: 84px;font-weight: \" align=\"center\">$row->Merk</td>
 													<td style=\"width: 84px;font-weight: \" align=\"center\">$row->NoSeri</td>
 													<td style=\"width: 84px; font-weight: \" align=\"center\">$row->Ukuran</td>
 													<td style=\"width: 85px;font-weight: \" align=\"center\">$row->Material</td>
 													<td style=\"width: 84px; font-weight: \" align=\"center\">$row->Tahun</td>
 													<td style=\"width: 85px; font-weight: \" align=\"center\">$row->Kode</td>
-													<td style=\"width: 84px;font-weight: \" align=\"center\">$row->Kuantitas</td>
+													<td style=\"width: 84px;font-weight: \" align=\"center\">$row->noRegister</td>
 													<td style=\"width: 85px;font-weight: \" align=\"right\">$perolehan</td>
-													<td style=\"width: 84px;font-weight: \" align=\"center\">$row->Baik</td>
-													<td style=\"width: 85px;font-weight: \" align=\"center\">$row->RusakRingan</td>
-													<td style=\"width: 84px;font-weight: \" align=\"center\">$row->RusakBerat</td>
+													<td style=\"width: 84px;font-weight: \" align=\"center\">$baik</td>
+													<td style=\"width: 85px;font-weight: \" align=\"center\">$kurangBaik</td>
+													<td style=\"width: 84px;font-weight: \" align=\"center\">$rusakBerat</td>
 													<td style=\"width: 85px;font-weight: \" align=\"center\">$row->Info</td>
 												</tr>
 												";
@@ -33097,17 +33145,26 @@ public function get_jabatan($satker,$jabatan){
 		$namajabatan="Kepala Daerah";
 	else if ($jabatan=="6")
 		$namajabatan="Pengelola BMD";
-			
-	$query="select NIPPejabat, NamaPejabat from Pejabat where Satker_ID='$satker' and NamaJabatan='$namajabatan' limit 1";
-	$result=$this->retrieve_query($query);
-	
-            if($result!="")
+	$nip='';
+	$nama_pejabat='';
+	$query_getIDsatker="select Satker_ID from satker where kode='$satker'";	
+	$result=$this->retrieve_query($query_getIDsatker);	
+	if($result!=""){
 		foreach($result as $value){
-			$nip=$value->NIPPejabat;
-			$nama_pejabat=$value->NamaPejabat;
-			
+			$Satker_ID=$value->Satker_ID;
 		}
-        return array($nip,$nama_pejabat);
+		$queryPejabat="select NIPPejabat, NamaPejabat from Pejabat where Satker_ID='$Satker_ID' and NamaJabatan='$namajabatan' limit 1";
+		$result2=$this->retrieve_query($queryPejabat);
+	
+            if($result2!=""){
+				foreach($result2 as $val){
+					$nip=$val->NIPPejabat;
+					$nama_pejabat=$val->NamaPejabat;
+				}
+			}	
+	}
+	
+	return array($nip,$nama_pejabat);
 			
 		
 	}
@@ -33135,7 +33192,7 @@ public function get_satker($satker){
     }
 	// pr($bidang);	
 		return array($bidang);*/
-	$query="select KodeSektor,KodeSatker,KodeUnit,Gudang from satker where Satker_ID='$satker' ";
+	$query="select KodeSektor,KodeSatker,KodeUnit,Gudang from satker where kode='$satker' ";
 	// pr($query);
 	$result=$this->retrieve_query($query);
 	// pr($result);
@@ -33148,7 +33205,7 @@ public function get_satker($satker){
 		}
     }
 	$parameter ="";
-	if($KodeSektor != ""){
+	/*if($KodeSektor != ""){
 		$parameter = 1;
 		// echo "lv1";
 	}
@@ -33159,7 +33216,7 @@ public function get_satker($satker){
 	if($KodeSektor != "" && $KodeSatker != "" && $KodeUnit !=""){
 		// echo "lv3";
 		$parameter = 3;
-	}
+	}*/
 	if($KodeSektor != "" && $KodeSatker != "" && $KodeUnit !="" && $Gudang){
 		// echo "lv4";
 		$parameter = 4;
@@ -33167,7 +33224,7 @@ public function get_satker($satker){
 	// echo "parameter =".$parameter;	
 	// exit;
 	switch($parameter){
-		case 1:
+		/*case 1:
 			// echo "lv1";
 			//cek lvl 1		
 				$querylv1="select KodeSektor,KodeSatker,KodeUnit,Gudang,NamaSatker from satker 
@@ -33290,12 +33347,12 @@ public function get_satker($satker){
 							}
 						
 				}
-		break;
+		break;*/
 		case 4:
 			// echo "lv4";
 				//cek lvl 4		
 				$querylv4="select KodeSektor,KodeSatker,KodeUnit,Gudang,NamaSatker from satker 
-						where Satker_ID='$satker' 
+						where kode='$satker' 
 						AND KodeSektor is not null 
 						AND KodeSatker is not null  
 						AND KodeUnit is not null 
@@ -33352,10 +33409,12 @@ public function get_konstruksi($konstruksi_tanah){
 	}
    
 public function get_bertingkat($bertingkat){
-	if($bertingkat == 0)
-		$tingkat = "Tidak";
-	else if($bertingkat == 1 )
-		$tingkat = "Tingkat";
+	if($bertingkat == 0){
+		$tingkat = "Tidak";}
+	else if($bertingkat == 1 ){
+		$tingkat = "Tingkat";}
+	else{
+		$tingkat="";}
     return $tingkat;
 		 }
      
