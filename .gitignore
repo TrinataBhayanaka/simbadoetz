@@ -6,5 +6,4 @@ log/*
 simbada_bimtek/*
 report/output/*.pdf
 report/data/*
-report/template/*
 report/footer/*
