@@ -61,7 +61,7 @@ $menu_id = 1;
 			</ul>
 			<div class="breadcrumb">
 				<div class="title">SP2D Penunjang</div>
-				<div class="subtitle">Daftar Kontrak</div>
+				<div class="subtitle">Daftar SP2D Penunjang</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">

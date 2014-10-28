@@ -92,28 +92,6 @@ $menu_id = 1;
 		
 	//end SQL
 ?>
-	<script>
-	function autoKelompok(from,dest){
-
-		var id = $('#'+from).val();	
-	
-		$.post("<?=$url_rewrite?>/module/perolehan/ajaxRekening.php", { id: id, idhtml: from}, 
-					function(data){ 
-						$("#li"+dest).removeAttr("style");
-						var locType = $('#'+dest);
-						$('#'+dest)
-							.find('option')
-							.remove()
-							.end()
-						;
-						locType.append("<option value=''>--Pilih "+dest+"--</option>")
-						for(i=0;i<data.length;i++){
-							locType.append("<option value='" + data[i].KodeRekening+"'>" + data[i].NamaRekening + "</option>")
-						}
-				}, "JSON");
-		
-	}
-	</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -132,41 +110,7 @@ $menu_id = 1;
 				 <div class="formKontrak">
 						
 						<ul>
-							<li>
-								<span class="span2">Rekening</span>
-								<select id="tipe" onchange="autoKelompok('tipe','kelompok')">
-									<option value="0">--Pilih Tipe--</option>
-									<?php
-										foreach ($Tipe as $key => $val) {
-											echo "<option value='{$val['KodeRekening']}'>{$val['NamaRekening']}</option>";
-										}
-									?>
-								</select><span>	
-							</li>
-							<li id="likelompok" style="display:none">
-								<span class="span2">&nbsp;</span>
-								<select id="kelompok" onchange="autoKelompok('kelompok','jenis')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="lijenis" style="display:none">
-								<span class="span2">&nbsp;</span>
-								<select id="jenis" onchange="autoKelompok('jenis','objek')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="liobjek" style="display:none">
-								<span class="span2">&nbsp;</span>
-								<select id="objek" onchange="autoKelompok('objek','rincianobjek')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="lirincianobjek" style="display:none">
-								<span class="span2">&nbsp;</span>
-								<select id="rincianobjek" name="kdRekening" >
-									<option></option>
-								</select>	
-							</li>
+							<?php selectRekening('kdRekening','255',true,false); ?><br />
 							<li>
 								<span class="span2">Jumlah</span>
 								<input type="text" name="jumlah" />
