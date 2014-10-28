@@ -105,5 +105,56 @@ function selectAset($name,$size=300,$br=false,$upd=false){
 
 }
 
+function selectRekening($name,$size=300,$br=false,$upd=false){
+
+	global $url_rewrite;
+	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+	?>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	//fungsi dropselect
+				$("#<?=$name?>").select2({
+               		placeholder: "Pilih Kode Rekening",
+				    minimumInputLength: 2,
+				    ajax: {
+				        url: "<?=$url_rewrite?>/function/api/rekening.php",
+				        dataType: 'json',
+				        type: "GET",
+				        quietMillis: 50,
+				        data: function (term) {
+				            return {
+				                term: term
+				            };
+				        },
+				        results: function (data) {
+				            return {
+				                results: $.map(data, function (item) {
+				                    return {
+				                        text: item.KodeRekening+" "+item.NamaRekening,
+				                        id: item.KodeRekening
+				                    }
+				                })
+				            };
+				        }
+				    }
+				});
+
+			var id = "<?=$upd?>";
+				if(id)
+				{
+					$("#<?=$name?>").select2('data', {id: id, text: id});	
+				}	
+
+	} );
+	</script>
+	<li>
+		<span class="<?=$span?>">Kode Rekening </span><?=$enter?>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
+	</li>
+	
+	
+	<?php
+
+}
 
 ?>

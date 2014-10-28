@@ -14,14 +14,15 @@ $mode = $_REQUEST['mode'];
 $tahun = $_REQUEST['tahun_kir'];
 $tab = $_REQUEST['tab'];
 $skpd_id = $_REQUEST['skpd_id2'];
-
-
+$kir = $_REQUEST['kir'];
+pr($_REQUEST);
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
-    "tab"=>$tab
+    "tab"=>$tab,
+	"kir"=>$kir
 );
 
 //mendeklarasikan report_engine. FILE utama untuk reporting
@@ -32,10 +33,12 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
+// exit;
 // pr($query);
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 

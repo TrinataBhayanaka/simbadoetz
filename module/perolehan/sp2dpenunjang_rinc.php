@@ -68,36 +68,13 @@ $menu_id = 1;
 			$sqlnmBrg = mysql_query("SELECT NamaRekening FROM koderekening WHERE KodeRekening = '{$value['kdRekening']}' LIMIT 1");
 			while ($uraian = mysql_fetch_array($sqlnmBrg)){
 					$tmp[] = $uraian;
-					$sp2drinc[$key]['uraian'] = $tmp[0]['NamaRekening'];
+					$sp2drinc[$key]['uraian'] = $tmp[$key]['NamaRekening'];
 				}
 		}	
 	}
-	
 		
 	//end SQL
 ?>
-	<script>
-	function autoKelompok(from,dest){
-
-		var id = $('#'+from).val();	
-	
-		$.post("<?=$url_rewrite?>/module/perolehan/ajaxRekening.php", { id: id, idhtml: from}, 
-					function(data){ 
-						$("#li"+dest).removeAttr("style");
-						var locType = $('#'+dest);
-						$('#'+dest)
-							.find('option')
-							.remove()
-							.end()
-						;
-						locType.append("<option value=''>--Pilih "+dest+"--</option>")
-						for(i=0;i<data.length;i++){
-							locType.append("<option value='" + data[i].KodeRekening+"'>" + data[i].NamaRekening + "</option>")
-						}
-				}, "JSON");
-		
-	}
-	</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -107,7 +84,7 @@ $menu_id = 1;
 			</ul>
 			<div class="breadcrumb">
 				<div class="title">Rincian SP2D Penunjang</div>
-				<div class="subtitle">Daftar Kontrak</div>
+				<div class="subtitle">Rincian SP2D Penunjang</div>
 			</div>	
 			<div class="grey-container shortcut-wrapper">
 				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_simbada.php">

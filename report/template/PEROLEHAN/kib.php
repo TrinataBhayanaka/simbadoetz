@@ -2,12 +2,12 @@
 
 include "../../../config/config.php";
 include "../../report_engine.php";
-
+// echo "masukk";
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
 $tahun = $_REQUEST['tahun'];
-$skpd_id = $_REQUEST['skpd_id'];
+$skpd_id = $_REQUEST['kodeSatker'];
 $kelompok=$_REQUEST['bidang'];
 $tipe=$_REQUEST['tipe_file'];
 $kib = $_REQUEST['kib'];
@@ -23,8 +23,8 @@ $data=array(
     "tab"=>$tab
 );
 
-//print_r($_POST);
-
+// print_r($_POST);
+// exit;
 
 $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tahun=$tahun&kib=$kib&bidang=$kelompok&tipe_file=";
 // echo $paramater_url;

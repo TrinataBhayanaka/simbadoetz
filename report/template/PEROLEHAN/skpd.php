@@ -10,11 +10,12 @@ $kelompok = $_REQUEST['kelompok_id'];
 $tab 	  = $_REQUEST['tab'];
 $tahun	  = $_REQUEST['tahun_buku_inventaris_skpd'];
 $skpd_id  = $_REQUEST['skpd_id3'];
-
+$bukuInv  = $_REQUEST['bukuInv'];
+pr($_REQUEST);
 $penanda  ='1';
 $tipe	  = $_REQUEST['tipe_file'];
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id3=$skpd_id&tahun_buku_inventaris_skpd=$tahun&kelompok_id=$kelompok&penanda=$penanda&tipe_file=";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id3=$skpd_id&tahun_buku_inventaris_skpd=$tahun&kelompok_id=$kelompok&penanda=$penanda&bukuinv=$bukuInv&tipe_file=";
 
 $REPORT=new report_engine();
   
