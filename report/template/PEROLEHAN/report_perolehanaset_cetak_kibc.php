@@ -18,7 +18,6 @@ $tahun = $_GET['tahun'];
 $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
 
-
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
@@ -41,6 +40,7 @@ $query=$REPORT->list_query($data);
 // mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
+
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 

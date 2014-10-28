@@ -17,6 +17,8 @@ $tab 	= $_GET['tab'];
 $penanda='1';
 $skpd_id = $_GET['skpd_id3'];
 $tipe	=$_GET['tipe_file'];
+$bukuInv  = $_GET['bukuinv'];
+pr($_GET);
 
 $data=array(
     "modul"=>$modul,
@@ -25,7 +27,8 @@ $data=array(
     "penanda"=>$penanda,
     "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
-    "tab"=>$tab
+    "tab"=>$tab,
+	"bukuInv"=>$bukuInv
 );
 
 //mendeklarasikan report_engine. FILE utama untuk reporting
@@ -36,8 +39,8 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-// pr($query);
-
+pr($query);
+exit;
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);

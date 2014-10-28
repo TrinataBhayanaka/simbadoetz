@@ -192,7 +192,7 @@ $resetDataView = $DBVAR->is_table_exists('pemeliharaan_filter_'.$SessionUser['se
 										</tr>
 									<tr>
                                                             <td>
-                                                                    <input type="text" name="pem_lokasi" id="pem_lokasi" style="width:450px;" readonly="readonly" value="">
+                                                             <input type="text" name="pem_lokasi" id="pem_lokasi" style="width:450px;" readonly="readonly" value="">
                                                              <input type="button" name="idbtnlookuplokasi" id="idbtnlookuplokasi" value="Pilih" onclick = "showSpoiler(this);">
                                                                     <div class="inner" style="display:none;">
                                                                             <style>
