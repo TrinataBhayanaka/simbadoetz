@@ -1,6 +1,9 @@
 <?php
 include "../../config/config.php";
 
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+
+
     $menu_id = 30;
     ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
     $SessionUser = $SESSION->get_session_user();
@@ -12,11 +15,12 @@ include "../../config/config.php";
         $tgl_akhir_fix=format_tanggal_db2($tgl_akhir);
         $no_penetapan_penggunaan=$_POST['nopenet'];
         $satker=$_POST['skpd_id'];
-        $submit=$_POST['tampil'];
-            
-            
+        $submit=$_POST['submit'];
+        
+    	
       if (isset($submit)){
             if ($tgl_awal=="" && $tgl_akhir=="" && $no_penetapan_penggunaan=="" && $satker==""){
+            	
     ?>
                 <script>var r=confirm('Tidak ada isian filter');
                             if (r==false){
@@ -32,7 +36,11 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-			?>
+
+
+	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST);
+
+?>
 
 
           <section id="main">
@@ -56,6 +64,7 @@ include "../../config/config.php";
 						<?php
 								$offset = @$_POST['record'];
 								$query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'validasi'";
+								pr($query_apl);
 										$result_apl = $DBVAR->query($query_apl) or die ($DBVAR->error());
 										$data_apl = $DBVAR->fetch_object($result_apl);
 										
@@ -79,13 +88,13 @@ include "../../config/config.php";
 							if (isset($_POST['tampil']))
 							{
 								// echo "masukk";
-								unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-								$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
-								$data = $RETRIEVE->retrieve_daftar_penetapan_penggunaan($parameter);
+								// unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+								// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
+								// $data = $RETRIEVE->retrieve_daftar_penetapan_penggunaan($parameter);
 							}else{
-								$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
-								$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
-								$data = $RETRIEVE->retrieve_daftar_penetapan_penggunaan($parameter);
+								// $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+								// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
+								// $data = $RETRIEVE->retrieve_daftar_penetapan_penggunaan($parameter);
 							}
 							
 							
@@ -127,7 +136,7 @@ include "../../config/config.php";
 				</thead>
 				<tbody>		
 				  <?php
-					if (!empty($data['dataArr']))
+					if (!empty($data))
 					{
 						$disabled = '';
 						// $pid = 0;
@@ -139,7 +148,9 @@ include "../../config/config.php";
 					}else{
 						$no = 1;
 					}
-					foreach($data['dataArr'] as $key => $hsl_data)
+
+
+					foreach($data as $key => $hsl_data)
 						{
 					?>  
 					<tr class="gradeA">
@@ -148,9 +159,9 @@ include "../../config/config.php";
 						<td><?php $change=$hsl_data['TglSKKDH']; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
 						<td>	
 						
-                                            <!--<a href="<?php echo "$url_rewrite/report/template/PENGGUNAAN/";?>tes_class_penetapan_aset_yang_digunakan.php?menu_id=30&mode=1&id=<?php echo "$hsl_data[Penggunaan_ID]";?>" target="_blank">Cetak</a> ||--> 
-											<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_edit.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>">Edit</a> ||
-											<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>">Hapus</a>  
+                            <!--<a href="<?php echo "$url_rewrite/report/template/PENGGUNAAN/";?>tes_class_penetapan_aset_yang_digunakan.php?menu_id=30&mode=1&id=<?php echo "$hsl_data[Penggunaan_ID]";?>" target="_blank">Cetak</a> ||--> 
+							<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_edit.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>">Edit</a> ||
+							<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>">Hapus</a>  
 						</td>
 					</tr>
 					 <?php 

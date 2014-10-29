@@ -1,8 +1,11 @@
-    <?php
-        include "../../config/config.php"; 
-        include "$path/header.php";
-        include "$path/title.php";
-        // pr($_SESSION);
+<?php
+    include "../../config/config.php"; 
+    include "$path/header.php";
+    include "$path/title.php";
+    
+
+    $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+
         $submit=$_POST['submit2'];
         
         $menu_id = 30;
@@ -12,16 +15,12 @@
         
         if (isset($submit))
 			{
-		
-						unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-						$ses_uid=$_SESSION['ses_uid'];
-						$parameter=array('ses_uid'=>$ses_uid);
-						$data = $RETRIEVE->retrieve_penetapan_penggunaan_eksekusi($parameter);
+				
+				// pr($_POST);
+				$data = $PENGGUNAAN->retrieve_penetapan_penggunaan_eksekusi($_POST);
+				// pr($data);
 			}
-                                
-		// echo '<pre>';
-		// print_r($data['dataArr']);
-		// echo '</pre>';
+        
 	?>
 
 <html>
