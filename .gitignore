@@ -1,4 +1,5 @@
-config/*
+config/database.php
+config/path_system.php
 doc/*
 foto/*
 fotonota/*
@@ -7,3 +8,4 @@ simbada_bimtek/*
 report/output/*.pdf
 report/data/*
 report/footer/*
+db/simda_to_simbada.sql
