@@ -223,9 +223,9 @@ $menu_id = 10;
 ?>
 
 <script type="text/javascript">
-	$(document).on('change','#aset', function(){
+	$(document).on('change','#kodeKelompok', function(){
 
-		var kode = $('#aset').val();
+		var kode = $('#kodeKelompok').val();
 		var gol = kode.split(".");
 
 		if(gol[0] == '01')

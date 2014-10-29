@@ -1682,7 +1682,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $value = implode(',', $tmpvalue2);
 
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
-
+            // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
             $query_id = mysql_query("SELECT {$idkey} FROM {$tabel} ORDER BY {$idkey} DESC LIMIT 1");

@@ -529,7 +529,9 @@ class DELETE extends DB
     {
 
         global $url_rewrite;    
-    
+
+        pr($data);exit;
+
         $query = "DELETE FROM kontrak WHERE id = '{$id}'";
         $result = $this->query($query) or die ($this->error());
         
@@ -670,7 +672,7 @@ class DELETE extends DB
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
-                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$idkontrak}\">";
+                return true;
                 exit;
             }
 
@@ -705,7 +707,8 @@ class DELETE extends DB
 
             }
 
-            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$idkontrak}\">";
+            return true;
+            exit;
     
     
     

@@ -29,11 +29,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">SP2D</li>
+			  <li class="active">Posting</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">SP2D</div>
+				<div class="title">Posting</div>
 				<div class="subtitle">Daftar Kontrak</div>
 			</div>	
 
@@ -87,7 +87,8 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<th>Tanggal</th>
 						<th>Tipe Aset</th>
 						<th>Nilai</th>
-						<th>SP2D</th>
+						<th>Status Posting</th>
+						<th>Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -103,8 +104,9 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=$val['tglKontrak']?></td>
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
+						<td class="center"><?=($val['n_status']==1) ? '<span class="label label-success">SUDAH</span>' : '<span class="label label-Default">BELUM</span>'?></td>
 						<td class="center">
-						<a href="posting.php?id=<?=$val['id']?>" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i>&nbsp;tambah</a>
+						<a href="kontrak_postingRincian.php?id=<?=$val['id']?>" class="btn btn-default btn-small"><i class="fa fa-book"></i>&nbsp;Posting</a>
 						</td>
 						
 					</tr>

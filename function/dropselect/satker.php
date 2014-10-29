@@ -115,6 +115,7 @@ function selectRekening($name,$size=300,$br=false,$upd=false){
 	//fungsi dropselect
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Kode Rekening",
+               		dropdownAutoWidth: 'true',
 				    minimumInputLength: 2,
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/rekening.php",
@@ -149,7 +150,7 @@ function selectRekening($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Rekening </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:50px"/>
 	</li>
 	
 	

@@ -13,51 +13,49 @@ $menu_id = 1;
 	//SQL Sementara
 	$idKontrak = $_GET['id'];
 	$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}'");
-		while ($dataKontrak = mysql_fetch_array($sql)){
-				$kontrak[] = $dataKontrak;
+		while ($dataKontrak = mysql_fetch_assoc($sql)){
+				$kontrak = $dataKontrak;
 			}
-
-	//post
-	if(isset($_POST['nosp2d'])){
-
-		foreach ($_POST as $key => $val) {
-				$tmpfield[] = $key;
-				$tmpvalue[] = "'$val'";
-			}
-			$field = implode(',', $tmpfield);
-			$value = implode(',', $tmpvalue);
-
-			$query = mysql_query("INSERT INTO sp2d ({$field}) VALUES ($value)");
-
-			echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dtermin.php?id={$idKontrak}\">";
-
-	}
 
 	//getdata
-	$sql = mysql_query("SELECT * FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '1'");
-		while ($dataSP2D = mysql_fetch_array($sql)){
-				$sp2d[] = $dataSP2D;
+	$RKsql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
+				$rKontrak[] = $dataRKontrak;
 			}
-	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '1'");
-		while ($sumsp2d = mysql_fetch_array($sql)){
-				$totalsp2d[] = $sumsp2d;
+	foreach ($rKontrak as $key => $value) {
+		$sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+		while ($uraian = mysql_fetch_assoc($sqlnmBrg)){
+				$tmp = $uraian;
+				$rKontrak[$key]['uraian'] = $tmp['Uraian'];
 			}
-	$sisaKontrak = $kontrak[0]['nilai']-$totalsp2d[0]['total'];
+	}
 
+	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
+		while ($dataSP2D = mysql_fetch_assoc($sql)){
+				$sumsp2d = $dataSP2D;
+			}
+
+	//sum total 
+	$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	while ($sum = mysql_fetch_assoc($sqlsum)){
+				$sumTotal = $sum;
+			}
+	// pr($sumsp2d);	
 	//end SQL
 ?>
 	
 	<section id="main">
-	<ul class="breadcrumb">
+		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">SP2D Termin</li>
+			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Posting</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">SP2D Termin</div>
-				<div class="subtitle">Daftar SP2D Termin</div>
-			</div>
+				<div class="title">Posting</div>
+				<div class="subtitle">Daftar Kontrak</div>
+			</div>	
 
 			<div class="grey-container shortcut-wrapper">
 				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_simbada.php">
@@ -95,8 +93,8 @@ $menu_id = 1;
 				    </span>
 					<span class="text">Posting</span>
 				</a>
-			</div>
-
+			</div>		
+		
 		<section class="formLegend">
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
@@ -104,11 +102,11 @@ $menu_id = 1;
 						<ul>
 							<li>
 								<span class="labelInfo">No. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['noKontrak']?>" disabled/>
+								<input type="text" value="<?=$kontrak['noKontrak']?>" disabled/>
 							</li>
 							<li>
 								<span class="labelInfo">Tgl. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
+								<input type="text" value="<?=$kontrak['tglKontrak']?>" disabled/>
 							</li>
 						</ul>
 							
@@ -117,53 +115,59 @@ $menu_id = 1;
 						
 						<ul>
 							<li>
-								<span class="labelInfo">Nilai Kontrak</span>
-								<input type="text" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
+								<span class="labelInfo">Nilai SPK</span>
+								<input type="text" value="<?=number_format($kontrak['nilai'])?>" disabled/>
 							</li>
 							<li>
-								<span class="labelInfo">Total SP2D</span>
-								<input type="text" value="<?=isset($totalsp2d) ? number_format($totalsp2d[0]['total']) : '0'?>" disabled/>
-							</li>
-							<li>
-								<span  class="labelInfo">Sisa Kontrak</span>
-								<input type="text" value="<?=isset($sisaKontrak) ? number_format($sisaKontrak) : 0?>" disabled/>
+								<span  class="labelInfo">Total Rincian Barang</span>
+								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
 							</li>
 						</ul>
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			
-			<p><a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah SP2D Termin</a>
+			<?php
+				if($kontrak['nilai'] != $sumTotal['total']){
+					echo "<p style='color:red'>* Total Rincian Barang tidak sama dengan total SPK</p>";
+					$disabled = "disabled";
+				}
+			?>
+			<p><a href="kontrak_postingFinal.php?id=<?=$idKontrak?>" class="btn btn-info btn-small" <?=$disabled?>><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
+			&nbsp;
+			<a class="btn btn-danger btn-small" disabled><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 			&nbsp;</p>	
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>No. SP2D</th>
-						<th>Tanggal</th>
-						<th>Nilai</th>
-						<th>Keterangan</th>
-						<th>Aksi</th>
+						<th>Kode Barang</th>
+						<th>Nama Barang</th>
+						<th>Jumlah</th>
+						<th>Harga Satuan</th>
+						<th>Total</total>
+						<th>Penunjang</th>
+						<th>Total Perolehan</th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php
-					if($sp2d){
+					if($rKontrak){
 						$i = 1;
-						foreach ($sp2d as $key => $value) {
+						foreach ($rKontrak as $key => $value) {
 							
 						
 				?>
 					<tr class="gradeA">
 						<td><?=$i?></td>
-						<td><?=$value['nosp2d']?></td>
-						<td><?=$value['tglsp2d']?></td>
-						<td class="center"><?=number_format($value['nilai'])?></td>
-						<td class="center"><?=$value['keterangan']?></td>
-						<td class="center">
-						<a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
-						<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
+						<td><?=$value['kodeKelompok']?></td>
+						<td><?=$value['uraian']?></td>
+						<td><?=$value['Kuantitas']?></td>
+						<td><?=number_format($value['Satuan'])?></td>
+						<td><?=number_format($value['NilaiPerolehan'])?></td>
+						<td><?=number_format($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'])?></td>
+						<td><?=number_format($value['NilaiPerolehan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']))?></td>
+						
 					</tr>
 				<?php
 					$i++;
@@ -185,41 +189,21 @@ $menu_id = 1;
 		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div id="titleForm" class="modal-header" >
 				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				  <h3 id="myModalLabel">Form Tambah SP2D Termin</h3>
+				  <h3 id="myModalLabel">&nbsp;</h3>
 				</div>
 			<form action="" method="POST">
 				<div class="modal-body">
 				 <div class="formKontrak">
-						<h3 class="grs-bottom"><span class="titleForm">SP2D Termin </span></h3>
-						<ul>
-							<li>
-								<span class="labelkontrak">No.SP2D</span>
-								<input type="text" name="nosp2d"/>
-							</li>
-							<li>
-								<span class="labelkontrak">Tgl.SP2D</span>
-								<input type="text" name="tglsp2d" />
-							</li>
-							<li>
-								<span  class="labelkontrak">Nilai</span>
-								<input type="text" name="nilai"/>
-							</li>
-							<li>
-								<span class="labelkontrak">Keterangan</span>
-								<textarea name="keterangan"></textarea>
-							</li>
-						</ul>
-							<!-- Hidden -->
-							<input type="hidden" name="idKontrak" value="<?=$idKontrak?>" >
-							<input type="hidden" name="type" value="1" >
+						<p>Sukses</p>
+							
 					</div>
 					
 			</div>
 			<div class="modal-footer">
 			  <button class="btn" data-dismiss="modal">Kembali</button>
-			  <button class="btn btn-primary">Simpan</button>
+			  <button class="btn btn-primary">Ok</button>
 			</div>
-		</form>
+
 		</div>        
 	</section>
 	

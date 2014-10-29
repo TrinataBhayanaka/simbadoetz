@@ -65,7 +65,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				    </span>
 					<span class="text">Penunjang</span>
 				</a>
-				<a class="shortcut-link" href="#">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_posting.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">5</i>
@@ -107,7 +107,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=number_format($val['nilai'])?></td>
 						<td class="center">
 						<a href="kontrakedit.php?id=<?=$val['id']?>" class="btn btn-warning btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
-						<a href="kontrakhapus.php?id=<?=$val['id']?>" class="btn btn-danger btn-small" <?=($val['n_status']==1) ? 'disabled' : '' ?> onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						<a href="kontrakhapus.php?id=<?=$val['id']?>" class="btn btn-danger btn-small" <?=($val['n_status']==1) ? 'disabled' : '' ?> ><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
 						</td>
 						
 					</tr>
