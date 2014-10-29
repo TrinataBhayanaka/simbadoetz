@@ -63,8 +63,10 @@ include "$path/function/dropdown/show_kode_rekening_page_admin.php";
 include "$path/function/dropdown/radio_function_ruangan.php";
 include "$path/function/dropdown/radio_function_lokasi_permendagri.php";
 
+
 /* DropSelect*/
 include "$path/function/dropselect/satker.php";
+
 
 ##untuk dropdown skps khusus page_admin
 include "$path/function/dropdown/radio_function_skpd_pageadmin.php";
@@ -99,6 +101,8 @@ $LOAD_DATA = new LOAD_DATA();
 $tes = $HELPER_FILTER->getAsetUser($data);
 
 $sys_config = $RETRIEVE->get_app_config();
+
+// pr($sys_config);
 $title = $sys_config->app_title;
 
 $data_conf = explode ('.',$sys_config->app_location_code);
