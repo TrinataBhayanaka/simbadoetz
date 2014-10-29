@@ -92,23 +92,7 @@ include "../../config/config.php";
 								<span class="span2">No. Penetapan Penggunaan</span>
 								<input placeholder="" type="text" name="penggu_valid_filt_nopenet" style="width:450px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
 							</li>
-							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-										<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" placeholder="">
-                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-                                            <div class="inner" style="display:none;">
-                                               
-                                                <?php
-                                                $alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-                                                $alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-                                                js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd','yuda');
-                                                $style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-                                                radioskpd($style2,"skpd_id",'skpd','yuda');
-                                                ?>
-                                            </div>
-								</div>
-							</li>
+							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

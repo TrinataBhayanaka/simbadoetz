@@ -1682,7 +1682,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $value = implode(',', $tmpvalue2);
 
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
-
+            // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
             $query_id = mysql_query("SELECT {$idkey} FROM {$tabel} ORDER BY {$idkey} DESC LIMIT 1");
@@ -1749,6 +1749,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         global $url_rewrite;
         unset($data['id']);
 
+        $updsp2d = mysql_query("UPDATE sp2d SET nilai = if(nilai is null,0,nilai)+{$data['jumlah']}");
 
         $data['n_status'] = 0; 
             foreach ($data as $key => $val) {

@@ -13,4 +13,6 @@ $menu_id = 10;
 
 	$dataArr = $DELETE->delete_aset($aset[0],$_GET['id'],$_GET['tmpthis']);
 
+	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$_GET['tmpthis']}\">";
+
 ?>

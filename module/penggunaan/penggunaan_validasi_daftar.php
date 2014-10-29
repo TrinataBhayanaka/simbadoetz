@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
 
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+
         $menu_id = 31;
         $SessionUser = $SESSION->get_session_user();
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -21,15 +23,18 @@ include "../../config/config.php";
 
         if (isset($submit))
 		{
-			unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
-			$data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
+			// unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
+			// $data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
 		}else{
-			$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
-			$data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
+			// $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
+			// $data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
 		}
-       
+       	
+       	$data = $PENGGUNAAN->retrieve_validasi_penggunaan($_POST);
+
+
         if (isset($submit)){
             if ($tgl_awal=="" && $tgl_akhir=="" && $no_penetapan_penggunaan=="" && $alasan==""){
     ?>

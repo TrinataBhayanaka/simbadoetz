@@ -529,7 +529,23 @@ class DELETE extends DB
     {
 
         global $url_rewrite;    
-    
+        
+        $selAset = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$data['noKontrak']}'");
+        while ($dataAset = mysql_fetch_assoc($selAset)){
+                    $aset[] = $dataAset;
+                }
+        foreach($aset as $key => $value){
+            $this->delete_aset($value,$value['Aset_ID'],$data['noKontrak']);    
+        }
+
+        $selrincsp2d = mysql_query("SELECT id FROM sp2d WHERE type='2' AND idKontrak = '{$data['id']}' ");
+        while ($datapen = mysql_fetch_assoc($selrincsp2d)){
+                    $penunjang = $datapen;
+                }
+
+        $delsp2d = mysql_query("DELETE FROM sp2d WHERE idKontrak = '{$data['id']}'");
+        $delPen = mysql_query("DELETE FROM sp2d_rinc WHERE idsp2d = '{$penunjang['id']}'");
+
         $query = "DELETE FROM kontrak WHERE id = '{$id}'";
         $result = $this->query($query) or die ($this->error());
         
@@ -670,7 +686,7 @@ class DELETE extends DB
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
-                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$idkontrak}\">";
+                return true;
                 exit;
             }
 
@@ -705,7 +721,8 @@ class DELETE extends DB
 
             }
 
-            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$idkontrak}\">";
+            return true;
+            exit;
     
     
     
