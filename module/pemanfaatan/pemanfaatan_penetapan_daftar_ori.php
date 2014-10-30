@@ -134,7 +134,7 @@
 									<td>&nbsp;</td>	
 									<td align="right"><input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 									<input type="hidden" class="hiddenrecord" value="<?php echo @$total_record?>">
-										<input type="button" value="<< Prev" class="buttonprev"/>
+									<input type="button" value="<< Prev" class="buttonprev"/>
 											Page
 									<input type="button" value="Next >>" class="buttonnext"/></td>	
 								</tr>

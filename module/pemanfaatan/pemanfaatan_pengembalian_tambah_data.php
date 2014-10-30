@@ -1,8 +1,6 @@
-    <?php
-        include "../../config/config.php";
-        include "$path/header.php";
-        include "$path/title.php";
-        
+<?php
+include "../../config/config.php";
+		
         /*$nm_aset=$_POST['peman_pengem_filt_add_nmaset'];
         $no_kontrak=$_POST['peman_pengem_filt_add_nokontrak'];
         $satker=$_POST['skpd_id'];*/
@@ -40,6 +38,14 @@
             }
         }
     ?>
+
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+			?>
 			<script language="Javascript" type="text/javascript">  
 			function enable(){  
 			var tes=document.getElementsByTagName('*');
@@ -107,25 +113,18 @@
 
 
 
-<html>
-    <?php
-        
-    ?>
-        <body onload="enable()">
-                        
-            <div id="content">
-                <?php
-                    //include "$path/title.php";
-                    include "$path/menu.php";
-                ?>
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Pengembalian Pemanfaatan	
-                            </div>
-                            <div id="bottomright">
-								<?php
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Pemanfaatan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Pengembalian Pemanfaatan</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Pengembalian Pemanfaatan</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+			<?php
 								$param=  urlencode($_SESSION['parameter_sql_report']);
                                 $offset = @$_POST['record'];
 								$param = $_SESSION['parameter_sql'];
@@ -207,179 +206,180 @@
                                     $param=  urlencode($_SESSION['parameter_sql_report']);
                                     //echo "$param";
                                 ?>
-                                <!--<div style="margin-bottom:10px; float:right; clear:both;">
-                                    <a href="<?php echo "$url_rewrite/report/template/PEMANFAATAN/tes_class_pengembalian_pemanfaatan_cetak_seluruh.php?menu_id=36&mode=1&parameter=$param";?>" target="_blank"><input type="submit" value="Cetak Daftar Aset (PDF)"></a>
-                                </div>-->
-                                 <table width="100%" height="4%" border="1" style="border-collapse:collapse;">
-								<tr>
-									<th colspan="2" align="left" style="font-weight:bold">Filter data : <?php echo $jml?> Record</u></th>
-								</tr>
-								</table>
-								<br>
-								<div style="margin-bottom:10px; float:right;">
-                                    <a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_filter2.php"><input type="submit" value="Kembali ke Halaman Utama: Cari Aset"></a>
-                                </div>
+		<section class="formLegend">
+			
+			<div class="detailLeft">
+					<span class="label label-success">Filter data: <?php echo $jml?> filter (View seluruh data)</span>
+			</div>
+		
+			<div class="detailRight" align="right">
+						 
+						<ul>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_filter2.php" class="btn">
+								Kembali ke Halaman Utama: Cari Aset</a>
 								
-                                <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_eksekusi_data.php?pid=1">
-                                <div>
-									<table  width="100%" style="padding:2px; margin-top:0px; border: 1px solid #dddddd; border-width: 1px 1px 1px 1px; clear:both;">
-										<tbody>
-											<tr>
-												<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-												<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-												<td align=right>
-													<input type="submit" name="submit" value="Pengembalian Pemanfaatan " id="submit" disabled/>
-												</td>
-												<td align="right" width="200px"><input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-													<input type="hidden" class="hiddenrecord" value="<?php echo @$rows?>">
-													<input type="button" value="<< Prev" class="buttonprev"/>
-													Page
-													<input type="button" value="Next >>" class="buttonnext"/></td>
-											</tr>
-										</tbody>
-									</table>
-									</div> 
-									<br>
-									<div id="demo">
-									<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
-									<thead>
-										<tr>
-                                            <th width="20px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-                                            <th width="50px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Pilihan</th>
-                                            <th width="500px" align="left" style="background-color: #eeeeee; border: 1px solid #dddddd;">&nbsp;Informasi Aset</th>
-                                            <th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">No SKKDH Pemanfaatan</th>
-                                            <th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Tgl Sekarang</th>
-                                            <th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Tgl Habis Pemanfaatan</th>
-                                        </tr>
-                                    </thead>    
-                                        <?php
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$rows?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			   <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_eksekusi_data.php?pid=1">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
+						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td align=right>
+							<input type="submit" name="submit" value="Pengembalian Pemanfaatan " id="submit" disabled/>
+						</td>
+					</tr>
+					<tr>
+						<th>No</th>
+						<th>Pilihan</th>
+						<th>&nbsp;Informasi Aset</th>
+						<th>No SKKDH Pemanfaatan</th>
+						<th>Tgl Sekarang</th>
+						<th>Tgl Habis Pemanfaatan</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				  <?php
                                                 
-									if($row!=""){
-										$page = @$_GET['pid'];
-										if ($page > 1){
-											$no = intval($page - 1 .'01');
-										}else{
-											$no = 1;
-										}
-                                            foreach ($row as $value){
-                                    ?>
-                                        <tr>
-                                            <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: black; font-weight: ;"><?php echo "$no";?></td>
-                                            <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: black; font-weight: ;">
-                                                <?php
-														// pr($_SESSION['ses_uaksesadmin']);
-													if (($_SESSION['ses_uaksesadmin'] == 1)){
-														?>
-														<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PengembalianPemanfaatan[]" value="<?php echo $value->Aset_ID;?>" 
-														<?php 
-															for ($i = 0; $i <= count($explode); $i++){
-																if ($explode[$i]==$value->Aset_ID) 
-																	echo 'checked';
-															}?>>
-														<?php
-													}else{
-														if ($dataAsetUser){
-														if (in_array($value->Aset_ID, $dataAsetUser)){
-														?>
-														<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PengembalianPemanfaatan[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
-														<?php
-														}
-													}
-													}
-						
-												?>
-											</td>
-                                            <td align="left" style="background-color: #; border: 1px solid #dddddd; color: black; font-weight: bold;">
-                                                <table width="100%">
-                                                    <tr>
-                                                        <td style="font-weight: bold;"><?php echo "$value->Aset_ID";?> ( Aset ID - System NUmber )<td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-weight: bold;"> <?php echo "$value->NomorReg";?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-weight: bold;"><?php echo "$value->Kode";?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-weight: bold;"><?php echo "$value->NamaAset";?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><hr></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td>No. Kontrak</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td></td>
-                                                                    <td><?php echo "$value->NoKontrak";?></td>
-                                                                </tr>
-                                                                <tr align="left">
-                                                                    <td>Satker</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td></td>
-                                                                    <td><?php echo "$value->NamaSatker";?></td>
-                                                                </tr>
-                                                                <tr align="left">
-                                                                    <td>Lokasi</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td></td>
-                                                                    <td><?php echo "$value->NamaLokasi";?></td>
-                                                                </tr>
-                                                                <tr align="left">
-                                                                    <td>Status</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td>&nbsp;</td>
-                                                                    <td></td>
-                                                                    <td>-</td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td align="center" style="background-color: #; border: 1px solid #dddddd; height:100px; color: ; font-weight: bold;"><?php echo "$value->NoSKKDH";?></td>
-                                            <td align="center" style="background-color: #; border: 1px solid #dddddd; height:100px; color: ; font-weight: bold;"><?php $date=date('d/m/Y'); echo "$date";?></td>
-                                            <td align="center" style="background-color: #; border: 1px solid #dddddd; height:100px; color: ; font-weight: bold;"><?php $change2=$value->TglSelesai; $change3=format_tanggal_db3($change2); echo "$change3";?></td>
-                                        </tr>
-                                        <?php $no++; } }
-                                        else 
-                                        {
-											$disabled = 'disabled';
-										}
-                                        ?>
-                                         <tfoot>
-											<tr>
-												<th width="20px" align="center" style="background-color: #eeeeee; border:1px solid #dddddd;">No</th>
-												<th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Pilihan</th>
-												<th width="300px" align="left" style="background-color: #eeeeee; border: 1px solid #dddddd;">&nbsp;Informasi Aset</th>
-												<th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">No SKKDH Pemanfaatan</th>
-												<th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Tgl Sekarang</th>
-												<th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Tgl Habis Pemanfaatan</th>
-                                        	</tr>
-									</tfoot>
-                                </table>
-                                    &nbsp;
-                                    </div>
-									<div class="spacer"></div>
-                                </form>    
-                                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-        </body>
-</html>	
-
-
-
+					if($row!=""){
+						$page = @$_GET['pid'];
+						if ($page > 1){
+							$no = intval($page - 1 .'01');
+						}else{
+							$no = 1;
+						}
+							foreach ($row as $value){
+					?>
+					<tr class="gradeA">
+						<td><?php echo "$no";?></td>
+						<td>
+							<?php
+									// pr($_SESSION['ses_uaksesadmin']);
+								if (($_SESSION['ses_uaksesadmin'] == 1)){
+									?>
+									<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PengembalianPemanfaatan[]" value="<?php echo $value->Aset_ID;?>" 
+									<?php 
+										for ($i = 0; $i <= count($explode); $i++){
+											if ($explode[$i]==$value->Aset_ID) 
+												echo 'checked';
+										}?>>
+									<?php
+								}else{
+									if ($dataAsetUser){
+									if (in_array($value->Aset_ID, $dataAsetUser)){
+									?>
+									<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PengembalianPemanfaatan[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
+									<?php
+									}
+								}
+								}
+	
+							?>
+						</td>
+						<td>
+							<table width="100%">
+									<tr>
+										<td style="font-weight: bold;"><?php echo "$value->Aset_ID";?> ( Aset ID - System NUmber )<td>
+									</tr>
+									<tr>
+										<td style="font-weight: bold;"> <?php echo "$value->NomorReg";?></td>
+									</tr>
+									<tr>
+										<td style="font-weight: bold;"><?php echo "$value->Kode";?></td>
+									</tr>
+									<tr>
+										<td style="font-weight: bold;"><?php echo "$value->NamaAset";?></td>
+									</tr>
+									<tr>
+										<td><hr></td>
+									</tr>
+									<tr>
+										<td>
+											<table>
+												<tr>
+													<td>No. Kontrak</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td></td>
+													<td><?php echo "$value->NoKontrak";?></td>
+												</tr>
+												<tr align="left">
+													<td>Satker</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td></td>
+													<td><?php echo "$value->NamaSatker";?></td>
+												</tr>
+												<tr align="left">
+													<td>Lokasi</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td></td>
+													<td><?php echo "$value->NamaLokasi";?></td>
+												</tr>
+												<tr align="left">
+													<td>Status</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td></td>
+													<td>-</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+						</td>
+						<td>	
+							<?php echo "$value->NoSKKDH";?>
+						</td>
+						<td>	
+							<?php $date=date('d/m/Y'); echo "$date";?>
+						</td>
+						<td>
+							<?php $change2=$value->TglSelesai; $change3=format_tanggal_db3($change2); echo "$change3";?>
+						</td>
+					</tr>
+					 <?php $no++; } }
+						else 
+						{
+							$disabled = 'disabled';
+						}
+						?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
+			</div>
+			<div class="spacer"></div>
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

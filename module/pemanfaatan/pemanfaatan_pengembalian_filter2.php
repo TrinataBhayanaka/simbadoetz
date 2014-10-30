@@ -1,13 +1,15 @@
-    <?php
-        include "../../config/config.php"; 
-    ?>
+<?php
+include "../../config/config.php";
 
-<html>
-    <?php
-        include "$path/header.php";
-    ?>
+?>
 
-                    <!--buat number only-->
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+?>
+   <!--buat number only-->
                     <style>
                         #errmsg { color:red; }
                     </style>
@@ -32,49 +34,36 @@
                         });
                     </script>
                     
-        <body>
-            <div id="content">
-                <?php
-                    include "$path/title.php";
-                    include "$path/menu.php";
-                ?>      
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Pengembalian Pemanfaatan
-                            </div>
-                            <div id="bottomright">
-                                <strong>
-									<u>Seleksi Pencarian:</u>
-								</strong>
-                                <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_tambah_data.php?pid=1">
-                                <table>
-                                    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
-                                    
-                                    <tr>
-                                        <td>Nama Aset<br>
-										<input type="text" name="peman_pengem_filt_add_nmaset" placeholder="" style="width: 480px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nomor Kontrak<br>
-                                            <input type="text" name="peman_pengem_filt_add_nokontrak" placeholder=""  id="">&nbsp;<span id="errmsg"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td valign="top">Satker<br>
-                                            <input type="text" name="lda_skpd" id="lda_skpd" style="width:450px;" readonly="readonly" placeholder="" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Pemanfaatan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Pengembalian Pemanfaatan</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Pengembalian Pemanfaatan</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			 <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_tambah_data.php?pid=1">
+			<ul>
+							<li>
+								<span class="span2">Nama Aset</span>
+								<input type="text" name="peman_pengem_filt_add_nmaset" placeholder="" style="width: 480px;">
+							</li>
+							<li>
+								<span class="span2">Nomor Kontrak</span>
+								 <input type="text" name="peman_pengem_filt_add_nokontrak" placeholder=""  id="">&nbsp;<span id="errmsg"></span>
+							</li>
+							<li>
+								<span class="span2">Satker</span>
+								<div class="input-append">
+											<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" placeholder="" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
+                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
                                             <div class="inner" style="display:none;">
-                                                <style>
-                                                    .tabel th {
-                                                        background-color: #eeeeee;
-                                                        border: 1px solid #dddddd;
-                                                    }
-                                                    .tabel td {
-                                                        border: 1px solid #dddddd;
-                                                    }
-                                                </style>
+                                                
                                                             <?php
                                                             
                                                             $alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
@@ -84,24 +73,51 @@
                                                             radioskpd($style2,"skpd_id",'skpd','yuda');
                                                             ?>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-									
-                                        <td ><input type="submit" name="tampil_filter_add" value="Lanjut"></td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-                                </form>
-                                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-        </body>
-</html>	
+								</div>
+							</li>
+							<li>
+								<span class="span2">Lokasi BAST</span>
+								<input type="text" name="peman_pengem_filt_lokasi" placeholder="" style="width:450px;">
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+							</li>
+						</ul>
+						<table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
 
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>
