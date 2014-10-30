@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 $menu_id = 5;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
@@ -12,12 +15,12 @@ if (isset($_POST['submit']))
 // print_r($_POST);
 // echo "</pre>";
 
-	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+	// unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
+	// $get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 } else
 		{
-	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+	 //    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
+		// $get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 	    }  
 
 	// echo '<pre>';	    
@@ -29,6 +32,9 @@ if (isset($_POST['submit']))
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	// pr($_POST);
+	$data = $PEMANFAATAN->retrieve_rkb_filter($_POST);
+	// pr($data);
 			?>
 
 
@@ -92,14 +98,14 @@ if (isset($_POST['submit']))
 							 
 				<?php
 						if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
-						if (!empty($get_data_filter))
+						if (!empty($data))
 						{
 							$disabled = '';
 						//$no = 1;
 						$pid = 0;
 						$check=0;
 						
-						foreach ($get_data_filter as $key => $hsl_data)
+						foreach ($data as $key => $hsl_data)
 
 					//while($hsl_data=mysql_fetch_array($exec))
 						{
@@ -111,31 +117,31 @@ if (isset($_POST['submit']))
 							<table border="0" width=100%>
 								<tr>
 									<td width="20%">Tahun</td>
-									<td><?php echo $hsl_data->Tahun;?></td>
+									<td><?php echo $hsl_data['Tahun'];?></td>
 								</tr>
 								<tr>
 									<td width="20%">SKPD</td>
-									<td><?php echo show_skpd($hsl_data->Satker_ID);?></td>
+									<td><?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?></td>
 								</tr>
 								<tr>
 									<td width="20%">Lokasi</td>
-									<td><?php echo show_lokasi($hsl_data->Lokasi_ID);?></td>
+									<td><?php echo $hsl_data['kodeLokasi'];?></td>
 								</tr>
 								<tr>
 									<td width="20%">Nama/Jenis Barang</td>
-									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
+									<td><?php echo $hsl_data['kodeKelompok'];?></td>
 								</tr>
 								<tr>
 									<td width="20%">Spesifikasi</td>
-									<td><?php echo $hsl_data->Merk;?></td>
+									<td><?php  if ($hsl_data['Merk']) echo $hsl_data['Merk']; else echo '-';?></td>
 								</tr>
 								<tr>
 									<td>Kode Rekening</td>
-									<td>[<?php echo show_koderekening($hsl_data->KodeRekening);?>]-<?php echo show_namarekening($hsl_data->KodeRekening);?></td>
+									<td>[<?php echo show_koderekening($hsl_data['KodeRekening']);?>]-<?php echo show_namarekening($hsl_data['KodeRekening']);?></td>
 								</tr>
 								<tr>
 									<td>Jumlah Barang</td>
-									<td><?php echo $hsl_data->Kuantitas;?></td>
+									<td><?php echo $hsl_data['Kuantitas'];?></td>
 								</tr>
 								<tr>
 									<td>Harga</td>
@@ -157,7 +163,7 @@ if (isset($_POST['submit']))
 								</tr>
 							</table>
 						</td>
-						<td><?php echo number_format($hsl_data->NilaiAnggaran,2,',','.')?></td>
+						<td><?php echo number_format($hsl_data['NilaiAnggaran'],2,',','.')?></td>
 						<td>	
 						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
 							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">

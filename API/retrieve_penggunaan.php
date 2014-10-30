@@ -9,75 +9,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $this->db = new DB;
 	}
 	
-	public function retrieve_daftar_validasi_penggunaan_($parameter)
-    {
-        echo '<pre>';
-        //print_r($_SESSION);
-        echo '</pre>';
-                switch ($parameter['menuID'])
-                {
-                    case '31':
-                        {
-                            $query_condition = " FixPenggunaan=1 and Status=1 ";
-                        }
-                        break;
-                }
-
-
-                    $sql_param = " $query_condition";
-
-                //print_r($_SESSION);
-                $query="SELECT Penggunaan_ID FROM Penggunaan WHERE $sql_param ORDER BY Penggunaan_ID ASC LIMIT $parameter[paging], 10";
-
-                //print_r($query);
-                $result = $this->query($query) or die($this->error());
-                
-                $rows = $this->num_rows($result);
-
-
-                $data = '';
-                $dataArray = '';
-
-                while ($data = $this->fetch_object($result))
-                {
-                    $dataArray[] = $data;
-                }
-                    //print_r($dataArray);
-                $dataArr = '';
-                $dataNoKontrak = '';
-
-                if ($dataArray !='')
-                {
-                    foreach ($dataArray as $Penggunaan_ID)
-                    {
-
-                        $query_tampil = "SELECT * 
-                                        FROM Penggunaan
-                                        WHERE  Penggunaan_ID = $Penggunaan_ID->Penggunaan_ID
-                                        ORDER BY Penggunaan_ID asc  ";
-
-                        $result_tampil = $this->query($query_tampil) or die($this->error());
-                        //$resultKontrak = $this->query($queryKontrak) or die($this->error());
-
-                        $check = $this->num_rows($result_tampil);
-
-
-                        $i=1;
-                        while ($data_tampil = $this->fetch_array($result_tampil))
-                        {
-                            $dataArr[] = $data_tampil;
-                        }
-                        //print_r($dataArr);
-                        //while ($dataKontrak = $this->fetch_object($resultKontrak))
-                        //{
-                            //$dataNoKontrak[$dataKontrak->Aset_ID][] = $dataKontrak->NoKontrak;
-                        //}
-                    }
-                }
-                
-                return array ('dataArr'=>$dataArr);
-    }
-    
+	
     public function update_daftar_penetapan_penggunaan($data,$debug=false)
     {
         
