@@ -385,10 +385,15 @@ class DB
 
 				
 				if ($debug){
-					pr($sql);
-					exit;
+					if ($debug>1){
+						pr($sql);
+					}else{
+						pr($sql);
+						exit;	
+					} 
+					
 				}
-				$res = $this->fetch($sql,1);
+				if (!$debug) $res = $this->fetch($sql,1);
 				if ($res) return $res;
 
 			break;
@@ -405,10 +410,15 @@ class DB
 
 				$sql = "INSERT INTO {$table} ({$field}) VALUES ({$value})";
 				if ($debug){
-					pr($sql);
-					exit;
+					if ($debug>1){
+						pr($sql);
+					}else{
+						pr($sql);
+						exit;	
+					} 
+					
 				}
-				$res = $this->query($sql);
+				if (!$debug) $res = $this->query($sql);
 				if ($res) return true;
 
 			break;
@@ -422,13 +432,21 @@ class DB
                 );
 				*/
 				$condition = $data['condition'];
-				
-				$sql = "UPDATE {$table} SET {$field} WHERE {$condition}";
+				$limit = intval($data['limit']);
+				if ($limit>0) $limit = " LIMIT {$limit}";
+				else $limit = "";
+
+				$sql = "UPDATE {$table} SET {$field} WHERE {$condition} {$limit}";
 				if ($debug){
-					pr($sql);
-					exit;
+					if ($debug>1){
+						pr($sql);
+					}else{
+						pr($sql);
+						exit;	
+					} 
+					
 				}
-				$res = $this->query($sql);
+				if (!$debug)$res = $this->query($sql);
 				if ($res) return true;
 
 			break;
