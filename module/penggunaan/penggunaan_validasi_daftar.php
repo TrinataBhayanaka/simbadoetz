@@ -32,7 +32,6 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 			// $data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
 		}
        	
-       	$data = $PENGGUNAAN->retrieve_validasi_penggunaan($_POST);
 
 
         if (isset($submit)){
@@ -54,6 +53,9 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	$data = $PENGGUNAAN->retrieve_validasi_penggunaan($_POST);
+       	// pr($data);
+
 			?>
 <script type="text/javascript">
 		function show_confirm()
@@ -159,8 +161,8 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td width="130px"><span><a href="javascript:void(0)" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
+						<td  align=left><a href="javascript:void(0)" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
 						<td colspan="3">
 								<p style="float:right;"><input type="submit" name="submit" value="Validasi Barang" id="submit" disabled/></p>
 						</td>
@@ -175,7 +177,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 				</thead>
 				<tbody>		
 				<?php
-					if (!empty($data['dataArr']))
+					if (!empty($data))
 					{
 						$disabled = '';
 						$page = @$_GET['pid'];
@@ -184,7 +186,8 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 						}else{
 							$no = 1;
 						}
-					foreach($data['dataArr'] as $key => $hsl_data)
+					// pr($data);
+					foreach($data as $key => $hsl_data)
 					{    
 						?>
 					<tr class="gradeA">

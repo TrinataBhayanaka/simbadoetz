@@ -78,6 +78,164 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 return array ('dataArr'=>$dataArr);
     }
     
+    public function update_daftar_penetapan_penggunaan($data,$debug=false)
+    {
+        
+        $id=$data['Penggunaan_ID'];
+        $tgl_aset=$data['penggu_penet_eks_tglpenet'];
+        $change_tgl=  format_tanggal_db2($tgl_aset);
+        $noaset=$data['penggu_penet_eks_nopenet'];
+        $ket=$data['penggu_penet_eks_ket'];
+
+        $sql = array(
+                'table'=>'Penggunaan',
+                'field'=>"TglSKKDH='{$change_tgl}', NoSKKDH='{$noaset}', Keterangan='{$ket}', TglUpdate='{$change_tgl}'",
+                'condition' => "Penggunaan_ID='$id'",
+                'limit' => '1',
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug,2);
+        if ($res) return $res;
+        return false;
+    }
+
+    public function delete_daftar_penetapan_penggunaan($data,$debug=false)
+    {
+        
+        $id=$data['Penggunaan_ID'];
+        $asetid=$data['Aset_ID'];
+
+        // $query="UPDATE Penggunaan SET FixPenggunaan=0 WHERE Penggunaan_ID='$id'";
+        // $exec=$this->query($query) or die($this->error());
+
+        // $query2="UPDATE Aset SET NotUse=0 WHERE LastPenggunaan_ID='$id'";
+        // $exec2=$this->query($query2) or die($this->error());
+
+        // $query3="DELETE FROM PenggunaanAset WHERE Penggunaan_ID='$id' AND Status=0 AND StatusMenganggur=0";
+        // $exec3=$this->query($query3) or die($this->error());
+
+        // $query4="UPDATE Aset SET LastPenggunaan_ID=NULL WHERE LastPenggunaan_ID='$id'";
+        // $exec4=$this->query($query4) or die($this->error());
+        
+        $sql = array(
+                'table'=>'Penggunaan',
+                'field'=>"FixPenggunaan=0",
+                'condition' => "Penggunaan_ID='$id'",
+                'limit' => '1',
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug,2);
+
+        
+        $sql1 = array(
+                'table'=>'Aset',
+                'field'=>"NotUse=0",
+                'condition' => "Aset_ID='$asetid'",
+                'limit' => '1',
+                );
+
+        $res1 = $this->db->lazyQuery($sql1,$debug,2);
+
+        if ($res && $res1) return true;
+        return false;
+    }
+
+    public function store_penetapan_penggunaan($data,$debug=false)
+    {
+        
+        $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
+        $nmaset=$data['penggu_nama_aset'];
+        $penggunaan_id=get_auto_increment("penggunaan");
+        $ses_uid=$_SESSION['ses_uid'];
+
+        $penggu_penet_eks_ket=$data['penggu_penet_eks_ket'];   
+        $penggu_penet_eks_nopenet=$data['penggu_penet_eks_nopenet'];   
+        $penggu_penet_eks_tglpenet=$data['penggu_penet_eks_tglpenet']; 
+        $olah_tgl=  format_tanggal_db2($penggu_penet_eks_tglpenet);
+
+        $panjang=count($nmaset);
+
+        // $query="insert into Penggunaan (Penggunaan_ID, NoSKKDH , TglSKKDH, 
+        //                                     Keterangan, NotUse, TglUpdate, UserNm, FixPenggunaan, GUID) 
+        //                                 values (null,'$penggu_penet_eks_nopenet','$olah_tgl', '$penggu_penet_eks_ket','','$olah_tgl','$UserNm','1','$ses_uid')";
+        $sql = array(
+                'table'=>'Penggunaan',
+                'field'=>'NoSKKDH , TglSKKDH, Keterangan, NotUse, TglUpdate, UserNm, FixPenggunaan, GUID',
+                'value' => "'{$penggu_penet_eks_nopenet}','{$olah_tgl}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','1','{$ses_uid}'",
+                );
+        $res = $this->db->lazyQuery($sql,$debug,1);
+
+        for($i=0;$i<$panjang;$i++){
+
+            $tmp=$nmaset[$i];
+            $tmp_olah=explode("<br>",$tmp);
+            $asset_id[$i]=$tmp_olah[0];
+            $no_reg[$i]=$tmp_olah[1];
+            $nm_barang[$i]=$tmp_olah[2];
+
+            // $query1="insert into PenggunaanAset(Penggunaan_ID,Aset_ID) values('$penggunaan_id','$asset_id[$i]')  ";
+            $sql1 = array(
+                'table'=>'Penggunaanaset',
+                'field'=>"Penggunaan_ID,Aset_ID",
+                'value' => "'{$penggunaan_id}','{$nmaset[$i]}'",
+                );
+            $res = $this->db->lazyQuery($sql1,$debug,1);
+
+            // $query2="UPDATE Aset SET NotUse=1, LastPenggunaan_ID='$penggunaan_id' WHERE Aset_ID='$asset_id[$i]'";
+            $sql2 = array(
+                'table'=>'Aset',
+                'field'=>"NotUse=1",
+                'condition' => "Aset_ID='{$asset_id[$i]}'",
+                'limit' => '1',
+                );
+            $res = $this->db->lazyQuery($sql2,$debug,2);
+        }
+
+        
+
+       
+        if ($res) return $res;
+        return false;
+
+        
+    }
+
+
+    public function update_validasi_penggunaan($data,$debug=false)
+    {
+        
+
+        $explodeID = $data['ValidasiPenggunaan'];
+        $cnt=count($explodeID);
+            // echo "$cnt";
+        for ($i=0; $i<$cnt; $i++){
+            if($explodeID!=""){
+            // $query="UPDATE Penggunaan SET Status=1 WHERE Penggunaan_ID='$explodeID[$i]'";
+            $sql2 = array(
+                'table'=>'Penggunaan',
+                'field'=>"Status=1",
+                'condition' => "Penggunaan_ID='{$explodeID[$i]}'",
+                );
+            $res2 = $this->db->lazyQuery($sql2,$debug,2);
+
+            // $query1="UPDATE PenggunaanAset SET Status=1 WHERE Penggunaan_ID='$explodeID[$i]'";
+            $sql3 = array(
+                'table'=>'PenggunaanAset',
+                'field'=>"Status=1",
+                'condition' => "Penggunaan_ID='{$explodeID[$i]}'",
+                );
+            $res3 = $this->db->lazyQuery($sql3,$debug,2);
+            }
+        }
+        // exit;
+        // $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='ValidasiPenggunaan[]' AND UserSes='$parameter[ses_uid]'";
+        // $exec_hapus=  $this->query($query_hapus_apl) or die($this->error());
+        
+        if ($res2 && $res3) return true;
+        return false;
+        
+    }
+
 	public function retrieve_validasi_penggunaan($data,$debug=false)
     {
         $tgl_awal=$data['tglawal'];
@@ -95,7 +253,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*',
-                'condition' => "p.FixPenggunaan = 1 $filter",
+                'condition' => "p.FixPenggunaan = 1 AND p.Status IS NULL $filter",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'
@@ -106,22 +264,26 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         return false;
     }
     
-	public function retrieve_penetapan_penggunaan_edit_data_($parameter)
+	public function retrieve_penetapan_penggunaan_edit_data($data, $debug=false)
     {
-        $query_tampil_aset="SELECT a.Aset_ID, b.NomorReg, b.NamaAset FROM PenggunaanAset AS a
-                                            LEFT JOIN Aset AS b ON a.Aset_ID=b.Aset_ID WHERE a.Penggunaan_ID='$parameter[id]'";
-        $exec_query_tampil_aset=$this->query($query_tampil_aset) or die($this->error());
         
-        while($data=$this->fetch_array($exec_query_tampil_aset)){
-            $dataArr[]=$data;
-        }
-        
-        $query="SELECT * FROM Penggunaan where Penggunaan_ID='$parameter[id]'";
-        $exec=  $this->query($query) or die($this->error());
+        $Penggunaan_ID = intval($data['id']);
 
-        $row=  $this->fetch_array($exec);
-        
-        return array('dataArr'=>$dataArr, 'dataRow'=>$row);
+        $filter = "";
+        if ($Penggunaan_ID) $filter .= " AND p.Penggunaan_ID = {$Penggunaan_ID} ";
+
+        $sql = array(
+                'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p, kelompok AS k',
+                'field'=>'p.*, a.*, k.Uraian',
+                'condition' => "p.FixPenggunaan = 1 $filter",
+                'limit' => '1',
+                'joinmethod' => 'LEFT JOIN',
+                'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, a.kodeKelompok = k.kode'
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
     }
     
 	public function retrieve_daftar_penetapan_penggunaan($data=array(),$debug=false)
@@ -142,7 +304,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
-                'field'=>'p.*',
+                'field'=>'p.*, pa.Aset_ID',
                 'condition' => "p.FixPenggunaan = 1 $filter",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',

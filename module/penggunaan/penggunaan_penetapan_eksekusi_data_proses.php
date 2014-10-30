@@ -2,6 +2,8 @@
 
 include "../../config/config.php";
 
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+
 $menu_id = 30;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
@@ -20,19 +22,10 @@ $penggu_penet_eks_tglpenet=$_POST['penggu_penet_eks_tglpenet'];
 $olah_tgl=  format_tanggal_db2($penggu_penet_eks_tglpenet);
 // pr($_POST);
 // exit;
-$data=$STORE->store_penetapan_penggunaan
-    (
-            $submit,
-            $UserNm,
-            $nmaset,
-            $penggunaan_id,
-            $ses_uid,
-            $penggu_penet_eks_ket,
-            $penggu_penet_eks_nopenet,
-            $penggu_penet_eks_tglpenet,
-            $olah_tgl
-    );
+$data=$PENGGUNAAN->store_penetapan_penggunaan($_POST);
 
+
+// exit;
 /*
 
 $asset_id=Array();
