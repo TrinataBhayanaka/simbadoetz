@@ -1,11 +1,6 @@
 <?php
-    include "../../config/config.php"; 
-    include "$path/header.php";
-    include "$path/title.php";
-    
-
-    $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
-
+include "../../config/config.php";
+ // pr($_SESSION);
         $submit=$_POST['submit2'];
         
         $menu_id = 30;
@@ -15,16 +10,26 @@
         
         if (isset($submit))
 			{
-				
-				// pr($_POST);
-				$data = $PENGGUNAAN->retrieve_penetapan_penggunaan_eksekusi($_POST);
-				// pr($data);
+		
+						unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+						$ses_uid=$_SESSION['ses_uid'];
+						$parameter=array('ses_uid'=>$ses_uid);
+						$data = $RETRIEVE->retrieve_penetapan_penggunaan_eksekusi($parameter);
 			}
-        
+                                
+		// echo '<pre>';
+		// print_r($data['dataArr']);
+		// echo '</pre>';
 	?>
 
-<html>
-        
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+?>
+
                     <!--buat date-->
                     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
                     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
@@ -100,23 +105,22 @@
 						document.getElementById(obj.id).value="Sub Detail";}
 						}
 				</script>
-                   
-        <body>
-            <div id="content">
-                    <?php
-                        
-                        include "$path/menu.php";
-                    ?>
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Penetapan Penggunaan
-                            </div>
-                            <div id="bottomright">
-                               
-                                <form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data_proses.php">
-                                <table width="100%">
+                 
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Penggunaan </a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Penetapan Penggunaan</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Penetapan Penggunaan</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data_proses.php">
+			<table width="100%">
                                     <tr>
                                         <td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar aset yang akan dibuatkan penetapan penggunaan :</u></td>
 									</tr>
@@ -283,74 +287,58 @@
 							 ?>
 										
 									
-                                </table>
-                                <table width="100%" style="padding:2px; margin-top:0px; border: 1px solid #004933; border-width: 1px 1px 1px 1px;">
-                                    <tr>
-                                        <td colspan=4><u style="font-weight:bold;">Informasi Surat Penetapan Penggunaan</u></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td width='150px'>Nomor Penetapan</td>
-                                        <td><input type="text" name="penggu_penet_eks_nopenet" required="required" id="" style="width:180px;">&nbsp;<span id="errmsg"></span></td>
-										<td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-									<tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanggal Penetapan</td>
-                                        <td><input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" style="width:180px;"></td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-									<tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Keterangan</td>
-                                        <td ><textarea name="penggu_penet_eks_ket" cols="50" rows="2"  required="required"></textarea></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr align=left>
-                                        <td></td>
-                                        <td><input type="submit" name="penggunaan_eks" value="Penetapan Penggunaan">&nbsp;<a href="<?php echo $url_rewrite?>/module/penggunaan/penggunaan_penetapan_tambah_data.php?pid=1"><input type="button" value="Batal"></a></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-                                </form>     
-                                     
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-        </body>
-</html>	
+                                </table><br/>
+			<ul>
+							<li>
+								<span class="span2">Nomor Penetapan</span>
+								<input type="text" name="penggu_penet_eks_nopenet" required="required" id="" style="width:180px;">&nbsp;<span id="errmsg"></span>
+							</li>
+							<li>
+								<span class="span2">Tanggal Penetapan</span>
+								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" style="width:180px;">
+							</li>
+							<li>
+								<span class="span2">Keterangan</span>
+								<textarea name="penggu_penet_eks_ket" cols="50" rows="2"  required="required"></textarea>
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="penggunaan_eks" class="btn btn-primary" value="Penetapan Penggunaan">&nbsp;<a href="<?php echo $url_rewrite?>/module/penggunaan/penggunaan_penetapan_tambah_data.php?pid=1"><input type="button" class="btn" value="Batal"></a>
+							</li>
+						</ul>
+						<table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+						</form>
+			
+		</section>     
+	</section>
 	
+<?php
+	include"$path/footer.php";
+?>

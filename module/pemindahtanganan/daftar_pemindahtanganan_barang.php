@@ -1,67 +1,147 @@
 <?php
+ob_start();
+
 include "../../config/config.php";
-$menu_id = 5;
+         
+$menu_id = 42;
+($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
+$USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+
+$submit = $_POST['tampil'];
 
 
-$paging = $LOAD_DATA->paging($_GET['pid']);	
-if (isset($_POST['submit']))	
-{
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
+	$paging = paging($_GET['pid'], 100);    
+ 
+	if (isset($submit))
+	{
+		// echo "filter";
+		$POST['kd_idaset'] = $_POST['bupt_idaset'];
+		$POST['kd_namaaset'] = $_POST['bupt_namaaset'];
+		$POST['bupt_nokontrak'] = $_POST['kd_nokontrak'];
+		$POST['kd_tahun'] = $_POST['bupt_tahun'];
+		$POST['kelompok_id']= $_POST['kelompok_id'];
+		$POST['lokasi_id']= $_POST['lokasi_id'];
+		$POST['satker']= $_POST['skpd_id'];
+		$POST['ngo_id']= $_POST['ngo_id'];
+		$POST['modul']= "";
+		$POST['paging'] = $_GET['pid'];
+		$POST['sql_where'] = TRUE;
+		$POST['sql'] = "Status_Validasi_Barang = 1 AND Usulan_Pemindahtanganan_ID IS NULL AND Dihapus != 0 AND 
+						Usulan_Pemusnahan_ID IS NULL";
+		// pr($POST);
+		unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+		$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$POST,'paging'=>$paging);
+		$data = $RETRIEVE->retrieve_pemindahtanganan_filter($parameter);
+	}else{
+		// echo "tanpa filter";
+		// $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+		$sessi = 1;
+		$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
+		$data = $RETRIEVE->retrieve_pemindahtanganan_filter($parameter);
+		
+	}
+	// echo"<pre>";
+	// pr($data);
+	// echo"</pre>";
+	
 
-	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-} else
-		{
-	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-	    }  
-
-	// echo '<pre>';	    
-	// print_r($get_data_filter);
-	// echo '</pre>';	
 ?>
+
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
 			?>
+<script language="Javascript" type="text/javascript">  
+		
+		function enable(){  
+		var tes=document.getElementsByTagName('*');
+		var button=document.getElementById('submit');
+		var boxeschecked=0;
+		for(k=0;k<tes.length;k++)
+		{
+			if(tes[k].className=='checkbox')
+				{
+					//
+					tes[k].checked == true  ? boxeschecked++: null;
+				}
+		}
+	   //alert(boxeschecked);
+	   if(boxeschecked!=0)
+		   button.disabled=false;
+	   else
+		   button.disabled=true;
+	}
+	function disable_submit(){
+		var enable = document.getElementById('pilihHalamanIni');
+		var disable = document.getElementById('kosongkanHalamanIni');
+		var button=document.getElementById('submit');
+		if (disable){
+			button.disabled=true;
+		} 
+	}
+	
+	function enable_submit(){
+		var enable = document.getElementById('pilihHalamanIni');
+		var disable = document.getElementById('kosongkanHalamanIni');
+		var button=document.getElementById('submit');
+		if (enable){
+			button.disabled=false;
+		} 
+	}
+	</script>
+	<script type="text/javascript" charset="utf-8">
+	  $(document).ready(function() {
+				$('#example').dataTable( {
+						"aaSorting": [[ 1, "asc" ]]
+				} );
+		var tes=document.getElementsByTagName('*');
+		var button=document.getElementById('submit');
+		var boxeschecked=0;
+		for(k=0;k<tes.length;k++)
+		{
+			if(tes[k].className=='checkbox')
+				{
+					//
+					tes[k].checked == true  ? boxeschecked++: null;
+				}
+		}
+	//alert(boxeschecked);
+		if(boxeschecked!=0){
+			button.disabled=false;
+		}
+		else {
+			button.disabled=true;
+		}		
+		} );
+	</script>       
 
 
           <section id="main">
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <li><a href="#">Pemindahtanganan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Buat Usulan Pemindahtanganan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="title">Buat Usulan Pemindahtanganan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
 			
 			<div class="detailLeft">
-					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+					<span class="label label-success">Filter data: <?php echo $_SESSION['parameter_sql_total']?> filter (View seluruh data)</span>
 			</div>
 		
 			<div class="detailRight" align="right">
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_import_data.php";?>" class="btn">
-								Tambah Data: Import</a>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_tambah_data.php";?>" class="btn">
-								Tambah Data: Manual</a>
-							</li>
-							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_filter.php";?>" class="btn">
-									   Kembali ke halaman utama : Form Filter
-								 </a>
+								<a href="<?php echo "$url_rewrite";?>/module/pemindahtanganan/pemindahtanganan.php" class="btn">
+								Kembali ke halaman utama: Cari Aset</a>
 							</li>
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
