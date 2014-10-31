@@ -103,7 +103,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=$val['tglKontrak']?></td>
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
-						<td class="center">
+						<td class="center">	
 						<a href="kontrak_barang.php?id=<?=$val['id']?>" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i>&nbsp;tambah</a>
 						</td>
 						

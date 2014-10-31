@@ -6,7 +6,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// pr($get_data_filter);
+// pr($_SESSION);
 ?>
 
 <?php
@@ -18,7 +18,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 	<!-- SQL Sementara -->
 	<?php
 
-		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id");
+		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
@@ -106,8 +106,16 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
 						<td class="center">
-						<a href="kontrakedit.php?id=<?=$val['id']?>" class="btn btn-warning btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
-						<a href="kontrakhapus.php?id=<?=$val['id']?>" class="btn btn-danger btn-small" <?=($val['n_status']==1) ? 'disabled' : '' ?> ><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						<?php
+						if($val['n_status'] != 1){
+						?>	
+							<a href="kontrakedit.php?id=<?=$val['id']?>" class="btn btn-warning btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
+							<a href="kontrakhapus.php?id=<?=$val['id']?>" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						<?php
+						} else {
+							echo "<span class='label label-Success'>Sudah di posting</span>";
+						}
+						?>
 						</td>
 						
 					</tr>

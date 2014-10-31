@@ -18,10 +18,9 @@ $menu_id = 10;
 
 		$idKontrak = $_GET['id'];
 	$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}'");
-		while ($dataKontrak = mysql_fetch_array($sql)){
+		while ($dataKontrak = mysql_fetch_assoc($sql)){
 				$kontrak[] = $dataKontrak;
 			}
-
 
 	//get data
 	$RKsql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
@@ -138,8 +137,17 @@ $menu_id = 10;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 
-			<p><a href="kontrak_rincianedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
-			&nbsp;</p>	
+			<?php
+				if($kontrak[0]['n_status'] != 1){
+			?>	
+				<p><a href="kontrak_rincianedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
+				&nbsp;</p>
+			<?php
+				} else {
+					echo "";
+				}
+			?>
+				
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
@@ -167,7 +175,15 @@ $menu_id = 10;
 						<td class="center"><?=$value['Kuantitas']?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan'])?></td>
 						<td class="center">
+						<?php
+							if($kontrak[0]['n_status'] != 1){
+						?>
 						<a href="kontrak_rincianhapus.php?id=<?=$value['Aset_ID']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i></a></td>
+						<?php
+						} else {
+							echo "<span class='label label-Success'>Sudah di posting</span>";
+						}
+						?>
 					</tr>
 				<?php
 						$i++;

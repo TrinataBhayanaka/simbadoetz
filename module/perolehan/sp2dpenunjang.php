@@ -132,9 +132,16 @@ $menu_id = 1;
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			
+			<?php
+				if($kontrak[0]['n_status'] != 1){
+			?>	
 			<p><a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjangedit.php/?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah SP2D Penunjang</a>
-			&nbsp;</p>	
+			&nbsp;</p>
+			<?php
+				} else {
+					echo "";
+				}
+			?>	
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
@@ -162,9 +169,17 @@ $menu_id = 1;
 						<td class="center"><?=number_format($value['nilai'])?></td>
 						<td class="center"><?=$value['keterangan']?></td>
 						<td class="center">
+						<?php
+							if($kontrak[0]['n_status'] != 1){
+						?>	
 						<a href="sp2dpenunjangedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>
 						<a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjang_rinc.php?idsp2d=<?=$value['id']?>&idkontrak=<?=$idKontrak?>" class="btn btn-info btn-small"><i class="icon-edit icon-white"></i>&nbsp;Rincian</a>
 						<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						<?php
+						} else {
+							echo "<span class='label label-Success'>Sudah di posting</span>";
+						}
+						?>
 						</td>
 					</tr>
 				<?php
