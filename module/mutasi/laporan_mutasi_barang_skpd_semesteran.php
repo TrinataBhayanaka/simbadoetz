@@ -130,8 +130,8 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span class="span2">&nbsp;</span>
-								<a href="<?echo $url_rewrite.'/module/mutasi/report/rp_laporanmutasibarang.php';?>" target="main"><input type="button" name="submit" value="Lanjut" /></a>
-                                        <input type="reset" name="reset" value="Bersihkan Filter" />
+								<a href="<?echo $url_rewrite.'/module/mutasi/report/rp_laporanmutasibarang.php';?>" target="main"><input type="button" name="submit" class="btn btn-primary" value="Lanjut" /></a>
+                                <input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
 						<table border="0" cellspacing="6" style="display: none">

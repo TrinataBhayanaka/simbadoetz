@@ -1,46 +1,91 @@
 <?php
 include "../../config/config.php";
-$menu_id = 5;
-$SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 
+    $menu_id = 47;
+    ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+    $SessionUser = $SESSION->get_session_user();
+    $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+    
+    
+        $tgl_awal=$_POST['buph_pph_tanggalawal'];
+        $tgl_akhir=$_POST['buph_pph_tanggalakhir'];
+        $tgl_awal_fix=format_tanggal_db2($tgl_awal);
+        $tgl_akhir_fix=format_tanggal_db2($tgl_akhir);
+        $no_penetapan=$_POST['buph_pph_noskpemusnahan'];
+        $lokasi=$_POST['lokasi_id'];
+        $submit=$_POST['tampil_filter'];
 
-$paging = $LOAD_DATA->paging($_GET['pid']);	
-if (isset($_POST['submit']))	
-{
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
+        //open_connection();
+        
+       /*
+            if ($tgl_awal_fix!=""){
+            $query_tgl_awal="TglBAPemusnahan LIKE '%$tgl_awal_fix%'";
+            }
+            if($tgl_akhir_fix!=""){
+            $query_tgl_akhir="TglBAPemusnahan LIKE '%$tgl_akhir_fix%'";
+            }
+            if($no_penetapan!=""){
+            $query_np="NoBAPemusnahan LIKE '%$no_penetapan%'";
+            }
 
-	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-} else
-		{
-	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-	    }  
-
-	// echo '<pre>';	    
-	// print_r($get_data_filter);
-	// echo '</pre>';	
-?>
+            $parameter_sql="";
+            if($tgl_awal!=""){
+            $parameter_sql=$query_tgl_awal;
+            }
+            if($tgl_akhir!="" && $parameter_sql!=""){
+            $parameter_sql="TglBAPemusnahan BETWEEN '$tgl_awal_fix' AND '$tgl_akhir_fix'";
+            }
+            if($tgl_akhir!="" && $parameter_sql==""){
+            $parameter_sql=$query_tgl_akhir;
+            }
+            if($no_penetapan!="" && $parameter_sql!=""){
+            $parameter_sql=$parameter_sql." AND ".$query_np;
+            }
+            if ($no_penetapan!="" && $parameter_sql==""){
+            $parameter_sql=$query_np;
+            }
+            
+            echo "$parameter_sql";
+        * 
+        */
+            
+            if (isset($submit)){
+                if ($tgl_awal=="" && $tgl_akhir=="" && $no_penetapan=="" && $lokasi==""){
+    ?>
+                <script>var r=confirm('Tidak ada isian filter');
+                            if (r==false){
+                                document.location="<?php echo "$url_rewrite/module/pemusnahan/"; ?>penetapan_pemusnahan_filter.php";
+                            }
+                    </script>
+    <?php
+            }
+        }
+    ?>
+              
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
 			?>
-
+<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS/script.js"></script>
+                  <script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/simbada.js"></script>
+	<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/simbada.js"></script>
+	
+		<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="ie_office.css" />
+		<![endif]-->
+	
 
           <section id="main">
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Buat Rencana Kebutuhan Barang</li>
+			  <li><a href="#">Pemusnahan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Penetapan Pemusnahan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Rencana Kebutuhan Barang</div>
+				<div class="title"> Penetapan Pemusnahan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
@@ -53,14 +98,12 @@ if (isset($_POST['submit']))
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_import_data.php";?>" class="btn">
-								Tambah Data: Import</a>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_tambah_data.php";?>" class="btn">
-								Tambah Data: Manual</a>
+								<a href="<?php echo "$url_rewrite/module/pemusnahan/"; ?>penetapan_pemusnahan_filter.php" class="btn">
+								Kembali ke form filter</a>
 							</li>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/perencanaan/rkb_filter.php";?>" class="btn">
-									   Kembali ke halaman utama : Form Filter
+								<a href="<?php echo "$url_rewrite/module/pemusnahan/"; ?>penetapan_pemusnahan_tambah_aset.php" class="btn">
+									   Tambah Data
 								 </a>
 							</li>
 							<li>
@@ -83,99 +126,79 @@ if (isset($_POST['submit']))
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Keterangan Jenis/Nama Barang</th>
-						<th>Total Harga</th>
+						<th>Nomor Pemusnahan</th>
+						<th>Tgl Pemusnahan</th>
 						<th>Tindakan</th>
 					</tr>
 				</thead>
 				<tbody>		
 							 
 				<?php
-						if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
-						if (!empty($get_data_filter))
-						{
-							$disabled = '';
-						//$no = 1;
-						$pid = 0;
-						$check=0;
-						
-						foreach ($get_data_filter as $key => $hsl_data)
-
-					//while($hsl_data=mysql_fetch_array($exec))
-						{
-				?>
-						  
-					<tr class="gradeA">
-						<td><?php echo $no;?></td>
-						<td>
-							<table border="0" width=100%>
-								<tr>
-									<td width="20%">Tahun</td>
-									<td><?php echo $hsl_data->Tahun;?></td>
-								</tr>
-								<tr>
-									<td width="20%">SKPD</td>
-									<td><?php echo show_skpd($hsl_data->Satker_ID);?></td>
-								</tr>
-								<tr>
-									<td width="20%">Lokasi</td>
-									<td><?php echo show_lokasi($hsl_data->Lokasi_ID);?></td>
-								</tr>
-								<tr>
-									<td width="20%">Nama/Jenis Barang</td>
-									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
-								</tr>
-								<tr>
-									<td width="20%">Spesifikasi</td>
-									<td><?php echo $hsl_data->Merk;?></td>
-								</tr>
-								<tr>
-									<td>Kode Rekening</td>
-									<td>[<?php echo show_koderekening($hsl_data->KodeRekening);?>]-<?php echo show_namarekening($hsl_data->KodeRekening);?></td>
-								</tr>
-								<tr>
-									<td>Jumlah Barang</td>
-									<td><?php echo $hsl_data->Kuantitas;?></td>
-								</tr>
-								<tr>
-									<td>Harga</td>
-											<td>
-									<?php
-									$query_shpb = "SELECT NilaiStandar FROM StandarHarga WHERE Kelompok_ID IN (".$hsl_data->Kelompok_ID.") AND TglUpdate LIKE '%".$hsl_data->Tahun."%' ";
-									//print_r($query_shpb);
-									$result		= mysql_query($query_shpb);
-									if($result){
-										$hasil		= mysql_fetch_array($result);
-										 //echo $hasil['NilaiStandar']; 
-										 
-									echo number_format($hasil['NilaiStandar'],2,',','.');
-									 
-										
-									}
-									?>
-									</td>
-								</tr>
-							</table>
-						</td>
-						<td><?php echo number_format($hsl_data->NilaiAnggaran,2,',','.')?></td>
-						<td>	
-						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
-							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
-							<input type="submit" value="Edit" class="btn btn-success" name="edit"/>
-						</form>
-						<form method="POST" action="rkb-proses.php"  onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin dihapus?'); ">
-							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
-							<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
-						</form>
-						</td>
-					</tr>
+				/*
+					$hal = $_GET[hal];
+					if(!isset($_GET['hal'])){ 
+						$page = 1; 
+					} else { 
+						$page = $_GET['hal']; 
+					}
+					$jmlperhalaman = 10;  // jumlah record per halaman
+					$offset = (($page * $jmlperhalaman) - $jmlperhalaman);
+					$i=$page + ($page - 1) * ($jmlperhalaman - 1);
+				
+					if($parameter_sql!="" ) {
+					$query="SELECT * FROM BAPemusnahan WHERE $parameter_sql AND FixPemusnahan=1 AND Status=0 limit $offset, $jmlperhalaman";
+					$exec = mysql_query($query) or die(mysql_error());
 					
-				     <?php
-						$no++;
-						$pid++;
-					 }
-				}
-				?>
+					$total_record = mysql_result(mysql_query("SELECT COUNT(*) as Num FROM BAPemusnahan WHERE $parameter_sql AND FixPemusnahan=1 AND Status=0"),0);
+					}
+
+					if($parameter_sql=="" ) {
+					$query="SELECT * FROM BAPemusnahan WHERE FixPemusnahan=1 AND Status=0 limit $offset, $jmlperhalaman";
+					$exec = mysql_query($query) or die(mysql_error());
+					
+					$total_record = mysql_result(mysql_query("SELECT COUNT(*) as Num FROM BAPemusnahan WHERE FixPemusnahan=1 AND Status=0"),0);
+					}
+					$i=1;
+					while($row=mysql_fetch_array($exec)){
+				 * 
+				 */
+				
+				$paging = $LOAD_DATA->paging($_GET['pid']);
+				unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+
+			if (isset($submit))
+								{
+											unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+											$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
+											$data = $RETRIEVE->retrieve_daftar_penetapan_pemusnahan($parameter);
+								} else {
+			
+			$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
+			$data = $RETRIEVE->retrieve_daftar_penetapan_pemusnahan($parameter);
+			}
+			echo '<pre>';
+			//print_r($data['dataArr']);
+			echo '</pre>';
+			
+			$nomor = 1;
+			if (!empty($data['dataArr']))
+			{
+				$disabled = '';
+				$pid = 0;
+			foreach($data['dataArr'] as $key => $row)
+				{
+				?>	  
+					<tr class="gradeA">
+						<td><?php echo "$nomor";?></td>
+						<td><?php echo "$row[NoBAPemusnahan]";?></td>
+						<td><?php $change=$row['TglBAPemusnahan']; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
+						<td>
+							<a href="<?php echo "$url_rewrite/module/pemusnahan/"; ?>penetapan_pemusnahan_daftar_hapus.php?id=<?php echo "$row[BAPemusnahan_ID]";?>">Hapus</a> || <a href="<?php echo "$url_rewrite/module/pemusnahan/"; ?>penetapan_pemusnahan_daftar_edit.php?id=<?php echo "$row[BAPemusnahan_ID]";?>">Edit</a>
+						</td>
+						
+					</tr>
+					 <?php $nomor++;} }?>
 				</tbody>
 				<tfoot>
 					<tr>

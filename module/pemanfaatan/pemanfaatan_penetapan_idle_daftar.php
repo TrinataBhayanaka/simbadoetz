@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
 
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
         $tgl_awal=$_POST['peman_penet_bmd_filt_tglawal'];
         $tgl_akhir=$_POST['peman_penet_bmd_filt_tglakhir'];
         $tgl_awal_fix=format_tanggal_db2($tgl_awal);
@@ -9,45 +11,7 @@ include "../../config/config.php";
         $alasan=$_POST['peman_penet_bmd_filt_alasan'];
         $submit=$_POST['tampil_idle'];
 			
-			// pr($_POST);
-            //open_connection();
-        
-       
-            if ($tgl_awal_fix!=""){
-            $query_tgl_awal="TglSKKDH LIKE '%$tgl_awal_fix%'";
-            }
-            if($tgl_akhir_fix!=""){
-            $query_tgl_akhir="TglSKKDH LIKE '%$tgl_akhir_fix%'";
-            }
-            if($no_penetapan_idle!=""){
-            $query_npi="NoSKKDH LIKE '%$no_penetapan_idle%'";
-            }
-            if($alasan!=""){
-            $query_alasan="Keterangan LIKE '%$alasan%'";
-            }
-
-            $parameter_sql="";
-            if($tgl_awal!=""){
-            $parameter_sql=$query_tgl_awal;
-            }
-            if($tgl_akhir!="" && $parameter_sql!=""){
-            $parameter_sql="m.TglSKKDH BETWEEN '$tgl_awal_fix' AND '$tgl_akhir_fix'";
-            }
-            if($tgl_akhir!="" && $parameter_sql==""){
-            $parameter_sql=$query_tgl_akhir;
-            }
-            if($no_penetapan_idle!="" && $parameter_sql!=""){
-            $parameter_sql=$parameter_sql." AND ".$query_npi;
-            }
-            if ($no_penetapan_idle!="" && $parameter_sql==""){
-            $parameter_sql=$query_npi;
-            }
-            if($alasan!="" && $parameter_sql!=""){
-            $parameter_sql=$parameter_sql." AND ".$query_alasan;
-            }
-            if ($alasan!="" && $parameter_sql==""){
-            $parameter_sql=$query_alasan;
-            }
+		
             
             //echo "$parameter_sql";
             
@@ -69,6 +33,9 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+
+	$data = $PEMANFAATAN->getPemanfaatan($_POST);
+	// pr($data);
 			?>
 
 
@@ -93,31 +60,31 @@ include "../../config/config.php";
 						<?php 
 								// pr($_SESSION);
 								// pr($parameter_sql);
-								if($parameter_sql!="" ) {
+								// if($parameter_sql!="" ) {
 									
-									if($_SESSION['ses_uaksesadmin'] = 1 ){
-										$query2="SELECT * FROM Menganggur WHERE FixMenganggur=1 and $parameter_sql";
-										$exec = mysql_query($query2) or die(mysql_error());
-										$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE $parameter_sql AND FixMenganggur=1"),0);
-									}else{
-										$query2="SELECT * FROM Menganggur WHERE UserNm =$_SESSION[ses_uoperatorid] and FixMenganggur=1 and $parameter_sql";
-										$exec = mysql_query($query2) or die(mysql_error());
-										$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE $parameter_sql AND FixMenganggur=1"),0);
-									}
+								// 	if($_SESSION['ses_uaksesadmin'] = 1 ){
+								// 		$query2="SELECT * FROM Menganggur WHERE FixMenganggur=1 and $parameter_sql";
+								// 		$exec = mysql_query($query2) or die(mysql_error());
+								// 		$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE $parameter_sql AND FixMenganggur=1"),0);
+								// 	}else{
+								// 		$query2="SELECT * FROM Menganggur WHERE UserNm =$_SESSION[ses_uoperatorid] and FixMenganggur=1 and $parameter_sql";
+								// 		$exec = mysql_query($query2) or die(mysql_error());
+								// 		$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE $parameter_sql AND FixMenganggur=1"),0);
+								// 	}
 									
-								}
-								elseif($parameter_sql=="" ){
-									if($_SESSION['ses_uaksesadmin'] = 1 ){
-										$query2="SELECT * FROM Menganggur WHERE FixMenganggur=1";
-										$exec = mysql_query($query2) or die(mysql_error());
-										$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE FixMenganggur=1"),0);
-									}else{
-										$query2="SELECT * FROM Menganggur WHERE UserNm =$_SESSION[ses_uoperatorid] and FixMenganggur=1";
-										$exec = mysql_query($query2) or die(mysql_error());
-										$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE FixMenganggur=1"),0);
-									}
+								// }
+								// elseif($parameter_sql=="" ){
+								// 	if($_SESSION['ses_uaksesadmin'] = 1 ){
+								// 		$query2="SELECT * FROM Menganggur WHERE FixMenganggur=1";
+								// 		$exec = mysql_query($query2) or die(mysql_error());
+								// 		$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE FixMenganggur=1"),0);
+								// 	}else{
+								// 		$query2="SELECT * FROM Menganggur WHERE UserNm =$_SESSION[ses_uoperatorid] and FixMenganggur=1";
+								// 		$exec = mysql_query($query2) or die(mysql_error());
+								// 		$total_record = mysql_result(mysql_query("SELECT COUNT(Menganggur_ID) as Num FROM Menganggur WHERE FixMenganggur=1"),0);
+								// 	}
 									
-								}
+								// }
 								
 								?>	
 						<ul>
@@ -168,14 +135,14 @@ include "../../config/config.php";
 							//sementara
 							// $query = "select distinct Menganggur_ID from MenganggurAset where StatusUsulan = 1";
 							// print_r($query);
-							$result  = mysql_query($query) or die (mysql_error());
-							while ($dataNew = mysql_fetch_object($result))
-							{
-								$dataArr[] = $dataNew->Menganggur_ID;
-							}
+							// $result  = mysql_query($query) or die (mysql_error());
+							// while ($dataNew = mysql_fetch_object($result))
+							// {
+							// 	$dataArr[] = $dataNew->Menganggur_ID;
+							// }
 							
 							//$no = 1;
-							while($row=mysql_fetch_array($exec)){
+							foreach($data as $row){
 							/*if($dataArr!="")
 							{
 								(in_array($row['Menganggur_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";

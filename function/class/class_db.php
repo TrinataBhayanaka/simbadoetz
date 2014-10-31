@@ -19,9 +19,9 @@ class DB
 	public function __construct()
 	{
 		$this->connect = open_connection();
-	  $this->path = $GLOBALS['path'];
-	  $this->url_rewrite = $GLOBALS['url_rewrite'];
-	  $this->url_rewrite_report = $GLOBALS['url_rewrite_report'];
+	  	$this->path = $GLOBALS['path'];
+	  	$this->url_rewrite = $GLOBALS['url_rewrite'];
+	  	$this->url_rewrite_report = $GLOBALS['url_rewrite_report'];
 	  //echo $this->path;
 	}
 	
@@ -297,6 +297,169 @@ class DB
 	    }
 
 	    return false;
+	}
+
+	public function fetch($data=false, $loop=false, $dbuse=0)
+	{
+		/* $dbuse [0] = config default database */
+		// pr($dbuse);
+		
+		if (!$data) return false;
+		
+		$dataArray = array();
+		
+		$var_result = $this->query($data) or die (mysql_error());
+		if ($loop){
+			if ($this->num_rows($var_result)){
+
+				while ($data = mysql_fetch_assoc($var_result)){
+						$dataArray[] = $data;
+				}
+				
+				return $dataArray;
+			}else{
+				return false;
+			}
+		}else{
+			
+			$dataArray = mysql_fetch_assoc($var_result);
+			
+			return $dataArray;
+		}
+		
+	}
+
+	function lazyQuery($data=array(), $debug=false, $method=0)
+	{
+
+
+		/*
+		How to use lazyQuery !!!
+
+		$sql1 = array(
+                'table'=>'satker AS s, aset AS a, log_aset l',
+                'field'=>'s.Satker_ID, s.KodeSektor, a.Aset_ID, l.last_aset_id',
+                'condition'=>'s.Satker_ID IN(1,2)',
+                'limit' => 5,
+                'joinmethod' => 'LEFT JOIN',
+                'join' => 's.Satker_ID = a.Aset_ID, a.Aset_ID = l.Aset_ID' 
+                );
+		*/
+
+		$table = $data['table'];
+		$field = $data['field'];
+
+		switch ($method) {
+			case '0':
+				
+				$condition = $data['condition'];
+				$limit = intval($data['limit']);
+				if ($limit>0) $limit = " LIMIT {$limit}";
+				else $limit = "";
+				$where = "";
+				if ($condition) $whereCondition = " {$condition} ";
+				else $whereCondition = " 1 ";
+
+				$jointmp = $data['join'];
+				$join = explode(',', $jointmp);
+
+				$joinmethod = $data['joinmethod'];
+				if ($joinmethod){
+					$tmpTable = explode(',', $table);
+					$length = count($tmpTable);
+
+					$joinIndex = 0;
+					for ($i=1; $i<$length; $i++){
+						$tatement[] = $joinmethod . $tmpTable[$i] . ' ON ' . $join[$joinIndex];
+						$joinIndex++;
+					}
+
+					$tmpStatement = implode(' ',$tatement);
+
+					$primaryTable = $tmpTable[0];
+
+					$sql = "SELECT {$field} FROM {$primaryTable} {$tmpStatement} WHERE {$whereCondition} {$limit}";
+				}else{
+					$sql = "SELECT {$field} FROM {$table} WHERE {$whereCondition} {$limit}";
+				}
+
+				
+				if ($debug){
+					if ($debug>1){
+						pr($sql);
+					}else{
+						pr($sql);
+						exit;	
+					} 
+					
+				}
+				if (!$debug) $res = $this->fetch($sql,1);
+				if ($res) return $res;
+
+			break;
+			
+			case '1':
+				/*
+				$sql = array(
+                'table'=>'aset',
+                'field'=>'Aset_ID, KodeSetkor',
+                'value'=>'111,1010',
+                );
+				*/
+				$value = $data['value'];
+
+				$sql = "INSERT INTO {$table} ({$field}) VALUES ({$value})";
+				if ($debug){
+					if ($debug>1){
+						pr($sql);
+					}else{
+						pr($sql);
+						exit;	
+					} 
+					
+				}
+				if (!$debug) $res = $this->query($sql);
+				if ($res) return true;
+
+			break;
+
+			case '2':
+				/*
+				$sql = array(
+                'table'=>'aset',
+                'field'=>'Aset_ID = 1, KodeSatker = 1010',
+                'condition'=>'Status_Validasi_Barang = 1',
+                );
+				*/
+				$condition = $data['condition'];
+				$limit = intval($data['limit']);
+				if ($limit>0) $limit = " LIMIT {$limit}";
+				else $limit = "";
+
+				$sql = "UPDATE {$table} SET {$field} WHERE {$condition} {$limit}";
+				if ($debug){
+					if ($debug>1){
+						pr($sql);
+					}else{
+						pr($sql);
+						exit;	
+					} 
+					
+				}
+				if (!$debug)$res = $this->query($sql);
+				if ($res) return true;
+
+			break;
+
+
+			default:
+				pr('Method no defined');
+				exit;
+				break;
+		}
+
+		
+		return false;
 	}
 	
 }

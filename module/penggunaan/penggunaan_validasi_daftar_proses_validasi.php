@@ -2,6 +2,8 @@
 
 include "../../config/config.php"; 
 
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+
 $menu_id = 31;
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -10,9 +12,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 $submit=$_POST['submit'];
 $ses_uid=$_SESSION['ses_uid'];
 
+// pr($_POST);
 $parameter=array('submit'=>$submit, 'ses_uid'=>$ses_uid);
-$data=$UPDATE->update_validasi_penggunaan($parameter);
+$data=$PENGGUNAAN->update_validasi_penggunaan($_POST);
 
+// exit;
 /*
 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPenggunaan' AND UserSes = '$_SESSION[ses_uid]'";
 //print_r($query);
