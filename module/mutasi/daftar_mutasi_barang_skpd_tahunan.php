@@ -125,9 +125,9 @@ include "../../config/config.php";
 								<input type="text"  placeholder="( dd/mm/yyyy )" style="text-align:center;" name="mutasi_daftar_tanggal" id="tanggal12"> 
 							</li>
 							<li>
-								<a href="<?echo $url_rewrite.'/module/mutasi/report/rp_daftarmutasibarang.php';?>" target="main"><input type="button" name="submit" value="Lanjut" /></a>
-                                        
-                                        <input type="reset" name="reset" value="Bersihkan Filter" />
+								<span class="span2">&nbsp;</span>
+								<a href="<?echo $url_rewrite.'/module/mutasi/report/rp_daftarmutasibarang.php';?>" target="main"><input type="button" name="submit" value="Lanjut" /></a>        
+                                <input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
 						<table border="0" cellspacing="6" style="display: none">

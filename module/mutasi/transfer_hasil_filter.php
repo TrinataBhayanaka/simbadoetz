@@ -1,9 +1,6 @@
 <?php
-    include "../../config/config.php";
-    include "$path/header.php";
-    include "$path/title.php";
-    
-    /*$aset_id=$_POST['mutasi_trans_filt_idaset'];
+include "../../config/config.php";
+ /*$aset_id=$_POST['mutasi_trans_filt_idaset'];
     $nama_aset=$_POST['mutasi_trans_filt_nmaset'];
     $nomor_kontrak=$_POST['mutasi_trans_filt_nokontrak'];
     $satker=$_POST['skpd_id'];
@@ -40,12 +37,15 @@
             }
         }
         ?>
-							
-	   <script type="text/javascript" charset="utf-8">
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+			?>
+		 <script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
-				$('#example').dataTable( {
-					"aaSorting": [[ 1, "desc" ]]
-				} );
+				
 				var tes=document.getElementsByTagName('*');
 				var button=document.getElementById('submit');
 				var boxeschecked=0;
@@ -105,32 +105,22 @@
 	
         
 
-<html>
-    <body onload="enable()">
-                        
-        <div id="content">
-            <?php
-                
-                include "$path/menu.php";
-            ?>
-            <div id="tengah1">	
-                <div id="frame_tengah1">
-                    <div id="frame_gudang">
-                        <div id="topright">
-                            Transfer Antar SKPD
-                        </div>
-                        
-                            <?php
-                                $param=  urlencode($_SESSION['parameter_sql_report']);
-                                //echo "$param";
-                            ?>
-                            <!--<div style="margin-bottom:10px; float:right; clear:both;">
-                                List Preview : <a href="<?php echo "$url_rewrite/report/template/MUTASI/tes_class_mutasi_transfer_cetak_seluruh.php?menu_id=22&mode=1&parameter=$param";?>" target="_blank"><input type="submit" value="Cetak Seluruh Data"></a>
-                                <a href="<?php echo "$url_rewrite/report/template/MUTASI/tes_class_mutasi_transfer_dengan_pilihan.php?menu_id=22&mode=2";?>" target="_blank"><input type="submit" value="Cetak dari Daftar Anda"></a>
-                            </div>-->
-                            
-                                        
-                                        <?php
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Mutasi</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Transfer Antar SKPD</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Transfer Antar SKPD</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+			 <?php
+				$param=  urlencode($_SESSION['parameter_sql_report']);
+				//echo "$param";
+			?>
+			 <?php
                                             $offset = @$_POST['record'];
 
 											$param = $_SESSION['parameter_sql'];
@@ -220,80 +210,81 @@
 										}
                                          // pr($_SESSION);      
 									?>
-										
-							<div id="bottomright">
-							<table width="100%" height="4%" border="1" style="border-collapse:collapse;">
-								<tr>
-									<th colspan="2" align="left" style="font-weight:bold;">Filter data : <?php echo $jml?> Record</u></th>
-								</tr>
-							</table>
-							<br>
-						<div style="margin-bottom:10px; float:right;">
-                                <a href="transfer_antar_skpd.php"><input type="submit" value="Kembali ke Halaman Utama: Cari Aset"></a>
-                            </div>
-                            <div style="margin-bottom:10px; float:right; clear:both;">
-								<table>
-									<tr>
-										<td>
-											<a href="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_hasil_daftar.php?pid=1"><input type="submit" value="Daftar Barang Mutasi"></a>
-										</td>
-									</tr>
-								</table>
-							</div>
-							<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
-								<div>
-								<table border='0' cellspacing="0" width="100%" style="padding:0px; margin-top:1px; border: 1px solid #dddddd;; border-width: 1px 1px 1px 1px; clear:both;">
-									<tbody>
-										<tr>
-											<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-											<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-											
-											<td  align="right">   
-												<input type="submit" name="submit" value="Pengeluaran Barang" id="submit" disabled/>
-											</td>
-											<td width="200px" align="right"><input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-												<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
-													<input type="button" value="<< Prev" class="buttonprev"/>
-														Page
-												<input type="button" value="Next >>" class="buttonnext"/>
-											</td>	
-										</tr>
-									</tbody>
-									</table>
-									</div>
-									</br>
-									<div id="demo">
-									<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
-										<thead>
-											<tr>
-												<th width=20px; style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-												<th style="background-color: #eeeeee; border: 1px solid #dddddd;">&nbsp;</th>
-												<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
-											</tr>
-										</thead>
-										<?php
-											if (!empty($row))
-											{
-											?>
-												
-											<tbody>
-												<?php
-												// $no = 1;
-												$no = 1;
-												$page = @$_GET['pid'];
-												if ($page > 1){
-													$no = intval($page - 1 .'01');
-												}else{
-													$no = 1;
-												}
-												foreach ($row as $key => $value)
-												{
-										?>
-										
-                                        <tr>
-                                            <td align="center" style="background-color: #; border: 1px solid #dddddd; color: black; font-weight: "><?php echo "$no.";?></td>
-                                            <td align="center" style="background-color: #; border: 1px solid #dddddd; color: black; font-weight: bold;">
-                                               	<?php
+		<section class="formLegend">
+			
+			<div class="detailLeft">
+					<span class="label label-success">Filter data: <?php echo $jml?> filter (View seluruh data)</span>
+			</div>
+		
+			<div class="detailRight" align="right">
+						
+						<ul>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/mutasi/transfer_antar_skpd.php";?>" class="btn">
+								Kembali ke Halaman Utama: Cari Aset</a>
+								
+							</li>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_hasil_daftar.php?pid=1" class="btn">
+									   Daftar Barang Mutasi
+								 </a>
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
+						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						
+						<td  align="right">   
+							<input type="submit" name="submit" value="Pengeluaran Barang" id="submit" disabled/>
+						</td>
+					</tr>
+					<tr>
+						<th>No</th>
+						<th>&nbsp;</th>
+						<th>Informasi Aset</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				<?php
+					if (!empty($row))
+					{
+					
+					
+						// $no = 1;
+						$no = 1;
+						$page = @$_GET['pid'];
+						if ($page > 1){
+							$no = intval($page - 1 .'01');
+						}else{
+							$no = 1;
+						}
+						foreach ($row as $key => $value)
+						{
+				?>
+				
+					<tr class="gradeA">
+						<td><?php echo "$no.";?></td>
+						<td>
+							<?php
 													// pr($_SESSION['ses_uaksesadmin']);
 												if (($_SESSION['ses_uaksesadmin'] == 1)){
 													?>
@@ -315,80 +306,75 @@
 												}
 												
 												?>	
-                                            </td>
-                                            <td align="left" style="background-color: #; border: 1px solid #dddddd;height:100px; color: black; font-weight: bold;">
-                                                <table width="100%">
-                                                    <tr>
-                                                        <td style="font-weight: bold;"> <?php echo "$value->Aset_ID";?></b> ( Aset ID - System Number )</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-weight: bold;"><?php echo "$value->NomorReg";?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-weight: bold;"><?php echo "$value->Kode";?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-weight: bold;"><?php echo "$value->NamaAset";?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><hr></td>
-                                                    </tr>
-												</table>	
-												<table width="100%">
-													<tr>
-														
-														<td width="20%">No. Kontrak</td>
-														<td width="2%">&nbsp;</td>
-														<td width="78%"><?php echo "$value->NoKontrak";?></td>
-													</tr>
-													<tr align="left">
-														<td>Satker</td>
-														<td>&nbsp;</td>
-														<td><?php echo "$value->NamaSatker";?></td>
-													</tr>
-													<tr align="left">
-														<td>Lokasi</td>
-														<td>&nbsp;</td>
-														<td><?php echo "$value->NamaLokasi";?></td>
-													</tr>			
-													<tr align="left">				
-														<td>Status</td>
-														<td>&nbsp;</td>
-														<td>-</td>
-													</tr>
-												</table>
-                                            </td>
-                                        </tr>
-                                        <?php $no++; 
-											} 
-                                        }
-                                          else
-										{
-											$disabled = 'disabled';
-										}
-										?>
-                                        	</tbody>
-											<tfoot>
-												<tr>
-													<th width=20px; style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-													<th style="background-color: #eeeeee; border: 1px solid #dddddd;">&nbsp;</th>
-													<th style="background-color: #eeeeee; border: 1px solid #dddddd; font-weight:bold;">Informasi Aset</th>
-													
-												</tr>
-											</tfoot>
-										</table>
-										</div>
-										<div class="spacer"></div>
-                                </form>
-                            
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-    </body>
-</html>	
+						</td>
+						<td>	
+						<table width="100%">
+								<tr>
+									<td style="font-weight: bold;"> <?php echo "$value->Aset_ID";?></b> ( Aset ID - System Number )</td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;"><?php echo "$value->NomorReg";?></td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;"><?php echo "$value->Kode";?></td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;"><?php echo "$value->NamaAset";?></td>
+								</tr>
+								<tr>
+									<td><hr></td>
+								</tr>
+							</table>	
+							<table width="100%">
+								<tr>
+									
+									<td width="20%">No. Kontrak</td>
+									<td width="2%">&nbsp;</td>
+									<td width="78%"><?php echo "$value->NoKontrak";?></td>
+								</tr>
+								<tr align="left">
+									<td>Satker</td>
+									<td>&nbsp;</td>
+									<td><?php echo "$value->NamaSatker";?></td>
+								</tr>
+								<tr align="left">
+									<td>Lokasi</td>
+									<td>&nbsp;</td>
+									<td><?php echo "$value->NamaLokasi";?></td>
+								</tr>			
+								<tr align="left">				
+									<td>Status</td>
+									<td>&nbsp;</td>
+									<td>-</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					 <?php 
+						$no++; 
+							} 
+						}
+						  else
+						{
+							$disabled = 'disabled';
+						}
+						?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
+			</form>
+			</div>
+			<div class="spacer"></div>
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

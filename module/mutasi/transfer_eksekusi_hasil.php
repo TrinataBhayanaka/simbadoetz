@@ -1,13 +1,14 @@
-    <?php
-        include "../../config/config.php";
-    ?>
-
-    <html>
-        
-    <?php
-        include "$path/header.php";
-    ?>
-        <!-- buat alert-->
+<?php
+include "../../config/config.php";
+ 
+        ?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+			?>
+		  <!-- buat alert-->
         <script type="text/javascript">
             <!--
             function sendit(){
@@ -88,128 +89,188 @@
             });
         </script>
 	
-	<body>
-	<div id="content">
-                    <?php
-                        include "$path/title.php";
-                        include "$path/menu.php";
-                    ?>
-            <div id="tengah1">	
-                <div id="frame_tengah1">
-                    <div id="frame_gudang">
-                        <div id="topright">
-                            Transfer Antar SKPD
-                        </div>
-                        <div id="bottomright">
-                            <?php
-                                $nama=$_POST['mutasi_nama_aset'];
-                                $satker1=$_POST['bkbppm'];
-                                $satker2=$_POST['bkbppmtu'];
-                                $satker3=$_POST['sekretariatdaerah'];
-                                $satker4=$_POST['sekretariatdaerahbhh'];
-                                $nodok=$_POST['mutasi_trans_eks_nodok'];
-                                $tgl=$_POST['mutasi_trans_eks_tglproses'];
-                                $alasan=$_POST['mutasi_trans_eks_alasan'];
-                            ?>  
-                            <div style="color:black; font-size:20px; font-family:arial; margin-bottom:20px;" align="center">
-                                Data Aset Sudah Ditransfer.
-                            </div>
-                            <div style="color:black; font-size:15px; font-family:arial; margin:0px auto;">
-                                Daftar aset yang ditransfer :    
-                                <br/>
-                                <br/>
-                                <table  width="100%" style="border:1px solid black; border-width:1px 1px 1px 1px;" cellspacing="0">
-                                        <tr style="background-color:#004933; font-family: arial; font-size: 15px; color:white; height:25px;">
-                                            <td rowspan="2" valign="top" align="center" style="border:1px solid black; padding-top:4px;" width="60">Nomor</td>
-                                            <td colspan="2" align="center" style="border:1px solid black;">Nama Aset</td>
-                                        </tr>
-                                        <tr style="background-color:#004933; font-family: arial; font-size: 15px; color:white; height:25px;"">
-                                            <td align="center" style="border:1px solid black;">Nomor Registrasi Lama</td>
-                                            <td align="center" style="border:1px solid black;">Nomor Registrasi Baru</td>
-                                        </tr>
-                                        <?php
-                                        $N = count($nama);
-                                        for($i=0; $i < $N; $i++){
-                                        $no=$i+1;
-                                        ?>
-                                        <tr style="font-family: arial; font-size: 15px; color:black; height:25px;"">
-                                            <td rowspan="2" valign="top" align="center" style="border:1px solid black; padding-top:4px;" width="60"><?php echo "$no.";?></td>
-                                            <td colspan="2" align="center" style="border:1px solid black;"><?php echo "$nama[$i]";?></td>
-                                        </tr>
-                                        <tr style="font-family: arial; font-size: 15px; color:black; height:25px;">
-                                            <td align="center" style="border:1px solid black;">99.02.23.1.XX.00 - 02.02.03.01.02.0001</td>
-                                            <td align="center" style="border:1px solid black;">99.02.23.1.XX.00 - 02.02.03.01.02.0001</td>
-                                        </tr>
-                                        <?php
-                                            }
-                                        ?>
-                                </table>
-                                &nbsp;
-                                <table style="margin-left:10px; color:black;">
-                                    <tr>
-                                        <td>Ke Satker</td>
-                                        <td>&nbsp;</td>
-                                        <td>:</td>
-                                        <td>UPTD</td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>No. Dokumen Pendukung</td>
-                                        <td>&nbsp;</td>
-                                        <td>:</td>
-                                        <td><?php echo "$nodok";?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanggal Proses</td>
-                                        <td>&nbsp;</td>
-                                        <td>:</td>
-                                        <td><?php echo "$tgl";?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Alasan</td>
-                                        <td>&nbsp;</td>
-                                        <td>:</td>
-                                        <td><?php echo "$alasan";?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"></td>
-                                    </tr>
-                                </table>
-                                <p align="center"><a href="#">Cetak Dokumen</a>&nbsp;||&nbsp;<a href="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_antar_skpd.php">Kembali ke menu utama</a></p>
-                            </div>
-                                
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-		
-        <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-        </div>
         
-    </body>
-</html>	
+
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Mutasi</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Transfer Antar SKPD</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Transfer Antar SKPD</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+			<?php
+				$nama=$_POST['mutasi_nama_aset'];
+				$satker1=$_POST['bkbppm'];
+				$satker2=$_POST['bkbppmtu'];
+				$satker3=$_POST['sekretariatdaerah'];
+				$satker4=$_POST['sekretariatdaerahbhh'];
+				$nodok=$_POST['mutasi_trans_eks_nodok'];
+				$tgl=$_POST['mutasi_trans_eks_tglproses'];
+				$alasan=$_POST['mutasi_trans_eks_alasan'];
+			?>  
+		<section class="formLegend">
+			
+			<div class="detailLeft">
+					<span class="label label-success">Filter data: <?php echo $jml?> filter (View seluruh data)</span>
+			</div>
+		
+			<div class="detailRight" align="right">
+						
+						<ul>
+							<li>
+								<a href="<?php echo"$url_rewrite/module/mutasi/transfer_antar_skpd.php";?>" class="btn">
+								Kembali ke Halaman Utama: Cari Aset</a>
+								
+							</li>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_hasil_daftar.php?pid=1" class="btn">
+									   Daftar Barang Mutasi
+								 </a>
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					
+					<tr>
+						<th>Nomor</th>
+						<th>Nama Aset</th>
+						<th>Nomor Registrasi Lama</th>
+						<th>Nomor Registrasi Baru</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				<?php
+					if (!empty($row))
+					{
+					
+					
+						// $no = 1;
+						$no = 1;
+						$page = @$_GET['pid'];
+						if ($page > 1){
+							$no = intval($page - 1 .'01');
+						}else{
+							$no = 1;
+						}
+						foreach ($row as $key => $value)
+						{
+				?>
+				
+					<tr class="gradeA">
+						<td><?php echo "$no.";?></td>
+						<td>
+							<?php
+													// pr($_SESSION['ses_uaksesadmin']);
+												if (($_SESSION['ses_uaksesadmin'] == 1)){
+													?>
+													<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value->Aset_ID;?>" 
+													<?php 
+														for ($i = 0; $i <= count($explode); $i++){
+															if ($explode[$i]==$value->Aset_ID) 
+																echo 'checked';
+														}?>>
+													<?php
+												}else{
+													if ($dataAsetUser){
+													if (in_array($value->Aset_ID, $dataAsetUser)){
+													?>
+													<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
+													<?php
+													}
+												}
+												}
+												
+												?>	
+						</td>
+						<td>	
+						<table width="100%">
+								<tr>
+									<td style="font-weight: bold;"> <?php echo "$value->Aset_ID";?></b> ( Aset ID - System Number )</td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;"><?php echo "$value->NomorReg";?></td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;"><?php echo "$value->Kode";?></td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;"><?php echo "$value->NamaAset";?></td>
+								</tr>
+								<tr>
+									<td><hr></td>
+								</tr>
+							</table>	
+							<table width="100%">
+								<tr>
+									
+									<td width="20%">No. Kontrak</td>
+									<td width="2%">&nbsp;</td>
+									<td width="78%"><?php echo "$value->NoKontrak";?></td>
+								</tr>
+								<tr align="left">
+									<td>Satker</td>
+									<td>&nbsp;</td>
+									<td><?php echo "$value->NamaSatker";?></td>
+								</tr>
+								<tr align="left">
+									<td>Lokasi</td>
+									<td>&nbsp;</td>
+									<td><?php echo "$value->NamaLokasi";?></td>
+								</tr>			
+								<tr align="left">				
+									<td>Status</td>
+									<td>&nbsp;</td>
+									<td>-</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					 <?php 
+						$no++; 
+							} 
+						}
+						  else
+						{
+							$disabled = 'disabled';
+						}
+						?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
+			</form>
+			</div>
+			<div class="spacer"></div>
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>
