@@ -133,8 +133,16 @@ $menu_id = 1;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
-			<p><a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah SP2D Termin</a>
-			&nbsp;</p>	
+			<?php
+				if($kontrak[0]['n_status'] != 1){
+			?>		
+				<p><a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah SP2D Termin</a>
+				&nbsp;</p>	
+			<?php
+				} else {
+					echo "";
+				}
+			?>
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
@@ -162,8 +170,16 @@ $menu_id = 1;
 						<td class="center"><?=number_format($value['nilai'])?></td>
 						<td class="center"><?=$value['keterangan']?></td>
 						<td class="center">
-						<a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
-						<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
+						<?php
+							if($kontrak[0]['n_status'] != 1){
+						?>	
+							<a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
+							<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
+						<?php
+						} else {
+							echo "<span class='label label-Success'>Sudah di posting</span>";
+						}
+						?>
 					</tr>
 				<?php
 					$i++;

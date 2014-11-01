@@ -1749,7 +1749,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         global $url_rewrite;
         unset($data['id']);
 
-        $updsp2d = mysql_query("UPDATE sp2d SET nilai = if(nilai is null,0,nilai)+{$data['jumlah']}");
+        $updsp2d = mysql_query("UPDATE sp2d SET nilai = if(nilai is null,0,nilai)+{$data['jumlah']} WHERE id = '{$data['idsp2d']}' AND type = '2'");
 
         $data['n_status'] = 0; 
             foreach ($data as $key => $val) {

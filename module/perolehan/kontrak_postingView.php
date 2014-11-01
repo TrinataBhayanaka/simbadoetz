@@ -120,20 +120,18 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span  class="labelInfo">Total Rincian Barang</span>
-								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
+								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']-$sumsp2d['total']) : '0'?>" disabled/>
+							</li>
+							<li>
+								<span  class="labelInfo">Total Penunjang</span>
+								<input type="text" value="<?=isset($sumsp2d) ? number_format($sumsp2d['total']) : '0'?>" disabled/>
 							</li>
 						</ul>
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			<?php
-				if($kontrak['nilai'] != $sumTotal['total']){
-					echo "<p style='color:red'>* Total Rincian Barang tidak sama dengan total SPK</p>";
-					$disabled = "disabled";
-				}
-			?>
-			<p><a href="kontrak_postingFinal.php?id=<?=$idKontrak?>" class="btn btn-info btn-small" <?=$disabled?>><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
-			&nbsp;
+			
+			<p>
 			<a class="btn btn-danger btn-small" disabled><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 			&nbsp;</p>	
 			<div id="demo">
@@ -155,7 +153,9 @@ $menu_id = 1;
 					if($rKontrak){
 						$i = 1;
 						foreach ($rKontrak as $key => $value) {
-							
+						$bop = $value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'];
+						$satuan = $value['Satuan']-($bop/$value['Kuantitas']);
+						$total = ($value['Satuan']-($bop/$value['Kuantitas']))*$value['Kuantitas'];	
 						
 				?>
 					<tr class="gradeA">
@@ -163,10 +163,10 @@ $menu_id = 1;
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
 						<td><?=$value['Kuantitas']?></td>
-						<td><?=number_format($value['Satuan'])?></td>
-						<td><?=number_format($value['Satuan']*$value['Kuantitas'])?></td>
-						<td><?=number_format($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'])?></td>
-						<td><?=number_format($value['NilaiPerolehan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']))?></td>
+						<td><?=number_format($satuan)?></td>
+						<td><?=number_format($total)?></td>
+						<td><?=number_format($bop)?></td>
+						<td><?=number_format($total+$bop)?></td>
 						
 					</tr>
 				<?php

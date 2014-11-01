@@ -106,7 +106,17 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=number_format($val['nilai'])?></td>
 						<td class="center"><?=($val['n_status']==1) ? '<span class="label label-success">SUDAH</span>' : '<span class="label label-Default">BELUM</span>'?></td>
 						<td class="center">
-						<a href="kontrak_postingRincian.php?id=<?=$val['id']?>" class="btn btn-default btn-small"><i class="fa fa-book"></i>&nbsp;Posting</a>
+						<?php
+						if($val['n_status'] != 1){
+						?>	
+							<a href="kontrak_postingRincian.php?id=<?=$val['id']?>" class="btn btn-default btn-small"><i class="fa fa-book"></i>&nbsp;Posting</a>
+						<?php
+						} else {
+						?>
+							<a href="kontrak_postingView.php?id=<?=$val['id']?>" class="btn btn-default btn-small"><i class="fa fa-eye"></i>&nbsp;View</a>
+						<?php
+						}
+						?>
 						</td>
 						
 					</tr>
