@@ -1,15 +1,13 @@
-<?php
-include "../../config/config.php";
+    <?php
+        include "../../config/config.php";
+    ?>
 
-?>
-
-<?php
-	include"$path/meta.php";
-	include"$path/header.php";
-	include"$path/menu.php";
-	
-?>
-  <!-- buat alert-->
+    <html>
+        
+    <?php
+        include "$path/header.php";
+    ?>
+        <!-- buat alert-->
         <script type="text/javascript">
             <!--
             function sendit(){
@@ -115,19 +113,20 @@ include "../../config/config.php";
 			}
         </script>
 	
-	<section id="main">
-		<ul class="breadcrumb">
-		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-		  <li><a href="#">Mutasi</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Transfer Antar SKPD</li>
-		  <?php SignInOut();?>
-		</ul>
-		<div class="breadcrumb">
-			<div class="title">Transfer Antar SKPD</div>
-			<div class="subtitle">Filter Data</div>
-		</div>
-		<section class="formLegend">
-			
+	<body>
+	<div id="content">
+                    <?php
+                        include "$path/title.php";
+                        include "$path/menu.php";
+                    ?>
+            <div id="tengah1">	
+                <div id="frame_tengah1">
+                    <div id="frame_gudang">
+                        <div id="topright">
+                            Transfer Antar SKPD
+                        </div>
+                        <div id="bottomright">
+                            
                             <?php
                                 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'Mutasi[]' AND UserSes = '$_SESSION[ses_uid]'";
                                         //print_r($query);
@@ -163,7 +162,7 @@ include "../../config/config.php";
                                                 $id++;
                                         }
                             ?>
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
+                            <form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
                             <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
                             <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top:2px;">
                                 <tbody>
@@ -399,10 +398,16 @@ include "../../config/config.php";
                                 </tbody>
                             </table>
                             </form>
-			
-		</section>     
-	</section>
-	
-<?php
-	include"$path/footer.php";
-?>
+                                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+        <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
+			Powered by BBSDM Team 2012
+        </div>
+        
+    </body>
+</html>	
