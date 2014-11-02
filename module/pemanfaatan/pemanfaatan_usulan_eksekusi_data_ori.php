@@ -1,14 +1,26 @@
-<?php
-include "../../config/config.php";
-?>
-<?php
-	include"$path/meta.php";
-	include"$path/header.php";
-	include"$path/menu.php";
-	
-			?>
+    <?php
+        include "../../config/config.php"; 
+    ?>
 
-<script type="text/javascript">
+<html>
+    <?php
+        include "$path/header.php";
+    ?>
+	
+        <body>
+            <div id="content">
+                    <?php
+                        include "$path/title.php";
+                        include "$path/menu.php";
+                    ?>
+                <div id="tengah1">	
+                    <div id="frame_tengah1">
+                        <div id="frame_gudang">
+                            <div id="topright">
+                                Daftar Usulan Pemanfaatan		
+                            </div>
+                            <div id="bottomright">
+                                <script type="text/javascript">
 									function spoiler(obj)
 									{
 									var inner = obj.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("tfoot")[0];
@@ -33,18 +45,7 @@ include "../../config/config.php";
 									document.getElementById(obj.id).value="Sub Detail";}
 									}
 								</script>
-          <section id="main">
-			<ul class="breadcrumb">
-			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Pemanfaatan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Pemanfaatan</li>
-			  <?php SignInOut();?>
-			</ul>
-			<div class="breadcrumb">
-				<div class="title">Daftar Usulan Pemanfaatan</div>
-				<div class="subtitle">Daftar Data</div>
-			</div>	
-			 <?php
+                                <?php
                                 // pr($_POST);
 								// exit;
 								$id = $_POST['usulan_pemanfaatan_aset'];
@@ -76,16 +77,7 @@ include "../../config/config.php";
                                         }
                                         //pr($row);
                                 ?>
-		<section class="formLegend">
-			
-			
-		
-			
-			<div style="height:5px;width:100%;clear:both"></div>
-			
-			
-			<div id="demo">
-			   <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_eksekusi_data_prev_proses.php">
+                                <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_eksekusi_data_prev_proses.php">
                                 <table width="100%">
                                     <tr>
                                         <td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar aset yang diusulkan untuk pemanfaatan :</u></td>
@@ -266,11 +258,14 @@ include "../../config/config.php";
                                     </tr>
                                 </table>
                                 </form>
-			</div>
-			
-			
-		</section> 
-	</section>
-<?php
-include "$path/footer.php";
-?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
+			Powered by BBSDM Team 2012
+            </div>
+        </body>
+</html>	
+	
