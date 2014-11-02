@@ -2,6 +2,8 @@
 
 include "../../config/config.php";
 
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 $menu_id = 33;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
@@ -20,6 +22,16 @@ $nm_barang=Array();
 
 $panjang=count($nmaset);
 
+// pr($_POST);
+$data = $PEMANFAATAN->store_usulan_pemanfaatan($_POST);
+
+
+echo "<script>
+            alert('Data Berhasil Disimpan');
+            document.location='$url_rewrite/module/pemanfaatan/pemanfaatan_usulan_eksekusi_data_proses.php?usulan_id=$usulan_id';
+            </script>";
+
+exit;
 $query="insert into Usulan (Usulan_ID, Aset_ID, Penetapan_ID, 
                                     Jenis_Usulan, UserNm, TglUpdate, 
                                     GUID, FixUsulan) 

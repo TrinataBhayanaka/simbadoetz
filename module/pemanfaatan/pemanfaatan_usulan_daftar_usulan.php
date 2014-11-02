@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 $menu_id = 5;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
@@ -13,11 +16,11 @@ if (isset($_POST['submit']))
 // echo "</pre>";
 
 	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+	// $get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 } else
 		{
 	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+		// $get_data_filter = $RETRIEVE->retrieve_rkb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 	    }  
 
 	// echo '<pre>';	    
@@ -29,6 +32,9 @@ if (isset($_POST['submit']))
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	$data = $PEMANFAATAN->retrieve_rkb_filter($_POST,1);
+
+
 			?>
 
 

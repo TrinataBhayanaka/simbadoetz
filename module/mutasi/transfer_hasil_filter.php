@@ -1,11 +1,14 @@
 <?php
 include "../../config/config.php";
+
+$MUTASI = new RETRIEVE_MUTASI;
+
  /*$aset_id=$_POST['mutasi_trans_filt_idaset'];
     $nama_aset=$_POST['mutasi_trans_filt_nmaset'];
     $nomor_kontrak=$_POST['mutasi_trans_filt_nokontrak'];
     $satker=$_POST['skpd_id'];
     $submit=$_POST['transfer'];*/
-		//pr($_POST);
+		// pr($_POST);
 		$submit=$_POST['transfer'];
 		$data['kd_idaset']= $_POST['mutasi_trans_filt_idaset'];
 		$data['kd_namaaset'] = $_POST['mutasi_trans_filt_nmaset'];
@@ -19,7 +22,7 @@ include "../../config/config.php";
 		//$data['sql'] = " StatusMenganggur=0 AND StatusMutasi=0";
 		$data['sql_where'] = TRUE;
 		$data['modul'] = "";
-		$getFilter = $HELPER_FILTER->filter_module($data);
+		// $getFilter = $HELPER_FILTER->filter_module($data);
 		// pr($getFilter);
 		// exit;
 		//echo'ada';
@@ -42,6 +45,9 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	
+	$data = $MUTASI->retrieve_mutasi_filter($_POST);
+	// pr($data);
 			?>
 		 <script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
@@ -120,96 +126,7 @@ include "../../config/config.php";
 				$param=  urlencode($_SESSION['parameter_sql_report']);
 				//echo "$param";
 			?>
-			 <?php
-                                            $offset = @$_POST['record'];
-
-											$param = $_SESSION['parameter_sql'];
-											if (isset($_POST['search'])){
-												
-												$query="$param ORDER BY Aset_ID ASC ";
-											}else{
-												$paging = paging($_GET['pid']);
-											
-												$query="$param ORDER BY Aset_ID ASC ";
-											}
-											
-											$res = mysql_query($query) or die(mysql_error());
-											if ($res){
-												$rows = mysql_num_rows($res);
-												
-												while ($data = mysql_fetch_array($res))
-												{
-													
-													$dataArray[] = $data['Aset_ID'];
-												}
-											}
-											
-											if($dataArray){
-												$dataImplode = implode(',',$dataArray);
-											}
-											$querypenggunaan ="SELECT Aset_ID FROM PenggunaanAset WHERE Aset_ID IN ({$dataImplode}) AND StatusMenganggur=0 AND StatusMutasi=0"; 	
-											$res1 = mysql_query($querypenggunaan) or die(mysql_error());
-											
-											if ($res1){
-												$rows1 = mysql_num_rows($res1);
-												$jml=($rows1);
-												//pr($jml);
-												while ($data1 = mysql_fetch_array($res1))
-												{
-													
-													$dataArray1[] = $data1['Aset_ID'];
-												}
-											}
-											if($dataArray1){
-												$dataImplode_1 = implode(',',$dataArray1);
-											}
-											if($dataImplode_1!=""){
-											$viewTable = 'filter_mutasi_'.$SessionUser['ses_uoperatorid'];
-											// $table = $DBVAR->is_table_exists($viewTable, 1);
-											// if (!$table){
-												$sql="CREATE OR REPLACE VIEW $viewTable AS SELECT a.LastSatker_ID, a.NamaAset, a.Aset_ID, a.NomorReg,c.NoKontrak, e.NamaSatker, f.NamaLokasi, g.Kode FROM Aset AS a 
-													 LEFT JOIN KontrakAset AS d ON a.Aset_ID=d.Aset_ID 
-													 LEFT JOIN Kontrak AS c ON d.Kontrak_ID=c.Kontrak_ID 
-													 INNER JOIN Satker AS e ON a.LastSatker_ID=e.Satker_ID 
-													 INNER JOIN Lokasi AS f ON a.Lokasi_ID=f.Lokasi_ID 
-													 INNER JOIN Kelompok AS g ON a.Kelompok_ID=g.Kelompok_ID
-													 WHERE a.Aset_ID IN ({$dataImplode_1}) ORDER BY a.Aset_ID asc";
-												
-											
-												$exec=mysql_query($sql) or die(mysql_error());
-											
-												// }
-												//pr($sql);
-											
-											$sql = "SELECT * FROM $viewTable LIMIT $paging, 100 ";
-											$exec=mysql_query($sql) or die(mysql_error());
-											$count=mysql_num_rows($exec);
-											while ($dataAset = mysql_fetch_object($exec)){
-												$row[] = $dataAset;
-												}
-											$dataAsetUser = $HELPER_FILTER->getAsetUser(array('Aset_ID'=>$dataImplode_1));	
-											}
-										
-										$query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'Mutasi[]'";
-										$result_apl = $DBVAR->query($query_apl) or die ($DBVAR->error());
-										$data_apl = $DBVAR->fetch_object($result_apl);
-										
-										$array = explode(',',$data_apl->aset_list);
-											
-										foreach ($array as $id)
-										{
-											if ($id !='')
-											{
-											$dataAsetList[] = $id;
-											}
-										}
-										
-										if ($dataAsetList !='')
-										{
-											$explode = array_unique($dataAsetList);
-										}
-                                         // pr($_SESSION);      
-									?>
+			 
 		<section class="formLegend">
 			
 			<div class="detailLeft">
@@ -265,7 +182,7 @@ include "../../config/config.php";
 				<tbody>		
 							 
 				<?php
-					if (!empty($row))
+					if (!empty($data))
 					{
 					
 					
@@ -277,7 +194,7 @@ include "../../config/config.php";
 						}else{
 							$no = 1;
 						}
-						foreach ($row as $key => $value)
+						foreach ($data as $key => $value)
 						{
 				?>
 				

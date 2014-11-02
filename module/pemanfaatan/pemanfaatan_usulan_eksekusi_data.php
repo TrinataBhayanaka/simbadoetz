@@ -1,11 +1,16 @@
 <?php
 include "../../config/config.php";
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 ?>
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	// pr($_POST);
+	$data = $PEMANFAATAN->retrieve_usulan_pemanfaatan_eksekusi($_POST);
+	// pr($data);
 			?>
 
 <script type="text/javascript">
@@ -47,34 +52,7 @@ include "../../config/config.php";
 			 <?php
                                 // pr($_POST);
 								// exit;
-								$id = $_POST['usulan_pemanfaatan_aset'];
-                                //pr($id);
-								$dataImplode = implode(', ',array_values($id));
-								// pr($dataImplode);
-							
-										if($dataImplode !=""){
-											
-                                            //$$key = $value;
-														$query = "SELECT b.Aset_ID, 
-																		a.Aset_ID,a.LastSatker_ID,a.TglPerolehan, a.AsetOpr, a.Kuantitas, a.Satuan,a.OrigSatker_ID,a.Ruangan, 
-																		a.SumberAset, a.NilaiPerolehan,a.Alamat, a.RTRW, a.Pemilik, a.NomorReg, a.NamaAset,a.TglPerolehan,
-																		c.NoKontrak, e.NamaSatker, f.NamaLokasi, g.Kode,g.Uraian
-																		FROM MenganggurAset AS b
-																		LEFT JOIN Aset AS a ON b.Aset_ID=a.Aset_ID
-																		LEFT JOIN  KontrakAset AS d  ON b.Aset_ID = d.Aset_ID
-																		LEFT JOIN Kontrak AS c ON c.Kontrak_ID = d.Kontrak_ID
-																		LEFT JOIN Lokasi AS f  ON a.Lokasi_ID=f.Lokasi_ID
-																		LEFT JOIN Satker AS e ON a.LastSatker_ID=e.Satker_ID
-																		LEFT JOIN Kelompok AS g ON a.Kelompok_ID=g.Kelompok_ID
-																	WHERE b.Aset_ID IN ({$dataImplode})";
-										
-                                                $exec=mysql_query($query) or die(mysql_error());
-												while ($data = mysql_fetch_object($exec)){
-													$row[] = $data;
-											}
-					
-                                        }
-                                        //pr($row);
+								
                                 ?>
 		<section class="formLegend">
 			
@@ -95,10 +73,10 @@ include "../../config/config.php";
                                             <table width="100%">
                                                  <?php
                                                 $no = 1;
-												foreach ($row as $keys => $nilai)
+												foreach ($data as $keys => $nilai)
 												{
 													
-													if ($nilai->Aset_ID !='')
+													if ($nilai['Aset_ID'] !='')
 													{
 														if ($nilai->AsetOpr == 0)
 														$select="selected='selected'";
@@ -116,16 +94,12 @@ include "../../config/config.php";
 														<tr>
 														<td></td>
 														<td>$no.</td>
-														<input type='hidden' name='peman_usul_nama_aset[]' value='$nilai->Aset_ID'>
-														<td>$nilai->NomorReg - $nilai->Kode</td>
-														<td align='right'><input type='button' id ='$nilai->Aset_ID' value='View Detail' onclick='spoiler(this);'></td>
+														<input type='hidden' name='peman_usul_nama_aset[]' value='$nilai[Aset_ID]'>
+														<td>$nilai[noRegister] - $nilai[Uraian]</td>
+														<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
 														</tr>
 
-														<tr>
-														<td>&nbsp;</td>
-														<td>&nbsp;</td>
-														<td>$nilai->NamaAset</td>
-														</tr>
+														
 														<tfoot style='display:none;'>
 														<tr>
 														<td></td>
@@ -135,37 +109,28 @@ include "../../config/config.php";
 
 														<table border=0 width=100%>
 														<tr>
-														<td>
-														<input type='text' value='$nilai->Pemilik' size='1px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$nilai->KodeSatker' size='10px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$nilai->Kode' size='20px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$nilai->Ruangan' size='5px' style='text-align:center' readonly = 'readonly'>
-														<input type='hidden' name='fromsatker' value='$nilai->OrigSatker_ID' size='5px' style='text-align:center' readonly = 'readonly'>
+														<td width='200px'>
+														$nilai[Pemilik]-$nilai[kodeSatker]-$nilai[kode]-$nilai[kodeRuangan]-$nilai[OrigSatker_ID]
+														
 														</td>
-														<td align='right'><input type='button' id ='sub$nilai->Aset_ID' value='Sub Detail' onclick='spoilsub(this);'></td>
+														<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
 														</tr>
 														</table>
 
 														<div id='idv_basicinfo' style='padding:5px; border:1px solid #999999;'>
 														<table width=100%>
-														<tr>
-														<td valign='top' align='left' width=10%>Nama Aset</td>
-														<td valign='top' align='left' style='font-weight:bold'>
-														$nilai->NamaAset
-														</td>
-														</tr>
-
+														
 														<tr>
 														<td valign='top' align='left'>Satuan Kerja</td>
 														<td valign='top' align='left' style='font-weight:bold'>
-														$nilai->NamaSatker
+														$nilai[NamaSatker]
 														</td>
 														</tr>
 
 														<tr>
 														<td valign='top' align='left'>Jenis Barang</td>
 														<td valign='top' align='left' style='font-weight:bold'>
-														$nilai->Uraian
+														$nilai[Uraian]
 														</td>
 														</tr>
 
@@ -182,7 +147,7 @@ include "../../config/config.php";
 														<table>
 														<tr>
 														<td valign='top' style='width:150px;'>Nomor Kontrak</td>
-														<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$nilai->NoKontrak'></td>
+														<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$nilai[NoKontrak]'></td>
 														</tr>
 
 														<tr>
@@ -198,9 +163,9 @@ include "../../config/config.php";
 
 														<tr>
 														<td valign='top' style='width:150px;'>Kuantitas</td>
-														<td valign='top'><input type='text' readonly='readonly' style='width:40px; text-align:right' value='$nilai->Kuantitas'>
+														<td valign='top'><input type='text' readonly='readonly' style='width:40px; text-align:right' value='$nilai[Kuantitas]'>
 														Satuan
-														<input type='text' readonly='readonly' style='width:130px' value='$nilai->Satuan'>
+														<input type='text' readonly='readonly' style='width:130px' value='$nilai[Satuan]'>
 														</td>
 														</tr>
 
@@ -217,24 +182,24 @@ include "../../config/config.php";
 
 														<tr>
 														<td valign='top' style='width:150px;'>Tanggal Perolehan</td>
-														<td valign='top'><input type='text' readonly='readonly' style='width:130px' value='$nilai->TglPerolehan'></td>
+														<td valign='top'><input type='text' readonly='readonly' style='width:130px' value='$nilai[TglPerolehan]'></td>
 														</tr>
 
 														<tr>
 														<td valign='top' style='width:150px;'>Nilai Perolehan</td>
-														<td valign='top'><input type='text' readonly='readonly' style='width:130px; text-align:right' value='$nilai->NilaiPerolehan'></td>
+														<td valign='top'><input type='text' readonly='readonly' style='width:130px; text-align:right' value='$nilai[NilaiPerolehan]'></td>
 														</tr>
 
 														<tr>
 														<td valign='top' style='width:150px;'>Alamat</td>
-														<td valign='top'><textarea style='width:90%' readonly>$nilai->Alamat</textarea><br>
+														<td valign='top'><textarea style='width:90%' readonly>$nilai[Alamat]</textarea><br>
 														RT/RW
-														<input type='text' readonly='readonly' style='width:50px' value='$nilai->RTRW'></td>
+														<input type='text' readonly='readonly' style='width:50px' value='$nilai[RTRW]'></td>
 														</tr>
 
 														<tr>
 														<td valign='top' style='width:150px;'>Lokasi</td>
-														<td valign='top'><input type='text' readonly='readonly' style='width:100px' value='$nilai->NamaLokasi'></td>
+														<td valign='top'><input type='text' readonly='readonly' style='width:100px' value='$nilai[NamaLokasi]'></td>
 														</tr>
 
 														
