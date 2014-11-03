@@ -2,6 +2,8 @@
 ob_start();
 include "../../config/config.php";
 
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+
 $menu_id = 38;
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -25,12 +27,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				
 				unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 				$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
-				list($get_data_filter,$dataAsetUser) = $RETRIEVE->retrieve_usulan_penghapusan($parameter);
+				//list($get_data_filter,$dataAsetUser) = $RETRIEVE->retrieve_usulan_penghapusan($parameter);
 			} else {
 				
 				$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
 				$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
-				list($get_data_filter,$dataAsetUser) = $RETRIEVE->retrieve_usulan_penghapusan($parameter);
+				//list($get_data_filter,$dataAsetUser) = $RETRIEVE->retrieve_usulan_penghapusan($parameter);
 			}
                     // echo '<pre>';
                     // print_r($data);
@@ -57,7 +59,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
-	
+	pr($_POST);
+	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan($_POST);
+pr($data);
+
+
 			?>
 
         <script language="Javascript" type="text/javascript">  
@@ -179,7 +185,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				</thead>
 				<tbody>		
 				<?php
-				if (!empty($get_data_filter))
+				if (!empty($data))
 				{
 			   
 					$page = @$_GET['pid'];
@@ -188,7 +194,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					}else{
 						$no = 1;
 					}
-					foreach ($get_data_filter as $key => $value)
+					foreach ($data as $key => $value)
 					{
 					// pr($get_data_filter);
 					?>
@@ -200,11 +206,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 										?>
 										<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" 
 											<?php for ($j = 0; $j <= count($dataAsetUser); $j++){
-													if ($dataAsetUser[$j]==$value->Aset_ID) echo 'checked';}?>/>
+													if ($dataAsetUser[$j]==$value[Aset_ID]) echo 'checked';}?>/>
 										<?php
 									}else{
 										if ($dataAsetUser){
-										if (in_array($value->Aset_ID, $dataAsetUser)){
+										if (in_array($value[Aset_ID], $dataAsetUser)){
 										?>
 										<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value->Aset_ID) echo 'checked';}?>/>							<?php
 										}
