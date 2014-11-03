@@ -45,7 +45,9 @@ $MUTASI = new RETRIEVE_MUTASI;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	$data = $MUTASI->retrieve_mutasi_hasil_daftar($_POST);
+	pr($_POST);
+	$data = $MUTASI->retrieve_mutasi_hasil_daftar($_POST,1);
+	// pr();
 exit;
 
 

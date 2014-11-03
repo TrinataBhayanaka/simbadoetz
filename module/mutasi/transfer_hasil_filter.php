@@ -141,11 +141,12 @@ $MUTASI = new RETRIEVE_MUTASI;
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>
+							<!--
 							<li>
 								<a href="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_hasil_daftar.php?pid=1" class="btn">
 									   Daftar Barang Mutasi
 								 </a>
-							</li>
+							</li>-->
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
@@ -163,6 +164,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			
 			<div id="demo">
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
+			<input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>

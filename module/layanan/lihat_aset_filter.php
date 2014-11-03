@@ -192,25 +192,11 @@ include "../../config/config.php";
 									</div>
 								</div>	
 							</li>
-							<li>
-								<span>SKPD</span><br/>
-								<div class="input-append">
-									<input type="text" name="lda_skpd" id="lda_skpd" style="width:480px;" readonly="readonly" placeholder="<?php echo $_SESSION['ses_satkername'] ; ?>">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-								
-									<div class="inner" style="display:none;">
-										<?php
-											$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-											$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-											js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd1','sk');
-											$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radioskpd($style2,"skpd_id",'skpd1','sk');
-										?>
-									</div>
-								</div>	
-							</li>
+							
 
-							<?php selectSatker(); ?>
+							<?php selectSatker('kodeSatker','255',true,false); ?>
+							<li>&nbsp;</li>
+							<?php selectAset('kodeKelompok','255',true,false); ?>
 							<li>
 								<input type='submit' value='Lanjut'  name="submit" class="btn btn-primary">
 							</li>
