@@ -242,7 +242,7 @@ class DB
 		if (!$Aset_ID) return false;
 
 		$sql = "SELECT * FROM {$table} WHERE Aset_ID = {$Aset_ID}";
-    	pr($sql);
+    	logFile($sql);
     	$res = $this->query($sql);
 
         $result = mysql_fetch_assoc($res);
@@ -260,7 +260,7 @@ class DB
 		return $result;
 	}
 
-	function logIt($table=array(),$Aset_ID=false,$action=1)
+	function logIt($table=array(),$Aset_ID=false,$action=1, $debug=false)
 	{
 
 	    if (empty($table)) return false;
@@ -287,7 +287,10 @@ class DB
 	        	$dataImp = implode(',', $tmpValue);
 
 	        	$sql = "INSERT INTO log_{$value} ({$fileldImp}) VALUES ({$dataImp})";
-	        	// pr($sql); 
+	        	logFile($sql);
+	        	if ($debug){
+	        		pr($sql); exit;
+	        	}
 	        	$res = $this->query($sql);
 	        	if ($res)return true;	
 	        	

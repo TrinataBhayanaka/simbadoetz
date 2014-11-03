@@ -141,11 +141,12 @@ $MUTASI = new RETRIEVE_MUTASI;
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>
+							<!--
 							<li>
 								<a href="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_hasil_daftar.php?pid=1" class="btn">
 									   Daftar Barang Mutasi
 								 </a>
-							</li>
+							</li>-->
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
@@ -163,6 +164,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			
 			<div id="demo">
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
+			<input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
@@ -176,7 +178,9 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr>
 						<th>No</th>
 						<th>&nbsp;</th>
-						<th>Informasi Aset</th>
+						<th>Satker</th>
+						<th>Lokasi</th>
+						<th>No Kontrak</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -201,71 +205,16 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr class="gradeA">
 						<td><?php echo "$no.";?></td>
 						<td>
-							<?php
-													// pr($_SESSION['ses_uaksesadmin']);
-												if (($_SESSION['ses_uaksesadmin'] == 1)){
-													?>
-													<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value->Aset_ID;?>" 
-													<?php 
-														for ($i = 0; $i <= count($explode); $i++){
-															if ($explode[$i]==$value->Aset_ID) 
-																echo 'checked';
-														}?>>
-													<?php
-												}else{
-													if ($dataAsetUser){
-													if (in_array($value->Aset_ID, $dataAsetUser)){
-													?>
-													<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
-													<?php
-													}
-												}
-												}
-												
-												?>	
+							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value['Aset_ID'];?>" >
+													
 						</td>
-						<td>	
-						<table width="100%">
-								<tr>
-									<td style="font-weight: bold;"> <?php echo "$value->Aset_ID";?></b> ( Aset ID - System Number )</td>
-								</tr>
-								<tr>
-									<td style="font-weight: bold;"><?php echo "$value->NomorReg";?></td>
-								</tr>
-								<tr>
-									<td style="font-weight: bold;"><?php echo "$value->Kode";?></td>
-								</tr>
-								<tr>
-									<td style="font-weight: bold;"><?php echo "$value->NamaAset";?></td>
-								</tr>
-								<tr>
-									<td><hr></td>
-								</tr>
-							</table>	
-							<table width="100%">
-								<tr>
-									
-									<td width="20%">No. Kontrak</td>
-									<td width="2%">&nbsp;</td>
-									<td width="78%"><?php echo "$value->NoKontrak";?></td>
-								</tr>
-								<tr align="left">
-									<td>Satker</td>
-									<td>&nbsp;</td>
-									<td><?php echo "$value->NamaSatker";?></td>
-								</tr>
-								<tr align="left">
-									<td>Lokasi</td>
-									<td>&nbsp;</td>
-									<td><?php echo "$value->NamaLokasi";?></td>
-								</tr>			
-								<tr align="left">				
-									<td>Status</td>
-									<td>&nbsp;</td>
-									<td>-</td>
-								</tr>
-							</table>
-						</td>
+						
+						
+						<td style="font-weight: bold;"> <?php echo "$value[kodeSatker]- $value[NamaSatker]";?> </td>
+						<td style="font-weight: bold;"><?php echo "$value[kodeLokasi]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>	
+							
+						
 					</tr>
 					 <?php 
 						$no++; 
