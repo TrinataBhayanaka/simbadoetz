@@ -94,23 +94,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">No. SK Penghapusan</span>
 								<input type="text" name="bup_pu_noskpenghapusan" placeholder="" style="width:200px;" id="posisiKolom">&nbsp;<span id="errmsg">
 							</li>
-							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-										<input type="text" name="lda_skpd" placeholder="Tekan Tombol Pilih..." id="lda_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-                                            <div class="inner" style="display:none;">
-                                               
-                                                <?php
-                                                $alamat_simpul_skpd="$url_rewrite/function/dropdown/simpul_skpd.php";
-                                                $alamat_search_skpd="$url_rewrite/function/dropdown/search_skpd.php";
-                                                js_checkboxskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd','yuda');
-                                                $style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-                                                checkboxskpd($style2,"skpd_id",'skpd','yuda');
-                                                ?>
-                                            </div>
-								</div>
-							</li>
+							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                            <li>&nbsp;</li>
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

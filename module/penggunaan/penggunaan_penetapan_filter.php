@@ -93,6 +93,7 @@ include "../../config/config.php";
 								<input placeholder="" type="text" name="nopenet" style="width:450px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
 							</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                            <li>&nbsp;</li>
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

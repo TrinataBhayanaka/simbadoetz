@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+
    $menu_id = 39;
         $SessionUser = $SESSION->get_session_user();
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -22,12 +25,12 @@ include "../../config/config.php";
         {
             unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
             $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
-            $get_data_filter = $RETRIEVE->retrieve_penetapan_penghapusan_filter($parameter);
+            // $get_data_filter = $RETRIEVE->retrieve_penetapan_penghapusan_filter($parameter);
         }else{
 
         $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
         $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
-        $get_data_filter = $RETRIEVE->retrieve_penetapan_penghapusan_filter($parameter);
+        // $get_data_filter = $RETRIEVE->retrieve_penetapan_penghapusan_filter($parameter);
 
        }
 	   // pr($get_data_filter);
@@ -54,6 +57,9 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+		// pr($_POST);
+	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter($_POST,1);
+// pr($data);
 			?>
      
                     <script language="Javascript" type="text/javascript">  
