@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$MUTASI = new RETRIEVE_MUTASI;
+
  /*$aset_id=$_POST['mutasi_trans_filt_idaset'];
     $nama_aset=$_POST['mutasi_trans_filt_nmaset'];
     $nomor_kontrak=$_POST['mutasi_trans_filt_nokontrak'];
@@ -19,7 +22,7 @@ include "../../config/config.php";
 		//$data['sql'] = " StatusMenganggur=0 AND StatusMutasi=0";
 		$data['sql_where'] = TRUE;
 		$data['modul'] = "";
-		$getFilter = $HELPER_FILTER->filter_module($data);
+		// $getFilter = $HELPER_FILTER->filter_module($data);
 		// pr($getFilter);
 		// exit;
 		//echo'ada';
@@ -42,6 +45,10 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	$data = $MUTASI->retrieve_mutasi_hasil_daftar($_POST);
+exit;
+
+
 			?>
 		 <script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {

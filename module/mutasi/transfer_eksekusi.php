@@ -6,6 +6,13 @@
         
     <?php
         include "$path/header.php";
+
+        $MUTASI = new RETRIEVE_MUTASI;
+
+        pr($_POST);
+        $data = $MUTASI->retrieve_mutasi_eksekusi($_POST,1);
+        pr($data);
+        // exit;
     ?>
         <!-- buat alert-->
         <script type="text/javascript">
@@ -128,6 +135,8 @@
                         <div id="bottomright">
                             
                             <?php
+
+                            /*
                                 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'Mutasi[]' AND UserSes = '$_SESSION[ses_uid]'";
                                         //print_r($query);
                                         $result = mysql_query($query) or die (mysql_error());
@@ -160,7 +169,7 @@
                                                 $data[$id] = mysql_fetch_object($result);
 
                                                 $id++;
-                                        }
+                                        }*/
                             ?>
                             <form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
                             <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>

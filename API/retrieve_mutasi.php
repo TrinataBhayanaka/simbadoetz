@@ -29,12 +29,12 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         $listTableAbjad = $table['listTableAbjad'];
 
         $sql = array(
-                'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k",
-                'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak",
+                'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
+                'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
                 'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak}",
                 'limit'=>'100',
                 'joinmethod' => 'LEFT JOIN',
-                'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
+                'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -43,9 +43,83 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 	}
 
 
+        function retrieve_mutasi_hasil_daftar($data,$debug=false)
+        {
+        
+
+        $querypenggunaan ="SELECT Aset_ID FROM PenggunaanAset WHERE Aset_ID IN ({$dataImplode}) AND StatusMenganggur=0 AND StatusMutasi=0";     
+         
+
+        $jenisaset = $data['jenisaset'];
+        $nokontrak = $data['nokontrak'];
+        $kodeSatker = $data['kodeSatker'];
+
+        $filterkontrak = "";
+        if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+
+
+        
+        $table = $this->getTableKibAlias($jenisaset);
+
+        // pr($jenisaset);
+        $listTable = $table['listTable'];
+        $listTableAlias = $table['listTableAlias'];
+        $listTableAbjad = $table['listTableAbjad'];
+
+        $sql = array(
+                'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
+                'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
+                'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak}",
+                'limit'=>'100',
+                'joinmethod' => 'LEFT JOIN',
+                'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+        }
+
+                                                                                       
+        function retrieve_mutasi_eksekusi($data,$debug=false)
+        {
+
+                $jenisaset = $data['jenisaset'];
+                $nokontrak = $data['nokontrak'];
+                $kodeSatker = $data['kodeSatker'];
+
+                $mutasi = implode(',', $data['Mutasi']);
+                
+                $filterkontrak = "";
+                if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+                if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+                if ($mutasi) $filterkontrak .= " AND a.Aset_ID IN ({$mutasi}) ";
+
+                
+                $table = $this->getTableKibAlias($jenisaset);
+
+                // pr($jenisaset);
+                $listTable = $table['listTable'];
+                $listTableAlias = $table['listTableAlias'];
+                $listTableAbjad = $table['listTableAbjad'];
+
+                $sql = array(
+                        'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
+                        'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
+                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak}",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                        );
+
+                $res = $this->db->lazyQuery($sql,$debug);
+                if ($res) return $res;
+                return false;
+        }
+
         function getTableKibAlias($type=1)
         {
-               
         $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
