@@ -18,16 +18,6 @@ $menu_id = 10;
 	<!-- SQL Sementara -->
 	<?php
 
-		if(isset($_POST['kodeKelompok'])){
-		    if($_POST['Aset_ID'] == "")
-		    {
-		      $dataArr = $STORE->store_aset($_POST);
-		    }  else
-		    {
-		      $dataArr = $STORE->store_edit_aset($_POST,$_POST['Aset_ID']);
-		    }
-		  }
-
 		//kontrak
 		$idKontrak = $_GET['id'];
 		$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}' LIMIT 1");
@@ -36,6 +26,21 @@ $menu_id = 10;
 				}
 		// pr($kontrak);
 
+		if(isset($_POST['kodeKelompok'])){
+		    if($_POST['Aset_ID'] == "")
+		    {
+		      	if($kontrak[0]['tipeAset'] == 1)
+		      	{
+		      		$dataArr = $STORE->store_aset($_POST);
+		      	} else {
+		      		$dataArr = $STORE->store_aset_kapitalisasi($_POST,$_GET);
+		      	}	
+		      
+		    }  else
+		    {
+		      $dataArr = $STORE->store_edit_aset($_POST,$_POST['Aset_ID']);
+		    }
+		  }		
 		//sum total 
 		$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
 		while ($sum = mysql_fetch_array($sqlsum)){
@@ -89,6 +94,50 @@ $menu_id = 10;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
+			<?php
+				if($kontrak[0]['tipeAset'] == 2)
+				{
+					$sql = mysql_query("SELECT * FROM {$_GET['tipeaset']} WHERE Aset_ID = '{$_GET['idaset']}' AND noRegister = '{$_GET['noreg']}' LIMIT 1");
+					while ($dataAset = mysql_fetch_assoc($sql)){
+	                    $aset[] = $dataAset;
+	                }
+	                if($aset){
+				        foreach ($aset as $key => $value) {
+				            $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+				            while ($uraian = mysql_fetch_array($sqlnmBrg)){
+				                    $tmp = $uraian;
+				                    $aset[$key]['uraian'] = $tmp['Uraian'];
+				                }
+				        }
+				    }
+	        ?>
+	        		<div class="search-options clearfix">
+	        			<strong style="margin-right:20px;">Kapitalisasi Aset</strong>
+	        			<hr style="padding:0px;margin:0px">
+						<table border='0' width="100%" style="font-size:12">
+							<tr>
+								<th>Kode Kelompok</th>
+								<th>Nama Barang</th>
+								<th>Kode Satker</th>
+								<th>Kode Lokasi</th>
+								<th>NoReg</th>
+								<th>Nilai</th>
+							</tr>
+							<tr>
+								<td align="center"><?=$aset[0]['kodeKelompok']?></td>
+								<td align="center"><?=$aset[0]['uraian']?></td>
+								<td align="center"><?=$aset[0]['kodeSatker']?></td>
+								<td align="center"><?=$aset[0]['kodeLokasi']?></td>
+								<td align="center"><?=$aset[0]['noRegister']?></td>
+								<td align="center"><?=number_format($aset[0]['NilaiPerolehan'])?></td>
+							</tr>	
+						</table>	
+
+					</div><!-- /search-option -->
+	        <?php
+				}	
+			?>
+
 			<div>
 			<form action="" method="POST">
 				 <div class="formKontrak">

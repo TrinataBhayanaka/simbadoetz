@@ -9638,6 +9638,37 @@ $offset = @$_POST['record'];
         
         return $dataArr;
     }
+
+    function retrieve_searchAset($data,$kodesatker)
+    {
+        $table = $data['tipeAset']; unset($data['tipeAset']);
+        // pr(array_filter($data));exit;
+
+        $dataclean = array_filter($data);
+
+        foreach ($dataclean as $key => $val) {
+            $tmpsetval[] = $key."='$val'";
+        }
+        $setval = implode(' AND ', $tmpsetval);
+
+        $sql = mysql_query("SELECT * FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%'");
+        while ($dataAset = mysql_fetch_assoc($sql)){
+                    $aset[] = $dataAset;
+                }
+
+        if($aset){
+        foreach ($aset as $key => $value) {
+            $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+            while ($uraian = mysql_fetch_array($sqlnmBrg)){
+                    $tmp = $uraian;
+                    $aset[$key]['uraian'] = $tmp['Uraian'];
+                }
+            $aset[$key]['tabel'] = $table;
+        }
+    }
+       
+        return $aset;
+    }
 	
 }
 

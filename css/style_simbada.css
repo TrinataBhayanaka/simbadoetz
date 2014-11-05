@@ -370,3 +370,29 @@ footer{
   -o-transition: all 0.2s ease;
 }
 
+.search-options {
+  max-width: 920px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+@media (max-width: 767px) {
+  .search-options {
+    text-align: center;
+  }
+}
+.search-options .search-pager {
+  float: right;
+}
+@media (max-width: 767px) {
+  .search-options .search-pager {
+    float: none;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+

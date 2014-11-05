@@ -1854,6 +1854,93 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         return true;
     }
+
+    public function store_aset_kapitalisasi($data,$aset)
+    {
+        global $url_rewrite;
+        unset($data['Aset_ID']);
+        // pr($aset);exit;
+        $kodeSatker = explode(".",$data['kodeSatker']);
+        $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+        $tblAset['kodeSatker'] = $data['kodeSatker'];
+        $tblAset['kodeLokasi'] = "12.33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($data['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+        $tblAset['noKontrak'] = $data['noKontrak'];
+        $tblAset['TglPerolehan'] = $data['TglPerolehan'];
+        $tblAset['NilaiPerolehan'] = $data['NilaiPerolehan'];
+        $tblAset['kondisi'] = $data['kondisi'];
+        $tblAset['Kuantitas'] = $data['Kuantitas'];
+        $tblAset['Satuan'] = $data['Satuan'];
+        $tblAset['Info'] = $data['Info'];
+        $tblAset['Alamat'] = $data['Alamat'];
+        $tblAset['UserNm'] = $data['UserNm'];
+        $tblAset['Tahun'] = $data['Tahun'];
+        $tblAset['TipeAset'] = $data['TipeAset'];
+        $tblAset['kodeKA'] = 0;
+
+            foreach ($tblAset as $key => $val) {
+                $tmpfield[] = $key;
+                $tmpvalue[] = "'$val'";
+            }
+            $field = implode(',', $tmpfield);
+            $value = implode(',', $tmpvalue);
+
+        $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
+        while ($row = mysql_fetch_assoc($query)){
+             $i = $row['noRegister'];
+        }
+        
+        $loop = $i+$data['Kuantitas'];
+
+        $tblAset['noRegister'] = $loop;
+        $query = "INSERT INTO aset ({$field},noRegister) VALUES ({$value},'{$tblAset['noRegister']}')";
+
+        $result=  $this->query($query) or die($this->error());
+
+        $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
+            while ($row = mysql_fetch_assoc($query_id)){
+                 $tblAset['Aset_ID'] = $row['Aset_ID'];
+            }
+
+          //log
+            $logdata['Aset_ID'] = $tblAset['Aset_ID'];
+            $logdata['last_aset_id'] = $tblAset['Aset_ID'];
+            $logdata['action'] = 'insert';
+            $logdata['changeDate'] = date('Y/m/d');
+            $logdata['operator'] = "{$_SESSION['ses_uoperatorid']}";
+            // pr($data);exit;
+            foreach ($logdata as $key => $val) {
+                $tmplogfield[] = $key;
+                $tmplogvalue[] = "'$val'";
+            }
+            $fieldlog = implode(',', $tmplogfield);
+            $valuelog = implode(',', $tmplogvalue);
+
+            $query_log = "INSERT INTO log_aset ({$field},{$fieldlog},noRegister) VALUES ({$value},{$valuelog},'{$tblAset['noRegister']}')";
+            // pr($query_log);exit;
+            $result=  $this->query($query_log) or die($this->error()); 
+
+        $kapital['idKontrak'] = $aset['id'];
+        $kapital['Aset_ID'] = $aset['idaset'];
+        $kapital['asetKapitalisasi'] = $logdata['Aset_ID'];
+        $kapital['noRegister'] = $aset['noreg'];
+        $kapital['nilai'] = $tblAset['NilaiPerolehan'];
+        $kapital['tipeAset'] = $aset['tipeaset'];
+        $kapital['n_status'] = 0;
+
+        foreach ($kapital as $key => $val) {
+                $tmpkapitalfield[] = $key;
+                $tmpkapitalvalue[] = "'$val'";
+            }
+            $fieldkap = implode(',', $tmpkapitalfield);
+            $valuekap = implode(',', $tmpkapitalvalue);
+
+            $query_log = "INSERT INTO kapitalisasi ({$fieldkap}) VALUES ({$valuekap})";
+            // pr($query_log);exit;
+            $result=  $this->query($query_log) or die($this->error());  
+
+            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$aset['id']}\">";  
+
+    }
     
 
 }

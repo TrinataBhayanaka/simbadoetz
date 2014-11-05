@@ -40,7 +40,7 @@ $menu_id = 1;
 	while ($sum = mysql_fetch_assoc($sqlsum)){
 				$sumTotal = $sum;
 			}
-	// pr($sumsp2d);	
+	// pr($kontrak);	
 	//end SQL
 ?>
 	
@@ -130,9 +130,17 @@ $menu_id = 1;
 				if($kontrak['nilai'] != $sumTotal['total']){
 					echo "<p style='color:red'>* Total Rincian Barang tidak sama dengan total SPK</p>";
 					$disabled = "disabled";
+					$url = "#";
+				} else {
+					if($kontrak['tipeAset'] == 1)
+					{
+						$url = "kontrak_postingFinal.php?id={$idKontrak}";
+					} elseif ($kontrak['tipeAset'] == 2) {
+						$url = "kontrak_postingKapitalisasi.php?id={$idKontrak}";
+					}	
 				}
 			?>
-			<p><a href="kontrak_postingFinal.php?id=<?=$idKontrak?>" class="btn btn-info btn-small" <?=$disabled?>><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
+			<p><a href="<?=$url?>" class="btn btn-info btn-small" <?=$disabled?>><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
 			&nbsp;
 			<a class="btn btn-danger btn-small" disabled><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 			&nbsp;</p>	
