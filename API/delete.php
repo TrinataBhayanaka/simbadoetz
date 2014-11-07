@@ -645,7 +645,7 @@ class DELETE extends DB
 
         global $url_rewrite;
 
-        // pr($data);
+        // pr($data);exit;
         $query = "DELETE FROM aset WHERE Aset_ID = '{$id}'";
         $result = $this->query($query) or die ($this->error());
 

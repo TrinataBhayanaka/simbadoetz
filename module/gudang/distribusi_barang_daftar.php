@@ -26,12 +26,12 @@ $paging = $LOAD_DATA->paging($_GET['pid']);
 if (isset($_POST['tampil']))
 {
 	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	list($get_data_filter,$count) = $RETRIEVE->retrieve_distribusi_barang(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));	
+	// list($get_data_filter,$count) = $RETRIEVE->retrieve_distribusi_barang(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));	
 	
 }else
 {
 	$sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-	list($get_data_filter,$count) = $RETRIEVE->retrieve_distribusi_barang(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+	// list($get_data_filter,$count) = $RETRIEVE->retrieve_distribusi_barang(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 }
 // pr($get_data_filter);
 // pr($count);

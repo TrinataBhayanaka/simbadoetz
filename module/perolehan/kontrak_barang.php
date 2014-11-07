@@ -143,6 +143,8 @@ $menu_id = 10;
 						$link = "kontrak_rincianedit.php";
 					} elseif ($kontrak[0]['tipeAset'] == 2) {
 						$link = "search_aset_filter.php";
+					} elseif ($kontrak[0]['tipeAset'] == 3) {
+						$link = "search_kdp.php";
 					}
 			?>	
 				<p><a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>

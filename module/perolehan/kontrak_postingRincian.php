@@ -137,6 +137,8 @@ $menu_id = 1;
 						$url = "kontrak_postingFinal.php?id={$idKontrak}";
 					} elseif ($kontrak['tipeAset'] == 2) {
 						$url = "kontrak_postingKapitalisasi.php?id={$idKontrak}";
+					} elseif ($kontrak['tipeAset'] == 3) {
+						$url = "kontrak_postingKDP.php?id={$idKontrak}";
 					}	
 				}
 			?>
