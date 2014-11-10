@@ -18,9 +18,6 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/menu.php";
 	
 
-	pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan($_POST);
-	pr($data);
 ?>
 
 
@@ -45,7 +42,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<?php 
 								unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 								$parameter = array('menuID'=>$menu_id,'type'=>'','paging'=>$paging);
-								$data = $RETRIEVE->retrieve_daftar_usulan_penghapusan($parameter);
+							// $data = $RETRIEVE->retrieve_daftar_usulan_penghapusan($parameter);
 								// pr($data);
 								$query = "select distinct Usulan_ID from UsulanAset where StatusPenetapan = 1 AND Jenis_Usulan = 'HPS'";
 								$result  = mysql_query($query) or die (mysql_error());
@@ -53,6 +50,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								{
 									$dataArr[] = $dataNew->Usulan_ID;
 								}
+								
+								
+	pr($_POST);
+	$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan($_POST);
+	pr($data);
 							?>
 						<ul>
 							<li>
@@ -93,8 +95,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							 
 				 <?php
                                         
-					// pr($dataArr);
+					pr($dataArr);
 					$no=1;	
+					pr($data);
 					foreach($data['dataArr'] as $key => $hsl_data){
 						
 						if($dataArr!="")

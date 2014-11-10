@@ -67,61 +67,80 @@ include "../../config/config.php";
 								<span class="span2">Tanggal SPBB</span>
 								<input id="tanggal2"type="text" name="tgl_spbb" value="" style="width:180px;"><br/><hr/>
 							</li>
+							
+						</ul>
+						
+						</form>
+						<div style="height:5px;width:100%;clear:both"></div>
+			<div class="detailLeft">
+						
+						<ul>
 							<li>
-								<span class="span6"><strong>Pihak Penyimpan</strong></span><br/><hr/>
+								<span class="span2"><strong>Pihak Penyimpan</strong></span><br/><hr/>
 							</li>
 							<li>
 								<span class="span2">Nama</span>
-								<input type="text" name="nama_penyimpan" style="width:180px;">
+								<input type="text" name="nama_penyimpan" >
 								
 							</li>
 							<li>
 								<span class="span2">Pangkat/Golongan</span>
-								<input type="text" name="pangkat_penyimpan" style="width:180px;">
+								<input type="text" name="pangkat_penyimpan" >
 							</li>
 							<li>
 								<span class="span2">NIP</span>
-								<input type="text" name="nip_penyimpan" style="width:180px;">
+								<input type="text" name="nip_penyimpan" >
 							</li>
 							<li>
 								<span class="span2">Nama Atasan</span>
-								<input type="text" name="nama_atasan" style="width:180px;">
+								<input type="text" name="nama_atasan" >
 							</li>
 							<li>
 								<span class="span2">Pangkat/Golongan</span>
-								<input type="text" name="pangkat_atasan_penyimpan" style="width:180px;">
+								<input type="text" name="pangkat_atasan_penyimpan" >
 							</li>
 							<li>
 								<span class="span2">NIP</span>
-								<input type="text" name="nip_atasan_penyimpan" style="width:180px;">
+								<input type="text" name="nip_atasan_penyimpan" >
 							</li>
 							<li>
 								<span class="span2">Jabatan</span>
-								<input type="text" name="jabatan_penyimpan" style="width:180px;"><br/><hr/>
+								<input type="text" name="jabatan_penyimpan" >
 							</li>
+						</ul>
+							
+					</div>
+			<div class="detailRight">
+						
+						<ul>
+							
 							<li>
-								<span class="span6"><strong>Pihak Pengurus</strong></span><br/><hr/>
+								<span class="span2"><strong>Pihak Pengurus</strong></span><br/><hr/>
 							</li>
 							<li>
 								<span class="span2">Nama</span>
-								<input type="text" name="nama_pengurus" style="width:180px;">
+								<input type="text" name="nama_pengurus" >
 							</li>
 							<li>
 								<span class="span2">Pangkat/Golongan</span>
-								<input type="text" name="pangkat_pengurus" style="width:180px;">
+								<input type="text" name="pangkat_pengurus" >
 							</li>
 							<li>
 								<span class="span2">NIP</span>
-								<input type="text" name="nip_pengurus" style="width:180px;">
+								<input type="text" name="nip_pengurus">
 							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+							<ul>
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="Lanjut" class="btn btn-primary" value="Tampilkan Data" />
 								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
 							</li>
-						</ul>
-						
-						</form>
+							</ul>
 			
 		</section>     
 	</section>
