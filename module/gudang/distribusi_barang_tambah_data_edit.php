@@ -57,10 +57,10 @@ $paging = $LOAD_DATA->paging($_GET['pid']);
 if (isset($_POST['Lanjut']))
 {
 	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'__'.$SessionUser->UserSes['ses_uid']]);
-	list($get_data_filter,$dataAsetUser,$count) = $RETRIEVE->retrieve_distribusi_barang_tambah_data(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'checkbox', 'paging'=>$paging));
+	// list($get_data_filter,$dataAsetUser,$count) = $RETRIEVE->retrieve_distribusi_barang_tambah_data(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'checkbox', 'paging'=>$paging));
 }else{
 	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'__'.$SessionUser->UserSes['ses_uid']]);
-	list($get_data_filter,$dataAsetUser,$count) = $RETRIEVE->retrieve_distribusi_barang_tambah_data(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'checkbox', 'paging'=>$paging));
+	// list($get_data_filter,$dataAsetUser,$count) = $RETRIEVE->retrieve_distribusi_barang_tambah_data(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'checkbox', 'paging'=>$paging));
 }
 
 

@@ -1,41 +1,10 @@
 <?php
 include "../../config/config.php";
-
-
 $menu_id = 15;
-$SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
-
-$paging = $LOAD_DATA->paging($_GET['pid']);
-// echo "Pagin $paging";
-// pr($_POST);
-/*if ($_POST['tampil']){
-	//if ($_POST['gdg_disbar_tglawal'] =="" && $_POST['gdg_disbar_tglakhir']=="" && $_POST['gdg_disbar_nopengeluaran']=="" && $_POST['skpd_id']=="" && $_POST['skpd_id2']==""){
-	if ($_POST['gdg_disbar_tglawal'] =="" && $_POST['gdg_disbar_tglakhir'] =="" && $_POST['gdg_disbar_nopengeluaran']=="" && $_POST['skpd_id2']==""){
-	?>
-	 <script>var r=confirm('Tidak ada isian filter');
-		if (r==false){
-			document.location='distribusi_barang.php';
-		}
-	</script>
-	 <?php
-            }
-        }*/
-// pr($_POST);
-// exit;
-if (isset($_POST['tampil']))
-{
-	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	list($get_data_filter,$count) = $RETRIEVE->retrieve_distribusi_barang(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));	
-	
-}else
-{
-	$sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-	list($get_data_filter,$count) = $RETRIEVE->retrieve_distribusi_barang(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-}
-// pr($get_data_filter);
-// pr($count);
-
+            $SessionUser = $SESSION->get_session_user();
+            ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+            $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
+$get_data_filter = $RETRIEVE->retrieve_distribusiBarang($_POST);
 ?>
 <?php
 	include"$path/meta.php";
@@ -59,36 +28,23 @@ if (isset($_POST['tampil']))
 		<section class="formLegend">
 			
 			<div class="detailLeft">
-					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+					<span class="label label-success">Jumlah Data: <?=$get_data_filter['total']?></span>
 			</div>
 		
 			<div class="detailRight" align="right">
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/gudang/distribusi_barang.php";?>" class="btn">
+								<a href="<?php echo"$url_rewrite/module/gudang/distribusi_barang.php";?>" class="btn btn-small">
 									   Kembali ke halaman utama : Form Filter
 								 </a>
-							</li>
-							<li>
-								<a href="<?php echo"$url_rewrite/module/gudang/distribusi_barang_filter_tambahdata.php";?>" class="btn">
-									   Tambah Data
-								 </a>
-							</li>
-							<li>
-								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
-								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
-										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
-									</ul>
 							</li>
 						</ul>
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			
+			<p><a href="distribusi_barang_eksekusi_data.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Data</a>
+				&nbsp;</p>
 			
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
@@ -106,12 +62,12 @@ if (isset($_POST['tampil']))
 							 
 						
 			<?php
-				if (!empty($get_data_filter))
+				if (!empty($get_data_filter['data']))
 				{
 				
 					$nomor = 1;
 					// pr($get_data_filter);
-					foreach ($get_data_filter as $key => $hsl_data)
+					foreach ($get_data_filter['data'] as $key => $hsl_data)
 					{
 						list($tahun, $bulan, $tanggal)= explode('-', $hsl_data->TglTransfer);
 					

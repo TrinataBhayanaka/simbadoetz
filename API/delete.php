@@ -612,6 +612,10 @@ class DELETE extends DB
         $query = "DELETE FROM sp2d_rinc WHERE id = '{$data['id']}'";
         $result = $this->query($query) or die ($this->error());
         
+        //update sp2d
+        $sql = "UPDATE sp2d SET nilai = if(nilai is null,0,nilai)-{$data['jumlah']} WHERE id = {$data['idsp2d']}";
+        $result = $this->query($sql) or die ($this->error());
+
         unset($data['id']);
         $data['sp2d_rinc_id'] = $id;
         $data['action'] = 'delete';
@@ -641,7 +645,7 @@ class DELETE extends DB
 
         global $url_rewrite;
 
-        // pr($data);
+        // pr($data);exit;
         $query = "DELETE FROM aset WHERE Aset_ID = '{$id}'";
         $result = $this->query($query) or die ($this->error());
 
@@ -720,6 +724,10 @@ class DELETE extends DB
                 $result=  $this->query($query_log) or die($this->error());
 
             }
+
+            $query = "DELETE FROM kapitalisasi WHERE asetKapitalisasi = '{$id}'";
+            $result = $this->query($query) or die ($this->error());
+
 
             return true;
             exit;

@@ -139,8 +139,15 @@ $menu_id = 10;
 
 			<?php
 				if($kontrak[0]['n_status'] != 1){
+					if($kontrak[0]['tipeAset'] == 1){
+						$link = "kontrak_rincianedit.php";
+					} elseif ($kontrak[0]['tipeAset'] == 2) {
+						$link = "search_aset_filter.php";
+					} elseif ($kontrak[0]['tipeAset'] == 3) {
+						$link = "search_kdp.php";
+					}
 			?>	
-				<p><a href="kontrak_rincianedit.php?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
+				<p><a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
 				&nbsp;</p>
 			<?php
 				} else {
