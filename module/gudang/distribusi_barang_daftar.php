@@ -43,7 +43,7 @@ $get_data_filter = $RETRIEVE->retrieve_distribusiBarang($_POST);
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			<p><a href="distribusi_barang_eksekusi_data.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Data</a>
+			<p><a href="search_aset_filter.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Data</a>
 				&nbsp;</p>
 			
 			<div id="demo">

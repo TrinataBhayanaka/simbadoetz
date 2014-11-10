@@ -9679,6 +9679,7 @@ $offset = @$_POST['record'];
         }
         $setval = implode(' AND ', $tmpsetval);
 
+        if($setval == "") $setval = 1;
         $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} ORDER BY id DESC");
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     $transfer[] = $dataTrs;
