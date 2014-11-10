@@ -9669,6 +9669,28 @@ $offset = @$_POST['record'];
        
         return $aset;
     }
+
+    public function retrieve_distribusiBarang($data)
+    {
+        // pr($data);exit;
+        $clrdata = array_filter($data);
+        foreach ($clrdata as $key => $val) {
+            $tmpsetval[] = $key."='$val'";
+        }
+        $setval = implode(' AND ', $tmpsetval);
+
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} ORDER BY id DESC");
+        while ($dataTrs = mysql_fetch_assoc($sql)){
+                    $transfer[] = $dataTrs;
+                }
+        $count_transfer = count($transfer);
+      
+        $dataArr['data'] = $transfer;
+        $dataArr['total']= $count_transfer;
+
+        return $dataArr;
+        exit;
+    }
 	
 }
 

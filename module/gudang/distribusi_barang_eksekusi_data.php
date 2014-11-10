@@ -49,7 +49,7 @@ include"$path/header.php";
 $gudang = $_POST['gudang'];
 // pr($_POST);
 
-if(empty($gudang))
+if(!empty($gudang))
 {
 echo "<script>alert('Tidak Ada Data');window.location='distribusi_barang_tambah_data_edit.php';</script>";
 }
