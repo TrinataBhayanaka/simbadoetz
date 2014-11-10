@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
 	
+	$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+
 	$menu_id = 39;
     ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
     $SessionUser = $SESSION->get_session_user();
@@ -83,14 +85,19 @@ include "../../config/config.php";
 							{
 								unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 								$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
-								$data = $RETRIEVE->retrieve_daftar_penetapan_penghapusan($parameter);
+								//$data = $RETRIEVE->retrieve_daftar_penetapan_penghapusan($parameter);
 							}else{
 							
 								$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
 								$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
-								$data = $RETRIEVE->retrieve_daftar_penetapan_penghapusan($parameter);
+								//$data = $RETRIEVE->retrieve_daftar_penetapan_penghapusan($parameter);
 							}
 							// pr($data);
+
+
+						pr($_POST);
+						$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan($_POST,1);
+					pr($data);
 						?>
 						<ul>
 							<li>

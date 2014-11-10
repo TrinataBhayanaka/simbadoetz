@@ -174,7 +174,7 @@ pr($data);
 						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
 						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
 						<td align="right">
-								<span><input type="submit" name="submit" value="Usulan Penghapusan" id="submit" disabled/></span>
+								<span><input type="submit" name="submit" class="btn" value="Usulan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
@@ -198,28 +198,28 @@ pr($data);
 					{
 					// pr($get_data_filter);
 					?>
-						<tr class="<?php if($nomor == 1) echo ' '?>">
-							<td align="center" style="border: 1px solid #dddddd;"><?php echo $no?></td>
-							<td width="10px" align="center" style="border: 1px solid #dddddd;">
-									<?php
-									if (($_SESSION['ses_uaksesadmin'] == 1)){
-										?>
-										<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" 
-											<?php for ($j = 0; $j <= count($dataAsetUser); $j++){
-													if ($dataAsetUser[$j]==$value[Aset_ID]) echo 'checked';}?>/>
-										<?php
-									}else{
-										if ($dataAsetUser){
-										if (in_array($value[Aset_ID], $dataAsetUser)){
-										?>
-										<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value->Aset_ID) echo 'checked';}?>/>							<?php
-										}
-									}
-									}
-									
-									?>  
+						
 					<tr class="gradeA">
-						<td><?php echo $no;?></td>
+						<td><?php echo $no?></td>
+						<td>
+						<?php
+						if (($_SESSION['ses_uaksesadmin'] == 1)){
+							?>
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" 
+								<?php for ($j = 0; $j <= count($dataAsetUser); $j++){
+										if ($dataAsetUser[$j]==$value->Aset_ID) echo 'checked';}?>/>
+							<?php
+						}else{
+							if ($dataAsetUser){
+							if (in_array($value->Aset_ID, $dataAsetUser)){
+							?>
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value->Aset_ID) echo 'checked';}?>/>							<?php
+							}
+						}
+						}
+						
+						?>
+						</td>
 						<td>
 							<table width='100%'>
 							<tr>
@@ -270,7 +270,7 @@ pr($data);
 					</tr>
 					
 				   <?php
-							$nomor++;
+							$no++;
 						}
 					}
 					else

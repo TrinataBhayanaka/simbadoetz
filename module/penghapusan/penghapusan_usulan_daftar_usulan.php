@@ -1,7 +1,8 @@
 <?php
 include "../../config/config.php";
 
-    
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+
         $menu_id = 38;
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
         $SessionUser = $SESSION->get_session_user();
@@ -16,6 +17,10 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+
+	pr($_POST);
+	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan($_POST);
+	pr($data);
 ?>
 
 

@@ -285,6 +285,9 @@ nav li a li:hover{
 	transition:background 1s ease;
 	text-decoration:none;
 }
+/*nav li ul {
+    display: none; // used to hide sub-menus
+}*/
 section#main{
 	background-color:#F9F9F9;
 	width:80%;
