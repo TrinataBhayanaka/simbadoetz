@@ -59,9 +59,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
-	pr($_POST);
+	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan($_POST);
-pr($data);
+	// pr($data);
 
 
 			?>
