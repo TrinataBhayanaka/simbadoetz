@@ -46,7 +46,7 @@ include "../../config/config.php";
 								<input name="Tahun" id="Tahun" class="span2"  type="text" required>
 							</li>
 							<li>
-								<span>Kode Registrasi</span><br/>
+								<span>Kode Lokasi</span><br/>
 								<input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px">
 							</li>
 							<li>

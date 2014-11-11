@@ -15,12 +15,20 @@ $get_data_filter = $RETRIEVE->retrieve_searchAset($_POST,$_SESSION['ses_satkerko
 	
 	<!-- End Sql -->
 	<script>
-	jQuery(function($){
-	   $('#selectAll').click(function (e) {
-	    $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
-	});
-	});
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#btn-dis").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#btn-dis').attr("disabled","disabled");
+			}}, 100);
+		}
 	</script>
+
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -35,13 +43,18 @@ $get_data_filter = $RETRIEVE->retrieve_searchAset($_POST,$_SESSION['ses_satkerko
 			</div>	
 
 		<section class="formLegend">
-			
-			
+		
+		<div style="height:5px;width:100%;clear:both"></div>	
+		<form action="" method=POST name="checks" ID="Form2">
+		<p><button type="submit" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Pilih</button>
+				&nbsp;</p>
+
 			<div id="demo">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<tr>
-						<th><input type="checkbox" id="selectAll" /></th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Kode Kelompok</th>
 						<th>Nama Barang</th>
 						<th>Kode Lokasi</th>
@@ -57,7 +70,7 @@ $get_data_filter = $RETRIEVE->retrieve_searchAset($_POST,$_SESSION['ses_satkerko
 						foreach ($get_data_filter as $key => $value) {
 				?>
 						<tr class="gradeA">
-							<td><input type="checkbox" name="aset[]" id="<?=$i?>" value="<?=$value['Aset_ID']?>"></td>
+							<td class="checkbox-column"><input type="checkbox" class="icheck-input" name="ids[]" value="{$var.id}" onchange="return AreAnyCheckboxesChecked();"></td>
 							<td><?=$value['kodeKelompok']?></td>
 							<td><?=$value['uraian']?></td>
 							<td><?=$value['kodeLokasi']?></td>
@@ -77,7 +90,9 @@ $get_data_filter = $RETRIEVE->retrieve_searchAset($_POST,$_SESSION['ses_satkerko
 					</tr>
 				</tfoot>
 			</table>
+		
 			</div>
+			</form>
 			<div class="spacer"></div>
 			    
 		</section> 
