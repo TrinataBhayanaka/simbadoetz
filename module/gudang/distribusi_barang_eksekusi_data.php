@@ -7,7 +7,20 @@ include "../../config/config.php";
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
-	
+
+	 if(isset($_POST['toSatker'])){
+	    if($_POST['id'] == "")
+	    {
+	      // pr($_POST);exit;
+	      $dataArr = $STORE->store_transfer($_POST);
+	    }  else
+	    {
+	      $dataArr = $STORE->store_edit_transfer($_POST,$_POST['id']);
+	    }
+	    	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/gudang/distribusi_barang.php\">";
+	    	exit;
+	  }
+
 ?>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -22,18 +35,18 @@ include "../../config/config.php";
 		</div>
 		<section class="formLegend">
 			
-			<form action='gudang_validasi_daftar.php?pid=1' method='post' name='formvalid'>
+			<form action='' method='post' name='formvalid'>
 			<ul>
 				<?=selectSatker('toSatker','205',true,false);?>
 			</ul>
 			<ul>
 							<li>
 								<span class="span2">Nomor Dokumen</span>
-								<input type="text" name="no_dokumen" id="no_dokumen" style="width:205px;" required>
+								<input type="text" name="noDokumen" id="no_dokumen" style="width:205px;" required>
 							</li>
 							<li>
 								<span class="span2">Tanggal Proses</span>
-								<input type="text" id="datepicker" name="tanggal_proses"value="" style="width:205px;" required>
+								<input type="text" id="datepicker" name="tglDistribusi" value="" style="width:205px;" required>
 							</li>
 							<li>
 								<span class="span2">Alasan</span>
@@ -42,7 +55,6 @@ include "../../config/config.php";
 							
 						</ul>
 						
-						</form>
 						<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
 						
@@ -69,11 +81,11 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span class="span2">Pangkat/Golongan</span>
-								<input type="text" name="pangkat_atasan_penyimpan" >
+								<input type="text" name="pangkat_atasan" >
 							</li>
 							<li>
 								<span class="span2">NIP</span>
-								<input type="text" name="nip_atasan_penyimpan" >
+								<input type="text" name="nip_atasan" >
 							</li>
 							<li>
 								<span class="span2">Jabatan</span>
@@ -82,7 +94,7 @@ include "../../config/config.php";
 						</ul>
 							
 					</div>
-			<div class="detailRight">
+			<div class="detailLeft">
 						
 						<ul>
 							
@@ -109,11 +121,14 @@ include "../../config/config.php";
 							<ul>
 							<li>
 								<span class="span2">&nbsp;</span>
-								<input type="submit" name="Lanjut" class="btn btn-primary" value="Tampilkan Data" />
+
+								<input type="hidden" name="fromSatker" value="<?=$_SESSION['ses_satkerkode']?>">
+
+								<input type="submit" class="btn btn-primary" value="Simpan Data" />
 								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
 							</li>
 							</ul>
-			
+			</form>
 		</section>     
 	</section>
 	

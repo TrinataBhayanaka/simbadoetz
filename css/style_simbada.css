@@ -112,7 +112,7 @@ section.formLegend .detailRight .labelInfo{
 	font-weight:bold;
 }
 section.formLegend .detailRight{
-	float:Left;
+	float:Right;
 }
 section.formLegend .titleLegend{
 	margin-top:-20px;
