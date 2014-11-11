@@ -6,6 +6,9 @@ $menu_id = 33;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
+pr($_POST);
+
+exit;
 /*
 $nmaset=$_POST['peman_usul_nama_aset'];
 $UserNm=$_SESSION['ses_uname'];// usernm akan diganti jika session di implementasikan
