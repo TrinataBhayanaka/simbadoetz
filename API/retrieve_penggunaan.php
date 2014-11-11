@@ -234,10 +234,12 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if ($tgl_akhir) $filter .= " AND DATE(p.TglSKKDH) <= '{$tgl_akhir}' ";
         if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}' ";
 
+        $username = $_SESSION['ses_uoperatorid'];
+        // pr($_SESSION);exit; AND a.UserNm = '{$username}'
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*, pa.Aset_ID',
-                'condition' => "p.FixPenggunaan = 1 $filter",
+                'condition' => "p.FixPenggunaan = 1  $filter",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'

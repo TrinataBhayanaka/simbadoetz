@@ -9580,8 +9580,8 @@ $offset = @$_POST['record'];
     
     public function get_app_config()
     {
-        $query = "SELECT * FROM tbl_app_config WHERE app_status = 1";    
-        
+        $query = "SELECT * FROM tbl_app_config WHERE app_status = 1 ORDER BY app_id DESC LIMIT 1";    
+        // pr($query);
         $result = $this->query($query) or die ($this->error());
         if ($this->num_rows($result))
         {
