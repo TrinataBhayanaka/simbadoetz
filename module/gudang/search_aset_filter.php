@@ -39,14 +39,14 @@ include "../../config/config.php";
 		
 		<section class="formLegend">
 			
-			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/gudang/"; ?>search_aset_daftar.php" method="post">
+			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/gudang/"; ?>search_aset_daftar.php?id=<?=$_GET['id']?>" method="post">
 			<ul>
 							<li>
 								<span>Tahun Perolehan</span><br/>
 								<input name="Tahun" id="Tahun" class="span2"  type="text" required>
 							</li>
 							<li>
-								<span>Kode Registrasi</span><br/>
+								<span>Kode Lokasi</span><br/>
 								<input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px">
 							</li>
 							<li>

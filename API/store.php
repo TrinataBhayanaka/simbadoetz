@@ -2128,6 +2128,90 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$aset['id']}\">";  
 
     }
+
+    public function store_transfer($data)
+    {
+
+        $data['userNm'] = $_SESSION['ses_uoperatorid'];
+        $data['n_status'] = 0; 
+
+         foreach ($data as $key => $val) {
+                $tmpfield[] = $key;
+                $tmpvalue[] = "'$val'";
+            }
+            $field = implode(',', $tmpfield);
+            $value = implode(',', $tmpvalue);
+
+        $query = "INSERT INTO transfer ({$field}) VALUES ({$value})";
+        // pr($query_log);exit;
+        $result=  $this->query($query) or die($this->error());
+
+        return true;
+        exit;
+
+    } 
+
+    public function store_trs_rinc($data,$get,$table)
+    {
+        unset($data['example_length']);
+        // pr($data);exit;
+        foreach ($data['aset'] as $key => $value) {
+            list($dataArr['tipeaset'],$dataArr['kodeKelompok'],$dataArr['kodeLokasi'],$noReg) = explode("_", $value);
+            list($dataArr['noReg_awal'],$dataArr['noReg_akhir']) = explode("-", $noReg);
+            $dataArr['transfer_id'] = $get['id'];
+            $dataArr['n_status'] = 0;
+
+            unset($tmpfield);
+            unset($tmpvalue);
+
+            foreach ($dataArr as $keys => $val) {
+                $tmpfield[] = $keys;
+                $tmpvalue[] = "'$val'";
+            }
+
+            $field = implode(',', $tmpfield);
+            $value = implode(',', $tmpvalue);
+
+            $query = "INSERT INTO transferaset ({$field}) VALUES ({$value})";
+            // pr($query);
+            $result=  $this->query($query) or die($this->error());
+
+            $sqlupd = "UPDATE {$dataArr['tipeaset']} SET Status_Validasi_Barang = '0' WHERE kodeKelompok = '{$dataArr['kodeKelompok']}' AND kodeLokasi = '{$dataArr['kodeLokasi']}' AND noRegister BETWEEN {$dataArr['noReg_awal']} AND {$dataArr['noReg_akhir']}";
+            // pr($sqlupd);
+            $result=  $this->query($sqlupd) or die($this->error());
+        }
+
+        return true;
+        exit;
+
+    }
+
+    public function store_trs_validasi($data)
+    {
+        unset($data['example_length']);
+        // pr($data);
+
+        foreach ($data['aset'] as $key => $value) {
+            $sqlupd = "UPDATE transfer SET n_status = '1' WHERE id = '$value'";
+            // pr($sqlupd);
+            $result=  $this->query($sqlupd) or die($this->error());
+
+            $sqltrsR = mysql_query("SELECT * FROM transferaset WHERE transfer_id = '$value'");
+            while ($row = mysql_fetch_assoc($sqltrsR)){
+                $aset[] = $row;
+            }
+        }
+
+        // pr($aset);exit;
+        foreach ($aset as $key => $value) {
+            $sqlupd = "UPDATE {$value['tipeaset']} SET Status_Validasi_Barang = '1' WHERE kodeKelompok = '{$value['kodeKelompok']}' AND kodeLokasi = '{$value['kodeLokasi']}' AND noRegister BETWEEN {$value['noReg_awal']} AND {$value['noReg_akhir']}";
+            // pr($sqlupd);
+            $result=  $this->query($sqlupd) or die($this->error());
+        }
+
+        return true;
+        exit;
+    }   
     
 
 }

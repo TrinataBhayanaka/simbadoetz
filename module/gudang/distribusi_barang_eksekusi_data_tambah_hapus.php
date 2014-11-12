@@ -2,7 +2,7 @@
 include "../../config/config.php";
 
 $aset=$_GET['id'];
-
+pr($aset);exit;
 $dataArr = $DELETE->delete_distribusi_barang($aset);
 
 
