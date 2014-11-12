@@ -110,7 +110,7 @@ include "../../config/config.php";
 						</ul>
 							
 					</div>
-			<div class="detailRight">
+			<div class="detailLeft">
 						
 						<ul>
 							

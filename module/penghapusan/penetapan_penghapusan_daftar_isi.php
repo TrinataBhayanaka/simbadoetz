@@ -97,7 +97,7 @@ include "../../config/config.php";
 
 						pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan($_POST,1);
-					pr($data);
+						pr($data);
 						?>
 						<ul>
 							<li>
