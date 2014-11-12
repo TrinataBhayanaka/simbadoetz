@@ -1,6 +1,9 @@
 <?php
 
 include "../../config/config.php"; 
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
                                     /*
                                     $nama_aset=$_POST['peman_penet_nama_aset'];
                                     $no=$_POST['peman_penet_eks_nopenet'];
@@ -36,6 +39,12 @@ $tgl_selesai=$_POST['peman_penet_eks_tglselesai'];
 $olah_tgl_selesai=  format_tanggal_db2($tgl_selesai);
 $jangka_waktu=$_POST['peman_penet_eks_jangkawaktu'];	
 
+
+pr($_POST);
+
+$data = $PEMANFAATAN->pemanfaatan_penetapan_tambah_proses($_POST,1);
+
+exit;
 $pemanfaatan_id=get_auto_increment("Pemanfaatan");
  $query="insert into Pemanfaatan (Pemanfaatan_ID, NoSKKDH, TipePemanfaatan, AlamatPartner, 
                                     Keterangan, TglSKKDH, NamaPartner, UserNm, TglUpdate, 

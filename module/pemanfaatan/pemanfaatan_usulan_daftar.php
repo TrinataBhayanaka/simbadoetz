@@ -165,11 +165,12 @@ $data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($_POST);
 								<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_filter.php" class="btn">
 								Kembali ke Halaman Utama: Cari Aset</a>
 							</li>
+							<!--
 							<li>
 								<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_daftar_usulan.php?pid=1" class="btn">
 								Daftar Barang
 								 </a>
-							</li>
+							</li>-->
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo $jml?>">

@@ -98,7 +98,7 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Usulan',
                 'field'=>'Aset_ID, Penetapan_ID, Jenis_Usulan, UserNm, TglUpdate, GUID, FixUsulan',
-                'value' => "'$asetID', '', 'MNF', '$UserNm', '$date', '$ses_uid', '1'",
+                'value' => "'$asetID', '', 'MNF', '$UserNm', '$date', '$ses_uid', '0'",
                 );
         $res = $this->db->lazyQuery($sql,$debug,1);
 
@@ -142,6 +142,233 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
         
         if ($res3) return true;
         return false;
+    }
+
+    function pemanfaatan_usulan_list($data,$debug=false)
+    {
+
+       
+        $filter = "";
+        $usulan_id = $data['usulan_id'];
+        // pr($data);
+        if ($usulan_id) $filter .= " AND ua.Usulan_ID = '{$usulan_id}'";
+            $sql = array(
+                    'table'=>"UsulanAset AS ua, aset AS a, kelompok AS k, satker AS s",
+                    'field'=>"a.*, k.Uraian, s.NamaSatker",
+                    'condition'=>"ua.Penetapan_ID = 0 AND StatusPenetapan = 0 {$filter}",
+                    'limit'=>'100',
+                    'joinmethod' => 'LEFT JOIN',
+                    'join' => "ua.Aset_ID = a.Aset_ID, a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                    );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+
+    function pemanfaatan_daftar_penetapan($data,$debug=false)
+    {
+
+        $filter = "";
+        $usulan_id = $data['usulan_id'];
+        // pr($data);
+        if ($usulan_id) $filter .= " AND ua.Usulan_ID = '{$usulan_id}'";
+            $sql = array(
+                    'table'=>"UsulanAset AS ua, aset AS a, kelompok AS k, satker AS s",
+                    'field'=>"a.*, k.Uraian, s.NamaSatker",
+                    'condition'=>"ua.Penetapan_ID = 0 AND StatusPenetapan = 0 {$filter}",
+                    'limit'=>'1',
+                    'joinmethod' => 'LEFT JOIN',
+                    'join' => "ua.Aset_ID = a.Aset_ID, a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                    );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+
+    function pemanfaatan_daftar_penetapan_tambah($data,$debug=false)
+    {
+
+        $filter = "";
+        $usulan_id = $data['usulan_id'];
+        // pr($data);
+        if ($usulan_id) $filter .= " AND u.Usulan_ID = '{$usulan_id}'";
+            $sql = array(
+                    'table'=>"Usulan AS u, aset AS a, kelompok AS k, satker AS s",
+                    'field'=>"a.*, k.Uraian, s.NamaSatker, u.*",
+                    'condition'=>"u.Penetapan_ID = 0 AND u.FixUsulan = 0 AND u.Status IS NULL {$filter}",
+                    'limit'=>'100',
+                    'joinmethod' => 'LEFT JOIN',
+                    'join' => "u.Aset_ID = a.Aset_ID, a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                    );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+
+    function pemanfaatan_daftar_penetapan_tambah_eksekusi($data,$debug=false)
+    {
+
+        // pr($data);
+
+        $filter = "";
+        $usulan_id = $data['PenetapanPemanfaatan'];
+
+        if ($usulan_id){
+            foreach ($usulan_id as $value) {
+                
+                $sql = array(
+                        'table'=>"Usulan AS u, aset AS a, kelompok AS k, satker AS s",
+                        'field'=>"u.*, k.Uraian, s.NamaSatker",
+                        'condition'=>"u.Penetapan_ID = 0 AND u.FixUsulan = 0 AND u.Status IS NULL AND u.Usulan_ID = '{$value}' {$filter}",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "u.Aset_ID = a.Aset_ID, a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                        );
+
+                $res[$value] = $this->db->lazyQuery($sql,$debug); 
+// pr($res);
+                if ($res){
+
+                    $aset[] = explode(',', $res[$value][0]['Aset_ID']);
+
+                    // foreach ($aset as $val) {
+                    //     $sql = array(
+                    //             'table'=>"aset AS a, kelompok AS k, satker AS s",
+                    //             'field'=>"a.*, k.Uraian, s.NamaSatker",
+                    //             'condition'=>"a.Aset_ID = {$val} ",
+                    //             'limit'=>'100',
+                    //             'joinmethod' => 'LEFT JOIN',
+                    //             'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                    //             );
+
+                    //     $result = $this->db->lazyQuery($sql,$debug); 
+                    //     $dataArr[] = $aset;
+                    // }
+                    
+                }
+            }
+
+            if ($aset){
+                foreach ($aset as $value) {
+
+                    foreach ($value as $val) {
+                        $hasil[] = $val;
+                    }
+                    
+                }
+
+                $implode = implode(',', $hasil);
+                     
+                $sql = array(
+                        'table'=>"aset AS a, kelompok AS k, satker AS s",
+                        'field'=>"a.*, k.Uraian, s.NamaSatker",
+                        'condition'=>"a.Aset_ID IN ({$implode}) ",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                        );
+
+                $result = $this->db->lazyQuery($sql,$debug); 
+                
+            }
+
+            
+        }
+        // pr($result);
+        // exit;
+        if ($result) return $result;
+        return false;
+    }
+
+
+    function pemanfaatan_penetapan_tambah_proses($data,$debug=false)
+    {
+
+        $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
+        $nmaset=$data['peman_penet_nama_aset'];
+        $aseid=implode(",",$nmaset);
+
+        $asset_id=Array();
+        $no_reg=Array();
+        $nm_barang=Array();
+        $panjang=count($nmaset);
+
+        $no=$data['peman_penet_eks_nopenet'];
+        $tgl=$data['peman_penet_eks_tglpenet'];
+        $olah_tgl=  date('Y-m-d');
+        $tipe=$data['peman_penet_eks_tipe'];
+        $ket=$data['peman_penet_eks_ket'];
+        $nama_partner=$data['peman_penet_eks_nmpartner'];
+        $alamat_partner=$data['peman_penet_eks_alamatpartner'];
+        $tgl_mulai=$data['peman_penet_eks_tglmulai'];
+        $olah_tgl_mulai=  format_tanggal_db2($tgl_mulai);
+        $tgl_selesai=$data['peman_penet_eks_tglselesai'];
+        $olah_tgl_selesai=  format_tanggal_db2($tgl_selesai);
+        $jangka_waktu=$data['peman_penet_eks_jangkawaktu'];    
+
+        $pemanfaatan_id=get_auto_increment("Pemanfaatan");
+
+        $sql = array(
+                'table'=>"Pemanfaatan",
+                'field'=>"NoSKKDH, TipePemanfaatan, AlamatPartner, 
+                                    Keterangan, TglSKKDH, NamaPartner, UserNm, TglUpdate, 
+                                    TglMulai, TglSelesai, JangkaWaktu, FixPemanfaatan, Aset_ID,Status",
+                'value'=>"'$no','$tipe','$alamat_partner',
+                                       '$ket','$olah_tgl','$nama_partner','$UserNm','$olah_tgl',
+                                        '$olah_tgl_mulai','$olah_tgl_selesai','$jangka_waktu','1','$aseid','0'",
+                );
+
+        $result = $this->db->lazyQuery($sql,$debug,1); 
+        
+       
+        for($i=0;$i<$panjang;$i++){
+            
+            $tmp=$nmaset[$i];
+            $tmp_olah=explode("<br/>",$tmp);
+            $asset_id[$i]=$tmp_olah[0];
+            $no_reg[$i]=$tmp_olah[1];
+            $nm_barang[$i]=$tmp_olah[2];
+            /*echo  "No= $i <br/>
+                    Asset ID =$asset_id[$i] <br/>
+                    No register=$no_reg[$i] <br/>
+                    Nama barang =$nm_barang[$i] <br/>";
+             * 
+             */
+            
+            // $query="insert into PemanfaatanAset(Pemanfaatan_ID,Aset_ID,Status,StatusPengembalian) values('$pemanfaatan_id','$asset_id[$i]','0','0')";
+            // $result=  mysql_query($query) or die(mysql_error());
+
+            $sql = array(
+                        'table'=>"PemanfaatanAset",
+                        'field'=>"Pemanfaatan_ID,Aset_ID,Status,StatusPengembalian",
+                        'value'=>"'$pemanfaatan_id','$asset_id[$i]','0','0' ",
+                        );
+
+            $result = $this->db->lazyQuery($sql,$debug,1);
+
+            /*untuk penambahan usulan_id di table aset
+            $query2="UPDATE Aset SET LastUsulan_ID='$menganggur_id' WHERE Aset_ID='$asset_id[$i]'";
+            $result2=mysql_query($query2) or die(mysql_error());
+            */
+            $query2="UPDATE UsulanAset SET StatusPenetapan=1, Penetapan_ID='$pemanfaatan_id' WHERE Aset_ID='$asset_id[$i]' AND Jenis_Usulan='MNF'";
+            $result2=mysql_query($query2) or die(mysql_error());
+
+            $sql = array(
+                        'table'=>"UsulanAset",
+                        'field'=>"StatusPenetapan=1, Penetapan_ID='$pemanfaatan_id'",
+                        'condition'=>"Aset_ID='$asset_id[$i]' AND Jenis_Usulan='MNF'",
+                        );
+
+            $result = $this->db->lazyQuery($sql,$debug,2);
+
+            // $query3="UPDATE Aset SET CurrentPemanfaatan_ID='$pemanfaatan_id', LastPemanfaatan_ID='$pemanfaatan_id' WHERE Aset_ID='$asset_id[$i]'";
+            // $result3=mysql_query($query3) or die(mysql_error());
+
+            
+        }
     }
 
 	function getTableKibAlias($type=1)

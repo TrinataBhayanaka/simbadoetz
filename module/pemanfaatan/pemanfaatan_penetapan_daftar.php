@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
 
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
  $menu_id = 34;
         $SessionUser = $SESSION->get_session_user();
         //($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -72,6 +74,8 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	$data = $PEMANFAATAN->pemanfaatan_daftar_penetapan($_POST);
+	pr($data);
 			?>
 
 
@@ -161,7 +165,7 @@ include "../../config/config.php";
 						$exec = mysql_query($query2) or die(mysql_error());*/
 	
 						$i=1;
-						while($row=mysql_fetch_array($exec)){
+						foreach($data as $row){
 					?>
 						  
 					<tr class="gradeA">
