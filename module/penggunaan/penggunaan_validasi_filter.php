@@ -80,7 +80,19 @@ include "../../config/config.php";
 			
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_daftar.php?pid=1">
 			<ul>
+                <!--
 							<li>
+                                <span class="span2">Jenis Aset</span>
+                                <select name="jenisaset">
+                                    <option value="1">Tanah</option>
+                                    <option value="2">Mesin</option>
+                                    <option value="3">Bangunan</option>
+                                    <option value="4">Jaringan</option>
+                                    <option value="5">Aset Lain</option>
+                                    <option value="6">KDP</option>
+                                </select>
+                            </li>-->
+                            <li>
 								<span class="span2">Tgl Penetapan Penggunaan Awal</span>
 								<input placeholder="" type="text" name="penggu_valid_filt_tglpenet_awal" style="width:200px;" id="tanggal12">
 							</li>

@@ -38,7 +38,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	
 
 
-	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST);
+	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST,1);
 
 ?>
 
@@ -161,7 +161,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 						
                             <!--<a href="<?php echo "$url_rewrite/report/template/PENGGUNAAN/";?>tes_class_penetapan_aset_yang_digunakan.php?menu_id=30&mode=1&id=<?php echo "$hsl_data[Penggunaan_ID]";?>" target="_blank">Cetak</a> ||--> 
 							<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_edit.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>">Edit</a> ||
-							<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_proses_hapus.php?Penggunaan_ID=<?php echo "$hsl_data[Penggunaan_ID]";?>&Aset_ID=<?php echo "$hsl_data[Aset_ID]";?>">Hapus</a>  
+							<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_daftar_proses_hapus.php?Penggunaan_ID=<?php echo "$hsl_data[Penggunaan_ID]";?>">Hapus</a>  
 						</td>
 					</tr>
 					 <?php 

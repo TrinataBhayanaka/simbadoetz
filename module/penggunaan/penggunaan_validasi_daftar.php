@@ -14,19 +14,24 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
         $tgl_akhir_fix=format_tanggal_db2($tgl_akhir);
         $no_penetapan_penggunaan=$_POST['penggu_valid_filt_nopenet'];
         $satker=$_POST['skpd_id'];
-        $submit=$_POST['tampil_validasi'];
+        $submit=$_POST['submit'];
         
         
-        
+        // pr($_POST);
         $paging = $LOAD_DATA->paging($_GET['pid']);    
         $ses_uid=$_SESSION['ses_uid'];
 
         if (isset($submit))
 		{
+
+			$_SESSION['penggunaan_validasi'] = $_POST;
+			$datasess = $_SESSION['penggunaan_validasi'];
 			// unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
 			// $data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
 		}else{
+
+			$datasess = $_SESSION['penggunaan_validasi'];
 			// $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
 			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
 			// $data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
@@ -53,8 +58,10 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	$data = $PENGGUNAAN->retrieve_validasi_penggunaan($_POST);
-       	// pr($data);
+
+
+	$data = $PENGGUNAAN->retrieve_validasi_penggunaan($datasess);
+       	// pr($datasess);
 
 			?>
 <script type="text/javascript">
