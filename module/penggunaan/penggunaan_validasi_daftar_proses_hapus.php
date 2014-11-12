@@ -4,6 +4,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
     
     $menu_id = 31;
     ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -13,8 +15,9 @@
     $id=$_GET['id'];
     // pr($id);
 	// exit;
-    $data=$DELETE->delete_update_daftar_validasi_penggunaan($id);
+    // $data=$DELETE->delete_update_daftar_validasi_penggunaan($id);
     
+    $data=$PENGGUNAAN->delete_update_daftar_validasi_penggunaan($_POST);
     /*
 
     $query="UPDATE Penggunaan SET Status=0 WHERE Penggunaan_ID='$id'";

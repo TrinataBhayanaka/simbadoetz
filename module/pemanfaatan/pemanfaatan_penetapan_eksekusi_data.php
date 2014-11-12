@@ -1,5 +1,7 @@
     <?php
         include "../../config/config.php"; 
+
+        $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
     ?>
 <html>
     <?php
@@ -339,6 +341,9 @@
             <?php
                     include "$path/title.php";
                     include "$path/menu.php";
+
+                    $data = $PEMANFAATAN->pemanfaatan_daftar_penetapan_tambah_eksekusi($_POST);
+                    // pr($data);
             ?>
                 <div id="tengah1">	
                     <div id="frame_tengah1">
@@ -348,34 +353,7 @@
                             </div>
                             <div id="bottomright">
                                 
-                                <?php
-								// pr($_SESSION);
-								$id = $_POST['PenetapanPemanfaatan'];
-								$dataImplode = implode(',',array_values($id));
-								// pr($dataImplode);
-								if($dataImplode!=""){
-									
-									//$$key = $value;
-									$query = "SELECT a.Aset_ID,a.LastSatker_ID,a.TglPerolehan, a.AsetOpr, a.Kuantitas, a.Satuan,a.OrigSatker_ID,a.Ruangan, 
-													a.SumberAset, a.NilaiPerolehan,a.Alamat, a.RTRW, a.Pemilik, a.NomorReg, a.NamaAset,a.TglPerolehan,
-													b.Aset_ID,  
-													c.NoKontrak, e.NamaSatker, f.NamaLokasi, g.Kode,g.Uraian
-													FROM MenganggurAset AS b
-													LEFT JOIN Aset AS a ON b.Aset_ID=a.Aset_ID
-													LEFT JOIN  KontrakAset AS d  ON a.Aset_ID = d.Aset_ID
-													LEFT JOIN Kontrak AS c ON c.Kontrak_ID = d.Kontrak_ID
-													 JOIN Lokasi AS f  ON a.Lokasi_ID=f.Lokasi_ID
-													 JOIN Satker AS e ON a.LastSatker_ID=e.Satker_ID
-													 JOIN Kelompok AS g ON a.Kelompok_ID=g.Kelompok_ID
-													WHERE b.Aset_ID IN ({$dataImplode})";
-										//print_r($query);
-										$exec=mysql_query($query) or die(mysql_error());
-										while ($data = mysql_fetch_object($exec)){
-											$row[] = $data;
-									}
-					
-								}
-                                ?>
+                               
                                 <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_penetapan_eksekusi_data_proses.php">
                                 <table width="100%">
                                     <tr>
@@ -383,16 +361,16 @@
                                     </tr>
 									<?php
 										$no = 1;
-										foreach ($row as $keys => $nilai)
+										foreach ($data as $keys => $nilai)
 										{
 											if ($nilai->AsetOpr == 0)
 											$select="selected='selected'";
 											if ($nilai->AsetOpr ==1)
 											$select2="selected='selected'";
 
-											if($nilai->SumberAset =='sp2d')
+											if($nilai['SumberAset'] =='sp2d')
 											$pilih="selected='selected'";
-											if($nilai->SumberAset =='hibah')
+											if($nilai['SumberAset'] =='hibah')
 											$pilih2="selected='selected'";
 												
 											echo "<tr>
@@ -401,15 +379,15 @@
 												<tr>
 												<td></td>
 												<td>$no.</td>
-												<input type='hidden' name='peman_penet_nama_aset[]' value='$nilai->Aset_ID'>
-												<td>$nilai->NomorReg - $nilai->Kode</td>
-												<td align='right'><input type='button' id ='$nilai->Aset_ID' value='View Detail' onclick='spoiler(this);'></td>
+												<input type='hidden' name='peman_penet_nama_aset[]' value='$nilai[Aset_ID]'>
+												<td>$nilai->NomorReg - $nilai[noRegister]</td>
+												<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
 												</tr>
 
 												<tr>
 												<td>&nbsp;</td>
 												<td>&nbsp;</td>
-												<td>$nilai->NamaAset</td>
+												<td>$nilai[Uraian]</td>
 												</tr>
 												<tfoot style='display:none;'>
 												<tr>
@@ -421,13 +399,11 @@
 												<table border=0 width=100%>
 												<tr>
 												<td>
-												<input type='text' value='$nilai->Pemilik' size='1px' style='text-align:center' readonly = 'readonly'> - 
-												<input type='text' value='$nilai->KodeSatker' size='10px' style='text-align:center' readonly = 'readonly'> - 
-												<input type='text' value='$nilai->Kode' size='20px' style='text-align:center' readonly = 'readonly'> - 
-												<input type='text' value='$nilai->Ruangan' size='5px' style='text-align:center' readonly = 'readonly'>
-												<input type='hidden' name='fromsatker' value='$nilai->OrigSatker_ID' size='5px' style='text-align:center' readonly = 'readonly'>
+												<input type='text' value='$nilai[kodeSatker]' size='10px' style='text-align:center' readonly = 'readonly'> - 
+												<input type='text' value='$nilai[kodeKelompok]' size='20px' style='text-align:center' readonly = 'readonly'> - 
+												<input type='text' value='$nilai[kodeRuangan]' size='5px' style='text-align:center' readonly = 'readonly'>
 												</td>
-												<td align='right'><input type='button' id ='sub$nilai->Aset_ID' value='Sub Detail' onclick='spoilsub(this);'></td>
+												<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
 												</tr>
 												</table>
 
@@ -436,23 +412,18 @@
 												<tr>
 												<td valign='top' align='left' width=10%>Nama Aset</td>
 												<td valign='top' align='left' style='font-weight:bold'>
-												$nilai->NamaAset
+												$nilai[Uraian]
 												</td>
 												</tr>
 
 												<tr>
 												<td valign='top' align='left'>Satuan Kerja</td>
 												<td valign='top' align='left' style='font-weight:bold'>
-												$nilai->NamaSatker
+												$nilai[NamaSatker]
 												</td>
 												</tr>
 
-												<tr>
-												<td valign='top' align='left'>Jenis Barang</td>
-												<td valign='top' align='left' style='font-weight:bold'>
-												$nilai->Uraian
-												</td>
-												</tr>
+												
 
 												</table>
 												</div>
@@ -467,7 +438,7 @@
 												<table>
 												<tr>
 												<td valign='top' style='width:150px;'>Nomor Kontrak</td>
-												<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$nilai->NoKontrak'></td>
+												<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$nilai[noKontrak]'></td>
 												</tr>
 
 												<tr>
@@ -483,9 +454,9 @@
 
 												<tr>
 												<td valign='top' style='width:150px;'>Kuantitas</td>
-												<td valign='top'><input type='text' readonly='readonly' style='width:40px; text-align:right' value='$nilai->Kuantitas'>
+												<td valign='top'><input type='text' readonly='readonly' style='width:40px; text-align:right' value='$nilai[Kuantitas]'>
 												Satuan
-												<input type='text' readonly='readonly' style='width:130px' value='$nilai->Satuan'>
+												<input type='text' readonly='readonly' style='width:130px' value='$nilai[Satuan]'>
 												</td>
 												</tr>
 
@@ -502,24 +473,24 @@
 
 												<tr>
 												<td valign='top' style='width:150px;'>Tanggal Perolehan</td>
-												<td valign='top'><input type='text' readonly='readonly' style='width:130px' value='$nilai->TglPerolehan'></td>
+												<td valign='top'><input type='text' readonly='readonly' style='width:130px' value='$nilai[TglPerolehan]'></td>
 												</tr>
 
 												<tr>
 												<td valign='top' style='width:150px;'>Nilai Perolehan</td>
-												<td valign='top'><input type='text' readonly='readonly' style='width:130px; text-align:right' value='$nilai->NilaiPerolehan'></td>
+												<td valign='top'><input type='text' readonly='readonly' style='width:130px; text-align:right' value='$nilai[NilaiPerolehan]'></td>
 												</tr>
 
 												<tr>
 												<td valign='top' style='width:150px;'>Alamat</td>
-												<td valign='top'><textarea style='width:90%' readonly>$nilai->Alamat</textarea><br>
+												<td valign='top'><textarea style='width:90%' readonly>$nilai[Alamat]</textarea><br>
 												RT/RW
-												<input type='text' readonly='readonly' style='width:50px' value='$nilai->RTRW'></td>
+												<input type='text' readonly='readonly' style='width:50px' value='$nilai[RTRW]'></td>
 												</tr>
 
 												<tr>
 												<td valign='top' style='width:150px;'>Lokasi</td>
-												<td valign='top'><input type='text' readonly='readonly' style='width:100px' value='$nilai->NamaLokasi'></td>
+												<td valign='top'><input type='text' readonly='readonly' style='width:100px' value='$nilai[NamaLokasi]'></td>
 												</tr>
 
 												

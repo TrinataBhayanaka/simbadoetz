@@ -14,7 +14,7 @@ $change_tgl=  format_tanggal_db2($tgl_aset);
 $noaset=$_POST['penggu_penet_eks_nopenet'];
 $ket=$_POST['penggu_penet_eks_ket'];
 $submit=$_POST['penggunaan_edit_eks'];
-pr($_POST);
+// pr($_POST);
 
 $data=$PENGGUNAAN->update_daftar_penetapan_penggunaan($_POST);
 // exit;

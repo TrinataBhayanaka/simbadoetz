@@ -43,7 +43,7 @@ $get_data_filter = $RETRIEVE->retrieve_distribusiBarang($_POST);
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			<p><a href="search_aset_filter.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Data</a>
+			<p><a href="distribusi_barang_eksekusi_data.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Data</a>
 				&nbsp;</p>
 			
 			<div id="demo">
@@ -54,66 +54,39 @@ $get_data_filter = $RETRIEVE->retrieve_distribusiBarang($_POST);
 						<th>Nomor Dokumen</th>
 						<th>Transfer ke SKPD</th>
 						<th>Tanggal Distribusi</th>
-						<th>Detail Distribusi Barang</th>
+						<th>Detail</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
 				<tbody>		
-							 
-						
-			<?php
-				if (!empty($get_data_filter['data']))
-				{
-				
-					$nomor = 1;
-					// pr($get_data_filter);
-					foreach ($get_data_filter['data'] as $key => $hsl_data)
-					{
-						list($tahun, $bulan, $tanggal)= explode('-', $hsl_data->TglTransfer);
-					
-					$queryFromSatker = "SELECT NamaSatker FROM satker WHERE Satker_ID = '{$hsl_data->ToSatker_ID}'";
-					$resultFromSatker = $DBVAR->query($queryFromSatker) or die ($DBVAR->error());
-					$dataFromSatker = $DBVAR->fetch_array($resultFromSatker);
-					?>
-
-						  
-					<tr class="gradeA">
-						<td><?php echo $nomor?></td>
-						<td>
-							<?=$hsl_data->NoDokumen?>
-						</td>
-						<td>
-							<?=$dataFromSatker[NamaSatker]?>
-						</td>
-						<td>
-							<?=$tanggal."/".$bulan."/".$tahun?>
-						</td>
-						<td>
-							<?=$hsl_data->InfoTransfer?>
-						</td>
-						<td>	
-						<a href='<?=$url_rewrite."/module/gudang/distribusi_barang_daftar_edit.php?id=".$hsl_data->NoDokumen?>&pid=1'> Edit </a> 
-						|| <a href="<?=$url_rewrite."/module/gudang/distribusi_barang_eksekusi_data_tambah_hapus.php?id=".$hsl_data->NoDokumen?>&pid=1" onclick="return confirm('Hapus Data ?');"> Hapus </a>
-						</td>
-					</tr>
 					<?php
-							$nomor++;
-						}
-					}
-					else
-					{
-						$disabled = 'disabled';
-					}
+						$i = 1;
+						if($get_data_filter['data'])
+						{
+							foreach ($get_data_filter['data'] as $key => $value) {
 					?>
+							<tr class="gradeA">
+								<td><?=$i++?></td>
+								<td><?=$value['noDokumen']?></td>
+								<td><?=$value['toSatker']?></td>
+								<td><?=$value['tglDistribusi']?></td>
+								<td><?=$value['alasan']?></td>
+								<td class="text-center">
+									<a href="kontrak_rincianhapus.php?id=<?=$value['Aset_ID']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-warning btn-small"><i class="fa fa-pencil"></i>&nbsp;Edit</a>
+									<a href="distribusi_rinc.php?id=<?=$value['id']?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Rincian</a>
+									<a href="distribusi_barang_eksekusi_data_tambah_hapus.php?id=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+								</td>
+							</tr>
+					<?php			
+							}
+
+							
+						}	
+					?>		 
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						<td colspan="6"></th>
 					</tr>
 				</tfoot>
 			</table>

@@ -31,9 +31,6 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 		<section class="formLegend">
 			
 			<form name="myform" method="post" action="distribusi_barang_daftar.php">
-			<ul>
-				<?=selectSatker('toSatker','205',true,false);?>
-			</ul>
 				<ul>
 					<li>
 						<span class="span2">Tanggal Distribusi</span>
@@ -43,6 +40,9 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 						<span class="span2">Nomor Dokumen</span>
 						<input type="text" name="noDokumen" value="" style="width:205px;">
 					</li>
+					<?=selectSatker('toSatker','205',true,false);?>
+				</ul>
+				<ul>
 					<li>
 						<span class="span2">&nbsp;</span>
 						<input type="submit" class="btn btn-primary" value="Tampilkan Data" />

@@ -4,7 +4,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-    
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+   
+
+$data = $PEMANFAATAN->pemanfaatan_validasi_daftar_hapus($_GET);
+if ($data){
+	echo "<script>alert('Data Berhasil Dihapus'); document.location='pemanfaatan_validasi_daftar_valid.php?pid=1';</script>";
+}
+exit;
     $id=$_GET['id'];
     //echo "$id";
 

@@ -11,6 +11,8 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 
 $data=$PENGGUNAAN->delete_daftar_penetapan_penggunaan($_GET);
 
+
+// exit;
 /*
 $query="UPDATE Penggunaan SET FixPenggunaan=0 WHERE Penggunaan_ID='$id'";
 $exec=mysql_query($query) or die(mysql_error());

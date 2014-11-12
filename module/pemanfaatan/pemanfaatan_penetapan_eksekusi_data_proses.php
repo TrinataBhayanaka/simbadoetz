@@ -1,6 +1,9 @@
 <?php
 
 include "../../config/config.php"; 
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
                                     /*
                                     $nama_aset=$_POST['peman_penet_nama_aset'];
                                     $no=$_POST['peman_penet_eks_nopenet'];
@@ -36,13 +39,24 @@ $tgl_selesai=$_POST['peman_penet_eks_tglselesai'];
 $olah_tgl_selesai=  format_tanggal_db2($tgl_selesai);
 $jangka_waktu=$_POST['peman_penet_eks_jangkawaktu'];	
 
+
+// pr($_POST);
+
+$data = $PEMANFAATAN->pemanfaatan_penetapan_tambah_proses($_POST);
+if ($data){
+    echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/pemanfaatan/pemanfaatan_penetapan_daftar.php?pid=1';</script>";
+
+}
+
+
+exit;
 $pemanfaatan_id=get_auto_increment("Pemanfaatan");
  $query="insert into Pemanfaatan (Pemanfaatan_ID, NoSKKDH, TipePemanfaatan, AlamatPartner, 
                                     Keterangan, TglSKKDH, NamaPartner, UserNm, TglUpdate, 
                                     TglMulai, TglSelesai, JangkaWaktu, FixPemanfaatan, Aset_ID,Status) 
                                 values (null,'$no','$tipe','$alamat_partner',
                                        '$ket','$olah_tgl','$nama_partner','$UserNm','$olah_tgl',
-                                        '$olah_tgl_mulai','$olah_tgl_selesai','$jangka_waktu','1','$aseid','0')";
+                                        '$olah_tgl_mulai','$olah_tgl_selesai','$jangka_waktu','0','$aseid','0')";
 
  $result=  mysql_query($query) or die(mysql_error());
  

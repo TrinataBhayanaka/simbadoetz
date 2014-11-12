@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
 
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
         $no_penetapan=$_POST['peman_valid_filt_nopenet'];
         $tgl_penetapan=$_POST['peman_valid_filt_tglpenet'];
         $tgl_fix=format_tanggal_db2($tgl_penetapan);
@@ -95,6 +97,9 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	$data = $PEMANFAATAN->pemanfaatan_validasi_daftar($_POST);
+	// pr($data);
+
 			?>
 		<script type="text/javascript">
 		function show_confirm()
@@ -167,49 +172,7 @@ include "../../config/config.php";
 			</div>
 		
 			<div class="detailRight" align="right">
-							<?php 
-								$query="SELECT Pemanfaatan_ID FROM Pemanfaatan WHERE FixPemanfaatan=1 AND Status=0 ORDER BY Aset_ID ASC ";
-                                        $result = $DBVAR->query($query) or die($DBVAR->error());
-                                        
-										while ($data = $DBVAR->fetch_object($result))
-                                        {
-                                            $dataArray[] = $data;
-                                        }
-										if($dataArray!=""){
-                                            foreach ($dataArray as $pemanfaatan_id)
-                                                {
-													if($_SESSION['ses_uaksesadmin'] == 1){
-														$query2="SELECT * FROM Pemanfaatan
-                                                                    WHERE  Pemanfaatan_ID = $pemanfaatan_id->Pemanfaatan_ID
-                                                                    ORDER BY Pemanfaatan_ID asc ";
-                                                    }else{
-														$query2="SELECT * FROM Pemanfaatan
-                                                                    WHERE  Pemanfaatan_ID = $pemanfaatan_id->Pemanfaatan_ID
-                                                                    AND UserNm = '$_SESSION[ses_uoperatorid]' ORDER BY Pemanfaatan_ID asc ";
-													}
-													$exec=$DBVAR->query($query2) or die(mysql_error());
-                                                    $row[] = $DBVAR->fetch_object($exec);       
-                                                }
-                                            }
-                                        $rows = $DBVAR->num_rows($exec);
-										$query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPemanfaatan[]'";
-										$result_apl = $DBVAR->query($query_apl) or die ($DBVAR->error());
-										$data_apl = $DBVAR->fetch_object($result_apl);
-										$array = explode(',',$data_apl->aset_list);
-											
-										foreach ($array as $id)
-										{
-											if ($id !='')
-											{
-											$dataAsetList[] = $id;
-											}
-										}
-										
-										if ($dataAsetList !='')
-										{
-											$explode = array_unique($dataAsetList);
-										}
-								?>
+							
 						<ul>
 							<li>
 								<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_validasi_filter.php" class="btn">
@@ -256,16 +219,16 @@ include "../../config/config.php";
 				</thead>
 				<tbody>		
 					<?php
-					if($row!=""){
+					if($data!=""){
 						$page = @$_GET['pid'];
 					if ($page > 1){
 						$no = intval($page - 1 .'01');
 					}else{
 						$no = 1;
 					}	  
-					// pr($row);	
-				   foreach ($row as $value){
-						$id = $value->Pemanfaatan_ID;
+					// pr($data);	
+				   foreach ($data as $value){
+						$id = $value['Pemanfaatan_ID'];
 						?>
 						  
 					<tr class="gradeA">
@@ -274,10 +237,10 @@ include "../../config/config.php";
 							<input type="checkbox" class="checkbox" onchange="enable()" name="ValidasiPemanfaatan[]" value="<?php echo $id?>" 
 							<?php for ($j = 0; $j <= count($explode); $j++){if ($explode[$j]==$id) echo 'checked';}?>/>
 						</td>
-						<td><?php echo "$value->NoSKKDH";?></td>
-						<td><?php $change=$value->TglSKKDH; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
+						<td><?php echo "$value[NoSKKDH]";?></td>
+						<td><?php $change=$value['TglSKKDH']; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
 						<td>	
-						<?php echo "$value->Keterangan";?>
+						<?php echo "$value[Keterangan]";?>
 						</td>
 					</tr>
 					  <?php 

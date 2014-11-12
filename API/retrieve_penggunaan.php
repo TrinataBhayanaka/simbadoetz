@@ -49,24 +49,39 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         // $query4="UPDATE Aset SET LastPenggunaan_ID=NULL WHERE LastPenggunaan_ID='$id'";
         // $exec4=$this->query($query4) or die($this->error());
         
+        
         $sql = array(
                 'table'=>'Penggunaan',
-                'field'=>"FixPenggunaan=0",
+                'field'=>"Status=0",
                 'condition' => "Penggunaan_ID='$id'",
                 'limit' => '1',
                 );
 
         $res = $this->db->lazyQuery($sql,$debug,2);
-
         
-        $sql1 = array(
-                'table'=>'Aset',
-                'field'=>"NotUse=0",
-                'condition' => "Aset_ID='$asetid'",
-                'limit' => '1',
+        $sql = array(
+                'table'=>'Penggunaanaset',
+                'field'=>"Aset_ID",
+                'condition' => "Penggunaan_ID='$id'",
                 );
 
-        $res1 = $this->db->lazyQuery($sql1,$debug,2);
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res){
+
+            foreach ($res as $key => $value) {
+
+                $sql1 = array(
+                        'table'=>'Aset',
+                        'field'=>"NotUse=NULL",
+                        'condition' => "Aset_ID='{$value[Aset_ID]}'",
+                        'limit' => '1',
+                        );
+
+                $res1 = $this->db->lazyQuery($sql1,$debug,2); 
+            }
+            
+        }
+        
 
         if ($res && $res1) return true;
         return false;
@@ -93,7 +108,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Penggunaan',
                 'field'=>'NoSKKDH , TglSKKDH, Keterangan, NotUse, TglUpdate, UserNm, FixPenggunaan, GUID',
-                'value' => "'{$penggu_penet_eks_nopenet}','{$olah_tgl}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','1','{$ses_uid}'",
+                'value' => "'{$penggu_penet_eks_nopenet}','{$olah_tgl}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','0','{$ses_uid}'",
                 );
         $res = $this->db->lazyQuery($sql,$debug,1);
 
@@ -114,6 +129,8 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
             $res = $this->db->lazyQuery($sql1,$debug,1);
 
             // $query2="UPDATE Aset SET NotUse=1, LastPenggunaan_ID='$penggunaan_id' WHERE Aset_ID='$asset_id[$i]'";
+            
+            
             $sql2 = array(
                 'table'=>'Aset',
                 'field'=>"NotUse=1",
@@ -121,6 +138,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 'limit' => '1',
                 );
             $res = $this->db->lazyQuery($sql2,$debug,2);
+           
         }
 
         
@@ -132,10 +150,38 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         
     }
 
+    function delete_update_daftar_validasi_penggunaan($data, $debug=false)
+    {
+
+        $penggunaan_id = $data['id'];
+
+        $sql2 = array(
+            'table'=>'Penggunaan',
+            'field'=>"Status=0, FixPenggunaan = 0",
+            'condition' => "Penggunaan_ID='{$penggunaan_id}'",
+            );
+        $res2 = $this->db->lazyQuery($sql2,$debug,2);
+
+        $sql2 = array(
+            'table'=>'PenggunaanAset',
+            'field'=>"Status=0",
+            'condition' => "Penggunaan_ID='{$penggunaan_id}'",
+            );
+        $res2 = $this->db->lazyQuery($sql2,$debug,2);
+
+        if ($res2) return true;
+        return false;
+
+    }
+
 
     public function update_validasi_penggunaan($data,$debug=false)
     {
         
+        $tabeltmp = $_SESSION['penggunaan_validasi']['jenisaset'];
+        $getTable = $this->getTableKibAlias($tabeltmp);
+        $tabel = $getTable['listTableReal'];
+
 
         $explodeID = $data['ValidasiPenggunaan'];
         $cnt=count($explodeID);
@@ -145,7 +191,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
             // $query="UPDATE Penggunaan SET Status=1 WHERE Penggunaan_ID='$explodeID[$i]'";
             $sql2 = array(
                 'table'=>'Penggunaan',
-                'field'=>"Status=1",
+                'field'=>"Status=1, FixPenggunaan = 1",
                 'condition' => "Penggunaan_ID='{$explodeID[$i]}'",
                 );
             $res2 = $this->db->lazyQuery($sql2,$debug,2);
@@ -159,6 +205,54 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
             $res3 = $this->db->lazyQuery($sql3,$debug,2);
             }
         }
+
+
+        /* Log It */
+
+        foreach ($explodeID as $key => $value) {
+
+            $sql = array(
+                'table'=>'PenggunaanAset',
+                'field'=>"Aset_ID",
+                'condition' => "Penggunaan_ID='{$value}'",
+                );
+            $res[] = $this->db->lazyQuery($sql,$debug);
+        }
+        
+        // pr($res);
+
+        
+        $listTable = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp');
+
+        if ($res){
+            foreach ($res as $key => $value) {
+
+                foreach ($value as $val) {
+                    
+                    $sql = array(
+                            'table'=>'aset',
+                            'field'=>"TipeAset",
+                            'condition' => "Aset_ID={$val['Aset_ID']}",
+                            );
+                    $result = $this->db->lazyQuery($sql,$debug);
+                    $asetid[$val['Aset_ID']] = $listTable[implode(',', $result[0])];
+                }
+                
+            }
+
+            foreach ($asetid as $key => $value) {
+
+                $this->db->logIt($tabel=array($value), $Aset_ID=$key);
+            }
+        }
+
+        
         // exit;
         // $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='ValidasiPenggunaan[]' AND UserSes='$parameter[ses_uid]'";
         // $exec_hapus=  $this->query($query_hapus_apl) or die($this->error());
@@ -182,10 +276,15 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if ($tgl_akhir) $filter .= " AND DATE(p.TglSKKDH) <= '{$tgl_akhir}' ";
         if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}' ";
 
+        // $tabeltmp = $_SESSION['penggunaan_validasi']['jenisaset'];
+        // $getTable = $this->getTableKibAlias($tabeltmp);
+        // $tabel = $getTable['listTableAbjad'];
+
+        $TipeAset = 
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*',
-                'condition' => "p.FixPenggunaan = 1 AND p.Status IS NULL $filter",
+                'condition' => "p.FixPenggunaan = 0 AND p.Status IS NULL $filter",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'
@@ -207,8 +306,8 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p, kelompok AS k',
                 'field'=>'p.*, a.*, k.Uraian',
-                'condition' => "p.FixPenggunaan = 1 $filter",
-                'limit' => '1',
+                'condition' => "p.FixPenggunaan = 0 $filter",
+                'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, a.kodeKelompok = k.kode'
                 );
@@ -235,14 +334,17 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}' ";
 
         $username = $_SESSION['ses_uoperatorid'];
+
+        // $tabeltmp = $_SESSION['penggunaan_penetapan']['jenisaset'];
+        // $getTable = $this->getTableKibAlias($tabeltmp);
+        // $tabel = $getTable['listTableAbjad'];
+
         // pr($_SESSION);exit; AND a.UserNm = '{$username}'
         $sql = array(
-                'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
-                'field'=>'p.*, pa.Aset_ID',
-                'condition' => "p.FixPenggunaan = 1  $filter",
+                'table'=>'penggunaan AS p',
+                'field'=>'p.*',
+                'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL $filter",
                 'limit' => '100',
-                'joinmethod' => 'LEFT JOIN',
-                'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -295,13 +397,14 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $listTable = $table['listTable'];
         $listTableAlias = $table['listTableAlias'];
 
+
         $sql = array(
-                'table'=>"aset AS a, {$listTable}, kelompok AS k",
+                'table'=>"{$listTable}, aset AS a, kelompok AS k",
                 'field'=>"{$listTableAlias}.*, k.Uraian",
-                'condition'=>"a.Status_Validasi_Barang = 1 {$filterkontrak}",
+                'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL {$filterkontrak}",
                 'limit'=>'100',
                 'joinmethod' => 'LEFT JOIN',
-                'join' => "a.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
+                'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -313,6 +416,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
     function getTableKibAlias($type=1)
     {
         $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
                         1=>'tanah AS t',
@@ -321,9 +425,19 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
                         6=>'kdp AS k');
+        $listTable2 = array(
+                        1=>'tanah',
+                        2=>'mesin',
+                        3=>'bangunan',
+                        4=>'jaringan',
+                        5=>'asetlain',
+                        6=>'kdp');
 
         $data['listTable'] = $listTable[$type];
         $data['listTableAlias'] = $listTableAlias[$type];
+        $data['listTableReal'] = $listTable2[$type];
+        $data['listTableAbjad'] = $listTableAbjad[$type];
+
 
         return $data;
     }

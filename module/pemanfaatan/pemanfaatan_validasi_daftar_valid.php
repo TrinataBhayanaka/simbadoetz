@@ -1,12 +1,18 @@
 <?php
 include "../../config/config.php";
 	
+	$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 ?>
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+
+	$data = $PEMANFAATAN->pemanfaatan_validasi_daftar_valid($_POST);
+	// pr($data);
+
 			?>
 
 
@@ -49,7 +55,7 @@ include "../../config/config.php";
 								$result  = mysql_query($query) or die (mysql_error());
 								while ($dataNew = mysql_fetch_object($result))
 								{
-									$dataArr[] = $dataNew->Pemanfaatan_ID;
+									// $dataArr[] = $dataNew->Pemanfaatan_ID;
 								}
 								// pr($dataArr);
 							?>
@@ -89,7 +95,7 @@ include "../../config/config.php";
 					}else{
 						$no = 1;
 					}	  
-					while($hsl_data=mysql_fetch_array($exec2)){
+					foreach($data as $hsl_data){
 					// pr($hsl_data);	
 				?>
 						  
