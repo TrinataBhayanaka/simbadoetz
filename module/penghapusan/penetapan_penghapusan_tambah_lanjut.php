@@ -57,9 +57,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-		// pr($_POST);
+		pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter($_POST,1);
-// pr($data);
+		pr($data);
 			?>
      
                     <script language="Javascript" type="text/javascript">  
