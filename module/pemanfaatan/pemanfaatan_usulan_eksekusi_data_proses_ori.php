@@ -1,6 +1,7 @@
 <?php
 include "../../config/config.php";
 
+
 $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 
 $menu_id = 33;
@@ -60,17 +61,19 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 
 $datausulan = $PEMANFAATAN->pemanfaatan_usulan_list($_GET);
 // pr($datausulan);
-
 ?>
 
-<?php
-	include"$path/meta.php";
-	include"$path/header.php";
-	include"$path/menu.php";
-	
-
-?>
-				<script type="text/javascript">
+<html>
+    <?php
+        include "$path/header.php";
+    ?>
+        <body>
+            <div id="content">
+                    <?php
+                        include "$path/title.php";
+                        include "$path/menu.php";
+                    ?>
+					<script type="text/javascript">
 						function spoiler(obj)
 						{
 						var inner = obj.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("tfoot")[0];
@@ -95,20 +98,16 @@ $datausulan = $PEMANFAATAN->pemanfaatan_usulan_list($_GET);
 						document.getElementById(obj.id).value="Sub Detail";}
 						}
 					</script>
-	<section id="main">
-		<ul class="breadcrumb">
-		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-		  <li><a href="#">Pemanfaatan</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Daftar Usulan Pemanfaatan</li>
-		  <?php SignInOut();?>
-		</ul>
-		<div class="breadcrumb">
-			<div class="title">Daftar Usulan Pemanfaatan</div>
-			<div class="subtitle">Filter Data</div>
-		</div>
-		<section class="formLegend">
-			
-			<table width="100%">
+                <div id="tengah1">	
+                    <div id="frame_tengah1">
+                        <div id="frame_gudang">
+                            <div id="topright">
+                                Daftar Usulan Pemanfaatan		
+                            </div>
+                            <div id="bottomright">
+                                
+                                <!--<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_proses.php">-->
+                                <table width="100%">
                                     <tr>
                                         <td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Aset yang baru saja diusulkan untuk pemanfaatan:</u></td>
                                     </tr>
@@ -318,10 +317,20 @@ $datausulan = $PEMANFAATAN->pemanfaatan_usulan_list($_GET);
                                         </td>
                                     </tr>
                                 </table>
-			
-		</section>     
-	</section>
+                                <!--</form>-->
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
+			Powered by BBSDM Team 2012
+            </div>
+        </body>
+</html>	
 	
-<?php
-	include"$path/footer.php";
-?>
+
+
+
+
