@@ -305,7 +305,7 @@ $datausulan = $PEMANFAATAN->pemanfaatan_usulan_list($_GET);
                                                 <tr>
                                                     <td colspan=4 align=center>
                                                         <!--<a href="<?php echo "$url_rewrite/report/template/PEMANFAATAN/tes_class_usulan_aset_yang_akan_dimanfaatkan.php?menu_id=33&mode=1&id=$usulan_id";?>"  target="_blank"><input type="submit" name="submit1" value="Cetak Daftar Usulan Pemanfaatan"></a>-->
-                                                        <a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_usulan_filter.php";?>"><input type="submit" name="submit2" value="Kembali ke Menu Utama"></a>
+                                                        <a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_usulan_filter.php";?>"><input type="submit" class="btn" name="submit2" value="Kembali ke Menu Utama"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
