@@ -27,28 +27,27 @@ include "../../config/config.php";
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Rincian Barang</li>
+		  <li><a href="#">Gudang</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Distribusi Barang</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Rincian Barang</div>
+			<div class="title">Cari Aset</div>
 			<div class="subtitle">Filter Data Aset</div>
 		</div>
 		
 		
 		<section class="formLegend">
 			
-			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/perolehan/"; ?>search_aset_daftar.php?id=<?=$idkontrak?>" method="post">
+			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/gudang/"; ?>search_aset_daftar.php?id=<?=$_GET['id']?>" method="post">
 			<ul>
 							<li>
 								<span>Tahun Perolehan</span><br/>
 								<input name="Tahun" id="Tahun" class="span2"  type="text" required>
 							</li>
 							<li>
-								<span>Kode Registrasi</span><br/>
-								<input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px"> . 
-								<input type="number" name="noRegister" class="span1" min="1" required>
+								<span>Kode Lokasi</span><br/>
+								<input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px">
 							</li>
 							<li>
 								<span>Jenis Aset</span><br/>

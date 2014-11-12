@@ -11,7 +11,7 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	$data = $PEMANFAATAN->retrieve_rkb_filter($_POST,1);
+	$data = $PEMANFAATAN->retrieve_rkb_filter($_POST);
 
 
 			?>

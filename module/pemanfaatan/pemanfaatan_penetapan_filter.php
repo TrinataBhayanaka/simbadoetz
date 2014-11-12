@@ -1,13 +1,15 @@
 <?php
 include "../../config/config.php";
 
-?>
 
-<?php
+
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
-	
+
+
+
+
 ?>
                 <!--buat date-->
                 <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>

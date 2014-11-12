@@ -1,10 +1,14 @@
 <?php
 include "../../config/config.php";
 
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 $menu_id = 33;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+
 
 /*
 $nmaset=$_POST['peman_usul_nama_aset'];
@@ -53,6 +57,10 @@ $exec_hapus=  mysql_query($query_hapus_apl) or die(mysql_error());
 echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
  * 
  */
+
+
+$datausulan = $PEMANFAATAN->pemanfaatan_usulan_list($_GET);
+// pr($datausulan);
 ?>
 
 <html>
@@ -132,11 +140,11 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														// pr($query);
 														
 														// pr($query);
-														$exec=  mysql_query($query) or die(mysql_error());
+														// $exec=  mysql_query($query) or die(mysql_error());
                                                         $no=1;
                                                        // $row=mysql_fetch_array($exec);
                                                         
-                                                        while($row=mysql_fetch_array($exec)){ 
+                                                        foreach($datausulan as $row){ 
 														// pr($row);
 														if ($row[AsetOpr] == 0)
 														$select="selected='selected'";
@@ -155,14 +163,14 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<td></td>
 														<td>$no.</td>
 														<input type='hidden' name='peman_usul_nama_aset[]' value='$row[Aset_ID]'>
-														<td>$row[NomorReg] - $row[Kode]</td>
+														<td>$row[noRegister] - $row[kodeSatker]</td>
 														<td align='right'><input type='button' id ='$row[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
 														</tr>
 
 														<tr>
 														<td>&nbsp;</td>
 														<td>&nbsp;</td>
-														<td>$row[NamaAset]</td>
+														<td>$row[Uraian]</td>
 														</tr>
 														<tfoot style='display:none;'>
 														<tr>
@@ -174,13 +182,11 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<table border=0 width=100%>
 														<tr>
 														<td>
-														<input type='text' value='$row[Pemilik]' size='1px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$row[KodeSatker]' size='10px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$row[Kode]' size='20px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$row[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
-														<input type='hidden' name='fromsatker' value='$row[OrigSatker_ID]' size='5px' style='text-align:center' readonly = 'readonly'>
+														<input type='text' value='$row[kodeSatker]' size='10px' style='text-align:center' readonly = 'readonly'> - 
+														<input type='text' value='$row[kodeLokasi]' size='20px' style='text-align:center' readonly = 'readonly'> - 
+														<input type='text' value='$row[kodeRuangan]' size='5px' style='text-align:center' readonly = 'readonly'>
 														</td>
-														<td align='right'><input type='button' id ='sub$row->Aset_ID' value='Sub Detail' onclick='spoilsub(this);'></td>
+														<td align='right'><input type='button' id ='sub$row[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
 														</tr>
 														</table>
 
@@ -189,7 +195,7 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<tr>
 														<td valign='top' align='left' width=10%>Nama Aset</td>
 														<td valign='top' align='left' style='font-weight:bold'>
-														$row[NamaAset]
+														$row[Uraian]
 														</td>
 														</tr>
 
@@ -201,9 +207,9 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														</tr>
 
 														<tr>
-														<td valign='top' align='left'>Jenis Barang</td>
+														<td valign='top' align='left'>Info Barang</td>
 														<td valign='top' align='left' style='font-weight:bold'>
-														$row[Uraian]
+														$row[Info]
 														</td>
 														</tr>
 
@@ -220,7 +226,7 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<table>
 														<tr>
 														<td valign='top' style='width:150px;'>Nomor Kontrak</td>
-														<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$row[NoKontrak]'></td>
+														<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$row[noKontrak]'></td>
 														</tr>
 
 														<tr>

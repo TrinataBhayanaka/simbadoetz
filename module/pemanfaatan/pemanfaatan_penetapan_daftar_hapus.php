@@ -1,5 +1,14 @@
 <?php
 include "../../config/config.php"; 
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
+
+$data = $PEMANFAATAN->pemanfaatan_penetapan_hapus_proses($_GET);
+if ($data){
+	echo "<script>alert('Data Sudah Terhapus'); document.location='$url_rewrite/module/pemanfaatan/pemanfaatan_penetapan_daftar.php';</script>";
+}
+exit;
 $id=$_GET['id'];
 
 $query="UPDATE Pemanfaatan SET FixPemanfaatan=0 WHERE Pemanfaatan_ID='$id'";

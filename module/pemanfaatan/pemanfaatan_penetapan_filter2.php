@@ -1,13 +1,14 @@
 <?php
 include "../../config/config.php";
 
-?>
 
-<?php
+
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
-	
+
+
+
 ?>
 
                 <!--buat number only-->
@@ -67,14 +68,7 @@ include "../../config/config.php";
 			
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_penetapan_tambah_data.php?pid=1">
 			<ul>
-							<li>
-								<span class="span2">Aset ID</span>
-								<input type="text" name="peman_penet_filt_add_idaset" placeholder="" style="width:200px;">
-							</li>
-							<li>
-								<span class="span2">Nama Aset</span>
-								<input type="text" name="peman_penet_filt_add_nmaset" placeholder="" style="width:480px;">
-							</li>
+							
 							<li>
 								<span class="span2">Nomor Kontrak</span>
 								<input type="text" name="peman_penet_filt_add_nokontrak" placeholder="" style="width:200px;" id="">&nbsp;<span id="errmsg"></span>
@@ -83,24 +77,8 @@ include "../../config/config.php";
 								<span class="span2">Tahun Perolehan</span>
 								<input type="text" name="peman_penet_filt_add_thn" placeholder="" style="" id="">&nbsp;<span id="errmsg"></span>
 							</li>
-							<li>
-								<span class="span2">Kelompok</span>
-								<div class="input-append">
-										<input type="text" name="pem_kelompok" id="pem_kelompok" class="span5" readonly="readonly" value="">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-											
-											<?php
-												//include "$path/function/dropdown/function_kelompok.php";
-												$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-												$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-												js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"pem_kelompok","kelompok_id5",'kelompok','pemkelompokfilter');
-												$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiokelompok($style,"kelompok_id5",'kelompok','pemkelompokfilter');
-											?>
-										</div>
-								</div>
-							</li>
+							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+							<!--
 							<li>
 								<span class="span2">Pilih Lokasi</span>
 								<div class="input-append">
@@ -136,7 +114,7 @@ include "../../config/config.php";
                                                             ?>
                                             </div>
 								</div>
-							</li>
+							</li>-->
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

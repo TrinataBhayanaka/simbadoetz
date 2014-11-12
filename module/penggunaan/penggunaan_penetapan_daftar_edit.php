@@ -18,6 +18,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	
 
 	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan_edit_data($_GET);
+	// pr($data);
 ?>
   <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
                     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
@@ -286,20 +287,20 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 			<ul>
 							<li>
 								<span class="span2">Nomor Penetapan</span>
-								<input type="text" name="penggu_penet_eks_nopenet" required="required" id="" value="<?php echo $row['NoSKKDH'];?>" style="width:180px;">&nbsp;<span id="errmsg"></span>
+								<input type="text" name="penggu_penet_eks_nopenet" required="required" id="" value="<?php echo $data[0]['NoSKKDH'];?>" style="width:180px;">&nbsp;<span id="errmsg"></span>
 							</li>
 							<li>
 								<span class="span2">Tanggal Penetapan</span>
-								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" value="<?php $change=$row['TglSKKDH']; $hasil=format_tanggal_db3($change); echo "$hasil";?>" style="width:180px;">
+								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" value="<?php $change=$data[0]['TglSKKDH']; $hasil=format_tanggal_db3($change); echo "$hasil";?>" style="width:180px;">
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>
-								<textarea name="penggu_penet_eks_ket" cols="50" rows="2" required="required"><?php echo $row->Keterangan;?></textarea>
+								<textarea name="penggu_penet_eks_ket" cols="50" rows="2" required="required"><?php echo $data[0]['Keterangan'];?></textarea>
 							</li>
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="penggunaan_edit_eks" value="Penetapan Penggunaan"/>&nbsp;<input type="button" value="Batal" onclick="window.location='penggunaan_penetapan_daftar.php?pid=1'"></td>
-                                        <input type="hidden" name="id_hidden" value="<?php echo $row['Penggunaan_ID'];?>"/>
+                                        <input type="hidden" name="id_hidden" value="<?php echo $data[0]['Penggunaan_ID'];?>"/>
 							</li>
 						</ul>
 						<table border="0" cellspacing="6" style="display: none">

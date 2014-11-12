@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
  $menu_id = 34;
         $SessionUser = $SESSION->get_session_user();
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -14,7 +17,7 @@ include "../../config/config.php";
 		$data['sql'] = " Status_Validasi_Barang=1";
 		$data['sql_where'] = TRUE;
 		$data['modul'] = "";
-		$getFilter = $HELPER_FILTER->filter_module($data);
+		// $getFilter = $HELPER_FILTER->filter_module($data);
 		
 		/*$query_nama_aset="SELECT a.Aset_ID FROM Aset AS a LEFT JOIN UsulanAset AS b ON b.Aset_ID=a.Aset_ID
                                                     WHERE a.NamaAset LIKE '%$nm_aset%'";
@@ -40,6 +43,9 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+
+	$data = $PEMANFAATAN->pemanfaatan_daftar_penetapan_tambah($_POST);
+
 			?>
 		<script language="Javascript" type="text/javascript">  
 			$(document).ready(function() {
@@ -113,96 +119,8 @@ include "../../config/config.php";
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 			
-                            <?php
-                                $param=  urlencode($_SESSION['parameter_sql_report']);
-                                //echo "$param";
-                                $offset = @$_POST['record'];
-
-											$param = $_SESSION['parameter_sql'];
-											
-											// pr($param);
-											if (isset($_POST['search'])){
-												
-												$query="$param ORDER BY Aset_ID ASC ";
-											}else{
-												$paging = paging($_GET['pid']);
-											
-												$query="$param ORDER BY Aset_ID ASC ";
-											}
-											//pr($query);
-											
-											
-											$res = mysql_query($query) or die(mysql_error());
-											if ($res){
-												$rows = mysql_num_rows($res);
-												
-												while ($data = mysql_fetch_array($res))
-												{
-													
-													$dataArray[] = $data['Aset_ID'];
-												}
-											}
-											//pr($dataArray);
-											
-											if($dataArray){
-											$dataImplode = implode(',',$dataArray);
-											$querypenggunaan ="SELECT Aset_ID FROM UsulanAset WHERE Aset_ID IN ({$dataImplode}) AND StatusPenetapan=0 AND Jenis_Usulan='MNF'"; 	
-											// pr($querypenggunaan);
-											$res1 = mysql_query($querypenggunaan) or die(mysql_error());
-											
-											if ($res1){
-												$rows1 = mysql_num_rows($res1);
-												$jml=($rows1);
-												while ($data1 = mysql_fetch_array($res1))
-												{
-													$dataArray1[] = $data1['Aset_ID'];
-												}
-											}
-											if($dataArray1){
-											$dataImplode_1 = implode(',',$dataArray1);
-											if($dataImplode_1!=""){
-											
-											$query = "SELECT a.LastSatker_ID, a.NamaAset, a.Aset_ID, a.NomorReg,c.NoKontrak, e.NamaSatker, f.NamaLokasi, g.Kode FROM Aset AS a 
-													 LEFT JOIN KontrakAset AS d ON a.Aset_ID=d.Aset_ID 
-													 LEFT JOIN Kontrak AS c ON d.Kontrak_ID=c.Kontrak_ID 
-													 INNER JOIN Satker AS e ON a.LastSatker_ID=e.Satker_ID 
-													 INNER JOIN Lokasi AS f ON a.Lokasi_ID=f.Lokasi_ID 
-													 INNER JOIN Kelompok AS g ON a.Kelompok_ID=g.Kelompok_ID
-													 WHERE a.Aset_ID IN ({$dataImplode_1}) ORDER BY a.Aset_ID asc";
-											
-											$exec=mysql_query($query) or die(mysql_error());
-													while ($dataAset = mysql_fetch_object($exec)){
-														$row[] = $dataAset;
-														
-												}
-													
-											$result = $DBVAR->query($query) or die($DBVAR->error());
-											$check = $DBVAR->num_rows($result);
-											$jml = $check;
-											$dataAsetUser = $HELPER_FILTER->getAsetUser(array('Aset_ID'=>$dataImplode_1));
-			
-											}
-										}
-										}
-										$query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'PenetapanPemanfaatan[]'";
-										$result_apl = $DBVAR->query($query_apl) or die ($DBVAR->error());
-										$data_apl = $DBVAR->fetch_object($result_apl);
-										
-										$array = explode(',',$data_apl->aset_list);
-											
-										foreach ($array as $id)
-										{
-											if ($id !='')
-											{
-											$dataAsetList[] = $id;
-											}
-										}
-										
-										if ($dataAsetList !='')
-										{
-											$explode = array_unique($dataAsetList);
-										}
-                            ?>
+                            
+                           
 		<section class="formLegend">
 			
 			<div class="detailLeft">
@@ -245,96 +163,31 @@ include "../../config/config.php";
 					<tr>
 						<th>No</th>
 						<th>&nbsp;</th>
-						<th>Informasi Aset</th>
+						<th>No Kontrak</th>
+						<th>Satker</th>
+						<th>Aset</th>
 					</tr>
 				</thead>
-				<tbody>		
-			 <?php
-						
-						if($row!="")
-						{
-						$page = @$_GET['pid'];
-						if ($page > 1){
-							$no = intval($page - 1 .'01');
-						}else{
-							$no = 1;
-						}
-						foreach ($row as $value){
-				?>
-						  
-					<tr class="gradeA">
-						<td><?php echo "$no";?></td>
-						<td>
-							 <?php
-								if (($_SESSION['ses_uaksesadmin'] == 1)){
-									?>
-									<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PenetapanPemanfaatan[]" value="<?php echo $value->Aset_ID;?>" 
-									<?php 
-										for ($i = 0; $i <= count($explode); $i++){
-											if ($explode[$i]==$value->Aset_ID) 
-												echo 'checked';
-										}?>>
-									<?php
-								}else{
-									if ($dataAsetUser){
-									if (in_array($value->Aset_ID, $dataAsetUser)){
-									?>
-									<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PenetapanPemanfaatan[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
-									<?php
-									}
-								}
-							}
+				<tbody>
+					<?php
+					// pr($data);
+					$no = 1;
+					foreach ($data as $value){
 						?>
-						</td>
-						<td>	
-						<table width="100%">
-								<tr>
-									<td style="font-weight: bold;"><?php echo "$value->Aset_ID";?> ( Aset ID - System Number )</td>
-								</tr>
-								<tr>
-									<td style="font-weight: bold;"><?php echo "$value->NomorReg";?></td>
-								</tr>
-								<tr>
-									<td style="font-weight: bold;"><?php echo "$value->Kode";?></td>
-								</tr>
-								<tr>
-									<td style="font-weight: bold;"><?php echo "$value->NamaAset";?></td>
-								</tr>
-							</table>	
-							<br>
-							<hr />
-							<table border=0 width="100%"> 
-								<tr>
-								   <td width="20%">No. Kontrak</td>
-									<td width="2%"></td>
-									<td width="78%"><?php echo "$value->NoKontrak";?></td>
-								</tr>
-								<tr >
-									<td>Satker</td>
-									<td></td>
-									<td><?php echo "$value->NamaSatker";?></td>
-								</tr>
-								<tr >
-									<td>Lokasi</td>
-									<td></td>
-									<td><?php echo "$value->NamaLokasi";?></td>
-								</tr>
-								<tr >
-									<td>Status</td>
-									<td></td>
-									<td>-</td>
-								</tr>
-							</table>
-						</td>
+					<tr>
+						<td><?=$no?></td>
+						<td><input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="PenetapanPemanfaatan[]" value="<?php echo $value['Usulan_ID'];?>"> </td>
+						<td><?=$value['noKontrak']?></td>
+						<td><?=$value['NamaSatker']?></td>
+						<td><?=$value['Uraian']?></td>
 					</tr>
-					  <?php
-						$no++; } }
-						else
-							{
-								$disabled = 'disabled';
-							}
-						?>
+					
+						<?php
+						$no++;
+					}
+					?>
 				</tbody>
+				
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
