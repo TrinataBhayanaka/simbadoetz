@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 		 $tgl_awal=$_POST['peman_pengem_filt_tglawal'];
         $tgl_akhir=$_POST['peman_pengem_filt_tglakhir'];
         $tgl_awal_fix=format_tanggal_db2($tgl_awal);
@@ -69,6 +72,9 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+
+	$data = $PEMANFAATAN->pemanfaatan_pengembalian_daftar($_GET);
+	pr($data);
 			?>
 
 

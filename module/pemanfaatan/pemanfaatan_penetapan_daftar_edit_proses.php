@@ -5,6 +5,9 @@ include "../../config/config.php";
  * and open the template in the editor.
  */
  // pr($_POST);
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 $id=$_POST['id'];
 $no=$_POST['peman_penet_eks_nopenet'];
 $tgl=$_POST['peman_penet_eks_tglpenet'];
@@ -35,6 +38,11 @@ echo "$jangka_waktu";
  */
 
 
+$data = $PEMANFAATAN->pemanfaatan_penetapan_edit_proses($_POST);
+if ($data){
+	echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/pemanfaatan/pemanfaatan_penetapan_daftar.php?pid=1';</script>";
+}
+exit;
 if(isset($submit)){
     $query="UPDATE Pemanfaatan SET NoSKKDH='$no', TglSKKDH='$olah_tgl', TipePemanfaatan='$tipe', Keterangan='$ket',
                 NamaPartner='$nama_partner', AlamatPartner='$alamat_partner', TglMulai='$olah_tgl_mulai', TglSelesai='$olah_tgl_selesai', JangkaWaktu='$jangka_waktu' WHERE Pemanfaatan_ID='$id'";

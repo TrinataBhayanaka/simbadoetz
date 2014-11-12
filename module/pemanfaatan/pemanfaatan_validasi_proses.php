@@ -2,6 +2,15 @@
 
 include "../../config/config.php"; 
 
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
+$data = $PEMANFAATAN->pemanfaatan_validasi_daftar_proses($_POST);
+if ($data){
+    echo "<script>alert('Data Telah Divalidasi'); document.location='pemanfaatan_validasi_daftar_valid.php?pid=1';</script>";
+
+}
+exit;
 //$id=$_POST['peman_validasi'];
 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPemanfaatan[]' AND UserSes = '$_SESSION[ses_uid]'";
 //print_r($query);

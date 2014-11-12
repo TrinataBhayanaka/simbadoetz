@@ -75,7 +75,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 	include"$path/menu.php";
 	
 	$data = $PEMANFAATAN->pemanfaatan_daftar_penetapan($_POST);
-	pr($data);
+	// pr($data);
 			?>
 
 
@@ -153,8 +153,9 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Nomor SKKDH</th>
-						<th>Tgl SKKDH</th>
+						<th>Tipe Pemanfaatan</th>
+						<th>No SKKDH</th>
+						<th>Nama Partner</th>
 						<th>Tindakan</th>
 					</tr>
 				</thead>
@@ -170,10 +171,9 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 						  
 					<tr class="gradeA">
 						<td><?php echo "$i";?></td>
-						<td>
-							<?php echo "$row[NoSKKDH]";?>
-						</td>
-						<td><?php $change=$row[TglSKKDH]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
+						<td><?php echo "$row[TipePemanfaatan]";?></td>
+						<td><?php echo "$row[NoSKKDH]";?></td>
+						<td><?php echo "$row[NamaPartner]";?></td>
 						<td>	
 						 <!--<a href="<?php echo "$url_rewrite/report/template/PEMANFAATAN/";?>tes_class_penetapan_aset_yang_dimanfaatkan.php?id=<?php echo "$row[Pemanfaatan_ID]";?>" target="_blank">Cetak</a>-->
 						<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_penetapan_daftar_edit.php?id=<?php echo "$row[Pemanfaatan_ID]";?>">Edit</a>
