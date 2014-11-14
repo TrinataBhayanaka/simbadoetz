@@ -210,7 +210,8 @@ include "../../config/config.php";
 								</div>	
 							</li>
 
-							<?php selectSatker(); ?>
+							<?php selectSatker('kodeSatker','255',true,false); ?>
+							<?php selectAset('kodeKelompok','255',true,false)?>
 							<li>
 								<input type='submit' value='Lanjut'  name="submit" class="btn btn-primary">
 							</li>
@@ -223,3 +224,12 @@ include "../../config/config.php";
 <?php
 	include"$path/footer.php";
 ?>
+<script>
+	$(document).on('submit', function(){
+		var kode = $("#satker1").val();
+		if(kode==""){
+			alert("pilih satker dulu");
+			return false;
+		}
+	});
+</script>

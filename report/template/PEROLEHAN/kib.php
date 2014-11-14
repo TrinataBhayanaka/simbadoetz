@@ -3,6 +3,7 @@
 include "../../../config/config.php";
 include "../../report_engine.php";
 // echo "masukk";
+// exit;
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
@@ -30,6 +31,7 @@ $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tahun=$tahun&
 // echo $paramater_url;
 if(isset($kib))
 {
+	
     $REPORT=new report_engine();
     switch ($kib)
     {

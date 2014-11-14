@@ -34,9 +34,9 @@ $count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {
 		 
-		 //echo $html[$i];     
+		 // echo $html[$i];     
 	}
-
+// exit;
 $REPORT->show_status_download();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);

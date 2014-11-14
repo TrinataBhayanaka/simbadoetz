@@ -17,7 +17,7 @@ $kib = $_GET['kib'];
 $tahun = $_GET['tahun'];
 $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
-pr($_GET);
+// pr($_GET);
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
@@ -46,13 +46,13 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
 $html=$REPORT->retrieve_html_kib_d($result_query, $gambar);
-$count = count($html);
+/*$count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 // echo $html[$i];     
 	}
-// exit;
+// exit;*/
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

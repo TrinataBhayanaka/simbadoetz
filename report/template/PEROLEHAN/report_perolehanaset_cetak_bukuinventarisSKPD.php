@@ -18,8 +18,7 @@ $penanda='1';
 $skpd_id = $_GET['skpd_id3'];
 $tipe	=$_GET['tipe_file'];
 $bukuInv  = $_GET['bukuinv'];
-pr($_GET);
-
+// pr($_GET);
 $data=array(
     "modul"=>$modul,
     "kelompok"=>$kelompok,
@@ -30,7 +29,27 @@ $data=array(
     "tab"=>$tab,
 	"bukuInv"=>$bukuInv
 );
-
+function arrayToObject($result_query) {
+	if (!is_array($result_query)) {
+		return $result_query;
+	}
+	
+	$object = new stdClass();
+	if (is_array($result_query) && count($result_query) > 0) {
+		foreach ($result_query as $name=>$value) {
+			// $name = strtolower(trim($name));
+			// if (!empty($name)) {
+				$object->$name = arrayToObject($value);
+			// }
+		}
+		return $object;
+	}
+	else {
+		return FALSE;
+	}
+}
+// pr($data);
+// exit;
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -39,23 +58,23 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-pr($query);
-exit;
+// pr($query);
 //mengenerate query
-$result_query=$REPORT->retrieve_query($query);
-// pr($result_query);
+$result_query=$REPORT->QueryBinv($query);
+
+$result = arrayToObject($result_query);
+
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-
 //retrieve html
-$html=$REPORT->retrieve_html_bukuiinventariskpd($result_query, $gambar);
-$count = count($html);
+$html=$REPORT->retrieve_html_bukuiinventariskpd($result, $gambar);
+/*$count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
-	}
+		 echo $html[$i];     
+	}*/
 // exit;
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	

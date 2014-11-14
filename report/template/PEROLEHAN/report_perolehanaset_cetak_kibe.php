@@ -17,7 +17,7 @@ $kib = $_GET['kib'];
 $tahun = $_GET['tahun'];
 $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
-pr($_GET);
+// pr($_GET);
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
@@ -27,6 +27,26 @@ $data=array(
     "kelompok"=>$kelompok,
     "tab"=>$tab
 );
+
+function arrayToObject($result_query) {
+	if (!is_array($result_query)) {
+		return $result_query;
+	}
+	
+	$object = new stdClass();
+	if (is_array($result_query) && count($result_query) > 0) {
+		foreach ($result_query as $name=>$value) {
+			// $name = strtolower(trim($name));
+			// if (!empty($name)) {
+				$object->$name = arrayToObject($value);
+			// }
+		}
+		return $object;
+	}
+	else {
+		return FALSE;
+	}
+}
 
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
@@ -38,21 +58,23 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 // pr($query);
 //mengenerate query
-$result_query=$REPORT->retrieve_query($query);
-// pr($result_query);
-
+// $result_query=$REPORT->retrieve_query($query);
+$table_name = "asetlain";
+$result_query=$REPORT->QueryKib($query,$table_name);
+$result = arrayToObject($result_query);
+// pr($result);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_kib_e($result_query, $gambar);
-$count = count($html);
+$html=$REPORT->retrieve_html_kib_e($result, $gambar);
+/*$count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 
-		// echo $html[$i];     
+		echo $html[$i];     
 	}
-// exit;
+exit;*/
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	
