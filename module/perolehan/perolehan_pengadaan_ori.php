@@ -1,34 +1,42 @@
 <?php
 include "../../config/config.php";
+/*
+$USERAUTH = new UserAuth();
+$SESSION = new Session();
+$UserSes = $SESSION->get_session_user();
 
 
-// $USERAUTH = new UserAuth();
-// $SESSION = new Session();
-// $UserSes = $SESSION->get_session_user();
+$menu_id = 10;
+$SessionUser = $SESSION->get_session_user();
+$USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+
+$dataArr = $RETRIEVE->retrieve_pengadaan_RTB($_GET[id]);
+*/
 /*echo"<pre>";
 print_r($KODE_PROVINSI);
 print_r($KODE_KABUPATEN);
 echo"</pre>";
 */
-// $menu_id = 10;
-// $SessionUser = $SESSION->get_session_user();
-// $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-
-// $dataArr = $RETRIEVE->retrieve_pengadaan_RTB($_GET[id]);
 //echo '<pre>';
 //print_r($dataArr);
 //echo '</pre>';
 //exit;
 ?>
-
+<html>
 <?php
-     include"$path/meta.php";
-     include"$path/header.php";
-     include"$path/menu.php";
-     
+include"$path/header.php";
 ?>
-
-                      <script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite" ?>/JS/select.js"></script>
+     <body>
+     <?php
+     include"$path/title.php";
+     include"$path/menu.php";
+     ?>			
+          <div id="tengah1">
+               <div id="frame_tengah1">
+                    <div id="frame_gudang">                   <div id="topright">
+                              Pengadaan
+                         </div>
+                         <script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite" ?>/JS/select.js"></script>
                          <script type="text/javascript" src="<?php echo "$url_rewrite" ?>/JS/addtr3.js"></script>
                          <script type="text/javascript" src="<?php echo "$url_rewrite" ?>/JS/multiple.js"></script>
                          <script type="text/javascript" src="<?php echo "$url_rewrite" ?>/JS/multiple2.js"></script>
@@ -78,7 +86,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -94,7 +102,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -110,7 +118,7 @@ echo"</pre>";
                                              //display er //tanggalror message
                                              $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -126,7 +134,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -142,7 +150,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -158,7 +166,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -177,7 +185,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -193,7 +201,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -209,7 +217,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -225,7 +233,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -241,7 +249,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -257,7 +265,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -273,7 +281,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -289,7 +297,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -305,7 +313,7 @@ echo"</pre>";
                                              //display error message
                                              $("#errmsg2").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
                                              return false;
-                                        }    
+                                        }	
                                    });
                               });
                          </script>
@@ -433,7 +441,7 @@ echo"</pre>";
 
                                         } else {
 
-                                             $("#hide1").slideUp("fast");  //Slide Up Effect
+                                             $("#hide1").slideUp("fast");	//Slide Up Effect
 
                                         }
                                    });
@@ -450,26 +458,16 @@ echo"</pre>";
                          </script>
                          <script src="require.js"></script>
 
-     <section id="main">
-          <ul class="breadcrumb">
-            <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-            <li><a href="#">Perolehan</a><span class="divider"><b>&raquo;</b></span></li>
-            <li class="active">Pengadaan</li>
-            <?php SignInOut();?>
-          </ul>
-          <div class="breadcrumb">
-               <div class="title">Pengadaan</div>
-               <div class="subtitle">Informasi Umum</div>
-          </div>
-          <section class="formLegend">
-               <form action="<?php echo "$url_rewrite" ?>/module/perolehan/pengadaan_proses.php" method="post" enctype="multipart/form-data">
+                         </head>                     
+                         <div id="bottomright">
+                              <form action="<?php echo "$url_rewrite" ?>/module/perolehan/pengadaan_proses.php" method="post" enctype="multipart/form-data">
 
                                    <div class="blok_judul">Informasi Umum</div>
 
                                    <table border=0 cellspacing="6">
                                         <tr>
                                              <td colspan=11 style="font-weight:bold;">Nomor Register (Untuk Kode Lokasi)</td>
-                                        </tr>          
+                                        </tr>		
                                         <tr>
                                              <td>
                                                   <input type="text" name="p_noreg_pemilik"   value ="12" size="1" maxlength="2" readonly="readonly" id="posisiKolom" />
@@ -497,7 +495,7 @@ echo"</pre>";
                                              </td>
                                         </tr>
                                    </table>
-                                   <table border=0 cellspacing="6">   
+                                   <table border=0 cellspacing="6">	
                                         <tr>
                                              <td width="10">
                                                   <input type="text" name="p_noreg_info_kel" value="<?= $dataArr->Kode ?>" readonly="readonly" size="20" >
@@ -513,7 +511,7 @@ echo"</pre>";
                                         <tr>
                                              <td colspan=5><i>
                                                        (No register terakhir dalam sistem :000-kosongkan untuk memberi nilai otomatis)</i>
-                                             </td>                                                                 
+                                             </td>													
                                         </tr>
                                    </table>
                                    <table border=0 cellspacing="6">
@@ -522,7 +520,7 @@ echo"</pre>";
                                              <td>.</td>
                                              <td>SKPD</td>
                                              <td>.</td>
-                                             <td>Kode Aset</td>                                
+                                             <td>Kode Aset</td>							
                                         </tr>
                                         <tr>
                                              <td>
@@ -544,7 +542,7 @@ echo"</pre>";
      ?>" readonly="readonly"></td>
                                              <td>.</td>
                                              <td><input type="text" id="p_kodeaset" name="p_kodeaset" value="<?= $dataArr->Kode ?>"  readonly="readonly"></td>
-                                        </tr>          
+                                        </tr>		
                                    </table>
                                    <table cellspacing="6">
                                         <tr>
@@ -878,7 +876,7 @@ include "perolehan_aset.php";
                                              }
                                         }
                                    </script>
-                                   <table cellspacing="6">  
+                                   <table cellspacing="6"> 	
 
 
                                         <script>
@@ -934,17 +932,17 @@ while ($row_dokumen = mysql_fetch_object($result_dokumen)) {
                                    <hr>
                                    <table cellspacing="6">
                                         <tr>
-                                             <td colspan=2 style="font-weight:bold;">Pemeriksaan</td>                                                                          
+                                             <td colspan=2 style="font-weight:bold;">Pemeriksaan</td>															
                                         </tr>
-                                        <tr> 
-                                             <td>No BA pemeriksaan</td>                                                                                         
-                                             <td><input class="dokumen_penerimaanclass"  type="text" id="p_periksa_no_ba" name="p_periksa_no_ba" value=""size ="40" required=" required" readonly></td>                     
+                                        <tr>	
+                                             <td>No BA pemeriksaan</td>																		
+                                             <td><input class="dokumen_penerimaanclass"  type="text" id="p_periksa_no_ba" name="p_periksa_no_ba" value=""size ="40" required=" required" readonly></td>					
                                         </tr>
-                                        <tr>  
-                                             <td>Tanggal Pemeriksaan</td>                                                                                       
-                                             <td> <input class="dokumen_penerimaanclass" id="tanggal14" type="text"  name="p_periksa_tglpemeriksaan" value="" size ="40" required=" required" readonly></td>                     
+                                        <tr>	 
+                                             <td>Tanggal Pemeriksaan</td>																		
+                                             <td> <input class="dokumen_penerimaanclass" id="tanggal14" type="text"  name="p_periksa_tglpemeriksaan" value="" size ="40" required=" required" readonly></td>					
                                         </tr>
-                                        <tr> 
+                                        <tr>	
                                              <td>Status Pemeriksaan</td>
                                              <td>
                                                   <select name="p_ststus_pemeriksaan">
@@ -952,41 +950,41 @@ while ($row_dokumen = mysql_fetch_object($result_dokumen)) {
                                                        <option value="1" name="">Baik</option>
                                                        <option value="2" name="">Kurang baik</option>
                                                   </select>
-                                             </td>                                   
+                                             </td>							
                                         </tr>
-                                        <tr> 
-                                             <td>Ketua Pemeriksa</td>                                                                                      
+                                        <tr>	
+                                             <td>Ketua Pemeriksa</td>																		
                                              <td><input class="dokumen_penerimaanclass" type="text" id="p_periksa_ketua_pemeriksa" name="p_periksa_ketua_pemeriksa" value="" size ="40" required=" required" readonly ></td>
                                         </tr>
-                                        <tr> 
-                                             <td colspan=2 style="font-weight:bold;">Penerimaan</td>                                             
+                                        <tr>	
+                                             <td colspan=2 style="font-weight:bold;">Penerimaan</td>									
                                         </tr>
-                                        <tr> 
-                                             <td>No BA Penerimaan</td>                                                                                          
-                                             <td><input class="dokumen_penerimaanclass" type="text" id="p_periksa_no_ba_penerimaan" name="p_periksa_no_ba_penerimaan" value="" size ="40" required=" required" readonly></td>                                            
+                                        <tr>	
+                                             <td>No BA Penerimaan</td>																		
+                                             <td><input class="dokumen_penerimaanclass" type="text" id="p_periksa_no_ba_penerimaan" name="p_periksa_no_ba_penerimaan" value="" size ="40" required=" required" readonly></td>									
                                         </tr>
-                                        <tr> 
-                                             <td>Tanggal Penerimaan</td>                                                                                        
-                                             <td><input class="dokumen_penerimaanclass"  id="tanggal15" type="text"  name="p_periksa_tglpenerimaan" value="" size ="40" required=" required" readonly></td>                                
+                                        <tr>	
+                                             <td>Tanggal Penerimaan</td>																		
+                                             <td><input class="dokumen_penerimaanclass"  id="tanggal15" type="text"  name="p_periksa_tglpenerimaan" value="" size ="40" required=" required" readonly></td>							
                                         </tr>
-                                        <tr> 
-                                             <td colspan=2 style="font-weight:bold;">Penyedia</td>                                                                                       
-                                             <td></td>                                         
+                                        <tr>	
+                                             <td colspan=2 style="font-weight:bold;">Penyedia</td>																		
+                                             <td></td>									
                                         </tr>
-                                        <tr> 
-                                             <td>Nama Penyedia</td>                                                                                        
-                                             <td><input class="dokumen_penerimaanclass"  type="text" id="p_periksa_namapenyedia" name="p_periksa_namapenyedia" value="" size ="40" required=" required" readonly></td>                          
+                                        <tr>	
+                                             <td>Nama Penyedia</td>																		
+                                             <td><input class="dokumen_penerimaanclass"  type="text" id="p_periksa_namapenyedia" name="p_periksa_namapenyedia" value="" size ="40" required=" required" readonly></td>						
                                         </tr>
-                                        <tr> 
-                                             <td colspan=3 style="font-weight:bold;">Pengurus Barang</td>                                             
+                                        <tr>	
+                                             <td colspan=3 style="font-weight:bold;">Pengurus Barang</td>									
                                         </tr>
-                                        <tr> 
-                                             <td>Nama Pengurus</td>                                                                                        
-                                             <td><input  class="dokumen_penerimaanclass" type="text" id="p_periksa_namapengurus" name="p_periksa_namapengurus"value="" size ="40" required=" required" readonly ></td>                          
+                                        <tr>	
+                                             <td>Nama Pengurus</td>																		
+                                             <td><input  class="dokumen_penerimaanclass" type="text" id="p_periksa_namapengurus" name="p_periksa_namapengurus"value="" size ="40" required=" required" readonly ></td>						
                                         </tr>
-                                        <tr> 
-                                             <td>NIP Pengurus</td>                                                                                         
-                                             <td><input class="dokumen_penerimaanclass"  type="text" id="p_periksa_nippengurus" name="p_periksa_nippengurus" value="" size ="40" required=" required" readonly></td>                  
+                                        <tr>	
+                                             <td>NIP Pengurus</td>																		
+                                             <td><input class="dokumen_penerimaanclass"  type="text" id="p_periksa_nippengurus" name="p_periksa_nippengurus" value="" size ="40" required=" required" readonly></td>				
                                         </tr>
                                    </table>
                                    <br /><hr><br />
@@ -997,17 +995,20 @@ while ($row_dokumen = mysql_fetch_object($result_dokumen)) {
 
 
                                              </td>
-                                        </tr>                    
+                                        </tr>				
                                    </table>  
 
                                    <input type="submit" value="Simpan" onclick="return check_satker();" name="simpan_aset" />
                                  <!--<input type="submit" value="Simpan" onclick="show_confirm()" name="simpan_aset" /> -->
 
                               </form>  
-               
-          </section>     
-     </section>
-     
+                         </div>
+                    </div>
+               </div>
+          </div>
+
 <?php
-     include"$path/footer.php";
+include"$path/footer.php";
 ?>
+     </body>
+</html>
