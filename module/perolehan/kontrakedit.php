@@ -158,6 +158,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
       
         <!-- Hidden -->
         <input type="hidden" name="id" value="<?=(isset($kontrak)) ? $kontrak[0]['id'] : '' ?>"/>
+        <input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>"/>
 
       </form>
       

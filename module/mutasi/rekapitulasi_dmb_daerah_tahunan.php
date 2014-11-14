@@ -1,12 +1,15 @@
 <?php
-    include "../../config/config.php";
+include "../../config/config.php";
+
 ?>
 
-<html>
-    <?php
-         include "$path/header.php";
-    ?>
-    
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+?>
+  
     <script>
         <!--
         function sendit(){
@@ -49,56 +52,35 @@
         </script>   
         <link href="<?php echo "$url_rewrite/"; ?>css/jquery-ui.css" type="text/css" rel="stylesheet">
       
-        <body>
-            <div id="content">
-                 <?php
-                    include "$path/title.php";
-                    include "$path/menu.php";
-                ?>
-                
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Rekapitulasi DMB Daerah Tahunan	
-                            </div>
-                            <div id="bottomright">
-                                
-                                <form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>proses_rekapitulasi_dmb_daerah_tahunan.php">
-                                <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <label>Tahun :</label>
-                                        </td>
-                                        <td><select name="mutasi_rekdmb_tahun">
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Mutasi</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active"> Rekapitulasi DMB Daerah Tahunan	</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title"> Rekapitulasi DMB Daerah Tahunan	</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>proses_rekapitulasi_dmb_daerah_tahunan.php">
+			<ul>
+							<li>
+								<span class="span2">Tahun :</span>
+								<select name="mutasi_rekdmb_tahun">
                                                 <option value="2012">2012</option>
                                                 <option value="2009">2009</option>
                                             </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                </table>
-
-                                <table>
-                                    <tr>
-                                        <td>
-                                            Satker<br>
-                                            <input type="text" name="kelompok" id="idkelompok" style="width:480px;" readonly="readonly" value="(semua Satker)">
-                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+							</li>
+							<li>
+								<span class="span2">Satker</span>
+								<div class="input-append">
+									<input type="text" name="kelompok" id="idkelompok" class="span5" readonly="readonly" value="(semua Satker)">
+                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
                                             <div class="inner" style="display:none;">
-                                                <style>
-                                                    .tabel th {
-                                                        background-color: #eeeeee;
-                                                        border: 1px solid #dddddd;
-                                                    }
-                                                    .tabel td {
-                                                        border: 1px solid #dddddd;			
-                                                    }
-                                                </style>
+                                            
                                                 <div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
                                                     <table width="100%" align="left" border="0" class="tabel">
                                                         <tr>
@@ -151,44 +133,51 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                </table>
-                                <hr>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <a href="<?echo $url_rewrite.'/module/mutasi/report/rp_rekapitulasidaftarmutasibarang.php';?>" target="main"><input type="button" name="submit" value="Lanjut" /></a>
-                                            <input type="reset" name="reset" value="Bersihkan Filter" />
-                                        </td>
-                                    </tr>
-                                </table>
-                                <hr>
-                                <table>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanggal Cetak Report</td>
-                                        <td>:</td>
-                                        <td>
-                                            <input type="text" placeholder="( dd/mm/yyyy )" style="text-align:center;" name="mutasi_rekdmb_tanggal" id="tanggal12"> 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-        </body>
-</html>	
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Cetak Report</span>
+								<input type="text" placeholder="( dd/mm/yyyy )" style="text-align:center;" name="mutasi_rekdmb_tanggal" id="tanggal12"> 
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								 <a href="<?echo $url_rewrite.'/module/mutasi/report/rp_rekapitulasidaftarmutasibarang.php';?>" target="main"><input type="button" name="submit" class="btn btn-primary" value="Lanjut" /></a>
+                                            <input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						<table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

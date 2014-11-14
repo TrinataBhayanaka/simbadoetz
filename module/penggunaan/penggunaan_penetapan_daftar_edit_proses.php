@@ -6,6 +6,7 @@ $menu_id = 30;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 
 $id=$_POST['id_hidden'];
 $tgl_aset=$_POST['penggu_penet_eks_tglpenet'];
@@ -14,9 +15,9 @@ $noaset=$_POST['penggu_penet_eks_nopenet'];
 $ket=$_POST['penggu_penet_eks_ket'];
 $submit=$_POST['penggunaan_edit_eks'];
 // pr($_POST);
-// exit;
-$data=$UPDATE->update_daftar_penetapan_penggunaan($id,$tgl_aset,$change_tgl,$noaset,$ket,$submit);
 
+$data=$PENGGUNAAN->update_daftar_penetapan_penggunaan($_POST);
+// exit;
 /*
 
 if(isset($submit)){

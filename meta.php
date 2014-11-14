@@ -10,7 +10,7 @@
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap-responsive_simbada.css" rel="stylesheet">
          <link href="<?php echo "$url_rewrite/"; ?>js/select2/select2.css" rel="stylesheet"/>
 		<style type="text/css" title="currentStyle">
-			@import "<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css";
+			@import '<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css';
 		</style>
 		<script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery_simbada.js"></script>
 		<script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.dataTables_simbada.js"></script>
@@ -20,12 +20,14 @@
 		 <script>
 			$(function() {
 			$( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			initTableCheckable ();
 			});
 		</script>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
 				$('#example').dataTable( {
 					"sPaginationType": "full_numbers"
+					
 				} );
 				$('#example2').dataTable( {
 					"sPaginationType": "full_numbers"
@@ -63,6 +65,7 @@
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/select2/select2.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/maskedinput/jquery.maskedinput.min.js"></script>
+	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tableCheckable/jquery.tableCheckable.js"></script>
 	   <script>
 	function change_pemilik() 
 	{
@@ -85,6 +88,19 @@
 	    var objsrc = document.getElementById("p_tahun").value;
 	    var content = document.getElementById("posisiKolom4")
 	    content.value = objsrc;
+	}
+
+	function initTableCheckable () {
+		if ($.fn.tableCheckable) {
+			$('.table-checkable')
+		        .tableCheckable ()
+			        .on ('masterChecked', function (event, master, slaves) { 
+			            if ($.fn.iCheck) { $(slaves).iCheck ('update'); }
+			        })
+			        .on ('slaveChecked', function (event, master, slave) {
+			            if ($.fn.iCheck) { $(master).iCheck ('update'); }
+			        });
+		}
 	}
     </script> 
 </head>

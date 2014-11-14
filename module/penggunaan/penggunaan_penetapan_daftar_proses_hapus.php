@@ -7,10 +7,12 @@ $menu_id = 30;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
-$id=$_GET['id'];
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 
-$data=$DELETE->delete_daftar_penetapan_penggunaan($id);
+$data=$PENGGUNAAN->delete_daftar_penetapan_penggunaan($_GET);
 
+
+// exit;
 /*
 $query="UPDATE Penggunaan SET FixPenggunaan=0 WHERE Penggunaan_ID='$id'";
 $exec=mysql_query($query) or die(mysql_error());

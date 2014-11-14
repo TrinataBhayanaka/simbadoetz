@@ -52,60 +52,10 @@ include "../../config/config.php";
 								<span class="span2">Tahun Perolehan</span>
 								<input type='text'  name="bup_tahun" placeholder=""/>
 							</li>
-							<li>
-								<span class="span2">Kelompok</span>
-								<div class="input-append">
-										<input type="text" name="lda_kelompok" id="lda_kelompok" class="span5" readonly="readonly" placeholder="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">	
-                                         <?php
-													//include "$path/function/dropdown/function_kelompok.php";
-													$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-													$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-													js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok","kelompok_id",'kelompok','pemkelompokfilter');
-													$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-													radiokelompok($style,"kelompok_id",'kelompok','pemkelompokfilter');
-												?>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Lokasi</span>
-								<div class="input-append">
-									<input type="text" name="lda_lokasi" id="lda_lokasi" class="span5" readonly="readonly" placeholder="">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok"class="btn" value="Pilih"onclick = "showSpoiler(this);">
-									<div class="inner" style="display:none;">
-                                      <?php
-									   // include "$path/function/dropdown/radio_function_lokasi_pengadaan.php";
-										$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
-										$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
-
-										js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"lda_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
-										$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-										radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
-										?>
-
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">SKPD</span>
-								<div class="input-append">
-									<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" placeholder="" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok"class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-														<?php
-															//include "$path/function/dropdown/function_skpd.php";
-															$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-															$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-															js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd','pemskpdfilter');
-															$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-															radioskpd($style2,"skpd_id",'skpd','pemskpdfilter');
-														?>
-
-										</div>
-								</div>
-							</li>
+							<?=selectAset('kodeKelompok',$width='205',$br=true,false)?>
+                            <li>&nbsp;</li>
+							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                            <li>&nbsp;</li>
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

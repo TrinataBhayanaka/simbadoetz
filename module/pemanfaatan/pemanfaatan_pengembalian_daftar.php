@@ -1,7 +1,9 @@
-    <?php
-        include "../../config/config.php"; 
-        
-        $tgl_awal=$_POST['peman_pengem_filt_tglawal'];
+<?php
+include "../../config/config.php";
+
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
+		 $tgl_awal=$_POST['peman_pengem_filt_tglawal'];
         $tgl_akhir=$_POST['peman_pengem_filt_tglakhir'];
         $tgl_awal_fix=format_tanggal_db2($tgl_awal);
         $tgl_akhir_fix=format_tanggal_db2($tgl_akhir);
@@ -64,37 +66,37 @@
         }
     ?>
 
-<html>
-    <?php
-        include "$path/header.php";
-    ?>
-    <body>
-        <div id="content">
-            <?php
-                    include "$path/title.php";
-                    include "$path/menu.php";
-            ?>
-            <div id="tengah1">	
-                <div id="frame_tengah1">
-                    <div id="frame_gudang">
-                        <div id="topright">
-                            Pengembalian Pemanfaatan
-                        </div>
-                        <script type="text/javascript" charset="utf-8">
-							$(document).ready(function() {
-								$('#example').dataTable( {
-									"aaSorting": [[ 1, "asc" ]]
-								} );
-							} );
-						</script>	
-                        <div id="bottomright">
-                            <div style="margin-bottom:10px; float:left;">
-                                <a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_filter.php"><input type="submit" value="Kembali ke Form Filter"></a>
-                            </div>
-                            <div style="margin-bottom:10px; float:right;">
-                                <a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_filter2.php"><input type="submit" value="Tambah Data"></a>
-                            </div>
-							<?php
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+
+	$data = $PEMANFAATAN->pemanfaatan_pengembalian_daftar($_GET);
+	pr($data);
+			?>
+
+
+          <section id="main">
+			<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Pemanfaatan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Pengembalian Pemanfaatan</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Pengembalian Pemanfaatan</div>
+				<div class="subtitle">Daftar Data</div>
+			</div>	
+		<section class="formLegend">
+			
+			<div class="detailLeft">
+					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+			</div>
+		
+			<div class="detailRight" align="right">
+						 <?php
 							 /*$query2="SELECT * FROM Menganggur where FixMenganggur=1 limit 10";
                                             $exec = mysql_query($query2) or die(mysql_error());*/
                             
@@ -122,70 +124,89 @@
 								}
 							}
 							?>
-                            <table border='0' width='100%' >
-								<tr>
-									<td align="right" width="200px">
-										<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-										<input type="hidden" class="hiddenrecord" value="<?php echo @$total_record?>">
-										<span><input type="button" value="<< Prev" class="buttonprev"/>
-										Page
-										<input type="button" value="Next >>" class="buttonnext"/></span>
-									</td>
-								</tr>
-							</table>
-							<br>
-                           <div id="demo">
-							<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" width="100%">
-								<thead>       
-									
-                                        <th width="15px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">No</th>
-                                        <th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Nomor BAST Pengembalian</th>
-                                        <th width="100px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Tgl BAST Pengembalian</th>
-                                        <th width="80px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Lokasi BAST</th>
-                                        <th width="40px" align="center" style="background-color: #eeeeee; border: 1px solid #dddddd;">Tindakan</th>
-                                    
-								 </thead> 
-                                    <?php
-									   $page = @$_GET['pid'];
-										if ($page > 1){
-											$no = intval($page - 1 .'01');
-										}else{
-											$no = 1;
-										}
-										while($row=mysql_fetch_array($exec)){
-                                        ?>
-                                    <tr>
-                                        <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;"><?php echo "$no.";?></td>
-                                        <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;"><?php echo "$row[NoBAST]";?></td>
-                                        <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;"><?php $change=$row[TglBAST]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
-                                        <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;"><?php echo "$row[LokasiBAST]";?></td>
-                                        <td align="center" style="height:100px; background-color: #; border: 1px solid #dddddd; color: #; font-weight: ;">
-                                            <a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_daftar_edit.php?id=<?php echo "$row[BAST_Pengembalian_ID]";?>">Edit</a>  ||
-											<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_daftar_hapus.php?id=<?php echo "$row[BAST_Pengembalian_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a> 
-                                        </td>
-                                    </tr>
-                                    <?php
-                                        $no++;
-                                            }
-                                    ?>
-                              </table>	
-                            <tfoot></tfoot>
-                            
-                                &nbsp;
-                         </table>
-							</div>
-							<div class="spacer"></div>
-				<!-- End Frame -->    
-				<!-- End Frame -->  
-                                    
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-        </div>
-    </body>
-</html>	
-
+						<ul>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_filter.php" class="btn">
+								Kembali ke Form Filter</a>
+								
+							</li>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_filter2.php" class="btn">
+								Tambah Data</a>
+								
+							</li>
+							<li>
+								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$total_record?>">
+								   <ul class="pager">
+										<li><a href="#" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="#" class="buttonnext">Next</a></li>
+									</ul>
+							</li>
+						</ul>
+							
+					</div>
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			
+			<div id="demo">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Nomor BAST Pengembalian</th>
+						<th>Tgl BAST Pengembalian</th>
+						<th>Lokasi BAST</th>
+						<th>Tindakan</th>
+					</tr>
+				</thead>
+				<tbody>		
+							 
+				  <?php
+				   $page = @$_GET['pid'];
+					if ($page > 1){
+						$no = intval($page - 1 .'01');
+					}else{
+						$no = 1;
+					}
+					while($row=mysql_fetch_array($exec)){
+					?>
+					<tr class="gradeA">
+						<td><?php echo "$no.";?></td>
+						<td>
+							<?php echo "$row[NoBAST]";?>
+						</td>
+						<td><?php $change=$row[TglBAST]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
+						<td>	
+							<?php echo "$row[LokasiBAST]";?>
+						</td>
+						<td>
+							<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_daftar_edit.php?id=<?php echo "$row[BAST_Pengembalian_ID]";?>">Edit</a>  ||
+							<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_pengembalian_daftar_hapus.php?id=<?php echo "$row[BAST_Pengembalian_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a> 
+						</td>
+					</tr>
+					<?php
+						$no++;
+							}
+					?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
+			</div>
+			<div class="spacer"></div>
+			
+			
+		</section> 
+	</section>
+<?php
+include "$path/footer.php";
+?>

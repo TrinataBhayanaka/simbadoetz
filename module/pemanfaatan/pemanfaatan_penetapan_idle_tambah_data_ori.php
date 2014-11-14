@@ -112,9 +112,11 @@
                                     $param=  urlencode($_SESSION['parameter_sql_report']);
                                     //echo "$param";
                                 ?>
+								
                                 <!--<div style="margin-bottom:10px; float:right; clear:both;">
                                     <a href="<?php echo "$url_rewrite/report/template/PEMANFAATAN/tes_class_penetapan_bmd_menganggur_cetak_seluruh.php?menu_id=32&mode=1&parameter=$param";?>" target="_blank"><input type="button" value="Cetak Daftar Aset (PDF)"></a>
                                 </div>-->
+								
 									<?php
                                                 
 											$offset = @$_POST['record'];

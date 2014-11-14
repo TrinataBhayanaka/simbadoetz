@@ -194,6 +194,7 @@ section.formLegend .titleSp2dRPenunjang{
 }
 #myModal3.login{
 	width:400px;
+	height:200px;
 	margin:0 auto;
 	margin-left:-180px;
 }
@@ -285,6 +286,9 @@ nav li a li:hover{
 	transition:background 1s ease;
 	text-decoration:none;
 }
+/*nav li ul {
+    display: none; // used to hide sub-menus
+}*/
 section#main{
 	background-color:#F9F9F9;
 	width:80%;
@@ -368,5 +372,31 @@ footer{
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
+}
+
+.search-options {
+  max-width: 920px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+@media (max-width: 767px) {
+  .search-options {
+    text-align: center;
+  }
+}
+.search-options .search-pager {
+  float: right;
+}
+@media (max-width: 767px) {
+  .search-options .search-pager {
+    float: none;
+    text-align: center;
+    margin-top: 20px;
+  }
 }
 

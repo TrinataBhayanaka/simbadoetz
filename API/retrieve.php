@@ -9581,7 +9581,7 @@ $offset = @$_POST['record'];
     public function get_app_config()
     {
         $query = "SELECT * FROM tbl_app_config WHERE app_status = 1";    
-        
+        // pr($query);
         $result = $this->query($query) or die ($this->error());
         if ($this->num_rows($result))
         {
@@ -9608,8 +9608,8 @@ $offset = @$_POST['record'];
     }
 
     public function retrieve_kontrak()
-    {
-        $sql = mysql_query("SELECT * FROM kontrak ORDER BY id");
+    {    
+        $sql = mysql_query("SELECT * FROM kontrak WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' ORDER BY id");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 if($dataKontrak['tipeAset'] == 1) $dataKontrak['tipeAset'] = 'Aset Baru';
                 elseif ($dataKontrak['tipeAset'] == 2) $dataKontrak['tipeAset'] = 'Kapitalisasi';
@@ -9637,6 +9637,114 @@ $offset = @$_POST['record'];
         }
         
         return $dataArr;
+    }
+
+    function retrieve_searchAset($data,$kodesatker)
+    {
+        $table = $data['tipeAset']; unset($data['tipeAset']);
+        // pr(array_filter($data));exit;
+
+        $dataclean = array_filter($data);
+
+        foreach ($dataclean as $key => $val) {
+            $tmpsetval[] = $key."='$val'";
+        }
+        $setval = implode(' AND ', $tmpsetval);
+
+        $sql = mysql_query("SELECT * FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1'");
+        while ($dataAset = mysql_fetch_assoc($sql)){
+                    $aset[] = $dataAset;
+                }
+
+        if($aset){
+        foreach ($aset as $key => $value) {
+            $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+            while ($uraian = mysql_fetch_array($sqlnmBrg)){
+                    $tmp = $uraian;
+                    $aset[$key]['uraian'] = $tmp['Uraian'];
+                }
+            $aset[$key]['tabel'] = $table;
+        }
+    }
+       
+        return $aset;
+    }
+
+    public function retrieve_distribusiBarang($data)
+    {
+        // pr($data);exit;
+        $clrdata = array_filter($data);
+        foreach ($clrdata as $key => $val) {
+            $tmpsetval[] = $key."='$val'";
+        }
+        $setval = implode(' AND ', $tmpsetval);
+
+        if($setval == "") $setval = 1;
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' ORDER BY id DESC");
+        while ($dataTrs = mysql_fetch_assoc($sql)){
+                    $transfer[] = $dataTrs;
+                }
+        $count_transfer = count($transfer);
+      
+        $dataArr['data'] = $transfer;
+        $dataArr['total']= $count_transfer;
+
+        return $dataArr;
+        exit;
+    }
+
+    public function retrieve_validasiBarang($data)
+    {
+        // pr($data);exit;
+        $clrdata = array_filter($data);
+        foreach ($clrdata as $key => $val) {
+            $tmpsetval[] = $key."='$val'";
+        }
+        $setval = implode(' AND ', $tmpsetval);
+
+        if($setval == "") $setval = 1;
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} ORDER BY id DESC");
+        while ($dataTrs = mysql_fetch_assoc($sql)){
+                    $transfer[] = $dataTrs;
+                }
+        $count_transfer = count($transfer);
+      
+        $dataArr['data'] = $transfer;
+        $dataArr['total']= $count_transfer;
+
+        return $dataArr;
+        exit;
+    }
+
+    function retrieve_searchAsetDist($data,$kodesatker)
+    {
+        $table = $data['tipeAset']; unset($data['tipeAset']);
+        // pr(array_filter($data));exit;
+
+        $dataclean = array_filter($data);
+
+        foreach ($dataclean as $key => $val) {
+            $tmpsetval[] = $key."='$val'";
+        }
+        $setval = implode(' AND ', $tmpsetval);
+
+        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(noRegister) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang IS NULL GROUP BY  kodeKelompok ,  kodeLokasi");
+        while ($dataAset = mysql_fetch_assoc($sql)){
+                    $aset[] = $dataAset;
+                }
+        // pr($aset);exit;        
+        if($aset){
+            foreach ($aset as $key => $value) {
+                $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+                while ($uraian = mysql_fetch_array($sqlnmBrg)){
+                        $tmp = $uraian;
+                        $aset[$key]['uraian'] = $tmp['Uraian'];
+                    }
+                $aset[$key]['tabel'] = $table;
+            }
+        }
+       
+        return $aset;
     }
 	
 }

@@ -1,13 +1,25 @@
-    <?php
-        include "../../config/config.php";
-    ?>
+<?php
+include "../../config/config.php";
 
-    <html>
-        
-    <?php
-        include "$path/header.php";
-    ?>
-        <!-- buat alert-->
+
+?>
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+
+	$MUTASI = new RETRIEVE_MUTASI;
+
+	pr($_POST);
+    $data = $MUTASI->retrieve_mutasi_eksekusi($_POST);
+
+
+    // pr($data);	
+?>
+  <!-- buat alert-->
+
         <script type="text/javascript">
             <!--
             function sendit(){
@@ -113,21 +125,22 @@
 			}
         </script>
 	
-	<body>
-	<div id="content">
-                    <?php
-                        include "$path/title.php";
-                        include "$path/menu.php";
-                    ?>
-            <div id="tengah1">	
-                <div id="frame_tengah1">
-                    <div id="frame_gudang">
-                        <div id="topright">
-                            Transfer Antar SKPD
-                        </div>
-                        <div id="bottomright">
-                            
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Mutasi</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Transfer Antar SKPD</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Transfer Antar SKPD</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
                             <?php
+
+                            /*
                                 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'Mutasi[]' AND UserSes = '$_SESSION[ses_uid]'";
                                         //print_r($query);
                                         $result = mysql_query($query) or die (mysql_error());
@@ -160,9 +173,10 @@
                                                 $data[$id] = mysql_fetch_object($result);
 
                                                 $id++;
-                                        }
+                                        }*/
                             ?>
-                            <form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
+                <input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
                             <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
                             <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top:2px;">
                                 <tbody>
@@ -188,7 +202,7 @@
 															$pilih="selected='selected'";
 															if($nilai->SumberAset =='hibah')
 															$pilih2="selected='selected'";
-															if ($nilai->Aset_ID !='')
+															if ($nilai['Aset_ID'] !='')
 															{
 															echo "<tr>
 																<td style='border: 1px solid #004933; height:50px; padding:2px;'>
@@ -196,15 +210,22 @@
 																<tr>
 																<td></td>
 																<td>$no.</td>
-																<input type='hidden' name='mutasi_nama_aset[]' value='$nilai->Aset_ID'>
-																<td>$nilai->NomorReg - $nilai->Kode</td>
-																<td align='right'><input type='button' id ='$nilai->Aset_ID' value='View Detail' onclick='spoiler(this);'></td>
+																<input type='hidden' name='mutasi_nama_aset[]' value='$nilai[Aset_ID]'>
+																<input type='hidden' name='lastSatker[]' value='$nilai[kodeSatker]'>
+																<input type='hidden' name='lastKelompok[]' value='$nilai[kodeKelompok]'>
+																<input type='hidden' name='lastLokasi[]' value='$nilai[kodeLokasi]'>
+																<input type='hidden' name='lastNoRegister[]' value='$nilai[noRegister]'>
+																<input type='hidden' name='lastNamaSatker[]' value='$nilai[NamaSatker]'>
+																<input type='hidden' name='lastTipeAset[]' value='$nilai[TipeAset]'>
+
+																<td>$nilai[noRegister] - $nilai[kodeSatker] - $nilai[NamaSatker]</td>
+																<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
 																</tr>
 
 																<tr>
 																<td>&nbsp;</td>
 																<td>&nbsp;</td>
-																<td>$nilai->NamaAset</td>
+																<td>$nilai[NamaAset]</td>
 																</tr>
 																<tfoot style='display:none;'>
 																<tr>
@@ -216,13 +237,8 @@
 																<table border=0 width=100%>
 																<tr>
 																<td>
-																<input type='text' value='$nilai->Pemilik' size='1px' style='text-align:center' readonly = 'readonly'> - 
-																<input type='text' value='$nilai->KodeSatker' size='10px' style='text-align:center' readonly = 'readonly'> - 
-																<input type='text' value='$nilai->Kode' size='20px' style='text-align:center' readonly = 'readonly'> - 
-																<input type='text' value='$nilai->Ruangan' size='5px' style='text-align:center' readonly = 'readonly'>
-																<input type='hidden' name='fromsatker' value='$nilai->OrigSatker_ID' size='5px' style='text-align:center' readonly = 'readonly'>
-																</td>
-																<td align='right'><input type='button' id ='sub$nilai->Aset_ID' value='Sub Detail' onclick='spoilsub(this);'></td>
+																$nilai[kodeSatker] - $nilai[kodeKelompok] - $nilai[kodeRuangan]																</td>
+																<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
 																</tr>
 																</table>
 
@@ -231,21 +247,21 @@
 																<tr>
 																<td valign='top' align='left' width=10%>Nama Aset</td>
 																<td valign='top' align='left' style='font-weight:bold'>
-																$nilai->NamaAset
+																$nilai[NamaAset]
 																</td>
 																</tr>
 
 																<tr>
 																<td valign='top' align='left'>Satuan Kerja</td>
 																<td valign='top' align='left' style='font-weight:bold'>
-																$nilai->NamaSatker
+																$nilai[NamaSatker]
 																</td>
 																</tr>
 
 																<tr>
 																<td valign='top' align='left'>Jenis Barang</td>
 																<td valign='top' align='left' style='font-weight:bold'>
-																$nilai->Uraian
+																$nilai[Uraian]
 																</td>
 																</tr>
 
@@ -262,7 +278,7 @@
 																<table>
 																<tr>
 																<td valign='top' style='width:150px;'>Nomor Kontrak</td>
-																<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$nilai->NoKontrak'></td>
+																<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$nilai[NoKontrak]'></td>
 																</tr>
 
 																<tr>
@@ -278,9 +294,9 @@
 
 																<tr>
 																<td valign='top' style='width:150px;'>Kuantitas</td>
-																<td valign='top'><input type='text' readonly='readonly' style='width:40px; text-align:right' value='$nilai->Kuantitas'>
+																<td valign='top'><input type='text' readonly='readonly' style='width:40px; text-align:right' value='$nilai[Kuantitas]'>
 																Satuan
-																<input type='text' readonly='readonly' style='width:130px' value='$nilai->Satuan'>
+																<input type='text' readonly='readonly' style='width:130px' value='$nilai[Satuan]'>
 																</td>
 																</tr>
 
@@ -297,24 +313,24 @@
 
 																<tr>
 																<td valign='top' style='width:150px;'>Tanggal Perolehan</td>
-																<td valign='top'><input type='text' readonly='readonly' style='width:130px' value='$nilai->TglPerolehan'></td>
+																<td valign='top'><input type='text' readonly='readonly' style='width:130px' value='$nilai[TglPerolehan]'></td>
 																</tr>
 
 																<tr>
 																<td valign='top' style='width:150px;'>Nilai Perolehan</td>
-																<td valign='top'><input type='text' readonly='readonly' style='width:130px; text-align:right' value='$nilai->NilaiPerolehan'></td>
+																<td valign='top'><input type='text' readonly='readonly' style='width:130px; text-align:right' value='$nilai[NilaiPerolehan]'></td>
 																</tr>
 
 																<tr>
 																<td valign='top' style='width:150px;'>Alamat</td>
-																<td valign='top'><textarea style='width:90%' readonly>$nilai->Alamat</textarea><br>
+																<td valign='top'><textarea style='width:90%' readonly>$nilai[Alamat]</textarea><br>
 																RT/RW
-																<input type='text' readonly='readonly' style='width:50px' value='$nilai->RTRW'></td>
+																<input type='text' readonly='readonly' style='width:50px' value='$nilai[RTRW]'></td>
 																</tr>
 
 																<tr>
 																<td valign='top' style='width:150px;'>Lokasi</td>
-																<td valign='top'><input type='text' readonly='readonly' style='width:100px' value='$nilai->NamaLokasi'></td>
+																<td valign='top'><input type='text' readonly='readonly' style='width:100px' value='$nilai[NamaLokasi]'></td>
 																</tr>
 
 																
@@ -338,34 +354,15 @@
 												<br>
                                                 <table width="100%" style="padding:2px; margin-top:0px; border: 1px solid #004933; border-width: 1px 1px 1px 1px;">
                                                     <tr>
-                                                        <td style="width:150px;">
-                                                            Transfer ke Satker
-														</td>
+                                                       
 														<td colspan="6">
-                                                            <input type="text" name="lda_skpd" readonly="readonly" id="lda_skpd" style="width:300px;" placeholder="(Semua SKPD)">
-                                                            <input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);"><br>
-                                                            <div class="inner" style="display:none;">
-                                                                <style>
-                                                                    .tabel th {
-                                                                        background-color: #eeeeee;
-                                                                        border: 1px solid #dddddd;
-                                                                    }
-                                                                    .tabel td {
-                                                                        border: 1px solid #dddddd;
-                                                                    }
-                                                                </style>
-                                                                    <?php
-                                                                    $alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-                                                                    $alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-                                                                    js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd','yuda');
-                                                                    $style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-                                                                    radioskpd($style2,"skpd_id",'skpd','yuda');
-                                                                    ?>
-
-                                                            </div>
+                                                            <?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+							
                                                         </td>
 														<td>&nbsp;</td>
-                                                    </tr>   
+                                                    </tr>  
+
+                                                    
                                                     <tr>
                                                         <td>No. Dokumen</td>
                                                         <td colspan="6"><input type="text" style="width:180px;" name="mutasi_trans_eks_nodok" required="required" id="">&nbsp;<span id="errmsg"></span></td>
@@ -398,16 +395,10 @@
                                 </tbody>
                             </table>
                             </form>
-                                                
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-		
-        <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-        </div>
-        
-    </body>
-</html>	
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

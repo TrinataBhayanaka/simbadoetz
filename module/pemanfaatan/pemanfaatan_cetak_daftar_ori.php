@@ -159,7 +159,7 @@
 						</script>
                             <div id="bottomright">
                                 <div style="margin-bottom:10px; float:left;">
-                                <a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_cetak_filter.php"><input type="submit" value="Kembali ke Form Filter"></a>
+									<a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_cetak_filter.php"><input type="submit" value="Kembali ke Form Filter"></a>
                                 </div>
                                 <?php
 									if($_SESSION['ses_uaksesadmin'] == 1){

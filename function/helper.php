@@ -158,6 +158,55 @@ function logAset($asetID=false, $satkerID=false, $lastSatkerID=false, $desc=fals
      return false;
 }
 
+function ubahLokasi($lokasi=false, $satkerbaru=false)
+{
 
+     // lokasi
+
+     if (!$lokasi) return false;
+     if (!$satkerbaru) return false;
+
+     $tmp = explode('.',$lokasi);
+     $slice_firstcode = array_slice($tmp,0, count($tmp)-5, true);
+
+     // satker
+     $tmps = explode('.',$satkerbaru);
+     $slice_firstcodes = array_slice($tmps,0, count($tmps)-2, true);
+
+     $slice_firstcodeLast = array_slice($tmps,2, count($tmps), true);
+
+     $slice_part2 = $tmp[5];
+
+     $noLokasi_1 = implode('.',$slice_firstcode);
+     $noLokasi_2 = implode('.',$slice_firstcodes);
+     $noLokasi_3 = implode('.',$slice_firstcodeLast);
+
+     $noLokasiFix = $noLokasi_1.".".$noLokasi_2.".".$slice_part2.".".$noLokasi_3;
+     
+     if ($noLokasiFix) return $noLokasiFix;
+     return false;
+}
+
+function logFile($comment, $fileName=false, $method=false)
+{
+     
+     global $path;
+     /*
+          method false = "a"
+          method (true)1 = w
+     */
+     $paths = $path.'/log/';
+     
+     if (!$fileName) $fileName = 'Log-'.date('d-m-Y').'.txt';
+     
+     if ($method){
+          $handle = fopen($paths.$fileName, "w");
+     }else{
+          $handle = fopen($paths.$fileName, "a");
+     }
+     
+     fwrite($handle, "{$comment}"."\n");
+     fclose($handle);
+}
 
 ?>

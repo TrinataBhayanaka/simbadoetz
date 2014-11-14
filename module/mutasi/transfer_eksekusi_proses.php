@@ -3,7 +3,9 @@
 include "../../config/config.php";
 
 
+$MUTASI = new RETRIEVE_MUTASI;
 
+   
 $satker=$_POST['skpd_id']; 
 $nodok=$_POST['mutasi_trans_eks_nodok'];
 $tgl=$_POST['mutasi_trans_eks_tglproses'];
@@ -24,6 +26,13 @@ $panjang=count($nmaset);
 $mutasi_id=get_auto_increment("Mutasi");
 
 
+// pr($_POST);
+$data = $MUTASI->store_mutasi_barang($_POST);
+
+echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/transfer_antar_skpd.php?pid=1';</script>";
+
+
+exit;
 //Insert ke Mutasi
  $query="INSERT INTO Mutasi (Mutasi_ID, NoSKKDH , TglSKKDH, 
                                     Keterangan, SatkerTujuan, NotUse, TglUpdate, 

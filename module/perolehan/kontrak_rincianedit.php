@@ -18,16 +18,6 @@ $menu_id = 10;
 	<!-- SQL Sementara -->
 	<?php
 
-		if(isset($_POST['kodeKelompok'])){
-		    if($_POST['Aset_ID'] == "")
-		    {
-		      $dataArr = $STORE->store_aset($_POST);
-		    }  else
-		    {
-		      $dataArr = $STORE->store_edit_aset($_POST,$_POST['Aset_ID']);
-		    }
-		  }
-
 		//kontrak
 		$idKontrak = $_GET['id'];
 		$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}' LIMIT 1");
@@ -36,6 +26,23 @@ $menu_id = 10;
 				}
 		// pr($kontrak);
 
+		if(isset($_POST['kodeKelompok'])){
+		    if($_POST['Aset_ID'] == "")
+		    {
+		      	if($kontrak[0]['tipeAset'] == 1)
+		      	{
+		      		$dataArr = $STORE->store_aset($_POST);
+		      	} elseif($kontrak[0]['tipeAset'] == 2) {
+		      		$dataArr = $STORE->store_aset_kapitalisasi($_POST,$_GET);
+		      	} elseif ($kontrak[0]['tipeAset'] == 3) {
+		      		$dataArr = $STORE->store_aset_kdp($_POST,$_GET);
+		      	}	
+		      
+		    }  else
+		    {
+		      $dataArr = $STORE->store_edit_aset($_POST,$_POST['Aset_ID']);
+		    }
+		  }		
 		//sum total 
 		$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
 		while ($sum = mysql_fetch_array($sqlsum)){
@@ -89,6 +96,50 @@ $menu_id = 10;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
+			<?php
+				if($kontrak[0]['tipeAset'] != 1)
+				{
+					$sql = mysql_query("SELECT * FROM {$_GET['tipeaset']} WHERE Aset_ID = '{$_GET['idaset']}' AND noRegister = '{$_GET['noreg']}' LIMIT 1");
+					while ($dataAset = mysql_fetch_assoc($sql)){
+	                    $aset[] = $dataAset;
+	                }
+	                if($aset){
+				        foreach ($aset as $key => $value) {
+				            $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+				            while ($uraian = mysql_fetch_array($sqlnmBrg)){
+				                    $tmp = $uraian;
+				                    $aset[$key]['uraian'] = $tmp['Uraian'];
+				                }
+				        }
+				    }
+	        ?>
+	        		<div class="search-options clearfix">
+	        			<strong style="margin-right:20px;"><?=($kontrak[0]['tipeAset'] == 2)? 'Kapitalisasi Aset' : 'Rubah Status'?></strong>
+	        			<hr style="padding:0px;margin:0px">
+						<table border='0' width="100%" style="font-size:12">
+							<tr>
+								<th>Kode Kelompok</th>
+								<th>Nama Barang</th>
+								<th>Kode Satker</th>
+								<th>Kode Lokasi</th>
+								<th>NoReg</th>
+								<th>Nilai</th>
+							</tr>
+							<tr>
+								<td align="center"><?=$aset[0]['kodeKelompok']?></td>
+								<td align="center"><?=$aset[0]['uraian']?></td>
+								<td align="center"><?=$aset[0]['kodeSatker']?></td>
+								<td align="center"><?=$aset[0]['kodeLokasi']?></td>
+								<td align="center"><?=$aset[0]['noRegister']?></td>
+								<td align="center"><?=number_format($aset[0]['NilaiPerolehan'])?></td>
+							</tr>	
+						</table>	
+
+					</div><!-- /search-option -->
+	        <?php
+				}	
+			?>
+
 			<div>
 			<form action="" method="POST">
 				 <div class="formKontrak">
@@ -126,11 +177,11 @@ $menu_id = 10;
 						<ul class="bangunan" style="display:none">
 							<li>
 								<span class="span2">Jumlah Lantai</span>
-								<input type="text" class="span3" name="JumlahLantai" disabled/>
+								<input type="text" class="span3" name="JumlahLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['JumlahLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Luas Lantai</span>
-								<input type="text" class="span3" name="LuasLantai" disabled/>
+								<input type="text" class="span3" name="LuasLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
 							</li>
 						</ul>
 						<ul class="jaringan" style="display:none">
@@ -174,23 +225,23 @@ $menu_id = 10;
 						<ul>
 							<li>
 								<span class="span2">Alamat</span>
-								<textarea name="Alamat" class="span3" ></textarea>
+								<textarea name="Alamat" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Alamat'] : ''?></textarea>
 							</li>
 							<li>
 								<span class="span2">Jumlah</span>
-								<input type="text" class="span3" name="Kuantitas" id="jumlah" onchange="return totalHrg()" required/>
+								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=($kontrak[0]['tipeAset'] == 3)? 1 : ''?>" onchange="return totalHrg()" required/>
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" name="Satuan" id="hrgSatuan" onchange="return totalHrg()" required/>
+								<input type="text" class="span3" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onchange="return totalHrg()" required/>
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
-								<input type="text" class="span3" name="NilaiPerolehan" id="total" readonly/>
+								<input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/>
 							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3" ></textarea>
+								<textarea name="Info" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Info'] : ''?></textarea>
 							</li>
 							<li>
 								<span class="span2">
@@ -223,9 +274,9 @@ $menu_id = 10;
 ?>
 
 <script type="text/javascript">
-	$(document).on('change','#aset', function(){
+	$(document).on('change','#kodeKelompok', function(){
 
-		var kode = $('#aset').val();
+		var kode = $('#kodeKelompok').val();
 		var gol = kode.split(".");
 
 		if(gol[0] == '01')

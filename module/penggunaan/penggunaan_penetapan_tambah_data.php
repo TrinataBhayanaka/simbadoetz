@@ -2,6 +2,7 @@
 ob_start();
 include "../../config/config.php";
 
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
       
         $menu_id = 30;
         $SessionUser = $SESSION->get_session_user();
@@ -24,18 +25,20 @@ include "../../config/config.php";
 		<?php
             }
         }
-        
-        if (isset($_POST['tampil2'])){				
-			unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
+        // pr($_POST);
+        if (isset($_POST['tampil2'])){		
+
+        	// pr($_POST);		
+			// unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
 			// pr($parameter);
-			list($data,$dataAsetUser) = $RETRIEVE->retrieve_penetapan_penggunaan($parameter);
+			// list($data,$dataAsetUser) = $RETRIEVE->retrieve_penetapan_penggunaan($parameter);
 			// echo 'sini';
 		}
 		else {
-			$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
-			list($data,$dataAsetUser) = $RETRIEVE->retrieve_penetapan_penggunaan($parameter);
+			// $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
+			// list($data,$dataAsetUser) = $RETRIEVE->retrieve_penetapan_penggunaan($parameter);
 			// echo'sana';
 		}  
          ?>   
@@ -44,7 +47,11 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-			?>
+	
+	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($_POST);	
+	// pr($data);
+
+?>	
 
 		
 		<script language="Javascript" type="text/javascript">  
@@ -173,16 +180,19 @@ include "../../config/config.php";
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align="left"><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td width="130px"><span><a href="javascript:void(0)" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
+						<td  align="left"><a href="javascript:void(0)" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
 						<td align="right" >
 								<input type="submit" name="submit2" value="Penetapan Penggunaan" id="submit" disabled/>
+							<input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
 						</td>
 					</tr>
 					<tr>
-						<th>No</th>
 						<th>&nbsp;</th>
-						<th>Informasi Aset</th>
+						<th>Kode Barang</th>
+						<th>Nama Barang</th>
+						<th>Kode Lokasi</th>
+						<th>SKPD</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -203,97 +213,28 @@ include "../../config/config.php";
 						{
 						?>	  
 					<tr class="gradeA">
-						<td><?php echo "$no.";?></td>
 						<td>
-							<?php
-								// pr($_SESSION['ses_uaksesadmin']);
-							if (($_SESSION['ses_uaksesadmin'] == 1)){
-								// echo "masukk";
-								?>
-								<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Penggunaan[]" value="<?php echo $value->Aset_ID;?>" 
-								<?php 
-									for ($i = 0; $i <= count($explode); $i++){
-										if ($explode[$i]==$value->Aset_ID) 
-											echo 'checked';
-									}?>>
-								<?php
-							}else{
-								if ($dataAsetUser){
-								if (in_array($value->Aset_ID, $dataAsetUser)){
-								?>
-								<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Penggunaan[]" value="<?php echo $value->Aset_ID;?>" <?php for ($i = 0; $i <= count($explode); $i++){if ($explode[$i]==$value->Aset_ID) echo 'checked';}?>>
-								<?php
-								}
-							}
-							}
+							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Penggunaan[]" value="<?php echo $value['Aset_ID'];?>" >
 							
-							?>
+							
 						</td>
-						<td<table width='100%'>
-												<tr>
-													<td height="10px"></td>
-												</tr>
-
-												<tr>
-													<td>
-														<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value->Aset_ID?></span>
-														<span>( Aset ID - System Number )</span>
-													</td>
-													<!--
-													<td align="right"><span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;horizontal-align:'right';font-weight:bold;">
-														
-														 <a href='validasi_data_aset.php?id=<?php //echo $value->Aset_ID?>'>Validasi</a></span>
-													</td>-->
-												</tr>
-												<tr>
-													<td style="font-weight:bold;"><?php echo $value->NomorReg?></td>
-												</tr>
-												<tr>
-													<td style="font-weight:bold;"><?php echo $value->Kode?></td>
-												</tr>
-												<tr>
-													<td style="font-weight:bold;"><?php echo $value->NamaAset?></td>
-												</tr>
-
-											</table>
-											<br>
-											<hr />
-											<table border=0 width="100%">
-												<tr>
-													<td width="20%">No.Kontrak</td> 
-													<td width="2%">&nbsp;</td>
-													<td width="78%">&nbsp;<?php echo $value->NoKontrak?></td>
-												</tr>
-												
-												<tr>
-													<td>Satker</td> 
-													<td>&nbsp;</td>
-													<td><?php echo '['.$value->KodeSatker.'] '.$value->NamaSatker?></td>
-												</tr>
-												<tr>
-													<td>Lokasi</td> 
-													<td>&nbsp;</td>
-													<td><?php echo $value->NamaLokasi?></td>
-												</tr>
-												<tr>
-													<td>Status</td> 
-													<td>&nbsp;</td>
-													<td><?php echo $value->Kondisi_ID. '-' .$value->InfoKondisi?></td>
-												</tr>
-
-											</table>
-						</td>
+						<td><?php echo $value['kodeKelompok']?></td>
+						<td style="font-weight:bold;"><?php echo $value['Uraian']?></td>
+						<td style="font-weight:bold;"><?php echo $value['kodeLokasi']?></td>
+						<td style="font-weight:bold;"><?php echo $value['kodeSatker']?></td>
+						
 					</tr>
+
 					 <?php 
-										$no++; 
-										//$pid++; 
-										} 
-									}
-									 else
-									{
-										$disabled = 'disabled';
-									}
-									?>
+					$no++; 
+					//$pid++; 
+					} 
+				}
+				 else
+				{
+					$disabled = 'disabled';
+				}
+				?>
 				</tbody>
 				<tfoot>
 					<tr>

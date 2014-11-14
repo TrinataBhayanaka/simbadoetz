@@ -13,35 +13,34 @@ $menu_id = 1;
 	//SQL Sementara
 	$idKontrak = $_GET['id'];
 	$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}'");
-		while ($dataKontrak = mysql_fetch_array($sql)){
-				$kontrak[] = $dataKontrak;
+		while ($dataKontrak = mysql_fetch_assoc($sql)){
+				$kontrak = $dataKontrak;
 			}
 
 	//getdata
-	$RKsql = mysql_query("SELECT * FROM kontrak_rinc WHERE idKontrak = '{$idKontrak}'");
-	while ($dataRKontrak = mysql_fetch_array($RKsql)){
+	$RKsql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
 	foreach ($rKontrak as $key => $value) {
-		$sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kd_brg']}' LIMIT 1");
-		while ($uraian = mysql_fetch_array($sqlnmBrg)){
+		$sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+		while ($uraian = mysql_fetch_assoc($sqlnmBrg)){
 				$tmp = $uraian;
 				$rKontrak[$key]['uraian'] = $tmp['Uraian'];
 			}
 	}
 
 	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
-		while ($dataSP2D = mysql_fetch_array($sql)){
-				$sumsp2d[] = $dataSP2D;
+		while ($dataSP2D = mysql_fetch_assoc($sql)){
+				$sumsp2d = $dataSP2D;
 			}
-	$bop = $sumsp2d[0]['total']/count($rKontrak);
 
 	//sum total 
-	$sqlsum = mysql_query("SELECT SUM(total) as total FROM kontrak_rinc WHERE idKontrak = '{$idKontrak}'");
-	while ($sum = mysql_fetch_array($sqlsum)){
+	$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	while ($sum = mysql_fetch_assoc($sqlsum)){
 				$sumTotal = $sum;
 			}
-		
+	// pr($kontrak);	
 	//end SQL
 ?>
 	
@@ -95,12 +94,7 @@ $menu_id = 1;
 					<span class="text">Posting</span>
 				</a>
 			</div>		
-		<?php
-				if($kontrak[0]['nilai'] != $sumTotal['total']){
-					pr("<p style='color:red'>* Total Rincian Barang tidak sama dengan total SPK</p>");
-					$disabled = "disabled";
-				}
-			?>
+		
 		<section class="formLegend">
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div class="detailLeft">
@@ -108,11 +102,11 @@ $menu_id = 1;
 						<ul>
 							<li>
 								<span class="labelInfo">No. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['noKontrak']?>" disabled/>
+								<input type="text" value="<?=$kontrak['noKontrak']?>" disabled/>
 							</li>
 							<li>
 								<span class="labelInfo">Tgl. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
+								<input type="text" value="<?=$kontrak['tglKontrak']?>" disabled/>
 							</li>
 						</ul>
 							
@@ -122,18 +116,33 @@ $menu_id = 1;
 						<ul>
 							<li>
 								<span class="labelInfo">Nilai SPK</span>
-								<input type="text" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
+								<input type="text" value="<?=number_format($kontrak['nilai'])?>" disabled/>
 							</li>
 							<li>
-								<span  class="labelInfo">Total Nilai Kontrak</span>
+								<span  class="labelInfo">Total Rincian Barang</span>
 								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
 							</li>
 						</ul>
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			
-			<p><button data-toggle="modal" href="#myModal" class="btn btn-info btn-small" <?=$disabled?>><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</button>
+			<?php
+				if($kontrak['nilai'] != $sumTotal['total']){
+					echo "<p style='color:red'>* Total Rincian Barang tidak sama dengan total SPK</p>";
+					$disabled = "disabled";
+					$url = "#";
+				} else {
+					if($kontrak['tipeAset'] == 1)
+					{
+						$url = "kontrak_postingFinal.php?id={$idKontrak}";
+					} elseif ($kontrak['tipeAset'] == 2) {
+						$url = "kontrak_postingKapitalisasi.php?id={$idKontrak}";
+					} elseif ($kontrak['tipeAset'] == 3) {
+						$url = "kontrak_postingKDP.php?id={$idKontrak}";
+					}	
+				}
+			?>
+			<p><a href="<?=$url?>" class="btn btn-info btn-small" <?=$disabled?>><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
 			&nbsp;
 			<a class="btn btn-danger btn-small" disabled><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 			&nbsp;</p>	
@@ -161,13 +170,13 @@ $menu_id = 1;
 				?>
 					<tr class="gradeA">
 						<td><?=$i?></td>
-						<td><?=$value['kd_brg']?></td>
+						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
-						<td><?=$value['jumlah']?></td>
-						<td><?=number_format($value['hrgSatuan'])?></td>
-						<td><?=number_format($value['total'])?></td>
-						<td><?=number_format($bop)?></td>
-						<td><?=number_format($value['total']+$bop)?></td>
+						<td><?=$value['Kuantitas']?></td>
+						<td><?=number_format($value['Satuan'])?></td>
+						<td><?=number_format($value['Satuan']*$value['Kuantitas'])?></td>
+						<td><?=number_format($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'])?></td>
+						<td><?=number_format($value['NilaiPerolehan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']))?></td>
 						
 					</tr>
 				<?php

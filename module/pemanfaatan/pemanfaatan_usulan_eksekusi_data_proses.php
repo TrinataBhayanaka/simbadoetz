@@ -1,10 +1,13 @@
 <?php
 include "../../config/config.php";
 
+$PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
+
 $menu_id = 33;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+
 
 /*
 $nmaset=$_POST['peman_usul_nama_aset'];
@@ -53,19 +56,21 @@ $exec_hapus=  mysql_query($query_hapus_apl) or die(mysql_error());
 echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
  * 
  */
+
+
+$datausulan = $PEMANFAATAN->pemanfaatan_usulan_list($_GET);
+// pr($datausulan);
+
 ?>
 
-<html>
-    <?php
-        include "$path/header.php";
-    ?>
-        <body>
-            <div id="content">
-                    <?php
-                        include "$path/title.php";
-                        include "$path/menu.php";
-                    ?>
-					<script type="text/javascript">
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+
+?>
+				<script type="text/javascript">
 						function spoiler(obj)
 						{
 						var inner = obj.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("tfoot")[0];
@@ -90,16 +95,20 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 						document.getElementById(obj.id).value="Sub Detail";}
 						}
 					</script>
-                <div id="tengah1">	
-                    <div id="frame_tengah1">
-                        <div id="frame_gudang">
-                            <div id="topright">
-                                Daftar Usulan Pemanfaatan		
-                            </div>
-                            <div id="bottomright">
-                                
-                                <!--<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_proses.php">-->
-                                <table width="100%">
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Pemanfaatan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Daftar Usulan Pemanfaatan</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Daftar Usulan Pemanfaatan</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			<table width="100%">
                                     <tr>
                                         <td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Aset yang baru saja diusulkan untuk pemanfaatan:</u></td>
                                     </tr>
@@ -132,11 +141,11 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														// pr($query);
 														
 														// pr($query);
-														$exec=  mysql_query($query) or die(mysql_error());
+														// $exec=  mysql_query($query) or die(mysql_error());
                                                         $no=1;
                                                        // $row=mysql_fetch_array($exec);
                                                         
-                                                        while($row=mysql_fetch_array($exec)){ 
+                                                        foreach($datausulan as $row){ 
 														// pr($row);
 														if ($row[AsetOpr] == 0)
 														$select="selected='selected'";
@@ -155,14 +164,14 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<td></td>
 														<td>$no.</td>
 														<input type='hidden' name='peman_usul_nama_aset[]' value='$row[Aset_ID]'>
-														<td>$row[NomorReg] - $row[Kode]</td>
+														<td>$row[noRegister] - $row[kodeSatker]</td>
 														<td align='right'><input type='button' id ='$row[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
 														</tr>
 
 														<tr>
 														<td>&nbsp;</td>
 														<td>&nbsp;</td>
-														<td>$row[NamaAset]</td>
+														<td>$row[Uraian]</td>
 														</tr>
 														<tfoot style='display:none;'>
 														<tr>
@@ -174,13 +183,11 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<table border=0 width=100%>
 														<tr>
 														<td>
-														<input type='text' value='$row[Pemilik]' size='1px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$row[KodeSatker]' size='10px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$row[Kode]' size='20px' style='text-align:center' readonly = 'readonly'> - 
-														<input type='text' value='$row[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
-														<input type='hidden' name='fromsatker' value='$row[OrigSatker_ID]' size='5px' style='text-align:center' readonly = 'readonly'>
+														<input type='text' value='$row[kodeSatker]' size='10px' style='text-align:center' readonly = 'readonly'> - 
+														<input type='text' value='$row[kodeLokasi]' size='20px' style='text-align:center' readonly = 'readonly'> - 
+														<input type='text' value='$row[kodeRuangan]' size='5px' style='text-align:center' readonly = 'readonly'>
 														</td>
-														<td align='right'><input type='button' id ='sub$row->Aset_ID' value='Sub Detail' onclick='spoilsub(this);'></td>
+														<td align='right'><input type='button' id ='sub$row[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
 														</tr>
 														</table>
 
@@ -189,7 +196,7 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<tr>
 														<td valign='top' align='left' width=10%>Nama Aset</td>
 														<td valign='top' align='left' style='font-weight:bold'>
-														$row[NamaAset]
+														$row[Uraian]
 														</td>
 														</tr>
 
@@ -201,9 +208,9 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														</tr>
 
 														<tr>
-														<td valign='top' align='left'>Jenis Barang</td>
+														<td valign='top' align='left'>Info Barang</td>
 														<td valign='top' align='left' style='font-weight:bold'>
-														$row[Uraian]
+														$row[Info]
 														</td>
 														</tr>
 
@@ -220,7 +227,7 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
 														<table>
 														<tr>
 														<td valign='top' style='width:150px;'>Nomor Kontrak</td>
-														<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$row[NoKontrak]'></td>
+														<td valign='top'><input type='text' readonly='readonly' style='width:170px' value='$row[noKontrak]'></td>
 														</tr>
 
 														<tr>
@@ -298,7 +305,7 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
                                                 <tr>
                                                     <td colspan=4 align=center>
                                                         <!--<a href="<?php echo "$url_rewrite/report/template/PEMANFAATAN/tes_class_usulan_aset_yang_akan_dimanfaatkan.php?menu_id=33&mode=1&id=$usulan_id";?>"  target="_blank"><input type="submit" name="submit1" value="Cetak Daftar Usulan Pemanfaatan"></a>-->
-                                                        <a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_usulan_filter.php";?>"><input type="submit" name="submit2" value="Kembali ke Menu Utama"></a>
+                                                        <a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_usulan_filter.php";?>"><input type="submit" class="btn" name="submit2" value="Kembali ke Menu Utama"></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -311,20 +318,10 @@ echo "<script>alert('Data Sudah Diusulkan.. !!!');</script>";
                                         </td>
                                     </tr>
                                 </table>
-                                <!--</form>-->
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="footer">Sistem Informasi Barang Daerah ver. 0.x.x <br />
-			Powered by BBSDM Team 2012
-            </div>
-        </body>
-</html>	
+			
+		</section>     
+	</section>
 	
-
-
-
-
+<?php
+	include"$path/footer.php";
+?>

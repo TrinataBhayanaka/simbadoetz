@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
 
+$PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
+
         $menu_id = 31;
         $SessionUser = $SESSION->get_session_user();
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -12,24 +14,31 @@ include "../../config/config.php";
         $tgl_akhir_fix=format_tanggal_db2($tgl_akhir);
         $no_penetapan_penggunaan=$_POST['penggu_valid_filt_nopenet'];
         $satker=$_POST['skpd_id'];
-        $submit=$_POST['tampil_validasi'];
+        $submit=$_POST['submit'];
         
         
-        
+        // pr($_POST);
         $paging = $LOAD_DATA->paging($_GET['pid']);    
         $ses_uid=$_SESSION['ses_uid'];
 
         if (isset($submit))
 		{
-			unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
-			$data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
+
+			$_SESSION['penggunaan_validasi'] = $_POST;
+			$datasess = $_SESSION['penggunaan_validasi'];
+			// unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
+			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging,'ses_uid'=>$ses_uid);
+			// $data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
 		}else{
-			$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
-			$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
-			$data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
+
+			$datasess = $_SESSION['penggunaan_validasi'];
+			// $sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
+			// $parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging,'ses_uid'=>$ses_uid);
+			// $data = $RETRIEVE->retrieve_validasi_penggunaan($parameter);
 		}
-       
+       	
+
+
         if (isset($submit)){
             if ($tgl_awal=="" && $tgl_akhir=="" && $no_penetapan_penggunaan=="" && $alasan==""){
     ?>
@@ -49,6 +58,11 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+
+
+	$data = $PENGGUNAAN->retrieve_validasi_penggunaan($datasess);
+       	// pr($datasess);
+
 			?>
 <script type="text/javascript">
 		function show_confirm()
@@ -154,8 +168,8 @@ include "../../config/config.php";
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td width="130px"><span><a href="javascript:void(0)" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
+						<td  align=left><a href="javascript:void(0)" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
 						<td colspan="3">
 								<p style="float:right;"><input type="submit" name="submit" value="Validasi Barang" id="submit" disabled/></p>
 						</td>
@@ -170,7 +184,7 @@ include "../../config/config.php";
 				</thead>
 				<tbody>		
 				<?php
-					if (!empty($data['dataArr']))
+					if (!empty($data))
 					{
 						$disabled = '';
 						$page = @$_GET['pid'];
@@ -179,7 +193,8 @@ include "../../config/config.php";
 						}else{
 							$no = 1;
 						}
-					foreach($data['dataArr'] as $key => $hsl_data)
+					// pr($data);
+					foreach($data as $key => $hsl_data)
 					{    
 						?>
 					<tr class="gradeA">

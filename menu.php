@@ -10,7 +10,9 @@ $menuPath = $USERAUTH->FrontEnd_show_menu($SessionUser);
 
 
 ?>
+
 <aside>
+	
 		<nav>
 			<ul>
 				<li  align="center">
