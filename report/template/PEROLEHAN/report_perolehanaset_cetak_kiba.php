@@ -50,14 +50,11 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 //retrieve html
 $html=$REPORT->retrieve_html_kib_a($result_query, $gambar);
 
-$count = count($html);
-
-
+/*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
-		 
-		 // echo $html[$i];     
+		 echo $html[$i];     
 	}
-// exit;
+exit;*/
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

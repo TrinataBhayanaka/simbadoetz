@@ -13,18 +13,18 @@ $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
-$kib = $_GET['kib'];
-$tahun = $_GET['tahun'];
-$kelompok=$_GET['bidang'];
+$rekap = $_GET['rekap'];
+// $tahun = $_GET['tahun'];
+// $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
 
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "kib"=>$kib,
-    "tahun"=>$tahun,
+    "rekap"=>$rekap,
+    // "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
-    "kelompok"=>$kelompok,
+    // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
 
@@ -45,16 +45,16 @@ $result_query=$REPORT->retrieve_query($query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_kib_c($result_query, $gambar);
+$html=$REPORT->retrieve_html_kib_c_rekap($result_query, $gambar);
 
 /*$count = count($html);
 
 
 	for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
+		 echo $html[$i];     
 	}
-// exit;*/
+ exit;*/
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	

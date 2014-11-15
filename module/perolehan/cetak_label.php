@@ -33,7 +33,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Tahun</span>
 								<input type="text" size="4" name="rkb_thn" class="span2" value="">
 							</li>
-							<li>
+							<!--<li>
 								<span class="span2">SKPD</span>
 								<div class="input-append">
 										<input type="text" name="rkb_skpd" id="rkb_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
@@ -41,11 +41,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 										<div class="inner" style="display:none;">
 											
 											<?php
-												$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
+												/*$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
 												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
 												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"rkb_skpd","skpd_id",'skpd','rkbskpdfilter');
 												$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');
+												radiopengadaanskpd($style2,"skpd_id",'skpd','rkbskpdfilter');*/
 											?>
 										</div>
 								</div>
@@ -58,17 +58,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									<div class="inner" style="display:none;">
 										
 										<?php
-											$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
+											/*$alamat_simpul_lokasi="$url_rewrite/function/dropdown/radio_simpul_lokasi_pengadaan.php";
 											$alamat_search_lokasi="$url_rewrite/function/dropdown/radio_search_lokasi_pengadaan.php";
 
 											js_radiopengadaanlokasi($alamat_simpul_lokasi, $alamat_search_lokasi,"rkb_lokasi","lokasi_id",'lokasi','p_provinsi','p_kabupaten','p_kecamatan','p_desa','lok');
 											$style1="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");
+											radiopengadaanlokasi($style1,"lokasi_id",'lokasi',"lok");*/
 											
 										?>
 									</div>
 								</div>
-							</li>
+							</li>-->
 							<li>
 								<span class="span2">Nama/Jenis Barang</span>
 								<div class="input-append">
