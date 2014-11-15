@@ -48,6 +48,8 @@ if (isset($_POST['Simpan']))
             $SKPD_ID=    $_POST['skpd_id'];
 	$JabatanOperator = $_POST['JabatanOperator'];
 	
+
+	// pr($_POST);exit;
 	if (isset($_POST['AksesAdmin']))
 	{
 		
@@ -235,11 +237,13 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 						case 'd':
 						
 						$query = "SELECT * FROM Operator WHERE OperatorID=".$_GET['a'];
+						// pr($query);
 						$result = mysql_query($query) or die (mysql_error());
 						if (mysql_num_rows($result))
 						{
 							$dataVal = mysql_fetch_array($result);
 							
+							// pr($dataVal);
 							//fetch data dari tabel Operator
 							$UserNm = $dataVal['UserNm']; 
 							$NamaOperator = $dataVal['NamaOperator']; 
@@ -248,15 +252,16 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 							$AksesAdmin = $dataVal['AksesAdmin'];
 							$Satker_ID = $dataVal['Satker_ID'];
                                                                                     
-                                                                                     $SKPD_ID = $dataVal['Satker_ID'];
-                                                                                     $query_data="select NamaSatker from Satker WHERE Satker_ID='$SKPD_ID'";
-                                                                                     $result_data = mysql_query($query_data) or die (mysql_error());
-                                                                                     $uraian="";
-                                                                                     if (mysql_num_rows($result_data))
-                                                                                     {
-                                                                                          $dataSatker = mysql_fetch_array($result_data);
-                                                                                          $uraian=$dataSatker ['NamaSatker'];
-                                                                                     }
+	                         $SKPD_ID = $dataVal['Satker_ID'];
+	                         $query_data="select NamaSatker from Satker WHERE Satker_ID='$SKPD_ID'";
+	                         // pr($query_data);
+	                         $result_data = mysql_query($query_data) or die (mysql_error());
+	                         $uraian="";
+	                         if (mysql_num_rows($result_data))
+	                         {
+	                              $dataSatker = mysql_fetch_array($result_data);
+	                              $uraian=$dataSatker ['NamaSatker'];
+	                         }
                                                                                 
 							//echo $JabatanOperator;
 							
@@ -269,7 +274,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 							$Satker_ID = '';
 						}
 						
-						
+						// pr($Satker_ID);
 						if (isset($_GET['a']))
 						{
 							if (isset($_GET['i']))
@@ -398,16 +403,39 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 							
 
 						}
-												
+							// pr($SKPD_ID);
+							// pr($Satker_ID);					
 						?>  	 	 	
 						User ID <br><input type='text' name='UserNm' value="<?=$UserNm; ?>" size='50' <?=$disabled; ?> required="required"/><br> 
 						Enter New Password<br> <input type= 'password' name='Passwd' value="" <?=$disabled; ?> required="required"><br> 
 						Nama Lengkap<br> <input type='text' name= 'NamaOperator' value="<?=$NamaOperator; ?>" <?=$disabled; ?> required="required"><br> 
 						NIP Operator <label style="font-size: 10px;">(Hanya Jika Memiliki)</label><br><input type='text' name='NIPOperator' value="<?=$NIPOperator?>" <?=$disabled; ?>><br> 
-						
-						<?php include 'js_dropdown_user.php'; ?>
-						
 						Jabatan Operator<br>
+						<input style="width: 300px;" name="skb_add_skpd" id="skb_add_skpd" type="text" value="<?php echo $uraian ; ?>"  required="required" readonly="readonly"/>
+												<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" value="Pilih" onclick = "showSpoiler(this);">
+												<div class="inner" style="display:none;">
+							<style>
+								.tabel th {
+									background-color: #eeeeee;
+									border: 1px solid #dddddd;
+								}
+								.tabel td {
+									border: 1px solid #dddddd;
+								}
+							</style>
+							<?php
+								//include "$path/function/dropdown/radio_function_skpd.php";
+								$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
+								$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
+								js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"skb_add_skpd","skpd_id",'skpd','skbskpdadd');
+								$style2="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+								radioskpd($style2,"skpd_id",'skpd','skbskpdadd|'.$Satker_ID);
+							?>
+						</div>	
+						<!-- radioskpd($style2,"skpd_id",'skpd','sk|'.$row->ToSatker_ID); -->
+						<?php //include 'js_dropdown_user.php'; ?>
+						
+						<br>
 						<select name="JabatanOperator" <?=$combobox_disable; ?> >
 							<?php
 							if ($user_ses['ses_ajabatan'] == 1)
