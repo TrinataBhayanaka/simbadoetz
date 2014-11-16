@@ -45,7 +45,7 @@ if (isset($_POST['Simpan']))
 	$NamaOperator = $_POST['NamaOperator'];
 	$NIPOperator = $_POST['NIPOperator'];
 	$Satker_ID = $_POST['Satker_ID'];
-            $SKPD_ID=    $_POST['skpd_id'];
+    $SKPD_ID=    intval($_POST['skpd_id']);
 	$JabatanOperator = $_POST['JabatanOperator'];
 	
 
@@ -84,6 +84,7 @@ if (isset($_POST['Simpan']))
 	$query = "INSERT INTO Operator VALUES (
 		  null, '$UserNm', '$Passwd', '$NamaOperator','$JabatanOperator', '$NIPOperator', '$AksesAdmin', '$SKPD_ID', '$menuAkese')";
 	
+	// pr($query);exit;
 	$result = $DBVAR->query($query) or die ($DBVAR->error());
 	if ($result)
 	{
@@ -280,6 +281,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 							if (isset($_GET['i']))
 							{
 								// insert
+
 								$UserNm = ''; 
 								$NamaOperator = '';
 								$NIPOperator = '';
@@ -287,6 +289,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								$AksesAdmin = '';
 								$Satker_ID = '';
 								$disabled = '';
+								$uraian="";
 								//$text = 'Read Only: <u>Jabatan udah digunakan pada tabel Operator.</u><br><br>';
 								$buttonNameLeft = 'Simpan';
 								$buttonNameRight = 'Batal';
