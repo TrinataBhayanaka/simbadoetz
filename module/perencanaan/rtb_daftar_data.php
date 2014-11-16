@@ -9,7 +9,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 if (isset($_POST['submit']))	
 {
 //echo "<pre>";
-//print_r($_POST);
+// print_r($_POST);
 //echo "</pre>";
 
 unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
@@ -18,6 +18,7 @@ $get_data_filter = $RETRIEVE->retrieve_rtb_filter(array('param'=>$_POST, 'menuID
 	    
 }else
 		{
+			
 	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
 		$get_data_filter = $RETRIEVE->retrieve_rtb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'checkbox', 'paging'=>$paging));
 	    }
