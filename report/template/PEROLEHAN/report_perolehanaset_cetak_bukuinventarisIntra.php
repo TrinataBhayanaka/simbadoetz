@@ -21,7 +21,8 @@ $data=array(
 	"tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
     "mode"=>$mode,
-    "tab"=>$tab
+    "tab"=>$tab,
+    "intra"=>"intra"
 );
 
 function arrayToObject($result_query) {
