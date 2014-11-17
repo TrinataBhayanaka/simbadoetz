@@ -11,7 +11,7 @@ while ($dataKontrak = mysql_fetch_assoc($sql)){
             $noKontrak = $dataKontrak;
         }
 
-$updateKontrak = mysql_query("UPDATE kontrak SET n_status = '1' WHERE id = '{$noKontrak['id']}'");
+$updateKontrak = mysql_query("UPDATE kontrak SET n_status = '0' WHERE id = '{$noKontrak['id']}'");
 
 $sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$kontrakID}' AND type = '2'");
 while ($dataSP2D = mysql_fetch_assoc($sql)){
@@ -22,13 +22,18 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
   while ($dataAset = mysql_fetch_assoc($sql)){
               $aset[] = $dataAset;
           }
+//sum total 
+  $sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$noKontrak['noKontrak']}'");
+  while ($sum = mysql_fetch_assoc($sqlsum)){
+        $sumTotal = $sum;
+      }
       
   foreach($aset as $key => $data){
-    $bop = $data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total'];
-    $NilaiPerolehan = $data['NilaiPerolehan'] + $bop;
-    $satuan = intval($data['Satuan']) + ($bop/$data['Kuantitas']);
+    $bop = $data['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'];
+    $satuan = $data['Satuan']-($bop/$data['Kuantitas']);
+    $total = ($data['Satuan']-($bop/$data['Kuantitas']))*$data['Kuantitas'];
 
-    $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
+    $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$total}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
     
     if($data['TipeAset']=="A"){
           $tabel = "tanah";
@@ -46,7 +51,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           $tabel = "aset";
       }
 
-      $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = '1' WHERE Aset_ID = '{$data['Aset_ID']}'");
+      $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = NULL WHERE Aset_ID = '{$data['Aset_ID']}'");
   }
 
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";

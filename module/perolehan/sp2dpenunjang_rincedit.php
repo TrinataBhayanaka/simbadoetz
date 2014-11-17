@@ -110,7 +110,7 @@ $menu_id = 1;
 				 <div class="formKontrak">
 						
 						<ul>
-							<?php selectRekening('kdRekening','255',true,false); ?><br />
+							<?php selectRekening('kdRekening','205',true,false); ?><br />
 							<li>
 								<span class="span2">Jumlah</span>
 								<input type="text" name="jumlah" />

@@ -45,10 +45,12 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 			});
 			if(idnumber[0] == "min")
 			{
-				$("#max_"+idnumber[1]).attr('min',$(item).val());
+				$("#max_"+idnumber[1]).val($("#max_"+idnumber[1]).attr('max'));
+				// $("#max_"+idnumber[1]).attr('min',$(item).val());
 			} else
 			{
-				$("#min_"+idnumber[1]).attr('max',$(item).val());
+				$("#min_"+idnumber[1]).val($("#min_"+idnumber[1]).attr('min'));
+				// $("#min_"+idnumber[1]).attr('max',$(item).val());
 			}	
 
 		}
@@ -64,7 +66,7 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 			</ul>
 			<div class="breadcrumb">
 				<div class="title">Daftar Aset</div>
-				<div class="subtitle">Pilih Aset Untuk Kapitalisasi</div>
+				<div class="subtitle">Pilih Aset Untuk Distribusi</div>
 			</div>	
 
 		<section class="formLegend">

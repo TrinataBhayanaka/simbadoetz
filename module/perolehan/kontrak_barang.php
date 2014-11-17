@@ -23,7 +23,7 @@ $menu_id = 10;
 			}
 
 	//get data
-	$RKsql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
+	$RKsql = mysql_query("SELECT kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
 	while ($dataRKontrak = mysql_fetch_array($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -185,7 +185,7 @@ $menu_id = 10;
 						<?php
 							if($kontrak[0]['n_status'] != 1){
 						?>
-						<a href="kontrak_rincianhapus.php?id=<?=$value['Aset_ID']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i></a></td>
+						<a href="kontrak_rincianhapus.php?idKel=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i></a></td>
 						<?php
 						} else {
 							echo "<span class='label label-Success'>Sudah di posting</span>";
