@@ -132,6 +132,7 @@ class DB
 	
 	public function error()
 	{
+
 		$message = 'Your query error, please check again';
 		return $message;
 	}
