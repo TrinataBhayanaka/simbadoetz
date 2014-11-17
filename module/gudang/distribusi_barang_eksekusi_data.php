@@ -17,7 +17,7 @@ include "../../config/config.php";
 	    {
 	      $dataArr = $STORE->store_edit_transfer($_POST,$_POST['id']);
 	    }
-	    	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/gudang/distribusi_barang.php\">";
+	    	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/gudang/distribusi_rinc.php?id={$dataArr['id']}\">";
 	    	exit;
 	  }
 

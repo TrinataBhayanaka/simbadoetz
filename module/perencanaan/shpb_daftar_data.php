@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PERENCANAAN = new RETRIEVE_PERENCANAAN;
+
 $menu_id = 3;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
@@ -15,12 +18,12 @@ $paging = $LOAD_DATA->paging($_GET['pid']);
 		unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
 						
 		// parameter yang dimasukan adalah menuID, type, post dan paging
-		$get_data_filter = $RETRIEVE->retrieve_harga_barang_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+		// $get_data_filter = $RETRIEVE->retrieve_harga_barang_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 		
 	    }else
 		{
 	    $sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_harga_barang_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+		// $get_data_filter = $RETRIEVE->retrieve_harga_barang_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 	    }
 ?>
 <?php
@@ -28,6 +31,9 @@ $paging = $LOAD_DATA->paging($_GET['pid']);
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	$_POST['menuID'] = 3;
+	$get_data_filter = $PERENCANAAN->retrieve_harga_barang_filter($_POST);
+
 			?>
 
 
@@ -111,17 +117,17 @@ $paging = $LOAD_DATA->paging($_GET['pid']);
 							 <table align="center" width="100%">
 								<tr>
 									<td width="20%">Nama/Jenis Barang</td>
-									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
+									<td><?php echo show_kelompok($hsl_data['Kelompok_ID']);?></td>
 								</tr>
 								<tr>
 									<td>Merk/Tipe</td>
-									<td><?php echo $hsl_data->Merk;?></td>
+									<td><?php echo $hsl_data['Merk'];?></td>
 								</tr>
 								<tr>
 									<td width="20%">Tanggal</td>
 									<td>
 									<?php 
-									$tanggal=explode("-",$hsl_data->TglUpdate);
+									$tanggal=explode("-",$hsl_data['TglUpdate']);
 									$tgl=$tanggal[2]."/".$tanggal[1]."/".$tanggal[0];
 									echo $tgl;
 									?>		
@@ -129,30 +135,30 @@ $paging = $LOAD_DATA->paging($_GET['pid']);
 								</tr>
 								<tr>
 									<td>Spesifikasi</td>
-									<td><?php echo $hsl_data->Spesifikasi;?></td>
+									<td><?php echo $hsl_data['Spesifikasi'];?></td>
 								</tr>
 								<tr>
 									<td>Satuan</td>
-									<td><?php echo $hsl_data->Satuan;?></td>
+									<td><?php echo $hsl_data['Satuan'];?></td>
 								</tr>
 								<tr>
 									<td>Keterangan</td>
-									<td><?php echo $hsl_data->Keterangan;?></td>
+									<td><?php echo $hsl_data['Keterangan'];?></td>
 								</tr>
 								<tr>
 									<td>Harga</td>
-								<td><?php echo  number_format($hsl_data->NilaiStandar,2,',','.')?></td> 
+								<td><?php echo  number_format($hsl_data['NilaiStandar'],2,',','.')?></td> 
 								</tr>
 							</table>
 						</td>
-						<td><?php echo  number_format($hsl_data->Pemeliharaan,2,',','.')?></td>
+						<td><?php echo  number_format($hsl_data['Pemeliharaan'],2,',','.')?></td>
 						<td>	
-								<form method="POST" action="shpb_edit_data.php?pid=1" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
-									<input type="hidden" name="ID" value="<?php echo $hsl_data->StandarHarga_ID;?>" id="ID_<?php echo $i?>">
+								<form method="POST" action="shpb_edit_data.php?pid=1" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data['Kelompok_ID']);?> ini ingin diedit?'); ">
+									<input type="hidden" name="ID" value="<?php echo $hsl_data['StandarHarga_ID'];?>" id="ID_<?php echo $i?>">
 									<input type="submit" value="Edit" class="btn btn-success" name="edit"/>
 								</form>
-								<form method="POST" action="shpb-proses.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin dihapus?'); ">
-									<input type="hidden" name="ID" value="<?php echo $hsl_data->StandarHarga_ID;?>" id="ID_<?php echo $i?>">
+								<form method="POST" action="shpb-proses.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data['Kelompok_ID']);?> ini ingin dihapus?'); ">
+									<input type="hidden" name="ID" value="<?php echo $hsl_data['StandarHarga_ID'];?>" id="ID_<?php echo $i?>">
 									<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
 								</form>
 						</td>

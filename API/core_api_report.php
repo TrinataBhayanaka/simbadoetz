@@ -198,6 +198,7 @@ class core_api_report extends DB {
 			{
 				$query_tahun=" M.Tahun <= '$tahun' ";
 				$query_satker_fix = " M.kodeSatker='$skpd_id'";
+
 			}
 			if($kib =='KIB-C')
 			{
@@ -322,7 +323,7 @@ class core_api_report extends DB {
 						$dataRow2Kel[]=$proses_kode_kel['Kode'];
 					}
 					if($dataRow2Kel!=""){
-						$query_kelompok_fix =" kodeKelompok = '".$dataRow2Kel[0]."'";
+						$query_kelompok_fix =" kodeKelompok like '".$dataRow2Kel[0]."%'";
 					}
 				}
 				
@@ -361,6 +362,7 @@ class core_api_report extends DB {
 				}
 			}
 			
+
 			// echo $query_tahun;
 			// echo "<br>";
 			// echo $query_satker_fix;
@@ -391,8 +393,8 @@ class core_api_report extends DB {
             if ($kelompok!="" && $parameter_sql==""){
             $parameter_sql=$query_kelompok_fix;
             } 
-            $limit="limit 20";
-			echo $parameter_sql;
+            //$limit="limit 20";
+			//echo $parameter_sql;
 			
 			// exit;
 			
@@ -4637,7 +4639,7 @@ class core_api_report extends DB {
 				$res = mysql_query($sql);
 				$register=array();
 
-				while($d = mysql_fetch_assoc($res)){
+				while($d = @mysql_fetch_assoc($res)){
 				  
 					$register[]= $d['noRegister'];
 				}

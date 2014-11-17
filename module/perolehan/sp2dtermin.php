@@ -174,7 +174,7 @@ $menu_id = 1;
 							if($kontrak[0]['n_status'] != 1){
 						?>	
 							<a href="sp2dterminedit.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-success btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
-							<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Kontrak?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
+							<a href="sp2dterminhapus.php?id=<?=$kontrak[0]['id']?>&idsp2d=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus SP2D?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a></td>
 						<?php
 						} else {
 							echo "<span class='label label-Success'>Sudah di posting</span>";

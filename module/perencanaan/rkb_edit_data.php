@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PERENCANAAN = new RETRIEVE_PERENCANAAN;
+
 $menu_id = 5;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
@@ -12,23 +15,23 @@ if (isset($_POST['edit']))
 		unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
 						
 		// parameter yang dimasukan adalah menuID, type, post dan paging
-		$get_data_filter = $RETRIEVE->retrieve_rkb_edit(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
-		
+		// $get_data_filter = $RETRIEVE->retrieve_rkb_edit(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+		$get_data_filter = $PERENCANAAN->retrieve_rkb_filter($_POST);
 	    }
 
 foreach ($get_data_filter as $key => $hsl_data)
 
 //while($hsl_data=mysql_fetch_array($exec))
 {
-	$select_tahun	= $hsl_data->Tahun;
-	$select_skpd	= $hsl_data->Satker_ID;
-	$select_lokasi	= $hsl_data->Lokasi_ID;
-	$select_njb		= $hsl_data->Kelompok_ID;
-	$select_merk	= $hsl_data->Merk;
+	$select_tahun	= $hsl_data['Tahun'];
+	$select_skpd	= $hsl_data['Satker_ID'];
+	$select_lokasi	= $hsl_data['Lokasi_ID'];
+	$select_njb		= $hsl_data['Kelompok_ID'];
+	$select_merk	= $hsl_data['Merk'];
 	$select_korek	= $hsl_dataKodeRekening;
-	$select_jml		= $hsl_data->Kuantitas;
-	$Pemeliharaan 	= $hsl_data->Pemeliharaan ;
-	$select_thrg	= $hsl_data->NilaiAnggaran;
+	$select_jml		= $hsl_data['Kuantitas'];
+	$Pemeliharaan 	= $hsl_data['Pemeliharaan'] ;
+	$select_thrg	= $hsl_data['NilaiAnggaran'];
 }
 ?>
 

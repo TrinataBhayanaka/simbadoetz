@@ -37,6 +37,7 @@ require_once "$path/API/retrieve_koreksi.php";
 require_once "$path/API/retrieve_katalog.php";
 require_once "$path/API/retrieve_inventarisasi.php";
 require_once "$path/API/retrieve_gudang.php";
+require_once "$path/API/retrieve_penyusutan.php";
 require_once "$path/function/helper_filter.php";
 /* End Add */
 
@@ -96,7 +97,7 @@ $STORE = new STORE();
 $DELETE = new DELETE();
 $UPDATE = new UPDATE();
 $LOAD_DATA = new LOAD_DATA();
-
+$PENYUSUTAN=new RETRIEVE_PENYUSUTAN();
 
 $tes = $HELPER_FILTER->getAsetUser($data);
 

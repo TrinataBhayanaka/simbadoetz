@@ -163,38 +163,6 @@ class DELETE extends DB
 	
 	
 	//GUDANG
-    public function delete_distribusi_barang($aset)
-    {
-		$sql = "SELECT
-					Aset_ID
-				FROM
-					Transfer
-				WHERE
-					NoDokumen='$aset'";
-		$exec = $this->query($sql) or die($this->error());
-        while ($data = $this->fetch_object($exec))
-        {
-            $dataArr[] = $data->Aset_ID;
-        }
-                
-        foreach ($dataArr as $value)
-        {
-        $query = "delete from Transfer where Aset_ID='$value'";
-		$query2= "update Aset SET OriginDBSatker = 0, Status_Validasi_Barang=0, LastSatker_ID=0 where Aset_ID='$value'";
-        $result = $this->query($query) or die ($this->error);
-		$result2 = $this->query($query2) or die ($this->error);
-		}
-        if ($result)
-        {
-            return true;
-        
-        }
-        else
-        {
-            return false;
-        }
-		
-    }
     
 	public function delete_gudang_pemeriksaan($aset,$gudang_id)
     {
@@ -640,93 +608,53 @@ class DELETE extends DB
     
     
     }
-    public function delete_aset($data,$id,$idkontrak)
+    public function delete_aset($data)
     {
 
         global $url_rewrite;
 
         // pr($data);exit;
-        $query = "DELETE FROM aset WHERE Aset_ID = '{$id}'";
-        $result = $this->query($query) or die ($this->error());
-
-        $data['last_aset_id'] = $data['Aset_ID'];
-        $data['action'] = 'delete';
-        $data['changeDate'] = date('Y/m/d');
-        $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
 
         foreach ($data as $key => $val) {
-            $tmplogfield[] = $key;
-            $tmplogvalue[] = "'$val'";
-        }
-        $fieldlog = implode(',', $tmplogfield);
-        $valuelog = implode(',', $tmplogvalue);
+            $query = "DELETE FROM aset WHERE Aset_ID = '{$val['Aset_ID']}'";
+            $result = $this->query($query) or die ($this->error());
 
-        $query_log = "INSERT INTO log_aset ({$fieldlog}) VALUES ({$valuelog})";
-        // pr($query_log);exit;
-        $result=  $this->query($query_log) or die($this->error()); 
-        
-        if($data['TipeAset']=="A"){
+            if($val['TipeAset']=="A"){
                 $tabel = "tanah";
                 $logtabel = "log_tanah";
                 $idkey = "Tanah_ID";
-            } elseif ($data['TipeAset']=="B") {
+            } elseif ($val['TipeAset']=="B") {
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
-            } elseif ($data['TipeAset']=="C") {
+            } elseif ($val['TipeAset']=="C") {
                 $tabel = "bangunan";
                 $logtabel = "log_bangunan";
                 $idkey = "Bangunan_ID";
-            } elseif ($data['TipeAset']=="D") {
+            } elseif ($val['TipeAset']=="D") {
                 $tabel = "jaringan";
                 $logtabel = "log_jaringan";
                 $idkey = "Jaringan_ID";
-            } elseif ($data['TipeAset']=="E") {
+            } elseif ($val['TipeAset']=="E") {
                 $tabel = "asetlain";
                 $logtabel = "log_asetlain";
                 $idkey = "AsetLain_ID";
-            } elseif ($data['TipeAset']=="F") {
+            } elseif ($val['TipeAset']=="F") {
                 $tabel = "kdp";
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
-            } elseif ($data['TipeAset']=="G") {
+            } elseif ($val['TipeAset']=="G") {
                 return true;
                 exit;
             }
 
-             $sql = mysql_query("SELECT * FROM {$tabel} WHERE Aset_ID = '{$id}'");
-                while ($dataAset = mysql_fetch_assoc($sql)){
-                    $log[] = $dataAset;
-                }
-
-            // pr($log);
-
-            $query = "DELETE FROM {$tabel} WHERE Aset_ID = '{$id}'";
+            $query = "DELETE FROM {$tabel} WHERE Aset_ID = '{$val['Aset_ID']}'";
             $result = $this->query($query) or die ($this->error());
 
-            foreach ($log as $key => $value) {
-                $log[$key]['action'] = 'delete';
-                $log[$key]['changeDate'] = date('Y/m/d');
-                $log[$key]['operator'] = "{$_SESSION['ses_uoperatorid']}";
-
-                unset($tmplogfield);
-                unset($tmplogvalue);
-
-                foreach ($log[$key] as $key2 => $val) {
-                    $tmplogfield[] = $key2;
-                    $tmplogvalue[] = "'$val'";
-                }
-                $fieldlog = implode(',', $tmplogfield);
-                $valuelog = implode(',', $tmplogvalue);
-
-                $query_log = "INSERT INTO {$logtabel} ({$fieldlog}) VALUES ({$valuelog})";
-                
-                $result=  $this->query($query_log) or die($this->error());
-
-            }
-
-            $query = "DELETE FROM kapitalisasi WHERE asetKapitalisasi = '{$id}'";
+            //kapitalisasi and kdp
+            $query = "DELETE FROM kapitalisasi WHERE asetKapitalisasi = '{$val['Aset_ID']}'";
             $result = $this->query($query) or die ($this->error());
+        }
 
 
             return true;
@@ -735,6 +663,51 @@ class DELETE extends DB
     
     
     }
+
+    public function delete_trs_rinc($id,$idtrs)
+    {
+        // pr($data);exit;
+
+        $sql = mysql_query("SELECT * FROM transferaset WHERE id = '{$id}' AND transfer_id = '{$idtrs}'");
+        while ($dataAset = mysql_fetch_assoc($sql)){
+            $data = $dataAset;
+        } 
+
+        $sql = "UPDATE {$data['tipeaset']} SET Status_Validasi_Barang = NULL WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$data['kodeLokasi']}' AND noRegister BETWEEN {$data['noReg_awal']} AND {$data['noReg_akhir']}";
+        $result = $this->query($sql) or die ($this->error());
+
+        $query = "DELETE FROM transferaset WHERE id = '{$data['id']}'";
+        $result = $this->query($query) or die ($this->error());
+
+        return true;
+        exit;
+    }
+
+    public function delete_distribusi_barang($id)
+    {
+
+        $sql = mysql_query("SELECT * FROM transferaset WHERE transfer_id = '{$id}'");
+        while ($dataAset = mysql_fetch_assoc($sql)){
+            $data[] = $dataAset;
+        }
+         // pr($data);exit;
+        foreach ($data as $key => $value) {
+            $sql = "UPDATE {$value['tipeaset']} SET Status_Validasi_Barang = NULL WHERE kodeKelompok = '{$value['kodeKelompok']}' AND kodeLokasi = '{$value['kodeLokasi']}' AND noRegister BETWEEN {$value['noReg_awal']} AND {$value['noReg_akhir']}";
+            $result = $this->query($sql) or die ($this->error());
+
+            $query = "DELETE FROM transferaset WHERE id = '{$value['id']}'";
+            $result = $this->query($query) or die ($this->error());
+        }
+
+        $sql = "DELETE FROM transfer WHERE id = '{$id}'";
+        $result = $this->query($sql) or die ($this->error());  
+
+        return true;
+        exit; 
+
+    }    
+
+
 
 	
 }

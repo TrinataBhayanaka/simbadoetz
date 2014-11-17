@@ -6,12 +6,12 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 
-	 $sql = mysql_query("SELECT * FROM aset WHERE Aset_ID = '{$_GET['id']}'");
+	 $sql = mysql_query("SELECT * FROM aset WHERE kodeKelompok = '{$_GET['idKel']}' AND kodeLokasi = '{$_GET['idLok']}'");
 	    while ($dataAset = mysql_fetch_assoc($sql)){
 	        $aset[] = $dataAset;
-	    }
+	    } 
 
-	$dataArr = $DELETE->delete_aset($aset[0],$_GET['id'],$_GET['tmpthis']);
+	$dataArr = $DELETE->delete_aset($aset);
 
 	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$_GET['tmpthis']}\">";
 

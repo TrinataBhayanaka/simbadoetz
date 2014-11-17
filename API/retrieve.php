@@ -2237,7 +2237,7 @@ class RETRIEVE extends DB
 		
 		$datasatker = implode(',',$Satker_ID);
 		
-		print_r($datasatker);
+		// print_r($datasatker);
 		}
 		elseif($kodesatker!= null && $kodeunit == null)
 		{
@@ -2255,13 +2255,13 @@ class RETRIEVE extends DB
 		
 		$datasatker = implode(',',$Satker_ID);
 		
-		print_r($datasatker);
+		// print_r($datasatker);
 		}
 		elseif($kodesatker!= null && $kodeunit != null)
 		{
 		$datasatker=$rtb_skpd;
 		
-		print_r($datasatker);
+		// print_r($datasatker);
 		}
 	}
 	
@@ -9672,7 +9672,7 @@ $offset = @$_POST['record'];
 
     public function retrieve_distribusiBarang($data)
     {
-        // pr($data);exit;
+        // pr($_SESSION);exit;
         $clrdata = array_filter($data);
         foreach ($clrdata as $key => $val) {
             $tmpsetval[] = $key."='$val'";
@@ -9680,7 +9680,7 @@ $offset = @$_POST['record'];
         $setval = implode(' AND ', $tmpsetval);
 
         if($setval == "") $setval = 1;
-        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' ORDER BY id DESC");
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     $transfer[] = $dataTrs;
                 }
@@ -9703,7 +9703,7 @@ $offset = @$_POST['record'];
         $setval = implode(' AND ', $tmpsetval);
 
         if($setval == "") $setval = 1;
-        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} ORDER BY id DESC");
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     $transfer[] = $dataTrs;
                 }

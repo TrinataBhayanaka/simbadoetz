@@ -150,11 +150,108 @@ function selectRekening($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Rekening </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:50px"/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
 	</li>
 	
 	
 	<?php
+
+}
+
+function selectRekening2($name,$size=300,$br=false,$upd=false){
+
+	global $url_rewrite;
+	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+
+	$sql = mysql_query("SELECT * FROM koderekening WHERE Kelompok IS NULL AND Jenis IS NULL AND Objek IS NULL AND RincianObjek IS NULL");
+	while ($dataRek = mysql_fetch_assoc($sql)){
+                    $tipe[] = $dataRek;
+                }
+	?>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#tipe,#kelompok,#jenis,#objek,#rincian").select2({
+				placeholder: "Pilih Kode Rekening",
+               	dropdownAutoWidth: 'true'
+			});	
+		});	
+
+		function autoLocation(name,dest){  
+            //get the id  
+            var idLocation = $('#'+name).val();  
+			if(idLocation==''){
+				$('#'+dest)
+					.find('option')
+					.remove()
+					.end()
+				;
+			}
+            //use ajax to run the check
+			if(idLocation != 0)
+			{
+				$.post(basedomain+"dok_perencanaan/ajax", { idLocation: idLocation},  
+					function(data){
+					var locType = $('#'+dest);
+					$('#'+dest)
+						.find('option')
+						.remove()
+						.end()
+					;
+					locType.append("<option value=''>--</option>")
+					for(i=0;i<data.length;i++){
+						locType.append("<option value='" + data[i].kode_wilayah+ "_"+ data[i].nama_wilayah +"'>" + data[i].nama_wilayah + "</option>")
+					}
+				}, "JSON");
+			}
+    }
+	</script>
+
+	<li>
+		<span class="<?=$span?>">Kode Rekening </span><?=$enter?>
+		<select id="tipe" type="hidden" style="width:50px" >
+		<?php
+			foreach ($tipe as $key => $value) {
+				echo "<option value='{$value['Tipe']}'>{$value['Tipe']} {$value['NamaRekening']}</option>";
+			}
+		?>	
+		</select>
+		.
+		<select id="kelompok" type="hidden" style="width:50px">
+		<?php
+			foreach ($tipe as $key => $value) {
+				echo "<option value='{$value['Tipe']}'>{$value['Tipe']} {$value['NamaRekening']}</option>";
+			}
+		?>	
+		</select>
+		.
+		<select id="jenis" type="hidden" style="width:50px">
+		<?php
+			foreach ($tipe as $key => $value) {
+				echo "<option value='{$value['Tipe']}'>{$value['Tipe']} {$value['NamaRekening']}</option>";
+			}
+		?>	
+		</select>
+		.
+		<select id="objek" type="hidden" style="width:50px">
+		<?php
+			foreach ($tipe as $key => $value) {
+				echo "<option value='{$value['Tipe']}'>{$value['Tipe']} {$value['NamaRekening']}</option>";
+			}
+		?>	
+		</select>
+		.
+		<select id="rincian" type="hidden" style="width:50px">
+		<?php
+			foreach ($tipe as $key => $value) {
+				echo "<option value='{$value['Tipe']}'>{$value['Tipe']} {$value['NamaRekening']}</option>";
+			}
+		?>	
+		</select>
+	</li>
+
+	<?php
+	
 
 }
 

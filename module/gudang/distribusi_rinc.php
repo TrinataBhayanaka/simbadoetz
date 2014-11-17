@@ -120,7 +120,7 @@ $menu_id = 10;
 						<?php
 							if($transfer[0]['n_status'] != 1){
 						?>
-						<a href="kontrak_rincianhapus.php?id=<?=$value['Aset_ID']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+						<a href="gudang_rincianhapus.php?id=<?=$value['id']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
 						<?php
 						} else {
 							echo "<span class='label label-Success'>Sudah di validasi</span>";
