@@ -24,12 +24,12 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			{
 				unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 				$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
-				$data = $RETRIEVE->retrieve_validasi_penghapusan($parameter);
+				// $data = $RETRIEVE->retrieve_validasi_penghapusan($parameter);
 			} else{
 
 				$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
 				$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
-				$data = $RETRIEVE->retrieve_validasi_penghapusan($parameter);
+				// $data = $RETRIEVE->retrieve_validasi_penghapusan($parameter);
 			}
             // echo '<pre>';
             // print_r($data);
@@ -55,7 +55,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	
 	
 	pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_validasi_penghapusan($_POST,1);
+	$data = $PENGHAPUSAN->retrieve_validasi_penghapusan($_POST);
 	pr($data);
 	
 			?>
@@ -157,13 +157,14 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			
 			
 			<div id="demo">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses.php">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
 						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
 						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-						<td align="right">
-						<span><input type="submit" name="submit" value="Validasi Barang" id="submit" disabled/></span>
+						<td align="right" colspan="3">
+						<span><input type="submit" name="submit" class="btn" value="Validasi Barang" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
@@ -183,10 +184,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					}else{
 						$no = 1;
 					}
-					if (!empty($data['dataArr']))
+					if (!empty($data))
 					{
 						
-					foreach($data['dataArr'] as $key => $value)
+					foreach($data as $key => $value)
 					{    
 							?>
 					<tr class="gradeA">
@@ -228,6 +229,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					</tr>
 				</tfoot>
 			</table>
+			</form>
 			</div>
 			<div class="spacer"></div>
 			

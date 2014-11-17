@@ -2,6 +2,8 @@
 
 include "../../config/config.php"; 
 
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+
 $menu_id = 39;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
@@ -15,21 +17,24 @@ $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di impl
 $nmaset=$_POST['penghapusan_nama_aset'];
 $ses_uid=$_SESSION[ses_uid];
 $penghapusan_id=get_auto_increment("penghapusan");
-// pr($_POST);
+pr($_POST);
 // pr($nmaset);
 // exit;
-    $data=$STORE->store_penetapan_penghapusan
-    (
-            $no,
-            $tgl,
-            $olah_tgl,
-            $keterangan,
-            $UserNm,
-            $nmaset,
-            $ses_uid,
-            $penghapusan_id
-    );
 
+    // $data=$STORE->store_penetapan_penghapusan
+    // (
+            // $no,-
+            // $tgl,-
+            // $olah_tgl,
+            // $keterangan,-
+            // $UserNm,
+            // $nmaset,-
+            // $ses_uid,
+            // $penghapusan_id
+    // );
+		pr($_POST);
+		$data = $PENGHAPUSAN->store_penetapan_penghapusan($_POST);
+        
 
 /*
 $asset_id=Array();
@@ -70,6 +75,7 @@ for($i=0;$i<$panjang;$i++){
 $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='PenetapanPenghapusan' AND UserSes='$_SESSION[ses_uid]'";
 $exec_hapus=  mysql_query($query_hapus_apl) or die(mysql_error());
 */
+
 echo "<script>alert('Data Berhasil Disimpan'); document.location='penetapan_penghapusan_daftar_isi.php?pid=1';</script>";
 
 

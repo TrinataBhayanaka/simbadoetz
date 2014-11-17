@@ -1,0 +1,100 @@
+<?php
+include "../../config/config.php";
+
+        $menu_id = 38;
+        $SessionUser = $SESSION->get_session_user();
+        ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+        $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+		
+		$resetDataView = $DBVAR->is_table_exists('penghapusan_filter_'.$SessionUser['ses_uoperatorid'], 0);
+?>
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+	
+?>
+			<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/script.js"></script>
+			<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/tabel.js"></script>
+			<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/simbada.js"></script>
+			<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/simbada.js"></script>
+			<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
+			<script type="text/javascript" src="<?php echo "$url_rewrite/";?>JS/ajax_checkbox.js"></script>
+	<section id="main">
+		<ul class="breadcrumb">
+		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li class="active">Daftar Usulan Penghapusan Pemusnahan</li>
+		  <?php SignInOut();?>
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Daftar Usulan Penghapusan Pemusnahan</div>
+			<div class="subtitle">Filter Data</div>
+		</div>
+		<section class="formLegend">
+			
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pms.php?pid=1">
+			<ul>
+							<li>
+								<span class="span2">ID Aset (System ID)</span>
+								<input type='text' style="width: 200px;" name="bup_idaset" placeholder=""/>
+							</li>
+							<li>
+								<span class="span2">Nama Aset</span>
+								<input type='text' style="width: 480px;" name="bup_namaaset" placeholder=""/>
+							</li>
+							<li>
+								<span class="span2">Nomor Kontrak</span>
+								<input type='text' style="width: 200px;" name="bup_nokontrak" placeholder=""/>
+							</li>
+							<li>
+								<span class="span2">Tahun Perolehan</span>
+								<input type='text'  name="bup_tahun" placeholder=""/>
+							</li>
+							<?=selectAset('kodeKelompok',$width='205',$br=true,false)?>
+                            <li>&nbsp;</li>
+							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                            <li>&nbsp;</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+							</li>
+						</ul>
+						<table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

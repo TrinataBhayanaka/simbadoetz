@@ -31,6 +31,164 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($res) return $res;
         return false;
     }
+	   public function retrieve_usulan_penghapusan_pmd($data,$debug=false)
+    {
+            
+        $jenisaset = $data['jenisaset'];
+        $nokontrak = $data['nokontrak'];
+        $kodeSatker = $data['kodeSatker'];
+
+        $filterkontrak = "";
+        if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+  
+
+        $sql = array(
+                'table'=>'penggunaan as a, Aset AS b',
+                'field'=>"b.*",
+                'condition' => "a.FixPenggunaan = 1 AND a.Status=1 AND a.NotUse=1 {$filterkontrak}",
+                'joinmethod' => ' LEFT JOIN ',
+                'join' => 'a.Penggunaan_ID = b.Aset_ID'
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+		   public function retrieve_usulan_penghapusan_pms($data,$debug=false)
+    {
+            
+        $jenisaset = $data['jenisaset'];
+        $nokontrak = $data['nokontrak'];
+        $kodeSatker = $data['kodeSatker'];
+
+        $filterkontrak = "";
+        if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+  
+
+        $sql = array(
+                'table'=>'Aset AS b,Kelompok AS c,Satker AS d',
+                'field'=>"b.*,c.*,d.*",
+                'condition' => "b.FixPenggunaan = 1 {$filterkontrak}",
+                'joinmethod' => ' LEFT JOIN ',
+                'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+	 public function retrieve_usulan_penghapusan_eksekusi_pms($data,$debug=false)
+    {
+		// pr($data);
+		$id = $data[penghapusanfilter];
+		$cols = implode(', ',array_values($id));
+		pr($cols);
+		$jenisaset = $data['jenisaset'];
+        $nokontrak = $data['nokontrak'];
+        $kodeSatker = $data['kodeSatker'];
+
+        $filterkontrak = "";
+        if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+  
+
+        $sql = array(
+                'table'=>'Aset AS a,Satker AS e, Kelompok AS g',
+                'field'=>"a.*,e.*, g.*",
+                'condition' => "a.Aset_ID IN ($cols) {$filterkontrak}",
+                'joinmethod' => ' LEFT JOIN ',
+                'join' => 'a.KodeSatker=e.Kode,a.kodeKelompok=g.Kode'
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+		/*$uname = $_SESSION['ses_uname'];
+		// $sql = "UPDATE apl_userasetlist SET aset_list = '$cols' WHERE aset_action = 'penghapusanfilter[]' AND UserNm='$uname'";
+		//pr($sql);
+		$exec = $this->query($sql) or die ($this->error());
+        $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'penghapusanfilter[]' AND UserNm='$uname'";
+        //print_r($query);
+        $result = $this->query($query) or die ($this->error());
+
+        $numRows = $this->num_rows($result);
+        if ($numRows)
+        {
+            $dataID = $this->fetch_object($result);
+        }
+        $explodeID = explode(',',$dataID->aset_list);
+		$explodeID = array_unique($explodeID);
+        $id=0;
+        foreach($explodeID as $value)
+        {
+            //$$key = $value;
+            $query = "SELECT a.Aset_ID,a.LastSatker_ID,a.TglPerolehan, a.AsetOpr, a.Kuantitas, a.Satuan,a.OrigSatker_ID,a.Ruangan, 
+			a.SumberAset, a.NilaiPerolehan,a.Alamat, a.RTRW, a.Pemilik, a.NomorReg, a.NamaAset,a.TglPerolehan,
+			c.NoKontrak, e.NamaSatker, e.KodeSatker, f.NamaLokasi, g.Kode,g.Uraian
+            FROM Aset AS a 
+            LEFT JOIN KontrakAset AS d  ON a.Aset_ID = d.Aset_ID
+            LEFT JOIN Kontrak AS c ON c.Kontrak_ID = d.Kontrak_ID
+            INNER JOIN Lokasi AS f  ON a.Lokasi_ID=f.Lokasi_ID
+            INNER JOIN Satker AS e ON a.LastSatker_ID=e.Satker_ID
+            INNER JOIN Kelompok AS g ON a.Kelompok_ID=g.Kelompok_ID
+            WHERE a.Aset_ID = '$value' limit 1";
+			// print_r($query);
+			$result = $this->query($query) or die($this->error());
+			while($data = $this->fetch_object($result))
+			{
+				$dataArr[]=$data;
+			}
+			
+        }
+        return array('dataArr'=>$dataArr);*/
+    }
+	 public function retrieve_usulan_penghapusan_eksekusi_tampil_pms($data,$debug=false)
+    {
+        /*$query="SELECT b.Usulan_ID, a.NamaAset, a.NomorReg, b.Aset_ID FROM Aset a, UsulanAset b 
+						WHERE 
+						b.Aset_ID=a.Aset_ID AND b.Usulan_ID='$parameter[usulan_id]'";*/
+		$jenisaset = $data['jenisaset'];
+        $nokontrak = $data['nokontrak'];
+        $kodeSatker = $data['kodeSatker'];
+
+        $filterkontrak = "";
+        if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+  
+
+        $sql = array(
+                'table'=>'usulanaset AS b,aset AS a,Satker AS e ,Kelompok AS g',
+                'field'=>"a.*, e.NamaSatker, e.KodeSatker, g.Kode,g.Uraian",
+                'condition' => "b.Usulan_ID='$data[usulan_id]' {$filterkontrak}",
+                'joinmethod' => ' LEFT JOIN ',
+                'join' => 'a.Aset_ID = b.Aset_ID, a.KodeSatker=e.kode, a.kodeKelompok=g.Kode'
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+		
+		/*$query = "SELECT a.Aset_ID,a.LastSatker_ID,a.TglPerolehan, a.AsetOpr, a.Kuantitas, a.Satuan,a.OrigSatker_ID,a.Ruangan, 
+			a.SumberAset, a.NilaiPerolehan,a.Alamat, a.RTRW, a.Pemilik, a.NomorReg, a.NamaAset,a.TglPerolehan,
+			c.NoKontrak, e.NamaSatker, e.KodeSatker, f.NamaLokasi, g.Kode,g.Uraian
+            FROM usulanaset AS b
+			INNER JOIN aset AS a ON a.Aset_ID = b.Aset_ID
+            LEFT JOIN KontrakAset AS d  ON a.Aset_ID = d.Aset_ID
+            LEFT JOIN Kontrak AS c ON c.Kontrak_ID = d.Kontrak_ID
+            INNER JOIN Lokasi AS f  ON a.Lokasi_ID=f.Lokasi_ID
+            INNER JOIN Satker AS e ON a.LastSatker_ID=e.Satker_ID
+            INNER JOIN Kelompok AS g ON a.Kelompok_ID=g.Kelompok_ID
+            WHERE b.Usulan_ID='$parameter[usulan_id]' ";		
+        
+		$exec=  $this->query($query) or die($this->error());
+        while($data=$this->fetch_object($exec)){
+            $dataArr[]=$data;
+        }
+        
+        return array('dataArr'=>$dataArr);*/
+    }
     public function retrieve_daftar_usulan_penghapusan($data,$debug=false)
     {
 	
@@ -302,9 +460,29 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         return array('dataArr'=>$dataArr,'count'=>$check);*/
     }
 	
-	 public function retrieve_penetapan_penghapusan_filter($parameter)
+	 public function retrieve_penetapan_penghapusan_filter($data,$debug=false)
     {
-					
+			$jenisaset = $data['jenisaset'];
+			$nokontrak = $data['nokontrak'];
+			$kodeSatker = $data['kodeSatker'];
+
+			$filterkontrak = "";
+			if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+			if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+	  
+
+			$sql = array(
+					'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
+					'field'=>"a.*, b.Aset_ID, e.NamaSatker, f.NamaLokasi, g.Kode",
+					'condition' => "StatusValidasi = 1 AND Status_Validasi_Barang=1 {$filterkontrak}",
+					'joinmethod' => ' LEFT JOIN ',
+					'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.Satker_ID,a.kodeKelompok=g.Kelompok_ID'
+					);
+
+			$res = $this->db->lazyQuery($sql,$debug);
+			if ($res) return $res;
+			return false;
+			/*
 			$data['kd_idaset'] = $parameter['param']['bup_pp_sp_asetid'];
 			$data['kd_namaaset'] = $parameter['param']['bup_pp_sp_namaaset'];
 			$data['kd_nokontrak'] = $parameter['param']['bup_pp_sp_nokontrak'];
@@ -400,10 +578,654 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 			
         // nilai kembalian dalam bentuk array
         // $parameter_sql_report_fix=$_SESSION['ses_report_filter_'.$parameter['menuID'].'_'.$this->UserSes['ses_uid']];
-        return array('dataArr'=>$dataArr, 'asetuser'=>$dataAsetUser,'count'=>$check);
+        return array('dataArr'=>$dataArr, 'asetuser'=>$dataAsetUser,'count'=>$check);*/
+    }
+	public function  retrieve_penetapan_penghapusan_eksekusi($data,$debug=false)
+    {
+		$id = $data[penetapanpenghapusan];
+		$cols = implode(', ',array_values($id));
+		pr($cols);
+		$uname = $_SESSION['ses_uname'];
+		
+		$jenisaset = $data['jenisaset'];
+        $nokontrak = $data['nokontrak'];
+        $kodeSatker = $data['kodeSatker'];
+
+        $filterkontrak = "";
+        if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+  
+
+        $sql = array(
+					'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
+					'field'=>"a.*, b.Aset_ID, e.NamaSatker, f.NamaLokasi, g.Kode",
+					'condition' => "b.Aset_ID IN ($cols) {$filterkontrak}",
+					'joinmethod' => ' LEFT JOIN ',
+					'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.Satker_ID,a.kodeKelompok=g.Kelompok_ID'
+					);
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+		/*
+		$sql = "UPDATE apl_userasetlist SET aset_list = '$cols' WHERE aset_action = 'penetapanpenghapusan[]' AND UserNm='$uname'";
+		$result = $this->query($sql) or die ($this->error());
+		
+        $query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'penetapanpenghapusan[]' AND UserNm='$uname'";
+        //print_r($query_apl);
+        $result_apl = $this->query($query_apl) or die ($this->error());
+        $data_apl = $this->fetch_object($result_apl);
+        $array = explode(',',$data_apl->aset_list);
+        foreach ($array as $id)
+        {
+        if ($id !='')
+        {
+        $dataAsetList[] = $id;
+        }
+        }
+
+        $explode = array_unique($dataAsetList);
+
+        $id = 0;
+        foreach($explode as $value)
+                {
+            //$$key = $value;
+            $query = "SELECT a.Aset_ID,a.LastSatker_ID,a.TglPerolehan, a.AsetOpr, a.Kuantitas, a.Satuan,a.OrigSatker_ID,a.Ruangan, 
+							a.SumberAset, a.NilaiPerolehan,a.Alamat, a.RTRW, a.Pemilik, a.NomorReg, a.NamaAset,a.TglPerolehan,
+							c.NoKontrak, e.NamaSatker, e.KodeSatker, f.NamaLokasi, g.Kode,g.Uraian 
+                            FROM UsulanAset AS b
+                            INNER JOIN Aset AS a ON b.Aset_ID=a.Aset_ID
+                            LEFT JOIN  KontrakAset AS d  ON b.Aset_ID = d.Aset_ID
+                            LEFT JOIN Kontrak AS c ON c.Kontrak_ID = d.Kontrak_ID
+                            INNER JOIN Lokasi AS f  ON a.Lokasi_ID=f.Lokasi_ID
+                            INNER JOIN Satker AS e ON a.LastSatker_ID=e.Satker_ID
+                            INNER JOIN Kelompok AS g ON a.Kelompok_ID=g.Kelompok_ID
+                            WHERE b.Aset_ID = '$value' limit 1";
+                // print_r($query);
+                $result = $this->query($query) or die($this->error());
+                
+                
+                while($data = $this->fetch_object($result)){
+                    $dataArr[]=$data;
+                }
+                
+                
+                }
+                //$id++;
+        
+        echo '<pre>';
+        //print_r($dataArr);
+        echo '</pre>';
+        return array('dataArr'=>$dataArr/*'dataNoKontrak'=>$dataNoKontrak, *//*);*/
     }
 	
+	public function retrieve_validasi_penghapusan($data,$debug=false)
+    {
+			
+			$jenisaset = $data['jenisaset'];
+			$nokontrak = $data['nokontrak'];
+			$kodeSatker = $data['kodeSatker'];
+
+			$filterkontrak = "";
+			if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+			if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+	  
+
+			$sql = array(
+					'table'=>'Penghapusan',
+					'field'=>"*",
+					'condition' => "FixPenghapusan=1 AND Status=0 {$filterkontrak}",
+					'limit'=>'100',
+					);
+
+			$res = $this->db->lazyQuery($sql,$debug);
+			if ($res) return $res;
+			return false;
+	// echo "masukk";
+       /* if (!isset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$this->UserSes['ses_uid']]))
+        {
+            
+            $tgl_awal=$parameter['param']['bup_val_tglskpenghapusan'];
+            $tgl_akhir=$parameter['param']['bup_val_tglskpenghapusan'];
+            $tgl_awal_fix=format_tanggal_db2($tgl_awal);
+            $tgl_akhir_fix=format_tanggal_db2($tgl_akhir);
+            $no_sk=$parameter['param']['bup_val_noskpenghapusan'];
+            $satker=$parameter['param']['skpd_id'];
+            $submit=$parameter['param']['tampil_valid_filter'];
+            
+            
+            if ($tgl_awal_fix!=""){
+            $query_tgl_awal="TglHapus LIKE '%$tgl_awal_fix%'";
+            }
+            if($tgl_akhir_fix!=""){
+            $query_tgl_akhir="TglHapus LIKE '%$tgl_akhir_fix%'";
+            }
+            if($no_sk!=""){
+            $query_sk="NoSKHapus LIKE '%$no_sk%'";
+            }
+            if($satker!=""){
+                $temp=explode(",",$satker);
+                    $panjang=count($temp);
+                    //$query_satker="(";
+                    $cek=0;
+                    for($i=0;$i<$panjang;$i++)
+                        {
+                            $cek=1;
+                                if($i==0)
+                                $query_satker.="Satker_ID ='$temp[$i]'";
+                                else
+                                $query_satker.=" or Satker_ID ='$temp[$i]'";
+                        }
+                        //if ($cek==1){
+                            //$query_satker.=")";}
+                        //else{
+                            //$query_satker="";}
+
+
+                $query_change_satker="SELECT KodeSektor, KodeSatker, NamaSatker FROM Satker 
+                                                        WHERE $query_satker";
+                //print_r($query_change_satker);
+                $exec_query_change_satker=  $this->query($query_change_satker) or die($this->error());
+                while($proses_kode=$this->fetch_array($exec_query_change_satker)){
+                        //$dataRow[]=$proses_kode;
+
+                        echo "<pre>";
+                        //print_r($proses_kode['KodeSektor']);
+                        echo "</pre>";
+                        echo "<pre>";
+                        //print_r($proses_kode['KodeSatker']);
+                        echo "</pre>";
+                        echo "<pre>";
+                        //print_r($proses_kode['NamaSatker']);
+                        echo "</pre>";
+                        if($proses_kode['KodeSektor']!="" && $proses_kode['KodeSatker']!=""){
+                        $query_return_kode="SELECT Satker_ID FROM Satker WHERE NGO=0 AND (KodeSatker LIKE '".$proses_kode['KodeSektor']."%' OR KodeSatker='$proses_kode[KodeSatker]')";
+                        }
+                        if($proses_kode['KodeSektor']!="" && $proses_kode['KodeSatker']==""){
+                            $query_return_kode="SELECT Satker_ID FROM Satker WHERE NGO=0 AND (KodeSatker LIKE '".$proses_kode['KodeSektor']."%')";
+                        }
+                        echo "<pre>";
+                        //print_r($query_return_kode);
+                        echo "</pre>";
+
+                    }
+                        $exec_query_return_kode=$this->query($query_return_kode) or die($this->error());
+                        while($proses_kode2=$this->fetch_array($exec_query_return_kode)){
+                            $dataRow2[]=$proses_kode2['Satker_ID'];
+                        }
+                        //$dataImplode = implode(',',$dataRow2);
+                        //print_r($dataImplode);
+
+                        if($dataRow2!=""){
+                            $panjang=count($dataRow2);
+                            //$query_satker_fix="(";
+                            $cek=0;
+                            for($i=0;$i<$panjang;$i++)
+                                {
+                                    $cek=1;
+
+                                        if($i==0)
+                                        $query_satker_fix.="c.LastSatker_ID = '".$dataRow2[$i]."'";
+                                        else
+                                        $query_satker_fix.=" or c.LastSatker_ID = '".$dataRow2[$i]."'";
+                                }
+                                //if ($cek==1){
+                                    //$query_satker_fix.=")";}
+                                //else{
+                                    //$query_satker_fix="";}
+
+                            //$query_satker_fix ="LastSatker_ID LIKE '%".$proses_kode2['Satker_ID']."%' ";
+                        }
+                        $query_change_satker_fix="SELECT a.Penghapusan_ID FROM Penghapusan AS a INNER JOIN PenghapusanAset AS b ON a.Penghapusan_ID=b.Penghapusan_ID
+                                                                        INNER JOIN Aset AS c ON b.Aset_ID=c.Aset_ID WHERE $query_satker_fix";
+                        $exec_query_change_satker_fix=  $this->query($query_change_satker_fix) or die($this->error());
+                        if($this->num_rows($exec_query_change_satker_fix)){
+                            while($proses_kode_fix=$this->fetch_array($exec_query_change_satker_fix))
+                            {
+                                $data_proses_kode_fix[]=$proses_kode_fix['Penghapusan_ID'];
+                            }
+                        $gabung=implode(',',$data_proses_kode_fix);
+                        }
+                        if($gabung!=""){
+                        $query_satker_fix2="Penghapusan_ID IN ($gabung)";
+                        }else{
+                            $query_satker_fix2="Penghapusan_ID IN (NULL)";
+                        }
+                    }
+
+            $parameter_sql="";
+            if($tgl_awal!=""){
+            $parameter_sql=$query_tgl_awal;
+            }
+            if($tgl_akhir!="" && $parameter_sql!=""){
+            $parameter_sql="TglHapus BETWEEN '$tgl_awal_fix' AND '$tgl_akhir_fix'";
+            }
+            if($tgl_akhir!="" && $parameter_sql==""){
+            $parameter_sql=$query_tgl_akhir;
+            }
+            if($no_sk!="" && $parameter_sql!=""){
+            $parameter_sql=$parameter_sql." AND ".$query_sk;
+            }
+            if ($no_sk!="" && $parameter_sql==""){
+            $parameter_sql=$query_sk;
+            }
+            if($satker!="" && $parameter_sql!=""){
+            $parameter_sql=$parameter_sql." AND ".$query_satker_fix2;
+            }
+            if ($satker!="" && $parameter_sql==""){
+            $parameter_sql=$query_satker_fix2;
+            }
+            
+            if($parameter_sql!="" ) {
+		$parameter_sql="WHERE ".$parameter_sql." AND ";
+               }
+               else
+               {
+                   $parameter_sql = " WHERE ";
+               }
+            
+            // echo "$parameter_sql";
+            
+            
+                $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$this->UserSes['ses_uid']] = $parameter_sql;
+                                //echo "$parameter_sql";
+            }
+            
+            echo '<pre>';
+        //print_r($_SESSION);
+        echo '</pre>';
+                switch ($parameter['menuID'])
+                {
+                    case '40':
+                        {
+                            // Katalog
+                            $query_condition = " FixPenghapusan=1 AND Status=0 ";
+                        }
+                        break;
+                }
+
+
+                if ($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$this->UserSes['ses_uid']] !='')
+                {
+                    $sql_param = " $query_condition";
+                }
+                else
+                {
+                    $sql_param = " $query_condition";
+                }
+
+                //print_r($_SESSION);
+                $query="SELECT Penghapusan_ID,UserNm FROM Penghapusan ".$_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$this->UserSes['ses_uid']]." $sql_param ORDER BY Penghapusan_ID ASC LIMIT $parameter[paging], 100";
+
+                print_r($query);
+                $result = $this->query($query) or die($this->error());
+                
+                $rows = $this->num_rows($result);
+
+
+                $data = '';
+                $dataArray = '';
+
+                while ($data = $this->fetch_object($result))
+                {
+                    $dataArray[] = $data;
+                }
+                    // print_r($dataArray);
+                $dataArr = '';
+                $dataNoKontrak = '';
+				// pr($_SESSION);
+                if ($dataArray !='')
+                {
+                    foreach ($dataArray as $Penghapusan_ID)
+                    {
+						
+							$query = "SELECT * 
+                                        FROM Penghapusan
+                                        WHERE  Penghapusan_ID = $Penghapusan_ID->Penghapusan_ID
+                                        ORDER BY Penghapusan_ID asc  ";
+                       
+						print_r($query);
+                        $result = $this->query($query) or die($this->error());
+                        $check = $this->num_rows($result);
+						// echo $check; 
+						while ($data = $this->fetch_array($result))
+                        {
+                            $dataArr[] = $data;
+                        }
+                    }
+        }
+        
+            if ($parameter['type'] == 'checkbox')
+                    {
+                        $query_apl = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPenghapusan[]'";
+                        $result_apl = $this->query($query_apl) or die ($this->error());
+                        $data_apl = $this->fetch_object($result_apl);
+
+                        $array = explode(',',$data_apl->aset_list);
+
+                        foreach ($array as $id)
+                        {
+                            if ($id !='')
+                            {
+                                $dataAsetList[] = $id;
+                            }
+                        }
+
+                        $asetList = '';
+
+                        if ($dataAsetList !='')
+                        {
+                            $asetList = array_unique($dataAsetList);    
+                        }
+                }
+        
+        return array('dataArr'=>$dataArr, 'asetList'=>$asetList,'count'=>$check);*/
+    }
 	
+	 public function retrieve_daftar_validasi_penghapusan($data,$debug=false)
+    {
+        
+			$jenisaset = $data['jenisaset'];
+			$nokontrak = $data['nokontrak'];
+			$kodeSatker = $data['kodeSatker'];
+
+			$filterkontrak = "";
+			if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+			if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+	  
+
+			$sql = array(
+					'table'=>'Penghapusan',
+					'field'=>"Penghapusan_ID,UserNm",
+					'condition' => "FixPenghapusan=1 and Status=1 {$filterkontrak}",
+					'limit'=>'100',
+					);
+
+			$res = $this->db->lazyQuery($sql,$debug);
+			if ($res) return $res;
+			return false;
+		
+		/*
+                switch ($parameter['menuID'])
+                {
+                    case '40':
+                        {
+                            $query_condition = " FixPenghapusan=1 and Status=1 ";
+                        }
+                        break;
+                }
+
+
+				$sql_param = " $query_condition";
+
+                $query="SELECT Penghapusan_ID,UserNm FROM Penghapusan WHERE $sql_param ORDER BY Penghapusan_ID ASC LIMIT $parameter[paging], 100";
+				$result = $this->query($query) or die($this->error());
+                $rows = $this->num_rows($result);
+
+				$data = '';
+                $dataArray = '';
+
+                while ($data = $this->fetch_object($result))
+                {
+                    $dataArray[] = $data;
+                }
+				// pr($dataArray);
+                $dataArr = '';
+				// pr($_SESSION);
+                if ($dataArray !='')
+                {
+                    foreach ($dataArray as $Penghapusan_ID)
+                    {
+
+                        if($_SESSION['ses_uaksesadmin']){
+							$query_tampil = "SELECT * 
+                                        FROM Penghapusan
+                                        WHERE  Penghapusan_ID = $Penghapusan_ID->Penghapusan_ID
+                                        ORDER BY Penghapusan_ID asc  ";
+						}else{
+							$query_tampil = "SELECT * 
+                                        FROM Penghapusan
+                                        WHERE  Penghapusan_ID = $Penghapusan_ID->Penghapusan_ID
+                                        AND UserNm = $Penghapusan_ID->UserNm ORDER BY Penghapusan_ID asc  ";
+						}
+						$result_tampil = $this->query($query_tampil) or die($this->error());
+                        $check = $this->num_rows($result_tampil);
+						
+                        while ($data_tampil = $this->fetch_array($result_tampil))
+                        {
+                            $dataArr[] = $data_tampil;
+                        }
+                        
+                    }
+                }
+                
+                return array ('dataArr'=>$dataArr,'count'=>$check);*/
+    }
+	 public function store_usulan_penghapusan_pms($data,$debug=false){	
+				
+				pr($data);
+                $asset_id=Array();
+                $no_reg=Array();
+                $nm_barang=Array();
+				
+					$nmaset=$data['penghapusan_nama_aset'];
+					$UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
+					$usulan_id=get_auto_increment("Usulan");
+					$date=date('Y-m-d');
+					$ses_uid=$_SESSION['ses_uid'];
+					
+                $panjang=count($nmaset);
+				$aset=implode(',',$nmaset);
+				
+				 $sql = array(
+							'table'=>'Usulan',
+							'field'=>'Aset_ID, Penetapan_ID, Jenis_Usulan, UserNm, TglUpdate, GUID, FixUsulan',
+							'value' => "'$aset', '', 'PMS', '$UserNm', '$date', '$ses_uid', '1'",
+							);
+				$res = $this->db->lazyQuery($sql,$debug,1);
+				
+                // $query="insert into Usulan (Usulan_ID, Aset_ID, Penetapan_ID, 
+                                                    // Jenis_Usulan, UserNm, TglUpdate, 
+                                                    // GUID, FixUsulan) 
+                                                // values ('', '$aset', '', 'HPS', '$UserNm', '$date', '$ses_uid', '1')";
+
+                // $result=  $this->query($query) or die($this->error());
+
+                for($i=0;$i<$panjang;$i++){
+
+                    $tmp=$nmaset[$i];
+                    $tmp_olah=explode("<br>",$tmp);
+                    $asset_id[$i]=$tmp_olah[0];
+                    $no_reg[$i]=$tmp_olah[1];
+                    $nm_barang[$i]=$tmp_olah[2];
+					
+					$sql1 = array(
+						'table'=>'UsulanAset',
+						'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan",
+						'value' => "'$usulan_id','','$asset_id[$i]','PMS','0'",
+						);
+					$res1 = $this->db->lazyQuery($sql1,$debug,1);
+					
+                    // $query1="insert into UsulanAset(Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan) values('$usulan_id','','$asset_id[$i]','HPS','0')";
+                    // $result1=  $this->query($query1) or die($this->error());
+					$sql2 = array(
+						'table'=>'Aset',
+						'field'=>"Usulan_Penghapusan_ID='$usulan_id'",
+						'condition' => "Aset_ID='{$asset_id[$i]}'",
+						);
+					$res2 = $this->db->lazyQuery($sql2,$debug,2);
+					
+                    // $query3="UPDATE Aset SET Usulan_Penghapusan_ID='$usulan_id' WHERE Aset_ID='$asset_id[$i]'";
+                    // $result3=$this->query($query3) or die($this->error());
+
+
+                    //lanjut dari sinii
+                    // $query2="UPDATE Aset SET NotUse=1 WHERE Aset_ID='$asset_id[$i]'";
+                    // $result2=$this->query($query2) or die($this->error());
+                }
+
+                // $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='penghapusanfilter[]' AND UserSes='$ses_uid'";
+                // $exec_hapus=  $this->query($query_hapus_apl) or die($this->error());
+                
+                // if($result)
+                    // {
+                        // return true;
+                    // }
+                // elseif($result1)
+                    // {
+                        // return true;
+                    // }
+                // else
+                    // {
+                        // return false;
+                    // }
+            }
+	 public function store_penetapan_penghapusan($data,$debug=false)
+            // (
+                    // $no,
+                    // $tgl,
+                    // $olah_tgl,
+                    // $keterangan,
+                    // $UserNm,
+                    // $nmaset,
+                    // $ses_uid,
+                    // $penghapusan_id
+            // )
+            {
+				$no=$data['bup_pp_noskpenghapusan'];
+				$tgl=$data['bup_pp_tanggal'];
+				$olah_tgl=  format_tanggal_db2($tgl);
+				$keterangan=$data['bup_pp_get_keterangan'];	
+				$UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
+				$nmaset=$data['penghapusan_nama_aset'];
+				$ses_uid=$_SESSION[ses_uid];
+				$penghapusan_id=get_auto_increment("penghapusan");
+
+                $asset_id=Array();
+                $no_reg=Array();
+                $nm_barang=Array();
+				
+                $panjang=count($nmaset);
+				 
+				 $sql = array(
+							'table'=>'penghapusan',
+							'field'=>'Penghapusan_ID, NoSKHapus, TglHapus, AlasanHapus, Status, UserNm, FixPenghapusan',
+							'value' => "'','$no', '$olah_tgl', '$keterangan', '0','$UserNm', '1'",
+							);
+				$res = $this->db->lazyQuery($sql,$debug,1);
+				/*
+                $query="INSERT INTO penghapusan (Penghapusan_ID, NoSKHapus, TglHapus, AlasanHapus, Status, UserNm, FixPenghapusan) 
+                                                values ('','$no', '$olah_tgl', '$keterangan', '0','$UserNm', '1')";
+                $result=  $this->query($query) or die($this->error());
+
+				*/
+
+                for($i=0;$i<$panjang;$i++){
+
+                    $tmp=$nmaset[$i];
+                    $tmp_olah=explode("<br>",$tmp);
+                    $asset_id[$i]=$tmp_olah[0];
+                    $no_reg[$i]=$tmp_olah[1];
+                    $nm_barang[$i]=$tmp_olah[2];
+                    /*echo  "No= $i <br/>
+                            Asset ID =$asset_id[$i] <br/>
+                            No register=$no_reg[$i] <br/>
+                            Nama barang =$nm_barang[$i] <br/>";
+                     * 
+                     */
+					$sql1 = array(
+							'table'=>'penghapusanaset',
+							'field'=>'Penghapusan_ID,Aset_ID,Status',
+							'value' => "'$penghapusan_id','$asset_id[$i]','0'",
+							);
+					$res1 = $this->db->lazyQuery($sql1,$debug,1);
+					/*
+                    $query1="insert into penghapusanaset(Penghapusan_ID,Aset_ID,Status) values('$penghapusan_id','$asset_id[$i]','0')";
+                    $result1=  $this->query($query1) or die($this->error());
+					*/
+					$sql2 = array(
+						'table'=>'usulanaset',
+						'field'=>"StatusPenetapan=1, Penetapan_ID='$penghapusan_id'",
+						'condition' => "Aset_ID='$asset_id[$i]' AND Jenis_Usulan='HPS'",
+						);
+					$res2 = $this->db->lazyQuery($sql2,$debug,2);
+					/*
+                    $query2="UPDATE usulanaset SET StatusPenetapan=1, Penetapan_ID='$penghapusan_id' WHERE Aset_ID='$asset_id[$i]' AND Jenis_Usulan='HPS'";
+                    $result2=$this->query($query2) or die($this->error());
+					*/
+					$sql3 = array(
+						'table'=>'aset',
+						'field'=>"Dihapus='1'",
+						'condition' => "Aset_ID='{$asset_id[$i]}'",
+						);
+					$res3 = $this->db->lazyQuery($sql3,$debug,2);
+					/*
+                    $query3="UPDATE aset SET Dihapus='1' WHERE Aset_ID='$asset_id[$i]'";
+                    $result3=$this->query($query3) or die($this->error());*/
+                }
+				
+					
+                // $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='penetapanpenghapusan[]' AND UserSes='$ses_uid'";
+                // $exec_hapus=  $this->query($query_hapus_apl) or die($this->error());
+                
+                // if($result)
+                // {
+                    // return true;
+                // }
+                // elseif($result1)
+                // {
+                    // return true;
+                // }
+                // else
+                // {
+                    // return false;
+                // }
+            }		
+	public function update_validasi_penghapusan($parameter)
+        {
+            if(isset($parameter['submit'])){
+                $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPenghapusan[]' AND UserSes = '$parameter[ses_uid]'";
+                //print_r($query);
+                $result = $this->query($query) or die ($this->error());
+
+
+                $numRows = $this->num_rows($result);
+                if ($numRows)
+                {
+                    $dataID = $this->fetch_object($result);
+                }
+
+                    $explodeID = explode(',',$dataID->aset_list);
+
+
+                    $cnt=count($explodeID);
+                    //echo "$cnt";
+
+                for ($i=0; $i<$cnt; $i++){
+                    //echo "$i";
+                    //echo "$id[$i]";
+                    if($explodeID!=""){
+
+                    $query="UPDATE Penghapusan SET Status=1 WHERE Penghapusan_ID='$explodeID[$i]'";
+                    $exec=$this->query($query) or die($this->error());
+
+                    $query2="UPDATE PenghapusanAset SET Status=1 WHERE Penghapusan_ID='$explodeID[$i]'";
+                    $exec2=$this->query($query2) or die($this->error());
+                    }
+                }
+
+                $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='ValidasiPenghapusan[]' AND UserSes='$parameter[ses_uid]'";
+                $exec_hapus=  $this->query($query_hapus_apl) or die($this->error());
+            }
+            
+            if($exec){
+                return true;
+            }elseif($exec2){
+                return true;
+            }else{
+                return false;
+            }
+        }
 	 function getTableKibAlias($type=1)
     {
         $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
