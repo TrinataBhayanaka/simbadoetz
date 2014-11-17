@@ -2237,7 +2237,7 @@ class RETRIEVE extends DB
 		
 		$datasatker = implode(',',$Satker_ID);
 		
-		print_r($datasatker);
+		// print_r($datasatker);
 		}
 		elseif($kodesatker!= null && $kodeunit == null)
 		{
@@ -2255,13 +2255,13 @@ class RETRIEVE extends DB
 		
 		$datasatker = implode(',',$Satker_ID);
 		
-		print_r($datasatker);
+		// print_r($datasatker);
 		}
 		elseif($kodesatker!= null && $kodeunit != null)
 		{
 		$datasatker=$rtb_skpd;
 		
-		print_r($datasatker);
+		// print_r($datasatker);
 		}
 	}
 	

@@ -1,12 +1,18 @@
 <?php
 include "../../config/config.php";
+
+$PERENCANAAN = new RETRIEVE_PERENCANAAN;
+
 $menu_id = 2;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 
 if (isset($_POST['submit']))
 {	
-$get_data_filter = $STORE->store_shb_data(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>''));
+
+	$get_data_filter = $PERENCANAAN->store_shb_data($_POST);
+
+// $get_data_filter = $STORE->store_shb_data(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>''));
 }
 ?>
 
@@ -15,6 +21,8 @@ $get_data_filter = $STORE->store_shb_data(array('param'=>$_POST, 'menuID'=>$menu
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	
+
 	 $menu_id = 1;
      $SessionUser = $SESSION->get_session_user();
      ($SessionUser['ses_uid'] != '') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title' => 'GuestMenu', 'ses_name' => 'menu_without_login'));

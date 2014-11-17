@@ -12,17 +12,19 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-$skpd_id = $_REQUEST['skpd_id4'];
-$kelompok=$_REQUEST['kelompok_id'];
-
+$skpd_id = $_REQUEST['kodeSatker8'];
+$tahun = $_REQUEST['tahun_label'];
+$gol = $_REQUEST['gol'];
+pr($_REQUEST);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "skpd_id"=>$skpd_id,
-    "kelompok"=>$kelompok,
-	"tab"=>$tab
+	"tahun"=>$tahun,
+    "gol"=>$gol,
+    "tab"=>$tab
 );
-
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -34,26 +36,26 @@ $query=$REPORT->list_query();
 
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
-
+// pr($result_query);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 
 $html=$REPORT->retrieve_html_cetak_label($result_query, $gambar);
 
-
-$count = count($html);
+/*$count = count($html);
 
 
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 // echo $html[$i];     
 	}
-
+// exit;*/
 $REPORT->show_status_download();
-$mpdf=new mPDF('','','','',15,15,16,16,9,9,'P');
-$mpdf->AddPage('P','','','','',15,15,16,16,9,9);
-$mpdf->setFooter('{PAGENO}') ;
+$mpdf=new mPDF('','','','',8,8,5,5,10,10,'P');
+$mpdf->AddPage('P','','','','',8,8,5,5,10,10);
+// $mpdf->setFooter('{PAGENO}') ;
 $mpdf->progbar_heading = '';
 $mpdf->StartProgressBarOutput(2);
 $mpdf->useGraphs = true;

@@ -1,5 +1,8 @@
 <?php
 include "../../config/config.php";
+
+$PERENCANAAN = new RETRIEVE_PERENCANAAN;
+
 $menu_id = 4;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
@@ -12,10 +15,10 @@ if (isset($_POST['submit']))
 	//echo "</pre>";
 	
 	unset($_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']]);
-	$get_data_filter = $RETRIEVE->retrieve_skb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+	// $get_data_filter = $RETRIEVE->retrieve_skb_filter(array('param'=>$_POST, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 } else {
 		$sess = $_SESSION['ses_retrieve_filter_'.$parameter['menuID'].'_'.$SessionUser->UserSes['ses_uid']];
-		$get_data_filter = $RETRIEVE->retrieve_skb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
+		// $get_data_filter = $RETRIEVE->retrieve_skb_filter(array('param'=>$sess, 'menuID'=>$menu_id, 'type'=>'', 'paging'=>$paging));
 }
 ?>
 <?php
@@ -23,6 +26,9 @@ if (isset($_POST['submit']))
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+
+	$get_data_filter = $PERENCANAAN->retrieve_skb_filter($_POST);
+	// pr($get_data_filter);
 			?>
 
 
@@ -103,24 +109,24 @@ if (isset($_POST['submit']))
 						  
 					<tr class="gradeA">
 						<td><?php echo $no;?></td>
-						<td><?php echo show_kelompok($hsl_data->skb_njb);?></td>
-						<td><?php echo show_skpd($hsl_data->skb_skpd);?></td>
-						<td><?php echo show_lokasi($hsl_data->skb_lokasi);?></td>
+						<td><?php echo show_kelompok($hsl_data['skb_njb']);?></td>
+						<td><?php echo show_skpd($hsl_data['skb_skpd']);?></td>
+						<td><?php echo show_lokasi($hsl_data['skb_lokasi']);?></td>
 						<td>	
 							<?php
-								$tanggal=explode("-",$hsl_data->skb_tgl);
+								$tanggal=explode("-",$hsl_data['skb_tgl']);
 								$tgl=$tanggal[2]."/".$tanggal[1]."/".$tanggal[0];
 								echo $tgl;
 							?>
 						</td>
-						<td><?php echo $hsl_data->skb_jml;?></td>
+						<td><?php echo $hsl_data['skb_jml'];?></td>
 						<td>	
-								<form method="POST" action="skb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->skb_njb);?> ini ingin diedit?'); ">
-									<input type="hidden" name="ID" value="<?php echo $hsl_data->skb_id;?>" id="ID_<?php echo $i?>">
+								<form method="POST" action="skb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data['skb_njb']);?> ini ingin diedit?'); ">
+									<input type="hidden" name="ID" value="<?php echo $hsl_data['skb_id'];?>" id="ID_<?php echo $i?>">
 									<input type="submit" value="Edit" class="btn btn-primary" name="edit"/>
 								</form>
-								<form method="POST" action="skb-proses.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->skb_njb);?> ini ingin dihapus?'); ">
-									<input type="hidden" name="ID" value="<?php echo $hsl_data->skb_id;?>" id="ID_<?php echo $i?>">
+								<form method="POST" action="skb-proses.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data['skb_njb']);?> ini ingin dihapus?'); ">
+									<input type="hidden" name="ID" value="<?php echo $hsl_data['skb_id'];?>" id="ID_<?php echo $i?>">
 									<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
 								</form>
 						</td>

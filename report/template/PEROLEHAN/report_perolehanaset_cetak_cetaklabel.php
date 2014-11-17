@@ -9,15 +9,18 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-$skpd_id = $_REQUEST['skpd_id'];
-$kelompok=$_REQUEST['kelompok'];
-
-
+$skpd_id = $_REQUEST['kodeSatker8'];
+// $kelompok=$_REQUEST['kelompok'];
+$tahun = $_REQUEST['tahun_label'];
+$gol = $_REQUEST['gol'];
+pr($_REQUEST);
+exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "skpd_id"=>$skpd_id,
-    "kelompok"=>$kelompok,
+	"tahun"=>$tahun,
+    "gol"=>$gol,
     "tab"=>$tab
 );
 
@@ -52,8 +55,6 @@ $gambar=$REPORT->getLogo('bireun', $url_rewrite);
 
 
 $html=$REPORT->retrieve_html_kir($result_query, $gambar);
-
-
 $count = count($html);
 
 //echo "$query ";
@@ -64,17 +65,17 @@ for ($i = 0; $i < $count; $i++) {
      echo $html[$i];     
 }
 */
-
-//list($nip,$nama_jabatan)=$REPORT->get_jabatan('474',"3");
 									
 //cetak reporting
-//$mpdf=new mPDF(); 
-
-
-
+$REPORT->show_status_download();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
+$mpdf->progbar_heading = '';
+$mpdf->StartProgressBarOutput(2);
+$mpdf->useGraphs = true;
+$mpdf->list_number_suffix = ')';
+$mpdf->hyphenate = true;
 $count = count($html);
 for ($i = 0; $i < $count; $i++) {
      if($i==0)
@@ -82,17 +83,15 @@ for ($i = 0; $i < $count; $i++) {
      else
      {
            $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
-           //$mpdf->AddPage();
            $mpdf->WriteHTML($html[$i]);
            
      }
 }
 
-$waktu=date("dymhis");
-$namafile="$path/report/output/Cetak Label_$waktu.pdf";
-
+$waktu=date("d-m-y_h-i-s");
+$namafile="$path/report/output/Cetak Label $waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Cetak Label_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Cetak Label $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 
