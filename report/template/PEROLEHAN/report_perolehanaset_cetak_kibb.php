@@ -56,7 +56,6 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-
 //mengenerate query
 // $result_query=$REPORT->retrieve_query($query);
 
@@ -75,8 +74,7 @@ $html=$REPORT->retrieve_html_kib_b($result, $gambar);
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
-}*/ 	
-
+}*/
 if($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

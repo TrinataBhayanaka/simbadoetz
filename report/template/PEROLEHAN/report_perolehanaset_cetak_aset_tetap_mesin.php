@@ -12,10 +12,11 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-$skpd_id = $_REQUEST['kodeSatker1'];
-$tahun = $_REQUEST['tahun_tanah'];
+$skpd_id = $_REQUEST['kodeSatker2'];
+$tahun = $_REQUEST['tahun_mesin'];
 $tipe=$_REQUEST['tipe_file'];
-
+// pr($_REQUEST);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
@@ -38,20 +39,19 @@ $satker = $skpd_id;
 		
 	}
 	
-$paramGol = '01';
+$paramGol = '02';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tahun,$paramGol);
 
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_asetTetapTanah($resultParamGol,$gambar);
-
+$html=$REPORT->retrieve_html_asetTetapMesin($resultParamGol,$gambar);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
-	}
-// exit;*/
+	}*/
+// exit;
 $REPORT->show_status_download();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
@@ -75,9 +75,9 @@ for ($i = 0; $i < $count; $i++) {
 
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Daftar Aset Tetap Tanah $waktu.pdf";
+$namafile="$path/report/output/Daftar Aset Tetap Mesin $waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Daftar Aset Tetap Tanah $waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Daftar Aset Tetap Mesin $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 ?>
