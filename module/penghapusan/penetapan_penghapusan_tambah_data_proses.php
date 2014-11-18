@@ -17,7 +17,7 @@ $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di impl
 $nmaset=$_POST['penghapusan_nama_aset'];
 $ses_uid=$_SESSION[ses_uid];
 $penghapusan_id=get_auto_increment("penghapusan");
-pr($_POST);
+// pr($_POST);
 // pr($nmaset);
 // exit;
 
@@ -32,7 +32,7 @@ pr($_POST);
             // $ses_uid,
             // $penghapusan_id
     // );
-		pr($_POST);
+		// pr($_POST);
 		$data = $PENGHAPUSAN->store_penetapan_penghapusan($_POST);
         
 

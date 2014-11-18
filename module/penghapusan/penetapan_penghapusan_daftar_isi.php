@@ -8,7 +8,10 @@ include "../../config/config.php";
     $SessionUser = $SESSION->get_session_user();
     $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
     
-    
+		if($_POST['jenis_hapus']){
+			$_SESSION['jenis_hapus']=$_POST['jenis_hapus'];
+		}
+		
         $tgl_awal=$_POST['bup_pu_tanggalawal'];
         $tgl_akhir=$_POST['bup_pu_tanggalakhir'];
         $tgl_awal_fix=format_tanggal_db2($tgl_awal);
@@ -95,9 +98,9 @@ include "../../config/config.php";
 							// pr($data);
 
 
-						pr($_POST);
+						// pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan($_POST);
-						pr($data);
+						// pr($data);
 						?>
 						<ul>
 							<li>
@@ -142,10 +145,10 @@ include "../../config/config.php";
 				echo '</pre>';
 				
 				$nomor = 1;
-				if (!empty($data['dataArr']))
+				if (!empty($data))
 				{
 				   
-				foreach($data['dataArr'] as $key => $row)
+				foreach($data as $key => $row)
 					{
 					?>
 						  

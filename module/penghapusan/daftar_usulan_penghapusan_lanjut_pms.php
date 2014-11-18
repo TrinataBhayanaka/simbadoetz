@@ -61,7 +61,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	include"$path/menu.php";
 	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($_POST);
-	// pr($data);
+	pr($data);
 
 
 			?>
@@ -239,13 +239,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</td>-->
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value[noRegister]?></td>
+								<td style="font-weight:bold;"><?php echo $value[noRegister]?>noRegister</td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value[Kode]?></td>
+								<td style="font-weight:bold;"><?php echo $value[Kode]?>Kode</td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value->NamaAset?></td>
+								<td style="font-weight:bold;"><?php echo $value[NamaAset]?>NamaAset</td>
 							</tr>
 
 						</table>
@@ -260,10 +260,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<td>Satker</td> <td><?php echo '['.$value[kodeSatker].'] '.$value[NamaSatker]?></td>
 							</tr>
 							<tr>
-								<td>Lokasi</td> <td><?php echo $value[Alamat]?></td>
+								<td>Kode Lokasi</td> <td><?php echo $value[kodeLokasi]?></td>
 							</tr>
 							<tr>
-								<td>Status</td> <td><?php echo $value->Kondisi_ID. '-' .$value[Info]?></td>
+								<td>Status</td> <td><?php echo $value->Kondisi_ID. '-' .$value->InfoKondisi?></td>
 							</tr>
 
 						</table>

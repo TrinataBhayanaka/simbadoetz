@@ -91,6 +91,13 @@ include "../../config/config.php";
 								<input type="text" name="bup_val_tglskpenghapusan" placeholder="" style="width:200px;" id="tanggal12">
 							</li>
 							<li>
+								<span class="span2">Jenis Penghapusan</span>
+								<select name="jenis_hapus">
+									<option value="PMD">Pemindahtanganan</option>
+									<option value="PMS">Pemusnahan</option>
+								</select>
+							</li>
+							<li>
 								<span class="span2">Satker</span>
 								<div class="input-append">
 										<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" placeholder="(Semua SKPD)" value="<?php echo $_SESSION['ses_satkername'] ; ?>">

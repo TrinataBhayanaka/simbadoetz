@@ -25,11 +25,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Penghapusan Pemindahtanganan</li>
+			  <li class="active">Daftar Usulan Penghapusan Pemusnahan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Daftar Usulan Penghapusan Pemindahtanganan</div>
+				<div class="title">Daftar Usulan Penghapusan Pemusnahan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
@@ -53,17 +53,17 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								
 								
 	pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan($_POST);
+	$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
 	pr($data);
 							?>
 						<ul>
 							<li>
-								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_filter_pmd.php" class="btn">
+								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_filter_pms.php" class="btn">
 								Kembali ke Form Filter</a>
 								
 							</li>
 							<li>
-								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_lanjut_pmd.php?pid=1" class="btn">
+								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_lanjut_pms.php?pid=1" class="btn">
 								Tambah Data</a>
 							</li>
 							<li>
@@ -95,10 +95,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							 
 				 <?php
                                         
-					pr($dataArr);
+					// pr($dataArr);
 					$no=1;	
-					pr($data);
-					foreach($data['dataArr'] as $key => $hsl_data){
+					// pr($data);
+					foreach($data as $key => $hsl_data){
 						
 						if($dataArr!="")
 							{
@@ -122,7 +122,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 														echo "&nbsp;";
 													}else{
 													?>
-														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 											
 													<?php
 													}
@@ -131,7 +131,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 														echo "&nbsp;";	
 													}else{
 													?>	
-														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 													<?php
 													}
 												}
@@ -139,11 +139,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 												if($_SESSION['ses_uaksesadmin'] == 1){
 												// echo "masukkkkkk";
 												?>
-													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 												<?php	
 												}elseif($_SESSION['ses_uoperatorid'] == $hsl_data[UserNm]){
 												?>
-													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 											
 												<?php
 												}else{

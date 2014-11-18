@@ -25,11 +25,11 @@ include "../../config/config.php";
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Daftar Usulan Penghapusan Pemindahtanganan</li>
+		  <li class="active">Daftar Usulan Penghapusan Pemusnahan</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Daftar Usulan Penghapusan Pemindahtanganan</div>
+			<div class="title">Daftar Usulan Penghapusan Pemusnahan</div>
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">

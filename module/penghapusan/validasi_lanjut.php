@@ -8,7 +8,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
         $SessionUser = $SESSION->get_session_user();
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
         $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-
+		
+		if($_POST['jenis_hapus']){
+			$_SESSION['jenis_hapus']=$_POST['jenis_hapus'];
+		}
+		
         $tgl_awal=$_POST['bup_val_tglskpenghapusan'];
         $tgl_akhir=$_POST['bup_val_tglskpenghapusan'];
         $tgl_awal_fix=format_tanggal_db2($tgl_awal);
@@ -217,7 +221,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<?php echo "$value[AlasanHapus]";?>
 						</td>
 					</tr>
-					    <?php $nomor++; }} ?>
+					    <?php $no++; }} ?>
 				</tbody>
 				<tfoot>
 					<tr>

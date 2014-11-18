@@ -145,7 +145,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
 						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
 						<td align="right">
-								<span><input type="submit" name="submit" value="Penetapan Penghapusan" id="submit" disabled/></span>
+								<span><input type="submit" name="submit" class="btn" value="Penetapan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>

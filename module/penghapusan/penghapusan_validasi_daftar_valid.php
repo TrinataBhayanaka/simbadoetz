@@ -110,7 +110,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								$parameter = array('menuID'=>$menu_id,'type'=>'','paging'=>$paging);
 								// $data = $RETRIEVE->retrieve_daftar_validasi_penghapusan($parameter);
                                 // pr($data);        
-							pr($_POST);
+							// pr($_POST);
 							$data = $PENGHAPUSAN->retrieve_daftar_validasi_penghapusan($_POST);
 							pr($data);
 							?>
@@ -153,7 +153,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							 
 				 <?php
 										
-					if (!empty($data['dataArr']))
+					if (!empty($data))
 					{
 					$page = @$_GET['pid'];
 					if ($page > 1){
@@ -161,7 +161,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					}else{
 						$no = 1;
 					}          
-					foreach($data['dataArr'] as $key => $hsl_data){
+					foreach($data as $key => $hsl_data){
 				?>
 						  
 					<tr class="gradeA">
@@ -177,7 +177,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</td>
 					</tr>
 					
-				    <?php $nomor++; } }?>
+				    <?php $no++; } }?>
 				</tbody>
 				<tfoot>
 					<tr>

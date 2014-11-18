@@ -105,11 +105,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Buat Usulan Penghapusan Pemindahtanganan</li>
+			  <li class="active">Buat Usulan Penghapusan Pemusnahan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Buat Usulan Penghapusan Pemindahtanganan</div>
+				<div class="title">Buat Usulan Penghapusan Pemusnahan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
@@ -168,7 +168,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			
 			
 			<div id="demo">
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_usul.php"> 
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_usul_pmd.php"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
@@ -206,15 +206,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<?php
 						if (($_SESSION['ses_uaksesadmin'] == 1)){
 							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" 
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" 
 								<?php for ($j = 0; $j <= count($dataAsetUser); $j++){
-										if ($dataAsetUser[$j]==$value->Aset_ID) echo 'checked';}?>/>
+										if ($dataAsetUser[$j]==$value[Aset_ID]) echo 'checked';}?>/>
 							<?php
 						}else{
 							if ($dataAsetUser){
 							if (in_array($value->Aset_ID, $dataAsetUser)){
 							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value->Aset_ID;?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value->Aset_ID) echo 'checked';}?>/>							<?php
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value[Aset_ID]) echo 'checked';}?>/>							<?php
 							}
 						}
 						}
@@ -229,7 +229,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
 							<tr>
 								<td>
-									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value->Aset_ID?></span>
+									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value[Aset_ID]?></span>
 									<span>( Aset ID - System Number )</span>
 								</td>
 								<!--
@@ -239,13 +239,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</td>-->
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value->NomorReg?></td>
+								<td style="font-weight:bold;"><?php echo $value[noRegister]?>noRegister</td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value->Kode?></td>
+								<td style="font-weight:bold;"><?php echo $value[Kode]?>Kode</td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value->NamaAset?></td>
+								<td style="font-weight:bold;"><?php echo $value[NamaAset]?>NamaAset</td>
 							</tr>
 
 						</table>
@@ -254,13 +254,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<hr />
 						<table>
 							<tr>
-								<td width="30%"> No.Kontrak</td> <td><?php echo $value->NoKontrak?></td>
+								<td width="30%"> No.Kontrak</td> <td><?php echo $value[noKontrak]?></td>
 							</tr>
 							<tr>
-								<td>Satker</td> <td><?php echo '['.$value->KodeSatker.'] '.$value->NamaSatker?></td>
+								<td>Satker</td> <td><?php echo '['.$value[kodeSatker].'] '.$value[NamaSatker]?></td>
 							</tr>
 							<tr>
-								<td>Lokasi</td> <td><?php echo $value->NamaLokasi?></td>
+								<td>Kode Lokasi</td> <td><?php echo $value[kodeLokasi]?></td>
 							</tr>
 							<tr>
 								<td>Status</td> <td><?php echo $value->Kondisi_ID. '-' .$value->InfoKondisi?></td>

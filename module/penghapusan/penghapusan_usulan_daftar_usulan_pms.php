@@ -53,7 +53,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								
 								
 	pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan($_POST);
+	$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 	pr($data);
 							?>
 						<ul>
@@ -95,10 +95,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							 
 				 <?php
                                         
-					pr($dataArr);
+					// pr($dataArr);
 					$no=1;	
-					pr($data);
-					foreach($data['dataArr'] as $key => $hsl_data){
+					// pr($data);
+					foreach($data as $key => $hsl_data){
 						
 						if($dataArr!="")
 							{
@@ -122,7 +122,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 														echo "&nbsp;";
 													}else{
 													?>
-														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 											
 													<?php
 													}
@@ -131,7 +131,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 														echo "&nbsp;";	
 													}else{
 													?>	
-														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+														<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 													<?php
 													}
 												}
@@ -139,11 +139,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 												if($_SESSION['ses_uaksesadmin'] == 1){
 												// echo "masukkkkkk";
 												?>
-													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 												<?php	
 												}elseif($_SESSION['ses_uoperatorid'] == $hsl_data[UserNm]){
 												?>
-													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 											
 												<?php
 												}else{
