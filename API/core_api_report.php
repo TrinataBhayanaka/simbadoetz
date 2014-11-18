@@ -351,6 +351,7 @@ class core_api_report extends DB {
 				}	
 			}
 			
+			
 			if($label == 'label'){
 				if($tahun !='' && $skpd_id == ""){
 					// echo "sini";
@@ -362,7 +363,6 @@ class core_api_report extends DB {
 				}
 			}
 			
-
 			// echo $query_tahun;
 			// echo "<br>";
 			// echo $query_satker_fix;
@@ -394,9 +394,7 @@ class core_api_report extends DB {
             $parameter_sql=$query_kelompok_fix;
             } 
 //           $limit="limit 20";
-			//echo $parameter_sql;
 			
-			// exit;
 			
 			//==============================================================
 			//start update query kib a (ok)
@@ -2424,10 +2422,10 @@ class core_api_report extends DB {
 												  break;
 												  case '10':
 												  {
+													
 													//cetak label edit
 													 if($parameter_sql!="" ){
-														// echo "param =".$parameter_sql;
-														// exit;
+														
 																	if($gol == 01){
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
@@ -2444,7 +2442,7 @@ class core_api_report extends DB {
 																						T.kodeKelompok,T.noRegister";	
 																	}
 																	elseif($gol == 02){
-																		// echo "gol 2";
+																		
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
 																			$param[]="M.".$pecah[$q];
@@ -2575,7 +2573,6 @@ class core_api_report extends DB {
 																				// print_r($data);
 																				// exit;
 																		*/
-																		
 																	}
 												  }
                                              }
