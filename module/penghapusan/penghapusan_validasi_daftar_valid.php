@@ -1,6 +1,9 @@
 <?php
 include "../../config/config.php";
 
+
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+
  $menu_id = 40;
     ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
     $SessionUser = $SESSION->get_session_user();
@@ -105,9 +108,11 @@ include "../../config/config.php";
 								$paging = $LOAD_DATA->paging($_GET['pid']);
 								unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 								$parameter = array('menuID'=>$menu_id,'type'=>'','paging'=>$paging);
-								$data = $RETRIEVE->retrieve_daftar_validasi_penghapusan($parameter);
+								// $data = $RETRIEVE->retrieve_daftar_validasi_penghapusan($parameter);
                                 // pr($data);        
-							
+							// pr($_POST);
+							$data = $PENGHAPUSAN->retrieve_daftar_validasi_penghapusan($_POST);
+							pr($data);
 							?>
 						<ul>
 							<li>
@@ -139,7 +144,7 @@ include "../../config/config.php";
 					<tr>
 						<th>No</th>
 						<th>Nomor SK Penghapusan</th>
-						<th>Tgl Penghapusan/th>
+						<th>Tgl Penghapusan</th>
 						<th>Keterangan</th>
 						<th>Tindakan</th>
 					</tr>
@@ -148,7 +153,7 @@ include "../../config/config.php";
 							 
 				 <?php
 										
-					if (!empty($data['dataArr']))
+					if (!empty($data))
 					{
 					$page = @$_GET['pid'];
 					if ($page > 1){
@@ -156,7 +161,7 @@ include "../../config/config.php";
 					}else{
 						$no = 1;
 					}          
-					foreach($data['dataArr'] as $key => $hsl_data){
+					foreach($data as $key => $hsl_data){
 				?>
 						  
 					<tr class="gradeA">
@@ -172,7 +177,7 @@ include "../../config/config.php";
 						</td>
 					</tr>
 					
-				    <?php $nomor++; } }?>
+				    <?php $no++; } }?>
 				</tbody>
 				<tfoot>
 					<tr>

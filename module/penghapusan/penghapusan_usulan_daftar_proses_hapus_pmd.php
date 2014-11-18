@@ -13,7 +13,7 @@ $id=$_GET['id'];
 
 // $dataArr = $DELETE->delete_daftar_usulan_penghapusan($id);
 
-		$data = $PENGHAPUSAN->delete_daftar_usulan_penghapusan_pms($_GET);
+		$data = $PENGHAPUSAN->delete_daftar_usulan_penghapusan_pmd($_GET);
 
 /*
 $query="UPDATE Usulan SET FixUsulan=0 WHERE Usulan_ID='$id' AND Jenis_Usulan='HPS'";
@@ -30,5 +30,5 @@ $exec3=mysql_query($query3) or die(mysql_error());
 $query4="UPDATE Aset SET Usulan_Penghapusan_ID=NULL WHERE Usulan_Penghapusan_ID='$id'";
 $exec4=mysql_query($query4) or die(mysql_error());
 */
-echo "<script>alert('Data Sudah Terhapus'); document.location='$url_rewrite/module/penghapusan/penghapusan_usulan_daftar_usulan_pms.php?pid=1';</script>";
+echo "<script>alert('Data Sudah Terhapus'); document.location='$url_rewrite/module/penghapusan/penghapusan_usulan_daftar_usulan_pmd.php?pid=1';</script>";
 ?>

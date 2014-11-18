@@ -2,6 +2,8 @@
 
 include "../../config/config.php"; 
 
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+
 $menu_id = 40;
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -10,7 +12,11 @@ $submit=$_POST['submit'];
 $ses_uid=$_SESSION['ses_uid'];
 
 $parameter=array('submit'=>$submit, 'ses_uid'=>$ses_uid);
-$data=$UPDATE->update_validasi_penghapusan($parameter);
+// $data=$UPDATE->update_validasi_penghapusan($parameter);
+
+
+		// pr($_POST);
+		$data = $PENGHAPUSAN->update_validasi_penghapusan($_POST);
 
 /*
 
