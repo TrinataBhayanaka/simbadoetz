@@ -4768,7 +4768,65 @@ class core_api_report extends DB {
 		return 	$getdata;
 	}
 	
-	
+	public function ceckneraca($satker,$tahun){
+			
+			$queryparentGol="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where k.Bidang is null and k.Kelompok is null and k.Sub is null and k.SubSub is null order by k.Kode";
+			$resultparentGol = $this->query($queryparentGol) or die ($this->error('error'));	
+			while ($data = $this->fetch_object($resultparentGol))
+			{
+				$dataparentgol[$data->Kode] = $data->Uraian;
+			}
+			$tahundefault = "2008";
+				foreach ($satker as $Satker_ID)
+				{
+					foreach ($dataparentgol as $data=>$value)
+					{
+						$datachildGol =array();
+						$querychildGol ="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where k.Golongan = '$data' and k.Bidang is not null and k.Kelompok is null and k.Sub is null and k.SubSub is null order by k.Kode ";		
+						$resultchildGol = $this->query($querychildGol) or die ($this->error('error'));	
+						while ($data2 = $this->fetch_object($resultchildGol))
+						{
+							$datachildGol[$data2->Kode] = $data2->Uraian;
+						}
+						foreach ($datachildGol as $data2=>$value2)
+						{	
+							$datafix =array();
+							if($tahun < $tahundefault ){
+								if($data2 == '01.01' || $data2 == '06.01' || $data2 == '06.20' || $data2 == '07.01'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai FROM aset WHERE kodeKelompok like '$data2%' and kodeSatker ='$Satker_ID' and Tahun <='$tahun'";		
+								}else{
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai FROM aset WHERE kodeKelompok like '$data2%' and kodeSatker ='$Satker_ID' and Tahun <='$tahun' and kondisi !='3'";		
+								}
+							}
+							else{
+								if($data2 == '01.01' || $data2 == '06.01' || $data2 == '06.20'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai FROM aset WHERE kodeKelompok like '$data2%' and kodeSatker ='$Satker_ID' and Tahun <='$tahun'";		
+								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11' || $data2 == '03.11' || $data2 == '03.12'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai FROM aset WHERE kodeKelompok like '$data2%' and kodeSatker ='$Satker_ID' and Tahun <'$tahundefault' and kondisi !='3'
+													UNION ALL
+													SELECT sum(NilaiPerolehan) as nilai FROM aset WHERE kodeKelompok like '$data2%' and kodeSatker ='$Satker_ID' and Tahun >='$tahundefault' and Tahun <='$tahun' and kondisi !='3'";	
+								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16' || $data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
+										$queryresult ="SELECT sum(NilaiPerolehan) as nilai FROM aset WHERE kodeKelompok like '$data2%' and kodeSatker ='$Satker_ID' and Tahun <='$tahun' and kondisi !='3'";		
+								}
+								else{
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai FROM aset WHERE kodeSatker ='$Satker_ID' and Tahun <='$tahun' and kondisi ='3'";
+								
+								}
+							
+							}
+							$resultfix = $this->query($queryresult) or die ($this->error('error'));	
+							while ($data3 = $this->fetch_object($resultfix))
+							{
+								$datafix[] = $data3->nilai;
+							}
+								$getdata[$Satker_ID][$data."_".$value][$data2."_".$value2][]= $datafix;
+						}	
+					}
+				}
+				// pr($getdata);
+				// exit;
+		return 	$getdata;
+	}
 }
 
 ?>
