@@ -43,25 +43,27 @@ function kib_a()
 {
 
 
+		
 	$modul = $_GET['menuID'];
 	$mode = $_GET['mode'];
 	$tab = $_GET['tab'];
 	$skpd_id = $_GET['skpd_id'];
-	$kib = $_GET['kib'];
-	$tahun = $_GET['tahun'];
-	$kelompok=$_GET['bidang'];
+	$rekap = $_GET['rekap'];
+	// $tahun = $_GET['tahun'];
+	// $kelompok=$_GET['bidang'];
 	$tipe=$_GET['tipe_file'];
-
+	
 	$data=array(
-	    "modul"=>"14",
-	    "mode"=>"1",
-	    "kib"=>"KIB-A",
-	    "tahun"=>"2010",
-	    "skpd_id"=>"",
-	    "kelompok"=>$kelompok,
-	    "tab"=>"1"
+	    "modul"=>14,
+	    "mode"=>1,
+	    "rekap"=>"RekapKIB-A",
+	    // "tahun"=>$tahun,
+	    "skpd_id"=>$skpd_id,
+	    // "kelompok"=>$kelompok,
+	    "tab"=>'9'
 	);
-
+	// pr($data);
+	// exit;
 	//mendeklarasikan report_engine. FILE utama untuk reporting
 	$REPORT=new report_engine();
 
@@ -70,11 +72,10 @@ function kib_a()
 
 	//mendapatkan jenis query yang digunakan
 	$query=$REPORT->list_query($data);
-	 // vd($query);
-	 // exit;
+	// pr($query);
+	// exit;
 	//mengenerate query
 	$result_query=$REPORT->retrieve_query($query);
-	// pr($result_query);
 	if ($result_query){
 		print(json_encode(array('status'=>true, 'data'=>$result_query)));
 	}else{
@@ -98,15 +99,16 @@ function kib_b()
 	$tipe=$_GET['tipe_file'];
 	// pr($_GET);
 	$data=array(
-	    "modul"=>"14",
-	    "mode"=>"1",
-	    "kib"=>"KIB-B",
-	    "tahun"=>"2010",
-	    "skpd_id"=>"",
-	    "kelompok"=>$kelompok,
-	    "tab"=>"1"
+	    "modul"=>14,
+	    "mode"=>1,
+	    "rekap"=>"RekapKIB-B",
+	    // "tahun"=>$tahun,
+	    "skpd_id"=>$skpd_id,
+	    // "kelompok"=>$kelompok,
+	    "tab"=>'9'
 	);
 
+		
 	//mendeklarasikan report_engine. FILE utama untuk reporting
 	$REPORT=new report_engine();
 
@@ -115,14 +117,14 @@ function kib_b()
 
 	//mendapatkan jenis query yang digunakan
 	$query=$REPORT->list_query($data);
+	// pr($query);
 	//mengenerate query
 	// $result_query=$REPORT->retrieve_query($query);
-	// pr($query);
+
 	$table_name = "mesin";
 	$result_query=$REPORT->QueryKib($query,$table_name);
+
 	$result = arrayToObject($result_query);
-	// pr($result_query);
-	//set gambar untuk laporan
 	if ($result){
 		print(json_encode(array('status'=>true, 'data'=>$result)));
 	}else{
@@ -165,15 +167,16 @@ function kib_c()
 	$tipe=$_GET['tipe_file'];
 
 	$data=array(
-	    "modul"=>"14",
-	    "mode"=>"1",
-	    "kib"=>"KIB-C",
-	    "tahun"=>"2010",
-	    "skpd_id"=>"",
-	    "kelompok"=>$kelompok,
-	    "tab"=>"1"
+	    "modul"=>14,
+	    "mode"=>1,
+	    "rekap"=>"RekapKIB-C",
+	    // "tahun"=>$tahun,
+	    "skpd_id"=>$skpd_id,
+	    // "kelompok"=>$kelompok,
+	    "tab"=>'9'
 	);
 
+		
 	//mendeklarasikan report_engine. FILE utama untuk reporting
 	$REPORT=new report_engine();
 
@@ -207,15 +210,16 @@ function kib_d()
 	$tipe=$_GET['tipe_file'];
 	// pr($_GET);
 	$data=array(
-	    "modul"=>"14",
-	    "mode"=>"1",
-	    "kib"=>"KIB-D",
-	    "tahun"=>"2010",
-	    "skpd_id"=>"",
-	    "kelompok"=>$kelompok,
-	    "tab"=>"1"
+	    "modul"=>14,
+	    "mode"=>1,
+	    "rekap"=>"RekapKIB-D",
+	    // "tahun"=>$tahun,
+	    "skpd_id"=>$skpd_id,
+	    // "kelompok"=>$kelompok,
+	    "tab"=>'9'
 	);
 
+		
 	//mendeklarasikan report_engine. FILE utama untuk reporting
 	$REPORT=new report_engine();
 
@@ -249,15 +253,16 @@ function kib_e()
 	$tipe=$_GET['tipe_file'];
 	// pr($_GET);
 	$data=array(
-	    "modul"=>"14",
-	    "mode"=>"1",
-	    "kib"=>"KIB-E",
-	    "tahun"=>"2010",
-	    "skpd_id"=>"",
-	    "kelompok"=>$kelompok,
-	    "tab"=>"1"
+	    "modul"=>14,
+	    "mode"=>1,
+	    "rekap"=>"RekapKIB-E",
+	    // "tahun"=>$tahun,
+	    "skpd_id"=>$skpd_id,
+	    // "kelompok"=>$kelompok,
+	    "tab"=>'9'
 	);
 
+		
 	//mendeklarasikan report_engine. FILE utama untuk reporting
 	$REPORT=new report_engine();
 
@@ -272,8 +277,8 @@ function kib_e()
 	$table_name = "asetlain";
 	$result_query=$REPORT->QueryKib($query,$table_name);
 	$result = arrayToObject($result_query);
-	if ($result){
-		print(json_encode(array('status'=>true, 'data'=>$result)));
+	if ($result_query){
+		print(json_encode(array('status'=>true, 'data'=>$result_query)));
 	}else{
 		print(json_encode(array('status'=>false)));
 	}
@@ -296,15 +301,14 @@ function kib_f()
 	$tipe=$_GET['tipe_file'];
 
 	$data=array(
-	    "modul"=>"14",
-	    "mode"=>"1",
-	    "kib"=>"KIB-F",
-	    "tahun"=>"2010",
-	    "skpd_id"=>"",
-	    "kelompok"=>$kelompok,
-	    "tab"=>"1"
+	    "modul"=>14,
+	    "mode"=>1,
+	    "rekap"=>"RekapKIB-F",
+	    // "tahun"=>$tahun,
+	    "skpd_id"=>$skpd_id,
+	    // "kelompok"=>$kelompok,
+	    "tab"=>'9'
 	);
-	//mendeklarasikan report_engine. FILE utama untuk reporting
 	$REPORT=new report_engine();
 
 	//menggunakan api untuk query berdasarkan variable yg telah dimasukan
