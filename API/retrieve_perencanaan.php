@@ -75,9 +75,9 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
 		$skb_lokasi	= $data['lokasi_id'];
 		
         $filter = "";
-		if ($skb_njb) $filter .= "skb_njb = '{$skb_njb}'";
-        if ($skb_skpd) $filter .= "skb_skpd = '{$skb_skpd}'";
-        if ($skb_lokasi) $filter .= "skb_lokasi = '{$skb_lokasi}'";
+		if ($skb_njb) $filter .= " AND skb_njb = '{$skb_njb}'";
+        if ($skb_skpd) $filter .= " AND skb_skpd = '{$skb_skpd}'";
+        if ($skb_lokasi) $filter .= " AND skb_lokasi = '{$skb_lokasi}'";
 
 
 		$sql = array(
@@ -101,12 +101,13 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
 		$rkb_skpd	= $data['skpd_id'];
 		$rkb_lokasi	= $data['lokasi_id'];
 		$rkb_njb	= $data['kelompok_id'];
-		
+        
+        // pr($data);	
 		$filter = "";
-        if ($rkb_tahun) $filter .= "Tahun = '{$rkb_tahun}'";
-        if ($rkb_skpd) $filter .= "Satker_ID = '{$skb_skpd}'";
-        if ($skb_lokasi) $filter .= "lokasi_ID = '{$skb_lokasi}'";
-        if ($rkb_njb) $filter .= "Kelompok_ID = '{$rkb_njb}'";
+        if ($rkb_tahun) $filter .= " AND Tahun = '{$rkb_tahun}'";
+        if ($rkb_skpd) $filter .= " AND Satker_ID = '{$rkb_skpd}'";
+        if ($skb_lokasi) $filter .= " AND lokasi_ID = '{$rkb_lokasi}'";
+        if ($rkb_njb) $filter .= " AND Kelompok_ID = '{$rkb_njb}'";
 
 		$sql = array(
                 'table'=>'Perencanaan',

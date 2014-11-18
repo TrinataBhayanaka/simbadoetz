@@ -131,6 +131,25 @@ include "../config/config.php";
                         </div>
                     </li>
 
+                    <li>
+                        <h3>View Result test</h3>
+                        
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                        <a href="?page=4">
+                                            <div class="acc-section">
+                                                <div class="acc-content">KIB A</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </li>
+
                     <!--
                     <li>
                         <h3>Store Data</h3>
@@ -182,6 +201,11 @@ include "../config/config.php";
                             case '3':
                                 {
                                     include 'view/store_standar_harga_barang.php'; 
+                                }
+                                break;
+                            case '4':
+                                {
+                                    include 'view/viewreport.php'; 
                                 }
                                 break;
                             default:
