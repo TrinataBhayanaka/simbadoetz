@@ -569,6 +569,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 		$tahun	=$parameter['param']['rkb_add_thn'];
 		$skpd	=$parameter['param']['skpd_id'];
 		$lokasi	=$parameter['param']['lokasi_id'];
+            if($lokasi=='')
+                 $lokasi="0";
 		$njb	=$parameter['param']['kelompok_id'];
 		$spesifikasi	=$parameter['param']['Spesifikasi'];
 		$korek	=$parameter['param']['rekening_id'];
@@ -579,6 +581,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 						Perencanaan (Perencanaan_ID,StatusPemeliharaan,StatusValidasi,Tahun,Satker_ID,Lokasi_ID,Kelompok_ID,Merk,KodeRekening,Kuantitas,NilaiAnggaran) 
 					VALUES 
 						(null,0,10, '".$tahun."' , '".$skpd."' , '".$lokasi."' , '".$njb."' , '".$spesifikasi."' , '".$korek."' , '".$jml."' , '".$thrg."')";
+        echo $query;
         $result = $this->query($query) or die ('error store_rkb_data');
         if ($result)
         {
@@ -599,7 +602,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 		$skpd	= $parameter['param']['skpd_id'];
 		$lokasi	= $parameter['param']['lokasi_id'];
 		$tanggal = explode("/",$parameter['param']['skb_add_tgl']);
-		$tgl	= $tanggal[2]."-".$tanggal[1]."-".$tanggal[0];
+		$tgl	= $tanggal[2]."-".$tanggal[0]."-".$tanggal[1];
 		
 		$ket	= $parameter['param']['skb_add_ket'];
 		$jml	= $parameter['param']['skb_add_jml'];
