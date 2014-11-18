@@ -8,7 +8,7 @@ $SessionUser = $SESSION->get_session_user();
 
 $menuPath = $USERAUTH->FrontEnd_show_menu($SessionUser);
 
-
+// pr($menuPath);
 ?>
 
 <aside>
@@ -56,11 +56,11 @@ $menuPath = $USERAUTH->FrontEnd_show_menu($SessionUser);
 					<ul>
 				<?php 
 					$j = $i;
-					foreach ($menuParent as $menuChild)
+					foreach ($menuParent as $key => $menuChild)
 					{
 						//echo $v2;
 				?>
-						<a href="<?php echo $url_rewrite."/module/".$menuPath[1][$j]; ?>"><li><?php echo $menuChild?></li></a>
+						<a href="<?php echo $url_rewrite."/module/".$menuPath[1][$key]; ?>"><li><?php echo $menuChild?></li></a>
 				<?php 
 					$j++;
 					}
