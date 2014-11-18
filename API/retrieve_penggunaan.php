@@ -293,7 +293,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*',
-                'condition' => "p.FixPenggunaan = 0 AND p.Status IS NULL $filter",
+                'condition' => "p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'
@@ -352,7 +352,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'penggunaan AS p, Penggunaanaset AS pa',
                 'field'=>'p.*',
-                'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL $filter",
+                'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID ",
                 'limit' => '100',
                 'joinmethod' => "LEFT JOIN",
                 'join' => "p.Penggunaan_ID = pa.Penggunaan_ID"
