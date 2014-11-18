@@ -91,6 +91,7 @@ section.formLegend{
 	padding:10px;
 	padding-bottom:50px;
 }
+
 section.formLegend li{
 	list-style:none;
 }
@@ -114,9 +115,80 @@ section.formLegend .detailRight .labelInfo{
 section.formLegend .detailRight{
 	float:Right;
 }
+
 section.formLegend .titleLegend{
 	margin-top:-20px;
 	margin-left:10px;
+}
+/*inventaris*/
+
+section.formLegendInve{
+	margin:0 auto;
+	margin-top:10px;
+	width:100%;
+	border:0px solid #DDDDDD;
+	border-radius:3px;
+	padding:10px;
+	padding-bottom:50px;
+}
+section.formLegendInve li{
+	list-style:none;
+}
+section.formLegendInve .detailLeft{
+	float:left;
+}
+section.formLegendInve .detailLeft .labelInfo{
+	width:100px;
+	display:inline-block;
+	text-align:right;
+	padding-right:10px;
+	font-weight:bold;
+}
+section.formLegendInve .detailRight .labelInfo{
+	width:200px;
+	display:inline-block;
+	text-align:right;
+	padding-right:10px;
+	font-weight:bold;
+}
+section.formLegendInve .detailRight{
+	float:Right;
+}
+
+section.formLegendInve .titleLegend{
+	margin-top:-20px;
+	margin-left:10px;
+}
+
+section.formLegendInve .titleSp2dTermin{
+	margin-top:-20px;
+	margin-left:10px;
+	font-size:12px;
+	background-color:#A3CE4B;
+	padding:2px 40px;
+	width:150px;
+	border-radius:2px;
+	font-weight:bold;
+}
+section.formLegendInve .titleSp2dPenunjang{
+	margin-top:-20px;
+	margin-left:10px;
+	font-size:12px;
+	background-color:#A3CE4B;
+	padding:2px 40px;
+	width:180px;
+	border-radius:2px;
+	font-weight:bold;
+}
+section.formLegendInve .titleSp2dRPenunjang{
+	margin-top:-20px;
+	margin-left:10px;
+	font-size:12px;
+	background-color:#A3CE4B;
+	padding:2px 40px;
+	width:200px;
+	border-radius:2px;
+	font-weight:bold;
 }
 .label.Legendtitle{
 	padding:4px 40px;

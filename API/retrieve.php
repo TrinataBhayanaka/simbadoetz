@@ -9747,6 +9747,51 @@ $offset = @$_POST['record'];
         return $aset;
     }
 	
+    function retrieve_filterKoreksi($data,$kodesatker)
+    {
+        $table = $data['tipeAset']; unset($data['tipeAset']);
+        // pr(array_filter($data));exit;
+
+        $dataclean = array_filter($data);
+
+        foreach ($dataclean as $key => $val) {
+            $tmpsetval[] = $key."='$val'";
+        }
+        $setval = implode(' AND ', $tmpsetval);
+
+        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(noRegister) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang = '1' GROUP BY  kodeKelompok ,  kodeLokasi");
+        while ($dataAset = mysql_fetch_assoc($sql)){
+                    $aset[] = $dataAset;
+                }
+        // pr($aset);exit;        
+        if($aset){
+            foreach ($aset as $key => $value) {
+                $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+                while ($uraian = mysql_fetch_array($sqlnmBrg)){
+                        $tmp = $uraian;
+                        $aset[$key]['uraian'] = $tmp['Uraian'];
+                    }
+                $aset[$key]['tabel'] = $table;
+            }
+        }
+       
+        return $aset;
+    }
+
+    function retrieve_koreksi_aset($data)
+    {
+        // pr($data);exit;
+        $sql = "SELECT * FROM aset WHERE kodeKelompok = '{$data['kdkel']}' AND kodeLokasi = '{$data['kdlok']}' AND noRegister = '{$data['reg']}' LIMIT 1";
+        $aset = $this->fetch($sql);
+
+        $sql = "SELECT * FROM {$data['tbl']} WHERE kodeKelompok = '{$data['kdkel']}' AND kodeLokasi = '{$data['kdlok']}' AND noRegister = '{$data['reg']}' LIMIT 1";
+        $kib = $this->fetch($sql);
+        
+        $dataArr = array('aset' => $aset, 'kib' => $kib );
+
+        return $dataArr;
+        exit;
+    }   
 }
 
 ?>

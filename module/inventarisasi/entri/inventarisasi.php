@@ -283,46 +283,48 @@ $menu_id = 10;
 		{
 			$("#TipeAset").val('A');
 			$(".mesin,.bangunan,.jaringan,.asetlain,.kdp").hide('');
-			$(".mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+			$(".mesin,.bangunan,.jaringan,.asetlain,.kdp li > input,textarea").attr('disabled','disabled');
 			$(".tanah li > input,textarea").removeAttr('disabled');
 			$(".tanah").show('');
 		} else if(gol[0] == '02')
 		{
 			$("#TipeAset").val('B');
 			$(".tanah,.bangunan,.jaringan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+			$(".tanah,.bangunan,.jaringan,.asetlain,.kdp li > input,textarea").attr('disabled','disabled');
 			$(".mesin li > input,textarea").removeAttr('disabled');
 			$(".mesin").show('');
 		} else if(gol[0] == '03')
 		{
 			$("#TipeAset").val('C');
 			$(".tanah,.mesin,.jaringan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+			$(".tanah,.mesin,.jaringan,.asetlain,.kdp li > input,textarea").attr('disabled','disabled');
 			$(".bangunan li > input,textarea").removeAttr('disabled');
 			$(".bangunan").show('');
 		} else if(gol[0] == '04')
 		{
 			$("#TipeAset").val('D');
 			$(".tanah,.mesin,.bangunan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+			$(".tanah,.mesin,.bangunan,.asetlain,.kdp li > input,textarea").attr('disabled','disabled');
 			$(".jaringan li > input,textarea").removeAttr('disabled');
 			$(".jaringan").show('');
 		} else if(gol[0] == '05')
+		{
 			$("#TipeAset").val('E');
 			$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+			$(".tanah,.mesin,.bangunan,.jaringan,.kdp li > input,textarea").attr('disabled','disabled');
 			$(".asetlain li > input,textarea").removeAttr('disabled');
 			$(".asetlain").show('');
 		} else if(gol[0] == '06')
+		{
 			$("#TipeAset").val('F');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,textarea").attr('disabled','disabled');
+			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan li > input,textarea").attr('disabled','disabled');
 			$(".kdp li > input,textarea").removeAttr('disabled');
 			$(".kdp").show('');
 		} else {
 			$("#TipeAset").val('G');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp li > input").attr('disabled','disabled');
 		}			
 		
 	})

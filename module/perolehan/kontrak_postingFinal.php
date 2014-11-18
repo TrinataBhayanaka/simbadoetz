@@ -28,7 +28,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     $NilaiPerolehan = $data['NilaiPerolehan'] + $bop;
     $satuan = intval($data['Satuan']) + ($bop/$data['Kuantitas']);
 
-    $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
+    $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'");
     
     if($data['TipeAset']=="A"){
           $tabel = "tanah";
@@ -46,7 +46,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           $tabel = "aset";
       }
 
-      $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = '1' WHERE Aset_ID = '{$data['Aset_ID']}'");
+      $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = '1', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'");
   }
 
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
