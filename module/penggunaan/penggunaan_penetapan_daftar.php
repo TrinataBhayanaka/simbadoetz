@@ -1,3 +1,4 @@
+
 <?php
 include "../../config/config.php";
 
@@ -38,7 +39,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	
 
 
-	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST,1);
+	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST);
 
 ?>
 
@@ -188,4 +189,5 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	</section>
 <?php
 include "$path/footer.php";
+
 ?>

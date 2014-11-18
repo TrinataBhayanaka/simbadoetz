@@ -154,6 +154,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 									<td></td>
 									<td>$no.</td>
 									<input type='hidden' name='penggu_nama_aset[]' value='$nilai[Aset_ID]'>
+									<input type='hidden' name='penggu_satker_aset[]' value='$nilai[kodeSatker]'>
 									<td>$nilai[noRegister] - $nilai[kodeSatker]</td>
 									<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
 									</tr>

@@ -67,6 +67,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
                             });
                     });
                 </script>
+				
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -93,6 +94,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>
 								<span class="span2">No. SK Penghapusan</span>
 								<input type="text" name="bup_pu_noskpenghapusan" placeholder="" style="width:200px;" id="posisiKolom">&nbsp;<span id="errmsg">
+							</li>
+							<li>
+								<span class="span2">Jenis Penghapusan</span>
+								<select name="jenis_hapus">
+									<option value="PMD">Pemindahtanganan</option>
+									<option value="PMS">Pemusnahan</option>
+								</select>
 							</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
                             <li>&nbsp;</li>

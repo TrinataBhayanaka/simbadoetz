@@ -53,13 +53,13 @@ function kib_a()
 	$tipe=$_GET['tipe_file'];
 
 	$data=array(
-	    "modul"=>$modul,
-	    "mode"=>$mode,
-	    "kib"=>$kib,
-	    "tahun"=>$tahun,
-	    "skpd_id"=>$skpd_id,
+	    "modul"=>"14",
+	    "mode"=>"1",
+	    "kib"=>"KIB-A",
+	    "tahun"=>"2010",
+	    "skpd_id"=>"",
 	    "kelompok"=>$kelompok,
-	    "tab"=>$tab
+	    "tab"=>"1"
 	);
 
 	//mendeklarasikan report_engine. FILE utama untuk reporting
@@ -70,10 +70,11 @@ function kib_a()
 
 	//mendapatkan jenis query yang digunakan
 	$query=$REPORT->list_query($data);
-	// pr($query);
-	// exit;
+	 // vd($query);
+	 // exit;
 	//mengenerate query
 	$result_query=$REPORT->retrieve_query($query);
+	// pr($result_query);
 	if ($result_query){
 		print(json_encode(array('status'=>true, 'data'=>$result_query)));
 	}else{

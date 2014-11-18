@@ -117,37 +117,37 @@ if (isset($_POST['submit']))
 							<table border="0" width=100%>
 								<tr>
 									<td width="20%">Tahun</td>
-									<td><?php echo $hsl_data->Tahun;?></td>
+									<td><?php echo $hsl_data['Tahun'];?></td>
 								</tr>
 								<tr>
 									<td width="20%">SKPD</td>
-									<td><?php echo show_skpd($hsl_data->Satker_ID);?></td>
+									<td><?php echo show_skpd($hsl_data['Satker_ID']);?></td>
 								</tr>
 								<tr>
 									<td width="20%">Lokasi</td>
-									<td><?php echo show_lokasi($hsl_data->Lokasi_ID);?></td>
+									<td><?php echo show_lokasi($hsl_data['Lokasi_ID']);?></td>
 								</tr>
 								<tr>
 									<td width="20%">Nama/Jenis Barang</td>
-									<td><?php echo show_kelompok($hsl_data->Kelompok_ID);?></td>
+									<td><?php echo show_kelompok($hsl_data['Kelompok_ID']);?></td>
 								</tr>
 								<tr>
 									<td width="20%">Spesifikasi</td>
-									<td><?php echo $hsl_data->Merk;?></td>
+									<td><?php echo $hsl_data['Merk'];?></td>
 								</tr>
 								<tr>
 									<td>Kode Rekening</td>
-									<td>[<?php echo show_koderekening($hsl_data->KodeRekening);?>]-<?php echo show_namarekening($hsl_data->KodeRekening);?></td>
+									<td>[<?php echo show_koderekening($hsl_data['KodeRekening']);?>]-<?php echo show_namarekening($hsl_data['KodeRekening']);?></td>
 								</tr>
 								<tr>
 									<td>Jumlah Barang</td>
-									<td><?php echo $hsl_data->Kuantitas;?></td>
+									<td><?php echo $hsl_data['Kuantitas'];?></td>
 								</tr>
 								<tr>
 									<td>Harga</td>
 											<td>
 									<?php
-									$query_shpb = "SELECT NilaiStandar FROM StandarHarga WHERE Kelompok_ID IN (".$hsl_data->Kelompok_ID.") AND TglUpdate LIKE '%".$hsl_data->Tahun."%' ";
+									$query_shpb = "SELECT NilaiStandar FROM StandarHarga WHERE Kelompok_ID IN (".$hsl_data['Kelompok_ID'].") AND TglUpdate LIKE '%".$hsl_data->Tahun."%' ";
 									//print_r($query_shpb);
 									$result		= mysql_query($query_shpb);
 									if($result){
@@ -163,14 +163,14 @@ if (isset($_POST['submit']))
 								</tr>
 							</table>
 						</td>
-						<td><?php echo number_format($hsl_data->NilaiAnggaran,2,',','.')?></td>
+						<td><?php echo number_format($hsl_data['NilaiAnggaran'],2,',','.')?></td>
 						<td>	
-						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin diedit?'); ">
+						<form method="POST" action="rkb_edit_data.php" onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data['Kelompok_ID']);?> ini ingin diedit?'); ">
 							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
 							<input type="submit" value="Edit" class="btn btn-success" name="edit"/>
 						</form>
-						<form method="POST" action="rkb-proses.php"  onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data->Kelompok_ID);?> ini ingin dihapus?'); ">
-							<input type="hidden" name="ID" value="<?php echo $hsl_data->Perencanaan_ID;?>" id="ID_<?php echo $i?>">
+						<form method="POST" action="rkb-proses.php"  onsubmit="return confirm('Apakah data nama/jenis barang = <?php echo show_kelompok($hsl_data['Kelompok_ID']);?> ini ingin dihapus?'); ">
+							<input type="hidden" name="ID" value="<?php echo $hsl_data['Perencanaan_ID'];?>" id="ID_<?php echo $i?>">
 							<input type="submit" value="Hapus" class="btn btn-danger" name="submit_hapus"/>
 						</form>
 						</td>
