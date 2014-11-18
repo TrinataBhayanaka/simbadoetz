@@ -38,7 +38,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	
 
 
-	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST,1);
+	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST);
 
 ?>
 
