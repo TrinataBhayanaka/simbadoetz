@@ -12,38 +12,18 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-$tahun=$_REQUEST['ThnbukuIntra'];
 $skpd_id = $_REQUEST['kodeSatker5'];
-$REPORT=new report_engine();
-
+$tahun = $_REQUEST['tahun_tetaplainnya'];
+$tipe=$_REQUEST['tipe_file'];
+// PR($_REQUEST);
+// EXIT;
 $data=array(
     "modul"=>$modul,
-	"tahun"=>$tahun,
-    "skpd_id"=>$skpd_id,
     "mode"=>$mode,
-    "tab"=>$tab,
-    "intra"=>"intra"
+    "tahun"=>$tahun,
+    "skpd_id"=>$skpd_id,
+    "tab"=>$tab
 );
-
-function arrayToObject($result_query) {
-	if (!is_array($result_query)) {
-		return $result_query;
-	}
-	
-	$object = new stdClass();
-	if (is_array($result_query) && count($result_query) > 0) {
-		foreach ($result_query as $name=>$value) {
-			// $name = strtolower(trim($name));
-			// if (!empty($name)) {
-				$object->$name = arrayToObject($value);
-			// }
-		}
-		return $object;
-	}
-	else {
-		return FALSE;
-	}
-}
 
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
@@ -51,28 +31,28 @@ $REPORT=new report_engine();
 //menggunakan api untuk query berdasarkan variable yg telah dimasukan
 $REPORT->set_data($data);
 
-//mendapatkan jenis query yang digunakan
-$query=$REPORT->list_query($data);
-// pr($query);
-// exit;
+$satker = $skpd_id;
+
+	if ($tahun !='')
+	{
+		$get_satker = $REPORT->validasi_data_satker_id($satker);
+		
+	}
+	
+$paramGol = '05';
+$resultParamGol = $REPORT->ceckGol($get_satker,$tahun,$paramGol);
 
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-$result_query=$REPORT->QueryBinv($query);
-// pr($result_query);
-// exit;
-$result = arrayToObject($result_query);
+//retrieve html
+$html=$REPORT->retrieve_html_asetTetapLainnya($resultParamGol,$gambar);
 
-
-$html=$REPORT->retrieve_html_bukuinventaris_intra($result,$gambar);
 /*$count = count($html);
-
-	 for ($i = 0; $i < $count; $i++) {
-		 
-		 // echo $html[$i];     
+	for ($i = 0; $i < $count; $i++) {
+		 echo $html[$i];     
 	}
-// exit;*/
+exit;*/
 $REPORT->show_status_download();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
@@ -83,25 +63,22 @@ $mpdf->useGraphs = true;
 $mpdf->list_number_suffix = ')';
 $mpdf->hyphenate = true;
 $count = count($html);
-	
-	for ($i = 0; $i < $count; $i++) {
-		 if($i==0)
-			  $mpdf->WriteHTML($html[$i]);
-		 else
-		 {
-			   $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
-			   $mpdf->WriteHTML($html[$i]);
-			   
-		 }
-	}
+for ($i = 0; $i < $count; $i++) {
+     if($i==0)
+          $mpdf->WriteHTML($html[$i]);
+     else
+     {
+           $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
+           $mpdf->WriteHTML($html[$i]);
+           
+     }
+}
+
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Rekapitulasi Buku Induk Inventaris Daerah_$waktu.pdf";
+$namafile="$path/report/output/Daftar Aset Tetap Lainnya $waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Rekapitulasi Buku Induk Inventaris Daerah_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Daftar Aset Tetap Lainnya $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
-
-
-
 ?>
