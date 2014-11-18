@@ -26,6 +26,9 @@ if ($param){
 		case '6':
 			kib_f();
 			break;		
+		case '7':
+			asettetap_tanah();
+			break;
 		default:
 			print json_encode(array('status'=>'invalid param'));
 			break;
@@ -312,6 +315,51 @@ function kib_f()
 
 	//mengenerate query
 	$result_query=$REPORT->retrieve_query($query);
+	if ($result_query){
+		print(json_encode(array('status'=>true, 'data'=>$result_query)));
+	}else{
+		print(json_encode(array('status'=>false)));
+	}
+	
+	exit;
+}
+
+function asettetap_tanah()
+{
+
+		
+	$modul = $_REQUEST['menuID'];
+	$mode = $_REQUEST['mode'];
+	$tab = $_REQUEST['tab'];
+	$skpd_id = $_REQUEST['kodeSatker1'];
+	$tahun = $_REQUEST['tahun_tanah'];
+	$tipe=$_REQUEST['tipe_file'];
+
+	$data=array(
+	    "modul"=>$modul,
+	    "mode"=>$mode,
+	    "tahun"=>$tahun,
+	    "skpd_id"=>$skpd_id,
+	    "tab"=>$tab
+	);
+
+	//mendeklarasikan report_engine. FILE utama untuk reporting
+	$REPORT=new report_engine();
+
+	//menggunakan api untuk query berdasarkan variable yg telah dimasukan
+	$REPORT->set_data($data);
+
+	$satker = $skpd_id;
+
+		if ($tahun !='')
+		{
+			$get_satker = $REPORT->validasi_data_satker_id($satker);
+			
+		}
+		
+	$paramGol = '01';
+	$result_query = $REPORT->ceckGol($get_satker,$tahun,$paramGol);
+
 	if ($result_query){
 		print(json_encode(array('status'=>true, 'data'=>$result_query)));
 	}else{
