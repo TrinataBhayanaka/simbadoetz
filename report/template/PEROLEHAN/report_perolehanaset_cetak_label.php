@@ -15,7 +15,8 @@ $tab = $_REQUEST['tab'];
 $skpd_id = $_REQUEST['kodeSatker8'];
 $tahun = $_REQUEST['tahun_label'];
 $gol = $_REQUEST['gol'];
-pr($_REQUEST);
+$label = $_REQUEST['label'];
+
 // exit;
 $data=array(
     "modul"=>$modul,
@@ -23,8 +24,10 @@ $data=array(
     "skpd_id"=>$skpd_id,
 	"tahun"=>$tahun,
     "gol"=>$gol,
-    "tab"=>$tab
+    "tab"=>$tab,
+	"label"=>$label
 );
+// pr($data);
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -33,7 +36,7 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query();
-
+// pr($query);
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
@@ -45,13 +48,11 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 $html=$REPORT->retrieve_html_cetak_label($result_query, $gambar);
 
 /*$count = count($html);
-
-
 	for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
+		 echo $html[$i];     
 	}
-// exit;*/
+exit;*/
 $REPORT->show_status_download();
 $mpdf=new mPDF('','','','',8,8,5,5,10,10,'P');
 $mpdf->AddPage('P','','','','',8,8,5,5,10,10);
