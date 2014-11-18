@@ -51,7 +51,87 @@ include "../config/config.php";
                                 </ul>
                             </div>
                         </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=1" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB A</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=2" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB B</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=3" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB C</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=4" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB D</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=5" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB E</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=6" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB F</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
+
+                    <!--
                     <li>
                         <h3>Store Data</h3>
                         
@@ -70,7 +150,7 @@ include "../config/config.php";
                         </div>
                         
                     </li>
-                    
+                    -->
                 </ul>
             </div>
         </div>
