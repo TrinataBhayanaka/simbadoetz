@@ -242,6 +242,14 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                             );
                     $result = $this->db->lazyQuery($sql,$debug);
                     $asetid[$val['Aset_ID']] = $listTable[implode(',', $result[0])];
+
+                    $sql3 = array(
+                        'table'=>'aset',
+                        'field'=>"fixPenggunaan=1",
+                        'condition' => "Aset_ID='{$val['Aset_ID']}'",
+                        );
+                    $res3 = $this->db->lazyQuery($sql3,$debug,2);
+
                 }
                 
             }

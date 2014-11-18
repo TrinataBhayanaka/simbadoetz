@@ -40,7 +40,7 @@ class report_engine extends core_api_report {
 		 $this->KODE_KABUPATEN = $KODE_KABUPATEN;
 		 $this->KODE_PROVINSI = $KODE_PROVINSI;
 	 }
-		 public function set_footer_to_png($path,$url_rewrite,$data){
+	public function set_footer_to_png($path,$url_rewrite,$data){
 			 
 
 		$waktu=date("dymhis");
@@ -75,7 +75,5453 @@ class report_engine extends core_api_report {
 
 		} 
 
-//IMAN
+public function retrieve_html_asetTetapTanah($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>DAFTAR ASET TETAP</h3>
+          <h3>TANAH</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasTotal,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+
+
+}		
+
+public function retrieve_html_asetTetapMesin($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>DAFTAR ASET TETAP</h3>
+          <h3>MESIN</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: center;\">&nbsp;$value->jumlah</td>
+                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->Nilai);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"3\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+
+
+}		
+
+public function retrieve_html_asetTetapGedung($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>DAFTAR ASET TETAP</h3>
+          <h3>GEDUNG DAN BANGUNAN</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+
+
+}		
+		
+public function retrieve_html_asetTetapJaringan($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>DAFTAR ASET TETAP</h3>
+          <h3>JALAN, IRIGASI DAN JARINGAN</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasJaringan,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+
+
+}		
+	
+public function retrieve_html_asetTetapLainnya($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>DAFTAR ASET TETAP</h3>
+          <h3>ASET TETAP LAINNYA</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: center;\">&nbsp;$value->jumlah</td>
+                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->Nilai);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"3\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+
+
+}		
+
+public function retrieve_html_asetTetapkdp($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>DAFTAR ASET TETAP</h3>
+          <h3>KONSTRUKSI DALAM PENGERJAAN</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+
+
+}		
+
+public function retrieve_html_asetLainnya($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>DAFTAR ASET </h3>
+          <h3>ASET LAINNYA</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: center;\">&nbsp;$value->jml</td>
+                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->Nilai);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"3\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+
+
+}		
+
+	
+//Rekapitulasi KIB-A
+	public function retrieve_html_kib_a_rekap($dataArr,$gambar){
+         // echo "masukk";
+          if($dataArr!="")
+          {
+               include ('../../../function/tanggal/tanggal.php');
+               $head = "
+                         <html>
+                         <head>
+                         <style>
+                              table
+                              {
+                                   font-size:10pt;
+                                   font-family:Arial;
+                                   border-collapse: collapse;											
+                                   border-spacing:0;
+                              }
+                              h3
+                              {
+                                   font-family:Arial;	
+                                   font-size:13pt;
+                                   color:#000;
+                                   
+                              }
+                              p
+                              {
+                                   font-size:10pt;
+                                   font-family:Arial;
+                                   font-weight:bold;
+                              }
+                              </style>
+                         </head>
+                          ";
+          $no=1;
+          $skpdeh="";
+          // $thn="";
+		  $status_print=0;
+          $luasTotal=0;
+          $perolehanTotal=0;
+		  
+          foreach ($dataArr as $row)
+          {
+				
+          if ($skpdeh =="" && $no==1){
+               $body="";
+               $skpdeh = $row->kodeSatker;
+               $satker_id=$row->kodeSatker;
+			   $thn = $row->Tahun;
+			   // echo "satker =".$satker_id;
+			   //==add new==//
+			   $detailSatker=$this->get_satker($satker_id);
+			   $NoBidang = $detailSatker[0];
+			   $NoUnitOrganisasi = $detailSatker[1];
+			   $NoSubUnitOrganisasi = $detailSatker[2];
+			   $NoUPB = $detailSatker[3];
+			   
+			   if($NoBidang !=""){
+					$paramKodeLokasi = $NoBidang;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+					$paramKodeLokasi = $NoUnitOrganisasi;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+			   }
+			   $Bidang = $detailSatker[4][0];
+			   $UnitOrganisasi = $detailSatker[4][1];
+			   $SubUnitOrganisasi = $detailSatker[4][2];
+			   $UPB = $detailSatker[4][3];
+			   $noReg=substr($row->kodeLokasi,0,17);
+			   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+			   $thnLokasi= substr($row->Tahun,2,4);
+			   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+			   //==end new==//
+			   
+               list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                if($nip_pengurus!="")
+                {
+                    $nip_pengurus_fix=$nip_pengurus;
+                }
+                else
+                {
+                    $nip_pengurus_fix='........................................';
+                }
+
+                if($nip_pengguna!="")
+                {
+                    $nip_pengguna_fix=$nip_pengguna;
+                }
+                else
+                {
+                    $nip_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengguna!="")
+                {
+                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+                }
+                else
+                {
+                    $nama_jabatan_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengurus!="")
+                {
+                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+                }
+                else
+                {
+                    $nama_jabatan_pengurus_fix='........................................';
+                }
+
+               $body="<body>
+                         <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+     
+                              <tr>
+                                   <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                   <td style=\"width: 90%; text-align: center;\">
+                                        <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) A</h3>
+                                        <h3>TANAH</h3>
+                                   </td>
+                              </tr>
+     
+                         </table>
+                         <br />
+                         <br />
+                        <table border=\"0\" width=\"100%\" >
+                              <tr align=\"left\" >
+								   <td >
+										<p>PROVINSI</p>
+								   </td>
+								   <td width=\"65%\">
+										<p>:&nbsp;$this->NAMA_PROVINSI</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>KABUPATEN/KOTA</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							   <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>SUB UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$SubUnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UPB</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UPB</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr align=\"left\">
+								   <td width=\"20%\">
+										<p>NO. KODE LOKASI</p> 
+								   </td>
+								   <td width=\"60%\">
+										<p>:&nbsp;$kodeLokasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+                              
+                              </table>
+                              <br />
+                              <br />
+                                        
+							<table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+
+								  <thead> 
+								
+								  <tr>
+									   <td style=\"font-weight: bold; width: 30px; text-align: center;\" colspan=\"1\" rowspan=\"3\">No<br>Urut<br></td>
+									   <td style=\"font-weight: bold; width: 160px; text-align: center;\" colspan=\"1\" rowspan=\"3\">Jenis Barang /<br>
+																											 Nama Barang</td>
+									   <td style=\"font-weight: bold; text-align: center;\" colspan=\"2\" rowspan=\"1\">Nomor</td>
+									   <td colspan=\"1\" rowspan=\"3\" style=\"font-weight: bold; width: 50px; text-align: center;\">Luas<br>
+																											 (m2)</td>
+									   <td colspan=\"1\" rowspan=\"3\" style=\"font-weight: bold;width: 75px; text-align: center;\">Tahun<br>
+																											 Pengadaan/<br>Perolehan</td>
+									   <td colspan=\"1\" rowspan=\"3\" style=\"font-weight: bold;width: 110px; text-align: center;\">Letak / Alamat <br>
+																										</td>
+									   <td colspan=\"3\" rowspan=\"1\" style=\"font-weight: bold; width: 220px; text-align: center;\">Status Tanah</td>
+									   <td style=\"font-weight: bold; width: 140px; text-align: center;\" colspan=\"1\" rowspan=\"3\">Penggunaan</td>
+									   <td style=\"font-weight: bold; width: 70px; text-align: center;\" colspan=\"1\" rowspan=\"3\">Asal Usul</td>
+									   <td style=\"font-weight: bold; width: 80px; text-align: center;\" colspan=\"1\" rowspan=\"3\">Nilai<br>Perolehan<br>(ribuan Rp)</td>
+									   
+									   <td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"3\">Ket</td>
+								  </tr>
+								  <tr>
+									   <td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Kode Barang</td>
+									   <td style=\" font-weight: bold;text-align: center;\" colspan=\"1\" rowspan=\"2\">Register</td>
+									   <td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; width: 85px; text-align: center;\">Hak</td>
+									   <td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; width: 135px; text-align: center;\">Sertifikat</td>
+								  </tr>
+								  <tr>
+									   <td style=\"font-weight: bold; width: 75px; text-align: center;\">Tanggal</td>
+									   <td style=\"font-weight: bold; width: 60px;text-align: center;\">Nomor</td>
+								  </tr>
+								  <tr>
+									   <td style=\"text-align: center; font-weight: bold;\">1</td>
+									   <td style=\"text-align: center; font-weight: bold;\">2</td>
+									   <td style=\"text-align: center; font-weight: bold;\">3</td>
+									   <td style=\"text-align: center; font-weight: bold;\">4</td>
+									   <td style=\"text-align: center; width: 50px; font-weight: bold;\">5</td>
+									   <td style=\"text-align: center; width: 75px; font-weight: bold;\">6</td>
+									   <td style=\"text-align: center; width: 110px; font-weight: bold;\">7</td>
+									   <td style=\"text-align: center; width: 85px; font-weight: bold;\">8</td>
+									   <td style=\"text-align: center; width: 75px; font-weight: bold;\">9</td>
+									   <td style=\"text-align: center; font-weight: bold;\">10</td>
+									   <td style=\"text-align: center; width: 140px; font-weight: bold;\">11</td>
+									   <td style=\"text-align: center; font-weight: bold;\">12</td>
+									   <td style=\"text-align: center; font-weight: bold;\">13</td>
+									   <td style=\"text-align: center; font-weight: bold;\">14</td>
+									   
+								  </tr>
+							  </thead>";
+                                              
+			}
+					   
+				//uda dites footer disini
+			 if ($skpdeh != $row->kodeSatker && $no>1){
+			 // $printluas=  number_format($luasTotal);
+			 $printperolehanTotal=number_format($perolehanTotal,2,",",".");
+			 $tabletotal="
+							<tr>
+								 <td style=\"text-align: center;\" colspan=\"12\">Jumlah Harga</td>
+								 <td align=\"right\">$printperolehanTotal</td>
+								 <td></td>
+							</tr>
+							</table>";
+							
+			 $foot="<table border=\"0\">
+						<tr>
+							<td colspan=\"13\">&nbsp;</td>
+						</tr>
+					</table>";  
+			$footer ="	     
+			 
+			 <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+				  <tr>
+					   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+				  </tr>
+				  
+				  <tr>
+					   <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+				  </tr>
+				  <tr>
+					   <td colspan=\"11\" style=\"height: 80px\"></td>
+				  </tr>
+				  
+				  <tr>
+					   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+				  </tr>
+					   <tr>
+					   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+				  </tr>
+				  <tr>
+					   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td>&nbsp;</td>
+					   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+				  </tr>
+
+			 </table>";
+			 
+			   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+			   $footer.="
+			 </body>
+		</html>";   
+				
+				   
+			 //udah dites footer
+			 $luasTotal=0;
+			 $perolehanTotal=0;
+			 $no=1;
+			 
+				 if($status_print==0){
+				 $html[]=$head.$body.$tabletotal.$foot.$footer;
+					}else{
+				 $html[]=$body.$tabletotal.$foot.$footer;
+
+					}
+					
+			 $skpdeh = $row->kodeSatker;
+				
+			$satker_id=$row->kodeSatker;
+			
+			//==add new==//
+		   $detailSatker=$this->get_satker($satker_id);
+		   $NoBidang = $detailSatker[0];
+		   $NoUnitOrganisasi = $detailSatker[1];
+		   $NoSubUnitOrganisasi = $detailSatker[2];
+		   $NoUPB = $detailSatker[3];
+		   
+		   if($NoBidang !=""){
+				$paramKodeLokasi = $NoBidang;
+		   }
+		   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+				$paramKodeLokasi = $NoUnitOrganisasi;
+		   }
+		   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+				$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+		   }
+		   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+				$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+		   }
+		   $Bidang = $detailSatker[4][0];
+		   $UnitOrganisasi = $detailSatker[4][1];
+		   $SubUnitOrganisasi = $detailSatker[4][2];
+		   $UPB = $detailSatker[4][3];
+		   $noReg=substr($row->	kodeLokasi,0,17);
+			$noKodeLokasi=substr($row->kodeLokasi,0,8);
+			$thnLokasi= substr($row->Tahun,2,4);
+			$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+			   
+			//==end new==//
+			
+			 list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+			 list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+			
+
+                                                  $body="";     
+                                                  $body.="
+                                               <body>
+												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                            <h3>REKAPITULASI INVENTARIS BARANG (KIB) A</h3>
+                                                            <h3>TANAH</h3>
+                                                       </td>
+                                                  </tr>
+
+															 </table>
+															 <br />
+															 <br />
+															<table border=\"0\" width=\"100%\" >
+															  <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+											  
+											  </table>
+                                                  <br />
+                                                  <br />
+                                        
+											  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <thead> 
+												
+                                                  <tr>
+                                                       <td style=\"font-weight: bold; width: 30px; text-align: center;\" colspan=\"1\" rowspan=\"3\">No<br>Urut<br></td>
+                                                       <td style=\"font-weight: bold; width: 160px; text-align: center;\" colspan=\"1\" rowspan=\"3\">Jenis Barang /<br>
+                                                                                                                             Nama Barang</td>
+                                                       <td style=\"font-weight: bold; text-align: center;\" colspan=\"2\" rowspan=\"1\">Nomor</td>
+                                                       <td colspan=\"1\" rowspan=\"3\" style=\"font-weight: bold; width: 50px; text-align: center;\">Luas<br>
+                                                                                                                             (m2)</td>
+                                                       <td colspan=\"1\" rowspan=\"3\" style=\"font-weight: bold;width: 75px; text-align: center;\">Tahun<br>
+                                                                                                                             Pengadaan/<br>Perolehan</td>
+                                                       <td colspan=\"1\" rowspan=\"3\" style=\"font-weight: bold;width: 110px; text-align: center;\">Letak / Alamat <br>
+                                                                                                                        </td>
+                                                       <td colspan=\"3\" rowspan=\"1\" style=\"font-weight: bold; width: 220px; text-align: center;\">Status Tanah</td>
+                                                       <td style=\"font-weight: bold; width: 140px; text-align: center;\" colspan=\"1\" rowspan=\"3\">Penggunaan</td>
+                                                       <td style=\"font-weight: bold; width: 70px;text-align: center;\" colspan=\"1\" rowspan=\"3\">Asal Usul</td>
+                                                       <td style=\"font-weight: bold; width: 80px;text-align: center;\" colspan=\"1\" rowspan=\"3\">Nilai<br>Perolehan<br>(ribuan Rp)</td>
+                                                       <td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"3\">Ket</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Kode Barang</td>
+                                                       <td style=\" font-weight: bold;text-align: center;\" colspan=\"1\" rowspan=\"2\">Register</td>
+                                                       <td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; width: 85px; text-align: center;\">Hak</td>
+                                                       <td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; width: 135px; text-align: center;\">Sertifikat</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"font-weight: bold; width: 75px; text-align: center;\">Tanggal</td>
+                                                       <td style=\"font-weight: bold; width: 60px;text-align: center;\">Nomor</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center; font-weight: bold;\">1</td>
+                                                       <td style=\"text-align: center; font-weight: bold;\">2</td>
+                                                       <td style=\"text-align: center; font-weight: bold;\">3</td>
+                                                       <td style=\"text-align: center; font-weight: bold;\">4</td>
+                                                       <td style=\"text-align: center; width: 50px; font-weight: bold;\">5</td>
+                                                       <td style=\"text-align: center; width: 75px; font-weight: bold;\">6</td>
+                                                       <td style=\"text-align: center; width: 110px; font-weight: bold;\">7</td>
+                                                       <td style=\"text-align: center; width: 85px; font-weight: bold;\">8</td>
+                                                       <td style=\"text-align: center; width: 75px; font-weight: bold;\">9</td>
+                                                       <td style=\"text-align: center; font-weight: bold;\">10</td>
+                                                       <td style=\"text-align: center; width: 140px; font-weight: bold;\">11</td>
+                                                       <td style=\"text-align: center; font-weight: bold;\">12</td>
+                                                       <td style=\"text-align: center; font-weight: bold;\">13</td>
+                                                       <td style=\"text-align: center; font-weight: bold;\">14</td>
+                                                       
+                                                  </tr>
+                                                  </thead>";
+                                                 //udah dites disini footer 
+                                                    
+                                                $skpdeh = $row->kodeSatker;
+												// $thn = $row->Tahun;
+												$status_print++;
+
+                                             }
+                                             //udah dites
+                                                       // $hak_tanah =$this->get_hak_pakai($row->HakTanah);
+                                                       //$perolehan = number_format($row->NilaiPerolehan);
+													   $perolehan = number_format($row->NilaiPerolehan,2,",",".");
+                                                       $luas = number_format($row->LuasTotal,2,",",".");
+                                                       $luasTotal = $luasTotal + $row->LuasTotal;
+                                                       $perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
+                                                       // $length = strlen($row->noRegister);
+														$noReg = sprintf("%04s", $row->noRegister);
+													  
+														// $noReg=$this->sortirNoReg($row->noRegister);
+														if($row->TglSertifikat == ''){
+															$tgl = ''; 
+													    }else{
+															list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
+															$tgl = "$tanggal/$bulan/$tahun";
+													    }
+                                                       
+															$body.="
+                                                            <tr align=\"center\">
+                                                                 <td style=\"text-align: center; width: 30px;font-weight: \">$no</td>
+                                                                 <td style=\"width: 160px;font-weight: \" align=\"left\">$row->Uraian</td>
+                                                                 <td style=\"text-align: center; font-weight: \">$row->Kode</td>
+                                                                 <td style=\"font-weight: \">$noReg</td>
+                                                                 <td style=\"width: 50px; font-weight: \" align=\"right\">$luas</td>
+                                                                 <td style=\"text-align: center; width: 75px; font-weight: \">$row->Tahun</td>
+                                                                 <td style=\"width: 110px; font-weight: \">$row->Alamat</td>
+                                                                 <td style=\"text-align: center; width: 85px; font-weight: \">$row->HakTanah</td>
+                                                                 <td style=\"width: 75px; font-weight: \">$tgl</td>
+                                                                 <td style=\"width: 60px;font-weight: \">$row->NoSertifikat</td>
+                                                                 <td style=\"font-weight: width: 140px; \">$row->Penggunaan</td>
+                                                                 <td style=\"width: 70px; text-align: center; \">$row->AsalUsul</td>
+                                                                 <td style=\"width: 80px;font-weight: \" align=\"right\">$perolehan</td>
+                                                                 
+                                                                 <td style=\"width: 80px;font-weight: \">$row->Info</td>
+                                                            </tr>
+                                                            ";
+                                                            
+                                                            $no++;
+															// $noReg = array();
+															// unset($noReg);
+                                                  
+                                             }
+                                             //udah dicoba ga muncul
+                                             
+                                             // $printluas=  number_format($luasTotal);
+                                             $printperolehanTotal=number_format($perolehanTotal,2,",",".");
+											 $tabletotal=" 
+														<tr>
+															 <td style=\"text-align: center;\" colspan=\"12\">Jumlah Harga</td>
+															 <td align=\"right\">$printperolehanTotal</td>
+															 <td></td>
+														</tr>
+														</table>";	
+										$foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"13\">&nbsp;</td>
+														</tr>
+													</table>";  
+											   
+                                        $footer ="	     
+                                             
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               $footer.="
+                                             </body>
+                                        </html>"; 
+                                        	
+                                        if($status_print==0){
+                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                        }else{
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+
+                                           }
+										// pr($html);   
+              return $html;
+          }
+     }
+   	
+//Rekapitulasi KIB-B 
+	public function retrieve_html_kib_b_rekap($dataArr,$gambar){
+      if($dataArr!="")
+          {
+		 
+			  include ('../../../function/tanggal/tanggal.php');
+                    $head = "
+                                        <html>
+                                        <head>
+											<style>
+												table
+												{
+													font-size:10pt;
+													font-family:Arial;
+													border-collapse: collapse;											
+													border-spacing:0;
+												}
+												h3
+												{
+													font-family:Arial;	
+													font-size:13pt;
+													color:#000;
+														
+												}
+												p
+												{
+													font-size:10pt;
+													font-family:Arial;
+													font-weight:bold;
+												}
+												</style>
+											</head>
+											 ";
+
+                                        
+								$no=1;
+								$skpdeh="";
+								$thn="";
+								$status_print=0;
+								$perolehanTotal=0;
+								
+                                   foreach ($dataArr as $row)
+                                   {
+										
+                                             if ($skpdeh =="" && $no==1){
+												$body="";
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												$thn=$row->Tahun;
+												//==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+											   list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+												if($nip_pengurus!="")
+												{
+													$nip_pengurus_fix=$nip_pengurus;
+												}
+												else
+												{
+													$nip_pengurus_fix='........................................';
+												}
+
+												if($nip_pengguna!="")
+												{
+													$nip_pengguna_fix=$nip_pengguna;
+												}
+												else
+												{
+													$nip_pengguna_fix='........................................';
+												}
+
+												if($nama_jabatan_pengguna!="")
+												{
+													$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+												}
+												else
+												{
+													$nama_jabatan_pengguna_fix='........................................';
+												}
+
+												if($nama_jabatan_pengurus!="")
+												{
+													$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+												}
+												else
+												{
+													$nama_jabatan_pengurus_fix='........................................';
+												}
+
+                                        
+                                        $body="
+											<body>
+                                             <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                            <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) B</h3>
+															<h3>PERALATAN DAN MESIN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                  <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+												 <table style=\"text-align: left; width: 100%; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+												  <thead>
+													<tr>
+														<td style=\"font-weight: bold; text-align: center; width: 30px;\" colspan=\"1\" rowspan=\"2\">No<br>Urut</td>
+														<td style=\"font-weight: bold; text-align: center; width: 85px;\" colspan=\"1\" rowspan=\"2\">Kode Barang</td>
+														<td style=\"font-weight: bold; text-align: center; width: 150px;\" colspan=\"1\" rowspan=\"2\">Jenis Barang / <br>Nama Barang</td>
+														<td style=\"font-weight: bold; text-align: center; width: 60px;\" colspan=\"1\" rowspan=\"2\">Nomor Register</td>
+														<td style=\"font-weight: bold; text-align: center; width: 43px;\" colspan=\"1\" rowspan=\"2\">Merk/<br>Type</td>
+														<td style=\"font-weight: bold; text-align: center; width: 60px;\" colspan=\"1\" rowspan=\"2\">Ukuran/<br>CC</td>
+														<td style=\"font-weight: bold; text-align: center; width: 60px;\" colspan=\"1\" rowspan=\"2\">Bahan</td>
+														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Pembelian</td>
+														<td style=\"font-weight: bold; text-align: center; width: 360px;\" colspan=\"5\" rowspan=\"1\">Nomor</td>
+														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Asal Usul</td>
+														<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Nilai<br>Perolehan (ribuan Rp)</td>
+														<td style=\"font-weight: bold; text-align: center; width: 70px;\" colspan=\"1\" rowspan=\"2\">Ket</td>
+													</tr>
+													<tr>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Pabrik</td>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Rangka</td>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Mesin</td>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Polisi</td>
+														<td style=\"text-align: center; width: 72px;\"><span style=\"font-weight: bold;\">BPKB</span></td>
+													</tr>
+													<tr>
+														<td style=\"font-weight: bold; text-align: center;\">1</td>
+														<td style=\"font-weight: bold; text-align: center;\">2</td>
+														<td style=\"font-weight: bold; text-align: center;\">3</td>
+														<td style=\"width: 60px; font-weight: bold; text-align: center;\">4</td>
+														<td style=\"width: 43px; font-weight: bold; text-align: center; \">5</td>
+														<td style=\"font-weight: bold; text-align: center;\">6</td>
+														<td style=\"font-weight: bold; text-align: center;\">7</td>
+														<td style=\"font-weight: bold; text-align: center;\">8</td>
+														<td style=\"font-weight: bold; text-align: center;\">9</td>
+														<td style=\"width: 72px; font-weight: bold; text-align: center;\">10</td>
+														<td style=\"width: 72px; font-weight: bold; text-align: center;\">11</td>
+														<td style=\"width: 72px; font-weight: bold; text-align: center;\">12</td>
+														<td style=\"width: 72px;font-weight: bold; text-align: center;\">13</td>
+														<td style=\"font-weight: bold; text-align: center;\">14</td>
+														<td style=\"font-weight: bold; text-align: center;\">15</td>
+														<td style=\"font-weight: bold; text-align: center;\">16</td>
+												   </tr>
+												  </thead>";
+                                              
+                                            }
+                                                       
+												//uda dites footer disini
+                                             if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+
+                                             	$printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+												$tabletotal="
+													<tr>
+														<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+														<td style=\"text-align: right;\">$printperolehanTotal</td>
+														<td></td>
+													</tr>
+												</table>";
+
+										   $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"13\">&nbsp;</td>
+														</tr>
+													</table>";  
+										     	
+                                           $footer ="	     
+                                             
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";
+											
+											 $perolehanTotal=0;
+                                             $no=1;
+                                             if($status_print==0)
+                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                             else
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+                                             
+                                             $skpdeh = $row->kodeSatker;
+												
+                                             $satker_id=$row->kodeSatker;
+											 //==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+											   
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                                                  
+                                                  $body="";     
+                                                  $body.="
+                                               <body>
+												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                            <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) B</h3>
+															<h3>PERALATAN DAN MESIN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                  <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+                                        
+											  <table style=\"text-align: left; width: 100%; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+												  <thead>
+													<tr>
+														<td style=\"font-weight: bold; text-align: center; width: 30px;\" colspan=\"1\" rowspan=\"2\">No<br>Urut</td>
+														<td style=\"font-weight: bold; text-align: center; width: 85px;\" colspan=\"1\" rowspan=\"2\">Kode Barang</td>
+														<td style=\"font-weight: bold; text-align: center; width: 150px;\" colspan=\"1\" rowspan=\"2\">Jenis Barang / <br>Nama Barang</td>
+														<td style=\"font-weight: bold; text-align: center; width: 60px;\" colspan=\"1\" rowspan=\"2\">Nomor Register</td>
+														<td style=\"font-weight: bold; text-align: center; width: 43px;\" colspan=\"1\" rowspan=\"2\">Merk/<br>Type</td>
+														<td style=\"font-weight: bold; text-align: center; width: 60px;\" colspan=\"1\" rowspan=\"2\">Ukuran/<br>CC</td>
+														<td style=\"font-weight: bold; text-align: center; width: 60px;\" colspan=\"1\" rowspan=\"2\">Bahan</td>
+														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Pembelian</td>
+														<td style=\"font-weight: bold; text-align: center; width: 360px;\" colspan=\"5\" rowspan=\"1\">Nomor</td>
+														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Asal Usul</td>
+														<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Nilai<br>Perolehan (ribuan Rp)</td>
+														<td style=\"font-weight: bold; text-align: center; width: 70px;\" colspan=\"1\" rowspan=\"2\">Ket</td>
+													</tr>
+													<tr>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Pabrik</td>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Rangka</td>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Mesin</td>
+														<td style=\"font-weight: bold; text-align: center; width: 72px;\">Polisi</td>
+														<td style=\"text-align: center; width: 72px;\"><span style=\"font-weight: bold;\">BPKB</span></td>
+													</tr>
+													<tr>
+														<td style=\"font-weight: bold; text-align: center;\">1</td>
+														<td style=\"font-weight: bold; text-align: center;\">2</td>
+														<td style=\"font-weight: bold; text-align: center;\">3</td>
+														<td style=\"width: 60px; font-weight: bold; text-align: center;\">4</td>
+														<td style=\"width: 43px; font-weight: bold; text-align: center; \">5</td>
+														<td style=\"font-weight: bold; text-align: center;\">6</td>
+														<td style=\"font-weight: bold; text-align: center;\">7</td>
+														<td style=\"font-weight: bold; text-align: center;\">8</td>
+														<td style=\"font-weight: bold; text-align: center;\">9</td>
+														<td style=\"width: 72px; font-weight: bold; text-align: center;\">10</td>
+														<td style=\"width: 72px; font-weight: bold; text-align: center;\">11</td>
+														<td style=\"width: 72px; font-weight: bold; text-align: center;\">12</td>
+														<td style=\"width: 72px;font-weight: bold; text-align: center;\">13</td>
+														<td style=\"font-weight: bold; text-align: center;\">14</td>
+														<td style=\"font-weight: bold; text-align: center;\">15</td>
+														<td style=\"font-weight: bold; text-align: center;\">16</td>
+												   </tr>
+												  </thead>";
+                                                 //udah dites disini footer 
+                                                    
+                                                  
+												$skpdeh = $row->KodeSatker;
+												$thn=$row->Tahun;
+												$status_print++;
+
+                                             }
+                                             //udah dites
+												$split = explode("-", $row->noRegister);
+												if (count($split) == 1){
+													// $hasil = 1;
+													$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+													$nilaiPerolehan = $row->NilaiPerolehan;
+												}else{
+													$awal = $split[0];
+													$akhir = end($split);
+													$hasil = (intval($akhir) - intval($awal)) + 1;
+													$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+													$nilaiPerolehan = $nilaiPrlhn ; 
+													$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+												}
+												$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+												// $noReg=$this->sortirNoReg($row->noRegister);
+												$noReg=$row->noRegister;
+																								
+                                                            $body.="
+																<tr align=\"center\">
+																	<td style=\"width: 30px; text-align: center;\">$no</td>
+																	<td style=\"width: 85px; text-align: center;\">$row->Kode</td>
+																	<td style=\"width: 150px; \">$row->Uraian</td>
+																	
+																	<td style=\"width: 60px; text-align: center; width: 60px; \">$noReg</td>
+																	
+																	<td style=\"width: 43px; font-weight: \">$row->Merk</td>
+																	<td style=\"width: 60px;font-weight: \">$row->Ukuran</td>
+																	<td style=\"width: 60px;font-weight: \">$row->Material</td>
+																	<td style=\"width: 70; text-align: center;\">$row->Tahun</td>
+																	<td style=\"width: 72px; text-align: center;\">$row->NoSeri</td>
+																	<td style=\"width: 72px; text-align: center;\">$row->NoRangka</td>
+																	<td style=\"width: 72px; text-align: center;\">$row->NoMesin</td>
+																	<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
+																	<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
+																	<td style=\"width: 69; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
+																	<td style=\"width: 69px;font-weight: \">$row->Info</td>
+																</tr>";
+                                                           
+                                                  $no++;
+                                                 
+                                             }
+                                             //udah dicoba ga muncul
+                                             
+                                             $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                                             $tabletotal="
+													<tr>
+														<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+														<td style=\"text-align: right;\">$printperolehanTotal</td>
+														<td></td>
+													</tr>
+												</table>";
+											 
+											 $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"13\">&nbsp;</td>
+														</tr>
+													</table>"; 
+													
+											 $footer ="	     
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";
+                                          
+                                        if($status_print==0){
+                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                        }else{
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+
+                                           }
+              return $html;
+          }   
+         
+     }
+
+//Rekapitulasi KIB-C (ok)
+	public function retrieve_html_kib_c_rekap($dataArr,$gambar){
+         
+          if($dataArr!="")
+          {
+			include ('../../../function/tanggal/tanggal.php');
+                    $head = "
+                                        <html>
+                                        <head>
+											<style>
+												table
+												{
+													font-size:10pt;
+													font-family:Arial;
+													border-collapse: collapse;											
+													border-spacing:0;
+												}
+												h3
+												{
+													font-family:Arial;	
+													font-size:13pt;
+													color:#000;
+														
+												}
+												p
+												{
+													font-size:10pt;
+													font-family:Arial;
+													font-weight:bold;
+												}
+												</style>
+											</head>
+											 ";
+
+                                        
+									$no=1;
+									$skpdeh="";	
+									$thn="";
+							        $luaslantai=0;
+									$luasTotal=0;
+									$perolehanTotal=0;
+									
+                                   foreach ($dataArr as $row)
+                                   {
+                                             if ($skpdeh =="" && $no==1){
+												$body="";
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												//==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   
+											   //==end new==//
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                if($nip_pengurus!="")
+                {
+                    $nip_pengurus_fix=$nip_pengurus;
+                }
+                else
+                {
+                    $nip_pengurus_fix='........................................';
+                }
+
+                if($nip_pengguna!="")
+                {
+                    $nip_pengguna_fix=$nip_pengguna;
+                }
+                else
+                {
+                    $nip_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengguna!="")
+                {
+                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+                }
+                else
+                {
+                    $nama_jabatan_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengurus!="")
+                {
+                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+                }
+                else
+                {
+                    $nama_jabatan_pengurus_fix='........................................';
+                }
+			
+																			
+                                        $body="
+											<body>
+												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) C</h3>
+															 <h3>GEDUNG DAN BANGUNAN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                  <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+                                                  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+												  <thead> 	
+													<tr>
+														<td style=\" width: 30px;text-align:center ; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">No<br>Urut</td>
+														<td style=\"width: 150px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Jenis Barang / <br>Nama Barang</td>
+														<td style=\"text-align: center; font-weight: bold; width: 145px;\"colspan=\"2\" rowspan=\"1\">Nomor</td>
+														<td style=\"width: 70px; text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Kondisi<br>Bangunan<br>(B,KB,RB)</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"2\" rowspan=\"1\">Konstruksi<br>Bangunan</td>
+														<td style=\"width: 50px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Luas<br>Lantai <br>(m2)</td>
+														<td style=\"width: 100px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Letak / Lokasi<br>Alamat</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"2\" rowspan=\"1\">Dokumen Gedung</td>
+														<td style=\"width: 50px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Luas<br>(m2)</td>
+														<td style=\"width: 70px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Status<br>Tanah<br></td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Nomer<br>Kode<br>Tanah</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Asal Usul<br></td>
+														<td style=\"width:50px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Nilai<br>Perolehan<br>(RibuanRp)</td>
+														<td style=\"width: 60px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Ket</td>
+													</tr>
+													<tr>
+														<td style=\"text-align: center; font-weight: bold; width: 80px;\">Kode Barang</td>
+														<td style=\"text-align: center; font-weight: bold; width: 65px;\">Registrasi</td>
+														<td style=\"text-align: center; font-weight: bold;\">Bertingkat/<br>Tidak</td>
+														<td style=\"text-align: center; font-weight: bold;\">Beton/<br>Tidak</td>
+														<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
+														<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
+													</tr>
+													<tr>
+														  <td style=\"text-align: center; font-weight: bold;\">1</td>
+														  <td style=\"text-align: center; font-weight: bold;\">2</td>
+														  <td style=\"text-align: center; font-weight: bold; width: 80px;\">3</td>
+														  <td style=\"text-align: center; font-weight: bold; width: 65px;\">4</td>
+														  <td style=\"width: 70px; text-align: center; font-weight: bold;\">5</td>
+														  <td style=\"text-align: center; font-weight: bold;\">6</td>
+														  <td style=\"text-align: center; font-weight: bold;\">7</td>
+														  <td style=\"text-align: center; font-weight: bold;\">8</td>
+														  <td style=\"text-align: center; font-weight: bold;\">9</td>
+														  <td style=\"text-align: center; font-weight: bold;\">10</td>
+														  <td style=\"text-align: center; font-weight: bold;\">11</td>
+														  <td style=\"text-align: center; font-weight: bold;\">12</td>
+														  <td style=\"text-align: center; font-weight: bold;\">13</td>
+														  <td style=\"text-align: center; font-weight: bold;\">14</td>
+														  <td style=\"text-align: center; font-weight: bold;\">15</td>
+														  <td style=\"text-align: center; font-weight: bold;\">16</td>
+														  <td style=\"text-align: center; font-weight: bold;\">17</td>
+													</tr>
+												  </thead>";
+                                              
+                                            }
+                                                       
+												//uda dites footer disini
+                                             if ($skpdeh != $row->kodeSatker && $no>1){
+  
+												// $print_luas_lantai=number_format($total_luaslantai);
+												// $printluas=  number_format($luasTotal);
+												$printperolehanTotal=  number_format($perolehanTotal,2,",",".");	
+												$tabletotal="
+														<tr>
+															<td colspan=\"15\" style=\"text-align: center;\">Jumlah Harga</td>
+															<td style=\"text-align: right;\">$printperolehanTotal</td>
+															<td></td>
+														</tr>
+													</table>";
+
+													
+                                             $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"16\">&nbsp;</td>
+														</tr>
+													</table>";  
+													
+											$footer ="	     
+                                             
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";      
+											
+											 $luaslantai=0;
+											$luasTotal=0;
+											$perolehanTotal=0;
+											$total_luaslantai=0;
+											$no=1;
+                                             if($status_print==0)
+                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                             else
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+                                             
+                                             $skpdeh = $row->kodeSatker;	
+                                             $satker_id=$row->kodeSatker;
+											 //==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+												
+                                                  $body="";     
+                                                  $body.="
+                                               <body>
+												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) C</h3>
+															 <h3>GEDUNG DAN BANGUNAN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                  <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+                                                  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+												  <thead> 	
+													<tr>
+														<td style=\" width: 30px;text-align:center ; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">No<br>Urut</td>
+														<td style=\"width: 150px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Jenis Barang / <br>Nama Barang</td>
+														<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 145px;\">Nomor</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 70px; text-align: center; font-weight: bold;\">Kondisi<br>Bangunan<br>(B,KB,RB)</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"2\" rowspan=\"1\">Konstruksi<br>Bangunan</td>
+														<td style=\"width: 50px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Luas<br>Lantai<br>(m2)</td>
+														<td style=\"width: 100px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Letak / Lokasi<br>Alamat</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"2\" rowspan=\"1\">Dokumen Gedung</td>
+														<td style=\"width: 50px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Luas<br>(m2)</td>
+														<td style=\"width: 70px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Status<br>Tanah<br></td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Nomer<br>Kode<br>Tanah</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Asal Usul<br></td>
+														<td style=\"width:50px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Nilai Perolehan<br>(RibuanRp)</td>
+														<td style=\"width: 60px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Ket</td>
+													</tr>
+													<tr>
+														<td style=\"text-align: center; font-weight: bold; width: 80px;\">Kode Barang</td>
+														<td style=\"text-align: center; font-weight: bold; width: 65px;\">Registrasi</td>
+														<td style=\"text-align: center; font-weight: bold;\">Bertingkat/<br>Tidak</td>
+														<td style=\"text-align: center; font-weight: bold;\">Beton/<br>Tidak</td>
+														<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
+														<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
+													</tr>
+													<tr>
+														  <td style=\"text-align: center; font-weight: bold;\">1</td>
+														  <td style=\"text-align: center; font-weight: bold;\">2</td>
+														  <td style=\"text-align: center; font-weight: bold; width: 80px;\">3</td>
+														  <td style=\"text-align: center; font-weight: bold; width: 65px;\">4</td>
+														  <td style=\"width: 70px; text-align: center; font-weight: bold;\">5</td>
+														  <td style=\"text-align: center; font-weight: bold;\">6</td>
+														  <td style=\"text-align: center; font-weight: bold;\">7</td>
+														  <td style=\"text-align: center; font-weight: bold;\">8</td>
+														  <td style=\"text-align: center; font-weight: bold;\">9</td>
+														  <td style=\"text-align: center; font-weight: bold;\">10</td>
+														  <td style=\"text-align: center; font-weight: bold;\">11</td>
+														  <td style=\"text-align: center; font-weight: bold;\">12</td>
+														  <td style=\"text-align: center; font-weight: bold;\">13</td>
+														  <td style=\"text-align: center; font-weight: bold;\">14</td>
+														  <td style=\"text-align: center; font-weight: bold;\">15</td>
+														  <td style=\"text-align: center; font-weight: bold;\">16</td>
+														  <td style=\"text-align: center; font-weight: bold;\">17</td>
+													</tr>
+												  </thead>";
+
+                                                 //udah dites disini footer 
+                                                    
+                                                  
+												$skpdeh = $row->kodeSatker;
+												// $thn = $row->Tahun;
+												$status_print++;
+
+                                             }
+                                             //udah dites
+												// $status_tanah = $this->get_status_tanah($row->StatusTanah);
+												$bertingkat = $this->get_bertingkat($row->JumlahLantai);
+												$beton = $this->get_beton($row->Beton);
+												
+												$perolehan = number_format($row->NilaiPerolehan,2,",",".");
+												$luas = number_format($row->LuasTotal,2,",",".");
+												$luaslantai= number_format($row->LuasLantai,2,",",".");
+												$total_luaslantai= $total_luaslantai + $row->LuasLantai;
+												$luasTotal = $luasTotal + $row->LuasTotal;
+												$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
+												// $noReg=substr($row->NomorReg,18);	
+												/*$temp=explode('.',$row->NomorReg);
+												$noReg=end($temp);*/
+												
+												$kondisi= $row->kondisi;
+												if ($kondisi == '1') {
+													$ketKondisi = "Baik";
+												}
+												elseif ($kondisi == '2') {
+													$ketKondisi = "Kurang Baik";
+												}
+												elseif ($kondisi == '3') {
+													$ketKondisi = "Rusak Berat";
+												}else{
+													$ketKondisi = "";
+												} 
+												$length = strlen($row->noRegister);
+											    $noReg = sprintf("%04s", $row->noRegister);
+											  
+												if($row->TglSurat == ''){
+													$tgl = ''; 
+												}else{
+													list($tahun, $bulan, $tanggal)= explode('-', $row->TglSurat);
+													$tgl = "$tanggal/$bulan/$tahun";
+												}	
+                                                            $body.="
+																<tr>
+																	<td style=\"width: 30px; text-align: center;\">$no</td>
+																	<td style=\"width: 150px\">$row->Uraian</td>
+																	<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
+																	<td style=\"width: 65px; text-align: center;\">$noReg</td>
+																	<td style=\"width: 70px;\">$ketKondisi</td>
+																	<td style=\"width: 67px; text-align: center;\">$bertingkat</td>
+																	<td style=\"width: 65px; text-align: center;\">$beton</td>
+																	<td style=\"width: 50px; text-align: right;\">$luaslantai </td>
+																	<td style=\"width: 100px;\">$row->Alamat</td>
+																	<td style=\"width: 66px;\">$tgl</td>
+																	<td style=\"width: 66px;\">$row->NoSurat</td>
+																	<td style=\"width: 50px; text-align: right;\">$luas</td>
+																	<td style=\"width: 70px; text-align: center;\">$row->StatusTanah</td>
+																	<td style=\"width: 67px;\"></td>
+																	<td style=\"width: 65px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 50px; text-align: right;\">$perolehan</td>
+																	<td style=\"width: 60px;\">$row->Info</td>
+																</tr>";
+                                                            
+                                                           
+                                                  $no++;
+                                                  
+                                             }
+                                             //udah dicoba ga muncul
+                                             
+                                             // $printperolehanTotal=  number_format($perolehanTotal);
+                                             // $print_luas_lantai=number_format($total_luaslantai);
+											 // $printluas=  number_format($luasTotal);
+											 $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+											 
+											      $tabletotal="
+													<tr>
+														<td colspan=\"15\" style=\"text-align: center;\">Jumlah Harga</td>
+														<td style=\"text-align: right;\">$printperolehanTotal</td>
+														<td></td>
+													</tr>
+													</table>"; 
+											  
+											  $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"16\">&nbsp;</td>
+														</tr>
+													</table>";  
+											  	
+											  $footer ="
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";
+                                        	
+                                        if($status_print==0){
+                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                        }else{
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+
+                                           }
+              return $html;
+          }
+     }
+
+//Rekapitulasi KIB-D (ok)
+    public function retrieve_html_kib_d_rekap($dataArr,$gambar){
+         
+          if($dataArr!="")
+          {
+			  include ('../../../function/tanggal/tanggal.php');
+                    $head = "
+                                        <html>
+                                        <head>
+											<style>
+												table
+												{
+													font-size:10pt;
+													font-family:Arial;
+													border-collapse: collapse;											
+													border-spacing:0;
+												}
+												h3
+												{
+													font-family:Arial;	
+													font-size:13pt;
+													color:#000;
+														
+												}
+												p
+												{
+													font-size:10pt;
+													font-family:Arial;
+													font-weight:bold;
+												}
+												</style>
+											</head>
+											 ";
+
+                                     
+									
+									$skpdeh="";
+									$thn="";
+									$no=1;
+									$status_print=0;
+									$luasTotal=0;
+									$panjangTotal=0;
+									$perolehanTotal=0;
+							
+                                   foreach ($dataArr as $row)
+                                   {
+                                             if ($skpdeh == "" && $no==1){
+												$body="";
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												//==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+											   $thnLokasi= substr($row->Tahun,2,4);
+											   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+										   list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+											if($nip_pengurus!="")
+											{
+												$nip_pengurus_fix=$nip_pengurus;
+											}
+											else
+											{
+												$nip_pengurus_fix='........................................';
+											}
+
+											if($nip_pengguna!="")
+											{
+												$nip_pengguna_fix=$nip_pengguna;
+											}
+											else
+											{
+												$nip_pengguna_fix='........................................';
+											}
+
+											if($nama_jabatan_pengguna!="")
+											{
+												$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+											}
+											else
+											{
+												$nama_jabatan_pengguna_fix='........................................';
+											}
+
+											if($nama_jabatan_pengurus!="")
+											{
+												$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+											}
+											else
+											{
+												$nama_jabatan_pengurus_fix='........................................';
+											}
+			
+											
+                                        $body="
+											<body>
+                                             <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) D</h3>
+															 <h3>JALAN IRIGASI DAN JARINGAN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                  <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+         
+												  <thead> 
+													<tr style=\"font-weight: bold;\">
+														<td style=\"width: 30px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">No<br>Urut<br></td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 106px;\">Nama
+																																				Barang /<br>
+																																				Jenis Barang</td>
+														<td colspan=\"2\" rowspan=\"1\" style=\" text-align: center; font-weight: bold; width: 130px;\">Nomor</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Konstruksi</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Panjang<br>
+																																			  (km)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Lebar<br>
+																																			   (m2)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Luas<br>
+																																			   (m2)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px; text-align: center; font-weight: bold;\">
+																																			   Letak/Lokasi<br>
+														</td>
+														<td colspan=\"2\" rowspan=\"1\" style=\"width: 140px; text-align: center; font-weight: bold;\">Dokumen
+																																			   </td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Status <br>
+																																  Tanah</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Nomer<br>
+																																  Kode<br>
+																																  Tanah</td>
+														 <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Asal Usul</td>
+														 <td colspan=\"1\" rowspan=\"2\" style=\"width:80px;text-align: center; font-weight: bold;\">Nilai<br>Perolehan
+																																  (Ribuan Rp)</td>
+
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 80px;\">Kondisi<br>
+																																  (B,KB,RB)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;width: 60px;\">Ket</td>
+													</tr>
+													<tr>
+														<td style=\"text-align: center; font-weight: bold; width: 80px;\">Kode Barang</td>
+														<td style=\"text-align: center; font-weight: bold; width: 50px;\">Register</td>
+														<td style=\"width: 60px; text-align: center; font-weight: bold;\">Tanggal</td>
+														<td style=\"width: 80px; text-align: center; font-weight: bold;\">Nomor</td>
+													</tr>
+													<tr>
+														<td style=\"text-align: center; font-weight: bold;\">1</td>
+														<td style=\"text-align: center; font-weight: bold; width: 106px;\">2</td>
+														<td style=\"text-align: center; font-weight: bold; width: 80px;\">3</td>
+														<td style=\"text-align: center; font-weight: bold;\">4</td>
+														<td style=\"text-align: center; font-weight: bold;\">5</td>
+														<td style=\"width: 50px; text-align: center; font-weight: bold;\">6</td>
+														<td style=\"width: 40px; text-align: center; font-weight: bold; width: 50px;\">7</td>
+														<td style=\"width: 40px; text-align: center; font-weight: bold; width: 50px;\">8</td>
+														<td style=\"width: 90px;  text-align: center; font-weight: bold;\">9</td>
+														<td style=\"width: 60px; text-align: center; font-weight: bold;width: 60px;\">10</td>
+														<td style=\"width: 60px; text-align: center; font-weight: bold;width: 80px;\">11</td>
+														<td style=\"text-align: center; font-weight: bold;\">12</td>
+														<td style=\"text-align: center; font-weight: bold;\">13</td>
+														<td style=\"text-align: center; font-weight: bold;\">14</td>
+														<td style=\"text-align: center; font-weight: bold;\">15</td>
+														
+														<td style=\"text-align: center; font-weight: bold;\">16</td>
+														<td style=\"text-align: center; font-weight: bold;\">17</td>
+													 </tr>
+												   </thead>";
+																															  
+											}
+                                                       
+												//uda dites footer disini
+                                             if ($skpdeh != $row->kodeSatker && $no>1){
+												
+												// $printluas=  number_format($luasTotal);
+												// $printpanjang= number_format($panjangTotal);
+												$printperolehanTotal=  number_format($perolehanTotal);	
+												
+													   $tabletotal="
+															<tr>
+																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+																<td style=\"text-align: right;\">$printperolehanTotal</td>
+																<td colspan=\"2\">&nbsp;</td>
+															</tr></table>";
+															
+										    $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"16\">&nbsp;</td>
+														</tr>
+													</table>";  	
+														
+													
+                                           $footer ="	     
+                                             
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";  
+											 //udah dites footer
+                                             
+                                           
+											
+											 $luasTotal=0;
+											 $panjangTotal=0;
+											 $perolehanTotal=0;
+											 $no=1;
+																	
+											
+											 
+                                             if($status_print==0)
+                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                             else
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+                                             
+											 $skpdeh = $row->kodeSatker;
+											 $satker_id=$row->kodeSatker;
+											 //==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+												  
+                                                  $body="";     
+                                                  $body.="
+                                               <body>
+                                             <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) D</h3>
+															 <h3>JALAN IRIGASI DAN JARINGAN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                 <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+         
+												  <thead> 
+													<tr style=\"font-weight: bold;\">
+														<td style=\"width: 30px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">No<br>Urut<br></td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 106px;\">Nama
+																																				Barang /<br>
+																																				Jenis Barang</td>
+														<td colspan=\"2\" rowspan=\"1\" style=\" text-align: center; font-weight: bold; width: 130px;\">Nomor</td>
+														<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Konstruksi</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Panjang<br>
+																																			  (km)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Lebar<br>
+																																			   (m2)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Luas<br>
+																																			   (m2)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px; text-align: center; font-weight: bold;\">
+																																			   Letak/Lokasi<br>
+														</td>
+														<td colspan=\"2\" rowspan=\"1\" style=\"width: 140px; text-align: center; font-weight: bold;\">Dokumen
+																																			   </td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Status <br>
+																																  Tanah</td>
+														<td colspan=\"1\" rowspan=\"2\"style=\"text-align: center; font-weight: bold;\">Nomer<br>
+																																  Kode<br>
+																																  Tanah</td>
+														 <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Asal Usul</td>
+														 <td colspan=\"1\" rowspan=\"2\" style=\"width:80px;text-align: center; font-weight: bold;\">Nilai<br>Perolehan
+																																  (Ribuan Rp)</td>
+														
+
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 80px;\">Kondisi<br>
+																																  (B,KB,RB)</td>
+														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;width: 60px;\">Ket</td>
+													</tr>
+													<tr>
+														<td style=\"text-align: center; font-weight: bold; width: 80px;\">Kode Barang</td>
+														<td style=\"text-align: center; font-weight: bold; width: 50px;\">Register</td>
+														<td style=\"width: 60px; text-align: center; font-weight: bold;\">Tanggal</td>
+														<td style=\"width: 80px; text-align: center; font-weight: bold;\">Nomor</td>
+													</tr>
+													<tr>
+														<td style=\"text-align: center; font-weight: bold;\">1</td>
+														<td style=\"text-align: center; font-weight: bold; width: 106px;\">2</td>
+														<td style=\"text-align: center; font-weight: bold; width: 80px;\">3</td>
+														<td style=\"text-align: center; font-weight: bold;\">4</td>
+														<td style=\"text-align: center; font-weight: bold;\">5</td>
+														<td style=\"width: 50px; text-align: center; font-weight: bold;\">6</td>
+														<td style=\"width: 40px; text-align: center; font-weight: bold; width: 50px;\">7</td>
+														<td style=\"width: 40px; text-align: center; font-weight: bold; width: 50px;\">8</td>
+														<td style=\"width: 90px;  text-align: center; font-weight: bold;\">9</td>
+														<td style=\"width: 60px; text-align: center; font-weight: bold;width: 60px;\">10</td>
+														<td style=\"width: 60px; text-align: center; font-weight: bold;width: 80px;\">11</td>
+														<td style=\"text-align: center; font-weight: bold;\">12</td>
+														<td style=\"text-align: center; font-weight: bold;\">13</td>
+														<td style=\"text-align: center; font-weight: bold;\">14</td>
+														<td style=\"text-align: center; font-weight: bold;\">15</td>
+														
+														<td style=\"text-align: center; font-weight: bold;\">16</td>
+														<td style=\"text-align: center; font-weight: bold;\">17</td>
+													 </tr>
+												   </thead>";
+                                                 //udah dites disini footer 
+                                                    
+                                                  
+												$skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
+												$status_print++;
+
+                                             }
+                                             //udah dites
+													// $status_tanah = $this->get_status_tanah($row->StatusTanah);
+													$luasTotal = $luasTotal + $row->LuasTotal;
+													$panjangTotal = $panjangTotal + $row->Panjang;
+													$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
+													
+													$perolehan = number_format($row->NilaiPerolehan,2,",",".");
+													$panjang = number_format($row->Panjang,0,",",".");
+													$luas = number_format($row->LuasTotal,0,",",".");
+													$lebar = number_format($row->Lebar,0,",",".");
+													// ($row->Lebar == '') ? $dataLebar = 0 : $dataLebar = $row->Lebar;
+													// $lebar = number_format($dataLebar);
+													// ($row->Panjang == '') ? $dataPanjang = 0 : $dataPanjang = $row->Panjang;
+													// $panjang = number_format($dataPanjang);
+													// $konstuksi = $this->get_konstruksi($row->Konstruksi);
+													//get_konstruksi
+													// $noReg=substr($row->NomorReg,18);
+													// $temp=explode('.',$row->NomorReg);
+													// $noReg=end($temp);
+													$length = strlen($row->noRegister);
+												   if($length == 1) $noReg = sprintf("%04s", $row->noRegister);
+												   if($length == 2) $noReg = sprintf("%03s", $row->noRegister);
+												   if($length == 3) $noReg = sprintf("%02s", $row->noRegister);
+												   if($length == 4) $noReg = $row->noRegister;
+													$kondisi= $row->kondisi;
+													if ($kondisi == '1') {
+														$ketKondisi = "Baik";
+													}
+													elseif ($kondisi == '2') {
+														$ketKondisi = "Kurang Baik";
+													}
+													elseif ($kondisi == '3') {
+														$ketKondisi = "Rusak Berat";
+													}else{
+														$ketKondisi = "";
+													} 	
+													if($row->TglDokumen == ''){
+														$tgl = ''; 
+													}else{
+														list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
+														$tgl = "$tanggal/$bulan/$tahun";
+													}
+                                                            $body.="
+																<tr>
+																	<td style=\"width: 30px; text-align: center;\">$no</td>
+																	<td style=\"width: 106px;\">$row->Uraian</td>
+																	<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
+																	<td style=\"width: 50px; text-align: center;\">$noReg</td>
+																	<td style=\"width: 66px;  \">$row->Konstruksi</td>
+																	<td style=\"width: 50px; text-align: right;\">$panjang</td>
+																	<td style=\"width: 50px; text-align: right;\">$lebar</td>
+																	<td style=\"width: 50px; text-align: right;\">$luas</td>
+																	<td style=\"width: 90px; \">$row->Alamat</td>
+																	<td style=\"width: 61px;  \">$tgl</td>
+																	<td style=\"width: 79px; \">$row->NoDokumen</td>
+																	<td style=\"width: 66px;  \">$row->StatusTanah</td>
+																	<td style=\"width: 66px; \"></td>
+																	<td style=\"width: 67px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 80px; text-align: right;\">$perolehan</td>
+																	
+																	<td style=\"width: 80px; text-align: center;\">$ketKondisi</td>
+																	<td style=\"width: 60px; \">$row->Info</td>
+																</tr>";
+                                                            
+                                                            $no++;
+                                                            
+                                                            //coba
+                                                            
+                                 
+                                             }
+												
+												   $printluas=  number_format($luasTotal);
+													$printpanjang= number_format($panjangTotal);
+													$printperolehanTotal=  number_format($perolehanTotal);
+													$tabletotal="
+														<tr>
+															<td style=\"text-align: center;\" colspan=\"14\">Total</td>
+															<td style=\"text-align: right;\">$printperolehanTotal</td>
+															<td colspan=\"2\">&nbsp;</td>
+														</tr></table>";
+                                           
+											   $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"16\">&nbsp;</td>
+														</tr>
+													</table>";
+													
+											   $footer ="
+												<table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";
+                                        
+                                        if($status_print==0){
+                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                        }else{
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+
+                                           }
+              return $html;
+          }
+     }          
+	 
+//Rekapitulasi KIB-E (ok)	 
+	public function retrieve_html_kib_e_rekap($dataArr,$gambar){
+			 if($dataArr!="")
+          {
+			  include ('../../../function/tanggal/tanggal.php');
+                    $head = "
+                                        <html>
+                                        <head>
+											<style>
+												table
+												{
+													font-size:10pt;
+													font-family:Arial;
+													border-collapse: collapse;											
+													border-spacing:0;
+												}
+												h3
+												{
+													font-family:Arial;	
+													font-size:13pt;
+													color:#000;
+														
+												}
+												p
+												{
+													font-size:10pt;
+													font-family:Arial;
+													font-weight:bold;
+												}
+												</style>
+											</head>
+											 ";
+
+                                     
+									$skpdeh="";
+									$no=1;
+									$thn = "";
+									$status_print=0;
+									$luasTotal=0;
+									$panjangTotal=0;
+									$perolehanTotal=0;
+							
+                                   foreach ($dataArr as $row)
+                                   {
+                                             if ($skpdeh == "" && $no==1){
+												$body="";
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												$thn = $row->Tahun;
+												//==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											    $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+											    	
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                if($nip_pengurus!="")
+                {
+                    $nip_pengurus_fix=$nip_pengurus;
+                }
+                else
+                {
+                    $nip_pengurus_fix='........................................';
+                }
+
+                if($nip_pengguna!="")
+                {
+                    $nip_pengguna_fix=$nip_pengguna;
+                }
+                else
+                {
+                    $nip_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengguna!="")
+                {
+                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+                }
+                else
+                {
+                    $nama_jabatan_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengurus!="")
+                {
+                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+                }
+                else
+                {
+                    $nama_jabatan_pengurus_fix='........................................';
+                }
+                                        
+                                        $body="
+											<body>
+                                             <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) E</h3>
+																<h3>ASET TETAP LAINNYA</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+											  <tr align=\"left\" >
+												   <td >
+														<p>Provinsi</p>
+												   </td>
+												   <td width=\"65%\">
+														<p>:&nbsp;$this->NAMA_PROVINSI</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Kabupaten/Kota</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Bidang</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$Bidang</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$UnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											   <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Sub Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$SubUnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>UPB</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$UPB</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr align=\"left\">
+												   <td width=\"20%\">
+														<p>NO. KODE LOKASI</p> 
+												   </td>
+												   <td width=\"60%\">
+													<p>:&nbsp;$kodeLokasi</p>
+													</td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  
+											  </table>
+                                                  <br />
+                                                  <br />
+												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+													 
+													  <thead> 
+													   <tr style=\"font-weight: bold;\">
+															<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px;font-weight: bold; text-align: center;\">No<br>Urut</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width: 150px;font-weight: bold; text-align: center;\">Nama Barang/<br>
+																																	  Jenis Barang</td>
+															<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;width: 140px;\">Nomor</td>
+															<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Buku /
+																																	  Perpustakaan</td>
+															<td colspan=\"3\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Barang
+																																	  Bercorak <br>
+																																	  Kesenian / Kebudayaan</td>
+															<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Hewan / Ternak<br>
+																																	  dan Tumbuhan</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;width: 50px;\">Jumlah</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\">Tahun<br>
+																																	  Cetak<br>
+																																	  Pembelian</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width:100px; font-weight: bold; text-align: center;\">Asal Usul<br>
+																																	  Cara Perolehan</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Nilai<br>Perolehan<br>
+																																	 (Ribuan Rp)</td>
+															
+															<td colspan=\"1\" rowspan=\"2\" style=\"width: 60px;font-weight: bold; text-align: center;\">Ket</td>
+														</tr>
+														<tr>
+															<td style=\"font-weight: bold; text-align: center;width: 80px;\">Kode Barang</td>
+															<td style=\"font-weight: bold; text-align: center;width: 60px;\">Register</td>
+															<td style=\"font-weight: bold; text-align: center;\">Judul / Pencipta</td>
+															<td style=\"font-weight: bold; text-align: center;\">Spesifikasi</td>
+															<td style=\"font-weight: bold; text-align: center;\">Asal<br>
+																											   Daerah</td>
+															<td style=\"font-weight: bold; text-align: center;\">Pencipta</td>
+															<td style=\"font-weight: bold; text-align: center;\">Bahan</td>
+															<td style=\"font-weight: bold; text-align: center;\">Jenis</td>
+															<td style=\"font-weight: bold; text-align: center;\">Ukuran</td>
+													   </tr>
+													   <tr>
+															<td style=\"text-align: center; font-weight: bold;\">1</td>
+															<td style=\"text-align: center; font-weight: bold;\">2</td>
+															<td style=\"text-align: center; font-weight: bold;width: 80px;\">3</td>
+															<td style=\"text-align: center; font-weight: bold;width: 60px;\">4</td>
+															<td style=\"text-align: center; font-weight: bold;\">5</td>
+															<td style=\"text-align: center; font-weight: bold;\">6</td>
+															<td style=\"text-align: center; font-weight: bold;\">7</td>
+															<td style=\"text-align: center; font-weight: bold;\">8</td>
+															<td style=\"text-align: center; font-weight: bold;\">9</td>
+															<td style=\"text-align: center; font-weight: bold;\">10</td>
+															<td style=\"text-align: center; font-weight: bold;\">11</td>
+															<td style=\"text-align: center; font-weight: bold;\">12</td>
+															<td style=\"text-align: center; font-weight: bold;\">13</td>
+															<td style=\"text-align: center; font-weight: bold;\">14</td>
+															<td style=\"text-align: center; font-weight: bold;\">15</td>
+															
+															<td style=\"text-align: center; font-weight: bold;\">16</td>
+														</tr>
+													  </thead>";
+																					  
+											}
+                                                       
+											
+                                             if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+												
+												// $printjumlahTotal= number_format($jumlahTotal);
+												$printperolehanTotal=  number_format($perolehanTotal,2,",",".");	
+												
+														$tabletotal="
+															<tr>
+																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+																<td style=\"text-align: right;\">$printperolehanTotal</td>
+																<td ></td>
+															</tr></table>";	
+												
+												
+													//echo $printluasLantai;
+											    $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"15\">&nbsp;</td>
+														</tr>
+													</table>";  
+													
+                                               $footer ="	     
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";      
+											    
+											 //udah dites footer
+                                          
+											
+											 $jumlahTotal=0;
+											 $perolehanTotal=0;
+											 $no=1;
+											 				
+											
+                                             if($status_print==0)
+                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                             else
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+                                             $skpdeh = $row->kodeSatker;
+												
+                                             $satker_id=$row->kodeSatker;
+											 $thn =$row->Tahun;
+											 //==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											    $noKodeLokasi=substr($row->kodeLokasi,0,8);
+											$thnLokasi= substr($row->Tahun,2,4);
+											$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+											   // if($row->Tahun){
+													// $tahun=substr($row->Tahun,2,2);
+												// }	
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                                                  
+                                                  $body="";     
+                                                  $body.="
+                                               <body>
+                                             <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) E</h3>
+																<h3>ASET TETAP LAINNYA</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+											  <tr align=\"left\" >
+												   <td >
+														<p>Provinsi</p>
+												   </td>
+												   <td width=\"65%\">
+														<p>:&nbsp;$this->NAMA_PROVINSI</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Kabupaten/Kota</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Bidang</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$Bidang</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$UnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											   <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Sub Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$SubUnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>UPB</p>
+												   </td>
+												   <td width=\"60%\">
+
+													   <p>:&nbsp;$UPB</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr align=\"left\">
+												   <td width=\"20%\">
+														<p>NO. KODE LOKASI</p> 
+												   </td>
+												   <td width=\"60%\">
+													<p>:&nbsp;$kodeLokasi</p>
+													</td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  
+											  </table>
+                                                  <br />
+                                                  <br />
+												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+													 
+													  <thead> 
+													   <tr style=\"font-weight: bold;\">
+															<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px;font-weight: bold; text-align: center;\">No<br>Urut</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width: 150px;font-weight: bold; text-align: center;\">Nama Barang/<br>
+																																	  Jenis Barang</td>
+															<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;width: 140px;\">Nomor</td>
+															<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Buku /
+																																	  Perpustakaan</td>
+															<td colspan=\"3\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Barang
+																																	  Bercorak <br>
+																																	  Kesenian / Kebudayaan</td>
+															<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Hewan / Ternak<br>
+																																	  dan Tumbuhan</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;width: 50px;\">Jumlah</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\">Tahun<br>
+																																	  Cetak<br>
+																																	  Pembelian</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width:100px; font-weight: bold; text-align: center;\">Asal Usul<br>
+																																	  Cara Perolehan</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Nilai<br>Perolehan<br>
+																																	 (Ribuan Rp)</td>
+															
+															<td colspan=\"1\" rowspan=\"2\" style=\"width: 60px;font-weight: bold; text-align: center;\">Ket</td>
+														</tr>
+														<tr>
+															<td style=\"font-weight: bold; text-align: center;width: 80px;\">Kode Barang</td>
+															<td style=\"font-weight: bold; text-align: center;width: 60px;\">Register</td>
+															<td style=\"font-weight: bold; text-align: center;\">Judul / Pencipta</td>
+															<td style=\"font-weight: bold; text-align: center;\">Spesifikasi</td>
+															<td style=\"font-weight: bold; text-align: center;\">Asal<br>
+																											   Daerah</td>
+															<td style=\"font-weight: bold; text-align: center;\">Pencipta</td>
+															<td style=\"font-weight: bold; text-align: center;\">Bahan</td>
+															<td style=\"font-weight: bold; text-align: center;\">Jenis</td>
+															<td style=\"font-weight: bold; text-align: center;\">Ukuran</td>
+													   </tr>
+													   <tr>
+															<td style=\"text-align: center; font-weight: bold;\">1</td>
+															<td style=\"text-align: center; font-weight: bold;\">2</td>
+															<td style=\"text-align: center; font-weight: bold;width: 80px;\">3</td>
+															<td style=\"text-align: center; font-weight: bold;width: 60px;\">4</td>
+															<td style=\"text-align: center; font-weight: bold;\">5</td>
+															<td style=\"text-align: center; font-weight: bold;\">6</td>
+															<td style=\"text-align: center; font-weight: bold;\">7</td>
+															<td style=\"text-align: center; font-weight: bold;\">8</td>
+															<td style=\"text-align: center; font-weight: bold;\">9</td>
+															<td style=\"text-align: center; font-weight: bold;\">10</td>
+															<td style=\"text-align: center; font-weight: bold;\">11</td>
+															<td style=\"text-align: center; font-weight: bold;\">12</td>
+															<td style=\"text-align: center; font-weight: bold;\">13</td>
+															<td style=\"text-align: center; font-weight: bold;\">14</td>
+															<td style=\"text-align: center; font-weight: bold;\">15</td>
+															
+															<td style=\"text-align: center; font-weight: bold;\">16</td>
+														</tr>
+													  </thead>";
+                                                 //udah dites disini footer 
+                                                    
+                                                  
+												$skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
+												$status_print++;
+
+                                             }
+                                             //udah dites
+													
+													// $jumlahTotal = $jumlahTotal + $row->Kuantitas;
+													// $jumlah = number_format($row->Kuantitas);
+													
+													$noReg=$row->noRegister;
+													$split = explode('-',$row->noRegister);
+													if (count($split) == 1){
+														$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+														$nilaiPerolehan= $row->NilaiPerolehan;
+													}else{
+														$awal = $split[0];
+														$akhir = end($split);
+														$hasil = (intval($akhir) - intval($awal)) + 1;
+														$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+														$nilaiPerolehan= $nilaiPrlhn;
+														$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+													}
+													
+													// $perolehan = number_format($row->NilaiPerolehan,2,",",".");
+													
+													
+													$ex = explode('.',$row->Kode);
+													$ceckKode = $ex[0].".".$ex[1];
+													if($ceckKode == '05.17'){
+														$judulBuku =  $row->Judul;
+														$judulHewan = '';
+													}elseif($ceckKode == '05.19'){
+														$judulBuku =  '';
+														$judulHewan = $row->Judul;
+													}
+													$mix = $row->Ukuran."&nbsp;".$row->Material;
+													
+													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+													       $body.="
+																<tr>
+																	<td style=\"width: 30px; text-align: center;\">$no</td>
+																	<td style=\"width: 150px; \">$row->Uraian</td>
+																	<td style=\"width: 79px; text-align: center;\">$row->Kode</td>
+																	<td style=\"width: 60px; text-align: center;\">$noReg</td>
+																	<td style=\"width: 150px;  \">$judulBuku</td>
+																	<td style=\"width: 70px;  \">$row->Spesifikasi</td>
+																	<td style=\"width: 70px;  \">$row->AsalDaerah</td>
+																	<td style=\"width: 69px;  \">$row->Pengarang</td>
+																	<td style=\"width: 80px; \">$row->Material</td>
+																	<td style=\"width: 69px;  \">$judulHewan</td>
+																	<td style=\"width: 70px; \">$mix</td>
+																	<td style=\"width: 51px; text-align: center;\">$hasil</td>
+																	<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
+																	<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
+																	
+																	<td style=\"width: 60px;\">$row->Info</td>
+																</tr>";
+                                                            
+                                                            $no++;				
+                                                            
+                                 
+                                             }
+												    // $printjumlahTotal= number_format($jumlahTotal);
+													$printperolehanTotal=  number_format($perolehanTotal,2,",",".");	
+												
+													$tabletotal="
+															<tr>
+																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+																<td style=\"text-align: right;\">$printperolehanTotal</td>
+																<td ></td>
+															</tr></table>";
+                                           
+
+											   $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"15\">&nbsp;</td>
+														</tr>
+													</table>"; 
+													
+                                               $footer ="
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";      
+											
+                                        if($status_print==0){
+                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                        }else{
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+
+                                           }
+              return $html;
+          }
+     }        
+
+//Rekapitulasi KIB-F (ok)	 
+	public function retrieve_html_kib_f_rekap($dataArr,$gambar){
+			 if($dataArr!="")
+          {
+			  include ('../../../function/tanggal/tanggal.php');
+                    $head = "
+                                        <html>
+                                        <head>
+											<style>
+												table
+												{
+													font-size:10pt;
+													font-family:Arial;
+													border-collapse: collapse;											
+													border-spacing:0;
+												}
+												h3
+												{
+													font-family:Arial;	
+													font-size:13pt;
+													color:#000;
+														
+												}
+												p
+												{
+													font-size:10pt;
+													font-family:Arial;
+													font-weight:bold;
+												}
+												</style>
+											</head>
+											 ";
+
+                                     
+									//$no=1;
+									$skpdeh="";
+									$thn="";
+									$no=1;
+									//$skpdeh="";
+									$status_print=0;
+									$luasTotal=0;
+									$panjangTotal=0;
+									$perolehanTotal=0;
+							
+                                   foreach ($dataArr as $row)
+                                   {
+                                             if ($skpdeh == "" && $no==1){
+												$body="";
+												$skpdeh = $row->kodeSatker;
+												$satker_id=$row->kodeSatker;
+												$thn=$row->Tahun;
+												//==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                if($nip_pengurus!="")
+                {
+                    $nip_pengurus_fix=$nip_pengurus;
+                }
+                else
+                {
+                    $nip_pengurus_fix='........................................';
+                }
+
+                if($nip_pengguna!="")
+                {
+                    $nip_pengguna_fix=$nip_pengguna;
+                }
+                else
+                {
+                    $nip_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengguna!="")
+                {
+                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+                }
+                else
+                {
+                    $nama_jabatan_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengurus!="")
+                {
+                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+                }
+                else
+                {
+                    $nama_jabatan_pengurus_fix='........................................';
+                }
+                                        
+                                        $body="
+											<body>
+                                             <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) F</h3>
+																<h3>KONSTRUKSI DALAM PENGERJAAN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                 <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+         
+											  <thead> 
+													<tr>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px;font-weight: bold; text-align: center;\"><br><br>No</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 120px;font-weight: bold; text-align: center;\"><br><br>Nama Barang /
+																															  <br>
+																															  Jenis Barang</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Bangunan<br>
+																															  (P,SP,D)</td>
+													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Konstruksi</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px;font-weight: bold; text-align: center;\"><br><br>Luas<br>(m2)</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Letak / Lokasi<br>
+																															  Alamat</td>
+													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Dokumen Gedung</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Tgl Bulan<br>
+																															  Thn Mulai</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Status <br>
+																															  Tanah</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Nomor Kode <br>
+																															  
+																															  Tanah</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Asal Usul<br>
+																															  Pembayaran</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Nilai Kontrak (Rp.)<br>
+																															 </td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Ket</td>
+												</tr>
+												<tr>
+													
+													<td style=\"font-weight: bold; ; text-align: center;\">Bertingkat/<br>Tidak</td>
+													<td style=\"font-weight: bold; text-align: center;\">Beton/<br>Tidak</td>
+													<td style=\"font-weight: bold; text-align: center;\">Tanggal</td>
+													<td style=\"font-weight: bold; text-align: center;\">Nomor</td>
+													
+												</tr>
+												<tr>
+													  <td style=\"text-align: center; font-weight: bold;\">1</td>
+													  <td style=\"text-align: center; font-weight: bold;\">2</td>
+													  <td style=\"text-align: center; font-weight: bold;\">3</td>
+													  <td style=\"text-align: center; font-weight: bold;\">4</td>
+													  <td style=\"text-align: center; font-weight: bold;\">5</td>
+													  <td style=\"text-align: center; font-weight: bold;\">6</td>
+													  <td style=\"text-align: center; font-weight: bold;\">7</td>
+													  <td style=\"text-align: center; font-weight: bold;\">8</td>
+													  <td style=\"text-align: center; font-weight: bold;\">9</td>
+													  <td style=\"text-align: center; font-weight: bold;\">10</td>
+													  <td style=\"text-align: center; font-weight: bold;\">11</td>
+													  <td style=\"text-align: center; font-weight: bold;\">12</td>
+													  <td style=\"text-align: center; font-weight: bold;\">13</td>
+													  <td style=\"text-align: center; font-weight: bold;\">14</td>
+													  <td style=\"text-align: center; font-weight: bold;\">15</td>
+												</tr>
+											  </thead>";
+																					  
+											}
+                                                       
+											
+                                             if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
+												
+												 // $printluas=  number_format($luasTotal);
+													 $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+													 $tabletotal="
+														<tr align=\"center\">
+															<td colspan=\"13\">Jumlah Harga</td>
+															<td>$printperolehanTotal</td>
+															<td></td>
+														</tr></table>";
+                                           
+
+											   $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"15\">&nbsp;</td>
+														</tr>
+													</table>";  
+													
+                                               $footer ="	     
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";      
+											    
+											 //udah dites footer
+                                          
+											
+											 $jumlahTotal=0;
+											 $perolehanTotal=0;
+											 $no=1;
+											 				
+											
+                                             if($status_print==0)
+                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                             else
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+                                             $skpdeh = $row->kodeSatker;
+												
+                                             $satker_id=$row->kodeSatker;
+											 //==add new==//
+											   $detailSatker=$this->get_satker($satker_id);
+											   $NoBidang = $detailSatker[0];
+											   $NoUnitOrganisasi = $detailSatker[1];
+											   $NoSubUnitOrganisasi = $detailSatker[2];
+											   $NoUPB = $detailSatker[3];
+											   
+											   if($NoBidang !=""){
+													$paramKodeLokasi = $NoBidang;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+													$paramKodeLokasi = $NoUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+											   }
+											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   }
+											   $Bidang = $detailSatker[4][0];
+											   $UnitOrganisasi = $detailSatker[4][1];
+											   $SubUnitOrganisasi = $detailSatker[4][2];
+											   $UPB = $detailSatker[4][3];
+											   $noReg=substr($row->NomorReg,0,17);
+											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+												$thnLokasi= substr($row->Tahun,2,4);
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											   //==end new==//
+												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                                                  
+                                                  $body="";     
+                                                  $body.="
+                                               <body>
+                                             <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 90%; text-align: center;\">
+                                                             <h3>REKAPITULASI KARTU INVENTARIS BARANG (KIB) F</h3>
+																<h3>KONSTRUKSI DALAM PENGERJAAN</h3>
+                                                       </td>
+                                                  </tr>
+
+                                             </table>
+                                             <br />
+                                             <br />
+                                            <table border=\"0\" width=\"100%\" >
+                                                 <tr align=\"left\" >
+													   <td >
+															<p>PROVINSI</p>
+													   </td>
+													   <td width=\"65%\">
+															<p>:&nbsp;$this->NAMA_PROVINSI</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>KABUPATEN/KOTA</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>BIDANG</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$Bidang</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												   <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>SUB UNIT ORGANISASI</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$SubUnitOrganisasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr>
+													   <td style=\"font-weight: bold; width=20%\">
+															<p>UPB</p>
+													   </td>
+													   <td width=\"60%\">
+
+														   <p>:&nbsp;$UPB</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+												  <tr align=\"left\">
+													   <td width=\"20%\">
+															<p>NO. KODE LOKASI</p> 
+													   </td>
+													   <td width=\"60%\">
+															<p>:&nbsp;$kodeLokasi</p>
+													   </td>
+													   <td width=\"20%\">&nbsp;</td>
+												  </tr>
+                                                  
+                                                  </table>
+                                                  <br />
+                                                  <br />
+												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+         
+											  <thead> 
+													<tr>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px;font-weight: bold; text-align: center;\"><br><br>No</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 120px;font-weight: bold; text-align: center;\"><br><br>Nama Barang /
+																															  <br>
+																															  Jenis Barang</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Bangunan<br>
+																															  (P,SP,D)</td>
+													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Konstruksi</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px;font-weight: bold; text-align: center;\"><br><br>Luas<br>(m2)</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Letak / Lokasi<br>
+																															  Alamat</td>
+													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Dokumen Gedung</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Tgl Bulan<br>
+																															  Thn Mulai</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Status <br>
+																															  Tanah</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Nomor Kode <br>
+																															  
+																															  Tanah</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Asal Usul<br>
+																															  Pembayaran</td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Nilai KOntrak (Rp.)<br>
+																															 </td>
+													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Ket</td>
+												</tr>
+												<tr>
+													
+													<td style=\"font-weight: bold; ; text-align: center;\">Bertingkat/<br>Tidak</td>
+													<td style=\"font-weight: bold; text-align: center;\">Beton/<br>Tidak</td>
+													<td style=\"font-weight: bold; text-align: center;\">Tanggal</td>
+													<td style=\"font-weight: bold; text-align: center;\">Nomor</td>
+													
+												</tr>
+												<tr>
+													  <td style=\"text-align: center; font-weight: bold;\">1</td>
+													  <td style=\"text-align: center; font-weight: bold;\">2</td>
+													  <td style=\"text-align: center; font-weight: bold;\">3</td>
+													  <td style=\"text-align: center; font-weight: bold;\">4</td>
+													  <td style=\"text-align: center; font-weight: bold;\">5</td>
+													  <td style=\"text-align: center; font-weight: bold;\">6</td>
+													  <td style=\"text-align: center; font-weight: bold;\">7</td>
+													  <td style=\"text-align: center; font-weight: bold;\">8</td>
+													  <td style=\"text-align: center; font-weight: bold;\">9</td>
+													  <td style=\"text-align: center; font-weight: bold;\">10</td>
+													  <td style=\"text-align: center; font-weight: bold;\">11</td>
+													  <td style=\"text-align: center; font-weight: bold;\">12</td>
+													  <td style=\"text-align: center; font-weight: bold;\">13</td>
+													   <td style=\"text-align: center; font-weight: bold;\">14</td>
+													  <td style=\"text-align: center; font-weight: bold;\">15</td>
+												</tr>
+											  </thead>";
+                                                 //udah dites disini footer 
+                                                    
+                                                  
+												$skpdeh = $row->kodeSatker;
+												$thn = $row->Tahun;
+												$status_print++;
+
+                                             }
+                                             //udah dites
+                                             
+													$bertingkat = $this->get_bertingkat($row->JumlahLantai);
+													$beton = $this->get_beton($row->Beton);
+													//$bertingkat = get_bertingkat($row->JumlahLantai);
+													//$beton = get_beton($row->Beton);
+													// $status_tanah = $this->get_status_tanah($row->StatusTanah);
+													// $konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
+													
+													$luasTotal = $luasTotal + $row->LuasLantai;
+													$luas = number_format($row->LuasLantai);
+													//$panjangTotal = $panjangTotal + $row->Panjang;
+													$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
+													$perolehan = number_format($row->NilaiPerolehan);
+													// $noReg=substr($row->NomorReg,18);
+													// $temp=explode('.',$row->NomorReg);
+													// $noReg=end($temp);
+													if($row->TglSertifikat == ''){
+														$tgl = ''; 
+													}else{
+														list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
+														$tgl = "$tanggal/$bulan/$tahun";
+													}
+                                                            $body.="
+																<tr align=\"center\">
+																	<td style=\"width: 30px;font-weight: \">$no</td>
+																	<td style=\"width: 120px;font-weight: \">$row->Uraian</td>
+																	<td style=\"width: 79px;font-weight: \">$row->Konstruksi</td>
+																	<td style=\"width: 80px;font-weight: \">$bertingkat</td>
+																	<td style=\"width: 78px; font-weight: \">$beton</td>
+																	<td style=\"width: 51px; font-weight: \">$luas</td>
+																	<td style=\"width: 90px; font-weight: \">$row->Alamat</td>
+																	<td style=\"width: 79px; font-weight: \">$tgl</td>
+																	<td style=\"width: 80px;font-weight: \">$row->NoSertifikat</td>
+																	<td style=\"width: 78px; font-weight: \">$tgl</td>
+																	<td style=\"width: 80px;font-weight: \">$row->StatusTanah</td>
+																	<td style=\"width: 90px; font-weight: \"></td>
+																	<td style=\"width: 79px;font-weight: \">$row->AsalUsul</td>
+																	<td style=\"width: 80px;font-weight: \">$perolehan</td>
+																	<td style=\"width: 90px;font-weight: \">$row->Info</td>
+																</tr>";
+                                                            
+                                                            $no++;
+                                                            
+                                                            //coba
+                                                            
+                                 
+                                             }
+												    // $printluas=  number_format($luasTotal);
+													 $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+													 $tabletotal="
+														<tr align=\"center\">
+															<td colspan=\"13\">Jumlah Harga</td>
+															<td>$printperolehanTotal</td>
+															<td></td>
+														</tr></table>";
+                                           
+
+											   $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"15\">&nbsp;</td>
+														</tr>
+													</table>"; 
+													
+                                               $footer ="
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+                                                  </tr>
+                                                       <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                                                  </tr>
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                                                  </tr>
+
+                                             </table>";
+                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+											   $footer.="
+                                             </body>
+                                        </html>";      
+											
+                                        if($status_print==0){
+                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                        }else{
+                                             $html[]=$body.$tabletotal.$foot.$footer;
+
+                                           }
+              return $html;
+          }
+     }        
+
 //KIB-A (ok)    
 	public function retrieve_html_kib_a($dataArr,$gambar){
          // echo "masukk";
@@ -118,6 +5564,7 @@ class report_engine extends core_api_report {
 		  
           foreach ($dataArr as $row)
           {
+				
           if ($skpdeh =="" && $no==1){
                $body="";
                $skpdeh = $row->kodeSatker;
@@ -616,23 +6063,19 @@ class report_engine extends core_api_report {
                                                        $luasTotal = $luasTotal + $row->LuasTotal;
                                                        $perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
                                                        $length = strlen($row->noRegister);
-													   if($length == 1) $noReg = sprintf("%04s", $length);
-													   if($length == 2) $noReg = sprintf("%03s", $length);
-													   if($length == 3) $noReg = sprintf("%02s", $length);
+													   if($length == 1) $noReg = sprintf("%04s", $row->noRegister);
+													   if($length == 2) $noReg = sprintf("%03s", $row->noRegister);
+													   if($length == 3) $noReg = sprintf("%02s", $row->noRegister);
 													   if($length == 4) $noReg = $row->noRegister;
-													   if($row->TglSertifikat == ''){
+													    
+														// $noReg=$this->sortirNoReg($row->noRegister);
+														if($row->TglSertifikat == ''){
 															$tgl = ''; 
-													   }else{
+													    }else{
 															list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
 															$tgl = "$tanggal/$bulan/$tahun";
-													   }
-                                                       //($row->NoSertifikat == '') ? $dataNoSertifikat = "-" : $dataNoSertifikat = $row->NoSertifikat;
-													   //($row->Info == '') ? $dataInfo = "-" : $dataInfo = $row->Info; 
-                                                            // echo "noreg".$row->NomorReg;
-															// $temp=explode('.',$row->NomorReg);
-															// $noReg=end($temp);
-															// echo $noReg; 
-															// $noReg=substr($row->NomorReg,18);
+													    }
+                                                       
 															$body.="
                                                             <tr align=\"center\">
                                                                  <td style=\"text-align: center; width: 30px;font-weight: \">$no</td>
@@ -654,6 +6097,8 @@ class report_engine extends core_api_report {
                                                             ";
                                                             
                                                             $no++;
+															// $noReg = array();
+															// unset($noReg);
                                                   
                                              }
                                              //udah dicoba ga muncul
@@ -750,6 +6195,7 @@ class report_engine extends core_api_report {
 	public function retrieve_html_kib_b($dataArr,$gambar){
       if($dataArr!="")
           {
+		 
 			  include ('../../../function/tanggal/tanggal.php');
                     $head = "
                                         <html>
@@ -785,72 +6231,10 @@ class report_engine extends core_api_report {
 								$thn="";
 								$status_print=0;
 								$perolehanTotal=0;
-								/*function object_to_array($data)
-								{
-									if (is_array($data) || is_object($data))
-									{
-										$result = array();
-										foreach ($data as $key => $value)
-										{
-											$result[$key] = object_to_array($value);
-										}
-										return $result;
-									}
-									return $data;
-								}
-								
-								// pr($result);
-								// exit;
-								$arrayObj = object_to_array($dataArr);
-								pr($arrayObj);
-								
-								$start = 0;
-								$kodeSatker = array();
-								
-								foreach ($arrayObj as $key => $val){
-									pr($val['Aset_ID']);
-									
-									if($start==0){
-										$kodeSatker = $val['kodeSatker'];
-									}
-									
-									
-								}foreach ($arrayObj as $k => $v){
-											
-									$newLastID[] = $v['kodeSatker'];
-									$newNama[] = $v['Uraian'];
-									$newNama2[][] = $v['Uraian'];
-									
-								}
-								$unique = array_unique($newLastID);
-								$uniqueNama = array_unique($newNama);
-								$temp = array ();
-								foreach ($arrayObj as $k => $v){
-									
-									if (in_array($v['kodeSatker'], $unique)){
-										
-										if (in_array($v['Uraian'], $uniqueNama)){
-											$newData[$v['kodeSatker']][$v['Uraian']][] = $v;
-												if(!in_array($v['Uraian'],$temp)){
-													$GetNewData[$v['kodeSatker']][$v['Uraian']][] = $v;
-													$temp[] = $v['Uraian'];
-												}
-										}
-										
-									}	
-								}
-								pr($newData);
-								// exit;
-								foreach ($arrayObj as $k => $val){
-			
-									$jumlah[$val['kodeSatker']][$val['Uraian']] = count($newData[$val['kodeSatker']][$val['Uraian']]); 
-								}
-								pr($jumlah);		
-								
-								exit;*/	
 								
                                    foreach ($dataArr as $row)
                                    {
+										
                                              if ($skpdeh =="" && $no==1){
 												$body="";
 												$skpdeh = $row->kodeSatker;
@@ -885,42 +6269,42 @@ class report_engine extends core_api_report {
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-                if($nip_pengurus!="")
-                {
-                    $nip_pengurus_fix=$nip_pengurus;
-                }
-                else
-                {
-                    $nip_pengurus_fix='........................................';
-                }
+											   list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+												if($nip_pengurus!="")
+												{
+													$nip_pengurus_fix=$nip_pengurus;
+												}
+												else
+												{
+													$nip_pengurus_fix='........................................';
+												}
 
-                if($nip_pengguna!="")
-                {
-                    $nip_pengguna_fix=$nip_pengguna;
-                }
-                else
-                {
-                    $nip_pengguna_fix='........................................';
-                }
+												if($nip_pengguna!="")
+												{
+													$nip_pengguna_fix=$nip_pengguna;
+												}
+												else
+												{
+													$nip_pengguna_fix='........................................';
+												}
 
-                if($nama_jabatan_pengguna!="")
-                {
-                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
-                }
-                else
-                {
-                    $nama_jabatan_pengguna_fix='........................................';
-                }
+												if($nama_jabatan_pengguna!="")
+												{
+													$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+												}
+												else
+												{
+													$nama_jabatan_pengguna_fix='........................................';
+												}
 
-                if($nama_jabatan_pengurus!="")
-                {
-                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
-                }
-                else
-                {
-                    $nama_jabatan_pengurus_fix='........................................';
-                }
+												if($nama_jabatan_pengurus!="")
+												{
+													$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+												}
+												else
+												{
+													$nama_jabatan_pengurus_fix='........................................';
+												}
 
                                         
                                         $body="
@@ -1057,12 +6441,12 @@ class report_engine extends core_api_report {
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
+                                             if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
 
-                                             	$printperolehanTotal=  number_format($perolehanTotal);
+                                             	$printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 												$tabletotal="
 													<tr>
-														<td style=\"text-align: center;\" colspan=\"14\">Total</td>
+														<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
 														<td style=\"text-align: right;\">$printperolehanTotal</td>
 														<td></td>
 													</tr>
@@ -1085,11 +6469,11 @@ class report_engine extends core_api_report {
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -1312,33 +6696,38 @@ class report_engine extends core_api_report {
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->kodeSatker;
+												$skpdeh = $row->KodeSatker;
 												$thn=$row->Tahun;
 												$status_print++;
 
                                              }
                                              //udah dites
-                                                $perolehan = number_format($row->NilaiPerolehan);
-												$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-												/*($row->Merk == '') ? $dataMerk = "-" : $dataMerk = $row->Merk;
-												($row->Ukuran == '') ? $dataUkuran = "-" : $dataUkuran = $row->Ukuran;
-                                                ($row->Material == '') ? $dataMaterial = "-" : $dataMaterial = $row->Material;
-                                                ($row->NoSeri == '') ? $dataNoSeri = "-" : $dataNoSeri = $row->NoSeri;
-                                                ($row->NoRangka == '') ? $dataNoRangka = "-" : $dataNoRangka = $row->NoRangka;
-                                                ($row->NoMesin == '') ? $dataNoMesin = "-" : $dataNoMesin = $row->NoMesin; 
-                                                ($row->NoSTNK == '') ? $dataNoSTNK = "-" : $dataNoSTNK = $row->NoSTNK;
-                                                ($row->NoBPKB == '') ? $dataNoBPKB = "-" : $dataNoBPKB = $row->NoBPKB;
-                                                ($row->Info == '') ? $dataInfo = "-" : $dataInfo = $row->Info;  */
-												// $noReg=substr($row->NomorReg,18);
-												$temp=explode('.',$row->NomorReg);
-												$noReg=end($temp);
-																		
+                                                
+												$split = explode("-", $row->noRegister);
+												if (count($split) == 1){
+													// $hasil = 1;
+													$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+													$nilaiPerolehan = $row->NilaiPerolehan;
+												}else{
+													$awal = $split[0];
+													$akhir = end($split);
+													$hasil = (intval($akhir) - intval($awal)) + 1;
+													$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+													$nilaiPerolehan = $nilaiPrlhn ; 
+													$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+												}
+												$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+												// $noReg=$this->sortirNoReg($row->noRegister);
+												$noReg=$row->noRegister;
+												
                                                             $body.="
 																<tr align=\"center\">
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
 																	<td style=\"width: 85px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 150px; \">$row->NamaAset</td>
-																	<td style=\"width: 60px; text-align: center; width: 60px; \">$row->noRegister</td>
+																	<td style=\"width: 150px; \">$row->Uraian</td>
+																	
+																	<td style=\"width: 60px; text-align: center; width: 60px; \">$noReg</td>
+																	
 																	<td style=\"width: 43px; font-weight: \">$row->Merk</td>
 																	<td style=\"width: 60px;font-weight: \">$row->Ukuran</td>
 																	<td style=\"width: 60px;font-weight: \">$row->Material</td>
@@ -1349,19 +6738,19 @@ class report_engine extends core_api_report {
 																	<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
 																	<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
 																	<td style=\"width: 69; text-align: center;\">$row->AsalUsul</td>
-																	<td style=\"width: 81px; text-align: right;\">$perolehan</td>
+																	<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
 																	<td style=\"width: 69px;font-weight: \">$row->Info</td>
 																</tr>";
                                                            
                                                   $no++;
-                                                  
+                                                 
                                              }
                                              //udah dicoba ga muncul
                                              
-                                             $printperolehanTotal=  number_format($perolehanTotal);
+                                             $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
                                              $tabletotal="
 													<tr>
-														<td style=\"text-align: center;\" colspan=\"14\">Total</td>
+														<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
 														<td style=\"text-align: right;\">$printperolehanTotal</td>
 														<td></td>
 													</tr>
@@ -1377,17 +6766,17 @@ class report_engine extends core_api_report {
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -1559,23 +6948,7 @@ class report_engine extends core_api_report {
                 {
                     $nama_jabatan_pengurus_fix='........................................';
                 }
-
-                                        
-												list($tahun, $bulan, $tanggal)= explode('-', $row->TglSurat);
-												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-														   $TglSertifikat = "-";
-														   $tahun="-";
-														   $bulan="-";
-														   $tanggal="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglSurat = "";
-															 
-														}
-														$row->TglSurat = "$tanggal/$bulan/$tahun";
-												   }
-												   
-														
+			
 																			
                                         $body="
 											<body>
@@ -1715,24 +7088,20 @@ class report_engine extends core_api_report {
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
   
-												$print_luas_lantai=number_format($total_luaslantai);
-												$printluas=  number_format($luasTotal);
-												$printperolehanTotal=  number_format($perolehanTotal);	
+												// $print_luas_lantai=number_format($total_luaslantai);
+												// $printluas=  number_format($luasTotal);
+												$printperolehanTotal=  number_format($perolehanTotal,2,",",".");	
 												$tabletotal="
 														<tr>
-															<td colspan=\"7\" style=\"text-align: center;\">Total</td>
-															<td style=\"text-align: right;\">$print_luas_lantai</td>
-															<td colspan=\"3\"></td>
-															<td style=\"text-align: right;\">$printluas</td>
-															<td colspan=\"3\"></td>
+															<td colspan=\"15\" style=\"text-align: center;\">Jumlah Harga</td>
 															<td style=\"text-align: right;\">$printperolehanTotal</td>
 															<td></td>
 														</tr>
 													</table>";
 
-											 	
+													
                                              $foot="<table border=\"0\">
 														<tr>
 															<td colspan=\"16\">&nbsp;</td>
@@ -1744,17 +7113,17 @@ class report_engine extends core_api_report {
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -1843,21 +7212,6 @@ class report_engine extends core_api_report {
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
 												
-                                                                                                
-												list($tahun, $bulan, $tanggal)= explode('-', $row->TglSurat);
-												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-														   $TglSertifikat = "-";
-														   $tahun="-";
-														   $bulan="-";
-														   $tanggal="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglSurat = "";
-															 
-														}
-														$row->TglSurat = "$tanggal/$bulan/$tahun";
-												   }
-												   
                                                   $body="";     
                                                   $body.="
                                                <body>
@@ -2003,19 +7357,20 @@ class report_engine extends core_api_report {
 
                                              }
                                              //udah dites
-												$status_tanah = $this->get_status_tanah($row->StatusTanah);
+												// $status_tanah = $this->get_status_tanah($row->StatusTanah);
 												$bertingkat = $this->get_bertingkat($row->JumlahLantai);
 												$beton = $this->get_beton($row->Beton);
 												
-												$perolehan = number_format($row->NilaiPerolehan);
-												$luas = number_format($row->LuasTotal);
-												$luaslantai= $row->LuasLantai;
+												$perolehan = number_format($row->NilaiPerolehan,2,",",".");
+												$luas = number_format($row->LuasTotal,2,",",".");
+												$luaslantai= number_format($row->LuasLantai,2,",",".");
 												$total_luaslantai= $total_luaslantai + $row->LuasLantai;
 												$luasTotal = $luasTotal + $row->LuasTotal;
 												$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
 												// $noReg=substr($row->NomorReg,18);	
-												$temp=explode('.',$row->NomorReg);
-												$noReg=end($temp);
+												/*$temp=explode('.',$row->NomorReg);
+												$noReg=end($temp);*/
+												
 												$kondisi= $row->kondisi;
 												if ($kondisi == '1') {
 													$ketKondisi = "Baik";
@@ -2027,19 +7382,28 @@ class report_engine extends core_api_report {
 													$ketKondisi = "Rusak Berat";
 												}else{
 													$ketKondisi = "";
-												} 	
+												} 
+												$length = strlen($row->noRegister);
+											    $noReg = sprintf("%04s", $row->noRegister);
+											  
+												if($row->TglSurat == ''){
+													$tgl = ''; 
+												}else{
+													list($tahun, $bulan, $tanggal)= explode('-', $row->TglSurat);
+													$tgl = "$tanggal/$bulan/$tahun";
+												}	
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
 																	<td style=\"width: 150px\">$row->Uraian</td>
 																	<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 65px; text-align: center;\">$row->noRegister</td>
+																	<td style=\"width: 65px; text-align: center;\">$noReg</td>
 																	<td style=\"width: 70px;\">$ketKondisi</td>
 																	<td style=\"width: 67px; text-align: center;\">$bertingkat</td>
 																	<td style=\"width: 65px; text-align: center;\">$beton</td>
 																	<td style=\"width: 50px; text-align: right;\">$luaslantai </td>
 																	<td style=\"width: 100px;\">$row->Alamat</td>
-																	<td style=\"width: 66px;\">$tanggal/$bulan/$tahun</td>
+																	<td style=\"width: 66px;\">$tgl</td>
 																	<td style=\"width: 66px;\">$row->NoSurat</td>
 																	<td style=\"width: 50px; text-align: right;\">$luas</td>
 																	<td style=\"width: 70px; text-align: center;\">$row->StatusTanah</td>
@@ -2055,18 +7419,14 @@ class report_engine extends core_api_report {
                                              }
                                              //udah dicoba ga muncul
                                              
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $print_luas_lantai=number_format($total_luaslantai);
-											 $printluas=  number_format($luasTotal);
-											 $printperolehanTotal=  number_format($perolehanTotal);
+                                             // $printperolehanTotal=  number_format($perolehanTotal);
+                                             // $print_luas_lantai=number_format($total_luaslantai);
+											 // $printluas=  number_format($luasTotal);
+											 $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 											 
 											      $tabletotal="
 													<tr>
-														<td colspan=\"7\" style=\"text-align: center;\">Total</td>
-														<td style=\"text-align: right;\">$print_luas_lantai</td>
-														<td colspan=\"3\"></td>
-														<td style=\"text-align: right;\">$printluas</td>
-														<td colspan=\"3\"></td>
+														<td colspan=\"15\" style=\"text-align: center;\">Jumlah Harga</td>
 														<td style=\"text-align: right;\">$printperolehanTotal</td>
 														<td></td>
 													</tr>
@@ -2082,17 +7442,17 @@ class report_engine extends core_api_report {
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -2265,20 +7625,7 @@ class report_engine extends core_api_report {
 												$nama_jabatan_pengurus_fix='........................................';
 											}
 			
-											list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
-										   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-												   $TglSertifikat = "-";
-												   $tahun="-";
-												   $bulan="-";
-												   $tanggal="-";
-										   }else{
-												if ($tanggal !='' ){
-													 $row->TglDokumen = "";
-													 
-												}
-												$row->TglDokumen = "$tanggal/$bulan/$tahun";
-										   }	
-                                        
+											
                                         $body="
 											<body>
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
@@ -2432,21 +7779,17 @@ class report_engine extends core_api_report {
 											}
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $thn = $row->Tahun && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $thn = $row->Tahun && $no>1){
 												
-												$printluas=  number_format($luasTotal);
-												$printpanjang= number_format($panjangTotal);
+												// $printluas=  number_format($luasTotal);
+												// $printpanjang= number_format($panjangTotal);
 												$printperolehanTotal=  number_format($perolehanTotal);	
 												
 													   $tabletotal="
 															<tr>
-																<td style=\"text-align: center;\" colspan=\"5\">Total</td>
-																<td style=\"text-align: right;\">$printpanjang</td>
-																<td colspan=\"1\"></td>
-																<td style=\"text-align: right;\">$printluas</td>
-																<td colspan=\"6\"></td>
+																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
 																<td style=\"text-align: right;\">$printperolehanTotal</td>
-																<td colspan=\"2\"></td>
+																<td colspan=\"2\">&nbsp;</td>
 															</tr></table>";
 															
 										    $foot="<table border=\"0\">
@@ -2461,17 +7804,17 @@ class report_engine extends core_api_report {
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -2564,21 +7907,7 @@ class report_engine extends core_api_report {
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-												
-												list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
-												if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-												   $TglSertifikat = "-";
-												   $tahun="-";
-												   $bulan="-";
-												   $tanggal="-";
-											   }else{
-													if ($tanggal !='' ){
-													 $row->TglDokumen = "";
-													}
-														$row->TglDokumen = "$tanggal/$bulan/$tahun";
-											   }	
-                                        	
-                                                  
+												  
                                                   $body="";     
                                                   $body.="
                                                <body>
@@ -2660,7 +7989,7 @@ class report_engine extends core_api_report {
 															<p>NO. KODE LOKASI</p> 
 													   </td>
 													   <td width=\"60%\">
-															<p>:&nbsp;$kodeLokasii</p>
+															<p>:&nbsp;$kodeLokasi</p>
 													   </td>
 													   <td width=\"20%\">&nbsp;</td>
 												  </tr>
@@ -2744,18 +8073,24 @@ class report_engine extends core_api_report {
 													$panjangTotal = $panjangTotal + $row->Panjang;
 													$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
 													
-													$perolehan = number_format($row->NilaiPerolehan);
-													$panjang = number_format($row->Panjang);
-													$luas = number_format($row->LuasTotal);
-													($row->Lebar == '') ? $dataLebar = 0 : $dataLebar = $row->Lebar;
-													$lebar = number_format($dataLebar);
-													($row->Panjang == '') ? $dataPanjang = 0 : $dataPanjang = $row->Panjang;
-													$panjang = number_format($dataPanjang);
+													$perolehan = number_format($row->NilaiPerolehan,2,",",".");
+													$panjang = number_format($row->Panjang,0,",",".");
+													$luas = number_format($row->LuasTotal,0,",",".");
+													$lebar = number_format($row->Lebar,0,",",".");
+													// ($row->Lebar == '') ? $dataLebar = 0 : $dataLebar = $row->Lebar;
+													// $lebar = number_format($dataLebar);
+													// ($row->Panjang == '') ? $dataPanjang = 0 : $dataPanjang = $row->Panjang;
+													// $panjang = number_format($dataPanjang);
 													// $konstuksi = $this->get_konstruksi($row->Konstruksi);
 													//get_konstruksi
 													// $noReg=substr($row->NomorReg,18);
-													$temp=explode('.',$row->NomorReg);
-													$noReg=end($temp);
+													// $temp=explode('.',$row->NomorReg);
+													// $noReg=end($temp);
+													$length = strlen($row->noRegister);
+												   if($length == 1) $noReg = sprintf("%04s", $row->noRegister);
+												   if($length == 2) $noReg = sprintf("%03s", $row->noRegister);
+												   if($length == 3) $noReg = sprintf("%02s", $row->noRegister);
+												   if($length == 4) $noReg = $row->noRegister;
 													$kondisi= $row->kondisi;
 													if ($kondisi == '1') {
 														$ketKondisi = "Baik";
@@ -2768,18 +8103,24 @@ class report_engine extends core_api_report {
 													}else{
 														$ketKondisi = "";
 													} 	
+													if($row->TglDokumen == ''){
+														$tgl = ''; 
+													}else{
+														list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
+														$tgl = "$tanggal/$bulan/$tahun";
+													}
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
 																	<td style=\"width: 106px;\">$row->Uraian</td>
 																	<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 50px; text-align: center;\">$row->noRegister</td>
+																	<td style=\"width: 50px; text-align: center;\">$noReg</td>
 																	<td style=\"width: 66px;  \">$row->Konstruksi</td>
-																	<td style=\"width: 50px; text-align: right;\">$dataPanjang</td>
-																	<td style=\"width: 50px; text-align: right;\">$dataLebar</td>
+																	<td style=\"width: 50px; text-align: right;\">$panjang</td>
+																	<td style=\"width: 50px; text-align: right;\">$lebar</td>
 																	<td style=\"width: 50px; text-align: right;\">$luas</td>
 																	<td style=\"width: 90px; \">$row->Alamat</td>
-																	<td style=\"width: 61px;  \">$tanggal/$bulan/$tahun</td>
+																	<td style=\"width: 61px;  \">$tgl</td>
 																	<td style=\"width: 79px; \">$row->NoDokumen</td>
 																	<td style=\"width: 66px;  \">$row->StatusTanah</td>
 																	<td style=\"width: 66px; \"></td>
@@ -2802,13 +8143,9 @@ class report_engine extends core_api_report {
 													$printperolehanTotal=  number_format($perolehanTotal);
 													$tabletotal="
 														<tr>
-															<td style=\"text-align: center;\" colspan=\"5\">Total</td>
-															<td style=\"text-align: right;\">$printpanjang</td>
-															<td colspan=\"1\"></td>
-															<td style=\"text-align: right;\">$printluas</td>
-															<td colspan=\"6\"></td>
+															<td style=\"text-align: center;\" colspan=\"14\">Total</td>
 															<td style=\"text-align: right;\">$printperolehanTotal</td>
-															<td colspan=\"2\"></td>
+															<td colspan=\"2\">&nbsp;</td>
 														</tr></table>";
                                            
 											   $foot="<table border=\"0\">
@@ -2922,11 +8259,9 @@ class report_engine extends core_api_report {
 											 ";
 
                                      
-									//$no=1;
 									$skpdeh="";
-									$thn="";
 									$no=1;
-									//$skpdeh="";
+									$thn = "";
 									$status_print=0;
 									$luasTotal=0;
 									$panjangTotal=0;
@@ -2938,7 +8273,7 @@ class report_engine extends core_api_report {
 												$body="";
 												$skpdeh = $row->kodeSatker;
 												$satker_id=$row->kodeSatker;
-												$thn=$row->Tahun;
+												$thn = $row->Tahun;
 												//==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -2962,11 +8297,11 @@ class report_engine extends core_api_report {
 											   $UnitOrganisasi = $detailSatker[4][1];
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
-											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+											    $noKodeLokasi=substr($row->kodeLokasi,0,8);
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
+											    	
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
                 if($nip_pengurus!="")
@@ -3021,76 +8356,76 @@ class report_engine extends core_api_report {
                                              <br />
                                              <br />
                                             <table border=\"0\" width=\"100%\" >
-                                                  <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
+											  <tr align=\"left\" >
+												   <td >
+														<p>Provinsi</p>
+												   </td>
+												   <td width=\"65%\">
+														<p>:&nbsp;$this->NAMA_PROVINSI</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Kabupaten/Kota</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Bidang</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$Bidang</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$UnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											   <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Sub Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$SubUnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>UPB</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$kodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  
-                                                  </table>
+													   <p>:&nbsp;$UPB</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr align=\"left\">
+												   <td width=\"20%\">
+														<p>NO. KODE LOKASI</p> 
+												   </td>
+												   <td width=\"60%\">
+													<p>:&nbsp;$kodeLokasi</p>
+													</td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  
+											  </table>
                                                   <br />
                                                   <br />
 												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
@@ -3155,16 +8490,14 @@ class report_engine extends core_api_report {
 											}
                                                        
 											
-                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
 												
-												$printjumlahTotal= number_format($jumlahTotal);
-												$printperolehanTotal=  number_format($perolehanTotal);	
+												// $printjumlahTotal= number_format($jumlahTotal);
+												$printperolehanTotal=  number_format($perolehanTotal,2,",",".");	
 												
 														$tabletotal="
 															<tr>
-																<td style=\"text-align: center;\" colspan=\"11\">Total</td>
-																<td style=\"text-align: center;\">$printjumlahTotal</td>
-																<td colspan=\"2\"></td>
+																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
 																<td style=\"text-align: right;\">$printperolehanTotal</td>
 																<td ></td>
 															</tr></table>";	
@@ -3181,17 +8514,17 @@ class report_engine extends core_api_report {
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -3252,6 +8585,7 @@ class report_engine extends core_api_report {
                                              $skpdeh = $row->kodeSatker;
 												
                                              $satker_id=$row->kodeSatker;
+											 $thn =$row->Tahun;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -3275,11 +8609,13 @@ class report_engine extends core_api_report {
 											   $UnitOrganisasi = $detailSatker[4][1];
 											   $SubUnitOrganisasi = $detailSatker[4][2];
 											   $UPB = $detailSatker[4][3];
-											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
-												$thnLokasi= substr($row->Tahun,2,4);
-												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+											    $noKodeLokasi=substr($row->kodeLokasi,0,8);
+											$thnLokasi= substr($row->Tahun,2,4);
+											$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
+											   // if($row->Tahun){
+													// $tahun=substr($row->Tahun,2,2);
+												// }	
 												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
 												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
                                                   
@@ -3300,76 +8636,76 @@ class report_engine extends core_api_report {
                                              <br />
                                              <br />
                                             <table border=\"0\" width=\"100%\" >
-                                                  <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
+											  <tr align=\"left\" >
+												   <td >
+														<p>Provinsi</p>
+												   </td>
+												   <td width=\"65%\">
+														<p>:&nbsp;$this->NAMA_PROVINSI</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Kabupaten/Kota</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Bidang</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$Bidang</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$UnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											   <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>Sub Unit Organisasi</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
+													   <p>:&nbsp;$SubUnitOrganisasi</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr>
+												   <td style=\"font-weight: bold; width=20%\">
+														<p>UPB</p>
+												   </td>
+												   <td width=\"60%\">
 
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$kodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  
-                                                  </table>
+													   <p>:&nbsp;$UPB</p>
+												   </td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  <tr align=\"left\">
+												   <td width=\"20%\">
+														<p>NO. KODE LOKASI</p> 
+												   </td>
+												   <td width=\"60%\">
+													<p>:&nbsp;$kodeLokasi</p>
+													</td>
+												   <td width=\"20%\">&nbsp;</td>
+											  </tr>
+											  
+											  </table>
                                                   <br />
                                                   <br />
 												  <table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
@@ -3439,50 +8775,72 @@ class report_engine extends core_api_report {
 
                                              }
                                              //udah dites
-													$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-													$perolehan = number_format($row->NilaiPerolehan);
-													$jumlahTotal = $jumlahTotal + $row->Kuantitas;
-													$jumlah = number_format($row->Kuantitas);
-													// $noReg=substr($row->NomorReg,18);
-													$temp=explode('.',$row->NomorReg);
-													$noReg=end($temp);
-                                                            $body.="
+													
+													// $jumlahTotal = $jumlahTotal + $row->Kuantitas;
+													// $jumlah = number_format($row->Kuantitas);
+													
+													$noReg=$row->noRegister;
+													$split = explode('-',$row->noRegister);
+													if (count($split) == 1){
+														$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+														$nilaiPerolehan= $row->NilaiPerolehan;
+													}else{
+														$awal = $split[0];
+														$akhir = end($split);
+														$hasil = (intval($akhir) - intval($awal)) + 1;
+														$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+														$nilaiPerolehan= $nilaiPrlhn;
+														$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+													}
+													
+													// $perolehan = number_format($row->NilaiPerolehan,2,",",".");
+													
+													
+													$ex = explode('.',$row->Kode);
+													$ceckKode = $ex[0].".".$ex[1];
+													if($ceckKode == '05.17'){
+														$judulBuku =  $row->Judul;
+														$judulHewan = '';
+													}elseif($ceckKode == '05.19'){
+														$judulBuku =  '';
+														$judulHewan = $row->Judul;
+													}
+													$mix = $row->Ukuran."&nbsp;".$row->Material;
+													
+													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+													       $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
 																	<td style=\"width: 150px; \">$row->Uraian</td>
 																	<td style=\"width: 79px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 60px; text-align: center;\">$row->noRegister</td>
-																	<td style=\"width: 150px;  \">$row->Judul</td>
+																	<td style=\"width: 60px; text-align: center;\">$noReg</td>
+																	<td style=\"width: 150px;  \">$judulBuku</td>
 																	<td style=\"width: 70px;  \">$row->Spesifikasi</td>
 																	<td style=\"width: 70px;  \">$row->AsalDaerah</td>
 																	<td style=\"width: 69px;  \">$row->Pengarang</td>
 																	<td style=\"width: 80px; \">$row->Material</td>
-																	<td style=\"width: 69px;  \"></td>
-																	<td style=\"width: 70px; \">$row->Ukuran</td>
-																	<td style=\"width: 51px; text-align: center;\">$row->Kuantitas</td>
+																	<td style=\"width: 69px;  \">$judulHewan</td>
+																	<td style=\"width: 70px; \">$mix</td>
+																	<td style=\"width: 51px; text-align: center;\">$hasil</td>
 																	<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
 																	<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
-																	<td style=\"width: 80px; text-align: right;\">$perolehan</td>
+																	<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
 																	
 																	<td style=\"width: 60px;\">$row->Info</td>
 																</tr>";
                                                             
-                                                            $no++;
-                                                            
-                                                            //coba
+                                                            $no++;				
                                                             
                                  
                                              }
-												    $printjumlahTotal= number_format($jumlahTotal);
-													$printperolehanTotal=  number_format($perolehanTotal);	
+												    // $printjumlahTotal= number_format($jumlahTotal);
+													$printperolehanTotal=  number_format($perolehanTotal,2,",",".");	
 												
 													$tabletotal="
-															<tr align=\"center\">
-																<td style=\"text-align: center;\" colspan=\"11\">Total</td>
-																<td style=\"text-align: center;\">$printjumlahTotal</td>
-																<td colspan=\"2\"></td>
+															<tr>
+																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
 																<td style=\"text-align: right;\">$printperolehanTotal</td>
-																<td></td>
+																<td ></td>
 															</tr></table>";
                                            
 
@@ -3496,17 +8854,17 @@ class report_engine extends core_api_report {
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -3562,6 +8920,7 @@ class report_engine extends core_api_report {
           }
      }        
 
+//KIB-F (ok)	 
 public function retrieve_html_kib_f($dataArr,$gambar){
 			 if($dataArr!="")
           {
@@ -3773,38 +9132,31 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px;font-weight: bold; text-align: center;\"><br><br>No</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 120px;font-weight: bold; text-align: center;\"><br><br>Nama Barang /
 																															  <br>
-																															  Jenis Barang /<br>
-																															  Pekerjaan</td>
-													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Nomor</td>
+																															  Jenis Barang</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Bangunan<br>
 																															  (P,SP,D)</td>
 													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Konstruksi</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px;font-weight: bold; text-align: center;\"><br><br>Luas<br>(m2)</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Letak / Lokasi<br>
 																															  Alamat</td>
-													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>RT/RW</td>
 													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Dokumen Gedung</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Tgl Bulan<br>
-																															  Thn Mutasi</td>
+																															  Thn Mulai</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Status <br>
 																															  Tanah</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Nomor Kode <br>
 																															  
 																															  Tanah</td>
-													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Tahun Pemebelian<br>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Asal Usul<br>
 																															  Pembayaran</td>
-													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Nilai KOntrak (Rp.)<br>
+													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Nilai Kontrak (Rp.)<br>
 																															 </td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Ket</td>
 												</tr>
 												<tr>
 													
-													<td style=\"font-weight: bold; ; text-align: center;\">Kode<br>Barang</td>
-													<td style=\"font-weight: bold; ; text-align: center;\">Register</td>
 													<td style=\"font-weight: bold; ; text-align: center;\">Bertingkat/<br>Tidak</td>
 													<td style=\"font-weight: bold; text-align: center;\">Beton/<br>Tidak</td>
-																								   
 													<td style=\"font-weight: bold; text-align: center;\">Tanggal</td>
 													<td style=\"font-weight: bold; text-align: center;\">Nomor</td>
 													
@@ -3825,34 +9177,27 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 													  <td style=\"text-align: center; font-weight: bold;\">13</td>
 													  <td style=\"text-align: center; font-weight: bold;\">14</td>
 													  <td style=\"text-align: center; font-weight: bold;\">15</td>
-													  <td style=\"text-align: center; font-weight: bold;\">16</td>
-													  <td style=\"text-align: center; font-weight: bold;\">17</td>
-													  <td style=\"text-align: center; font-weight: bold;\">18</td>
-													  <td style=\"text-align: center; font-weight: bold;\">19</td>
 												</tr>
 											  </thead>";
 																					  
 											}
                                                        
 											
-                                             if ($skpdeh != $row->NamaSatker && $thn != $row->Tahun && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
 												
-												$printluas=  number_format($luasTotal);
-													 $printperolehanTotal=  number_format($perolehanTotal);
+												 // $printluas=  number_format($luasTotal);
+													 $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 													 $tabletotal="
 														<tr align=\"center\">
-															<td colspan=\"7\">Total</td>
-															<td>$printluas</td>
-															<td colspan=\"9\"></td>
+															<td colspan=\"13\">Jumlah Harga</td>
 															<td>$printperolehanTotal</td>
 															<td></td>
 														</tr></table>";
-												
-												
-													//echo $printluasLantai;
-											    $foot="<table border=\"0\">
+                                           
+
+											   $foot="<table border=\"0\">
 														<tr>
-															<td colspan=\"19\">&nbsp;</td>
+															<td colspan=\"15\">&nbsp;</td>
 														</tr>
 													</table>";  
 													
@@ -3860,17 +9205,17 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -4058,25 +9403,21 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px;font-weight: bold; text-align: center;\"><br><br>No</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 120px;font-weight: bold; text-align: center;\"><br><br>Nama Barang /
 																															  <br>
-																															  Jenis Barang /<br>
-																															  Pekerjaan</td>
-													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Nomor</td>
+																															  Jenis Barang</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Bangunan<br>
 																															  (P,SP,D)</td>
 													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Konstruksi</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px;font-weight: bold; text-align: center;\"><br><br>Luas<br>(m2)</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Letak / Lokasi<br>
 																															  Alamat</td>
-													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>RT/RW</td>
 													<td colspan=\"2\" rowspan=\"1\" style=\"font-weight: bold; text-align: center;\">Dokumen Gedung</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Tgl Bulan<br>
-																															  Thn Mutasi</td>
+																															  Thn Mulai</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Status <br>
 																															  Tanah</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"width: 90px;font-weight: bold; text-align: center;\"><br><br>Nomor Kode <br>
 																															  
 																															  Tanah</td>
-													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Tahun Pemebelian<br>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Asal Usul<br>
 																															  Pembayaran</td>
 													<td colspan=\"1\" rowspan=\"2\" style=\"font-weight: bold; text-align: center;\"><br><br>Nilai KOntrak (Rp.)<br>
@@ -4085,11 +9426,8 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 												</tr>
 												<tr>
 													
-													<td style=\"font-weight: bold; ; text-align: center;\">Kode<br>Barang</td>
-													<td style=\"font-weight: bold; ; text-align: center;\">Register</td>
 													<td style=\"font-weight: bold; ; text-align: center;\">Bertingkat/<br>Tidak</td>
 													<td style=\"font-weight: bold; text-align: center;\">Beton/<br>Tidak</td>
-																								   
 													<td style=\"font-weight: bold; text-align: center;\">Tanggal</td>
 													<td style=\"font-weight: bold; text-align: center;\">Nomor</td>
 													
@@ -4108,12 +9446,8 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 													  <td style=\"text-align: center; font-weight: bold;\">11</td>
 													  <td style=\"text-align: center; font-weight: bold;\">12</td>
 													  <td style=\"text-align: center; font-weight: bold;\">13</td>
-													  <td style=\"text-align: center; font-weight: bold;\">14</td>
+													   <td style=\"text-align: center; font-weight: bold;\">14</td>
 													  <td style=\"text-align: center; font-weight: bold;\">15</td>
-													  <td style=\"text-align: center; font-weight: bold;\">16</td>
-													  <td style=\"text-align: center; font-weight: bold;\">17</td>
-													  <td style=\"text-align: center; font-weight: bold;\">18</td>
-													  <td style=\"text-align: center; font-weight: bold;\">19</td>
 												</tr>
 											  </thead>";
                                                  //udah dites disini footer 
@@ -4130,8 +9464,8 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 													$beton = $this->get_beton($row->Beton);
 													//$bertingkat = get_bertingkat($row->JumlahLantai);
 													//$beton = get_beton($row->Beton);
-													$status_tanah = $this->get_status_tanah($row->StatusTanah);
-													$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
+													// $status_tanah = $this->get_status_tanah($row->StatusTanah);
+													// $konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
 													
 													$luasTotal = $luasTotal + $row->LuasLantai;
 													$luas = number_format($row->LuasLantai);
@@ -4139,27 +9473,29 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 													$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
 													$perolehan = number_format($row->NilaiPerolehan);
 													// $noReg=substr($row->NomorReg,18);
-													$temp=explode('.',$row->NomorReg);
-													$noReg=end($temp);
+													// $temp=explode('.',$row->NomorReg);
+													// $noReg=end($temp);
+													if($row->TglSertifikat == ''){
+														$tgl = ''; 
+													}else{
+														list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
+														$tgl = "$tanggal/$bulan/$tahun";
+													}
                                                             $body.="
 																<tr align=\"center\">
 																	<td style=\"width: 30px;font-weight: \">$no</td>
-																	<td style=\"width: 120px;font-weight: \">$row->NamaAset</td>
-																	<td style=\"width: ; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: ; text-align: center;\">$row->noRegister</td>
+																	<td style=\"width: 120px;font-weight: \">$row->Uraian</td>
 																	<td style=\"width: 79px;font-weight: \">$row->Konstruksi</td>
 																	<td style=\"width: 80px;font-weight: \">$bertingkat</td>
 																	<td style=\"width: 78px; font-weight: \">$beton</td>
 																	<td style=\"width: 51px; font-weight: \">$luas</td>
 																	<td style=\"width: 90px; font-weight: \">$row->Alamat</td>
-																	<td style=\"width: 90px; font-weight: \">$row->RTRW</td>
-																	<td style=\"width: 79px; font-weight: \">$row->TglSertifikat</td>
+																	<td style=\"width: 79px; font-weight: \">$tgl</td>
 																	<td style=\"width: 80px;font-weight: \">$row->NoSertifikat</td>
-																	<td style=\"width: 78px; font-weight: \"></td>
-																	<td style=\"width: 80px;font-weight: \">$status_tanah</td>
+																	<td style=\"width: 78px; font-weight: \">$tgl</td>
+																	<td style=\"width: 80px;font-weight: \">$row->StatusTanah</td>
 																	<td style=\"width: 90px; font-weight: \"></td>
-																	<td style=\"width: 90px; font-weight: \">$row->Tahun</td>
-																	<td style=\"width: 79px;font-weight: \">$row->SumberDana</td>
+																	<td style=\"width: 79px;font-weight: \">$row->AsalUsul</td>
 																	<td style=\"width: 80px;font-weight: \">$perolehan</td>
 																	<td style=\"width: 90px;font-weight: \">$row->Info</td>
 																</tr>";
@@ -4170,13 +9506,11 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                                             
                                  
                                              }
-												    $printluas=  number_format($luasTotal);
-													 $printperolehanTotal=  number_format($perolehanTotal);
+												    // $printluas=  number_format($luasTotal);
+													 $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 													 $tabletotal="
 														<tr align=\"center\">
-															<td colspan=\"7\">Total</td>
-															<td>$printluas</td>
-															<td colspan=\"9\"></td>
+															<td colspan=\"13\">Jumlah Harga</td>
 															<td>$printperolehanTotal</td>
 															<td></td>
 														</tr></table>";
@@ -4184,7 +9518,7 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 
 											   $foot="<table border=\"0\">
 														<tr>
-															<td colspan=\"19\">&nbsp;</td>
+															<td colspan=\"15\">&nbsp;</td>
 														</tr>
 													</table>"; 
 													
@@ -4192,17 +9526,17 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang Sekretaris DPRD</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
@@ -4258,82 +9592,84 @@ public function retrieve_html_kib_f($dataArr,$gambar){
           }
      }        
 
-//
-//DAFTAR PENGADAAN BMD (ok)
-    public function retrieve_html_daftar_pengadaan_bmd($dataArr,$gambar){
-			 if($dataArr!="")
-          {
-			  include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
 
-                                     
-									//$no=1;
-									$no=1;
-									$skpdeh="NULL";
-									$status_print=0;
-									$barangTotal=0;
-									$hargasatuanTotal;
-									$perolehanTotal=0;
-							
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "NULL" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												//==add new==//
-											   $detailSatker=$this->get_satker($satker_id);
-											   $NoBidang = $detailSatker[0];
-											   $NoUnitOrganisasi = $detailSatker[1];
-											   $NoSubUnitOrganisasi = $detailSatker[2];
-											   $NoUPB = $detailSatker[3];
-											   
-											   if($NoBidang !=""){
-													$paramKodeLokasi = $NoBidang;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
-													$paramKodeLokasi = $NoUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-											   }
-											   $Bidang = $detailSatker[4][0];
-											   $UnitOrganisasi = $detailSatker[4][1];
-											   $SubUnitOrganisasi = $detailSatker[4][2];
-											   $UPB = $detailSatker[4][3];
-											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
-											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+//BUKU INVENTARIS INTRA (ok) 
+    public function  retrieve_html_bukuinventaris_intra($dataArr,$gambar){
+         
+if($dataArr!="")
+{
+include ('../../../function/tanggal/tanggal.php');
+$head = "
+        <html>
+        <head>
+                <style>
+                        table
+                        {
+                                font-size:10pt;
+                                font-family:Arial;
+                                border-collapse: collapse;											
+                                border-spacing:0;
+                        }
+                        h3
+                        {
+                                font-family:Arial;	
+                                font-size:13pt;
+                                color:#000;
+
+                        }
+                        p
+                        {
+                                font-size:10pt;
+                                font-family:Arial;
+                                font-weight:bold;
+                        }
+                        </style>
+                </head>
+                    ";
+
+//$nno=1;
+$no=1;
+$skpdeh="";
+$thn="";
+$status_print=0;
+$barangTotal=0;
+//$panjangTotal=0;
+$perolehanTotal=0;
+				foreach ($dataArr as $row)
+				{
+					if ($skpdeh == "" && $no==1){
+                        $body="";
+                        $skpdeh = $row->kodeSatker;
+                        $satker_id=$row->kodeSatker;
+						//==add new==//
+					   $detailSatker=$this->get_satker($satker_id);
+					   $NoBidang = $detailSatker[0];
+					   $NoUnitOrganisasi = $detailSatker[1];
+					   $NoSubUnitOrganisasi = $detailSatker[2];
+					   $NoUPB = $detailSatker[3];
+					   
+					   if($NoBidang !=""){
+							$paramKodeLokasi = $NoBidang;
+					   }
+					   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+							$paramKodeLokasi = $NoUnitOrganisasi;
+					   }
+					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+					   }
+					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+					   }
+					   $Bidang = $detailSatker[4][0];
+					   $UnitOrganisasi = $detailSatker[4][1];
+					   $SubUnitOrganisasi = $detailSatker[4][2];
+					   $UPB = $detailSatker[4][3];
+					   $noReg=substr($row->NomorReg,0,17);
+					   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+						$thnLokasi= substr($row->Tahun,2,4);
+						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+					   //==end new==//
+                        list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
                 if($nip_pengurus!="")
                 {
@@ -4370,192 +9706,491 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                 {
                     $nama_jabatan_pengurus_fix='........................................';
                 }
-												    list($tahun, $bulan, $tanggal)= explode('-', $row->TglKontrak);
-												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-														   $TglKontrak = "-";
-														   $tahun="-";
-														   $bulan="-";
-														   $tanggal="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglKontrak = "";
-															 
-														}
-														$row->TglKontrak = "$tanggal/$bulan/$tahun";
-												   }
-												   
-												   list($tahun_1, $bulan_1, $tanggal_1)= explode('-', $row->TglSP2D);
-												   if ($tahun_1 =='0000' && $bulan_1 == '00' && $tanggal_1 ='00'){
-														   $TglSP2D = "-";
-														   $tahun_1="-";
-														   $bulan_1="-";
-														   $tanggal_1="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglSP2D = "";
-															 
-														}
-														$row->TglSP2D = "$tanggal_1/$bulan_1/$tahun_1";
-												   }
+                        
+
+
+$body="
+<body>
+      <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+        <thead>
+            <tr>
+                 <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                 <td style=\"width: 90%; text-align: center;\">
+                    <h3>BUKU INVENTARIS ASET</h3>
+                </td>
+            </tr>
+        </thead>
+        </table>
+        <br />
+        <br />
+        <table border=\"0\" width=\"100%\">
+            <tr align=\"left\" >
+			   <td >
+					<p>PROVINSI</p>
+			   </td>
+			   <td width=\"65%\">
+					<p>:&nbsp;$this->NAMA_PROVINSI</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>KABUPATEN/KOTA</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>BIDANG</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$Bidang</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		   <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>SUB UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$SubUnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UPB</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UPB</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr align=\"left\">
+			   <td width=\"20%\">
+					<p>NO. KODE LOKASI</p> 
+			   </td>
+			   <td width=\"60%\">
+					<p>:&nbsp;$kodeLokasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+            
+        </table>
+          <br />
+          <br />
+
+        <table  style=\"width: 100%; height: 330px; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+        <thead>
+            <tr>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Tahun Perolehan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran Barang / Konstruksi (P,S,D)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
+                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
+            </tr>
+            <tr align=\"center\"></tr>
+            <tr>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 47px;\">No Urut</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 83px;\">Kode Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 64px;\">Register</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 118px;\">Nama/Jenis Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 45px;\">Merk / Type</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 120px;\">No.Sertifikat<br>No. pabrik<br>No.Chasis Mesin</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Harga<br>(ribuan Rp)</td>
+            </tr>
+            <tr>
+                <td style=\"text-align:center; font-weight: bold; width: 47px;\">1</td>
+                <td style=\"text-align:center; font-weight: bold; width: 83px;\">2</td>
+                <td style=\"text-align:center; font-weight: bold; width: 64px;\">3</td>
+                <td style=\"text-align:center; font-weight: bold; width: 118px;\">4</td>
+                <td style=\"text-align:center; font-weight: bold; width: 45px;\">5</td>
+                <td style=\"text-align:center; font-weight: bold; width: 120px;\">6</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">7</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">8</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">11</td>
+                <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
+                <td style=\"text-align:center; font-weight: bold;\">13</td>
+                <td style=\"text-align:center; font-weight: bold;\">14</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
+            </tr></thead>";
+																					  
+}
+//====== cek 1                                                       
+//uda dites footer disini
+if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+// $printbarang=  number_format($barangTotal);
+                        //$printpanjang= number_format($panjangTotal);
+                        $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                        $tabletotal="
+						<tr>
+							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
+							<td style=\"text-align: right;\">$printperolehanTotal</td>
+                            <td>&nbsp;</td>
+						</tr></table>"; 
+
+$foot="<table border=\"0\">
+		<tr>
+			<td colspan=\"14\">&nbsp;</td>
+		</tr>
+	</table>"; 
+	
+$footer ="	
+	 <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+		  </tr>
+		  
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+		  </tr>
+		  <tr>
+			   <td colspan=\"11\" style=\"height: 80px\"></td>
+		  </tr>
+		  
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+		  </tr>
+			   <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+		  </tr>
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+		  </tr>
+
+	 </table>";
+	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+	   $footer.="
+	 </body>
+</html>";       
+                                                //udah dites footer
+// cek 2
+			    $barangTotal=0;
+						//$panjangTotal=0;
+			    $perolehanTotal=0;
+			    $no=1;
+
+				if($status_print==0)
+					$html[]=$head.$body.$tabletotal.$foot.$footer;
+				else
+				$html[]=$body.$tabletotal.$foot.$footer;
+				$skpdeh = $row->kodeSatker;
+
+				$satker_id=$row->kodeSatker;
+				//==add new==//
+			   $detailSatker=$this->get_satker($satker_id);
+			   $NoBidang = $detailSatker[0];
+			   $NoUnitOrganisasi = $detailSatker[1];
+			   $NoSubUnitOrganisasi = $detailSatker[2];
+			   $NoUPB = $detailSatker[3];
+			   
+			   if($NoBidang !=""){
+					$paramKodeLokasi = $NoBidang;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+					$paramKodeLokasi = $NoUnitOrganisasi;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+			   }
+			   $Bidang = $detailSatker[4][0];
+			   $UnitOrganisasi = $detailSatker[4][1];
+			   $SubUnitOrganisasi = $detailSatker[4][2];
+			   $UPB = $detailSatker[4][3];
+			   $noReg=substr($row->NomorReg,0,17);
+			   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+				$thnLokasi= substr($row->Tahun,2,4);
+				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+					   
+			   //==end new==//
+                list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+				 
+					
+
+
+        $body="";     
+        $body.="
+		<body>
+        <table style=\"text-align: left; width: 100%;\" border=\"0\"cellpadding=\"2\" cellspacing=\"2\">
+        <thead>
+            <tr>
+                 <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                 <td style=\"width: 90%; text-align: center;\">
+                    <h3>BUKU INVENTARIS ASET</h3>
+                </td>
+            </tr>
+        </thead>
+        </table>
+        <br />
+        <br />
+        <table border=\"0\" width=\"100%\">
+            <tr align=\"left\" >
+			   <td >
+					<p>PROVINSI</p>
+			   </td>
+			   <td width=\"65%\">
+					<p>:&nbsp;$this->NAMA_PROVINSI</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>KABUPATEN/KOTA</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>BIDANG</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$Bidang</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		   <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>SUB UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$SubUnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UPB</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UPB</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr align=\"left\">
+			   <td width=\"20%\">
+					<p>NO. KODE LOKASI</p> 
+			   </td>
+			   <td width=\"60%\">
+					<p>:&nbsp;$kodeLokasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+            
+        </table>
+          <br />
+          <br />
+
+        <table  style=\"width: 100%; height: 330px; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+        <thead>
+            <tr>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Tahun Perolehan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran Barang / Konstruksi (P,S,D)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
+                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
+            </tr>
+            <tr align=\"center\"></tr>
+            <tr>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 47px;\">No Urut</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 83px;\">Kode Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 64px;\">Register</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 118px;\">Nama/Jenis Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 45px;\">Merk / Type</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 120px;\">No.Sertifikat<br>No. pabrik<br>No.Chasis Mesin</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Harga<br>(ribuan Rp)</td>
+            </tr>
+            <tr>
+                <td style=\"text-align:center; font-weight: bold; width: 47px;\">1</td>
+                <td style=\"text-align:center; font-weight: bold; width: 83px;\">2</td>
+                <td style=\"text-align:center; font-weight: bold; width: 64px;\">3</td>
+                <td style=\"text-align:center; font-weight: bold; width: 118px;\">4</td>
+                <td style=\"text-align:center; font-weight: bold; width: 45px;\">5</td>
+                <td style=\"text-align:center; font-weight: bold; width: 120px;\">6</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">7</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">8</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">11</td>
+                <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
+                <td style=\"text-align:center; font-weight: bold;\">13</td>
+                <td style=\"text-align:center; font-weight: bold;\">14</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
+            </tr></thead>";
+                                                 //udah dites disini footer 
+		$skpdeh = $row->kodeSatker;
+        $status_print++;
+
+          }
+                                             //udah dites
+					$barangTotal = $barangTotal + $row->Kuantitas;
+					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
+					$perolehan = number_format($row->NilaiPerolehan);
+					$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
                                         
-                                        $body="
-											<body>
-                                             <table style=\"width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-
-                                                  <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-                                                       <td style=\"width: 90%; text-align: center;\">
-                                                             <h3>DAFTAR PENGADAAN BARANG</h3>
-															 
-                                                       </td>
-                                                  </tr>
-
-                                             </table>
-                                             <br />
-                                             <br />
-                                            <table border=\"0\" width=\"100%\" >
-                                                  <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  
-                                                  </table>
-                                                  <br />
-                                                  <br />
-												  <table style=\"width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-													<thead>
-													<tr>
-														<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px; text-align:center; font-weight: bold;\">No</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"width: 180px;text-align:center; font-weight: bold;\">Jenis Barang yang Dibeli</td>
-														<td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">SPK/Perjanjian/Kontrak</td>
-														<td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">DPA/SPM/Kwitansi</td>
-														<td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Dipergunakan<br>pada Unit</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Keterangan</td>
-													</tr>
-													<tr>
-														<td style=\"text-align:center; font-weight: bold;\">Tanggal</td>
-														<td style=\"text-align:center; font-weight: bold;\">Nomor</td>
-														<td style=\"text-align:center; font-weight: bold;\">Tanggal</td>
-														<td style=\"text-align:center; font-weight: bold;\">Nomor</td>
-														<td style=\"text-align:center; font-weight: bold;\">Banyak</td>
-														<td style=\"text-align:center; font-weight: bold;\">Harga Satuan (ribuan Rp)</td>
-														<td style=\"text-align:center; font-weight: bold;\">Jumlah Harga (ribuan Rp)</td>
-													</tr>
-													<tr>
-														<td style=\"text-align:center; font-weight: bold;\">1</td>
-														<td style=\"text-align:center; font-weight: bold;\">2</td>
-														<td style=\"text-align:center; font-weight: bold;\">3</td>
-														<td style=\"text-align:center; font-weight: bold;\">4</td>
-														<td style=\"text-align:center; font-weight: bold;\">5</td>
-														<td style=\"text-align:center; font-weight: bold;\">6</td>
-														<td style=\"text-align:center; font-weight: bold;\">7</td>
-														<td style=\"text-align:center; font-weight: bold;\">8</td>
-														<td style=\"text-align:center; font-weight: bold;\">9</td>
-														<td style=\"text-align:center; font-weight: bold;\">10</td>
-														<td style=\"text-align:center; font-weight: bold;\">11</td>
-													</tr>
-												  </thead>";
-													
-																														  
-											}
-                                                       
-											
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-											         $printbarang=  number_format($barangTotal);
-                                                     $printhargasatuan=  number_format($hargasatuanTotal);
-                                                     $printperolehanTotal=  number_format($perolehanTotal);
-                                                     $tabletotal="
-															<tr>
-																<td colspan=\"6\" style=\"text-align:center;\">TOTAL</td>
-																<td style=\"text-align:center;\">$printbarang</td>
-																<td style=\"text-align:right;\">$printhargasatuan</td>
-																<td style=\"text-align:right;\">$printperolehanTotal</td>
-																<td colspan=\"2\"></td>
-															</tr></table>";
-													//echo $printluasLantai;
-												
-												$foot="<table border=\"0\">
+                    ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
+                    ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
+                    ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;
+					$kondisi= $row->kondisi;
+					if ($kondisi == '1') {
+						$ketKondisi = "Baik";
+					}
+					elseif ($kondisi == '2') {
+						$ketKondisi = "Kurang Baik";
+					}
+					elseif ($kondisi == '3') {
+						$ketKondisi = "Rusak Berat";
+					}else{
+						$ketKondisi = "";
+					} 
+					$noReg=$row->noRegister;
+					$kuantitas=count($noReg);
+					$split = explode("-", $row->noRegister);
+					if (count($split) == 1){
+						// $hasil = 1;
+						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+						$kuantitas = 1;
+					}else{
+						$awal = $split[0];
+						$akhir = end($split);
+						$hasil = (intval($akhir) - intval($awal)) + 1;
+						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+						$kuantitas = $hasil;
+					}
+					
+					$body.="
+                                <tr>
+									<td style=\"width: 47px; text-align:center;\">$no</td>
+									<td style=\"width: 83px; text-align:center;\">$row->Kode</td>
+									<td style=\"width: 64px; text-align:center;\">$noReg</td>
+									<td style=\"width: 118px;\">$row->Uraian</td>
+									<td style=\"width: 45px; \">$row->Merk</td>
+									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
+									<td style=\"width: 56x; \">$row->Material</td>
+									<td style=\"width: 70px; \">$row->SumberAset</td>
+									<td style=\"width: 71px; text-align:center;\">$row->Tahun</td>
+									<td style=\"width: 71px;\">$konstruksi_tanah</td>
+									<td style=\"width: 60px; text-align:center;\">$row->Satuan</td>
+									<td style=\"width: 81px;\">$ketKondisi</td>
+									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
+									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnFix</td>
+									<td style=\"width: 60px;\">$row->Info</td>
+								</tr>";
+                                                            
+                             $no++;
+                           }
+                                            
+                    // $printbarang=  number_format($barangTotal);
+                    $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                    $tabletotal="
+						<tr>
+							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
+							<td style=\"text-align: right;\">$printperolehanTotal</td>
+                            <td>&nbsp;</td>
+						</tr></table>"; 
+						
+											  $foot="<table border=\"0\">
 														<tr>
-															<td colspan=\"10\">&nbsp;</td>
+															<td colspan=\"14\">&nbsp;</td>
 														</tr>
-													</table>"; 
-													
-                                               $footer ="	     
+													</table>"; 	
+
+											  $footer ="	     
+                                             <br />
+                                             <br />
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
@@ -4604,270 +10239,615 @@ public function retrieve_html_kib_f($dataArr,$gambar){
 											   $footer.="
                                              </body>
                                         </html>";      
-											
-											 //udah dites footer
-                                          
-											
-											 $barangTotal=0;
-                                             $hargasatuanTotal=0;
-											 $perolehanTotal=0;
-											 $no=1;		
-												
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
+                                        if($status_print==0){
+                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
+                                        }else{
                                              $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-											 //==add new==//
-											   $detailSatker=$this->get_satker($satker_id);
-											   $NoBidang = $detailSatker[0];
-											   $NoUnitOrganisasi = $detailSatker[1];
-											   $NoSubUnitOrganisasi = $detailSatker[2];
-											   $NoUPB = $detailSatker[3];
-											   
-											   if($NoBidang !=""){
-													$paramKodeLokasi = $NoBidang;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
-													$paramKodeLokasi = $NoUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-											   }
-											   $Bidang = $detailSatker[4][0];
-											   $UnitOrganisasi = $detailSatker[4][1];
-											   $SubUnitOrganisasi = $detailSatker[4][2];
-											   $UPB = $detailSatker[4][3];
-											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
-											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-                                                 
-                                                 list($tahun, $bulan, $tanggal)= explode('-', $row->TglKontrak);
-												   if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-														   $TglKontrak = "-";
-														   $tahun="-";
-														   $bulan="-";
-														   $tanggal="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglKontrak = "";
-															 
-														}
-														$row->TglKontrak = "$tanggal/$bulan/$tahun";
-												   }
-												   
-												   list($tahun_1, $bulan_1, $tanggal_1)= explode('-', $row->TglSP2D);
-												   if ($tahun_1 =='0000' && $bulan_1 == '00' && $tanggal_1 ='00'){
-														   $TglSP2D = "-";
-														   $tahun_1="-";
-														   $bulan_1="-";
-														   $tanggal_1="-";
-												   }else{
-														if ($tanggal !='' ){
-															 $row->TglSP2D = "";
-															 
-														}
-														$row->TglSP2D = "$tanggal_1/$bulan_1/$tahun_1";
-												   } 
-                                                  $body="";     
-                                                  $body.="
-                                               <body>
-                                             <table style=\" width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
-                                                  <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-                                                       <td style=\"width: 90%; text-align: center;\">
-                                                             <h3>DAFTAR PENGADAAN BARANG</h3>
-															 
-                                                       </td>
-                                                  </tr>
+                                           }
+              return $html;
+          }
+         
+     }
 
-                                             </table>
-                                             <br />
-                                             <br />
-                                            <table border=\"0\" width=\"100%\" >
-                                                  <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
+//BUKU INVENTARIS EKSTRA (ok) 
+ public function  retrieve_html_bukuinventaris_ekstra($dataArr,$gambar){
+         
+if($dataArr!="")
+{
+include ('../../../function/tanggal/tanggal.php');
+$head = "
+        <html>
+        <head>
+                <style>
+                        table
+                        {
+                                font-size:10pt;
+                                font-family:Arial;
+                                border-collapse: collapse;											
+                                border-spacing:0;
+                        }
+                        h3
+                        {
+                                font-family:Arial;	
+                                font-size:13pt;
+                                color:#000;
 
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
+                        }
+                        p
+                        {
+                                font-size:10pt;
+                                font-family:Arial;
+                                font-weight:bold;
+                        }
+                        </style>
+                </head>
+                    ";
 
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
+//$nno=1;
+$no=1;
+$skpdeh="";
+$thn="";
+$status_print=0;
+$barangTotal=0;
+//$panjangTotal=0;
+$perolehanTotal=0;
+				foreach ($dataArr as $row)
+				{
+					if ($skpdeh == "" && $no==1){
+                        $body="";
+                        $skpdeh = $row->kodeSatker;
+                        $satker_id=$row->kodeSatker;
+						//==add new==//
+					   $detailSatker=$this->get_satker($satker_id);
+					   $NoBidang = $detailSatker[0];
+					   $NoUnitOrganisasi = $detailSatker[1];
+					   $NoSubUnitOrganisasi = $detailSatker[2];
+					   $NoUPB = $detailSatker[3];
+					   
+					   if($NoBidang !=""){
+							$paramKodeLokasi = $NoBidang;
+					   }
+					   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+							$paramKodeLokasi = $NoUnitOrganisasi;
+					   }
+					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+					   }
+					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+					   }
+					   $Bidang = $detailSatker[4][0];
+					   $UnitOrganisasi = $detailSatker[4][1];
+					   $SubUnitOrganisasi = $detailSatker[4][2];
+					   $UPB = $detailSatker[4][3];
+					   $noReg=substr($row->NomorReg,0,17);
+					   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+						$thnLokasi= substr($row->Tahun,2,4);
+						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+					   //==end new==//
+                        list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                if($nip_pengurus!="")
+                {
+                    $nip_pengurus_fix=$nip_pengurus;
+                }
+                else
+                {
+                    $nip_pengurus_fix='........................................';
+                }
 
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
+                if($nip_pengguna!="")
+                {
+                    $nip_pengguna_fix=$nip_pengguna;
+                }
+                else
+                {
+                    $nip_pengguna_fix='........................................';
+                }
 
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
+                if($nama_jabatan_pengguna!="")
+                {
+                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+                }
+                else
+                {
+                    $nama_jabatan_pengguna_fix='........................................';
+                }
 
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  
-                                                  </table>
-                                                  <br />
-                                                  <br />
-												   <table style=\"width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-													<thead>
-													<tr>
-														<td colspan=\"1\" rowspan=\"2\" style=\"width: 30px; text-align:center; font-weight: bold;\">No</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"width: 180px; text-align:center; font-weight: bold;\">Jenis Barang yang Dibeli</td>
-														<td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">SPK/Perjanjian/Kontrak</td>
-														<td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">DPA/SPM/Kwitansi</td>
-														<td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Dipergunakan<br>pada Unit</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Keterangan</td>
-													</tr>
-													<tr>
-														<td style=\"text-align:center; font-weight: bold;\">Tanggal</td>
-														<td style=\"text-align:center; font-weight: bold;\">Nomor</td>
-														<td style=\"text-align:center; font-weight: bold;\">Tanggal</td>
-														<td style=\"text-align:center; font-weight: bold;\">Nomor</td>
-														<td style=\"text-align:center; font-weight: bold;\">Banyak</td>
-														<td style=\"text-align:center; font-weight: bold;\">Harga Satuan (ribuan Rp)</td>
-														<td style=\"text-align:center; font-weight: bold;\">Jumlah Harga (ribuan Rp)</td>
-													</tr>
-													<tr>
-														<td style=\"text-align:center; font-weight: bold;\">1</td>
-														<td style=\"text-align:center; font-weight: bold;\">2</td>
-														<td style=\"text-align:center; font-weight: bold;\">3</td>
-														<td style=\"text-align:center; font-weight: bold;\">4</td>
-														<td style=\"text-align:center; font-weight: bold;\">5</td>
-														<td style=\"text-align:center; font-weight: bold;\">6</td>
-														<td style=\"text-align:center; font-weight: bold;\">7</td>
-														<td style=\"text-align:center; font-weight: bold;\">8</td>
-														<td style=\"text-align:center; font-weight: bold;\">9</td>
-														<td style=\"text-align:center; font-weight: bold;\">10</td>
-														<td style=\"text-align:center; font-weight: bold;\">11</td>
-													</tr>
-												  </thead>";
+                if($nama_jabatan_pengurus!="")
+                {
+                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+                }
+                else
+                {
+                    $nama_jabatan_pengurus_fix='........................................';
+                }
+                        
+
+
+$body="
+<body>
+      <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+        <thead>
+            <tr>
+                 <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                 <td style=\"width: 90%; text-align: center;\">
+                    <h3>BUKU INVENTARIS NON ASET</h3>
+                </td>
+            </tr>
+        </thead>
+        </table>
+        <br />
+        <br />
+        <table border=\"0\" width=\"100%\">
+            <tr align=\"left\" >
+			   <td >
+					<p>PROVINSI</p>
+			   </td>
+			   <td width=\"65%\">
+					<p>:&nbsp;$this->NAMA_PROVINSI</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>KABUPATEN/KOTA</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>BIDANG</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$Bidang</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		   <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>SUB UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$SubUnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UPB</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UPB</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr align=\"left\">
+			   <td width=\"20%\">
+					<p>NO. KODE LOKASI</p> 
+			   </td>
+			   <td width=\"60%\">
+					<p>:&nbsp;$kodeLokasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+            
+        </table>
+          <br />
+          <br />
+
+        <table  style=\"width: 100%; height: 330px; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+        <thead>
+            <tr>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Tahun Perolehan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran Barang / Konstruksi (P,S,D)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
+                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
+            </tr>
+            <tr align=\"center\"></tr>
+            <tr>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 47px;\">No Urut</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 83px;\">Kode Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 64px;\">Register</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 118px;\">Nama/Jenis Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 45px;\">Merk / Type</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 120px;\">No.Sertifikat<br>No. pabrik<br>No.Chasis Mesin</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Harga<br>(ribuan Rp)</td>
+            </tr>
+            <tr>
+                <td style=\"text-align:center; font-weight: bold; width: 47px;\">1</td>
+                <td style=\"text-align:center; font-weight: bold; width: 83px;\">2</td>
+                <td style=\"text-align:center; font-weight: bold; width: 64px;\">3</td>
+                <td style=\"text-align:center; font-weight: bold; width: 118px;\">4</td>
+                <td style=\"text-align:center; font-weight: bold; width: 45px;\">5</td>
+                <td style=\"text-align:center; font-weight: bold; width: 120px;\">6</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">7</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">8</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">11</td>
+                <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
+                <td style=\"text-align:center; font-weight: bold;\">13</td>
+                <td style=\"text-align:center; font-weight: bold;\">14</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
+            </tr></thead>";
+																					  
+}
+//====== cek 1                                                       
+//uda dites footer disini
+if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+// $printbarang=  number_format($barangTotal);
+                        //$printpanjang= number_format($panjangTotal);
+                        $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                        $tabletotal="
+						<tr>
+							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
+							<td style=\"text-align: right;\">$printperolehanTotal</td>
+                            <td>&nbsp;</td>
+						</tr></table>"; 
+
+$foot="<table border=\"0\">
+		<tr>
+			<td colspan=\"14\">&nbsp;</td>
+		</tr>
+	</table>"; 
+	
+$footer ="	
+	 <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+		  </tr>
+		  
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+		  </tr>
+		  <tr>
+			   <td colspan=\"11\" style=\"height: 80px\"></td>
+		  </tr>
+		  
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+		  </tr>
+			   <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+		  </tr>
+		  <tr>
+			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td>&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+		  </tr>
+
+	 </table>";
+	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+	   $footer.="
+	 </body>
+</html>";       
+                                                //udah dites footer
+// cek 2
+			    $barangTotal=0;
+						//$panjangTotal=0;
+			    $perolehanTotal=0;
+			    $no=1;
+
+				if($status_print==0)
+					$html[]=$head.$body.$tabletotal.$foot.$footer;
+				else
+				$html[]=$body.$tabletotal.$foot.$footer;
+				$skpdeh = $row->kodeSatker;
+
+				$satker_id=$row->kodeSatker;
+				//==add new==//
+			   $detailSatker=$this->get_satker($satker_id);
+			   $NoBidang = $detailSatker[0];
+			   $NoUnitOrganisasi = $detailSatker[1];
+			   $NoSubUnitOrganisasi = $detailSatker[2];
+			   $NoUPB = $detailSatker[3];
+			   
+			   if($NoBidang !=""){
+					$paramKodeLokasi = $NoBidang;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+					$paramKodeLokasi = $NoUnitOrganisasi;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+			   }
+			   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+			   }
+			   $Bidang = $detailSatker[4][0];
+			   $UnitOrganisasi = $detailSatker[4][1];
+			   $SubUnitOrganisasi = $detailSatker[4][2];
+			   $UPB = $detailSatker[4][3];
+			   $noReg=substr($row->NomorReg,0,17);
+			   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+				$thnLokasi= substr($row->Tahun,2,4);
+				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+					   
+			   //==end new==//
+                list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+				 
+					
+
+
+        $body="";     
+        $body.="
+		<body>
+        <table style=\"text-align: left; width: 100%;\" border=\"0\"cellpadding=\"2\" cellspacing=\"2\">
+        <thead>
+            <tr>
+                 <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                 <td style=\"width: 90%; text-align: center;\">
+                    <h3>BUKU INVENTARIS NON ASET</h3>
+                </td>
+            </tr>
+        </thead>
+        </table>
+        <br />
+        <br />
+        <table border=\"0\" width=\"100%\">
+            <tr align=\"left\" >
+			   <td >
+					<p>PROVINSI</p>
+			   </td>
+			   <td width=\"65%\">
+					<p>:&nbsp;$this->NAMA_PROVINSI</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>KABUPATEN/KOTA</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>BIDANG</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$Bidang</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		   <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>SUB UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$SubUnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UPB</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UPB</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr align=\"left\">
+			   <td width=\"20%\">
+					<p>NO. KODE LOKASI</p> 
+			   </td>
+			   <td width=\"60%\">
+					<p>:&nbsp;$kodeLokasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+            
+        </table>
+          <br />
+          <br />
+
+        <table  style=\"width: 100%; height: 330px; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+        <thead>
+            <tr>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
+                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Tahun Perolehan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran Barang / Konstruksi (P,S,D)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
+                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
+            </tr>
+            <tr align=\"center\"></tr>
+            <tr>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 47px;\">No Urut</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 83px;\">Kode Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 64px;\">Register</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 118px;\">Nama/Jenis Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 45px;\">Merk / Type</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 120px;\">No.Sertifikat<br>No. pabrik<br>No.Chasis Mesin</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Barang</td>
+                <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Harga<br>(ribuan Rp)</td>
+            </tr>
+            <tr>
+                <td style=\"text-align:center; font-weight: bold; width: 47px;\">1</td>
+                <td style=\"text-align:center; font-weight: bold; width: 83px;\">2</td>
+                <td style=\"text-align:center; font-weight: bold; width: 64px;\">3</td>
+                <td style=\"text-align:center; font-weight: bold; width: 118px;\">4</td>
+                <td style=\"text-align:center; font-weight: bold; width: 45px;\">5</td>
+                <td style=\"text-align:center; font-weight: bold; width: 120px;\">6</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">7</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">8</td>
+                <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">11</td>
+                <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
+                <td style=\"text-align:center; font-weight: bold;\">13</td>
+                <td style=\"text-align:center; font-weight: bold;\">14</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
+            </tr></thead>";
                                                  //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
+		$skpdeh = $row->kodeSatker;
+        $status_print++;
 
-                                             }
+          }
                                              //udah dites
-													$barang = $row->Kuantitas;
-													$hargasatuan = $row->NilaiPerolehan;
-													$perolehan= $barang * $hargasatuan;
-													$perolehan_rp=number_format($perolehan);
-													
-													$barangTotal = $barangTotal + $row->Kuantitas;
-													$hargasatuanTotal = $hargasatuanTotal + $row->NilaiPerolehan;
-													$perolehanTotal = $perolehanTotal + $perolehan;
-													$nilai = number_format($row->NilaiPerolehan); 								
-													$ktts = number_format($row->Kuantitas);
-                                                            $body.="
-																<tr>
-																	<td style=\"text-align:center; width: 30px;\">$no</td>
-																	<td style=\"width: 180px;\">$row->NamaAset</td>
-																	<td style=\"text-align:center; width: 110px;\">$tanggal/$bulan/$tahun</td>
-																	<td style=\"text-align:center; width: 108px;\">$row->NoKontrak</td>
-																	<td style=\"text-align:center; width: 107px;\">$tanggal_1/$bulan_1/$tahun_1</td>
-																	<td style=\"text-align:center; width: 108px;\">$row->NoSP2D</td>
-																	<td style=\"text-align:center; width: 108px;\">$ktts</td>
-																	<td style=\"text-align:right; width: 108px;\">$nilai</td>
-																	<td style=\"text-align:right; width: 109px;\">$perolehan_rp</td>
-																	<td style=\"width: 129px; text-align:center;\">$row->AsalUsul</td>
-																	<td style=\"text-align:center; width: 151px;\">$row->Info</td>
-																</tr>";
+					$barangTotal = $barangTotal + $row->Kuantitas;
+					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
+					$perolehan = number_format($row->NilaiPerolehan);
+					$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
+                                        
+                    ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
+                    ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
+                    ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;
+					$kondisi= $row->kondisi;
+					if ($kondisi == '1') {
+						$ketKondisi = "Baik";
+					}
+					elseif ($kondisi == '2') {
+						$ketKondisi = "Kurang Baik";
+					}
+					elseif ($kondisi == '3') {
+						$ketKondisi = "Rusak Berat";
+					}else{
+						$ketKondisi = "";
+					} 
+					$noReg=$row->noRegister;
+					$kuantitas=count($noReg);
+					$split = explode("-", $row->noRegister);
+					if (count($split) == 1){
+						// $hasil = 1;
+						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+						$kuantitas = 1;
+					}else{
+						$awal = $split[0];
+						$akhir = end($split);
+						$hasil = (intval($akhir) - intval($awal)) + 1;
+						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+						$kuantitas = $hasil;
+					}
+					
+					$body.="
+                                <tr>
+									<td style=\"width: 47px; text-align:center;\">$no</td>
+									<td style=\"width: 83px; text-align:center;\">$row->Kode</td>
+									<td style=\"width: 64px; text-align:center;\">$noReg</td>
+									<td style=\"width: 118px;\">$row->Uraian</td>
+									<td style=\"width: 45px; \">$row->Merk</td>
+									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
+									<td style=\"width: 56x; \">$row->Material</td>
+									<td style=\"width: 70px; \">$row->SumberAset</td>
+									<td style=\"width: 71px; text-align:center;\">$row->Tahun</td>
+									<td style=\"width: 71px;\">$konstruksi_tanah</td>
+									<td style=\"width: 60px; text-align:center;\">$row->Satuan</td>
+									<td style=\"width: 81px;\">$ketKondisi</td>
+									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
+									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnFix</td>
+									<td style=\"width: 60px;\">$row->Info</td>
+								</tr>";
                                                             
-                                                            $no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-												     $printbarang=  number_format($barangTotal);
-													 $printhargasatuan=  number_format($hargasatuanTotal);
-													 $printperolehanTotal=  number_format($perolehanTotal);
-													 $tabletotal="
-															<tr>
-																<td colspan=\"6\" style=\"text-align:center;\">TOTAL</td>
-																<td style=\"text-align:center;\">$printbarang</td>
-																<td style=\"text-align:right;\">$printhargasatuan</td>
-																<td style=\"text-align:right;\">$printperolehanTotal</td>
-																<td colspan=\"2\"></td>
-															</tr></table>";
-											   
-													$foot="<table border=\"0\">
-															<tr>
-																<td colspan=\"10\">&nbsp;</td>
-															</tr>
-														</table>"; 
-													
-											        $footer ="	     
-                                             
-												<table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+                             $no++;
+                           }
+                                            
+                    // $printbarang=  number_format($barangTotal);
+                    $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                    $tabletotal="
+						<tr>
+							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
+							<td style=\"text-align: right;\">$printperolehanTotal</td>
+                            <td>&nbsp;</td>
+						</tr></table>"; 
+						
+											  $foot="<table border=\"0\">
+														<tr>
+															<td colspan=\"14\">&nbsp;</td>
+														</tr>
+													</table>"; 	
+
+											  $footer ="	     
+                                             <br />
+                                             <br />
+                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
@@ -4915,7 +10895,7 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
 											   $footer.="
                                              </body>
-                                        </html>";    
+                                        </html>";      
                                         if($status_print==0){
                                              $html[]=$head.$body.$tabletotal.$foot.$footer;
                                         }else{
@@ -4924,9 +10904,10 @@ public function retrieve_html_kib_f($dataArr,$gambar){
                                            }
               return $html;
           }
-     }     
+         
+     }
 
-
+ 
 //BUKU INVENTARIS SKPD (ok) 
     public function  retrieve_html_bukuiinventariskpd($dataArr,$gambar){
          
@@ -4964,6 +10945,7 @@ $head = "
 //$nno=1;
 $no=1;
 $skpdeh="";
+$thn="";
 $status_print=0;
 $barangTotal=0;
 //$panjangTotal=0;
@@ -4972,8 +10954,8 @@ $perolehanTotal=0;
 				{
 					if ($skpdeh == "" && $no==1){
                         $body="";
-                        $skpdeh = $row->NamaSatker;
-                        $satker_id=$row->LastSatker_ID;
+                        $skpdeh = $row->kodeSatker;
+                        $satker_id=$row->kodeSatker;
 						//==add new==//
 					   $detailSatker=$this->get_satker($satker_id);
 					   $NoBidang = $detailSatker[0];
@@ -4998,7 +10980,9 @@ $perolehanTotal=0;
 					   $SubUnitOrganisasi = $detailSatker[4][2];
 					   $UPB = $detailSatker[4][3];
 					   $noReg=substr($row->NomorReg,0,17);
-					   $noKodeLokasi=substr($row->NomorReg,0,5);
+					   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+						$thnLokasi= substr($row->Tahun,2,4);
+						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   //==end new==//
                         list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
@@ -5037,25 +11021,7 @@ $perolehanTotal=0;
                 {
                     $nama_jabatan_pengurus_fix='........................................';
                 }
-                        $baik= $row->Baik;
-						$ringan= $row->RusakRingan;
-						$rusak= $row->RusakBerat;
-						$tidakditemukan= $row->TidakDitemukan;
-						$kondisi="";
-						if ($baik == '1') {
-							$kondisi = "BB";
-						}
-						else if ($ringan == '1'){
-							$kondisi = "RR";
-						}
-						else if ($rusak == '1'){	
-							$kondisi = "RB";
-						}
-						else if ($tidakditemukan == '1'){
-							$kondisi = "TD";
-						}
-						else 
-							$kondisi = ""; 
+                        
 
 
 $body="
@@ -5137,7 +11103,7 @@ $body="
 					<p>NO. KODE LOKASI</p> 
 			   </td>
 			   <td width=\"60%\">
-					<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+					<p>:&nbsp;$kodeLokasi</p>
 			   </td>
 			   <td width=\"20%\">&nbsp;</td>
 		  </tr>
@@ -5192,14 +11158,13 @@ $body="
 }
 //====== cek 1                                                       
 //uda dites footer disini
-if ($skpdeh != $row->NamaSatker && $no>1){
-$printbarang=  number_format($barangTotal);
+if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+// $printbarang=  number_format($barangTotal);
                         //$printpanjang= number_format($panjangTotal);
-                        $printperolehanTotal=  number_format($perolehanTotal);
+                        $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
                         $tabletotal="
 						<tr>
-							<td colspan=\"12\" style=\"text-align: center;\">TOTAL</td>
-							<td style=\"text-align: center;\">$printbarang</td>
+							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
 							<td style=\"text-align: right;\">$printperolehanTotal</td>
                             <td>&nbsp;</td>
 						</tr></table>"; 
@@ -5214,13 +11179,13 @@ $footer ="
 	 <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
 		  <tr>
-			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
 		  </tr>
 		  
 		  <tr>
@@ -5280,9 +11245,9 @@ $footer ="
 					$html[]=$head.$body.$tabletotal.$foot.$footer;
 				else
 				$html[]=$body.$tabletotal.$foot.$footer;
-				$skpdeh = $row->NamaSatker;
+				$skpdeh = $row->kodeSatker;
 
-				$satker_id=$row->LastSatker_ID;
+				$satker_id=$row->kodeSatker;
 				//==add new==//
 			   $detailSatker=$this->get_satker($satker_id);
 			   $NoBidang = $detailSatker[0];
@@ -5307,29 +11272,15 @@ $footer ="
 			   $SubUnitOrganisasi = $detailSatker[4][2];
 			   $UPB = $detailSatker[4][3];
 			   $noReg=substr($row->NomorReg,0,17);
-			   $noKodeLokasi=substr($row->NomorReg,0,5);
+			   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+				$thnLokasi= substr($row->Tahun,2,4);
+				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+					   
 			   //==end new==//
                 list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
                 list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-				 $baik= $row->Baik;
-				$ringan= $row->RusakRingan;
-				$rusak= $row->RusakBerat;
-				$tidakditemukan= $row->TidakDitemukan;
-				$kondisi="";
-				if ($baik == '1') {
-					$kondisi = "BB";
-				}
-				else if ($ringan == '1'){
-					$kondisi = "RR";
-				}
-				else if ($rusak == '1'){	
-					$kondisi = "RB";
-				}
-				else if ($tidakditemukan == '1'){
-					$kondisi = "TD";
-				}
-				else 
-					$kondisi = ""; 
+				 
+					
 
 
         $body="";     
@@ -5412,7 +11363,7 @@ $footer ="
 					<p>NO. KODE LOKASI</p> 
 			   </td>
 			   <td width=\"60%\">
-					<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
+					<p>:&nbsp;$kodeLokasi</p>
 			   </td>
 			   <td width=\"20%\">&nbsp;</td>
 		  </tr>
@@ -5464,7 +11415,7 @@ $footer ="
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
             </tr></thead>";
                                                  //udah dites disini footer 
-		$skpdeh = $row->NamaSatker;
+		$skpdeh = $row->kodeSatker;
         $status_print++;
 
           }
@@ -5477,14 +11428,40 @@ $footer ="
                     ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
                     ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
                     ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;
-					$temp=explode('.',$row->NomorReg);
-					$noReg=end($temp);					
-                     $body.="
+					$kondisi= $row->kondisi;
+					if ($kondisi == '1') {
+						$ketKondisi = "Baik";
+					}
+					elseif ($kondisi == '2') {
+						$ketKondisi = "Kurang Baik";
+					}
+					elseif ($kondisi == '3') {
+						$ketKondisi = "Rusak Berat";
+					}else{
+						$ketKondisi = "";
+					} 
+					$noReg=$row->noRegister;
+					$kuantitas=count($noReg);
+					$split = explode("-", $row->noRegister);
+					if (count($split) == 1){
+						// $hasil = 1;
+						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+						$kuantitas = 1;
+					}else{
+						$awal = $split[0];
+						$akhir = end($split);
+						$hasil = (intval($akhir) - intval($awal)) + 1;
+						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+						$kuantitas = $hasil;
+					}
+					
+					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
 									<td style=\"width: 83px; text-align:center;\">$row->Kode</td>
 									<td style=\"width: 64px; text-align:center;\">$noReg</td>
-									<td style=\"width: 118px;\">$row->NamaAset</td>
+									<td style=\"width: 118px;\">$row->Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
 									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 									<td style=\"width: 56x; \">$row->Material</td>
@@ -5492,21 +11469,20 @@ $footer ="
 									<td style=\"width: 71px; text-align:center;\">$row->Tahun</td>
 									<td style=\"width: 71px;\">$konstruksi_tanah</td>
 									<td style=\"width: 60px; text-align:center;\">$row->Satuan</td>
-									<td style=\"width: 81px;\">$kondisi</td>
-									<td style=\"width: 71px; text-align:center;\">$row->Kuantitas</td>
-									<td style=\"width: 80px; text-align:right;\">$perolehan</td>
-									<td style=\"width: 60px;\"></td>
+									<td style=\"width: 81px;\">$ketKondisi</td>
+									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
+									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnFix</td>
+									<td style=\"width: 60px;\">$row->Info</td>
 								</tr>";
                                                             
                              $no++;
                            }
                                             
-                    $printbarang=  number_format($barangTotal);
-                    $printperolehanTotal=  number_format($perolehanTotal);
+                    // $printbarang=  number_format($barangTotal);
+                    $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
                     $tabletotal="
 						<tr>
-							<td colspan=\"12\" style=\"text-align: center;\">TOTAL</td>
-							<td style=\"text-align: center;\">$printbarang</td>
+							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
 							<td style=\"text-align: right;\">$printperolehanTotal</td>
                             <td>&nbsp;</td>
 						</tr></table>"; 
@@ -5523,13 +11499,13 @@ $footer ="
                                              <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                                                   </tr>
                                                   
                                                   <tr>
@@ -5590,7 +11566,6 @@ $footer ="
      }
 
 
-
 //BUKU INDUK INVENTARIS (ok)
 public function  retrieve_html_bukuiindukskpd($dataArr,$gambar){
 
@@ -5628,24 +11603,18 @@ if($dataArr!="")
     $skpdeh="";
     $barangTotal=0;
     $perolehanTotal=0;
-    //echo '<pre>';
-    //print_r($dataArr);
-    //exit;
     
-    $query="select distinct NamaJabatan,Satker_ID,NamaPejabat from Pejabat where Satker_ID = 1";
+    /*// $query="select distinct NamaJabatan,Satker_ID,NamaPejabat from Pejabat where Satker_ID = 1";
         //echo $query;
-        $result= mysql_query($query);
+        // $result= mysql_query($query);
         //echo $result;
-        while ($data=mysql_fetch_object($result))
-        {           
+        // while ($data=mysql_fetch_object($result))
+        // {           
              $satker=$data->Satker_ID;
              //echo $data->Satker_ID;
              //echo'-';
-        } 
-        //echo '<pre>';
-        //print_r($satker_id);
-        //exit;
-        //$i = 0;
+        } */
+        
     foreach ($dataArr as $row)
         
     {
@@ -5679,8 +11648,11 @@ if($dataArr!="")
 	   $UnitOrganisasi = $detailSatker[4][1];
 	   $SubUnitOrganisasi = $detailSatker[4][2];
 	   $UPB = $detailSatker[4][3];
-	   $noReg=substr($row->NomorReg,0,17);
-	   $noKodeLokasi=substr($row->NomorReg,0,5);
+	   // $noReg=substr($row->NomorReg,0,17);
+	   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+	   $thnLokasi= substr($row->Tahun,2,4);
+	    $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+
 	   //==end new==//
         list($nip_kepala_daerah,$nama_jabatan_kepala_daerah)=$this->get_jabatan($satker_id,"5");
         list($nip_pengelola_bmd,$nama_jabatan_pengelola_bmd)=$this->get_jabatan($satker_id,"6");
@@ -5767,15 +11739,6 @@ if($dataArr!="")
 			   <td width=\"20%\">&nbsp;</td>
 		  </tr>
 		  
-		  <tr align=\"left\">
-			   <td width=\"20%\">
-					<p>NO. KODE LOKASI</p> 
-			   </td>
-			   <td width=\"60%\">
-					<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
             </table>
             <br />
             <br />
@@ -5837,14 +11800,39 @@ if($dataArr!="")
             ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
             ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
             ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;	           
-			$temp=explode('.',$row->NomorReg);
-			$noReg=end($temp);        
+			$kondisi= $row->kondisi;
+			if ($kondisi == '1') {
+				$ketKondisi = "Baik";
+			}
+			elseif ($kondisi == '2') {
+				$ketKondisi = "Kurang Baik";
+			}
+			elseif ($kondisi == '3') {
+				$ketKondisi = "Rusak Berat";
+			}else{
+				$ketKondisi = "";
+			} 
+			$noReg=$row->noRegister;
+			$kuantitas=count($noReg);
+			$split = explode("-", $row->noRegister);
+			if (count($split) == 1){
+				// $hasil = 1;
+				$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+				$kuantitas = 1;
+			}else{
+				$awal = $split[0];
+				$akhir = end($split);
+				$hasil = (intval($akhir) - intval($awal)) + 1;
+				$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+				$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+				$kuantitas = $hasil;
+			}      
             $body.="
                 <tr>
                     <td style=\"width: 47px; text-align:center;\">$no</td>
                     <td style=\"width: 83px; text-align:center;\">$row->Kode</td>
                     <td style=\"width: 64px; text-align:center;\">$noReg</td>
-                    <td style=\"width: 200px;\">$row->NamaAset</td>
+                    <td style=\"width: 200px;\">$row->Uraian</td>
                     <td style=\"width: 100px; \">$row->Merk</td>
                     <td style=\"width: 150px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
                     <td style=\"width: 100x; \">$row->Material</td>
@@ -5852,20 +11840,19 @@ if($dataArr!="")
                     <td style=\"width: 71px; text-align:center;\">$row->Tahun</td>
                     <td style=\"width: 71px;\">$konstruksi_tanah</td>
                     <td style=\"width: 60px; text-align:center;\">$row->Satuan</td>
-                    <td style=\"width: 81px;\"></td>
-                    <td style=\"width: 71px; text-align:center;\">$row->Kuantitas</td>
-                    <td style=\"width: 73px; text-align:right;\">$perolehan</td>
-                    <td style=\"width: 60px;\"></td>
+                    <td style=\"width: 81px;\">$ketKondisi</td>
+                    <td style=\"width: 71px; text-align:center;\">$Kuantitas</td>
+                    <td style=\"width: 73px; text-align:right;\">$nilaiPrlhnFix</td>
+                    <td style=\"width: 60px;\">$row->Info</td>
                 </tr>";
                                                             
             $no++;
         }
                                             
-            $printbarang=  number_format($barangTotal);
-            $printperolehanTotal=  number_format($perolehanTotal);
+            // $printbarang=  number_format($barangTotal);
+            $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
             $tabletotal="<tr>
-                            <td colspan=\"12\" style=\"text-align: center;\">Total</td>
-                            <td style=\"text-align: center;\">$printbarang</td>
+                            <td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
                             <td style=\"text-align: right;\">$printperolehanTotal</td>
                             <td>&nbsp;</td>
                         </tr>
@@ -5881,13 +11868,13 @@ if($dataArr!="")
             $footer ="
                 <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
                     <tr>
-                        <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
+                        <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                        <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
                     </tr>
                     <tr>
                         <td style=\"text-align: center;\" colspan=\"3\">Kepala Daerah</td>
@@ -5941,1274 +11928,6 @@ if($dataArr!="")
           }
          
      }
-
-
-
-//DAFTAR PENERIMAAN BARANG DARI PIHAK KETIGA (ok)
-	public function  retrieve_html_daftarpenerimaanbarangpihaktiga($dataArr,$gambar){
-         
-if($dataArr!="")
-{
-include ('../../../function/tanggal/tanggal.php');
-$head = "
-        <html>
-        <head>
-                <style>
-                        table
-                        {
-                                font-size:10pt;
-                                font-family:Arial;
-                                border-collapse: collapse;											
-                                border-spacing:0;
-                        }
-                        h3
-                        {
-                                font-family:Arial;	
-                                font-size:13pt;
-                                color:#000;
-
-                        }
-                        p
-                        {
-                                font-size:10pt;
-                                font-family:Arial;
-                                font-weight:bold;
-                        }
-                        </style>
-                </head>
-                    ";
-
-//$nno=1;
-$no=1;
-$skpdeh="";
-$status_print=0;
-$barangTotal=0;
-//$panjangTotal=0;
-$perolehanTotal=0;
-				foreach ($dataArr as $row)
-				{
-					if ($skpdeh == "" && $no==1){
-                        $body="";
-                        $skpdeh = $row->NamaSatker;
-                        $satker_id=$row->LastSatker_ID;
-						//==add new==//
-					   $detailSatker=$this->get_satker($satker_id);
-					   $NoBidang = $detailSatker[0];
-					   $NoUnitOrganisasi = $detailSatker[1];
-					   $NoSubUnitOrganisasi = $detailSatker[2];
-					   $NoUPB = $detailSatker[3];
-					   
-					   if($NoBidang !=""){
-							$paramKodeLokasi = $NoBidang;
-					   }
-					   if($NoBidang !="" && $NoUnitOrganisasi != ""){
-							$paramKodeLokasi = $NoUnitOrganisasi;
-					   }
-					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-					   }
-					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-					   }
-					   $Bidang = $detailSatker[4][0];
-					   $UnitOrganisasi = $detailSatker[4][1];
-					   $SubUnitOrganisasi = $detailSatker[4][2];
-					   $UPB = $detailSatker[4][3];
-					   $noReg=substr($row->NomorReg,0,17);
-					   $noKodeLokasi=substr($row->NomorReg,0,5);
-					   //==end new==//
-                        list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-                if($nip_pengurus!="")
-                {
-                    $nip_pengurus_fix=$nip_pengurus;
-                }
-                else
-                {
-                    $nip_pengurus_fix='........................................';
-                }
-
-                if($nip_pengguna!="")
-                {
-                    $nip_pengguna_fix=$nip_pengguna;
-                }
-                else
-                {
-                    $nip_pengguna_fix='........................................';
-                }
-
-                if($nama_jabatan_pengguna!="")
-                {
-                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
-                }
-                else
-                {
-                    $nama_jabatan_pengguna_fix='........................................';
-                }
-
-                if($nama_jabatan_pengurus!="")
-                {
-                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
-                }
-                else
-                {
-                    $nama_jabatan_pengurus_fix='........................................';
-                }
-                        $baik= $row->Baik;
-						$ringan= $row->RusakRingan;
-						$rusak= $row->RusakBerat;
-						$tidakditemukan= $row->TidakDitemukan;
-						$kondisi="";
-						if ($baik == '1') {
-							$kondisi = "BB";
-						}
-						else if ($ringan == '1'){
-							$kondisi = "RR";
-						}
-						else if ($rusak == '1'){	
-							$kondisi = "RB";
-						}
-						else if ($tidakditemukan == '1'){
-							$kondisi = "TD";
-						}
-						else 
-							$kondisi = ""; 
-
-
-$body="
-<body>
-      <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-        <thead>
-            <tr>
-                 <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-                 <td style=\"width: 90%; text-align: center;\">
-                    <h3>DAFTAR PENERIMAN BARANG DARI PIHAK KETIGA</h3>
-                </td>
-            </tr>
-        </thead>
-        </table>
-        <br />
-        <br />
-        <table border=\"0\" width=\"100%\">
-            <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  
-            
-        </table>
-          <br />
-          <br />
-		<table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-		  <thead>
-			<tr>
-				<td style=\"text-align: center; font-weight: bold; width: 9%\" colspan=\"2\" rowspan=\"1\">Nomor</td>
-				<td style=\"text-align: center; font-weight: bold; width: 26%\" colspan=\"3\" rowspan=\"1\">Spesifikasi Barang</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Pembelian/<br>Pengadaan</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Asal/Cara<br>Perolehan<br>Barang</td>
-				<td style=\"text-align: center; font-weight: bold; width: 9%\" colspan=\"1\" rowspan=\"2\">Nama<br>Penyumbang/<br>Pihak Ketiga</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\"><br>Satuan</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Keadaan<br>Barang<br>(B/KB/RB)</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"2\" rowspan=\"1\">Jumlah</td>
-				<td style=\"text-align: center; font-weight: bold; width: 11%\" colspan=\"1\" rowspan=\"2\"><br>Keterangan</td>
-			</tr>
-			<tr>
-				<td style=\"text-align: center; font-weight: bold; width: 4%\">No <br>Urut</td>
-				<td style=\"text-align: center; font-weight: bold; width: 5%\">Kode Barang<br></td>
-				<td style=\"text-align: center; font-weight: bold; width: 13%\">Nama/Jenis Barang</td>
-				<td style=\"text-align: center; font-weight: bold; width: 5%\">Merk/<br>Type</td>
-				<td style=\"text-align: center; font-weight: bold; width: 8%\">No.Sertifikat<br>No.Pabrik<br>No.Chasis Mesin<br></td>
-				<td style=\"text-align: center; font-weight: bold\">Barang</td>
-				<td style=\"text-align: center; font-weight: bold\">Harga<br>(ribuan Rp)</td>
-					</tr>
-			<tr >
-				<td style=\"text-align: center; font-weight: bold;\">1</td>
-				<td style=\"text-align: center; font-weight: bold;\">2</td>
-				<td style=\"text-align: center; font-weight: bold;\">3</td>
-				<td style=\"text-align: center; font-weight: bold;\">4</td>
-				<td style=\"text-align: center; font-weight: bold;\">5</td>
-				<td style=\"text-align: center; font-weight: bold;\">6</td>
-				<td style=\"text-align: center; font-weight: bold;\">7</td>
-				<td style=\"text-align: center; font-weight: bold;\">8</td>
-				<td style=\"text-align: center; font-weight: bold;\">9</td>
-				<td style=\"text-align: center; font-weight: bold;\">10</td>
-				<td style=\"text-align: center; font-weight: bold;\">11</td>
-				<td style=\"text-align: center; font-weight: bold;\">12</td>
-				<td style=\"text-align: center; font-weight: bold;\">13</td>
-			</tr></thead>";
-																					  
-}
-//====== cek 1                                                       
-//uda dites footer disini
-										if ($skpdeh != $row->NamaSatker && $no>1){
-											$printbarang=  number_format($barangTotal);
-										//$printpanjang= number_format($panjangTotal);
-											$printperolehanTotal=  number_format($perolehanTotal);
-										
-											$tabletotal="
-												<tr>
-													<td colspan=\"10\" style=\"text-align: center;\">TOTAL</td>
-													<td style=\"text-align: center;\">$printbarang</td>
-													<td style=\"text-align: right;\">$printperolehanTotal</td>
-													<td>&nbsp;</td>
-												</tr></table>"; 
-												
-											$foot="<table border=\"0\">
-													<tr>
-														<td colspan=\"12\">&nbsp;</td>
-													</tr>
-												</table>";
-												
-											$footer ="
-                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
-                                                  </tr>
-                                                       <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
-                                                  </tr>
-
-                                             </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
-                                             </body>
-                                        </html>";                                         //udah dites footer
-// cek 2
-			    $barangTotal=0;
-						//$panjangTotal=0;
-			    $perolehanTotal=0;
-			    $no=1;
-
-				if($status_print==0)
-					$html[]=$head.$body.$tabletotal.$foot.$footer;
-				else
-				$html[]=$body.$tabletotal.$foot.$footer;
-				$skpdeh = $row->NamaSatker;
-
-				$satker_id=$row->LastSatker_ID;
-				//==add new==//
-					   $detailSatker=$this->get_satker($satker_id);
-					   $NoBidang = $detailSatker[0];
-					   $NoUnitOrganisasi = $detailSatker[1];
-					   $NoSubUnitOrganisasi = $detailSatker[2];
-					   $NoUPB = $detailSatker[3];
-					   
-					   if($NoBidang !=""){
-							$paramKodeLokasi = $NoBidang;
-					   }
-					   if($NoBidang !="" && $NoUnitOrganisasi != ""){
-							$paramKodeLokasi = $NoUnitOrganisasi;
-					   }
-					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-					   }
-					   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-							$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-					   }
-					   $Bidang = $detailSatker[4][0];
-					   $UnitOrganisasi = $detailSatker[4][1];
-					   $SubUnitOrganisasi = $detailSatker[4][2];
-					   $UPB = $detailSatker[4][3];
-					   $noReg=substr($row->NomorReg,0,17);
-					   $noKodeLokasi=substr($row->NomorReg,0,5);
-					   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-                $baik= $row->Baik;
-				$ringan= $row->RusakRingan;
-				$rusak= $row->RusakBerat;
-				$tidakditemukan= $row->TidakDitemukan;
-				$kondisi="";
-				if ($baik == '1') {
-					$kondisi = "BB";
-				}
-				else if ($ringan == '1'){
-					$kondisi = "RR";
-				}
-				else if ($rusak == '1'){	
-					$kondisi = "RB";
-				}
-				else if ($tidakditemukan == '1'){
-					$kondisi = "TD";
-				}
-				else 
-					$kondisi = ""; 
-
-        $body="";     
-        $body.="
-		<body>
-        <table style=\"text-align: left; width: 100%;\" border=\"0\"cellpadding=\"2\" cellspacing=\"2\">
-        <thead>
-            <tr>
-                 <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-                 <td style=\"width: 90%; text-align: center;\">
-                    <h3>DAFTAR PENERIMAN BARANG DARI PIHAK KETIGA</h3>
-                </td>
-            </tr>
-        </thead>
-        </table>
-        <br />
-        <br />
-        <table border=\"0\" width=\"100%\">
-            <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  
-            
-        </table>
-          <br />
-          <br />
-
-        <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-		  <thead>
-			<tr>
-				<td style=\"text-align: center; font-weight: bold; width: 9%\" colspan=\"2\" rowspan=\"1\">Nomor</td>
-				<td style=\"text-align: center; font-weight: bold; width: 26%\" colspan=\"3\" rowspan=\"1\">Spesifikasi Barang</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Pembelian/<br>Pengadaan</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Asal/Cara<br>Perolehan<br>Barang</td>
-				<td style=\"text-align: center; font-weight: bold; width: 9%\" colspan=\"1\" rowspan=\"2\">Nama<br>Penyumbang/<br>Pihak Ketiga</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\"><br>Satuan</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Keadaan<br>Barang<br>(B/KB/RB)</td>
-				<td style=\"text-align: center; font-weight: bold;\" colspan=\"2\" rowspan=\"1\">Jumlah</td>
-				<td style=\"text-align: center; font-weight: bold; width: 11%\" colspan=\"1\" rowspan=\"2\"><br>Keterangan</td>
-			</tr>
-			<tr>
-				<td style=\"text-align: center; font-weight: bold; width: 4%\">No <br>Urut</td>
-				<td style=\"text-align: center; font-weight: bold; width: 5%\">Kode Barang<br></td>
-				<td style=\"text-align: center; font-weight: bold; width: 13%\">Nama/Jenis Barang</td>
-				<td style=\"text-align: center; font-weight: bold; width: 5%\">Merk/<br>Type</td>
-				<td style=\"text-align: center; font-weight: bold; width: 8%\">No.Sertifikat<br>No.Pabrik<br>No.Chasis Mesin<br></td>
-				<td style=\"text-align: center; font-weight: bold\">Barang</td>
-				<td style=\"text-align: center; font-weight: bold\">Harga<br>(ribuan Rp)</td>
-					</tr>
-			<tr >
-				<td style=\"text-align: center; font-weight: bold;\">1</td>
-				<td style=\"text-align: center; font-weight: bold;\">2</td>
-				<td style=\"text-align: center; font-weight: bold;\">3</td>
-				<td style=\"text-align: center; font-weight: bold;\">4</td>
-				<td style=\"text-align: center; font-weight: bold;\">5</td>
-				<td style=\"text-align: center; font-weight: bold;\">6</td>
-				<td style=\"text-align: center; font-weight: bold;\">7</td>
-				<td style=\"text-align: center; font-weight: bold;\">8</td>
-				<td style=\"text-align: center; font-weight: bold;\">9</td>
-				<td style=\"text-align: center; font-weight: bold;\">10</td>
-				<td style=\"text-align: center; font-weight: bold;\">11</td>
-				<td style=\"text-align: center; font-weight: bold;\">12</td>
-				<td style=\"text-align: center; font-weight: bold;\">13</td>
-			</tr></thead>";
-                                                 //udah dites disini footer 
-		$skpdeh = $row->NamaSatker;
-        $status_print++;
-
-          }
-                                             //udah dites
-					$barangTotal = $barangTotal + $row->Kuantitas;
-					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-					$perolehan = number_format($row->NilaiPerolehan);
-					$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
-                                        
-                    ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
-                    ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
-                    ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;	           
-                     $body.="
-                         <tr>
-							<td style=\"text-align: center; width: 47px;font-weight: \">$no</td>
-							<td style=\"text-align: center; width: 60px;font-weight: \">$row->Kode</td>
-							<td style=\"width: 155px;font-weight: \">$row->NamaAset</td>
-							<td style=\"width: 59px;font-weight: \">$row->Merk</td>
-							<td style=\"width: 96px; font-weight: \">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
-							<td style=\"width: 91px; text-align: center; \">$row->Tahun</td>
-							<td style=\"width: 91px; text-align: center; \">$row->SumberAset</td>
-							<td style=\"width: 107px; font-weight: \">$row->NamaDonor</td>
-							<td style=\"text-align: center; width: 92px; font-weight: \">$row->Satuan</td>
-							<td style=\"width: 92px;font-weight: \">$kondisi</td>
-							<td style=\"text-align: center; width: 91px;font-weight: \">$row->Kuantitas</td>
-							<td style=\"text-align: right;width: 91px;font-weight: \">$perolehan</td>
-							<td style=\"width: 131px;font-weight: \">$row->Info</td>
-						</tr>";
-                                                            
-                             $no++;
-                           }
-                                            
-                    $printbarang=  number_format($barangTotal);
-                    $printperolehanTotal=  number_format($perolehanTotal);
-                    $tabletotal="
-						<tr>
-							<td colspan=\"10\" style=\"text-align: center;\">TOTAL</td>
-							<td style=\"text-align: center;\">$printbarang</td>
-							<td style=\"text-align: right;\">$printperolehanTotal</td>
-                            <td>&nbsp;</td>
-						</tr></table>"; 
-						
-						
-											$foot="<table border=\"0\">
-													<tr>
-														<td colspan=\"12\">&nbsp;</td>
-													</tr>
-												</table>";
-						
-						
-											$footer ="	     
-                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
-                                                  </tr>
-                                                       <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
-                                                  </tr>
-
-                                             </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
-                                             </body>
-                                        </html>";      
-										
-										if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-
-                                           }
-              return $html;
-          }
-         
-     }
-
-
-//Daftar Pemeliharaan BMD (ok)
-	public function retrieve_html_pemeliharaan_bmd($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			  include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-        
-							 $no=1;
-							 $skpdeh="";
-							 $status_print=0;
-							 //$luasTotal=0;
-							 $perolehanTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh =="" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												//==add new==//
-											   $detailSatker=$this->get_satker($satker_id);
-											   $NoBidang = $detailSatker[0];
-											   $NoUnitOrganisasi = $detailSatker[1];
-											   $NoSubUnitOrganisasi = $detailSatker[2];
-											   $NoUPB = $detailSatker[3];
-											   
-											   if($NoBidang !=""){
-													$paramKodeLokasi = $NoBidang;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
-													$paramKodeLokasi = $NoUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-											   }
-											   $Bidang = $detailSatker[4][0];
-											   $UnitOrganisasi = $detailSatker[4][1];
-											   $SubUnitOrganisasi = $detailSatker[4][2];
-											   $UPB = $detailSatker[4][3];
-											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
-											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-                if($nip_pengurus!="")
-                {
-                    $nip_pengurus_fix=$nip_pengurus;
-                }
-                else
-                {
-                    $nip_pengurus_fix='........................................';
-                }
-
-                if($nip_pengguna!="")
-                {
-                    $nip_pengguna_fix=$nip_pengguna;
-                }
-                else
-                {
-                    $nip_pengguna_fix='........................................';
-                }
-
-                if($nama_jabatan_pengguna!="")
-                {
-                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
-                }
-                else
-                {
-                    $nama_jabatan_pengguna_fix='........................................';
-                }
-
-                if($nama_jabatan_pengurus!="")
-                {
-                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
-                }
-                else
-                {
-                    $nama_jabatan_pengurus_fix='........................................';
-                }
-												
-												list($tahun, $bulan, $tanggal)= explode('-', $row->TglPemeliharaan);
-														if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-															$TglPemeliharaan = "-";
-													
-														}else {
-															 if ($tanggal !='' ){
-																$row->TglPemeliharaan = "";
-															}
-																$row->TglPemeliharaan = "$tanggal/$bulan/$tahun";
-														};
-                                        
-                                        $body="
-											<body>
-                                             <table style=\"text-align: left; width: 100%;\" border=\"0\"cellpadding=\"2\" cellspacing=\"2\">
-											<tbody>
-												<tr>
-													<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-													<td style=\"width: 900px; text-align: center;\">
-														<h3>DAFTAR PEMELIHARAAN BARANG</h3>
-														<h3>TAHUN ANGGARAN $f_tahun</h3>
-													</td>
-												</tr>
-											</tbody>
-											</table>                                             
-											<br />
-                                            <br />
-                                            <table border=\"0\" width=\"100%\" >
-                                                  <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  </table>
-                                                  <br />
-                                                  <br />
-                                        
-												<table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-                                                  <thead> 
-													<tr>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:30px; font-weight: bold;\">No</td>
-														<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; width:180px;font-weight: bold;\">Spesifikasi Barang</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:13%;font-weight: bold;\">Nama Barang<br>yang Dipelihara</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jenis<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Yang<br>Memelihara</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Biaya<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Bukti<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:15%;font-weight: bold;\">Keterangan</td>
-													</tr>
-													<tr>
-														<td style=\"text-align: center; width:90px; font-weight: bold;\">No.Kode<br>Barang<br></td>
-														<td style=\"text-align: center; width:90px;font-weight: bold;\">No.<br>Register</td>
-													</tr>
-													<tr>
-														<td style=\"text-align: center; font-weight: bold;\">1</td>
-														<td style=\"text-align: center; font-weight: bold;\">2</td>
-														<td style=\"text-align: center; font-weight: bold;\">3</td>
-														<td style=\"text-align: center; font-weight: bold;\">4</td>
-														<td style=\"text-align: center; font-weight: bold;\">5</td>
-														<td style=\"text-align: center; font-weight: bold;\">6</td>
-														<td style=\"text-align: center; font-weight: bold;\">7</td>
-														<td style=\"text-align: center; font-weight: bold;\">8</td>
-														<td style=\"text-align: center; font-weight: bold;\">9</td>
-														<td style=\"text-align: center; font-weight: bold;\">10</td>
-													</tr>
-												  </thead>";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             //$printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-                                                            <tr>
-                                                                 <td style=\"text-align: center;\" colspan=\"7\">Total</td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                            </table>
-                                                       ";
-                                               
-                                               $foot="<table border=\"0\">
-														<tr>
-															<td colspan=\"9\">&nbsp;</td>
-														</tr>
-													</table>"; 
-														                                                       
-                                               $footer ="
-                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
-                                                  </tr>
-                                                       <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
-                                                  </tr>
-
-                                             </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
-                                             </body>
-                                        </html>";           
-											 //udah dites footer
-                                             //$luasTotal=0;
-                                             $perolehanTotal=0;
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             
-                                             $skpdeh = $row->NamaSatker;	
-                                             $satker_id=$row->LastSatker_ID;
-											 //==add new==//
-											   $detailSatker=$this->get_satker($satker_id);
-											   $NoBidang = $detailSatker[0];
-											   $NoUnitOrganisasi = $detailSatker[1];
-											   $NoSubUnitOrganisasi = $detailSatker[2];
-											   $NoUPB = $detailSatker[3];
-											   
-											   if($NoBidang !=""){
-													$paramKodeLokasi = $NoBidang;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != ""){
-													$paramKodeLokasi = $NoUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-											   }
-											   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-													$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-											   }
-											   $Bidang = $detailSatker[4][0];
-											   $UnitOrganisasi = $detailSatker[4][1];
-											   $SubUnitOrganisasi = $detailSatker[4][2];
-											   $UPB = $detailSatker[4][3];
-											   $noReg=substr($row->NomorReg,0,17);
-											   $noKodeLokasi=substr($row->NomorReg,0,5);
-											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-												list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
-												
-												 	list($tahun, $bulan, $tanggal)= explode('-', $row->TglPemeliharaan);
-														if ($tahun =='0000' && $bulan == '00' && $tanggal ='00'){
-															$TglPemeliharaan = "-";
-													
-														}else {
-															 if ($tanggal !='' ){
-																$TglPemeliharaan = "";
-															}
-																$TglPemeliharaan = "$tanggal/$bulan/$tahun";
-														};
-                                                  
-                                                  $body="";     
-                                                  $body.="
-                                           <body>
-                                            <table style=\"text-align: left; width: 100%;\" border=\"0\"cellpadding=\"2\" cellspacing=\"2\">
-											<tbody>
-												<tr>
-													<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-													<td style=\"width: 900px; text-align: center;\">
-														<h3>DAFTAR PEMELIHARAAN BARANG</h3>
-														<h3>TAHUN ANGGARAN $f_tahun</h3>
-													</td>
-												</tr>
-											</tbody>
-											</table>                                             
-											<br />
-                                            <br />
-                                            <table border=\"0\" width=\"100%\" >
-                                                  <tr align=\"left\" >
-													   <td >
-															<p>PROVINSI</p>
-													   </td>
-													   <td width=\"65%\">
-															<p>:&nbsp;$this->NAMA_PROVINSI</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>KABUPATEN/KOTA</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>BIDANG</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$Bidang</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												   <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>SUB UNIT ORGANISASI</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$SubUnitOrganisasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr>
-													   <td style=\"font-weight: bold; width=20%\">
-															<p>UPB</p>
-													   </td>
-													   <td width=\"60%\">
-
-														   <p>:&nbsp;$UPB</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-												  <tr align=\"left\">
-													   <td width=\"20%\">
-															<p>NO. KODE LOKASI</p> 
-													   </td>
-													   <td width=\"60%\">
-															<p>:&nbsp;$noKodeLokasi.$paramKodeLokasi</p>
-													   </td>
-													   <td width=\"20%\">&nbsp;</td>
-												  </tr>
-                                                  </table>
-                                                  <br />
-                                                  <br />
-                                        
-												<table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-                                                  <thead> 
-													<tr>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:30px; font-weight: bold;\">No</td>
-														<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; width:180px;font-weight: bold;\">Spesifikasi Barang</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:13%;font-weight: bold;\">Nama Barang<br>yang Dipelihara</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jenis<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Yang<br>Memelihara</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Biaya<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Bukti<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:15%;font-weight: bold;\">Keterangan</td>
-													</tr>
-													<tr>
-														<td style=\"text-align: center; width:90px; font-weight: bold;\">No.Kode<br>Barang<br></td>
-														<td style=\"text-align: center; width:90px;font-weight: bold;\">No.<br>Register</td>
-													</tr>
-													<tr>
-														<td style=\"text-align: center; font-weight: bold;\">1</td>
-														<td style=\"text-align: center; font-weight: bold;\">2</td>
-														<td style=\"text-align: center; font-weight: bold;\">3</td>
-														<td style=\"text-align: center; font-weight: bold;\">4</td>
-														<td style=\"text-align: center; font-weight: bold;\">5</td>
-														<td style=\"text-align: center; font-weight: bold;\">6</td>
-														<td style=\"text-align: center; font-weight: bold;\">7</td>
-														<td style=\"text-align: center; font-weight: bold;\">8</td>
-														<td style=\"text-align: center; font-weight: bold;\">9</td>
-														<td style=\"text-align: center; font-weight: bold;\">10</td>
-															</tr>
-												  </thead>";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                       //$hak_tanah =$this->get_hak_pakai($row->HakTanah);
-                                                       $perolehan = number_format($row->Biaya);
-                                                       //$luas = number_format($row->LuasTotal);
-                                                       //$luasTotal = $luasTotal + $row->LuasTotal;
-                                                       $perolehanTotal = $perolehanTotal + $row->Biaya;
-                                                       
-                                                       //($row->NoSertifikat == '') ? $dataNoSertifikat = 0 : $dataNoSertifikat = $row->NoSertifikat;
-													   //($row->Info == '') ? $dataInfo = "-" : $dataInfo = $row->Info; 
-													   $temp=explode('.',$row->NomorReg);
-														$noReg=end($temp);
-                                                            $body.="
-                                                            <tr align=\"center\">
-                                                                 <td style=\"text-align: center;\">$no</td>
-																<td style=\"text-align: center;\">$row->Kode</td>
-																<td style=\"text-align: center;\">$noReg</td>
-																<td style=\"text-align: center;\">$row->NamaAset</td>
-																<td style=\"text-align: center;\">$row->JenisPemeliharaan</td>
-																<td style=\"text-align: center;\">$row->NamaPenyediaJasa </td>
-																<td style=\"text-align: center;\">$tanggal/$bulan/$tahun</td>
-																<td style=\"text-align: right;\">$perolehan</td>
-																<td style=\"text-align: center;\">$row->NoBAPemeliharaan</td>
-																<td style=\"text-align: center;\">$row->KeteranganPemeliharaan</td>
-															</tr>";
-                                                            
-                                                            $no++;
-                                                  
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                             //$printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-
-                                                            <tr>
-                                                                 <td style=\"text-align: center;\" colspan=\"7\">Total</td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                          </table>";
-											   
-                                               $foot="<table border=\"0\">
-														<tr>
-															<td colspan=\"9\">&nbsp;</td>
-														</tr>
-													</table>"; 
-													
-											   $footer ="
-                                             <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">Mengetahui</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td colspan=\"11\" style=\"height: 80px\"></td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
-                                                  </tr>
-                                                       <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
-                                                  </tr>
-
-                                             </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
-                                             </body>
-                                        </html>";                                              
-                                        
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-
-                                           }
-              return $html;
-          }
-     }
-
 
 //KIR (ok)
 	public function retrieve_html_kir($dataArr,$gambar){
@@ -7338,71 +12057,98 @@ $body="
                                         $body="
 												<body>
 													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-													  <tbody>
-														<tr>
-															<td colspan=\"3\" rowspan=\"1\" style=\"width: 908px;\">
-																<h2>KARTU INVENTARIS RUANGAN<br>
-																<br>
-																</h2>
+     
+													  <tr>
+														   <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+														   <td style=\"width: 90%; text-align: center;\">
+																<h3>KARTU INVENTARIS RUANGAN (KIR)</h3>
 															</td>
-															<br>
-															<br>
-															<td  rowspan=\"7\" style=\"width: 205px; text-align: center; padding-bottom:63px;\"><br><br><br>
-																<img style=\"width: 130px; height: 138px;\" alt=\"\" src=\"$gambar\"><br>
-															</td>
-															
-														</tr>
-														<br>
-														<tbody>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">PROVINSI</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\">: $this->NAMA_PROVINSI</td>
-															<td style=\"width: 561px;\"></td>
-														</tr>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">KAB / KOTA</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\">: $this->NAMA_KABUPATEN</td>
-															<td style=\"width: 561px;\"></td>
-														</tr>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">BIDANG</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $Bidang</td>		
-														</tr>
-													</tbody>
-													<br>	
-													<tbody>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">UNIT ORGANISASI</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $UnitOrganisasi</td>
-															
-														</tr>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">SUB UNIT ORGANISASI</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $SubUnitOrganisasi</td>
-															
-														</tr>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">UPB</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $UPB </td>
-															
-														</tr>
-														<tr>
-															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 180px; padding-top:4px;\">RUANGAN</td>
-															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: 200px; padding-top:4px; \" colspan=\"2\">: $ruangan</td>	
-														</tr>
-														<tr>
-															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 50px; padding-top:4px;\">NO.KODE LOKASI</td>
-															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: ; padding-top:4px; \" colspan=\"2\">: $kodeLokasi</td>	
-															
-														</tr>
-													</tbody>	
-													</tbody>
-														<br>
-														<br />
-														<br>
-													  </tbody>
-													</table>
-													<br>
+													  </tr>
+							 
+												 </table>
+												 <br />
+												 <br />
+												<table border=\"0\" width=\"100%\" >
+													  <tr align=\"left\" >
+														   <td >
+																<p>PROVINSI</p>
+														   </td>
+														   <td width=\"65%\">
+																<p>:&nbsp;$this->NAMA_PROVINSI</p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													  <tr>
+														   <td style=\"font-weight: bold; width=20%\">
+																<p>KABUPATEN/KOTA</p>
+														   </td>
+														   <td width=\"60%\">
+
+															   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													  <tr>
+														   <td style=\"font-weight: bold; width=20%\">
+																<p>BIDANG</p>
+														   </td>
+														   <td width=\"60%\">
+
+															   <p>:&nbsp;$Bidang</p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													  <tr>
+														   <td style=\"font-weight: bold; width=20%\">
+																<p>UNIT ORGANISASI</p>
+														   </td>
+														   <td width=\"60%\">
+
+															   <p>:&nbsp;$UnitOrganisasi</p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													   <tr>
+														   <td style=\"font-weight: bold; width=20%\">
+																<p>SUB UNIT ORGANISASI</p>
+														   </td>
+														   <td width=\"60%\">
+
+															   <p>:&nbsp;$SubUnitOrganisasi</p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													  <tr>
+														   <td style=\"font-weight: bold; width=20%\">
+																<p>UPB</p>
+														   </td>
+														   <td width=\"60%\">
+
+															   <p>:&nbsp;$UPB</p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													  <tr align=\"left\">
+														   <td width=\"20%\">
+																<p>NO. KODE LOKASI</p> 
+														   </td>
+														   <td width=\"60%\">
+																<p>:&nbsp;$kodeLokasi</p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													  <tr align=\"left\">
+														   <td width=\"20%\">
+																<p>RUANGAN</p> 
+														   </td>
+														   <td width=\"60%\">
+																<p>:&nbsp;$kodeLokasi</p>
+														   </td>
+														   <td width=\"20%\">&nbsp;</td>
+													  </tr>
+													  </table>
+													  <br />
+													  <br />
 													  
 												   <table style=\"text-align: left; width: 100%;border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 													  <thead>
@@ -7592,72 +12338,98 @@ $body="
                                                   $body.="
 															<body>
 																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-																  <tbody>
-																	<tr>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"width: 908px;\">
-																			<h2>KARTU INVENTARIS RUANGAN<br>
-																			<br>
-																			</h2>
-																		</td>
-																		<br>
-																		<br>
-																		<td  rowspan=\"7\" style=\"width: 205px; text-align: center; padding-bottom:63px;\"><br>
-																			<img style=\"width: 130px; height: 138px;\" alt=\"\" src=\"$gambar\"><br>
-																		</td>
-																	</tr>
-																	<br>
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 180px;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 240px;\">: $this->NAMA_PROVINSI</td>
-																			<td style=\"width: 561px;\">$provinsi</td>
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 180px;\">KAB / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 240px;\">: $this->NAMA_KABUPATEN</td>
-																			<td style=\"width: 561px;\">$kabupaten</td>
-																		</tr>
-																		<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">BIDANG</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $Bidang</td>		
-														</tr>
-													</tbody>
-													<br>	
-													<tbody>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">UNIT ORGANISASI</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $UnitOrganisasi</td>
-															
-														</tr>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">SUB UNIT ORGANISASI</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $SubUnitOrganisasi</td>
-															
-														</tr>
-														<tr>
-															<td style=\"font-weight: bold; text-align: left; width: 180px;\">UPB</td>
-															<td style=\"text-align: left; font-weight: bold; width: 240px;\" colspan=\"2\">: $UPB </td>
-															
-														</tr>
-														
-														<tr>
-															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 180px; padding-top:4px;\">RUANGAN</td>
-															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: 200px; padding-top:4px; \" colspan=\"2\">: $ruangan</td>	
-															
-														</tr>
-														<tr>
-															<td valign=\"top\" style=\"font-weight: bold; text-align: left; width: 50px; padding-top:4px;\">NO.KODE LOKASI</td>
-															<td valign=\"top\" style=\"text-align: left; font-weight: bold; width: ; padding-top:4px; \" colspan=\"2\">: $kodeLokasi</td>	
-															
-														</tr>
-													</tbody>	
-													</tbody>	
-																	<br>
-																	<br />
-																	<br>
-																  </tbody>
-																</table>
-																<br>
+     
+																	  <tr>
+																		   <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+																		   <td style=\"width: 90%; text-align: center;\">
+																				<h3>KARTU INVENTARIS RUANGAN (KIR)</h3>
+																			</td>
+																	  </tr>
+											 
+																 </table>
+																 <br />
+																 <br />
+																<table border=\"0\" width=\"100%\" >
+																	  <tr align=\"left\" >
+																		   <td >
+																				<p>PROVINSI</p>
+																		   </td>
+																		   <td width=\"65%\">
+																				<p>:&nbsp;$this->NAMA_PROVINSI</p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	  <tr>
+																		   <td style=\"font-weight: bold; width=20%\">
+																				<p>KABUPATEN/KOTA</p>
+																		   </td>
+																		   <td width=\"60%\">
+
+																			   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	  <tr>
+																		   <td style=\"font-weight: bold; width=20%\">
+																				<p>BIDANG</p>
+																		   </td>
+																		   <td width=\"60%\">
+
+																			   <p>:&nbsp;$Bidang</p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	  <tr>
+																		   <td style=\"font-weight: bold; width=20%\">
+																				<p>UNIT ORGANISASI</p>
+																		   </td>
+																		   <td width=\"60%\">
+
+																			   <p>:&nbsp;$UnitOrganisasi</p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	   <tr>
+																		   <td style=\"font-weight: bold; width=20%\">
+																				<p>SUB UNIT ORGANISASI</p>
+																		   </td>
+																		   <td width=\"60%\">
+
+																			   <p>:&nbsp;$SubUnitOrganisasi</p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	  <tr>
+																		   <td style=\"font-weight: bold; width=20%\">
+																				<p>UPB</p>
+																		   </td>
+																		   <td width=\"60%\">
+
+																			   <p>:&nbsp;$UPB</p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	  <tr align=\"left\">
+																		   <td width=\"20%\">
+																				<p>NO. KODE LOKASI</p> 
+																		   </td>
+																		   <td width=\"60%\">
+																				<p>:&nbsp;$kodeLokasi</p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	  <tr align=\"left\">
+																		   <td width=\"20%\">
+																				<p>RUANGAN</p> 
+																		   </td>
+																		   <td width=\"60%\">
+																				<p>:&nbsp;$kodeLokasi</p>
+																		   </td>
+																		   <td width=\"20%\">&nbsp;</td>
+																	  </tr>
+																	  </table>
+																	  <br />
+																	  <br />
 																  
 															   <table style=\"text-align: left; width: 100%;border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 																  <thead>
@@ -7896,7517 +12668,62 @@ $body="
 							 $status_print=0;
 							 //$luasTotal=0;
 							 //$perolehanTotal=0;
-									
-                                   foreach ($dataArr as $row)
+							$head.="<body>
+									<table style=\"text-align: left; width: 320px; height: 94px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">
+										";
+                                   $i=1;
+								   $j=1;
+								   $total = count($dataArr);
+								   foreach ($dataArr as $row)
                                    {
-                                             if ($skpdeh =="null" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
+                                       if($i==1){
+											$body.="<tr>";
 												
-                                        
-                                        $body="<body>";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-										$footer="	
-													</body>
-												</html>";
-                                             	
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$footer;
-                                             else
-												$html[]=$body.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                           
-                                         $body="";     
-                                         $body.="<body>";
-                                               
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             
-                                             
-                                             //udah dites
-                                                      
-												$body.="<table style=\"text-align: left; width: 352px; height: 94px;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+										}
+										$noReg = sprintf("%04s", $row->noRegister);
+										$body.="<td>
+													<table style=\"text-align: left; width: 320px; height: 94px;\" border=\"1\" cellpadding=\"1\" cellspacing=\"1\">
 														<tr>
-														  <td>
-														  <table style=\"text-align: left; width: 350px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-															<tbody>
-															  <tr>
-																<td style=\"width: 100px;\" colspan=\"1\" rowspan=\"4\">
-																<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">
-																</td>
-																<td style=\"text-align: center; width: 250px;\"><b>Pemerintah $this->NAMA_PROVINSI<br>";
-																if($this->NAMA_KABUPATEN!='-')
-																$body.="($this->NAMA_KABUPATEN)";
-																$body.="</b></td>
-															  </tr>
-															  <tr>
-																<td style=\"text-align: center; width: 250px;\"><b>Barang Milik Daerah</b></td>
-															  </tr>
-															  <tr>
-																<td style=\"text-align: center; width: 250px;\"><b>$row->NomorReg</b></td>
-															  </tr>
-															  <tr>
-																<td style=\"text-align: center; width: 250px;\"><b>$row->kode."."$no</b></td>
-															  </tr>
-															</tbody>
-														  </table>
-														  </td>
+															<td style=\"width: 50px;\" colspan=\"1\" rowspan=\"2\" align=\"center\">
+																<img style=\"width: 60px; height: 65px;\" alt=\"\" src=\"$gambar\">
+															</td>
+															<td style=\"text-align: center; width: 80px;\"><b>$row->kodeLokasi</td>
+														</tr>
+														<tr>
+															<td style=\"text-align: center; width: 80px;\"><b>$row->kodeKelompok.$noReg</b></td>
+														</tr>
+														<tr >
+															<td colspan=\"2\" style=\"text-align: center; width: 80px;\"><b>PEMERINTAH $this->NAMA_KABUPATEN</b></td>
 														</tr>
 													</table>
-													<p style=\"text-align: center; width: 350px;\">$row->NamaAset</p>
-													
-													<br />";
-													
-										
-										$no++;
-                                                  
-								 }
+												</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>";
+										$i++;
+										$j++;
+										if($i>2 || $j>$total){
+											$body.="</tr>";
+											$i=1;
+										}
+										// $body.="";		
+									}
                                     
 									$footer="
+											</table>	
 										</body>
                                      </html>";	
-                                        if($status_print==0){
+                                        // if($status_print==0){
                                               $html[]=$head.$body.$footer;
-                                        }else{
-                                             $html[]=$body.$footer;
+                                        // }else{
+                                             // $html[]=$body.$footer;
 
-                                           }
+                                           // }
               return $html;
           }
          
     } 
 
 	 
-
-
-//MARNI-ELF
-
-
-//KARTU BARANG PAKAI HABIS (ok) cek
-	public function retrieve_html_kartubarangpakaihabis($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			 include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-											</style>
-										</head>
-											 ";
-
-                                        
-							 $no=1;
-							 $skpdeh="";
-							 $status_print=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-											
-                                                                                                if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-															</tr>
-														</tbody>
-													</table>
-													<br />
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaSatker </td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																
-															</tr>
-														</tbody>
-													</table>
-													<br />
-													<table style=\"text-align: center; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tr>
-															<td>
-																<h2 style=\"text-align: center;\">KARTU BARANG PAKAI HABIS</h2>
-															</td>
-														</tr>
-													</table>
-													<br />
-													  
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaAset</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Satuan</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Spesifikasi</td>
-															
-															</tr>
-														</tbody>
-													</table>	
-													
-													<br/>
-													<br/>
-													<br/>
-																				
-													<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-														<thead>
-															<tr>
-																<td style=\"width: 30px; text-align: center; font-weight: bold;\">No</td>
-																<td style=\"text-align: center; font-weight: bold; width: 120px;\">Tanggal</td>
-																<td style=\"text-align: center; font-weight: bold; width: 100px;\">Masuk</td>
-																<td style=\"text-align: center; font-weight: bold; width: 100px;\">Keluar</td>
-																<td style=\"text-align: center; font-weight: bold; width: 100px;\">Sisa</td>
-																<td style=\"text-align: center; font-weight: bold; width: 200px;\">Keterangan</td>
-															</tr>
-															<tr>
-																<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																<td style=\"width: 120px; text-align: center; font-weight: bold;\">2</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">3</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">5</td>
-																<td style=\"width: 200px; text-align: center; font-weight: bold;\">6</td>
-															</tr>
-														</thead> 
-														";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1 && $cek_nmbrg!= $row->NamaAset){
-
-												$no=1;
-												
-												$foot="
-														</tbody>
-													</table>";
-													
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"5\">&nbsp;</td>
-														</tr>
-													</table>";	
-														 
-														$footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$foot.$footer;
-                                             else
-                                             $html[]=$body.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                                                                                
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: center; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tr>
-																		<td>
-																			<h2 style=\"text-align: center;\">KARTU BARANG PAKAI HABIS</h2>
-																		</td>
-																	</tr>
-																</table>
-																<br>
-																  
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaAset</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Satuan</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Spesifikasi</td>
-																		
-																		</tr>
-																	</tbody>
-																</table>	
-																
-																<br/>
-																<br/>
-																<br/>
-																							
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																	<thead>
-																		<tr>
-																			<td style=\"width: 30px; text-align: center; font-weight: bold;\">No</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 120px;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 100px;\">Masuk</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 100px;\">Keluar</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 100px;\">Sisa</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 200px;\">Keterangan</td>
-																		</tr>
-																		<tr>
-																			<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																			<td style=\"width: 120px; text-align: center; font-weight: bold;\">2</td>
-																			<td style=\"width: 100px; text-align: center; font-weight: bold;\">3</td>
-																			<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																			<td style=\"width: 100px; text-align: center; font-weight: bold;\">5</td>
-																			<td style=\"width: 200px; text-align: center; font-weight: bold;\">6</td>
-																		</tr>
-																	</thead>
-															 ";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-														$masuk = $row->Kuantitas;
-														$masuk_rp = number_format($masuk);
-														$change=$row->TglPerolehan;
-														$change2=format_tanggal($change);
-														
-														($row->InfoTransfer == '') ? $dataInfo = "-" : $dataInfo = $row->InfoTransfer;
-														($change2 == '') ? $change3 = "-" : $change3 = $change2;
-														
-														
-															$body.="
-															<tr>
-																<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-																<td style=\"width: 120px;font-weight: \" align=\"center\">$change3</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">0</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$dataInfo</td>
-															</tr>
-															
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-														//echo"ada";
-														$foot="
-																</tbody>
-															</table>";
-														
-														$foot.="<table border=\"0\">
-																<tr>
-																	<td colspan=\"5\">&nbsp;</td>
-																</tr>
-															</table>";	
-																	
-															
-														$footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																	</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-																	</body>
-																</html>";
-																
-														
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$foot.$footer;  
-
-                                           }
-              return $html;
-          }
- 
-     }
- 
-     
-   
-//KARTU BARANG INVENTARIS (ok)  cek
-	public function retrieve_html_kartubaranginventaris($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			 include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-											</style>
-										</head>
-											 ";
-
-                                        
-							 $no=1;
-							 $skpdeh="";
-							 $status_print=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                                                                
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-															</tr>
-														</tbody>
-													</table>
-													<br />
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaSatker </td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																
-															</tr>
-														</tbody>
-													</table>
-													<br />
-													<table style=\"text-align: center; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tr>
-															<td>
-																<h2 style=\"text-align: center;\">KARTU BARANG INVENTARIS</h2>
-															</td>
-														</tr>
-													</table>
-													<br />
-													  
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaAset</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Satuan</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Spesifikasi</td>
-															
-															</tr>
-														</tbody>
-													</table>	
-													
-													<br/>
-													<br/>
-													<br/>
-																				
-													<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-														<thead>
-															<tr>
-																<td style=\"width: 30px; text-align: center; font-weight: bold;\">No</td>
-																<td style=\"text-align: center; font-weight: bold; width: 120px;\">Tanggal</td>
-																<td style=\"text-align: center; font-weight: bold; width: 100px;\">Masuk</td>
-																<td style=\"text-align: center; font-weight: bold; width: 100px;\">Keluar</td>
-																<td style=\"text-align: center; font-weight: bold; width: 100px;\">Sisa</td>
-																<td style=\"text-align: center; font-weight: bold; width: 200px;\">Keterangan</td>
-															</tr>
-															<tr>
-																<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																<td style=\"width: 120px; text-align: center; font-weight: bold;\">2</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">3</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">5</td>
-																<td style=\"width: 200px; text-align: center; font-weight: bold;\">6</td>
-															</tr>
-														</thead> 
-														";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1 && $cek_nmbrg!= $row->NamaAset){
-
-												$no=1;
-												
-												$foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"5\">&nbsp;</td>
-														</tr>
-													</table>";	
-														 
-												$footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$foot.$footer;
-                                             else
-                                             $html[]=$body.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaSatker </td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: center; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tr>
-																		<td>
-																			<h2 style=\"text-align: center;\">KARTU BARANG INVENTARIS</h2>
-																		</td>
-																	</tr>
-																</table>
-																<br>
-																  
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaAset</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Satuan</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Spesifikasi</td>
-																		
-																		</tr>
-																	</tbody>
-																</table>	
-																
-																<br/>
-																<br/>
-																<br/>
-																							
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																	<thead>
-																		<tr>
-																			<td style=\"width: 30px; text-align: center; font-weight: bold;\">No</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 120px;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 100px;\">Masuk</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 100px;\">Keluar</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 100px;\">Sisa</td>
-																			<td style=\"text-align: center; font-weight: bold; width: 200px;\">Keterangan</td>
-																		</tr>
-																		<tr>
-																			<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																			<td style=\"width: 120px; text-align: center; font-weight: bold;\">2</td>
-																			<td style=\"width: 100px; text-align: center; font-weight: bold;\">3</td>
-																			<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																			<td style=\"width: 100px; text-align: center; font-weight: bold;\">5</td>
-																			<td style=\"width: 200px; text-align: center; font-weight: bold;\">6</td>
-																		</tr>
-																	</thead>
-															 ";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-														$masuk = $row->Kuantitas;
-														$masuk_rp = number_format($masuk);
-														$change=$row->TglPerolehan;
-														$change2=format_tanggal($change);
-														
-														($row->InfoTransfer == '') ? $dataInfo = "-" : $dataInfo = $row->InfoTransfer;
-														($change2 == '') ? $change3 = "-" : $change3 = $change2;
-														
-														
-															$body.="
-															<tr>
-																<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-																<td style=\"width: 120px;font-weight: \" align=\"center\">$change3</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">0</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$dataInfo</td>
-															</tr>
-															
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-														//echo"ada";
-														$foot="
-																</tbody>
-															</table>";
-															
-														$foot.="<table border=\"0\">
-																<tr>
-																	<td colspan=\"5\">&nbsp;</td>
-																</tr>
-															</table>";	
-														 	
-														$footer="	  
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																	</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-																	</body>
-																</html>";
-																
-														
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$foot.$footer;  
-
-                                           }
-              return $html;
-          }
-     }
- 
- 
-     
-//BUKU PERSEDIAAN BARANG INVENTARIS (ok) cek
-    public function retrieve_html_bukupersediaanbaranginventaris($dataArr,$gambar){
-         
-         
-          if($dataArr!="")
-          {
-			  include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                       
-                                        
-								$no=1;
-								$skpdeh="";
-								$status_print=0;
-								$masukTotal=0;
-								$keluarTotal=0;
-								$sisaTotal=0;
-								$bertambahTotal=0;
-								$berkurangTotal=0;
-								$sisahargaTotal=0;
-								$perolehanTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        
-                                        $body=" <body>
-												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 850px; text-align: center;\">
-																			<h3>BUKU PERSEDIAAN BARANG INVENTARIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaSatker </td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Gudang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaAset</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Satuan</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>	
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Kartu No</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Spesifikasi</td>
-																		
-																	</tr>
-															   </tbody>
-															   </table>
-																  <br>
-																  <br>
-																  <table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																  <thead>
-																	<tr>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 80px; text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 174px; text-align: center; font-weight: bold;\">No.Tgl
-																																										Surat
-																																										Dasar
-																																										Penerimaan/Pengeluaran </td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 82px; text-align: center; font-weight: bold;\">Uraian</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Barang -
-																																				  Barang<br></td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga Satuan</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Jumlah Harga Barang</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;\">Masuk</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Keluar</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Bertambah</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Berkurang</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																	</tr>
-																	<tr>
-																		<td style=\"width: 50px; text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"width: 174px; text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"width: 82px; text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"text-align: center; font-weight: bold;\">10</td>
-																		<td style=\"text-align: center; font-weight: bold;\">11</td>
-																	</tr>
-																  </thead>
-                                                                 ";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1 && $cek_nmbrg!= $row->NamaAset){
-
-												$foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"10\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-											 //udah dites footer
-                                             
-                                             //$no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 850px; text-align: center;\">
-																			<h3>BUKU PERSEDIAAN BARANG INVENTARIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaSatker </td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Gudang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaAset</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Satuan</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>	
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Kartu No</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Spesifikasi</td>
-																		
-																	</tr>
-															   </tbody>
-															   </table>
-																  <br>
-																  <br>
-																  <table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																  <thead>
-																	<tr>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 80px; text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 174px; text-align: center; font-weight: bold;\">No.Tgl
-																																										Surat
-																																										Dasar
-																																										Penerimaan/Pengeluaran </td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 82px; text-align: center; font-weight: bold;\">Uraian</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Barang -
-																																				  Barang<br></td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga Satuan</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Jumlah Harga Barang</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;\">Masuk</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Keluar</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Bertambah</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Berkurang</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																	</tr>
-																	<tr>
-																		<td style=\"width: 50px; text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"width: 174px; text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"width: 82px; text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"text-align: center; font-weight: bold;\">10</td>
-																		<td style=\"text-align: center; font-weight: bold;\">11</td>
-																	</tr>
-																  </thead>";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                      
-												$masuk = $row->Kuantitas;
-												//$keluar = $row->ToKuantitas;
-												//$sisa = $masuk - $keluar;
-												
-												$bertambah = $masuk * $perolehan;
-												//$berkurang = $keluar * $perolehan;
-												//$sisaharga = $bertambah - $berkurang;
-												
-												//$sisa_rp = number_format($sisa);
-												$masuk_rp = number_format($masuk);
-												//$keluar_rp = number_format ($keluar);
-												$perolehan_rp = number_format ($perolehan);
-												$bertambah_rp = number_format($bertambah);
-												//$berkurang_rp = number_format($berkurang);
-												//$sisaharga_rp = number_format ($sisaharga);
-												
-												$masukTotal = $masukTotal + $row->Kuantitas;
-												//$keluarTotal = $keluarTotal + $row->ToKuantitas;
-												///$sisaTotal = $sisaTotal + $sisa;
-												$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-												$bertambahTotal = $bertambahTotal + $bertambah;
-												//$berkurangTotal = $berkurangTotal + $berkurang;
-												///$sisahargaTotal = $sisahargaTotal + $sisaharga;
-				
-												$change=$row->TglPerolehan;
-												$change2=format_tanggal($change);
-												$change3=$row->TglPenerimaan;
-												$change4=format_tanggal($change3);	
-												
-												($row->InfoTransfer == '') ? $dataInfo = "-" : $dataInfo = $row->InfoTransfer;
-												($row->NoBAPenerimaan == '') ? $NoBA = "-" : $NoBA = $row->NoBAPenerimaan;
-												($change4 == '') ? $change5 = "-" : $change5 = $change4;	
-												($change2 == '') ? $change6 = "-" : $change6 = $change2;
-															$body.="
-															<tr>
-																<td style=\"width: 50px;font-weight: \" align=\"center\">$change6</td>
-																<td style=\"width: 174px;font-weight: \" align=\"center\">$change5</td>
-																<td style=\"width: 82px;font-weight: \" align=\"center\">$NoBA</td>
-																<td style=\"width: 108px;font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 107px; font-weight: \" align=\"center\">0</td>
-																<td style=\"width: 108px; font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 108px; font-weight: \" align=\"right\">$perolehan_rp</td>
-																<td style=\"width: 106px; font-weight: \" align=\"center\">$bertambah_rp</td>
-																<td style=\"width: 108px; font-weight: \" align=\"center\">0</td>
-																<td style=\"width: 108px; font-weight: \" align=\"center\">$bertambah_rp</td>
-																<td style=\"width: 107px; font-weight: \" align=\"left\">$dataInfo</td>		
-															</tr>
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                               $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"10\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-											   $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-														
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-     
- 
- 
- 
-//BUKU PERSEDIAAN BARANG PAKAI HABIS (ok) cek     
-    public function retrieve_html_bukupersediaanbarangpakaihabis($dataArr,$gambar){
-         
-         if($dataArr!="")
-          {
-			  include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                       
-                                        
-								$no=1;
-								$skpdeh="";
-								$status_print=0;
-								$masukTotal=0;
-								$keluarTotal=0;
-								$sisaTotal=0;
-								$bertambahTotal=0;
-								$berkurangTotal=0;
-								$sisahargaTotal=0;
-								$perolehanTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        
-                                        $body=" <body>
-												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 850px; text-align: center;\">
-																			<h3>BUKU PERSEDIAAN BARANG PAKAI HABIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaSatker </td>
-																		<td style=\"width: 641px;\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; width: 19%; \">PROVINSI</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Gudang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 91%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 91%;\">: $row->NamaAset</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 91%;\">: $row->Satuan</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>	
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Kartu No</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 91%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 91%;\">: $row->Spesifikasi</td>
-																		
-																	</tr>
-															   </tbody>
-															   </table>
-																  <br>
-																  <br>
-																  <table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																  <thead>
-																	<tr>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 80px; text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 174px; text-align: center; font-weight: bold;\">No.Tgl
-																																										Surat
-																																										Dasar
-																																										Penerimaan/Pengeluaran </td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 82px; text-align: center; font-weight: bold;\">Uraian</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Barang -
-																																				  Barang<br></td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga Satuan</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Jumlah Harga Barang</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;\">Masuk</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Keluar</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Bertambah</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Berkurang</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																	</tr>
-																	<tr>
-																		<td style=\"width: 50px; text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"width: 174px; text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"width: 82px; text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"text-align: center; font-weight: bold;\">10</td>
-																		<td style=\"text-align: center; font-weight: bold;\">11</td>
-																	</tr>
-																  </thead>
-                                                                 ";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1 && $cek_nmbrg!= $row->NamaAset){
-
-												$foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"10\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-											 //udah dites footer
-                                             
-                                             //$no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 850px; text-align: center;\">
-																			<h3>BUKU PERSEDIAAN BARANG PAKAI HABIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">PROVINSI</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Gudang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Nama Barang</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->NamaAset</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Satuan</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Satuan</td>
-																		
-																	</tr>
-																</tbody>
-																</table>
-																<br>	
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Kartu No</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: -</td>
-																		
-																	</tr>
-																	<tr>
-																		<td style=\"font-weight: bold; text-align: left; width: 19%;\">Spesifikasi</td>
-																		<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $row->Spesifikasi</td>
-																		
-																	</tr>
-															   </tbody>
-															   </table>
-																  <br>
-																  <br>
-																  <table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																  <thead>
-																	<tr>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 80px; text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 174px; text-align: center; font-weight: bold;\">No.Tgl
-																																										Surat
-																																										Dasar
-																																										Penerimaan/Pengeluaran </td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"width: 82px; text-align: center; font-weight: bold;\">Uraian</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Barang -
-																																				  Barang<br></td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga Satuan</td>
-																		<td colspan=\"3\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Jumlah Harga Barang</td>
-																		<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;\">Masuk</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Keluar</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Bertambah</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Berkurang</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Sisa</td>
-																	</tr>
-																	<tr>
-																		<td style=\"width: 50px; text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"width: 174px; text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"width: 82px; text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"text-align: center; font-weight: bold;\">10</td>
-																		<td style=\"text-align: center; font-weight: bold;\">11</td>
-																	</tr>
-																  </thead>
-                                                                 ";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                      
-												$masuk = $row->Kuantitas;
-												//$keluar = $row->ToKuantitas;
-												//$sisa = $masuk - $keluar;
-												
-												$bertambah = $masuk * $perolehan;
-												//$berkurang = $keluar * $perolehan;
-												//$sisaharga = $bertambah - $berkurang;
-												
-												//$sisa_rp = number_format($sisa);
-												$masuk_rp = number_format($masuk);
-												//$keluar_rp = number_format ($keluar);
-												$perolehan_rp = number_format ($perolehan);
-												$bertambah_rp = number_format($bertambah);
-												//$berkurang_rp = number_format($berkurang);
-												//$sisaharga_rp = number_format ($sisaharga);
-												
-												$masukTotal = $masukTotal + $row->Kuantitas;
-												//$keluarTotal = $keluarTotal + $row->ToKuantitas;
-												///$sisaTotal = $sisaTotal + $sisa;
-												$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-												$bertambahTotal = $bertambahTotal + $bertambah;
-												//$berkurangTotal = $berkurangTotal + $berkurang;
-												///$sisahargaTotal = $sisahargaTotal + $sisaharga;
-				
-												$change=$row->TglPerolehan;
-												$change2=format_tanggal($change);
-												$change3=$row->TglPenerimaan;
-												$change4=format_tanggal($change3);	
-												
-												($row->InfoTransfer == '') ? $dataInfo = "-" : $dataInfo = $row->InfoTransfer;
-												($row->NoBAPenerimaan == '') ? $NoBA = "-" : $NoBA = $row->NoBAPenerimaan;
-												($change4 == '') ? $change5 = "-" : $change5 = $change4;	
-												($change2 == '') ? $change6 = "-" : $change6 = $change2;
-															$body.="
-															<tr>
-																<td style=\"width: 50px;font-weight: \" align=\"center\">$change6</td>
-																<td style=\"width: 174px;font-weight: \" align=\"center\">$change5</td>
-																<td style=\"width: 82px;font-weight: \" align=\"center\">$NoBA</td>
-																<td style=\"width: 108px;font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 107px; font-weight: \" align=\"center\">0</td>
-																<td style=\"width: 108px; font-weight: \" align=\"center\">$masuk_rp</td>
-																<td style=\"width: 108px; font-weight: \" align=\"right\">$perolehan_rp</td>
-																<td style=\"width: 106px; font-weight: \" align=\"center\">$bertambah_rp</td>
-																<td style=\"width: 108px; font-weight: \" align=\"center\">0</td>
-																<td style=\"width: 108px; font-weight: \" align=\"center\">$bertambah_rp</td>
-																<td style=\"width: 107px; font-weight: \" align=\"left\">$dataInfo</td>		
-															</tr>
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                               $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"10\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-											   $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-														
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
- 
-      
-     
-//BUKU PENERIMAAN BARANG INVENTARIS (ok) cek   
-	public function retrieve_html_bukupenerimaanbaranginventaris($dataArr,$gambar){
-         
-           if($dataArr!="")
-          {
-			 include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							$no=1;
-							$skpdeh="";
-							$status_print=0;
-							$satuanTotal=0;
-							$hargaTotal=0;
-							$jumlahTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        
-                                        $body="
-												<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 902px; text-align: center;\">
-																			<h3>BUKU PENERIMAAN BARANG INVENTARIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																	<thead>
-																		<tr>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width:30px;text-align: center; font-weight: bold;\">No<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Dari</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Dokumen Faktur<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width: 140px;text-align: center; font-weight: bold;\">Nama / Jenis
-																																										   Barang</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Banyak</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jumlah</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Bukti
-																																							  Penerimaan</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">1</td>
-																			<td style=\"text-align: center; font-weight: bold;\">2</td>
-																			<td style=\"text-align: center; font-weight: bold;\">3</td>
-																			<td style=\"text-align: center; font-weight: bold;\">4</td>
-																			<td style=\"text-align: center; font-weight: bold;\">5</td>
-																			<td style=\"text-align: center; font-weight: bold;\">6</td>
-																			<td style=\"text-align: center; font-weight: bold;\">7</td>
-																			<td style=\"text-align: center; font-weight: bold;\">8</td>
-																			<td style=\"text-align: center; font-weight: bold;\">9</td>
-																			<td style=\"text-align: center; font-weight: bold;\">10</td>
-																			<td style=\"text-align: center; font-weight: bold;\">11</td>
-																			<td style=\"text-align: center; font-weight: bold;\">12</td>
-																		</tr>
-																	</thead>";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-															
-															$printsatuanTotal=  number_format($satuanTotal);
-															$printhargaTotal=  number_format($hargaTotal);
-                                                            $printjumlahTotal=  number_format($jumlahTotal);
-                                                            $tabletotal="
-																<tr>
-																	<td colspan=\"6\" align=\"center\">TOTAL</td>
-																	<td align=\"center\">$printsatuanTotal</td>
-																	<td align=\"center\">$printhargaTotal</td>
-																	<td align=\"center\">$printjumlahTotal</td>
-																	<td colspan=\"3\"></td>
-																</tr></table>
-															";
-													
-													$satuanTotal=0;		
-													$jumlahTotal=0;
-												    $hargaTotal=0;
-													$no=1;
-                                             
-                                             
-                                             
-                                                $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"11\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-											 //udah dites footer
-                                             
-                                             $satuanTotal=0;
-                                             $jumlahTotal=0;
-                                             $hargaTotal=0;
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 902px; text-align: center;\">
-																			<h3>BUKU PENERIMAAN BARANG INVENTARIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																			
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																	<thead>
-																		<tr>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width:30px;text-align: center; font-weight: bold;\">No<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Dari</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Dokumen Faktur<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width: 140px;text-align: center; font-weight: bold;\">Nama / Jenis
-																																										   Barang</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Banyak</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jumlah</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Bukti
-																																							  Penerimaan</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">1</td>
-																			<td style=\"text-align: center; font-weight: bold;\">2</td>
-																			<td style=\"text-align: center; font-weight: bold;\">3</td>
-																			<td style=\"text-align: center; font-weight: bold;\">4</td>
-																			<td style=\"text-align: center; font-weight: bold;\">5</td>
-																			<td style=\"text-align: center; font-weight: bold;\">6</td>
-																			<td style=\"text-align: center; font-weight: bold;\">7</td>
-																			<td style=\"text-align: center; font-weight: bold;\">8</td>
-																			<td style=\"text-align: center; font-weight: bold;\">9</td>
-																			<td style=\"text-align: center; font-weight: bold;\">10</td>
-																			<td style=\"text-align: center; font-weight: bold;\">11</td>
-																			<td style=\"text-align: center; font-weight: bold;\">12</td>
-																		</tr>
-																	</thead>";
-																	
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                    $satuan= $row->Kuantitas;
-                                                    $harga= $row->NilaiPerolehan;
-                                                    $jumlah= $satuan * $harga; 
-                                                    $hargaTotal = $hargaTotal + $row->NilaiPerolehan;
-													$jumlahTotal = $jumlahTotal + $jumlah;
-													$satuanTotal = $satuanTotal + $row->Kuantitas;
-												
-													$jumlah_rp = number_format($jumlah);
-													$harga_rp= number_format($harga);
-													$satuan_rp= number_format($satuan);
-													
-													$change=$row->TglPerolehan;
-													$change2=format_tanggal($change);
-													$change3=$row->TglPenerimaan;
-													$change4=format_tanggal($change3);
-													
-													($row->InfoTransfer == '') ? $dataInfo = "-" : $dataInfo = $row->InfoTransfer;
-													($row->NoBAPenerimaan == '') ? $NoBA = "-" : $NoBA = $row->NoBAPenerimaan;
-													($change2 == '') ? $change5 = "-" : $change5 = $change2;
-													($change4 == '') ? $change6 = "-" : $change6 = $change4;
-													
-														$body.="
-														<tr>
-															<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-															<td style=\"width: 99px;font-weight: \" align=\"center\">$change5</td>
-															<td style=\"width: 99px;font-weight: \">$row->NamaPenyedia</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$change6</td>
-															<td style=\"width: 98px; font-weight: \" align=\"center\">$NoBA</td>
-															<td style=\"width: 140px; font-weight: \">$row->NamaAset</td>
-															<td style=\"width: 99px; font-weight: \" align=\"center\">$satuan_rp</td>
-															<td style=\"width: 98px; font-weight: \" align=\"right\">$harga_rp</td>
-															<td style=\"width: 99px; font-weight: \" align=\"right\">$jumlah_rp</td>
-															<td style=\"width: 98px; font-weight: \" align=\"center\">$change6</td>
-															<td style=\"width: 99px;font-weight: \" align=\"center\">$NoBA</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$dataInfo</td>
-														</tr>
-                                                            ";
-                                                            $no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-															$printsatuanTotal=  number_format($satuanTotal);
-															$printhargaTotal=  number_format($hargaTotal);
-                                                            $printjumlahTotal=  number_format($jumlahTotal);
-                                                            $tabletotal="
-																<tr>
-																	<td colspan=\"6\" align=\"center\">TOTAL</td>
-																	<td align=\"center\">$printsatuanTotal</td>
-																	<td align=\"center\">$printhargaTotal</td>
-																	<td align=\"center\">$printjumlahTotal</td>
-																	<td colspan=\"3\"></td>
-																</tr></table>
-															";
-
-												$foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"11\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-										
-												
-										if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }  
-     
-  
-  
-//BUKU PENERIMAAN BARANG PAKAI HABIS  (ok) cek
-	public function retrieve_html_bukupenerimaanbarangpakaihabis($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			 include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							$no=1;
-							$skpdeh="";
-							$status_print=0;
-							$satuanTotal=0;
-							$hargaTotal=0;
-							$jumlahTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no=1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        
-                                        $body="
-												<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 902px; text-align: center;\">
-																			<h3>BUKU PENERIMAAN BARANG PAKAI HABIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																	<thead>
-																		<tr>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width:30px;text-align: center; font-weight: bold;\">No<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Dari</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Dokumen Faktur<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width: 140px;text-align: center; font-weight: bold;\">Nama / Jenis
-																																										   Barang</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Banyak</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jumlah</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Bukti
-																																							  Penerimaan</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">1</td>
-																			<td style=\"text-align: center; font-weight: bold;\">2</td>
-																			<td style=\"text-align: center; font-weight: bold;\">3</td>
-																			<td style=\"text-align: center; font-weight: bold;\">4</td>
-																			<td style=\"text-align: center; font-weight: bold;\">5</td>
-																			<td style=\"text-align: center; font-weight: bold;\">6</td>
-																			<td style=\"text-align: center; font-weight: bold;\">7</td>
-																			<td style=\"text-align: center; font-weight: bold;\">8</td>
-																			<td style=\"text-align: center; font-weight: bold;\">9</td>
-																			<td style=\"text-align: center; font-weight: bold;\">10</td>
-																			<td style=\"text-align: center; font-weight: bold;\">11</td>
-																			<td style=\"text-align: center; font-weight: bold;\">12</td>
-																		</tr>
-																	</thead>";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-															
-															$printsatuanTotal=  number_format($satuanTotal);
-															$printhargaTotal=  number_format($hargaTotal);
-                                                            $printjumlahTotal=  number_format($jumlahTotal);
-                                                            $tabletotal="
-																<tr>
-																	<td colspan=\"6\" align=\"center\">TOTAL</td>
-																	<td align=\"center\">$printsatuanTotal</td>
-																	<td align=\"center\">$printhargaTotal</td>
-																	<td align=\"center\">$printjumlahTotal</td>
-																	<td colspan=\"3\"></td>
-																</tr></table>
-															";
-													
-													$satuanTotal=0;		
-													$jumlahTotal=0;
-												    $hargaTotal=0;
-													$no=1;
-											   
-											    $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"11\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-										
-											 //udah dites footer
-                                             
-                                             $satuanTotal=0;
-                                             $jumlahTotal=0;
-                                             $hargaTotal=0;
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 902px; text-align: center;\">
-																			<h3>BUKU PENERIMAAN BARANG PAKAI HABIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																	<thead>
-																		<tr>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width:30px;text-align: center; font-weight: bold;\">No<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Dari</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Dokumen Faktur<br></td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"width: 140px;text-align: center; font-weight: bold;\">Nama / Jenis
-																																										   Barang</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Banyak</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Harga</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jumlah</td>
-																			<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold;\">Bukti
-																																							  Penerimaan</td>
-																			<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Keterangan</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																			<td style=\"text-align: center; font-weight: bold;\">Nomor</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center; font-weight: bold;\">1</td>
-																			<td style=\"text-align: center; font-weight: bold;\">2</td>
-																			<td style=\"text-align: center; font-weight: bold;\">3</td>
-																			<td style=\"text-align: center; font-weight: bold;\">4</td>
-																			<td style=\"text-align: center; font-weight: bold;\">5</td>
-																			<td style=\"text-align: center; font-weight: bold;\">6</td>
-																			<td style=\"text-align: center; font-weight: bold;\">7</td>
-																			<td style=\"text-align: center; font-weight: bold;\">8</td>
-																			<td style=\"text-align: center; font-weight: bold;\">9</td>
-																			<td style=\"text-align: center; font-weight: bold;\">10</td>
-																			<td style=\"text-align: center; font-weight: bold;\">11</td>
-																			<td style=\"text-align: center; font-weight: bold;\">12</td>
-																		</tr>
-																	</thead>";
-																	
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                    $satuan= $row->Kuantitas;
-                                                    $harga= $row->NilaiPerolehan;
-                                                    $jumlah= $satuan * $harga; 
-                                                    $hargaTotal = $hargaTotal + $row->NilaiPerolehan;
-													$jumlahTotal = $jumlahTotal + $jumlah;
-													$satuanTotal = $satuanTotal + $row->Kuantitas;
-												
-													$jumlah_rp = number_format($jumlah);
-													$harga_rp= number_format($harga);
-													$satuan_rp= number_format($satuan);
-													
-													$change=$row->TglPerolehan;
-													$change2=format_tanggal($change);
-													$change3=$row->TglPenerimaan;
-													$change4=format_tanggal($change3);
-													
-													($row->InfoTransfer == '') ? $dataInfo = "-" : $dataInfo = $row->InfoTransfer;
-													($row->NoBAPenerimaan == '') ? $NoBA = "-" : $NoBA = $row->NoBAPenerimaan;
-													($change4 == '') ? $change5 = "-" : $change5 = $change4;
-												
-														$body.="
-														<tr>
-															<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-															<td style=\"width: 99px;font-weight: \" align=\"center\">$change2</td>
-															<td style=\"width: 99px;font-weight: \">$row->NamaPenyedia</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$change5</td>
-															<td style=\"width: 98px; font-weight: \" align=\"center\">$NoBA</td>
-															<td style=\"width: 140px; font-weight: \">$row->NamaAset</td>
-															<td style=\"width: 99px; font-weight: \" align=\"center\">$satuan_rp</td>
-															<td style=\"width: 98px; font-weight: \" align=\"right\">$harga_rp</td>
-															<td style=\"width: 99px; font-weight: \" align=\"right\">$jumlah_rp</td>
-															<td style=\"width: 98px; font-weight: \" align=\"center\">$change5</td>
-															<td style=\"width: 99px;font-weight: \" align=\"center\">$NoBA</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$dataInfo</td>
-														</tr>
-                                                            ";
-                                                            $no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-															$printsatuanTotal=  number_format($satuanTotal);
-															$printhargaTotal=  number_format($hargaTotal);
-                                                            $printjumlahTotal=  number_format($jumlahTotal);
-                                                            $tabletotal="
-																<tr>
-																	<td colspan=\"6\" align=\"center\">TOTAL</td>
-																	<td align=\"center\">$printsatuanTotal</td>
-																	<td align=\"center\">$printhargaTotal</td>
-																	<td align=\"center\">$printjumlahTotal</td>
-																	<td colspan=\"3\"></td>
-																</tr></table>
-															";
-
-											   $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"11\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-														
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }  
-  
-  
-//BUKU PENGELUARAN BARANG INVENTARIS  (pending)
-	public function retrieve_html_bukupengeluaranbaranginventaris($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			 // include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							$no=1;
-							$skpdeh="";
-							$status_print=0;
-							$jumlahTotal=0;
-							$perolehanTotal=0;
-							$hargaTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 902px; text-align: center;\">
-																			<h3>BUKU PENGELUARAN BARANG INVENTARIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-															<br>
-															<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-															<tbody>
-																<tr>
-																	<td style=\"font-weight: bold; text-align: left; width: 161px;\">SKPD</td>
-																	<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $skpdeh</td>
-																	<td style=\"width: 641px;\">$skpd</td>
-																</tr>
-																<tr>
-																	<td style=\"font-weight: bold; text-align: left; width: 161px;\">KABUPATEN / KOTA</td>
-																	<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_KABUPATEN</td>
-																	<td style=\"width: 641px;\">$kab_kota</td>
-																</tr>
-																<tr>
-																	<td style=\"font-weight: bold; text-align: left; width: 161px;\">PROVINSI</td>
-																	<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_PROVINSI</td>
-																	<td style=\"width: 641px;\">$provinsi</td>
-																</tr>
-															</tbody>
-														    </table>
-															<br>
-															<br>
-															<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																<thead>
-																	<tr>
-																		<td style=\"width: 30px;text-align: center; font-weight: bold;\">No</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td style=\"width: 50px;text-align: center; font-weight: bold;\">No.Urut</td>
-																		<td style=\"width: 250px;text-align: center; font-weight: bold;\">Nama
-																																				Barang</td>
-																		<td style=\"width: 60px;text-align: center; font-weight: bold;\">Banyak</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Harga
-																																   Satuan</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Jumlah
-																																	Harga<br>
-																																	Penyerahan<br>
-																																	&nbsp;</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Untuk</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td style=\"width:150px;text-align: center; font-weight: bold;\">Keterangan</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"text-align: center; font-weight: bold;\">10</td>
-																	</tr>
-																</thead>";
-																
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             $no=1;
-                                             
-                                               $footer ="	     
-															</tbody>
-														</table>
-
-															   <br />
-															   <br />
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan</td>
-																	  </tr>
-																		   <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	  </tr>
-																	  <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan</td>
-																	  </tr>
-														";
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																			<tbody>
-																				<tr>
-																					<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-																					<td style=\"width: 902px; text-align: center;\">
-																						<h3>BUKU PENGELUARAN BARANG INVENTARIS</h3>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
-																		<br>
-																		<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-																		<tbody>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 161px;\">SKPD</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $skpdeh</td>
-																				<td style=\"width: 641px;\">$skpd</td>
-																			</tr>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 161px;\">KABUPATEN / KOTA</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_KABUPATEN</td>
-																				<td style=\"width: 641px;\">$kab_kota</td>
-																			</tr>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 161px;\">PROVINSI</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_PROVINSI</td>
-																				<td style=\"width: 641px;\">$provinsi</td>
-																			</tr>
-																		</tbody>
-																		</table>
-																		<br>
-																		<br>
-																		<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																			<thead>
-																				<tr>
-																					<td style=\"width: 30px;text-align: center; font-weight: bold;\">No</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																					<td style=\"width: 50px;text-align: center; font-weight: bold;\">No.Urut</td>
-																					<td style=\"width: 250px;text-align: center; font-weight: bold;\">Nama
-																																							Barang</td>
-																					<td style=\"width: 60px;text-align: center; font-weight: bold;\">Banyak</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Harga
-																																			   Satuan</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Jumlah
-																																				Harga<br>
-																																				Penyerahan<br>
-																																				&nbsp;</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Untuk</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																					<td style=\"width:150px;text-align: center; font-weight: bold;\">Keterangan</td>
-																				</tr>
-																				<tr>
-																					<td style=\"text-align: center; font-weight: bold;\">1</td>
-																					<td style=\"text-align: center; font-weight: bold;\">2</td>
-																					<td style=\"text-align: center; font-weight: bold;\">3</td>
-																					<td style=\"text-align: center; font-weight: bold;\">4</td>
-																					<td style=\"text-align: center; font-weight: bold;\">5</td>
-																					<td style=\"text-align: center; font-weight: bold;\">6</td>
-																					<td style=\"text-align: center; font-weight: bold;\">7</td>
-																					<td style=\"text-align: center; font-weight: bold;\">8</td>
-																					<td style=\"text-align: center; font-weight: bold;\">9</td>
-																					<td style=\"text-align: center; font-weight: bold;\">10</td>
-																				</tr>
-																			</thead>";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                       $jumlah = $row->Kuantitas;
-														$perolehan = $row->NilaiPerolehan;
-														$harga = $jumlah * $perolehan;
-														$harga_rp = number_format($harga);
-														$jumlah_rp = number_format($jumlah);
-														$perolehan_rp = number_format ($perolehan);
-														
-														$jumlahTotal = $jumlahTotal + $row->Kuantitas;
-														$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-														$hargaTotal = $hargaTotal + $row->NilaiPerolehan;
-													
-														// $hak_tanah = get_hak_pakai($row->HakTanah);
-														
-														$change=$row->TglInventarisasi;
-														$change2=format_tanggal($change);
-														
-															$body.="
-															<tr>
-																<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-																<td style=\"width: 119px;font-weight: \" align=\"center\">$change2</td>
-																<td style=\"width: 50px;font-weight: \" align=\"center\">-</td>
-																<td style=\"width: 249px;font-weight: \">$row->NamaAset</td>
-																<td style=\"width: 62px; font-weight: \" align=\"center\">$jumlah_rp</td>
-																<td style=\"width: 118px; font-weight: \" align=\"center\">$perolehan_rp</td>
-																<td style=\"width: 118px; font-weight: \" align=\"center\">$harga_rp</td>
-																<td style=\"width: 120px; font-weight: \">$row->NamaSatker</td>
-																<td style=\"width: 119px; font-weight: \" align=\"center\">-</td>
-																<td style=\"width: 150px; font-weight: \" align=\"center\">-</td>	
-															</tr>
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                              /*$printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-
-                                                            <tr align=\"center\">
-                                                                 <td colspan=\"4\">Total</td>
-                                                                 <td align=\"right\">$printluas</td>
-                                                                 <td colspan=\"7\"></td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr></table>
-                                                       ";*/
-
-											   $footer ="	     
-															</tbody>
-														</table>
-
-															   <br />
-															   <br />
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan</td>
-																	  </tr>
-																		   <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	  </tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">NIP:&nbsp;$nip_atasan</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">NIP :&nbsp;$nip_penyimpan</td>
-																</tr>
-															   </tbody>
-															</table>
-														 </body>
-													</html>
-														";
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-     
-     
-    
-//BUKU PENGELUARAN BARANG PAKAI HABIS (pending)    
-	public function retrieve_html_bukupengeluaranbarangpakaihabis($dataArr,$gambar){
-         
-         if($dataArr!="")
-          {
-			 // include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							$no=1;
-							$skpdeh="";
-							$status_print=0;
-							$jumlahTotal=0;
-							$perolehanTotal=0;
-							$hargaTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 902px; text-align: center;\">
-																			<h3>BUKU PENGELUARAN BARANG PAKAI HABIS</h3>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-															<br>
-															<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-															<tbody>
-																<tr>
-																	<td style=\"font-weight: bold; text-align: left; width: 161px;\">SKPD</td>
-																	<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $skpdeh</td>
-																	<td style=\"width: 641px;\">$skpd</td>
-																</tr>
-																<tr>
-																	<td style=\"font-weight: bold; text-align: left; width: 161px;\">KABUPATEN / KOTA</td>
-																	<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_KABUPATEN</td>
-																	<td style=\"width: 641px;\">$kab_kota</td>
-																</tr>
-																<tr>
-																	<td style=\"font-weight: bold; text-align: left; width: 161px;\">PROVINSI</td>
-																	<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_PROVINSI</td>
-																	<td style=\"width: 641px;\">$provinsi</td>
-																</tr>
-															</tbody>
-														    </table>
-															<br>
-															<br>
-															<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																<thead>
-																	<tr>
-																		<td style=\"width: 30px;text-align: center; font-weight: bold;\">No</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td style=\"width: 50px;text-align: center; font-weight: bold;\">No.Urut</td>
-																		<td style=\"width: 250px;text-align: center; font-weight: bold;\">Nama
-																																				Barang</td>
-																		<td style=\"width: 60px;text-align: center; font-weight: bold;\">Banyak</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Harga
-																																   Satuan</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Jumlah
-																																	Harga<br>
-																																	Penyerahan<br>
-																																	&nbsp;</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Untuk</td>
-																		<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																		<td style=\"width:150px;text-align: center; font-weight: bold;\">Keterangan</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"text-align: center; font-weight: bold;\">10</td>
-																	</tr>
-																</thead>";
-																
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             /*$printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-                                                            <tr align=\"center\">
-                                                                 <td colspan=\"4\">Total</td>
-                                                                 <td align=\"right\">$printluas</td>
-                                                                 <td colspan=\"7\"></td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                            </table>
-                                                       ";
-                                             $luasTotal=0;
-                                             $perolehanTotal=0;*/
-                                             $no=1;
-                                             
-                                               $footer ="	     
-															</tbody>
-														</table>
-
-															   <br />
-															   <br />
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan</td>
-																	  </tr>
-																		   <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	  </tr>
-																	  <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan</td>
-																	  </tr>
-														";
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																			<tbody>
-																				<tr>
-																					<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-																					<td style=\"width: 902px; text-align: center;\">
-																						<h3>BUKU PENGELUARAN BARANG PAKAI HABIS</h3>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
-																		<br>
-																		<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-																		<tbody>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 161px;\">SKPD</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $skpdeh</td>
-																				<td style=\"width: 641px;\">$skpd</td>
-																			</tr>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 161px;\">KABUPATEN / KOTA</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_KABUPATEN</td>
-																				<td style=\"width: 641px;\">$kab_kota</td>
-																			</tr>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 161px;\">PROVINSI</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $this->NAMA_PROVINSI</td>
-																				<td style=\"width: 641px;\">$provinsi</td>
-																			</tr>
-																		</tbody>
-																		</table>
-																		<br>
-																		<br>
-																		<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																			<thead>
-																				<tr>
-																					<td style=\"width: 30px;text-align: center; font-weight: bold;\">No</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																					<td style=\"width: 50px;text-align: center; font-weight: bold;\">No.Urut</td>
-																					<td style=\"width: 250px;text-align: center; font-weight: bold;\">Nama
-																																							Barang</td>
-																					<td style=\"width: 60px;text-align: center; font-weight: bold;\">Banyak</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Harga
-																																			   Satuan</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Jumlah
-																																				Harga<br>
-																																				Penyerahan<br>
-																																				&nbsp;</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Untuk</td>
-																					<td style=\"text-align: center; font-weight: bold;\">Tanggal</td>
-																					<td style=\"width:150px;text-align: center; font-weight: bold;\">Keterangan</td>
-																				</tr>
-																				<tr>
-																					<td style=\"text-align: center; font-weight: bold;\">1</td>
-																					<td style=\"text-align: center; font-weight: bold;\">2</td>
-																					<td style=\"text-align: center; font-weight: bold;\">3</td>
-																					<td style=\"text-align: center; font-weight: bold;\">4</td>
-																					<td style=\"text-align: center; font-weight: bold;\">5</td>
-																					<td style=\"text-align: center; font-weight: bold;\">6</td>
-																					<td style=\"text-align: center; font-weight: bold;\">7</td>
-																					<td style=\"text-align: center; font-weight: bold;\">8</td>
-																					<td style=\"text-align: center; font-weight: bold;\">9</td>
-																					<td style=\"text-align: center; font-weight: bold;\">10</td>
-																				</tr>
-																			</thead>";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                       $jumlah = $row->Kuantitas;
-														$perolehan = $row->NilaiPerolehan;
-														$harga = $jumlah * $perolehan;
-														$harga_rp = number_format($harga);
-														$jumlah_rp = number_format($jumlah);
-														$perolehan_rp = number_format ($perolehan);
-														
-														$jumlahTotal = $jumlahTotal + $row->Kuantitas;
-														$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-														$hargaTotal = $hargaTotal + $row->NilaiPerolehan;
-													
-														// $hak_tanah = get_hak_pakai($row->HakTanah);
-														
-														$change=$row->TglInventarisasi;
-														$change2=format_tanggal($change);
-														
-															$body.="
-															<tr>
-																<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-																<td style=\"width: 119px;font-weight: \" align=\"center\">$change2</td>
-																<td style=\"width: 50px;font-weight: \" align=\"center\">-</td>
-																<td style=\"width: 249px;font-weight: \">$row->NamaAset</td>
-																<td style=\"width: 62px; font-weight: \" align=\"center\">$jumlah_rp</td>
-																<td style=\"width: 118px; font-weight: \" align=\"center\">$perolehan_rp</td>
-																<td style=\"width: 118px; font-weight: \" align=\"center\">$harga_rp</td>
-																<td style=\"width: 120px; font-weight: \">$row->NamaSatker</td>
-																<td style=\"width: 119px; font-weight: \" align=\"center\">-</td>
-																<td style=\"width: 150px; font-weight: \" align=\"center\">-</td>	
-															</tr>
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                              /*$printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-
-                                                            <tr align=\"center\">
-                                                                 <td colspan=\"4\">Total</td>
-                                                                 <td align=\"right\">$printluas</td>
-                                                                 <td colspan=\"7\"></td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr></table>
-                                                       ";*/
-
-											   $footer ="	     
-															</tbody>
-														</table>
-
-															   <br />
-															   <br />
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan</td>
-																	  </tr>
-																		   <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	  </tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">NIP:&nbsp;$nip_atasan</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">NIP :&nbsp;$nip_penyimpan</td>
-																</tr>
-															   </tbody>
-															</table>
-														 </body>
-													</html>
-														";
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-     
-
-
-//LAPORAN PEMERIKSAAN BARANG ATAU GUDANG   (ok)
-    public function retrieve_html_laporanpemeriksaanbarangataugudang($dataArr,$gambar){
-         
-           if($dataArr!="")
-          {
-			 include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-								$no=1;
-								$skpdeh="";
-								$status_print=0;
-								$jumlahTotal=0;
-								$perolehanTotal=0;
-                         
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                $baik= $row->Baik;
-												$ringan= $row->RusakRingan;
-												$rusak= $row->RusakBerat;
-												$tidakditemukan= $row->TidakDitemukan;
-												$kondisi="";
-												if ($baik == '1') {
-													$kondisi = "BB";
-												}
-												else if ($ringan == '1'){
-													$kondisi = "RR";
-												}
-												else if ($rusak == '1'){	
-													$kondisi = "RB";
-												}
-												else if ($tidakditemukan == '1'){
-													$kondisi = "TD";
-												}
-												else 
-													$kondisi = "-";
-												
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: center; width: 100%; height: 93px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-															  <td colspan=\"1\" rowspan=\"3\" style=\"width: 150px; text-align: left;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"><br>
-															  </td>
-															  <td style=\"width: 700px; text-align: center; font-weight: bold;\"><h3>PEMERINTAH DAERAH </h3></td>
-															</tr>
-															<tr style=\"font-weight: bold;\" align=\"center\">
-															  <td style=\"width: 700px;\"><h3>LAPORAN PEMERIKSAAN BARANG / GUDANG</h3></td>
-															</tr>
-															<tr style=\"font-weight: bold;\" align=\"center\">
-															  <td style=\"width: 700px;\"><h3>TAHUN ANGGARAN $f_tahun </h3></td>
-															</tr>
-														</tbody>
-													</table>
-
-														<br />
-														<br />
-
-														<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																
-															</tr>
-														</tbody>
-														</table>
-														  <br />
-														  <br />
-														  <table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-														  <thead>
-															<tr>
-																<td style=\"width: 30px;font-weight: bold; text-align: center;\">No</td>
-																<td style=\"width: 140px;font-weight: bold; text-align: center;\">Nama / Jenis Barang</td>
-																<td style=\"font-weight: bold; text-align: center;\">Kode Barang</td>
-																<td style=\"font-weight: bold; text-align: center;\">Jumlah Barang</td>
-																<td style=\"font-weight: bold; text-align: center;\">Satuan</td>
-																<td style=\"font-weight: bold; text-align: center;\">Nilai Barang</td>
-																<td style=\"font-weight: bold; text-align: center;\">Kondisi *)</td>
-																<td style=\"font-weight: bold; text-align: center;\">NO BA<br>Pemeriksaan</td>
-																<td style=\"font-weight: bold; text-align: center;\">Alasan<br>Pemeriksaan</td>
-																<td style=\"font-weight: bold; text-align: center;\">Tindak Lanjut</td>
-															</tr>
-														</thead>
-															";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             $printTotal = number_format($jumlahTotal);
-                                             $printjumlahTotal = number_format($perolehanTotal);
-                                             $tabletotal="
-                                                            <tr align=\"center\">
-                                                                 <td colspan=\"3\">Total</td>
-                                                                 <td align=\"center\">$printTotal</td>
-                                                                 <td>&nbsp;</td>
-                                                                 <td align=\"right\">$printjumlahTotal</td>
-                                                                 <td colspan=\"4\">&nbsp;</td>
-                                                            </tr>
-                                                            </table>";
-                                             $jumlahTotal=0;
-                                             $perolehanTotal=0;
-                                             $no=1;
-                                             
-                                                $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"11\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>
-																<br>
-																<p><i>*)B : Baik , RR : Rusak Ringan , RB : Rusak Berat , TD : Tidak diTemukan</i>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-										
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: center; width: 100%; height: 93px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																		  <td colspan=\"1\" rowspan=\"3\" style=\"width: 150px; text-align: left;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"><br>
-																		  </td>
-																		  <td style=\"width: 700px; text-align: center; font-weight: bold;\"><h3>PEMERINTAH DAERAH $pemerintah_daerah</h3></td>
-																		</tr>
-																		<tr style=\"font-weight: bold;\" align=\"center\">
-																		  <td style=\"width: 700px;\"><h3>LAPORAN PEMERIKSAAN BARANG / GUDANG</h3></td>
-																		</tr>
-																		<tr style=\"font-weight: bold;\" align=\"center\">
-																		  <td style=\"width: 700px;\"><h3>TAHUN ANGGARAN $tahun_anggaran </h3></td>
-																		</tr>
-																	</tbody>
-																</table>
-
-																	<br />
-																	<br />
-
-																	<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																		<tbody>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																				
-																			</tr>
-																			<tr>
-																				<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																				
-																			</tr>
-																			<tr>
-																				<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																				<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																				
-																			</tr>
-																		</tbody>
-																	</table>
-																	  <br />
-																	  <br />
-																	  <table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																	  <thead>
-																		<tr>
-																			<td style=\"width: 30px;font-weight: bold; text-align: center;\">No</td>
-																			<td style=\"width: 140px;font-weight: bold; text-align: center;\">Nama / Jenis Barang</td>
-																			<td style=\"font-weight: bold; text-align: center;\">Kode Barang</td>
-																			<td style=\"font-weight: bold; text-align: center;\">Jumlah Barang</td>
-																			<td style=\"font-weight: bold; text-align: center;\">Satuan</td>
-																			<td style=\"font-weight: bold; text-align: center;\">Nilai Barang</td>
-																			<td style=\"font-weight: bold; text-align: center;\">Kondisi *)</td>
-																			<td style=\"font-weight: bold; text-align: center;\">NO BA<br>Pemeriksaan</td>
-																			<td style=\"font-weight: bold; text-align: center;\">Alasan<br>Pemeriksaan</td>
-																			<td style=\"font-weight: bold; text-align: center;\">Tindak Lanjut</td>
-																		</tr>
-																	</thead>
-																		";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                      $perolehan = number_format ($row->NilaiPerolehan);
-                                                      ($row->AlasanPemeriksaanGudang == '') ? $Alasan = "-" : $Alasan = $row->AlasanPemeriksaanGudang;
-													  ($row->NoBAPemeriksaan == '') ? $NoBA = "-" : $NoBA = $row->NoBAPemeriksaan;	
-													   
-													   $total = number_format($row->Kuantitas);
-                                                       $jumlahTotal = $jumlahTotal + $row->Kuantitas;
-                                                       $perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-														$body.="
-														<tr>
-															<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-															<td style=\"width: 140px;font-weight: \">$row->NamaAset</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$row->Kode</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$total</td>
-															<td style=\"width: 99px;font-weight: \" align=\"center\">$row->Satuan</td>
-															<td style=\"width: 98px;font-weight: \" align=\"right\">$perolehanTotal</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$kondisi</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$NoBA</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">$Alasan</td>
-															<td style=\"width: 98px;font-weight: \" align=\"center\">-</td>
-														</tr>
-														";
-														$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             $printTotal = number_format($jumlahTotal);
-                                             $printjumlahTotal = number_format($perolehanTotal);
-                                             $tabletotal="
-                                                            <tr align=\"center\">
-                                                                 <td colspan=\"3\">Total</td>
-                                                                 <td align=\"center\">$printTotal</td>
-                                                                 <td>&nbsp;</td>
-                                                                 <td align=\"right\">$printjumlahTotal</td>
-                                                                 <td colspan=\"4\">&nbsp;</td>
-                                                            </tr>
-                                                            </table>";
-                                             $jumlahTotal=0;
-                                             $perolehanTotal=0;
-                                             $no=1;
-                                             
-
-											    $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"11\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>
-																<br>
-																<p><i>*)B : Baik , RR : Rusak Ringan , RB : Rusak Berat , TD : Tidak diTemukan</i>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-										
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-        
-
-//DAFTAR BARANG HASIL INVENTARISASI     
-	public function retrieve_html_daftarbaranghasilinventarisasi($dataArr,$gambar){
-         
-           if($dataArr!="")
-          {
-			 // include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                            $no=1;
-							$skpdeh="";
-							$status_print=0;
-							$perolehanTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_pengelola,$nama_jabatan_pengelola)=$this->get_jabatan($satker_id,"3");
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												
-                                        
-                                        $body="
-												<body>
-														<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																	<td style=\"width: 700px; text-align: center;\">
-																	<h3>DAFTAR BARANG HASIL INVENTARISASI</h3>
-																	<h3>TAHUN $row->Tahun</h3>
-																	</td>
-																</tr>
-															</tbody>
-															</table>
-															<br>
-															<br />
-															<br />
-
-															<table border=\"0\" width=\"100%\">
-																<tr style=\"font-weight: bold;\">
-																	<td width=\"15%\">
-																		<b>KAB/KOTA</b>
-																	</td>
-																	<td>
-																		<b>:&nbsp;$this->NAMA_KABUPATEN</b>
-																	</td>
-																</tr>
-																<tr style=\"font-weight: bold;\"align=\"left\" >
-																	<td>
-																		<b>PROVINSI</b>
-																	</td>
-																	<td>
-																		<b>:&nbsp;$this->NAMA_PROVINSI</b>
-																	</td>
-																</tr>
-															</table>
-															  <br />
-															  <br />
-															  <table style=\"text-align: left; width: 1071px; height: 163px;\" border=\"1\" border-collapse: collapse>
-															<thead>
-																<tr style=\"font bold;\" align=\"center\">
-																	<td style=\"width: 30px;\" colspan=\"1\" rowspan=\"2\"><b>No</b></td>
-																	<td style=\"width: 135px;\" colspan=\"2\" rowspan=\"1\"><b>Kontrak</b></td>
-																	<td style=\"width: 180px;\" colspan=\"1\" rowspan=\"2\"><b>Nama
-																													  Barang / Jasa</b></td>
-																	<td colspan=\"1\" style=\"width: 84px;\"rowspan=\"2\"><b>Volume</b></td>
-																	<td colspan=\"1\" style=\"width: 84px;\"rowspan=\"2\"><b>Satuan</b></td>
-																	<td colspan=\"1\" style=\"width: 84px;\"rowspan=\"2\"><b>Nilai</b></td>
-																	<td colspan=\"1\" style=\"width: 150px;\"rowspan=\"2\"><b>Hasil
-																								Inventarisasi</b></td>
-																	<td colspan=\"1\" style=\"width: 79px;\"rowspan=\"2\"><b>Tgl Inv</b></td>
-																	<td colspan=\"1\" style=\"width: 162px;\"rowspan=\"2\"><b>Keterangan</b></td>
-																</tr>
-																<tr align=\"center\">
-																	<td style=\"font: bold; width: 58px;\"><b>No</b></td>
-																	<td style=\"width: 77px;\"><b>Tanggal</b></td>
-																</tr>
-																<tr>
-																	<td colspan=\"10\" rowspan=\"1\" style=\"width: 988px;\">SKPD
-																	- &nbsp;$row->NamaSatker</td>
-																</tr>
-																<tr>
-																	<td colspan=\"10\" rowspan=\"1\" style=\"width: 988px;\">Unit
-																	-&nbsp;$unit</td>
-																</tr>
-															</thead>";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                                            $tabletotal="
-																<tr align=\"center\">
-																	<td colspan=\"6\">TOTAL</td>
-																	<td>$printperolehanTotal</td>
-																</tr></table>
-																";
-                                                        
-															$perolehanTotal=0;
-															$no=1;
-                                             
-                                               $footer ="	     
-															</tbody>
-														</table>
-
-															   <br />
-															   <br />
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">Pengelola Barang</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">Kepala SKPD</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengelola</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																	  </tr>
-																		   <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	  </tr>
-																	  <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengelola</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan</td>
-																	  </tr>
-														";
-											 //udah dites footer
-                                             
-                                            $no=1;
-											$skpdeh="";
-											$status_print=0;
-											$perolehanTotal=0;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																			<td style=\"width: 700px; text-align: center;\">
-																			<h3>DAFTAR BARANG HASIL INVENTARISASI</h3>
-																			<h3>TAHUN $row->Tahun</h3>
-																			</td>
-																		</tr>
-																	</tbody>
-																	</table>
-																	<br>
-																	<br />
-																	<br />
-
-																	<table border=\"0\" width=\"100%\">
-																		<tr style=\"font-weight: bold;\">
-																			<td width=\"15%\">
-																				<b>KAB/KOTA</b>
-																			</td>
-																			<td>
-																				<b>:&nbsp;$this->NAMA_KABUPATEN</b>
-																			</td>
-																		</tr>
-																		<tr style=\"font-weight: bold;\"align=\"left\" >
-																			<td>
-																				<b>PROVINSI</b>
-																			</td>
-																			<td>
-																				<b>:&nbsp;$this->NAMA_PROVINSI</b>
-																			</td>
-																		</tr>
-																	</table>
-																	  <br />
-																	  <br />
-																	  <table style=\"text-align: left; width: 1071px; height: 163px;\" border=\"1\" border-collapse: collapse>
-																	<thead>
-																		<tr style=\"font bold;\" align=\"center\">
-																			<td style=\"width: 30px;\" colspan=\"1\" rowspan=\"2\"><b>No</b></td>
-																			<td style=\"width: 135px;\" colspan=\"2\" rowspan=\"1\"><b>Kontrak</b></td>
-																			<td style=\"width: 180px;\" colspan=\"1\" rowspan=\"2\"><b>Nama
-																															  Barang / Jasa</b></td>
-																			<td colspan=\"1\" style=\"width: 84px;\"rowspan=\"2\"><b>Volume</b></td>
-																			<td colspan=\"1\" style=\"width: 84px;\"rowspan=\"2\"><b>Satuan</b></td>
-																			<td colspan=\"1\" style=\"width: 84px;\"rowspan=\"2\"><b>Nilai</b></td>
-																			<td colspan=\"1\" style=\"width: 150px;\"rowspan=\"2\"><b>Hasil
-																										Inventarisasi</b></td>
-																			<td colspan=\"1\" style=\"width: 79px;\"rowspan=\"2\"><b>Tgl Inv</b></td>
-																			<td colspan=\"1\" style=\"width: 162px;\"rowspan=\"2\"><b>Keterangan</b></td>
-																		</tr>
-																		<tr align=\"center\">
-																			<td style=\"font: bold; width: 58px;\"><b>No</b></td>
-																			<td style=\"width: 77px;\"><b>Tanggal</b></td>
-																		</tr>
-																		<tr>
-																			<td colspan=\"10\" rowspan=\"1\" style=\"width: 988px;\">SKPD
-																			- &nbsp;$row->NamaSatker</td>
-																		</tr>
-																		<tr>
-																			<td colspan=\"10\" rowspan=\"1\" style=\"width: 988px;\">Unit
-																			-&nbsp;$unit</td>
-																		</tr>
-																	</thead>";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                    $perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-													$perolehan = number_format($row->NilaiPerolehan);
-													
-														$body.="
-														<tr>
-															<td style=\"width: 31px;font-weight: \" align=\"center\">$no</td>
-															<td style=\"width: 56px;font-weight: \" align=\"center\">$row->NoKontrak</td>
-															<td style=\"width: 79px;font-weight: \" align=\"center\">$row->TglKontrak</td>
-															<td style=\"width: 180px;font-weight: \">$row->NamaAset</td>
-															<td style=\"width: 84px;font-weight: \">-</td>
-															<td style=\"width: 84px; font-weight: \" align=\"center\">$row->Satuan</td>
-															<td style=\"width: 84px; font-weight: \" align=\"right\">$perolehan</td>
-															<td style=\"width: 150px; font-weight: \">-</td>
-															<td style=\"width: 79px; font-weight: \" align=\"center\">$row->TglInventarisasi</td>
-															<td style=\"width: 161px; font-weight: \">$row->Info</td>
-														</tr>
-														";
-														$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                              $printperolehanTotal=  number_format($perolehanTotal);
-												$tabletotal="
-													<tr align=\"center\">
-														<td colspan=\"6\">TOTAL</td>
-														<td>$printperolehanTotal</td>
-													</tr></table>
-												";
-
-
-											   $footer ="	     
-															</tbody>
-																</table>
-
-																	   <br />
-																	   <br />
-																	<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																		</tr>
-																		<tr>
-																			<td style=\"text-align: center;\" colspan=\"3\">Pengelola Barang</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td style=\"text-align: center;\" colspan=\"3\">Kepala SKPD</td>
-																		</tr>
-																		<tr>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																		</tr>
-																		<tr>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																		</tr>
-																		<tr>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																		</tr>
-																		<tr>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																		</tr>
-																		<tr>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																		</tr>
-																		<tr>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																			<td>&nbsp;</td>
-																		</tr>
-																		<tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengelola</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																			  </tr>
-																				   <tr>
-																				   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																			  </tr>
-																			  <tr>
-																				   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengelola</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td>&nbsp;</td>
-																				   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan</td>
-																			  </tr>
-																";
-																
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-     
-     
-// PENETAPAN STATUS PENGGUNAAN BMD    
-    public function retrieve_html_penetapanstatuspenggunaanbmd($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			 // include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							$no=1;
-							$skpdeh="";
-							$status_print=0;
-							$barangTotal=0;
-							$perolehanTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												//list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												//list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-																<td style=\"width: 900px; text-align: center;\">
-																	 <h3>LAMPIRAN KEPUTUSAN GUBERNUR/BUPATI/WALIKOTA</h3>
-																	 <h3>NOMOR $row->NoSKKDH</h3>
-																	 <h3>TANGGAL $trow->TglSKKDH</h3>
-																	 <h3>TENTANG PENETAPAN STATUS PENGGUNAAN BARANG MILIK DAERAH PADA DINAS/BADAN/KANTOR</h3>
-														</td>
-															</tr>
-														</tbody>
-														</table>
-														<br />
-														<br />
-														<br />
-												<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-													<thead>
-															<tr>
-																<td style=\"text-align: center; font-weight: bold; width: 30px\" colspan=\"1\" rowspan=\"2\">No.<br>Urut<br></td>
-																<td style=\"text-align: center; font-weight: bold; width: 10%\" colspan=\"1\" rowspan=\"2\">Nama Barang /<br>Jenis Barang</td>
-																<td style=\"text-align: center; font-weight: bold; width: 5%\" colspan=\"1\" rowspan=\"2\">Merk/<br>Model</td>
-																<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">No. Seri <br>Pabrik</td>
-																<td style=\"text-align: center; font-weight: bold; width: 5%\" colspan=\"1\" rowspan=\"2\">Ukuran</td>
-																<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Bahan</td>
-																<td style=\"text-align: center; font-weight: bold; width: 10%\" colspan=\"1\" rowspan=\"2\">Tahun Pembuatan /<br>Pembelian</td>
-																<td style=\"text-align: center; font-weight: bold; width: 7%\" colspan=\"1\" rowspan=\"2\">No. Kode<br>Barang</td>
-																<td style=\"text-align: center; font-weight: bold; width: 10%\" colspan=\"1\" rowspan=\"2\">Jumlah Barang / <br>Register</td>
-																<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Harga Perolehan</td>
-																<td style=\"text-align: center; font-weight: bold;width: 11%\" colspan=\"2\" rowspan=\"1\">Keadaan Barang</td>
-																<td style=\"text-align: center; font-weight: bold;width: 5%\" colspan=\"1\" rowspan=\"2\">Fungsi</td>
-																<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Lokasi<br>Penggunaan</td>
-																<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Keterangan</td>
-															</tr>
-															<tr>
-																<td style=\"text-align: center; font-weight: bold;width: 4%\">Baik <br>(B)</td>
-																<td style=\"text-align: center; font-weight: bold;width: 7%\">Kurang Baik <br>(KB)</td>
-															</tr>
-															<tr>
-																<td style=\"text-align: center; font-weight: bold;\">1</td>
-																<td style=\"text-align: center; font-weight: bold;\">2</td>
-																<td style=\"text-align: center; font-weight: bold;\">3</td>
-																<td style=\"text-align: center; font-weight: bold;\">4</td>
-																<td style=\"text-align: center; font-weight: bold;\">5</td>
-																<td style=\"text-align: center; font-weight: bold;\">6</td>
-																<td style=\"text-align: center; font-weight: bold;\">7</td>
-																<td style=\"text-align: center; font-weight: bold;\">8</td>
-																<td style=\"text-align: center; font-weight: bold;\">9</td>
-																<td style=\"text-align: center; font-weight: bold;\">10</td>
-																<td style=\"text-align: center; font-weight: bold;\">11</td>
-																<td style=\"text-align: center; font-weight: bold;\">12</td>
-																<td style=\"text-align: center; font-weight: bold;\">13</td>
-																<td style=\"text-align: center; font-weight: bold;\">14</td>
-																<td style=\"text-align: center; font-weight: bold;\">15</td>
-															</tr>
-													</thead>
-															";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-															$printbarangTotal=  number_format($barangTotal);
-                                                            $printperolehanTotal=  number_format($perolehanTotal);
-                                                            $tabletotal="
-																<tr>
-																	<td colspan=\"8\" align=\"center\">TOTAL</td>
-																	<td  align=\"center\">$printbarangTotal</td>
-																	<td  align=\"center\">$printperolehanTotal</td>
-																	<td colspan=\"5\"></td>
-																</tr></table>
-															";
-                                                            $barangTotal=0;
-															$perolehanTotal=0;
-															$no=1;
-                                             
-                                               $footer ="	     
-															</tbody>
-															</table>
-															</body>
-														</html>";
-											 //udah dites footer
-                                             
-                                            $no=1;
-											$skpdeh="";
-											$status_print=0;
-											$barangTotal=0;
-											$perolehanTotal=0;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												//list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												//list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-																		<td style=\"width: 900px; text-align: center;\">
-																			 <h3>LAMPIRAN KEPUTUSAN GUBERNUR/BUPATI/WALIKOTA</h3>
-																			 <h3>NOMOR $row->NoSKKDH</h3>
-																			 <h3>TANGGAL $row->TglSKKDH</h3>
-																			 <h3>TENTANG PENETAPAN STATUS PENGGUNAAN BARANG MILIK DAERAH PADA DINAS/BADAN/KANTOR</h3>
-																</td>
-																	</tr>
-																</tbody>
-																</table>
-																<br />
-																<br />
-																<br />
-														<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-															<thead>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold; width: 30px\" colspan=\"1\" rowspan=\"2\">No.<br>Urut<br></td>
-																		<td style=\"text-align: center; font-weight: bold; width: 10%\" colspan=\"1\" rowspan=\"2\">Nama Barang /<br>Jenis Barang</td>
-																		<td style=\"text-align: center; font-weight: bold; width: 5%\" colspan=\"1\" rowspan=\"2\">Merk/<br>Model</td>
-																		<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">No. Seri <br>Pabrik</td>
-																		<td style=\"text-align: center; font-weight: bold; width: 5%\" colspan=\"1\" rowspan=\"2\">Ukuran</td>
-																		<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Bahan</td>
-																		<td style=\"text-align: center; font-weight: bold; width: 10%\" colspan=\"1\" rowspan=\"2\">Tahun Pembuatan /<br>Pembelian</td>
-																		<td style=\"text-align: center; font-weight: bold; width: 7%\" colspan=\"1\" rowspan=\"2\">No. Kode<br>Barang</td>
-																		<td style=\"text-align: center; font-weight: bold; width: 10%\" colspan=\"1\" rowspan=\"2\">Jumlah Barang / <br>Register</td>
-																		<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Harga Perolehan</td>
-																		<td style=\"text-align: center; font-weight: bold;width: 11%\" colspan=\"2\" rowspan=\"1\">Keadaan Barang</td>
-																		<td style=\"text-align: center; font-weight: bold;width: 5%\" colspan=\"1\" rowspan=\"2\">Fungsi</td>
-																		<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Lokasi<br>Penggunaan</td>
-																		<td style=\"text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Keterangan</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;width: 4%\">Baik <br>(B)</td>
-																		<td style=\"text-align: center; font-weight: bold;width: 7%\">Kurang Baik <br>(KB)</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"text-align: center; font-weight: bold;\">10</td>
-																		<td style=\"text-align: center; font-weight: bold;\">11</td>
-																		<td style=\"text-align: center; font-weight: bold;\">12</td>
-																		<td style=\"text-align: center; font-weight: bold;\">13</td>
-																		<td style=\"text-align: center; font-weight: bold;\">14</td>
-																		<td style=\"text-align: center; font-weight: bold;\">15</td>
-																	</tr>
-															</thead>
-																	";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                $barangTotal = $barangTotal + $row->Kuantitas;
-												$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-											
-												//$hak_tanah = get_hak_pakai($row->HakTanah);
-												$perolehan = number_format($row->NilaiPerolehan);
-												
-												($row->NoSeri == '') ? $noseri = "-" : $noseri = $row->NoSeri;
-												($row->Ukuran == '') ? $ukuran = "-" : $ukuran = $row->Ukuran;
-												($row->Material == '') ? $material = "-" : $material = $row->Material;
-												($row->TahunBuat == '') ? $tahunbuat = "-" : $tahunbuat = $row->TahunBuat;
-												($row->Baik == '') ? $baik = "-" : $baik = $row->Baik;
-												($row->RusakRingan == '') ? $rusakringan = "-" : $rusakringan = $row->RusakRingan;
-												($row->Info == '') ? $info = "-" : $info = $row->Info;
-												
-													$body.="
-													<tr>
-														<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-														<td style=\"width: 119px;font-weight: \">$row->NamaAset</td>
-														<td style=\"width: 59px; font-weight: \" align=\"center\">$row->Merk</td>
-														<td style=\"width: 80px; font-weight: \" align=\"center\">$noseri</td>
-														<td style=\"width: 60px; font-weight: \" align=\"center\">$ukuran</td>
-														<td style=\"width: 78px; font-weight: \" align=\"center\">$material</td>
-														<td style=\"width: 120px; font-weight: \" align=\"center\">$tahunbuat</td>
-														<td style=\"width: 83px; font-weight: \" align=\"center\">$row->Kode</td>
-														<td style=\"width: 118px; font-weight: \" align=\"center\">$row->Kuantitas</td>
-														<td style=\"width: 79px; font-weight: \" align=\"right\">$perolehan</td>
-														<td style=\"width: 48px; font-weight: \" align=\"center\">$baik</td>
-														<td style=\"width: 83px; font-weight: \" align=\"center\">$rusakringan</td>
-														<td style=\"width: 60px; font-weight: \" align=\"center\">-</td>
-														<td style=\"width: 79px; font-weight: \">$row->NamaLokasi</td>
-														<td style=\"width: 80px; font-weight: \" align=\"center\">$info</td>
-													</tr>
-													";
-													$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-												$printbarangTotal=  number_format($barangTotal);
-												$printperolehanTotal=  number_format($perolehanTotal);
-											   $tabletotal="
-													<tr>
-														<td colspan=\"8\" align=\"center\">TOTAL</td>
-														<td  align=\"center\">$printbarangTotal</td>
-														<td  align=\"center\">$printperolehanTotal</td>
-														<td colspan=\"5\"></td>
-													</tr></table>
-												";
-
-											   $footer ="	     
-															</tbody>
-															</table>
-															</body>
-														</html>";
-														
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-     
-    
-         
-// PEMELIHARAAN    
-     public function retrieve_html_pemeliharaan($dataArr,$gambar){
-         
-           if($dataArr!="")
-          {
-			 // include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							$no=1;
-							$skpdeh="";
-							$status_print=0;
-							//$luasTotal=0;
-							$perolehanTotal=0;
-							$nilaisebelum=0;
-							$nilaisesudah=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												//list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												//list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-													<tbody>
-														<tr>
-															<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-															<td style=\"width: 900px; text-align: center;\">
-																<h3>PEMERINTAH DAERAH $this->NAMA_KABUPATEN_BESAR</h3>
-																<h3>DAFTAR BMD UNTUK PEMELIHARAAN</h3>
-																<h3>TAHUN ANGGARAN $this->Tahun</h3>
-															</td>
-														</tr>
-													</tbody>
-													</table>
-													<br />
-													<br />
-													<table border=\"0\" width=\"100%\">
-														<tr  align=\"center\">
-															<td style=\"font-weight: bold; text-align: left; width: 110px;\">No.Kode Lokasi</td>
-															<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $row->KodeLokasi</td>
-															<td style=\"width: 641px;\">$kodelokasi</td>
-														</tr>
-													</table>
-													  <br />
-													  <br />
-														 <table border=\"1\" width=\"100%\">
-														 <thead>
-																<tr>
-																	<td rowspan=\"2\" width=\"3%\" align=\"center\" span style=\"font-weight: bold;\">No</td>
-																	<td rowspan=\"2\" width=\"9%\" align=\"center\" span style=\"font-weight: bold;\">Tanggal<br>Pemeliharaan</td>
-																	<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Jenis Pemeliharaan</td>
-																	<td rowspan=\"2\" width=\"8%\" align=\"center\" span style=\"font-weight: bold;\">Biaya</td>
-																	<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Pemelihara</td>
-																	<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Nilai Aset</td>
-																	<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Perubahan Kondisi</td>
-																</tr>
-																<tr>
-																	<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Ringan<br></td>
-																	<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Sedang</td>
-																	<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Berat</td>
-																	<td width=\"8%\" align=\"center\" span style=\"font-weight: bold;\">Nama</td>
-																	<td width=\"5%\" align=\"center\" span style=\"font-weight: bold;\">NIP</td>
-																	<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Jabatan</td>
-																	<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Sebelum</td>
-																	<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Setelah</td>
-																	<td width=\"8%\" align=\"center\" span style=\"font-weight: bold;\">Keterangan</td>
-																	<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Baik</td>
-																	<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Rusak<br>Ringan</td>
-																	<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Rusak<br />Berat</td></tr>
-																<tr>
-																	<td width=\"3%\" style=\"font-weight: bold; text-align: center;\">1</td>
-																			<td width=\"9%\" style=\"font-weight: bold; text-align: center;\">2</td>
-																	<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">3</td>
-																			<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">4</td>
-																	<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">5</td>
-																			<td width=\"8%\" style=\"font-weight: bold; text-align: center;\">6</td>
-																	<td width=\"8%\" style=\"font-weight: bold; text-align: center;\">7</td>
-																	<td width=\"5%\" style=\"font-weight: bold; text-align: center;\">8</td>
-																			<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">9</td>
-																	<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">10</td>
-																	<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">11</td>
-																			<td width=\"8%\" style=\"font-weight: bold; text-align: center;\">12</td>
-																	<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">13</td>
-																	<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">14</td>
-																	<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">15</td>
-																</tr>
-														</thead>
-														";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1 && $cek_nmbrg!= $row->NamaAset){
-
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                                            $printnilaisebelum=  number_format($nilaisebelum);
-                                                            $printnilaisesudah=  number_format($nilaisesudah);
-                                                            $tabletotal="
-																<tr align=\"center\">
-																	<td colspan=\"5\" align=\"center\">Total</td>
-																	<td align=\"center\">$printperolehanTotal</td>
-																	<td colspan=\"3\"></td>
-																	<td align=\"center\">$printnilaisebelum</td>
-																	<td align=\"center\">$printnilaisesudah</td>
-																	<td colspan=\"4\"></td>
-																</tr></table>
-															";
-																				   
-													$perolehanTotal=0;
-													$nilaisebelum=0;
-													$nilaisesudah=0;
-													$no=1;
-																					 
-                                               $footer ="	     
-																</tbody>
-																</table>
-																<br>
-																<br>
-															 </body>
-														</html>";
-	
-														
-											 //udah dites footer
-                                             
-													$perolehanTotal=0;
-													$nilaisebelum=0;
-													$nilaisesudah=0;
-													$no=1;
-													
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												//list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												//list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-													<tbody>
-														<tr>
-															<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-															<td style=\"width: 900px; text-align: center;\">
-																<h3>PEMERINTAH DAERAH $this->NAMA_KABUPATEN_BESAR</h3>
-																<h3>DAFTAR BMD UNTUK PEMELIHARAAN</h3>
-																<h3>TAHUN ANGGARAN $this->Tahun</h3>
-															</td>
-														</tr>
-													</tbody>
-													</table>
-													<br />
-													<br />
-													<table border=\"0\" width=\"100%\">
-														<tr  align=\"center\">
-															<tr  align=\"center\">
-															<td style=\"font-weight: bold; text-align: left; width: 110px;\">No.Kode Lokasi</td>
-															<td style=\"text-align: left; font-weight: bold; width: 190px;\">: $row->KodeLokasi</td>
-															<td style=\"width: 641px;\">$kodelokasi</td>
-														</tr>
-															
-														</tr>
-													</table>
-													  <br />
-													  <br />
-													<table border=\"1\" width=\"100%\">
-															<tr>
-																<td rowspan=\"2\" width=\"3%\" align=\"center\" span style=\"font-weight: bold;\">No</td>
-																<td rowspan=\"2\" width=\"9%\" align=\"center\" span style=\"font-weight: bold;\">Tanggal<br>Pemeliharaan</td>
-														<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Jenis Pemeliharaan</td>
-														<td rowspan=\"2\" width=\"8%\" align=\"center\" span style=\"font-weight: bold;\">Biaya</td>
-														<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Pemelihara</td>
-														<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Nilai Aset</td>
-														<td width=\"20%\" align=\"center\" span style=\"font-weight: bold;\">Perubahan Kondisi</td>
-															</tr>
-															<tr>
-														<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Ringan<br></td>
-																<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Sedang</td>
-														<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Berat</td>
-																<td width=\"8%\" align=\"center\" span style=\"font-weight: bold;\">Nama</td>
-														<td width=\"5%\" align=\"center\" span style=\"font-weight: bold;\">NIP</td>
-																<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Jabatan</td>
-														<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Sebelum</td>
-														<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Setelah</td>
-																<td width=\"8%\" align=\"center\" span style=\"font-weight: bold;\">Keterangan</td>
-														<td width=\"6%\" align=\"center\" span style=\"font-weight: bold;\">Baik</td>
-														<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Rusak<br>Ringan</td>
-																<td width=\"7%\" align=\"center\" span style=\"font-weight: bold;\">Rusak<br />Berat</td></tr>
-															<tr>
-														<td width=\"3%\" style=\"font-weight: bold; text-align: center;\">1</td>
-																<td width=\"9%\" style=\"font-weight: bold; text-align: center;\">2</td>
-														<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">3</td>
-																<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">4</td>
-														<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">5</td>
-																<td width=\"8%\" style=\"font-weight: bold; text-align: center;\">6</td>
-														<td width=\"8%\" style=\"font-weight: bold; text-align: center;\">7</td>
-														<td width=\"5%\" style=\"font-weight: bold; text-align: center;\">8</td>
-																<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">9</td>
-														<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">10</td>
-														<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">11</td>
-																<td width=\"8%\" style=\"font-weight: bold; text-align: center;\">12</td>
-														<td width=\"6%\" style=\"font-weight: bold; text-align: center;\">13</td>
-														<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">14</td>
-																<td width=\"7%\" style=\"font-weight: bold; text-align: center;\">15</td>
-															</tr>
-															";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                                    $nilaisebelum  = $nilaisebelum + $row->FromNilai;
-													$nilaisesudah  = $nilaisesudah + $row->ToNilai;
-													$perolehanTotal = $perolehanTotal + $row->Biaya;
-												
-													//$hak_tanah = get_hak_pakai($row->HakTanah);
-													$perolehan = number_format($row->Biaya);
-													$nilaisebelum = number_format($row->FromNilai); 
-													$nilaisesudah= number_format($row->ToNilai); 
-													
-													$change=$row->TglPemeliharaan;
-													$change2=format_tanggal($change);
-													
-														$body.="
-														<tr>
-															<td style=\"width: 35px;font-weight: \" align=\"center\">$no</td>
-															<td style=\"width: 107px;font-weight: \" align=\"center\">$change2</td>
-															<td style=\"width: 72px;font-weight: \" align=\"center\">-</td>
-															<td style=\"width: 83px;font-weight: \" align=\"center\">-</td>
-															<td style=\"width: 83px;font-weight: \" align=\"center\">-</td>
-															<td style=\"width: 95px;font-weight: \" align=\"right\">$perolehan</td>
-															<td style=\"width: 96px;font-weight: \">$row->NamaPemelihara</td>
-															<td style=\"width: 59x;font-weight: \" align=\"center\">$row->NIPPemelihara</td>
-															<td style=\"width: 84px;font-weight: \" align=\"center\">$row->JabatanPemelihara</td>
-															<td style=\"width: 71px;font-weight: \" align=\"right\">$nilaisebelum</td>
-															<td style=\"width: 72px;font-weight: \" align=\"right\">$nilaisesudah</td>
-															<td style=\"width: 95px;font-weight: \">$row->KeteranganNilai</td>
-															<td style=\"width: 70px;font-weight: \" align=\"center\">$row->Baik</td>
-															<td style=\"width: 83px;font-weight: \" align=\"center\">$row->RusakRingan</td>
-															<td style=\"width: 84px;font-weight: \" align=\"center\">$row->RusakBerat</td>
-														</tr>	
-														";
-														$no++;
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                             $printnilaisebelum =  number_format($nilaisebelum);
-											 $printnilaisesudah = number_format($nilaisesudah);
-											 $printperolehanTotal=  number_format($perolehanTotal);
-											   $tabletotal="
-													<tr>
-														<td colspan=\"5\" align=\"center\">Total</td>
-														<td align=\"center\">$printperolehanTotal</td>
-														<td colspan=\"3\"></td>
-														<td align=\"center\">$printnilaisebelum</td>
-														<td align=\"center\">$printnilaisesudah</td>
-														<td colspan=\"4\"></td>
-													</tr></table>
-												";
-
-
-											   $footer ="	     
-															</tbody>
-															</table>
-															<br>
-															<br>
-														 </body>
-													</html>";
-													
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-     
-     
-//LAPORAN PEMELIHARAAN     
-     public function retrieve_html_laporanpemeliharaan($dataArr,$gambar){
-         
-           if($dataArr!="")
-          {
-			 // include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                                        <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-												</style>
-											</head>
-											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							$no=1;
-							$skpdeh="";
-							$status_print=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-												$buktipemeliharaan = $row->NoBAPemeliharaan;
-												$bukti = "";
-												if ($buktipemeliharaan != ""){
-													$bukti = "Ada";
-												}
-												else 
-													$bukti = "Tidak Ada";
-												
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-													<tbody>
-														<tr>
-															<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-															<td style=\"width: 900px; text-align: center;\">
-																<h2>LAPORAN BULANAN / SEMESTERAN / TAHUNAN</h2>
-																<h2>PEMELIHARAAN BARANG</h2>
-																<h2>TAHUN ANGGARAN $row->Tahun</h2>
-															</td>
-														</tr>
-												</tbody>
-												</table>
-												<br />
-												<br />
-												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 161px; font-size:18px;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 190px; font-size:18px;\" colspan=5>: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 200px; font-size:18px;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 190px; font-size:18px;\">: $this->NAMA_KABUPATEN</td>
-																			<td style=\"width: 641px;\" colspan=4>$kab_kota</td>
-																		</tr>
-																		<tr width=100%>
-																			<td style=\"font-weight: bold; font-size:18px;\">PROVINSI</td>
-																			<td style=\"font-weight: bold; font-size:18px; \">: $this->NAMA_PROVINSI</td>
-																			<td style=\"width: 600px; float:left; font-size:18px;\">$provinsi</td>
-																			<td style=\"font-weight: bold; width:180px; float: right; font-size:18px;\">NO. KODE LOKASI</td>
-																			<td style=\"font-weight: bold; width:80px; font-size:18px;\">: $row->Satker_ID</td>
-																			<td style=\"width: 0px; font-size:18px;\">$provinsi</td>
-																		</tr>
-																	</tbody>
-															</table>
-												  <br />
-												  <br />
-												<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-													<thead>
-															<tr>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:30px; font-weight: bold;\">No</td>
-														<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; width:180px;font-weight: bold;\">Spesifikasi Barang</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:13%;font-weight: bold;\">Nama Barang<br>yang Dipelihara</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jenis<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Yang<br>Memelihara</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Biaya<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Bukti<br>Pemeliharaan</td>
-														<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:15%;font-weight: bold;\">Keterangan</td>
-													</tr>
-													<tr>
-														<td style=\"text-align: center; width:90px; font-weight: bold;\">No.Kode<br>Barang<br></td>
-														<td style=\"text-align: center; width:90px;font-weight: bold;\">No.<br>Register</td>
-													</tr>
-													<tr>
-														<td style=\"text-align: center; font-weight: bold;\">1</td>
-														<td style=\"text-align: center; font-weight: bold;\">2</td>
-														<td style=\"text-align: center; font-weight: bold;\">3</td>
-														<td style=\"text-align: center; font-weight: bold;\">4</td>
-														<td style=\"text-align: center; font-weight: bold;\">5</td>
-														<td style=\"text-align: center; font-weight: bold;\">6</td>
-														<td style=\"text-align: center; font-weight: bold;\">7</td>
-														<td style=\"text-align: center; font-weight: bold;\">8</td>
-														<td style=\"text-align: center; font-weight: bold;\">9</td>
-														<td style=\"text-align: center; font-weight: bold;\">10</td>
-													</tr>
-												</thead>";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             /*$printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-                                                            <tr align=\"center\">
-                                                                 <td colspan=\"4\">Total</td>
-                                                                 <td align=\"right\">$printluas</td>
-                                                                 <td colspan=\"7\"></td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                            </table>
-                                                       ";	
-                                             $luasTotal=0;
-                                             $perolehanTotal=0; */
-                                             $no=1;
-                                             
-                                               $footer ="	     
-															</tbody>
-														</table>
-
-															   <br />
-															   <br />
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">Kepala SKPD</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr> font-weight: bold;
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus</td>
-																	  </tr>
-																		   <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	  </tr>
-																	  <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus</td>
-																	  </tr>
-																 </table>
-															 </body>
-														</html>
-														";
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$footer;
-                                             $skpdeh = $row->NamaSatker;
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-													<tbody>
-														<tr>
-															<td style=\"width: 150px;\"><img style=\"width: 130px; height: 115px;\" alt=\"\" src=\"$gambar\"></td>
-															<td style=\"width: 900px; text-align: center;\">
-																<h2>LAPORAN BULANAN / SEMESTERAN / TAHUNAN</h2>
-																<h2>PEMELIHARAAN BARANG</h2>
-																<h2>TAHUN ANGGARAN $row->Tahun</h2>
-															</td>
-														</tr>
-												</tbody>
-												</table>
-												<br />
-												<br />
-												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 161px; font-size:18px;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 190px; font-size:18px;\" colspan=5>: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 200px; font-size:18px;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 190px; font-size:18px;\">: $this->NAMA_KABUPATEN</td>
-																			<td style=\"width: 641px;\" colspan=4>$kab_kota</td>
-																		</tr>
-																		<tr width=100%>
-																			<td style=\"font-weight: bold; font-size:18px;\">PROVINSI</td>
-																			<td style=\"font-weight: bold; font-size:18px; \">: $this->NAMA_PROVINSI</td>
-																			<td style=\"width: 600px; float:left; font-size:18px;\">$provinsi</td>
-																			<td style=\"font-weight: bold; width:180px; float: right; font-size:18px;\">NO. KODE LOKASI</td>
-																			<td style=\"font-weight: bold; width:80px; font-size:18px;\">: $row->Satker_ID</td>
-																			<td style=\"width: 0px; font-size:18px;\">$provinsi</td>
-																		</tr>
-																	</tbody>
-															</table>
-															  <br />
-															  <br />
-															<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																<thead>
-																		<tr>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:30px; font-weight: bold;\">No</td>
-																	<td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; width:180px;font-weight: bold;\">Spesifikasi Barang</td>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:13%;font-weight: bold;\">Nama Barang<br>yang Dipelihara</td>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Jenis<br>Pemeliharaan</td>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Yang<br>Memelihara</td>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Pemeliharaan</td>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Biaya<br>Pemeliharaan</td>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Bukti<br>Pemeliharaan</td>
-																	<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; width:15%;font-weight: bold;\">Keterangan</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center; width:90px; font-weight: bold;\">No.Kode<br>Barang<br></td>
-																	<td style=\"text-align: center; width:90px;font-weight: bold;\">No.<br>Register</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center; font-weight: bold;\">1</td>
-																	<td style=\"text-align: center; font-weight: bold;\">2</td>
-																	<td style=\"text-align: center; font-weight: bold;\">3</td>
-																	<td style=\"text-align: center; font-weight: bold;\">4</td>
-																	<td style=\"text-align: center; font-weight: bold;\">5</td>
-																	<td style=\"text-align: center; font-weight: bold;\">6</td>
-																	<td style=\"text-align: center; font-weight: bold;\">7</td>
-																	<td style=\"text-align: center; font-weight: bold;\">8</td>
-																	<td style=\"text-align: center; font-weight: bold;\">9</td>
-																	<td style=\"text-align: center; font-weight: bold;\">10</td>
-																</tr>
-															</thead>";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-                                             $perolehan = number_format ($row->Biaya);
-                                             
-                                             $change=$row->TglPemeliharaan;
-											 $change2=format_tanggal($change);
-                                             
-                                             ($row->JenisPemeliharaan == '') ? $jenis = "-" : $jenis = $row->JenisPemeliharaan;
-											 ($row->NamaPemelihara == '') ? $nama = "-" : $nama = $row->NamaPemelihara;	
-											 ($row->KeteranganPemeliharaan == '') ? $ket = "-" : $ket = $row->KeteranganPemeliharaan;
-                                                       $body.="
-														<tr>
-															<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-															<td style=\"width: 90px;font-weight: \" align=\"center\">$row->Kode</td>
-															<td style=\"width: 90px;font-weight: \" align=\"center\">$row->NomorReg</td>
-															<td style=\"width: 155px;font-weight: \">$row->NamaAset</td>
-															<td style=\"width: 119px;font-weight: \" align=\"center\">$jenis</td>
-															<td style=\"width: 118px;font-weight: \" align=\"center\">$nama</td>
-															<td style=\"width: 120px;font-weight: \" align=\"center\">$change2</td>
-															<td style=\"width: 118px;font-weight: \" align=\"right\">$perolehan</td>
-															<td style=\"width: 119px;font-weight: \" align=\"center\">$bukti</td>
-															<td style=\"width: 178px;font-weight: \" align=\"center\">$ket</td>
-														</tr>
-														";
-														$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                             /*$printluas=  number_format($luasTotal);
-                                             $printperolehanTotal=  number_format($perolehanTotal);
-                                             $tabletotal="
-
-                                                            <tr align=\"center\">
-                                                                 <td colspan=\"4\">Total</td>
-                                                                 <td align=\"right\">$printluas</td>
-                                                                 <td colspan=\"7\"></td>
-                                                                 <td align=\"right\">$printperolehanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr></table>
-                                                       ";*/
-
-											   $footer ="	
-															</tbody>
-														</table>
-
-															   <br />
-															   <br />
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-															<tbody>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																</tr>
-																<tr>
-																	<td style=\"text-align: center;\" colspan=\"3\">Kepala SKPD</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																	<td>&nbsp;</td>
-																</tr>
-																<tr>
-																   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus</td>
-																	  </tr>
-																		   <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	  </tr>
-																	  <tr>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td>&nbsp;</td>
-																		   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus</td>
-																	  </tr>
-																	 </table>
-																 </body>
-															</html>
-														";
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$footer;
-                                             
-                                             
-                                             
-
-                                           }
-              return $html;
-          }
-     }
-     
-     
-	 
-//BUKU BARANG INVENTARIS (ok) cek	 
-	 public function retrieve_html_bukubaranginventaris($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			 include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                               <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-											</style>
-										</head>
-											 ";
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							 $no=1;
-							 $skpdeh="";
-							 $status_print=0;
-							 $jumlahTotal=0;
-							 $satuanTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-													  <tbody>
-														<tr>
-														  <td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-														  <td style=\"width: 902px; text-align: center;\">
-															<h3>BUKU BARANG INVENTARIS</h3>
-														  </td>
-														</tr>
-													  </tbody>
-													</table>
-													<br>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																
-															</tr>
-														</tbody>
-													</table>
-													<br>
-													<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-													  <thead>
-														<tr>
-														  <td colspan=\"1\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 30px;\"></td>
-														  <td style=\"text-align: center; font-weight: bold; width: 741px;\"rowspan=\"1\" colspan=\"8\">PENERIMAAN</td>
-														  <td style=\"font-weight: bold; text-align: center; width: 343px;\"rowspan=\"1\" colspan=\"4\">PENGELUARAN<br>
-														  </td>
-														  <td>&nbsp;</td>
-														</tr>
-														<tr>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 30px;\">No</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Tanggal</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 170px;\">Nama
-																																				/
-																																				Jenis
-																																				Barang</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 100px;\">Merk
-																																				 / Ukuran</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 83px;\">Thn<br>
-																																				 Pembuatan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Jumlah
-																																				/ <br>
-																																				Satuan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 108px;\">Tgl/No.<br>
-																																				  Kontrak/SP/SPK</td>
-														  <td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 160px;\">Berita Acara<br>Pemeriksaan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Dikeluarkan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Diserahkan <br>Kepada</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 85px;\">Jumlah
-																																				 Sat /
-																																				 Barang </td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 87px;\">Tgl
-																																				 / No.
-																																				 Penyerahan</td>
-														  <td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Keterangan</td>
-														</tr>
-														<tr>
-														  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Tanggal</td>
-														  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Nomor</td>
-														</tr>
-														<tr>
-																<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																<td style=\"width: 60px; text-align: center; font-weight: bold;\">2</td>
-																<td style=\"width: 170px; text-align: center; font-weight: bold;\">3</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																<td style=\"width: 83px; text-align: center; font-weight: bold;\">5</td>
-																<td style=\"width: 60px; text-align: center; font-weight: bold;\">6</td>
-																<td style=\"width: 108px; text-align: center; font-weight: bold;\">7</td>
-																<td style=\"width: 80px; text-align: center; font-weight: bold;\">8</td>
-																<td style=\"width: 80px; text-align: center; font-weight: bold;\">9</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">10</td>
-																<td style=\"width: 85px; text-align: center; font-weight: bold;\">11</td>
-																<td style=\"width: 87px; text-align: center; font-weight: bold;\">12</td>
-																<td style=\"width: 85px; text-align: center; font-weight: bold;\">13</td>
-																<td style=\"width: 87px; text-align: center; font-weight: bold;\">14</td>
-														</tr>		
-													</thead>
-												";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             $printjumlahTotal=  number_format($jumlahTotal);
-                                             $printsatuanTotal=  number_format($satuanTotal);
-                                             $tabletotal="
-                                                            <tr>
-                                                                 <td colspan=\"5\" align=\"center\">TOTAL</td>
-                                                                 <td align=\"center\">$printjumlahTotal</td>
-                                                                 <td colspan=\"5\"></td>
-                                                                 <td align=\"center\">$printsatuanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                            </table>
-                                                       ";
-                                             
-                                             $no=1;          	
-                                             $jumlahTotal=0;
-                                             $satuanTotal=0; 
-                                             
-												$foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"13\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             $jumlahTotal=0;
-                                             $satuanTotal=0;
-                                             
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																  <tbody>
-																	<tr>
-																	  <td style=\"width: 150px;\"><img style=\"width: 60px; height: 79px;\" alt=\"\" src=\"$gambar\"></td>
-																	  <td style=\"width: 902px; text-align: center;\">
-																		<h3>BUKU BARANG INVENTARIS</h3>
-																	  </td>
-																	</tr>
-																  </tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																  <thead>
-																	<tr>
-																	  <td colspan=\"1\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 30px;\"></td>
-																	  <td style=\"text-align: center; font-weight: bold; width: 741px;\"rowspan=\"1\" colspan=\"8\">PENERIMAAN</td>
-																	  <td style=\"font-weight: bold; text-align: center; width: 343px;\"rowspan=\"1\" colspan=\"4\">PENGELUARAN<br>
-																	  </td>
-																	  <td>&nbsp;</td>
-																	</tr>
-																	<tr>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 30px;\">No</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Tanggal</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 170px;\">Nama
-																																							/
-																																							Jenis
-																																							Barang</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 100px;\">Merk
-																																							 / Ukuran</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 83px;\">Thn<br>
-																																							 Pembuatan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Jumlah
-																																							/ <br>
-																																							Satuan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 108px;\">Tgl/No.<br>
-																																							  Kontrak/SP/SPK</td>
-																	  <td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 160px;\">Berita Acara<br>Pemeriksaan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Dikeluarkan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Diserahkan <br>Kepada</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 85px;\">Jumlah
-																																							 Sat /
-																																							 Barang </td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 87px;\">Tgl
-																																							 / No.
-																																							 Penyerahan</td>
-																	  <td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Keterangan</td>
-																	</tr>
-																	<tr>
-																	  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Tanggal</td>
-																	  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Nomor</td>
-																	</tr>
-																	<tr>
-																		<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"width: 60px; text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"width: 170px; text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"width: 83px; text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"width: 60px; text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"width: 108px; text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"width: 80px; text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"width: 80px; text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"width: 100px; text-align: center; font-weight: bold;\">10</td>
-																		<td style=\"width: 85px; text-align: center; font-weight: bold;\">11</td>
-																		<td style=\"width: 87px; text-align: center; font-weight: bold;\">12</td>
-																		<td style=\"width: 85px; text-align: center; font-weight: bold;\">13</td>
-																		<td style=\"width: 87px; text-align: center; font-weight: bold;\">14</td>
-																</tr>	
-																</thead>
-																	";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-														$jumlahTotal = $jumlahTotal + $row->Kuantitas;
-														$satuanTotal = $satuanTotal + $row->Kuantitas;
-														$kuantitas = $row->Kuantitas;
-														$kuantitas_rp = number_format($kuantitas);
-														
-														$change=$row->TglPenerimaan;
-														$change2=format_tanggal($change);
-														$change3=$row->TglPemeriksaan;
-														$change4=format_tanggal($change3);
-														$change5=$row->TglTransfer;
-														$change6=format_tanggal($change5);
-														
-														($row->NoBAPemeriksaan == '') ? $NoBA = "-" : $NoBA = $row->NoBAPemeriksaan;
-														($row->NoBAST == '') ? $NoBAST = "-" : $NoBAST = $row->NoBAST;
-														($row->KeteranganPenerimaan == '') ? $ket = "-" : $ket = $row->KeteranganPenerimaan;
-														($row->Merk == '') ? $merk = "-" : $merk = $row->Merk;
-														($row->NoKontrak == '') ? $nokontrak = "-" : $nokontrak = $row->NoKontrak;
-														($change2 == '') ? $change7 = "-" : $change7 = $change2;
-														($change4 == '') ? $change8 = "-" : $change8 = $change4;
-														($change6 == '') ? $change9 = "-" : $change9 = $change6;
-														
-														
-															$body.="
-															<tr>
-																<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-																<td style=\"width: 120px;font-weight: \" align=\"center\">$change7</td>
-																<td style=\"width: 100px;font-weight: \">$row->NamaAset</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$merk</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$row->Tahun</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$kuantitas_rp</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$nokontrak</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$change8</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$NoBA</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$change9</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">-</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$kuantitas_rp</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$change9</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$ket</td>
-
-																
-															</tr>
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                             $printjumlahTotal=  number_format($jumlahTotal);
-                                             $printsatuanTotal=  number_format($satuanTotal);
-                                             $tabletotal="
-                                                            <tr>
-                                                                 <td colspan=\"5\" align=\"center\">TOTAL</td>
-                                                                 <td align=\"center\">$printjumlahTotal</td>
-                                                                 <td colspan=\"5\"></td>
-                                                                 <td align=\"center\">$printsatuanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                            </table>";
-
-											    $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"13\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>"; 
-															
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;  
-
-                                           }
-              return $html;
-          }
-     } 
-     
-	 
-	 
-//BUKU BARANG PAKAI HABIS (ok) cek	 
-	 public function retrieve_html_bukubarangpakaihabis($dataArr,$gambar){
-         
-          if($dataArr!="")
-          {
-			 include ('../../../function/tanggal/tanggal.php');
-                    $head = "
-                               <html>
-                                        <head>
-											<style>
-												table
-												{
-													font-size:10pt;
-													font-family:Arial;
-													border-collapse: collapse;											
-													border-spacing:0;
-												}
-												h3
-												{
-													font-family:Arial;	
-													font-size:13pt;
-													color:#000;
-														
-												}
-												p
-												{
-													font-size:10pt;
-													font-family:Arial;
-													font-weight:bold;
-												}
-											</style>
-										</head>
-											 ";
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
-							 $no=1;
-							 $skpdeh="";
-							 $status_print=0;
-							 $jumlahTotal=0;
-							 $satuanTotal=0;
-									
-                                   foreach ($dataArr as $row)
-                                   {
-                                             if ($skpdeh == "" && $no==1){
-												$body="";
-												$skpdeh = $row->NamaSatker;
-												$satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-												if($nip_atasan!="")
-                                                                                                {
-                                                                                                    $nip_atasan_fix=$nip_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nip_penyimpan!="")
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix=$nip_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nip_penyimpan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_atasan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix=$nama_jabatan_atasan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_atasan_fix='........................................';
-                                                                                                }
-
-                                                                                                if($nama_jabatan_penyimpan!="")
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix=$nama_jabatan_penyimpan;
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    $nama_jabatan_penyimpan_fix='........................................';
-                                                                                                }
-
-                                        
-                                        $body="
-												<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-													  <tbody>
-														<tr>
-														  <td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-														  <td style=\"width: 902px; text-align: center;\">
-															<h3>BUKU BARANG PAKAI HABIS</h3>
-														  </td>
-														</tr>
-													  </tbody>
-													</table>
-													<br>
-													<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-														<tbody>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																
-															</tr>
-															<tr>
-																<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																
-															</tr>
-														</tbody>
-													</table>
-													<br>
-													<body>
-													<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-													  <thead>
-														<tr>
-														  <td colspan=\"1\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 30px;\"></td>
-														  <td style=\"text-align: center; font-weight: bold; width: 741px;\"rowspan=\"1\" colspan=\"8\">PENERIMAAN</td>
-														  <td style=\"font-weight: bold; text-align: center; width: 343px;\"rowspan=\"1\" colspan=\"4\">PENGELUARAN<br>
-														  </td>
-														  <td>&nbsp;</td>
-														</tr>
-														<tr>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 30px;\">No</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Tanggal</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 170px;\">Nama
-																																				/
-																																				Jenis
-																																				Barang</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 100px;\">Merk
-																																				 / Ukuran</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 83px;\">Thn<br>
-																																				 Pembuatan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Jumlah
-																																				/ <br>
-																																				Satuan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 108px;\">Tgl/No.<br>
-																																				  Kontrak/SP/SPK</td>
-														  <td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 160px;\">Berita Acara<br>Pemeriksaan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Dikeluarkan</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Diserahkan <br>Kepada</td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 85px;\">Jumlah
-																																				 Sat /
-																																				 Barang </td>
-														  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 87px;\">Tgl
-																																				 / No.
-																																				 Penyerahan</td>
-														  <td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Keterangan</td>
-														</tr>
-														<tr>
-														  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Tanggal</td>
-														  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Nomor</td>
-														</tr>
-														<tr>
-																<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																<td style=\"width: 60px; text-align: center; font-weight: bold;\">2</td>
-																<td style=\"width: 170px; text-align: center; font-weight: bold;\">3</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																<td style=\"width: 83px; text-align: center; font-weight: bold;\">5</td>
-																<td style=\"width: 60px; text-align: center; font-weight: bold;\">6</td>
-																<td style=\"width: 108px; text-align: center; font-weight: bold;\">7</td>
-																<td style=\"width: 80px; text-align: center; font-weight: bold;\">8</td>
-																<td style=\"width: 80px; text-align: center; font-weight: bold;\">9</td>
-																<td style=\"width: 100px; text-align: center; font-weight: bold;\">10</td>
-																<td style=\"width: 85px; text-align: center; font-weight: bold;\">11</td>
-																<td style=\"width: 87px; text-align: center; font-weight: bold;\">12</td>
-																<td style=\"width: 85px; text-align: center; font-weight: bold;\">13</td>
-																<td style=\"width: 87px; text-align: center; font-weight: bold;\">14</td>
-														</tr>		
-													</thead>
-												";
-                                              
-                                            }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->NamaSatker && $no>1){
-
-                                             $printjumlahTotal=  number_format($jumlahTotal);
-                                             $printsatuanTotal=  number_format($satuanTotal);
-                                             $tabletotal="
-                                                            <tr>
-                                                                 <td colspan=\"5\" align=\"center\">TOTAL</td>
-                                                                 <td align=\"center\">$printjumlahTotal</td>
-                                                                 <td colspan=\"5\"></td>
-                                                                 <td align=\"center\">$printsatuanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                            </table>
-                                                       ";
-                                             
-                                             $no=1;          	
-                                             $jumlahTotal=0;
-                                             $satuanTotal=0; 
-                                             
-                                             
-                                              $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"13\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-
-											 //udah dites footer
-                                             
-                                             $no=1;
-                                             $jumlahTotal=0;
-                                             $satuanTotal=0;
-                                             
-                                             if($status_print==0)
-                                                  $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                             else
-                                             $html[]=$body.$tabletotal.$foot.$footer;
-                                             $skpdeh = $row->NamaSatker;
-												
-                                             $satker_id=$row->LastSatker_ID;
-												list($nip_atasan,$nama_jabatan_atasan)=$this->get_jabatan($satker_id,"1");
-												list($nip_penyimpan,$nama_jabatan_penyimpan)=$this->get_jabatan($satker_id,"2");
-                                                  
-                                                  $body="";     
-                                                  $body.="
-															<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																  <tbody>
-																	<tr>
-																	  <td style=\"width: 150px;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-																	  <td style=\"width: 902px; text-align: center;\">
-																		<h3>BUKU BARANG PAKAI HABIS</h3>
-																	  </td>
-																	</tr>
-																  </tbody>
-																</table>
-																<br>
-																<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																	<tbody>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">SKPD</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $skpdeh</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; text-align: left; width: 19%;\">KABUPATEN / KOTA</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_KABUPATEN</td>
-																			
-																		</tr>
-																		<tr>
-																			<td style=\"font-weight: bold; width: 19%;\">PROVINSI</td>
-																			<td style=\"text-align: left; font-weight: bold; width: 81%;\">: $this->NAMA_PROVINSI</td>
-																			
-																		</tr>
-																	</tbody>
-																</table>
-																<br>
-																<body>
-																<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-																  <thead>
-																	<tr>
-																	  <td colspan=\"1\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 30px;\"></td>
-																	  <td style=\"text-align: center; font-weight: bold; width: 741px;\"rowspan=\"1\" colspan=\"8\">PENERIMAAN</td>
-																	  <td style=\"font-weight: bold; text-align: center; width: 343px;\"rowspan=\"1\" colspan=\"4\">PENGELUARAN<br>
-																	  </td>
-																	  <td>&nbsp;</td>
-																	</tr>
-																	<tr>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 30px;\">No</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Tanggal</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 170px;\">Nama
-																																							/
-																																							Jenis
-																																							Barang</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 100px;\">Merk
-																																							 / Ukuran</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 83px;\">Thn<br>
-																																							 Pembuatan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 60px;\">Jumlah
-																																							/ <br>
-																																							Satuan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 108px;\">Tgl/No.<br>
-																																							  Kontrak/SP/SPK</td>
-																	  <td colspan=\"2\" rowspan=\"1\" style=\"text-align: center; font-weight: bold; width: 160px;\">Berita Acara<br>Pemeriksaan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Tanggal<br>Dikeluarkan</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold;\">Diserahkan <br>Kepada</td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 85px;\">Jumlah
-																																							 Sat /
-																																							 Barang </td>
-																	  <td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 87px;\">Tgl
-																																							 / No.
-																																							 Penyerahan</td>
-																	  <td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Keterangan</td>
-																	</tr>
-																	<tr>
-																	  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Tanggal</td>
-																	  <td style=\"text-align: center; font-weight: bold; width: 80px;\">Nomor</td>
-																	</tr>
-																	<tr>
-																		<td style=\"width: 30px; text-align: center; font-weight: bold;\">1</td>
-																		<td style=\"width: 60px; text-align: center; font-weight: bold;\">2</td>
-																		<td style=\"width: 170px; text-align: center; font-weight: bold;\">3</td>
-																		<td style=\"width: 100px; text-align: center; font-weight: bold;\">4</td>
-																		<td style=\"width: 83px; text-align: center; font-weight: bold;\">5</td>
-																		<td style=\"width: 60px; text-align: center; font-weight: bold;\">6</td>
-																		<td style=\"width: 108px; text-align: center; font-weight: bold;\">7</td>
-																		<td style=\"width: 80px; text-align: center; font-weight: bold;\">8</td>
-																		<td style=\"width: 80px; text-align: center; font-weight: bold;\">9</td>
-																		<td style=\"width: 100px; text-align: center; font-weight: bold;\">10</td>
-																		<td style=\"width: 85px; text-align: center; font-weight: bold;\">11</td>
-																		<td style=\"width: 87px; text-align: center; font-weight: bold;\">12</td>
-																		<td style=\"width: 85px; text-align: center; font-weight: bold;\">13</td>
-																		<td style=\"width: 87px; text-align: center; font-weight: bold;\">14</td>
-																</tr>	
-																</thead>
-																	";
-                                                 //udah dites disini footer 
-                                                    
-                                                  
-												$skpdeh = $row->NamaSatker;
-												$status_print++;
-
-                                             }
-                                             //udah dites
-														$jumlahTotal = $jumlahTotal + $row->Kuantitas;
-														$satuanTotal = $satuanTotal + $row->Kuantitas;
-														$kuantitas = $row->Kuantitas;
-														$kuantitas_rp = number_format($kuantitas);
-														
-														$change=$row->TglPenerimaan;
-														$change2=format_tanggal($change);
-														$change3=$row->TglPemeriksaan;
-														$change4=format_tanggal($change3);
-														$change5=$row->TglBAST;
-														$change6=format_tanggal($change5);
-														
-														($row->NoBAPemeriksaan == '') ? $NoBA = "-" : $NoBA = $row->NoBAPemeriksaan;
-														($row->NoBAST == '') ? $NoBAST = "-" : $NoBAST = $row->NoBAST;
-														($row->KeteranganPenerimaan == '') ? $ket = "-" : $ket = $row->KeteranganPenerimaan;
-														($row->Merk == '') ? $merk = "-" : $merk = $row->Merk;
-														($row->NoKontrak == '') ? $nokontrak = "-" : $nokontrak = $row->NoKontrak;
-														
-															$body.="
-															<tr>
-																<td style=\"width: 30px;font-weight: \" align=\"center\">$no</td>
-																<td style=\"width: 120px;font-weight: \" align=\"center\">$change2</td>
-																<td style=\"width: 100px;font-weight: \">$row->NamaAset</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$merk</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$row->Tahun</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$kuantitas_rp</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$nokontrak</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$change4</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$NoBA</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$change6</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">-</td>
-																<td style=\"width: 100px;font-weight: \" align=\"center\">$kuantitas_rp</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$change6</td>
-																<td style=\"width: 200px;font-weight: \" align=\"center\">$ket</td>
-																
-															</tr>
-															";
-															$no++;
-                                                            
-                                                            //coba
-                                                            
-                                 
-                                             }
-                                             //udah dicoba ga muncul
-                                             
-                                             $printjumlahTotal=  number_format($jumlahTotal);
-                                             $printsatuanTotal=  number_format($satuanTotal);
-                                             $tabletotal="
-                                                            <tr>
-                                                                 <td colspan=\"5\" align=\"center\">TOTAL</td>
-                                                                 <td align=\"center\">$printjumlahTotal</td>
-                                                                 <td colspan=\"5\"></td>
-                                                                 <td align=\"center\">$printsatuanTotal</td>
-                                                                 <td colspan=\"2\"></td>
-                                                            </tr>
-                                                            </table> ";
-
-											   $foot="
-														</tbody>
-													</table>";
-												
-												$foot.="<table border=\"0\">
-														<tr>
-															<td colspan=\"13\">&nbsp;</td>
-														</tr>
-													</table>";	
-                                             
-                                                $footer="
-															<table style=\"text-align: left; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"2\" cellspacing=\"2\">
-																<tbody>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"300px\">Mengetahui</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\" width=\"140px\">$f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">Atasan langsung</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">Penyimpan Barang</td>
-																	</tr>
-																	<tr>
-																		<td colspan=\"11\" style=\"height: 80px\"></td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_penyimpan_fix</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																	    <td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
-																	</tr>
-																	<tr>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_atasan_fix</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td>&nbsp;</td>
-																		<td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_penyimpan_fix</td>
-																	</tr>
-																</table>";
-																$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-																$footer.="
-															</body>
-														</html>";
-
-															
-                                        if($status_print==0){
-                                             $html[]=$head.$body.$tabletotal.$foot.$footer;
-                                            
-                                        }else{
-                                             $html[]=$body.$tabletotal.$foot.$footer;  
-
-                                           }
-              return $html;
-          }
-     } 	
-	
-
-
-
-
 
 //MERLI     
      
@@ -19555,8 +16872,8 @@ foreach ($dataArr as $data)
                     <td style=\"text-align: center;\">&nbsp;</td>
                     <td style=\"text-align: center;\">".substr($value->Kode, 3,2)."</td>
                     <td style=\"text-align: left;\">$value->Uraian</td>
-                    <td style=\"text-align: right;\">".number_format($value->Jumlah)."</td>
-                    <td align=\"right\">".number_format($value->NilaiPerolehan)."</td>
+                    <td style=\"text-align: right;\">".number_format($value->Jumlah,0,",",".")."</td>
+                    <td align=\"right\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
                     <td>&nbsp;</td>
                   </tr>";
             $total_jumlah += ($value->Jumlah);
@@ -19571,8 +16888,8 @@ $html .="
     
     <tr>
         <td colspan = \"4\" align=\"center\">Total</td>
-        <td align=\"right\">".number_format($total_jumlah)."</td>
-        <td align=\"right\">".number_format($total_perolehan)."</td>
+        <td align=\"right\">".number_format($total_jumlah,0,",",".")."</td>
+        <td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
         <td>&nbsp;</td>
     </tr>
     </table>
@@ -19657,7 +16974,7 @@ include ('../../../function/tanggal/tanggal.php');
 //$index = 0;
 
 $index_id = 0;
-foreach ($dataArr as $satker_id => $data_array)
+foreach ($dataArr as $satker_id => $value)
 {
     //$data_satker[] = $key_1;
 	//==add new==//
@@ -19726,8 +17043,8 @@ foreach ($dataArr as $satker_id => $data_array)
 
 
 
-foreach ($data_array as $key => $value)
-{
+// foreach ($data_array as $key => $value)
+// {
     
     $html = "<html>
         <head>
@@ -19839,11 +17156,11 @@ foreach ($data_array as $key => $value)
                         <td style=\"text-align: center;\">&nbsp;</td>
                         <td style=\"text-align: center;\">".substr($value->Kode, 3,2)."</td>
                         <td style=\"text-align: left;\">$value->Uraian</td>
-                        <td style=\"text-align: right;\">".number_format($value->Jumlah)."</td>
-                        <td align=\"right\">".number_format($value->NilaiPerolehan)."</td>
+                        <td style=\"text-align: right;\">".number_format($value->Jumlah,0,",",".")."</td>
+                        <td align=\"right\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
                         <td>&nbsp;</td>
                       </tr>";
-                $total_jumlah += ($value->Jumlah);
+                $total_jumlah += number_format($value->Jumlah);
                 $total_perolehan += ($value->NilaiPerolehan);
             }
             
@@ -19856,8 +17173,8 @@ foreach ($data_array as $key => $value)
         
         <tr>
             <td colspan = \"4\" align=\"center\">Total</td>
-            <td align=\"right\">".number_format($total_jumlah)."</td>
-            <td align=\"right\">".number_format($total_perolehan)."</td>
+            <td align=\"right\">".number_format($total_jumlah,0,",",".")."</td>
+            <td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
             <td>&nbsp;</td>
         </tr>
         </table>
@@ -19933,7 +17250,7 @@ foreach ($data_array as $key => $value)
     $hasil_html[]=$html.$foot.$footer;
     
     
-}
+// }
 $index_id++;
 }
 return $hasil_html;
@@ -33396,8 +30713,7 @@ public function get_satker($satker){
 	}	
 	return array($KodeSektor,$KodeSatker,$KodeUnit,$Gudang,$NamaSatker);
 }
-     
-	 
+     	 
 public function get_konstruksi($konstruksi_tanah){
         if($konstruksi_tanah == 'P')
 		$konstruksi = "Permanen";
@@ -33436,5 +30752,5 @@ public function get_hak_pakai($hak_tanah){
     
     
  }
-            
+     
 ?>

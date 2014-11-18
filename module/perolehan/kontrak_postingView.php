@@ -18,7 +18,7 @@ $menu_id = 1;
 			}
 
 	//getdata
-	$RKsql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	$RKsql = mysql_query("SELECT Satuan, kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -40,7 +40,19 @@ $menu_id = 1;
 	while ($sum = mysql_fetch_assoc($sqlsum)){
 				$sumTotal = $sum;
 			}
-	// pr($sumsp2d);	
+	// pr($sumsp2d);
+
+	//unposting
+	$sql = mysql_query("SELECT COUNT(*) AS dist FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND Status_Validasi_Barang = 1");
+	while ($sumpost = mysql_fetch_assoc($sql)){
+				$unpost = $sumpost;
+			}
+
+	$sql = mysql_query("SELECT COUNT(*) AS kap FROM kapitalisasi WHERE noKontrakAset = '{$kontrak['noKontrak']}'");	
+	while ($sumpost = mysql_fetch_assoc($sql)){
+				$kapchek = $sumpost;
+			}
+	// pr($kapchek);
 	//end SQL
 ?>
 	
@@ -131,9 +143,18 @@ $menu_id = 1;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
-			<p>
-			<a class="btn btn-danger btn-small" disabled><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
-			&nbsp;</p>	
+			<?php
+				if($unpost['dist'] == 0){
+					if($kontrak['tipeAset'] == 1){
+						if($kapchek['kap'] == 0){
+			?>
+				<p><a href="<?=$url?>.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
+				&nbsp;</p>	
+			<?php		
+						}
+					}
+				}
+			?>
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
@@ -146,6 +167,7 @@ $menu_id = 1;
 						<th>Total</total>
 						<th>Penunjang</th>
 						<th>Total Perolehan</th>
+						<th>Nilai Total Satuan</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -167,6 +189,7 @@ $menu_id = 1;
 						<td><?=number_format($total)?></td>
 						<td><?=number_format($bop)?></td>
 						<td><?=number_format($total+$bop)?></td>
+						<td><?=number_format($value['Satuan'])?></td>
 						
 					</tr>
 				<?php

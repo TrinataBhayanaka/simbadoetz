@@ -51,7 +51,106 @@ include "../config/config.php";
                                 </ul>
                             </div>
                         </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=1" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB A</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=2" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB B</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=3" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB C</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=4" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB D</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=5" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB E</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/getkib.php?req=6" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Report KIB F</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
+
+                    <li>
+                        <h3>View Result test</h3>
+                        
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                        <a href="?page=4">
+                                            <div class="acc-section">
+                                                <div class="acc-content">KIB A</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </li>
+
+                    <!--
                     <li>
                         <h3>Store Data</h3>
                         
@@ -70,7 +169,7 @@ include "../config/config.php";
                         </div>
                         
                     </li>
-                    
+                    -->
                 </ul>
             </div>
         </div>
@@ -102,6 +201,11 @@ include "../config/config.php";
                             case '3':
                                 {
                                     include 'view/store_standar_harga_barang.php'; 
+                                }
+                                break;
+                            case '4':
+                                {
+                                    include 'view/viewreport.php'; 
                                 }
                                 break;
                             default:

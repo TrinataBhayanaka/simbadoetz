@@ -32,18 +32,18 @@ $paramater_sql=" ";
 
 if($tipe!="")
 {
-     $tipe=sprintf('%01d', $tipe);
+     $tipe=sprintf('%02d', $tipe);
      $query_golongan=" Tipe='$tipe'";
 }
 
 if($kelompok!="")
 {
-     $kelompok=sprintf('%01d', $kelompok);
+     $kelompok=sprintf('%02d', $kelompok);
      $query_bidang="Kelompok='$kelompok'";
 }
 
 if($jenis!="")
-       $jenis=sprintf('%01d', $jenis);
+       $jenis=sprintf('%02d', $jenis);
      $query_kelompok =" Jenis='$jenis' ";
 if($objek!="")
      $objek=sprintf('%02d', $objek);
@@ -133,7 +133,7 @@ switch ($level) {
 
 if($kode!=""&&$paramater_sql!=""){
      $query="Select * from KodeRekening where $paramater_sql  $tambahan_query order by KodeRekening asc";
-      //echo "$query  <br/>";
+    //  echo "$query  <br/>";
      $result=  mysql_query($query) or die(mysql_error());
  
   //  echo "<table width=\"100%\" align=\"left\" border=\"0\" class=\"tabel\">";

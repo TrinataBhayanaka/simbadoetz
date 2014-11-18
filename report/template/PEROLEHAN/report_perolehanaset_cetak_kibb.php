@@ -28,6 +28,26 @@ $data=array(
     "tab"=>$tab
 );
 
+function arrayToObject($result_query) {
+	if (!is_array($result_query)) {
+		return $result_query;
+	}
+	
+	$object = new stdClass();
+	if (is_array($result_query) && count($result_query) > 0) {
+		foreach ($result_query as $name=>$value) {
+			// $name = strtolower(trim($name));
+			// if (!empty($name)) {
+				$object->$name = arrayToObject($value);
+			// }
+		}
+		return $object;
+	}
+	else {
+		return FALSE;
+	}
+}
+	
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -36,26 +56,25 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-// pr($query);
-// exit;
 //mengenerate query
-$result_query=$REPORT->retrieve_query($query);
-// pr($result_query);
-// exit;
+// $result_query=$REPORT->retrieve_query($query);
+
+$table_name = "mesin";
+$result_query=$REPORT->QueryKib($query,$table_name);
+$result = arrayToObject($result_query);
+
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_kib_b($result_query, $gambar);
+$html=$REPORT->retrieve_html_kib_b($result, $gambar);
 
-$count = count($html);
+/*$count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
-}
-// exit;
-
+		 echo $html[$i];     
+}*/
 if($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

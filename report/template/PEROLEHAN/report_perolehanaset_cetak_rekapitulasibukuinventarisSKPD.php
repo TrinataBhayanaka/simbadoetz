@@ -13,7 +13,7 @@ $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
 $tahun = $_REQUEST['tahun_rekap_buku_inventaris_skpd'];
-$skpd_id = $_REQUEST['skpd_id4'];
+$skpd_id = $_REQUEST['kodeSatker4'];
 
 $REPORT=new report_engine();
 
@@ -37,17 +37,17 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
-	
+	// pr($get_satker);
 $result_query = $REPORT->get_report_rekap_inv_skpd($get_satker, $tahun);
+
 //retrieve html
 $html=$REPORT->retrieve_html_rekapitulasi_bukuinventaris_skpd($result_query,$gambar);
-$count = count($html);
-
-	 for ($i = 0; $i < $count; $i++) {
+/*$count = count($html);
+	for ($i = 0; $i < $count; $i++) {
 		 
 		 // echo $html[$i];     
 	}
-// exit;
+// exit;*/
 
 $REPORT->show_status_download();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

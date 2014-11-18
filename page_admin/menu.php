@@ -2,7 +2,7 @@
 <?php
 // $NAMA_KABUPATEN = $nama_kab;
 $data_admin = $RETRIEVE_ADMIN->admin_retrieve_app_conf($NAMA_KABUPATEN);
-// print_r($data_admin);
+//print_r($data_admin);
 ?>
 <div>    
 <table style="width:100%">                            

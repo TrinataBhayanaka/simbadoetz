@@ -53,14 +53,14 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 $html=$REPORT->retrieve_html_kib_f($result_query,$gambar);
 //echo'ada';
 //exit();
-$count = count($html);
+/*$count = count($html);
 //pr($count);
 
 	for ($i = 0; $i < $count; $i++) {
 		 
-		// echo $html[$i];     
+		echo $html[$i];     
 	}
-// exit();
+exit();*/
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	

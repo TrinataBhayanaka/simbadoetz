@@ -47,14 +47,14 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 //retrieve html
 $html=$REPORT->retrieve_html_kib_c($result_query, $gambar);
 
-$count = count($html);
+/*$count = count($html);
 
 
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 // echo $html[$i];     
 	}
-// exit;
+// exit;*/
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	

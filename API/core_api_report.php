@@ -23,6 +23,13 @@ class core_api_report extends DB {
      var $mode;
      var $kib;
      var $kir;
+     var $intra;
+     var $ekstra;
+     var $rekap;
+     var $label;
+     var $gol;
+     var $aset;
+	 
      var $tab;
      var $tahun;
      var $skpd_id;
@@ -94,9 +101,16 @@ class core_api_report extends DB {
 		  $this->modul=$hasil_data['modul'];
 		  $this->mode=$hasil_data['mode'];
 		  $this->kib=$hasil_data['kib'];
+		  $this->rekap=$hasil_data['rekap'];
+		  $this->label=$hasil_data['label'];
+		  $this->gol=$hasil_data['gol'];
+		  $this->aset=$hasil_data['aset'];
 		  
 		  $this->kir=$hasil_data['kir'];
 		  $this->bukuInv=$hasil_data['bukuInv'];
+		  $this->bukuIndk=$hasil_data['bukuIndk'];
+		  $this->intra=$hasil_data['intra'];
+		  $this->ekstra=$hasil_data['ekstra'];
 		  
 		  $this->tahun=$hasil_data['tahun'];
 		  $this->skpd_id =$hasil_data['skpd_id'];
@@ -131,15 +145,22 @@ class core_api_report extends DB {
  
 	 //===============================
      public function list_query(){
-          
+          ;
           //echo 'path = '.$this->path;
 		  
           $modul=$this->modul;
           $mode=$this->mode;
           $kib=$this->kib;
+          $rekap=$this->rekap;
+          $label=$this->label;
+          $gol=$this->gol;
+          $aset=$this->aset;
 		  
           $kir=$this->kir;
           $bukuInv=$this->bukuInv;
+          $bukuIndk=$this->bukuIndk;
+          $intra=$this->intra;
+          $ekstra=$this->ekstra;
           
 		  $tahun=$this->tahun;
           $skpd_id=$this->skpd_id;
@@ -170,204 +191,181 @@ class core_api_report extends DB {
 		//this for kib a -kib f
 			if($kib =='KIB-A')
 			{
-				$query_tahun = " T.Tahun <='$tahun' ";
+				$query_tahun = " T.Tahun <= '$tahun' ";
 				$query_satker_fix = " T.kodeSatker='$skpd_id'";
 			}
 			if($kib =='KIB-B')
 			{
-				$query_tahun=" M.Tahun <='$tahun' ";
+				$query_tahun=" M.Tahun <= '$tahun' ";
 				$query_satker_fix = " M.kodeSatker='$skpd_id'";
+
 			}
 			if($kib =='KIB-C')
 			{
-				$query_tahun=" B.Tahun <='$tahun' ";
+				$query_tahun=" B.Tahun <= '$tahun' ";
 				$query_satker_fix = " B.kodeSatker='$skpd_id'";
 			}
 			if($kib =='KIB-D')
 			{
-				$query_tahun=" J.Tahun <='$tahun' ";
+				$query_tahun=" J.Tahun <= '$tahun' ";
 				$query_satker_fix = " J.kodeSatker='$skpd_id'";
 			}
 			if($kib =='KIB-E')
 			{
-				$query_tahun=" AL.Tahun <='$tahun' ";
+				$query_tahun=" AL.Tahun <= '$tahun' ";
 				$query_satker_fix = " AL.kodeSatker='$skpd_id'";
 			}
 			if($kib =='KIB-F')
 			{
-				$query_tahun=" KDPA.Tahun <='$tahun' ";
+				$query_tahun=" KDPA.Tahun <= '$tahun' ";
 				$query_satker_fix = " KDPA.kodeSatker='$skpd_id'";
 			}
 			
-		//this for kir
+			// echo "masuk";
+		//this for rekap kib a -kib f
+			if($rekap =='RekapKIB-A')
+			{
+				$query_satker_fix = " T.kodeSatker='$skpd_id'";
+			}
+			if($rekap =='RekapKIB-B')
+			{
+				$query_satker_fix = " M.kodeSatker='$skpd_id'";
+			}
+			if($rekap =='RekapKIB-C')
+			{
+				$query_satker_fix = " B.kodeSatker='$skpd_id'";
+			}
+			if($rekap =='RekapKIB-D')
+			{
+				$query_satker_fix = " J.kodeSatker='$skpd_id'";
+			}
+			if($rekap =='RekapKIB-E')
+			{
+				$query_satker_fix = " AL.kodeSatker='$skpd_id'";
+			}
+			if($rekap =='RekapKIB-F')
+			{
+				$query_satker_fix = " KDPA.kodeSatker='$skpd_id'";
+			}
+			// echo "rekap =".$query_satker_fix;
+			// exit;
+		// this for kir
 			if($kir =='kir'){
 				// echo "masuk kir";
-				$query_tahun=" M.Tahun <='$tahun' ";
-				if($skpd_id!=""){
-					$IDsatker = "$skpd_id";
-					$query_change_satker="SELECT KodeSektor,KodeSatker,KodeUnit,Gudang,kode,NamaSatker FROM Satker  
-                                                    WHERE Satker_ID =$IDsatker";
-					// pr($query_change_satker);
-					$exec_query_change_satker=  $this->query($query_change_satker) or die($this->error());
-					while($proses_kode=$this->fetch_array($exec_query_change_satker)){
-                    
-					if($proses_kode['KodeSektor'] != ""){
-						$query_return_kode = "SELECT kode FROM Satker 
-											WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "'";
-					}
-					if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != ""){
-						$query_return_kode = "SELECT kode FROM Satker 
-											  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-												    KodeSatker='" . $proses_kode['KodeSatker'] . "'";
-					}
-					if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != ""){
-						$query_return_kode = "SELECT kode FROM Satker 
-											  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-												    KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-													KodeUnit='" . $proses_kode['KodeUnit'] . "'";
-					}
-					if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != "" && $proses_kode['Gudang'] != ""){
-						$query_return_kode = "SELECT kode FROM Satker 
-											  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-												    KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-													KodeUnit='" . $proses_kode['KodeUnit'] . "' AND
-													Gudang='" . $proses_kode['Gudang'] . "'";
-					}
-					
-					$exec_query_return_kode=$this->query($query_return_kode) or die($this->error());
-                    while($proses_kode2=$this->fetch_array($exec_query_return_kode)){
-                        $dataRow2[]=$proses_kode2['kode'];
-                    }
-					if($dataRow2!=""){
-						$query_satker_fix ="M.kodeSatker='$dataRow2[0]'";
-					}
-				}
-			  }	
+				$query_tahun=" M.Tahun <= '$tahun' ";
+				$query_satker_fix = " M.kodeSatker='$skpd_id'";
 			}
+			
 			//this is for buku inventaris
 			if($bukuInv =='bukuInv'){
-				// echo "masuk buku iinv";
+				
 				if($tahun !='' && $skpd_id =="" && $kelompok == ""){
 					// echo "sini";
-					$query_tahun=" Tahun <='$tahun' ";
+					$query_tahun=" Tahun <= '$tahun' ";
+					
 				}	
 				if($tahun !='' && $skpd_id!="" && $kelompok != ""){
-					$query_tahun=" Tahun <='$tahun' ";
-						// if($skpd_id!=""){
-								$IDsatker = "$skpd_id";
-								$query_change_satker="SELECT KodeSektor,KodeSatker,KodeUnit,Gudang,kode,NamaSatker FROM Satker  
-																WHERE Satker_ID =$IDsatker";
-								// pr($query_change_satker);
-								$exec_query_change_satker=  $this->query($query_change_satker) or die($this->error());
-								while($proses_kode=$this->fetch_array($exec_query_change_satker)){
-								
-								if($proses_kode['KodeSektor'] != ""){
-									$query_return_kode = "SELECT kode FROM Satker 
-														WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "'";
-								}
-								if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != ""){
-									$query_return_kode = "SELECT kode FROM Satker 
-														  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-																KodeSatker='" . $proses_kode['KodeSatker'] . "'";
-								}
-								if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != ""){
-									$query_return_kode = "SELECT kode FROM Satker 
-														  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-																KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-																KodeUnit='" . $proses_kode['KodeUnit'] . "'";
-								}
-								if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != "" && $proses_kode['Gudang'] != ""){
-									$query_return_kode = "SELECT kode FROM Satker 
-														  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-																KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-																KodeUnit='" . $proses_kode['KodeUnit'] . "' AND
-																Gudang='" . $proses_kode['Gudang'] . "'";
-								}
-								
-								$exec_query_return_kode=$this->query($query_return_kode) or die($this->error());
-								while($proses_kode2=$this->fetch_array($exec_query_return_kode)){
-									$dataRow2[]=$proses_kode2['kode'];
-								}
-								if($dataRow2!=""){
-									$query_satker_fix =" kodeSatker='$dataRow2[0]'";
-								}
-							}
-						  // }	
-						// if($kelompok != ""){
-							$IDkelompok = "$kelompok";
-							$query_change_satker="SELECT Kode FROM Kelompok as K
-                                                    WHERE Kelompok_ID = $IDkelompok";
-							$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
-							while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
-								$dataRow2Kel[]=$proses_kode_kel['Kode'];
-							}
-							if($dataRow2Kel!=""){
-								$query_kelompok_fix ="kodeKelompok = '".$dataRow2Kel[0]."'";
-							}
-				
-						// }
-					}
-					if($tahun !='' && $skpd_id =="" && $kelompok != ""){
-						$query_tahun=" Tahun <='$tahun' ";
-						
-						// if($kelompok != ""){
-							$IDkelompok = "$kelompok";
-							$query_change_satker="SELECT Kode FROM Kelompok as K
-                                                    WHERE Kelompok_ID = $IDkelompok";
-							$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
-							while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
-								$dataRow2Kel[]=$proses_kode_kel['Kode'];
-							}
-							if($dataRow2Kel!=""){
-								$query_kelompok_fix ="kodeKelompok = '".$dataRow2Kel[0]."'";
-							}
-				
-						// }
-					}
 					
-					if($tahun !='' && $skpd_id !="" && $kelompok == ""){
-						$query_tahun=" Tahun <='$tahun' ";
-						$IDsatker = "$skpd_id";
-							$query_change_satker="SELECT KodeSektor,KodeSatker,KodeUnit,Gudang,kode,NamaSatker FROM Satker  
-															WHERE Satker_ID =$IDsatker";
-							// pr($query_change_satker);
-							$exec_query_change_satker=  $this->query($query_change_satker) or die($this->error());
-							while($proses_kode=$this->fetch_array($exec_query_change_satker)){
-							
-							if($proses_kode['KodeSektor'] != ""){
-								$query_return_kode = "SELECT kode FROM Satker 
-													WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "'";
-							}
-							if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != ""){
-								$query_return_kode = "SELECT kode FROM Satker 
-													  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-															KodeSatker='" . $proses_kode['KodeSatker'] . "'";
-							}
-							if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != ""){
-								$query_return_kode = "SELECT kode FROM Satker 
-													  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-															KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-															KodeUnit='" . $proses_kode['KodeUnit'] . "'";
-							}
-							if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != "" && $proses_kode['Gudang'] != ""){
-								$query_return_kode = "SELECT kode FROM Satker 
-													  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-															KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-															KodeUnit='" . $proses_kode['KodeUnit'] . "' AND
-															Gudang='" . $proses_kode['Gudang'] . "'";
-							}
-							
-							$exec_query_return_kode=$this->query($query_return_kode) or die($this->error());
-							while($proses_kode2=$this->fetch_array($exec_query_return_kode)){
-								$dataRow2[]=$proses_kode2['kode'];
-							}
-							if($dataRow2!=""){
-								$query_satker_fix =" kodeSatker='$dataRow2[0]'";
-							}
-						}
+					$query_tahun=" Tahun <= '$tahun' ";
+					$query_satker_fix = " kodeSatker='$skpd_id'";
+					
+					$IDkelompok = "$kelompok";
+					$query_change_satker="SELECT Kode FROM Kelompok as K
+											WHERE Kelompok_ID = $IDkelompok";
+					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
+					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
+						$dataRow2Kel[]=$proses_kode_kel['Kode'];
 					}
+					if($dataRow2Kel!=""){
+						$query_kelompok_fix =" kodeKelompok = '".$dataRow2Kel[0]."'";
+					}
+				}
+				if($tahun !='' && $skpd_id =="" && $kelompok != ""){
+					$query_tahun=" Tahun <= '$tahun' ";
+					
+					// if($kelompok != ""){
+					$IDkelompok = "$kelompok";
+					$query_change_satker="SELECT Kode FROM Kelompok as K
+											WHERE Kelompok_ID = $IDkelompok";
+					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
+					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
+						$dataRow2Kel[]=$proses_kode_kel['Kode'];
+					}
+					if($dataRow2Kel!=""){
+						$query_kelompok_fix ="kodeKelompok = '".$dataRow2Kel[0]."'";
+					}
+			
+				}
+				
+				if($tahun !='' && $skpd_id !="" && $kelompok == ""){
+					$query_tahun=" Tahun <= '$tahun' ";
+					$query_satker_fix = " kodeSatker='$skpd_id'";
+				}
 			}		
-			pr($query_kelompok_fix);
+			
+			//this is for buku induk inventaris
+			if($bukuIndk =='bukuIndk'){
+				
+				if($tahun !='' && $kelompok == ""){
+					// echo "sini";
+					$query_tahun=" Tahun <= '$tahun' ";
+					
+				}	
+				if($tahun !='' && $kelompok != ""){
+					
+					$query_tahun=" Tahun <= '$tahun' ";
+					
+					$IDkelompok = "$kelompok";
+					$query_change_satker="SELECT Kode FROM Kelompok as K
+											WHERE Kelompok_ID = $IDkelompok";
+					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
+					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
+						$dataRow2Kel[]=$proses_kode_kel['Kode'];
+					}
+					if($dataRow2Kel!=""){
+						$query_kelompok_fix =" kodeKelompok like '".$dataRow2Kel[0]."%'";
+					}
+				}
+				
+			}	
+			
+			if($intra == 'intra'){
+				if($tahun !='' && $skpd_id == ""){
+					// echo "sini";
+					$query_tahun=" Tahun <= '$tahun' ";
+				}elseif($tahun !='' && $skpd_id != ""){
+				
+					$query_tahun=" Tahun <= '$tahun' ";
+					$query_satker_fix = " kodeSatker='$skpd_id'";
+				}	
+			}
+			
+			if($ekstra == 'ekstra'){
+				if($tahun !='' && $skpd_id == ""){
+					// echo "sini";
+					$query_tahun=" Tahun <= '$tahun' ";
+				}elseif($tahun !='' && $skpd_id != ""){
+				
+					$query_tahun=" Tahun <= '$tahun' ";
+					$query_satker_fix = " kodeSatker='$skpd_id'";
+				}	
+			}
+			
+			
+			if($label == 'label'){
+				if($tahun !='' && $skpd_id == ""){
+					// echo "sini";
+					$query_tahun=" Tahun = '$tahun' ";
+				}elseif($tahun !='' && $skpd_id != ""){
+				
+					$query_tahun=" Tahun = '$tahun' ";
+					$query_satker_fix = " kodeSatker='$skpd_id'";
+				}
+			}
+			
+			// echo $query_tahun;
+			// echo "<br>";
+			// echo $query_satker_fix;
 			//end edit
 			//==============================================================
 			
@@ -395,67 +393,65 @@ class core_api_report extends DB {
             if ($kelompok!="" && $parameter_sql==""){
             $parameter_sql=$query_kelompok_fix;
             } 
-            $limit="limit 20";
-			// echo $parameter_sql;
-			// exit;
+//           $limit="limit 20";
+			
+			
 			//==============================================================
 			//start update query kib a (ok)
-			$Modul_1_Mode_1_Case_a_condition = "select T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
-												K.Kode, K.Uraian
+			$Modul_1_Mode_1_Case_a_condition = "select 
+													T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+													K.Kode, K.Uraian
 												from 
-												tanah as T,kelompok as K
+													tanah as T,kelompok as K
 												where
-												T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 and T.Tahun <=2013
-												and $parameter_sql
-												order by T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
+													T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+													and $parameter_sql
+												order by 
+													T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
 			
-			$Modul_1_Mode_1_Case_a_default = "select T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
-											K.Kode, K.Uraian
-											from 
-											tanah as T,kelompok as K
-											where
-											T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 and T.Tahun <=2013
-											order by T.kodeSatker,T.Tahun,T.kodeKelompok $limit";	
+			$Modul_1_Mode_1_Case_a_default   = "select 
+													T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+													K.Kode, K.Uraian
+												from 
+													tanah as T,kelompok as K
+												where
+													T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+												order by 
+													T.kodeSatker,T.Tahun,T.kodeKelompok $limit";	
 			//end update query kib a								
            
 		   //start update query kib b (ok)
-			$Modul_1_Mode_1_Case_b_condition = "select M.Aset_ID, M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul,
-											M.Info, M.TglPerolehan,M.TglPembukuan,M.Tahun,M.noRegister,M.Alamat,
-											M.Merk,M.Ukuran,M.Material,M.NoSeri,
-											M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,M.kodeRuangan,M.kodeLokasi, 
-											K.Kode, K.Uraian
-											from 
-											Mesin as M,kelompok as K  
-											where
-											M.kodeKelompok=K.Kode and 
-											M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 
-											and M.kodeSatker = '05.01.01.01' and k.uraian = 'Kursi Lipat' and $parameter_sql
-											order by M.Tahun $limit";
-          
-			/*$Modul_1_Mode_1_Case_b_default = "select M.Aset_ID, M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul,
-											M.Info, M.TglPerolehan,M.TglPembukuan,M.Tahun,M.noRegister,M.Alamat,
-											M.Merk,M.Ukuran,M.Material,M.NoSeri,
-											M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,M.kodeRuangan,M.kodeLokasi, 
-											K.Kode, K.Uraian
-											from 
-											Mesin as M,kelompok as K  
-											where
-											M.kodeKelompok=K.Kode and 
-											M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 
-											order by M.Tahun $limit";*/
-			$Modul_1_Mode_1_Case_b_default = "select M.Aset_ID, M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul,
-											M.Info, M.TglPerolehan,M.TglPembukuan,M.Tahun,M.noRegister,M.Alamat,
-											M.Merk,M.Ukuran,M.Material,M.NoSeri,
-											M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,M.kodeRuangan,M.kodeLokasi, 
-											K.Kode, K.Uraian
-											from 
-											Mesin as M,kelompok as K  
-											where
-											M.kodeKelompok=K.Kode and 
-											M.StatusValidasi =1 and   M.Status_Validasi_Barang =1 and M.StatusTampil =1 and 
-											and M.kodeSatker = '05.01.01.01' and k.uraian = 'Kursi Lipat' and M.Tahun ='2004'
-											order by M.kodeSatker,M.Tahun,M.kodeKelompok $limit";								
-											
+			$Modul_1_Mode_1_Case_b_condition = "select 
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+												from 
+													Mesin as M,kelompok as K 
+												where 
+													M.kodeKelompok=K.Kode and 
+													M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3 and $parameter_sql
+												group by 
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+													M.kodeLokasi, K.Kode, K.Uraian 
+												order by 
+													M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+										
+			$Modul_1_Mode_1_Case_b_default = "select 
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian 
+												from 
+													Mesin as M,kelompok as K 
+												where 
+													M.kodeKelompok=K.Kode and 
+													M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3 
+												group by 
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+													M.kodeLokasi, K.Kode, K.Uraian 
+												order by 
+													M.Tahun,M.kodeSatker,M.kodeKelompok $limit";								
           //end update query kib b (ok)
 		  
 		  //start update query kib c (ok)
@@ -468,7 +464,7 @@ class core_api_report extends DB {
 											Bangunan as B,kelompok as K  
 											where
 											B.kodeKelompok = K.Kode and 
-											B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1
+											B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
 											and $parameter_sql
 											order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
           //ok
@@ -481,7 +477,7 @@ class core_api_report extends DB {
 											Bangunan as B,kelompok as K  
 											where
 											B.kodeKelompok = K.Kode and 
-											B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1
+											B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
 											order by  B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
           //end update query kib c (ok)
 		  
@@ -495,9 +491,9 @@ class core_api_report extends DB {
 											Jaringan as J,kelompok as K  
 											where
 											J.kodeKelompok = K.Kode and 
-											J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1
+											J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
 											and $parameter_sql
-											order by J.Tahun $limit";
+											order by J.Tahun,J.Tahun,J.kodeKelompok $limit";
           
 		  $Modul_1_Mode_1_Case_d_default = "select J.Aset_ID, J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 											J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.noRegister,J.Alamat,
@@ -508,36 +504,46 @@ class core_api_report extends DB {
 											Jaringan as J,kelompok as K  
 											where
 											J.kodeKelompok = K.Kode and 
-											J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1
-											order by J.Tahun  $limit";
+											J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+											order by J.Tahun,J.Tahun,J.kodeKelompok  $limit";
 		 //end update query kib d (ok)
 
 
 		 //start update query kib e (ok)
-          $Modul_1_Mode_1_Case_e_condition = "select AL.Aset_ID, AL.kodeSatker,AL.kodeKelompok,AL.KodeRuangan,AL.NilaiPerolehan, AL.AsalUsul,
-											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.noRegister,AL.Alamat,
-											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-											AL.kondisi, AL.kodeLokasi,Al.kuantitas,
-											K.Kode, K.Uraian
-											from 
-											AsetLain as AL,kelompok as K  
-											where
-											AL.kodeKelompok = K.Kode and 
-											AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1
-											and $parameter_sql
-											order by AL.kodeSatker,AL.kodeKelompok,AL.noRegister $limit";
           
-		  $Modul_1_Mode_1_Case_e_default = "select AL.Aset_ID, AL.kodeSatker,AL.kodeKelompok,AL.KodeRuangan,AL.NilaiPerolehan, AL.AsalUsul,
-											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.noRegister,AL.Alamat,
+			$Modul_1_Mode_1_Case_e_condition = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-											AL.kondisi, AL.kodeLokasi,Al.kuantitas,
+											AL.kondisi, AL.kodeLokasi,
 											K.Kode, K.Uraian
 											from 
 											AsetLain as AL,kelompok as K  
 											where
 											AL.kodeKelompok = K.Kode and 
-											AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1
-											order by AL.kodeSatker,AL.kodeKelompok,AL.noRegister $limit";
+											AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+											and $parameter_sql
+											group by AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+											AL.kondisi, AL.kodeLokasi,
+											K.Kode, K.Uraian
+											order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";
+											
+			  $Modul_1_Mode_1_Case_e_default = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+												AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+												AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+												AL.kondisi, AL.kodeLokasi,
+												K.Kode, K.Uraian
+												from 
+												AsetLain as AL,kelompok as K  
+												where
+												AL.kodeKelompok = K.Kode and AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+												group by AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+												AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+												AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+												AL.kondisi, AL.kodeLokasi,
+												K.Kode, K.Uraian
+												order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";
 	     //end update query kib d (ok)
 		 
          //start update query kib f (ok)
@@ -552,7 +558,7 @@ class core_api_report extends DB {
 											KDPA.kodeKelompok = K.Kode and 
 											KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
 											and $parameter_sql
-											order by KDPA.Tahun $limit";
+											order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";
           
 		  $Modul_1_Mode_1_Case_f_default = "select KDPA.Aset_ID, KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 											KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.noRegister,KDPA.Alamat,
@@ -564,7 +570,7 @@ class core_api_report extends DB {
 											where
 											KDPA.kodeKelompok = K.Kode and 
 											KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
-											order by KDPA.Tahun $limit";
+											order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";
 		//end update query kib f (ok)
 			//Cetak Dokumen Inventaris-KIR
 		  $query_kir_condition = "select M.Aset_ID, M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul,
@@ -576,9 +582,9 @@ class core_api_report extends DB {
 								Mesin as M,kelompok as K  
 								where
 								M.kodeKelompok=K.Kode and 
-								M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and 
-								M.KodeRuangan is not null  and $parameter_sql
-								order by M.Tahun $limit";
+								M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and  
+								M.KodeRuangan is not null  and M.kondisi != 3 and $parameter_sql
+								order by M.kodeSatker,M.Tahun $limit";
 
 
 
@@ -592,72 +598,11 @@ class core_api_report extends DB {
 								where
 								M.kodeKelompok=K.Kode and 
 								M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and 
-								M.KodeRuangan is not null 
-								order by M.Tahun $limit";
-
-          
-		  //Buku Inventaris
-          $query_buku_inventaris_condition =  "select M.Aset_ID, M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul,
-											M.Info, M.TglPerolehan,M.TglPembukuan,M.Tahun,M.noRegister,M.Alamat,
-											M.Merk,M.Ukuran,M.Material,M.NoSeri,
-											M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,M.kodeRuangan,M.kodeLokasi, 
-											K.Kode, K.Uraian,B.Konstruksi,
-											from 
-											Mesin as M,kelompok as K,Bangunan as B,aset as A  
-											where
-											M.Aset_ID = A.Aset_ID and  M.Bangunan = A.Aset_ID 
-											M.kodeKelompok=K.Kode and 
-											M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 
-											and $parameter_sql
-											order by M.Tahun $limit";
-
-          $query_buku_inventaris_default = "select A.LastSatker_ID, A.NomorReg, A.NamaAset, A.Pemilik, A.SumberAset, A.NilaiPerolehan,A.AsalUsul, 
-											A.Alamat, A.Kuantitas, A.TipeAset, A.Tahun, S.KodeSatker, S.NamaSatker, S.Satker_ID, S.KodeUnit,
-											K.Kode, K.Uraian, K.Satuan, B.Konstruksi, KDS.Baik, KDS.RusakRingan, KDS.RusakBerat, M.Merk, M.Model, 
-											M.NoRangka, M.NoMesin, M.NoBPKB, M.Material from Aset A 
-											left join Mesin M on A.Aset_ID=M.Aset_ID 
-											left join Bangunan B on A.Aset_ID=B.Aset_ID
-											left join Tanah T on A.Aset_ID=T.Aset_ID
-											left join Jaringan J on A.Aset_ID=J.Aset_ID
-											left join AsetLain AL on A.Aset_ID=AL.Aset_ID
-											left join KDP KDP on A.Aset_ID=KDP.Aset_ID
-											join Satker S on A.LastSatker_ID=S.Satker_ID 
-											left join Kondisi KDS on KDS.Kondisi_ID=A.LastKondisi_ID 
-											join Kelompok K on A.Kelompok_ID=K.Kelompok_ID 
-											where $TAMBAHAN_QUERY_KIB order by A.LastSatker_ID, K.Kode $limit";
-		  
-		  //Buku Induk Inventaris Daerah
-          $query_buku_induk_inventaris_daerah_condition = "select A.LastSatker_ID, A.NomorReg, A.NamaAset, A.Pemilik, A.SumberAset, A.NilaiPerolehan, 
-												A.Alamat, A.Kuantitas, A.TipeAset, A.Tahun, S.KodeSatker, S.NamaSatker, S.Satker_ID, S.KodeUnit,
-												K.Kode, K.Uraian, K.Satuan, B.Konstruksi, KDS.Baik, KDS.RusakRingan, KDS.RusakBerat, M.Merk, M.Model, 
-												M.NoRangka, M.NoMesin, M.NoBPKB, M.Material from Aset A 
-												join Satker S on A.LastSatker_ID=S.Satker_ID 
-												left join Mesin M on A.Aset_ID=M.Aset_ID 
-												left join Bangunan B on A.Aset_ID=B.Aset_ID
-												left join Tanah T on A.Aset_ID=T.Aset_ID
-												left join Jaringan J on A.Aset_ID=J.Aset_ID
-												left join AsetLain AL on A.Aset_ID=AL.Aset_ID
-												left join KDP KDP on A.Aset_ID=KDP.Aset_ID
-												left join Kondisi KDS on KDS.Kondisi_ID=A.LastKondisi_ID 
-												join Kelompok K on A.Kelompok_ID=K.Kelompok_ID 
-												where $TAMBAHAN_QUERY_KIB AND $parameter_sql order by A.LastSatker_ID, K.Kode $limit";
-          
-          $query_buku_induk_inventaris_daerah_default = "select A.LastSatker_ID, A.NomorReg, A.NamaAset, A.Pemilik, A.SumberAset, A.NilaiPerolehan, 
-												A.Alamat, A.Kuantitas, A.TipeAset, A.Tahun, S.KodeSatker, S.NamaSatker, S.Satker_ID, S.KodeUnit,
-												K.Kode, K.Uraian, K.Satuan, B.Konstruksi, KDS.Baik, KDS.RusakRingan, KDS.RusakBerat, M.Merk, M.Model, 
-												M.NoRangka, M.NoMesin, M.NoBPKB, M.Material from Aset A 
-												join Satker S on A.LastSatker_ID=S.Satker_ID 
-												left join Mesin M on A.Aset_ID=M.Aset_ID 
-												left join Bangunan B on A.Aset_ID=B.Aset_ID
-												left join Tanah T on A.Aset_ID=T.Aset_ID
-												left join Jaringan J on A.Aset_ID=J.Aset_ID
-												left join AsetLain AL on A.Aset_ID=AL.Aset_ID
-												left join KDP KDP on A.Aset_ID=KDP.Aset_ID
-												left join Kondisi KDS on KDS.Kondisi_ID=A.LastKondisi_ID 
-												join Kelompok K on A.Kelompok_ID=K.Kelompok_ID 
-												where $TAMBAHAN_QUERY_KIB order by A.LastSatker_ID, K.Kode $limit";
-          
-		  //Pengadaaan BMD
+								M.KodeRuangan is not null and M.kondisi != 3
+								order by M.kodeSatker,M.Tahun $limit";
+		
+		
+		 //Pengadaaan BMD
 		  //REVISI PENGADAAN
           $query_pengadaan_bmd_condition = "select A.LastSatker_ID, A.NomorReg, A.NamaAset, A.Pemilik, A.SumberAset, A.Kuantitas, A.TglPerolehan,
 											A.NilaiPerolehan,A.CaraPerolehan,A.Alamat, A.Info, A.Tahun, CC.KodeSatker, CC.NamaSatker, CC.Satker_ID, CC.KodeUnit,
@@ -1289,6 +1234,7 @@ class core_api_report extends DB {
                     LEFT JOIN AsetLain AS t ON a.Aset_ID = t.Aset_ID and
                     A.Status_Validasi_Barang='1' and $parameter_sql";
              
+			
               if (isset($modul))
           {
                switch ($modul)
@@ -1379,61 +1325,314 @@ class core_api_report extends DB {
                                                        }
                                                   }
                                                   break;
-                                                  
+                                                  //kir
                                                   case '2':
                                                   { 
 														if($parameter_sql!="" ) {
-                                                                                     $query = $query_kir_condition; 
+																		 $query = $query_kir_condition; 
 																	}
-																	if($parameter_sql=="" ) {
-                                                                                $query = $query_kir_default; 
-																	}
+														if($parameter_sql=="" ) {
+															$query = $query_kir_default; 
+														}
                                                   }		
                                                    break;
                                                   
                                                   case '3':
                                                   {
+														
                                                             //Buku Inventaris SKPD
                                                             if($parameter_sql!="" ){
-																	// echo "masuk buku inv";
-																	// echo $query_kelompok_fix;
 																	$kel = explode('=',$query_kelompok_fix);
 																	$kel_prs = explode('.',$kel[1]);
-																	$satker = explode('=',$query_satker_fix);
-																	// $sat_prs = explode('.',$satker[1]);
 																	
 																	if($kel_prs[1] == '01'){
-																		echo "gol 1";
-																		$query = $query_buku_inventaris_condition_1;	
+																		// echo "gol 1";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="T.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					from 
+																						tanah as T,kelompok as K
+																					where
+																						T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																						and $newparameter_sql
+																					group by 
+																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					order by 
+																						T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
 																	}
 																	elseif($kel_prs[1] == '02'){
-																		echo "gol 2";
-																		$query = $query_buku_inventaris_condition_2;	
+																		// echo "gol 2";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="M.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																						M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																					from 
+																						Mesin as M,kelompok as K 
+																					where 
+																						M.kodeKelompok=K.Kode and 
+																						M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																						and $newparameter_sql
+																					group by 
+																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																						M.kodeLokasi, K.Kode, K.Uraian 
+																					order by 
+																						M.Tahun,M.kodeSatker,M.kodeKelompok $limit";	
 																	}
 																	elseif($kel_prs[1] == '03'){
-																		echo "gol 3";
-																		$query = $query_buku_inventaris_condition_3;	
+																		// echo "gol 3";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="B.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Bangunan as B,kelompok as K  
+																				where
+																					B.kodeKelompok = K.Kode and 
+																					B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																					and $newparameter_sql
+																				group by 
+																					B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";	
 																	}
 																	elseif($kel_prs[1] == '04'){
-																		echo "gol 4";
-																		$query = $query_buku_inventaris_condition_4;	
+																		// echo "gol 4";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="J.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Jaringan as J,kelompok as K  
+																				where
+																					J.kodeKelompok = K.Kode and 
+																					J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																					and $newparameter_sql
+																				group by 
+																					J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by J.Tahun,J.Tahun,J.kodeKelompok $limit";	
 																	}
 																	elseif($kel_prs[1] == '05'){
-																		echo "gol 5";
-																		$query = $query_buku_inventaris_condition_5;	
+																		// echo "gol 5";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="AL.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					AsetLain as AL,kelompok as K  
+																				where
+																					AL.kodeKelompok = K.Kode and 
+																					AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																					and $newparameter_sql
+																				group by 
+																					AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";	
 																	}
 																	elseif($kel_prs[1] == '06'){
-																		echo "gol 6";
-																		$query = $query_buku_inventaris_condition_6;	
+																		// echo "gol 6";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="KDPA.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					KDP as KDPA,kelompok as K  
+																				where
+																					KDPA.kodeKelompok = K.Kode and 
+																					KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+																					and $parameter_sql
+																				group by 
+																					KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian	
+																				order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
 																	}
 																	elseif($kel_prs[1] == '07'){
-																		echo "gol 7";
-																		$query = $query_buku_inventaris_condition_7;	
+																		// echo "gol 7";
+																		/*$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="M.".$pecah[$q];
+																		}*/
+																		$query = "";	
 																	}else{
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param_01[]="T.".$pecah[$q];
+																			$param_02[]="M.".$pecah[$q];
+																			$param_03[]="B.".$pecah[$q];
+																			$param_04[]="J.".$pecah[$q];
+																			$param_05[]="AL.".$pecah[$q];
+																			$param_06[]="KDPA.".$pecah[$q];
+																		}
+																		$newparameter_sql_01 = implode('AND ', $param_01);
+																		$newparameter_sql_02 = implode('AND ', $param_02);
+																		$newparameter_sql_03 = implode('AND ', $param_03);
+																		$newparameter_sql_04 = implode('AND ', $param_04);
+																		$newparameter_sql_05 = implode('AND ', $param_05);
+																		$newparameter_sql_06 = implode('AND ', $param_06);
+																		// pr($param);
+																		$query_01 = "select T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					from 
+																						tanah as T,kelompok as K
+																					where
+																						T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																						and $newparameter_sql_01
+																					group by 
+																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					order by 
+																						T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
+																						
+																		$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																						M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																					from 
+																						Mesin as M,kelompok as K 
+																					where 
+																						M.kodeKelompok=K.Kode and 
+																						M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																						and $newparameter_sql_02
+																					group by 
+																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																						M.kodeLokasi, K.Kode, K.Uraian 
+																					order by 
+																						M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+																		
+																		$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Bangunan as B,kelompok as K  
+																				where
+																					B.kodeKelompok = K.Kode and 
+																					B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																					and $newparameter_sql_03
+																				group by 
+																					B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+
+																		$query_04 = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Jaringan as J,kelompok as K  
+																				where
+																					J.kodeKelompok = K.Kode and 
+																					J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																					and $newparameter_sql_04
+																				group by 
+																					J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by J.Tahun,J.Tahun,J.kodeKelompok $limit";
+																		
+																		$query_05 = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					AsetLain as AL,kelompok as K  
+																				where
+																					AL.kodeKelompok = K.Kode and 
+																					AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																					and $newparameter_sql_05
+																				group by 
+																					AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";
 																	
+																		$query_06 = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					KDP as KDPA,kelompok as K  
+																				where
+																					KDPA.kodeKelompok = K.Kode and 
+																					KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+																					and $newparameter_sql_06
+																				group by 
+																					KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian	
+																				order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
+																				$dataQuery = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+																				// $dataQuery = array($query_01,$query_02,$query_03,$query_04);
+																				$query = $dataQuery;
+																				// for($i=0;$i<count($dataQuery);$i++){
+																					// $data[]=$dataQuery[$i];
+																				// }
+																				// echo "<pre>";
+																				// print_r($data);
+																				// exit;
+																	
+																		
 																	}
-																	$query = $query_buku_inventaris_condition;	
-																		exit;
+																	
 															}
                                                             if($parameter_sql=="" ){
                                                                       $query = $query_buku_inventaris_default;	
@@ -1448,13 +1647,304 @@ class core_api_report extends DB {
                                                   break;
                                                   case '5':
                                                   {
-                                                            //Buku Inventaris Daerah
-														if($parameter_sql!="" ){
-                                                                      $query = $query_buku_induk_inventaris_daerah_condition;	
-																				}
-														if($parameter_sql=="" ){
-                                                                      $query =  $query_buku_induk_inventaris_daerah_default;	
+															
+                                                        //Buku induk Inventaris SKPD
+                                                            if($parameter_sql!="" ){
+																	$kel = explode('=',$query_kelompok_fix);
+																	$kel_prs = explode('.',$kel[1]);
+																	
+																	if($kel_prs[1] == '01'){
+																		// echo "gol 1";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="T.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					from 
+																						tanah as T,kelompok as K
+																					where
+																						T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																						and $newparameter_sql
+																					group by 
+																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					order by 
+																						T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
+																	}
+																	elseif($kel_prs[1] == '02'){
+																		// echo "gol 2";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="M.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																						M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																					from 
+																						Mesin as M,kelompok as K 
+																					where 
+																						M.kodeKelompok=K.Kode and 
+																						M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																						and $newparameter_sql
+																					group by 
+																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																						M.kodeLokasi, K.Kode, K.Uraian 
+																					order by 
+																						M.Tahun,M.kodeSatker,M.kodeKelompok $limit";	
+																	}
+																	elseif($kel_prs[1] == '03'){
+																		// echo "gol 3";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="B.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Bangunan as B,kelompok as K  
+																				where
+																					B.kodeKelompok = K.Kode and 
+																					B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																					and $newparameter_sql
+																				group by 
+																					B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";	
+																	}
+																	elseif($kel_prs[1] == '04'){
+																		// echo "gol 4";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="J.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Jaringan as J,kelompok as K  
+																				where
+																					J.kodeKelompok = K.Kode and 
+																					J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																					and $newparameter_sql
+																				group by 
+																					J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by J.Tahun,J.Tahun,J.kodeKelompok $limit";	
+																	}
+																	elseif($kel_prs[1] == '05'){
+																		// echo "gol 5";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="AL.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					AsetLain as AL,kelompok as K  
+																				where
+																					AL.kodeKelompok = K.Kode and 
+																					AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																					and $newparameter_sql
+																				group by 
+																					AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";	
+																	}
+																	elseif($kel_prs[1] == '06'){
+																		// echo "gol 6";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="KDPA.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					KDP as KDPA,kelompok as K  
+																				where
+																					KDPA.kodeKelompok = K.Kode and 
+																					KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+																					and $parameter_sql
+																				group by 
+																					KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian	
+																				order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
+																	}
+																	elseif($kel_prs[1] == '07'){
+																		// echo "gol 7";
+																		/*$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="M.".$pecah[$q];
+																		}*/
+																		$query = "";	
+																	}else{
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param_01[]="T.".$pecah[$q];
+																			$param_02[]="M.".$pecah[$q];
+																			$param_03[]="B.".$pecah[$q];
+																			$param_04[]="J.".$pecah[$q];
+																			$param_05[]="AL.".$pecah[$q];
+																			$param_06[]="KDPA.".$pecah[$q];
+																		}
+																		$newparameter_sql_01 = implode('AND ', $param_01);
+																		$newparameter_sql_02 = implode('AND ', $param_02);
+																		$newparameter_sql_03 = implode('AND ', $param_03);
+																		$newparameter_sql_04 = implode('AND ', $param_04);
+																		$newparameter_sql_05 = implode('AND ', $param_05);
+																		$newparameter_sql_06 = implode('AND ', $param_06);
+																		// pr($param);
+																		$query_01 = "select T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					from 
+																						tanah as T,kelompok as K
+																					where
+																						T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																						and $newparameter_sql_01
+																					group by 
+																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						K.Kode, K.Uraian
+																					order by 
+																						T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
+																						
+																		$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																						M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																					from 
+																						Mesin as M,kelompok as K 
+																					where 
+																						M.kodeKelompok=K.Kode and 
+																						M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																						and $newparameter_sql_02
+																					group by 
+																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																						M.kodeLokasi, K.Kode, K.Uraian 
+																					order by 
+																						M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+																		
+																		$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Bangunan as B,kelompok as K  
+																				where
+																					B.kodeKelompok = K.Kode and 
+																					B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																					and $newparameter_sql_03
+																				group by 
+																					B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																					B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																					B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																					B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+
+																		$query_04 = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					Jaringan as J,kelompok as K  
+																				where
+																					J.kodeKelompok = K.Kode and 
+																					J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																					and $newparameter_sql_04
+																				group by 
+																					J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																					J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																					J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																					J.kondisi, J.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by J.Tahun,J.Tahun,J.kodeKelompok $limit";
+																		
+																		$query_05 = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					AsetLain as AL,kelompok as K  
+																				where
+																					AL.kodeKelompok = K.Kode and 
+																					AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																					and $newparameter_sql_05
+																				group by 
+																					AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																					AL.kondisi, AL.kodeLokasi,
+																					K.Kode, K.Uraian
+																				order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";
+																	
+																		$query_06 = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian
+																				from 
+																					KDP as KDPA,kelompok as K  
+																				where
+																					KDPA.kodeKelompok = K.Kode and 
+																					KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+																					and $newparameter_sql_06
+																				group by 
+																					KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																					KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																					KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																					KDPA.kondisi, KDPA.kodeLokasi,
+																					K.Kode, K.Uraian	
+																				order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
+																				$dataQuery = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+																				// $dataQuery = array($query_01,$query_02,$query_03,$query_04);
+																				$query = $dataQuery;
+																				// for($i=0;$i<count($dataQuery);$i++){
+																					// $data[]=$dataQuery[$i];
+																				// }
+																				// echo "<pre>";
+																				// print_r($data);
+																				// exit;
+																	
+																		
+																	}
+																	
 															}
+                                                            if($parameter_sql=="" ){
+                                                                      $query = "";	
+                                                            }
 												
 												  }
 												  break;
@@ -1463,16 +1953,638 @@ class core_api_report extends DB {
                                                        //Rekapitulasi Buku Induk Inventaris SKPD
                                                   }
                                                   break;
-									
+												  case '7':
+												  {
+												  // echo "intra masuk";
+												  // exit;
+												  if($parameter_sql != ''){
+														$Thn = $tahun;
+														$tahunIntraDefault = 2008;
+														$pecah = explode("AND ",$parameter_sql);
+															for ($q=0;$q<count($pecah);$q++){
+																$param_01[]="T.".$pecah[$q];
+																$param_02[]="M.".$pecah[$q];
+																$param_03[]="B.".$pecah[$q];
+																$param_04[]="J.".$pecah[$q];
+																$param_05[]="AL.".$pecah[$q];
+																$param_06[]="KDPA.".$pecah[$q];
+														}
+                                                                                  
+													
+														$newparameter_sql_01 = implode('AND ', $param_01);
+														$newparameter_sql_02 = implode('AND ', $param_02);
+														$newparameter_sql_03 = implode('AND ', $param_03);
+														$newparameter_sql_04 = implode('AND ', $param_04);
+														$newparameter_sql_05 = implode('AND ', $param_05);
+														$newparameter_sql_06 = implode('AND ', $param_06);
+                                                                                                                                                                                              
+                                                                                                                                                                                              $satker_param01=$param_01[1];
+                                                                                                                                                                                              $satker_param02=$param_02[1];
+                                                                                                                                                                                              $satker_param03=$param_03[1];
+                                                                                                                                                                                              $satker_param04=$param_04[1];
+                                                                                                                                                                                              $satker_param05=$param_05[1];
+                                                                                                                                                                                              $satker_param06=$param_06[1];
+                                                                                                                                                                                              
+														if(count($param_02) == 2){
+															if($param_02[1] != ''){
+																$satker_02 = "AND ".$param_02[1];
+															}else{
+																$satker_02 ="";
+															}
+														}
+														
+														if(count($param_03) == 2){
+															if($param_03[1] != ''){
+																$satker_03 = "AND ".$param_03[1];
+															}else{
+																$satker_03 ="";
+															}
+														}
+														
+														if($tahun < $tahunIntraDefault){
+															$query_01 = "select T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																			K.Kode, K.Uraian
+																		from 
+																			tanah as T,kelompok as K
+																		where
+																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																			and $newparameter_sql_01
+																		group by 
+																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																			K.Kode, K.Uraian
+																		order by 
+																			T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
+																			
+															$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																		from 
+																			Mesin as M,kelompok as K 
+																		where 
+																			M.kodeKelompok=K.Kode and 
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																			and $newparameter_sql_02
+																		group by 
+																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																			M.kodeLokasi, K.Kode, K.Uraian 
+																		order by 
+																			M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+															
+															$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		Bangunan as B,kelompok as K  
+																	where
+																		B.kodeKelompok = K.Kode and 
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																		and $newparameter_sql_03
+																	group by 
+																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+
+															$query_04 = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																		J.kondisi, J.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		Jaringan as J,kelompok as K  
+																	where
+																		J.kodeKelompok = K.Kode and 
+																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																		and $newparameter_sql_04
+																	group by 
+																		J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																		J.kondisi, J.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by J.Tahun,J.Tahun,J.kodeKelompok $limit";
+															
+															$query_05 = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																		AL.kondisi, AL.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		AsetLain as AL,kelompok as K  
+																	where
+																		AL.kodeKelompok = K.Kode and 
+																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																		and $newparameter_sql_05
+																	group by 
+																		AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																		AL.kondisi, AL.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";
+														
+															$query_06 = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																		KDPA.kondisi, KDPA.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		KDP as KDPA,kelompok as K  
+																	where
+																		KDPA.kodeKelompok = K.Kode and 
+																		KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+																		and $newparameter_sql_06
+																	group by 
+																		KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																		KDPA.kondisi, KDPA.kodeLokasi,
+																		K.Kode, K.Uraian	
+																	order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
+																	
+															$dataQuery = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+															$query = $dataQuery;
+														}else{
+															// echo "tahun > tahun intra";
+															$query_01 = "select T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																			K.Kode, K.Uraian
+																		from 
+																			tanah as T,kelompok as K
+																		where
+																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																			and $newparameter_sql_01
+																		group by 
+																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																			K.Kode, K.Uraian
+																		order by 
+																			T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
+															
+															$query_02_default = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																		from 
+																			Mesin as M,kelompok as K 
+																		where 
+																			M.kodeKelompok=K.Kode and 
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																			and M.Tahun < '2008'  and $satker_param02
+																		group by 
+																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																			M.kodeLokasi, K.Kode, K.Uraian 
+																		order by 
+																			M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+																			
+															$query_02_condt = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																		from 
+																			Mesin as M,kelompok as K 
+																		where 
+																			M.kodeKelompok=K.Kode and 
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.NilaiPerolehan >= 300000 and M.kondisi != 3
+																			and M.Tahun >= '2008' and $newparameter_sql_02
+																		group by 
+																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																			M.kodeLokasi, K.Kode, K.Uraian 
+																		order by 
+																			M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+															
+															$query_03_default = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		Bangunan as B,kelompok as K  
+																	where
+																		B.kodeKelompok = K.Kode and 
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																		and B.Tahun < '2008'  and $satker_param03
+																	group by 
+																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+															
+															$query_03_condt = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		Bangunan as B,kelompok as K  
+																	where
+																		B.kodeKelompok = K.Kode and 
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.NilaiPerolehan >= 10000000 and B.kondisi != 3
+																		and B.Tahun >= '2008' $satker_03
+																	group by 
+																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+															
+															$query_04 = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																		J.kondisi, J.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		Jaringan as J,kelompok as K  
+																	where
+																		J.kodeKelompok = K.Kode and 
+																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																		and $newparameter_sql_04
+																	group by 
+																		J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+																		J.kondisi, J.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by J.Tahun,J.Tahun,J.kodeKelompok $limit";
+															
+															$query_05 = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																		AL.kondisi, AL.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		AsetLain as AL,kelompok as K  
+																	where
+																		AL.kodeKelompok = K.Kode and 
+																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																		and $newparameter_sql_05
+																	group by 
+																		AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+																		AL.kondisi, AL.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by AL.Tahun,AL.kodeSatker,AL.kodeKelompok $limit";
+														
+															$query_06 = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																		KDPA.kondisi, KDPA.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		KDP as KDPA,kelompok as K  
+																	where
+																		KDPA.kodeKelompok = K.Kode and 
+																		KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+																		and $newparameter_sql_06
+																	group by 
+																		KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+																		KDPA.kondisi, KDPA.kodeLokasi,
+																		K.Kode, K.Uraian	
+																	order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
+																	
+															$dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+															$query = $dataQuery;
+														}
+															
+														
+													}		
+												  }
+												  break;
+												  case '8':
+												  {
+												   // echo "extra masuk";
+												  // exit;
+												  if($parameter_sql != ''){
+														$Thn = $tahun;
+														$tahunIntraDefault = 2008;
+														$pecah = explode("AND ",$parameter_sql);
+															for ($q=0;$q<count($pecah);$q++){
+																// $param_01[]="T.".$pecah[$q];
+																$param_02[]="M.".$pecah[$q];
+																$param_03[]="B.".$pecah[$q];
+																// $param_04[]="J.".$pecah[$q];
+																// $param_05[]="AL.".$pecah[$q];
+																// $param_06[]="KDPA.".$pecah[$q];
+														}
+															
+														// $newparameter_sql_01 = implode('AND ', $param_01);
+														$newparameter_sql_02 = implode('AND ', $param_02);
+														$newparameter_sql_03 = implode('AND ', $param_03);
+														// $newparameter_sql_04 = implode('AND ', $param_04);
+														// $newparameter_sql_05 = implode('AND ', $param_05);
+														// $newparameter_sql_06 = implode('AND ', $param_06);
+                                                                                    //                                                                                                      
+                                                                                                                                                                                               $satker_param01=$param_01[1];
+                                                                                                                                                                                              $satker_param02=$param_02[1];
+                                                                                                                                                                                              $satker_param03=$param_03[1];
+                                                                                                                                                                                              $satker_param04=$param_04[1];
+                                                                                                                                                                                              $satker_param05=$param_05[1];
+                                                                                                                                                                                              $satker_param06=$param_06[1];
+													// pr($param);
+														if($tahun > $tahunIntraDefault){
+																
+															$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																		from 
+																			Mesin as M,kelompok as K 
+																		where 
+																			M.kodeKelompok=K.Kode and 
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.NilaiPerolehan <= 300000
+																			and M.Tahun > '2008' and M.kondisi != 3 and $newparameter_sql_02
+																		group by 
+																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																			M.kodeLokasi, K.Kode, K.Uraian 
+																		order by 
+																			M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+															
+															$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	from 
+																		Bangunan as B,kelompok as K  
+																	where
+																		B.kodeKelompok = K.Kode and 
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.NilaiPerolehan <= 10000000
+																		and B.Tahun > '2008' and B.kondisi != 3 and $newparameter_sql_03
+																	group by 
+																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		K.Kode, K.Uraian
+																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+
+															$dataQuery = array($query_02,$query_03);
+															$query = $dataQuery;
+														}else{
+															
+															// $query_02 = "";
+															
+															// $query_03 = "";
+
+															// $dataQuery = array($query_02,$query_03);
+															$dataQuery = array();
+															$query = $dataQuery;
+														}
+															
+														
+													}
+												  
+												  }
+												  break;
+												  case '9':
+												  {
+													if (isset($rekap))
+													  {
+														switch ($rekap)
+														{
+														 case 'RekapKIB-A':
+														 {
+															// echo "masukkk";
+															// exit;
+															if($parameter_sql!="" ) {
+																			 $query = $Modul_1_Mode_1_Case_a_condition; 
+																			 // echo "masukkk";
+															}
+															if($parameter_sql=="" ) {
+																		$query = $Modul_1_Mode_1_Case_a_default; 
+															}
+														 }		
+														 break;
+														 case 'RekapKIB-B':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $Modul_1_Mode_1_Case_b_condition;
+																						}
+															  if($parameter_sql=="" ) {
+																		$query = $Modul_1_Mode_1_Case_b_default;
+																						}
+														 }
+														 break;
+														 case 'RekapKIB-C':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $Modul_1_Mode_1_Case_c_condition;
+															  }
+															  if($parameter_sql=="" ) {
+																		$query = $Modul_1_Mode_1_Case_c_default;
+															  }
+														 }
+														 break;
+														 case 'RekapKIB-D':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $Modul_1_Mode_1_Case_d_condition;
+															  }
+															  if($parameter_sql=="" ){
+																		$query = $Modul_1_Mode_1_Case_d_default;
+															  }
+														 }
+														 break;
+														 
+														 case 'RekapKIB-E':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $Modul_1_Mode_1_Case_e_condition;
+															   }
+															  if($parameter_sql=="" ){
+																		$query = $Modul_1_Mode_1_Case_e_default;
+															  }
+														 }
+														 break;
+												
+														 case 'RekapKIB-F':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $Modul_1_Mode_1_Case_f_condition;	
+															  }
+															  if($parameter_sql=="" ){
+																		$query = $Modul_1_Mode_1_Case_f_default;	
+															  }
+														 }
+														 break;
+														}
+                                                       }
+												  }
+												  break;
+												  case '10':
+												  {
+													
+													//cetak label edit
+													 if($parameter_sql!="" ){
+														
+																	if($gol == 01){
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="T.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select T.kodeSatker,T.kodeLokasi,T.kodeKelompok,T.noRegister
+																					from 
+																						tanah as T
+																					where 
+																						T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																						and $newparameter_sql
+																					order by 
+																						T.kodeKelompok,T.noRegister";	
+																	}
+																	elseif($gol == 02){
+																		
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="M.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select M.kodeSatker,M.kodeLokasi,M.kodeKelompok,M.noRegister
+																					from 
+																						mesin as M
+																					where 
+																						M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																						and $newparameter_sql
+																					order by 
+																						M.kodeKelompok,M.noRegister";	
+																	}
+																	elseif($gol == 03){
+																		// echo "gol 3";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="B.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select B.kodeSatker,B.kodeLokasi,B.kodeKelompok,B.noRegister
+																					from 
+																						bangunan as B
+																					where 
+																						B.StatusValidasi =1 and B.Status_Validasi_Barang =1 and B.StatusTampil =1 and B.kondisi != 3
+																						and $newparameter_sql
+																					order by 
+																						B.kodeKelompok,B.noRegister	";	
+																	}
+																	elseif($gol == 04){
+																		// echo "gol 4";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="J.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select J.kodeSatker,J.kodeLokasi,J.kodeKelompok,J.noRegister
+																					from 
+																						jaringan as J
+																					where 
+																						J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																						and $newparameter_sql
+																					order by 
+																						J.kodeKelompok,J.noRegister	";	
+																	}
+																	elseif($gol == 05){
+																		// echo "gol 5";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="AL.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select AL.kodeSatker,AL.kodeLokasi,AL.kodeKelompok,AL.noRegister
+																					from 
+																						asetlain as AL
+																					where 
+																						AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																						and $newparameter_sql
+																					order by 
+																						AL.kodeKelompok,AL.noRegister";	
+																	}
+																	elseif($gol == 06){
+																		// echo "gol 6";
+																		$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="KDPA.".$pecah[$q];
+																		}
+																		$newparameter_sql = implode('AND ', $param);
+																		$query = "select KDPA.kodeSatker,KDPA.kodeLokasi,KDPA.kodeKelompok,KDPA.noRegister
+																					from 
+																						kdp as KDPA
+																					where 
+																						KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1 and KDPA.kondisi != 3
+																						and $newparameter_sql
+																					order by 
+																						KDPA.kodeKelompok,KDPA.noRegister";	
+																	}
+																	elseif($kel_prs[1] == '07'){
+																		// echo "gol 7";
+																		/*$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param[]="M.".$pecah[$q];
+																		}*/
+																		$query = "";	
+																	}else{
+																		/*$pecah = explode("AND ",$parameter_sql);
+																		for ($q=0;$q<count($pecah);$q++){
+																			$param_01[]="T.".$pecah[$q];
+																			$param_02[]="M.".$pecah[$q];
+																			$param_03[]="B.".$pecah[$q];
+																			$param_04[]="J.".$pecah[$q];
+																			$param_05[]="AL.".$pecah[$q];
+																			$param_06[]="KDPA.".$pecah[$q];
+																		}
+																		$newparameter_sql_01 = implode('AND ', $param_01);
+																		$newparameter_sql_02 = implode('AND ', $param_02);
+																		$newparameter_sql_03 = implode('AND ', $param_03);
+																		$newparameter_sql_04 = implode('AND ', $param_04);
+																		$newparameter_sql_05 = implode('AND ', $param_05);
+																		$newparameter_sql_06 = implode('AND ', $param_06);
+																		// pr($param);
+																		$query_01 = "select T.kodeSatker,T.kodeLokasi,T.kodeKelompok,T.noRegister
+																						from 
+																							tanah as T
+																						where 
+																							T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 and T.kondisi != 3
+																							and $newparameter_sql_01
+																						order by 
+																							T.kodeKelompok,T.noRegister";
+																		
+																		$query_02 = "";
+																		
+																		$query_03 = "";
+
+																		$query_04 = "";
+																		
+																		$query_05 = "";
+																	
+																		$query_06 = "";	
+																				$dataQuery = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+																				// $dataQuery = array($query_01,$query_02,$query_03,$query_04);
+																				$query = $dataQuery;
+																				// for($i=0;$i<count($dataQuery);$i++){
+																					// $data[]=$dataQuery[$i];
+																				// }
+																				// echo "<pre>";
+																				// print_r($data);
+																				// exit;
+																		*/
+																	}
+												  }
                                              }
-                                        }
-                                   }
-                                   break;
+												  break;
+												}
+										}
                                    
-                               }
-                            }
-                         }
-                         break;
+									}
+								}
+							}
+						}	
+					break;
 					//cetak dokumen pengadaan
                     case '13':
                          {
@@ -1487,12 +2599,19 @@ class core_api_report extends DB {
 														switch($tab){
 															case '1':
 																{
-																//Daftar Pengadaan BMD
+																//Daftar Aset Tetap - Tanah
 																if($parameter_sql!="" ){
-                                                                      $query = $query_pengadaan_bmd_condition;	
-																				}
+																
+																	echo "masuk Daftar Aset Tetap - Tanah";
+																	if($query_satker_fix != ""){
+																		$query ="SELECT T.kodeSatker,s.NamaSatker,k.Uraian, T.Alamat, T.LuasTotal, T.NilaiPerolehan FROM tanah as T, kelompok as k,satker as s WHERE k.Kode = T.kodeKelompok and s.kode = T.kodeSatker  and $parameter_sql order by T.kodeSatker, T.kodeKelompok " ;	
+																	}else{
+																		$query ="SELECT T.kodeSatker,s.NamaSatker,k.Uraian, T.Alamat, T.LuasTotal, T.NilaiPerolehan FROM tanah as T, kelompok as k,satker as s WHERE k.Kode = T.kodeKelompok and s.kode = T.kodeSatker and $parameter_sql order by T.kodeSatker, T.kodeKelompok " ;	
+																	}
+																	// exit;
+                                                                }
 																if($parameter_sql=="" ){
-                                                                      $query = $query_pengadaan_bmd_default;
+                                                                      // $query = $query_pengadaan_bmd_default;
                                                                       
 																				}
 															   }
@@ -1757,11 +2876,11 @@ class core_api_report extends DB {
 															case '2':
 																{
 																//Standar Harga Pemeliharaan
-                                                                                $query = $query_standarhargapemeliharaan_condition; 
+																				$query = $query_standarhargapemeliharaan_condition; 
 																if($parameter_sql!="" ) {
 																		}
 																if($parameter_sql=="" ) {
-                                                                                $query = $query_standarhargapemeliharaan_default; 
+																				$query = $query_standarhargapemeliharaan_default; 
 																		}
 																}
 															break;
@@ -1920,9 +3039,14 @@ class core_api_report extends DB {
 						}
 					//cetak 
                }
+			  	
+			   
                $this->query_report=$query;
                return $query;
      }
+		
+	 
+	 
      }
 	 
     
@@ -1956,140 +3080,38 @@ class core_api_report extends DB {
 		
 		if ($bool == TRUE)
 		{
-			foreach ($param as $satker_id):
-		
-			$query = "  select a.LastSatker_ID, b.NamaSatker from Aset as a 
-						left outer join Satker as b on a.LastSatker_ID = b.Satker_ID
-						where a.LastSatker_ID = $satker_id group by a.LastSatker_ID ";
-			//print_r($query);
-			$result = $this->query($query) or die ($this->error());
-			
-			while($data = $this->fetch_object($result)){
-				if ($data->NamaSatker !='')
-				{
-					
-					$rekap[$data->LastSatker_ID][] = $data->NamaSatker;
-					
-				}
-				
-				
+			if(is_array($param)){
+				// $impl = implode(' AND ',$param);
+				$getSatkerRekap = $param;
 			}
 			
-			endforeach;
 		}
 		else
 		{
-			$query = "  select a.LastSatker_ID, b.NamaSatker from Aset as a left outer join Satker as b 
-						on a.LastSatker_ID = b.Satker_ID
-						where a.NIlaiPerolehan is not null group by a.LastSatker_ID ";
+			$query = "  SELECT distinct(`kodeSatker`) FROM `aset` where (`NilaiPerolehan` is not null and `NilaiPerolehan` != '') order by kodeSatker asc   ";
 			//print_r($query);
 			$result = $this->query($query) or die ($this->error());
 			
 			while($data = $this->fetch_object($result)){
-				if ($data->NamaSatker !='')
-				{
-					
-					$rekap[$data->LastSatker_ID][] = $data->NamaSatker;
-					
-				}
-				
-				
+				if($data != ''){
+					$getSatkerRekap[] = $data->kodeSatker;
+				}	
 			}
+			$getSatkerRekap = array_filter($getSatkerRekap, 'strlen');
 		}
-		
-        
-        return $rekap;
+        return $getSatkerRekap;
     }
     
     public function validasi_data_satker_id ($satker)
     {
 		if($satker!=""){
-		
-		$temp=explode(",",$satker);
-		$panjang=count($temp);
-		
-		$cek=0;
-		for($i=0;$i<$panjang;$i++)
-			{
-				$cek=1;
-					if($i==0)
-					$query_satker.="Satker_ID ='$temp[$i]'";
-					else
-					$query_satker.=" or Satker_ID ='$temp[$i]'";
-			}
-						
-			/*$query_change_satker="SELECT KodeSektor, KodeSatker, NamaSatker FROM Satker 
-													WHERE $query_satker";*/
-			$query_change_satker="SELECT KodeSektor,KodeSatker,KodeUnit,Gudang,NamaSatker FROM Satker  
-                                                    WHERE $query_satker";
-					
-					
-			$exec_query_change_satker=  $this->query($query_change_satker) or die($this->error());
-			while($proses_kode=$this->fetch_array($exec_query_change_satker)){
-				   
-					/*if($proses_kode['KodeSektor']!="" && $proses_kode['KodeSatker']!=""){
-					$query_return_kode="SELECT Satker_ID FROM Satker WHERE NGO=0 AND (KodeSatker LIKE '".$proses_kode['KodeSektor']."%' OR KodeSatker='$proses_kode[KodeSatker]')";
-					}
-					if($proses_kode['KodeSektor']!="" && $proses_kode['KodeSatker']==""){
-						$query_return_kode="SELECT Satker_ID FROM Satker WHERE NGO=0 AND (KodeSatker LIKE '".$proses_kode['KodeSektor']."%')";
-					}*/
-					if($proses_kode['KodeSektor'] != ""){
-						$query_return_kode = "SELECT Satker_ID FROM Satker 
-											WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "'";
-					}
-					if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != ""){
-						$query_return_kode = "SELECT Satker_ID FROM Satker 
-											  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-												    KodeSatker='" . $proses_kode['KodeSatker'] . "'";
-					}
-					if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != ""){
-						$query_return_kode = "SELECT Satker_ID FROM Satker 
-											  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-												    KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-													KodeUnit='" . $proses_kode['KodeUnit'] . "'";
-					}
-					if($proses_kode['KodeSektor'] != "" && $proses_kode['KodeSatker'] != "" && $proses_kode['KodeUnit'] != "" && $proses_kode['Gudang'] != ""){
-						$query_return_kode = "SELECT Satker_ID FROM Satker 
-											  WHERE KodeSektor='" . $proses_kode['KodeSektor'] . "' AND 
-												    KodeSatker='" . $proses_kode['KodeSatker'] . "' AND
-													KodeUnit='" . $proses_kode['KodeUnit'] . "' AND
-													Gudang='" . $proses_kode['Gudang'] . "'";
-					}								
-					//ini dari ka andreas
-					$exec_query_return_kode=$this->query($query_return_kode) or die($this->error());
-					while($proses_kode2=$this->fetch_array($exec_query_return_kode)){
-						$dataRow2[]=$proses_kode2['Satker_ID'];
-					}
-					if($dataRow2!=""){
-						$panjang=count($dataRow2);
-						$query_satker_fix="(";
-						$cek=0;
-						for($i=0;$i<$panjang;$i++)
-							{
-								$cek=1;
-
-									if($i==0)
-									{
-									$get_satker[] = $dataRow2[$i];
-									//$query_satker_fix.="LastSatker_ID = '".$dataRow2[$i]."'";
-									}
-									else
-									{
-									$get_satker[] = $dataRow2[$i];
-									//$query_satker_fix.=" or LastSatker_ID = '".$dataRow2[$i]."'";
-								}
-							}
-							
-						}
-					}
-						
-						$get_satker = $this->_cek_data_satker_with_id($get_satker, true);
-				}
-			
-			
-		
+			$kdSakter = "$satker";
+			$get_satker = array($kdSakter);
+			$get_satker = $this->_cek_data_satker_with_id($get_satker, true);
+		}
 		else
 		{
+			$kdSakter = "$satker";
 			$get_satker = $this->_cek_data_satker_with_id($get_satker, false);
 		}
 		
@@ -2152,8 +3174,10 @@ class core_api_report extends DB {
 }
      
     public function retrieve_query($query){
+		
           $result= $this->query($query);
           $rows = $this->num_rows($result);
+		  
 	if ($rows)
 	{
 		    while ($data = $this->fetch_object($result))
@@ -2172,33 +3196,49 @@ class core_api_report extends DB {
      //REVISI REKAP INDUK
     public function get_report_rekap_inv_daerah($tahun)
     {
-		$TAMBAHAN_QUERY_KIB = 'a.Status_Validasi_Barang=1';//and a.Tahun = '$tahun' 
-        
-        $query_get_golongan_1 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                    left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                    left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.Tahun = '$tahun' AND $TAMBAHAN_QUERY_KIB where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-        $query_get_golongan_2 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                    left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                    left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.Tahun = '$tahun' AND $TAMBAHAN_QUERY_KIB where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-        $query_get_golongan_3 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                    left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                    left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.Tahun = '$tahun' AND $TAMBAHAN_QUERY_KIB where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-        $query_get_golongan_4 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                    left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                    left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.Tahun = '$tahun' AND $TAMBAHAN_QUERY_KIB where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_5 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                    left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                    left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.Tahun = '$tahun' AND $TAMBAHAN_QUERY_KIB where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_6 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                    left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                    left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.Tahun = '$tahun' AND $TAMBAHAN_QUERY_KIB where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_7 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                    left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                    left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.Tahun = '$tahun' AND $TAMBAHAN_QUERY_KIB where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        
-        $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
+		
+        $query_get_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(T.Aset_ID)as Jumlah, sum(T.NilaiPerolehan) as NilaiPerolehan 
+								from kelompok k 
+									left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+									left join tanah T on T.kodeKelompok = x.Kode and 
+									T.Tahun <='$tahun' and T.Status_Validasi_Barang = 1 and T.StatusTampil = 1
+								where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+		$query_get_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(M.Aset_ID)as Jumlah, sum(M.NilaiPerolehan) as NilaiPerolehan 
+								from kelompok k 
+									left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+									left join mesin M on M.kodeKelompok = x.Kode and 
+									M.Tahun <='$tahun' and M.Status_Validasi_Barang = 1 and M.StatusTampil = 1 and M.kondisi != 3
+								where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+		$query_get_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(B.Aset_ID)as Jumlah, sum(B.NilaiPerolehan) as NilaiPerolehan 
+								from kelompok k 
+									left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+									left join bangunan B on B.kodeKelompok = x.Kode and 
+									B.Tahun <='$tahun' and B.Status_Validasi_Barang = 1 and B.StatusTampil = 1 and B.kondisi != 3
+								where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+		$query_get_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(J.Aset_ID)as Jumlah, sum(J.NilaiPerolehan) as NilaiPerolehan 
+								from kelompok k 
+									left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+									left join jaringan J on J.kodeKelompok = x.Kode and 
+									J.Tahun <='$tahun' and J.Status_Validasi_Barang = 1 and J.StatusTampil = 1 and J.kondisi != 3
+								where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+		$query_get_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(AL.Aset_ID)as Jumlah, sum(AL.NilaiPerolehan) as NilaiPerolehan 
+								from kelompok k 
+									left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+									left join asetlain AL on AL.kodeKelompok = x.Kode and 
+									AL.Tahun <='$tahun' and AL.Status_Validasi_Barang = 1 and AL.StatusTampil = 1 and AL.kondisi != 3
+								where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+		$query_get_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(KDPA.Aset_ID)as Jumlah, sum(KDPA.NilaiPerolehan) as NilaiPerolehan 
+								from kelompok k 
+									left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+									left join kdp KDPA on KDPA.kodeKelompok = x.Kode and 
+									KDPA.Tahun <='$tahun' and KDPA.Status_Validasi_Barang = 1 and KDPA.StatusTampil = 1
+								where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+		
+        // $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
+        $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6');
         //pr($query_get_golongan_2);
-        for ($i = 0; $i <=6; $i++)
+        // for ($i = 0; $i <=6; $i++)
+        for ($i = 0; $i <6; $i++)
         {
             $result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
             if ($result_golongan)
@@ -2214,6 +3254,7 @@ class core_api_report extends DB {
             
             $result_golongan = '';
         }
+		// exit;
         //pr($dataArr);
         return $dataArr;
     }
@@ -2224,55 +3265,84 @@ class core_api_report extends DB {
     //REVISI REKAP SKPD
     public function get_report_rekap_inv_skpd($parameter,$tahun)
     {
-         $TAMBAHAN_QUERY='a.Status_Validasi_Barang=1';
-        foreach ($parameter as $Satker_ID => $value)
-        {
-            
-            $query_get_golongan_1 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(a.Aset_ID)as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                        left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                        left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID = '$Satker_ID' and a.Tahun = '$tahun' and $TAMBAHAN_QUERY where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-            $query_get_golongan_2 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(a.Aset_ID)as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                        left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                        left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID = '$Satker_ID' and a.Tahun = '$tahun' and $TAMBAHAN_QUERY where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_golongan_3 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(a.Aset_ID)as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                        left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                        left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID = '$Satker_ID' and a.Tahun = '$tahun' and $TAMBAHAN_QUERY where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode  ";
-            $query_get_golongan_4 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(a.Aset_ID)as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                        left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                        left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID = '$Satker_ID' and a.Tahun = '$tahun' and $TAMBAHAN_QUERY  where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_golongan_5 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(a.Aset_ID)as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                        left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                        left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID = '$Satker_ID' and a.Tahun = '$tahun' and $TAMBAHAN_QUERY where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_golongan_6 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(a.Aset_ID)as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                        left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                        left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID = '$Satker_ID' and a.Tahun = '$tahun' and $TAMBAHAN_QUERY where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_golongan_7 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(a.Aset_ID)as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k 
-                                        left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
-                                        left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID = '$Satker_ID' and a.Tahun = '$tahun' where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-            
-            $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
-            // pr($query_get_golongan_1);
-            for ($i = 0; $i <=6; $i++)
-            {
-                $result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
-                if ($result_golongan)
-                {
-                   
-                    while ($data = $this->fetch_object($result_golongan))
-                    {
-                        $dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)][] = $data;
-                        //echo "ada";
-                        //echo"<pre>";
-                        //print_r($dataArr);
-                        //echo"</pre>";
-                    }
-                }
-                
-                //$result_golongan = '';
-            }
-        }
+		// echo "masuk execute query";
+		// pr($parameter);
+		// pr($tahun);
+			foreach ($parameter as $Satker_ID)
+			{
+				if($Satker_ID != ''){
+				// echo "satker".$Satker_ID;
+				// echo "<br>";
+				// exit;
+					$query_get_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(T.Aset_ID)as Jumlah, sum(T.NilaiPerolehan) as NilaiPerolehan 
+											from kelompok k 
+												left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+												left join tanah T on T.kodeKelompok = x.Kode and 
+												T.kodeSatker = '$Satker_ID' and T.Tahun <='$tahun' and T.Status_Validasi_Barang = 1 and T.StatusTampil = 1
+											where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+					$query_get_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(M.Aset_ID)as Jumlah, sum(M.NilaiPerolehan) as NilaiPerolehan 
+											from kelompok k 
+												left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+												left join mesin M on M.kodeKelompok = x.Kode and 
+												M.kodeSatker = '$Satker_ID' and M.Tahun <='$tahun' and M.Status_Validasi_Barang = 1 and M.StatusTampil = 1 and M.kondisi != 3
+											where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+					$query_get_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(B.Aset_ID)as Jumlah, sum(B.NilaiPerolehan) as NilaiPerolehan 
+											from kelompok k 
+												left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+												left join bangunan B on B.kodeKelompok = x.Kode and 
+												B.kodeSatker = '$Satker_ID' and B.Tahun <='$tahun' and B.Status_Validasi_Barang = 1 and B.StatusTampil = 1 and B.kondisi != 3
+											where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+					$query_get_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(J.Aset_ID)as Jumlah, sum(J.NilaiPerolehan) as NilaiPerolehan 
+											from kelompok k 
+												left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+												left join jaringan J on J.kodeKelompok = x.Kode and 
+												J.kodeSatker = '$Satker_ID' and J.Tahun <='$tahun' and J.Status_Validasi_Barang = 1 and J.StatusTampil = 1 and J.kondisi != 3
+											where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+					$query_get_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(AL.Aset_ID)as Jumlah, sum(AL.NilaiPerolehan) as NilaiPerolehan 
+											from kelompok k 
+												left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+												left join asetlain AL on AL.kodeKelompok = x.Kode and 
+												AL.kodeSatker = '$Satker_ID' and AL.Tahun <='$tahun' and AL.Status_Validasi_Barang = 1 and AL.StatusTampil = 1 and AL.kondisi != 3
+											where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+					$query_get_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian,count(KDPA.Aset_ID)as Jumlah, sum(KDPA.NilaiPerolehan) as NilaiPerolehan 
+											from kelompok k 
+												left join kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang 
+												left join kdp KDPA on KDPA.kodeKelompok = x.Kode and 
+												KDPA.kodeSatker = '$Satker_ID' and KDPA.Tahun <='$tahun' and KDPA.Status_Validasi_Barang = 1 and KDPA.StatusTampil = 1
+											where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null  group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
+					// $query_get_golongan_7 = "  ";
+					
+					// $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
+					$dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6');
+					for ($i = 0; $i <6; $i++)
+					{
+						// echo "dataGolongan =".$dataGolongan."$i";
+						// echo "<br>";
+						$result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
+						
+						if ($result_golongan)
+						{
+						   
+							while ($data = $this->fetch_object($result_golongan))
+							{
+								// pr($data);
+								// $dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)][] = $data;
+								$dataArr[$Satker_ID]['Golongan_'.($i+1)][] = $data;
+								
+							}
+						}
+						
+						//$result_golongan = '';
+					}
+			  }
+				
+			}
+			// pr($dataArr);
+			// exit;
+			return $dataArr;
+			
+		
         
-        return $dataArr;
     }
     
     //Rekapitulasi Pengadaan BMD	
@@ -3366,7 +4436,339 @@ class core_api_report extends DB {
         <?php
     }
     
-    
+	public function sortirNoReg($noReg){
+	$ex = explode(',',$noReg);
+	$sorting =sort($ex);
+	$arrlength=count($ex);
+	for($x=0;$x<$arrlength;$x++)
+	{
+		$numSort[] = $ex[$x];
+	}
+	$temp ='';
+	$awal= '';
+	$akhir = '';
+	$selisih = '';
+	// $noRegSort= array();
+	// unset($noRegSort);
+	$output="";
+	for($i=0;$i<=$arrlength;$i++)
+	{
+		if($i == 0){
+			$temp = $ex[0];
+			$awal = $temp;	
+		}
+	   else{
+			$temp = $ex[$i];
+			if($akhir == ""){
+				$selisih = $temp - $awal;
+			}else{
+				$selisih = $temp - $akhir;
+			}
+				if($i!=0){
+					if($selisih == 1  ){
+						$akhir = $temp;
+					}else{
+						if ($awal != "" && $akhir !=""){
+								
+							$awal = sprintf("%04s", $awal);
+							$akhir = sprintf("%04s", $akhir);
+							$output.=$awal.""."-"."".$akhir;
+							$output.=", ";
+							$awal=$temp;
+							$akhir="";
+						}else{
+							$awal = sprintf("%04s", $awal);
+							
+							$output.=$awal;
+							$output.=", ";
+							$awal = $temp;
+						}
+					}
+				}
+			}
+	}  
+	return $output;
+
+}
+	
+	
+    public function QueryKib($query,$tableName){
+		
+		if (!$query) return false;
+	
+		$result=mysql_query($query);
+		
+		while ($row=mysql_fetch_assoc($result)){
+		  $data[] = $row;
+		}
+		if (!$data) {
+			return '';
+		}
+		//untuk mendapatkan field
+		foreach ($data[0] as $key => $val){
+		  
+		  $field [] = $key;
+
+		}
+		$ignoreField = array('Kode','Uraian');
+		$i=1;
+		$data_reg=1;
+		$count_reg=0;
+		$iman=array();
+		foreach ($data as $keys => $value){
+		  
+			$tmp = array();
+			$imp = "";
+
+			foreach ($field as $val){
+				
+				if (!in_array($val, $ignoreField)){
+					if ($value[$val]==''){
+						$tmp[] = "(".$val ." IS NULL or $val='' )";
+			   
+					}else{
+						$tmp[] = $val ." = '$value[$val]'";
+					}
+				  
+				}
+				
+			}
+			  
+			$imp = implode(' and ', $tmp);
+			
+			$sql = "SELECT noRegister FROM $tableName WHERE {$imp} order by noRegister desc";
+			// echo $sql; 
+			$res = mysql_query($sql);
+			$register=array();
+
+			while($d = mysql_fetch_assoc($res)){
+			  
+				$register[]= $d['noRegister'];
+			}
+			sort($register);
+			$text_register=implode(",",$register);
+	        //$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
+			$register_no=explode(",",$this->sortirNoReg($text_register));
+			for($m=0;$m<count($register_no)-1;$m++){
+				$data[$keys]['noRegister']=$register_no[$m];
+				array_push($iman,$data[$keys])  ;
+			}
+			$i++;
+		}
+			
+		return $iman;
+	}
+
+	public function QueryBinv($dataQuery){
+		// pr($dataQuery);
+		// exit;
+		if(is_array($dataQuery)){
+			$hit = count($dataQuery);
+			if($hit == 0){
+				$data ='';
+			}else{
+			// echo "array query";
+				for ($i = 0; $i < count($dataQuery); $i++)
+					{
+						// echo "query_$i =".$dataQuery[$i];
+						// echo "<br>";
+						// echo "<br>";
+						// exit;
+						$result_golongan = $this->query($dataQuery[$i]) or die ($this->error('error dataQuery'));
+						if ($result_golongan)
+						{
+						   while ($dataArr = mysql_fetch_assoc($result_golongan))
+							{
+								$data[] = $dataArr;
+							}
+						}
+						$result_golongan = '';
+					}
+			}	
+		}else{
+				// echo "single query";
+				$result_golongan = $this->query($dataQuery) or die ($this->error('error dataQuery'));
+				if ($result_golongan)
+				{
+				   while ($dataArr = mysql_fetch_assoc($result_golongan))
+					{
+						$data[] = $dataArr;
+					}
+				}
+		}
+		$ignoreField = array('Kode','Uraian');
+		$i=1;
+		$x=0;
+		$data_reg=1;
+		$count_reg=0;
+		$iman=array();
+		if($data){
+			foreach ($data as $keys => $value){
+				
+				$tmp = array();
+				$tmp1 = array();
+				$getField =array();
+				$imp = "";
+				
+				foreach ($data[$x] as $key => $val){
+					$getField[]  = $key;
+				}
+					foreach ($getField as $val){
+						
+						if (!in_array($val, $ignoreField)){
+							if ($value[$val]==''){
+								$tmp[] = "(".$val ." IS NULL or $val='' )";
+								$tmp1[] = "(".$val ." IS NULL or $val= )";
+					   
+							}else{
+								$tmp[] = $val ." = '$value[$val]'";
+								$tmp1[] = $val ." = $value[$val]";
+							}
+						  
+						}
+						
+					}
+					
+				$kel = explode(" = ",$tmp1[1]);
+				$kel_prs = explode('.',$kel[1]);
+				
+				if($kel_prs[0] == 01){
+					$tableName = "tanah";
+				}elseif($kel_prs[0] == 02){
+					$tableName = "mesin";
+				}elseif($kel_prs[0] == 03){
+					$tableName = "bangunan";
+				}elseif($kel_prs[0] == 04){
+					$tableName = "jaringan";
+				}elseif($kel_prs[0] == 05){
+					$tableName = "asetlain";
+				}elseif($kel_prs[0] == 06){
+					$tableName = "kdp";
+				}
+				
+				$imp = implode(' and ', $tmp);
+				$sql = "SELECT noRegister FROM $tableName WHERE {$imp} order by noRegister desc";
+				$res = mysql_query($sql);
+				$register=array();
+
+				while($d = @mysql_fetch_assoc($res)){
+				  
+					$register[]= $d['noRegister'];
+				}
+				sort($register);
+				$text_register=implode(",",$register);
+				//$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
+				$register_no=explode(",",$this->sortirNoReg($text_register));
+				for($m=0;$m<count($register_no)-1;$m++){
+					$data[$keys]['noRegister']=$register_no[$m];
+					array_push($iman,$data[$keys])  ;
+				}
+				$x++;
+				$i++;
+			}
+			return $iman;
+		}
+		else{
+			return false;
+		}
+	
+	}
+
+	public function ceckGol ($satker,$tahun,$paramGol){
+			if($paramGol != ''){
+				$query ="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k 
+					where k.Golongan=$paramGol and k.Bidang is not null and k.Kelompok is null and k.Sub is null and k.SubSub is null 
+					order by k.Kode ";
+			}else{
+				$query ="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where (k.kode not like '01%' and k.kode not like '07%') and k.Bidang is not null and k.Kelompok is null and k.Sub is null and k.SubSub is null order by k.Kode ";		
+			}		
+			
+			// pr($query);
+			// exit;
+			$result_golongan = $this->query($query) or die ($this->error('error'));	
+			while ($data = $this->fetch_object($result_golongan))
+			{
+				$datagol[$data->Kode] = $data->Uraian;
+			}
+			// pr($datagol);
+			// exit;
+			$tahundefault = "2008";
+				foreach ($satker as $Satker_ID)
+				{
+					foreach ($datagol as $data=>$value)
+					{
+						if($paramGol == 01 ){
+							$queryok ="SELECT k.Uraian, t.Alamat, t.LuasTotal, t.NilaiPerolehan 
+										FROM tanah as t, kelompok as k 
+										WHERE t.kodeKelompok =k.Kode and t.kodeSatker = '$Satker_ID' and t.Tahun <= '$tahun'
+										order by t.kodeKelompok";
+						}elseif($paramGol == 02){
+							if($tahun < $tahundefault){
+								$queryok="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
+									   from mesin as m,kelompok as k where 
+									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.Tahun <= '$tahun' group by m.kodeKelompok ORDER BY m.Mesin_ID ASC ";
+							}else{
+								$queryok ="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
+									   from mesin as m,kelompok as k where 
+									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.Tahun <'$tahundefault' group by m.kodeKelompok 
+									   union all
+									   select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
+									   from mesin as m,kelompok as k where 
+									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.Tahun >= '$tahundefault' and m.Tahun <='$tahun' and m.NilaiPerolehan >=300000 group by m.kodeKelompok";
+							}
+							
+						}elseif($paramGol == 03){
+							if($tahun < $tahundefault){
+								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan as b, kelompok as k 
+										WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.Tahun <= '$tahun' and b.kondisi != '3' 
+										order by b.kodeKelompok ";
+							}else{
+								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan as b, kelompok as k 
+										WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.Tahun < '$tahundefault' and b.kondisi != '3'
+										union all
+										SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan as b, kelompok as k 
+										WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.Tahun >= '$tahundefault' and b.Tahun <= '$tahun' and b.NilaiPerolehan >=10000000 and b.kondisi != '3'";
+							}
+						}elseif($paramGol == 04){
+							$queryok ="SELECT k.Uraian, j.Alamat, j.LuasJaringan, j.NilaiPerolehan FROM jaringan as j, kelompok as k 
+										WHERE j.kodeKelompok =k.Kode and j.kodeKelompok like '$data%' and j.kodeSatker = '$Satker_ID' and j.Tahun <= '$tahun' and j.kondisi	!= '3'
+										order by j.kodeKelompok ";
+						
+						}elseif($paramGol == 05){
+							
+							$queryok ="select al.kodeKelompok,k.Uraian,count(al.AsetLain_ID) as jumlah,sum(al.NilaiPerolehan) as Nilai 
+									   from asetlain as al,kelompok as k where 
+									   al.kodeKelompok = k.Kode and al.kodeKelompok like '$data%' and al.kodeSatker = '$Satker_ID' and al.Tahun <= '$tahun' and al.kondisi != '3' group by al.kodeKelompok ORDER BY al.AsetLain_ID ASC";
+							
+						
+						}elseif($paramGol == 06){
+							$queryok ="SELECT k.Uraian, kdp.Alamat, kdp.LuasLantai, kdp.NilaiPerolehan FROM kdp as kdp, kelompok as k 
+										WHERE kdp.kodeKelompok =k.Kode and kdp.kodeKelompok like '$data%' and kdp.kodeSatker = '$Satker_ID' and kdp.Tahun <= '$tahun' 
+										order by kdp.kodeKelompok ";
+						}else{
+							$queryok="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian 
+										FROM aset as a, kelompok as k 
+										WHERE a.kodeKelompok = k.Kode and a.kodeSatker LIKE '$Satker_ID' 
+										AND a.kondisi = 3 AND a.kodeKelompok like '$data%' group by a.kodeKelompok";
+						}
+						
+						
+						// echo $queryok ; 	
+						// echo "<br>";
+						// exit;
+						$result = $this->query($queryok) or die ($this->error('error'));		
+						while ($data = $this->fetch_object($result))
+						{
+							$getdata[$Satker_ID][$value][]= $data;
+						}
+					}
+				}
+				// pr($getdata);
+				// exit;
+		return 	$getdata;
+	}
+	
+	
 }
 
 ?>

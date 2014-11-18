@@ -538,6 +538,13 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
         // $query2="UPDATE PemanfaatanAset SET Status=1 WHERE Pemanfaatan_ID='$explodeID[$i]'";
         // $exec=mysql_query($query2) or die(mysql_error());
 
+        $listTable = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp');
 
         $pemanfaatan = $data['ValidasiPemanfaatan'];
         if ($pemanfaatan){
@@ -558,15 +565,39 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
                         );
 
                 $result = $this->db->lazyQuery($sql,$debug,2);
+
+                $sql = array(
+                        'table'=>"PemanfaatanAset",
+                        'field'=>"Aset_ID",
+                        'condition'=>"Pemanfaatan_ID='$value'",
+                        );
+
+                $resultAset[] = $this->db->lazyQuery($sql,$debug);
+            }
+
+            // pr($resultAset);
+            foreach ($resultAset as $key => $value) {
+
+                foreach ($value as $val) {
+                    
+                    $sql = array(
+                            'table'=>'aset',
+                            'field'=>"TipeAset",
+                            'condition' => "Aset_ID={$val['Aset_ID']}",
+                            );
+                    $result = $this->db->lazyQuery($sql,$debug);
+                    $asetid[$val['Aset_ID']] = $listTable[implode(',', $result[0])];
+                }
+                
+            }
+
+            foreach ($asetid as $key => $value) {
+
+                $this->db->logIt($tabel=array($value), $Aset_ID=$key);
             }
         }
         
-        foreach ($asetid as $key => $value) {
-
-            $this->db->logIt($tabel=array($value), $Aset_ID=$key);
-        }
-
-            
+        // exit;
         if ($result) return true;
         return false;
 

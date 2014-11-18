@@ -22,7 +22,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
   while ($dataAset = mysql_fetch_assoc($sql)){
               $aset[] = $dataAset;
           }
-
+      
   foreach($aset as $key => $data){
     $bop = $data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total'];
     $NilaiPerolehan = $data['NilaiPerolehan'] + $bop;

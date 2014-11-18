@@ -9,9 +9,9 @@ $mode 	  = $_REQUEST['mode'];
 $kelompok = $_REQUEST['kelompok_id'];
 $tab 	  = $_REQUEST['tab'];
 $tahun	  = $_REQUEST['tahun_buku_inventaris_skpd'];
-$skpd_id  = $_REQUEST['skpd_id3'];
+$skpd_id  = $_REQUEST['kodeSatker3'];
 $bukuInv  = $_REQUEST['bukuInv'];
-pr($_REQUEST);
+// pr($_REQUEST);
 $penanda  ='1';
 $tipe	  = $_REQUEST['tipe_file'];
 
@@ -20,15 +20,8 @@ $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id3=$skpd_id&tahun_buku_i
 $REPORT=new report_engine();
   
 $url="report_perolehanaset_cetak_bukuinventarisSKPD.php?$paramater_url";
-//include 'report_perolehanaset_cetak_kiba.php';
-//echo "<script>window.location.href='$namafile_web';</script>";
     
 $REPORT->show_pilih_download($url);    
-/*echo "Download File $kib A tersedia dalam bentuk:<br/>";
-echo "1. <a href=\"$url"."1\">PDF</a><br/>";
-echo "2. <a href=\"$url"."2\">Micorosoft Excel</a>";
-*/
-
 
 ?>
 
