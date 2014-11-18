@@ -393,7 +393,7 @@ class core_api_report extends DB {
             if ($kelompok!="" && $parameter_sql==""){
             $parameter_sql=$query_kelompok_fix;
             } 
-            //$limit="limit 20";
+//           $limit="limit 20";
 			//echo $parameter_sql;
 			
 			// exit;
@@ -1971,14 +1971,22 @@ class core_api_report extends DB {
 																$param_05[]="AL.".$pecah[$q];
 																$param_06[]="KDPA.".$pecah[$q];
 														}
-														
+                                                                                  
+													
 														$newparameter_sql_01 = implode('AND ', $param_01);
 														$newparameter_sql_02 = implode('AND ', $param_02);
 														$newparameter_sql_03 = implode('AND ', $param_03);
 														$newparameter_sql_04 = implode('AND ', $param_04);
 														$newparameter_sql_05 = implode('AND ', $param_05);
 														$newparameter_sql_06 = implode('AND ', $param_06);
-														
+                                                                                                                                                                                              
+                                                                                                                                                                                              $satker_param01=$param_01[1];
+                                                                                                                                                                                              $satker_param02=$param_02[1];
+                                                                                                                                                                                              $satker_param03=$param_03[1];
+                                                                                                                                                                                              $satker_param04=$param_04[1];
+                                                                                                                                                                                              $satker_param05=$param_05[1];
+                                                                                                                                                                                              $satker_param06=$param_06[1];
+                                                                                                                                                                                              
 														if(count($param_02) == 2){
 															if($param_02[1] != ''){
 																$satker_02 = "AND ".$param_02[1];
@@ -2126,7 +2134,7 @@ class core_api_report extends DB {
 																		where 
 																			M.kodeKelompok=K.Kode and 
 																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
-																			and M.Tahun < '2008' 
+																			and M.Tahun < '2008'  and $satker_param02
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
@@ -2160,7 +2168,7 @@ class core_api_report extends DB {
 																	where
 																		B.kodeKelompok = K.Kode and 
 																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
-																		and B.Tahun < '2008' 
+																		and B.Tahun < '2008'  and $satker_param03
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
@@ -2179,7 +2187,7 @@ class core_api_report extends DB {
 																	where
 																		B.kodeKelompok = K.Kode and 
 																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.NilaiPerolehan >= 10000000 and B.kondisi != 3
-																		and B.Tahun >= '2008' and $satker_03
+																		and B.Tahun >= '2008' $satker_03
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
@@ -2276,6 +2284,13 @@ class core_api_report extends DB {
 														// $newparameter_sql_04 = implode('AND ', $param_04);
 														// $newparameter_sql_05 = implode('AND ', $param_05);
 														// $newparameter_sql_06 = implode('AND ', $param_06);
+                                                                                    //                                                                                                      
+                                                                                                                                                                                               $satker_param01=$param_01[1];
+                                                                                                                                                                                              $satker_param02=$param_02[1];
+                                                                                                                                                                                              $satker_param03=$param_03[1];
+                                                                                                                                                                                              $satker_param04=$param_04[1];
+                                                                                                                                                                                              $satker_param05=$param_05[1];
+                                                                                                                                                                                              $satker_param06=$param_06[1];
 													// pr($param);
 														if($tahun > $tahunIntraDefault){
 																
