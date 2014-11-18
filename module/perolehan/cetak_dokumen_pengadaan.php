@@ -32,7 +32,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 		<section class="formLegend">
 			<script>
 				$(document).ready(function() {
-					$('#tahun_tanah,#tahun_mesin,#tahun_bangunan,#tahun_jaringan,#tahun_tetaplainnya,#tahun_kdp,#tahun_lainnya').keydown(function (e) {
+					$('#tahun_tanah,#tahun_mesin,#tahun_bangunan,#tahun_jaringan,#tahun_tetaplainnya,#tahun_kdp,#tahun_lainnya,#tahun_neraca').keydown(function (e) {
 						// Allow: backspace, delete, tab, escape, enter and .
 						if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 							 // Allow: Ctrl+A
@@ -62,6 +62,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#bdp3" data-toggle="tab">Daftar Aset Tetap - Aset Tetap Lainnya</a></li>
 						<li><a href="#rbdp3" data-toggle="tab">Daftar Aset Tetap - Konstruksi Dalam Pengerjaan</a></li>
 						<li><a href="#lainnya" data-toggle="tab">Daftar Aset Lainnya</a></li>
+						<li><a href="#neraca" data-toggle="tab">Rekapitulasi Barang Ke Neraca</a></li>
 					  </ul>
 					  
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -202,6 +203,27 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<input name="tahun_lainnya" id ="tahun_lainnya" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
 							</li>
 							<?php selectSatker('kodeSatker7','255',true,false); ?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+						</div>
+						
+						<div class="tab-pane" id="neraca">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Barang Ke Neraca</div>
+						</div>
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_rekapneraca.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tahun</span>
+								<input name="tahun_neraca" id ="tahun_neraca" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+							</li>
+							<?php selectSatker('kodeSatker8','255',true,false); ?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
