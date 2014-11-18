@@ -92,6 +92,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         
         $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
         $nmaset=$data['penggu_nama_aset'];
+        $nmasetsatker=$data['penggu_satker_aset'];
         $penggunaan_id=get_auto_increment("penggunaan");
         $ses_uid=$_SESSION['ses_uid'];
 
@@ -123,8 +124,8 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
             // $query1="insert into PenggunaanAset(Penggunaan_ID,Aset_ID) values('$penggunaan_id','$asset_id[$i]')  ";
             $sql1 = array(
                 'table'=>'Penggunaanaset',
-                'field'=>"Penggunaan_ID,Aset_ID",
-                'value' => "'{$penggunaan_id}','{$nmaset[$i]}'",
+                'field'=>"Penggunaan_ID,Aset_ID, kodeSatker",
+                'value' => "'{$penggunaan_id}','{$nmaset[$i]}', '{$nmasetsatker[$i]}'",
                 );
             $res = $this->db->lazyQuery($sql1,$debug,1);
 
@@ -292,7 +293,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*',
-                'condition' => "p.FixPenggunaan = 0 AND p.Status IS NULL $filter",
+                'condition' => "p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'
@@ -339,7 +340,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $filter = "";
         if ($tgl_awal) $filter .= " AND DATE(p.TglSKKDH) >= '{$tgl_awal}' ";
         if ($tgl_akhir) $filter .= " AND DATE(p.TglSKKDH) <= '{$tgl_akhir}' ";
-        if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}' ";
+        if ($kodeSatker) $filter .= " AND pa.kodeSatker = '{$kodeSatker}' ";
 
         $username = $_SESSION['ses_uoperatorid'];
 
@@ -349,10 +350,12 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
         // pr($_SESSION);exit; AND a.UserNm = '{$username}'
         $sql = array(
-                'table'=>'penggunaan AS p',
+                'table'=>'penggunaan AS p, Penggunaanaset AS pa',
                 'field'=>'p.*',
-                'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL $filter",
+                'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID ",
                 'limit' => '100',
+                'joinmethod' => "LEFT JOIN",
+                'join' => "p.Penggunaan_ID = pa.Penggunaan_ID"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);

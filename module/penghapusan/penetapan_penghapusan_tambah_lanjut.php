@@ -58,7 +58,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/menu.php";
 	
 		pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter($_POST,1);
+	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter($_POST);
 		pr($data);
 			?>
      
@@ -138,13 +138,14 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			
 			
 			<div id="demo">
+			<form name="myform" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data.php">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
 						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
 						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
 						<td align="right">
-								<span><input type="submit" name="submit" value="Penetapan Penghapusan" id="submit" disabled/></span>
+								<span><input type="submit" name="submit" class="btn" value="Penetapan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
@@ -156,11 +157,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				<tbody>		
 							 
 				<?php
-					if (!empty($get_data_filter['dataArr']))
+					if (!empty($data))
 					{
 					
 						$nomor = 1;
-						foreach ($get_data_filter['dataArr'] as $key => $value)
+						foreach ($data as $key => $value)
 						{
 				?>
 						  
@@ -170,16 +171,16 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<?php
 						if (($_SESSION['ses_uaksesadmin'] == 1)){
 							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $value->Aset_ID;?>" 
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $value[Aset_ID];?>" 
 							<?php for ($j = 0; $j <= count($get_data_filter['asetuser']); $j++){
-								if ($get_data_filter['asetuser'][$j]==$value->Aset_ID) echo 'checked';}
+								if ($get_data_filter['asetuser'][$j]==$value[Aset_ID]) echo 'checked';}
 							?>/>
 							<?php
 						}else{
 							if ($get_data_filter['asetuser']){
-							if (in_array($value->Aset_ID, $get_data_filter['asetuser'])){
+							if (in_array($value[Aset_ID], $get_data_filter['asetuser'])){
 							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $value->Aset_ID;?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value->Aset_ID) echo 'checked';}?>/>							<?php
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $value[Aset_ID];?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value[Aset_ID]) echo 'checked';}?>/>							<?php
 							}
 						}
 						}
@@ -194,7 +195,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
 							<tr>
 								<td>
-									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value->Aset_ID?></span>
+									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value[Aset_ID]?></span>
 									<span>( Aset ID - System Number )</span>
 								</td>
 								<!--
@@ -204,13 +205,13 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								</td>-->
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value->NomorReg?></td>
+								<td style="font-weight:bold;"><?php echo $value[NomorReg]?></td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value->Kode?></td>
+								<td style="font-weight:bold;"><?php echo $value[Kode]?></td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value->NamaAset?></td>
+								<td style="font-weight:bold;"><?php echo $value[NamaAset]?></td>
 							</tr>
 
 						</table>
@@ -219,16 +220,16 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<hr />
 						<table>
 							<tr>
-								<td width="30%"> No.Kontrak</td> <td><?php echo $value->NoKontrak?></td>
+								<td width="30%"> No.Kontrak</td> <td><?php echo $value[NoKontrak]?></td>
 							</tr>
 							<tr>
-								<td>Satker</td> <td><?php echo $value->NamaSatker?></td>
+								<td>Satker</td> <td><?php echo $value[NamaSatker]?></td>
 							</tr>
 							<tr>
-								<td>Lokasi</td> <td><?php echo $value->NamaLokasi?></td>
+								<td>Lokasi</td> <td><?php echo $value[NamaLokasi]?></td>
 							</tr>
 							<tr>
-								<td>Status</td> <td><?php echo $value->Kondisi_ID. '-' .$value->InfoKondisi?></td>
+								<td>Status</td> <td><?php echo $value[Kondisi_ID]. '-' .$value[InfoKondisi]?></td>
 							</tr>
 
 						</table>
@@ -236,7 +237,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					</tr>
 					
 				     <?php
-						$no++;
+						$nomor++;
 						$pid++;
 					 }
 				}
@@ -250,6 +251,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					</tr>
 				</tfoot>
 			</table>
+			</form>
 			</div>
 			<div class="spacer"></div>
 			

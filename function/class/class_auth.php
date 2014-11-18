@@ -367,7 +367,7 @@ class UserAuth
 	    </table>
 	</div>
 	
-	<?
+	<?php
     }
     
     public function admin_check_akses_group_to_admin($param)

@@ -15,6 +15,12 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
         $ket = $data['shb_ket'];
         $menuID = $data['menuID'];
 
+        $filter = "";
+        if ($tahun) $filter .= " AND tahun = '{$tahun}'";
+        if ($njb) $filter .= " AND Kelompok_ID = '{$njb}'";
+        if ($ket) $filter .= " AND Keterangan = '{$ket}'";
+
+        // pr($data);
         $StatusPemeliharaan = "";
         if ($menuID==2) $StatusPemeliharaan .= "StatusPemeliharaan=0";
         if ($menuID==3) $StatusPemeliharaan .= "StatusPemeliharaan=1";
@@ -22,7 +28,7 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'StandarHarga AS st',
                 'field'=>"st.*",
-                'condition' => "{$StatusPemeliharaan}",
+                'condition' => "{$StatusPemeliharaan} {$filter}",
                 'limit' => '100',
                 );
 
@@ -68,11 +74,16 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
 		$skb_skpd	= $data['skpd_id'];
 		$skb_lokasi	= $data['lokasi_id'];
 		
-		
+        $filter = "";
+		if ($skb_njb) $filter .= " AND skb_njb = '{$skb_njb}'";
+        if ($skb_skpd) $filter .= " AND skb_skpd = '{$skb_skpd}'";
+        if ($skb_lokasi) $filter .= " AND skb_lokasi = '{$skb_lokasi}'";
+
+
 		$sql = array(
                 'table'=>'StandarKebutuhan',
                 'field'=>"*",
-                'condition' => "1",
+                'condition' => "1 {$filter}",
                 'limit' => '100'
                 );
 
@@ -90,12 +101,18 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
 		$rkb_skpd	= $data['skpd_id'];
 		$rkb_lokasi	= $data['lokasi_id'];
 		$rkb_njb	= $data['kelompok_id'];
-		
-		
+        
+        // pr($data);	
+		$filter = "";
+        if ($rkb_tahun) $filter .= " AND Tahun = '{$rkb_tahun}'";
+        if ($rkb_skpd) $filter .= " AND Satker_ID = '{$rkb_skpd}'";
+        if ($skb_lokasi) $filter .= " AND lokasi_ID = '{$rkb_lokasi}'";
+        if ($rkb_njb) $filter .= " AND Kelompok_ID = '{$rkb_njb}'";
+
 		$sql = array(
                 'table'=>'Perencanaan',
                 'field'=>"*",
-                'condition' => "1",
+                'condition' => "1 {$filter}",
                 'limit' => '100'
                 );
 

@@ -132,6 +132,7 @@ class DB
 	
 	public function error()
 	{
+
 		$message = 'Your query error, please check again';
 		return $message;
 	}
@@ -454,6 +455,7 @@ class DB
 
 			break;
 
+			
 
 			default:
 				pr('Method no defined');
