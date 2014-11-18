@@ -150,6 +150,90 @@ include "../config/config.php";
                         
                     </li>
 
+                    <li>
+                        <h3>Rekap KIB</h3>
+                        
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/rekapkib.php?req=1" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Rekap KIB A</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/rekapkib.php?req=2" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Rekap KIB B</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/rekapkib.php?req=3" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Rekap KIB C</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/rekapkib.php?req=4" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Rekap KIB D</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/rekapkib.php?req=5" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Rekap KIB E</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                    <a href="<?=$url_rewrite?>/services/rekapkib.php?req=6" target="_blank">
+                                        <div class="acc-section">
+                                            <div class="acc-content">Rekap KIB F</div>
+                                        </div>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </li>
+
                     <!--
                     <li>
                         <h3>Store Data</h3>
