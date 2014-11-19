@@ -121,8 +121,21 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			
 
 			<div>
+
 			<form action="" method="POST">
 				 <div class="detailLeft">
+				 	<ul>
+				 		<li>
+					 		<span class="span6">
+					 			<ul class="nav nav-pills" role="tablist">
+								  <li role="presentation" class="active" id="data"><a href="#" onclick="return option('data');">Rubah Data</a></li>
+								  <li role="presentation" id="kapital"><a href="#" onclick="return option('kapital');">Kapitalisasi</a></li>
+								  <li role="presentation" id="nilai"><a href="#" onclick="return option('nilai');">Koreksi Nilai</a></li>
+								  <li role="presentation" id="kondisi"><a href="#" onclick="return option('kondisi');">Rubah Kondisi</a></li>
+								</ul>
+							</span>
+						</li>
+				</ul>
 						<ul>
 							<li>
 								<span class="span2">Kode Pemilik</span>
@@ -193,7 +206,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" onchange="return totalHrg()" required/>
+								<input type="text" class="span3" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" onchange="return totalHrg()" required readonly/>
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
@@ -471,5 +484,10 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		var hrgSatuan = $("#hrgSatuan").val();
 		var total = jml*hrgSatuan;
 		$("#total").val(total);
+	}
+
+	function option(item){
+		$(".nav li").removeAttr('class');
+		$("#"+item).attr('class','active');
 	}
 </script>
