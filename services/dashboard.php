@@ -233,7 +233,37 @@ include "../config/config.php";
                         </div>
                         
                     </li>
-
+                    <li>
+                        <h3>Request Description</h3>
+                        
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                        <a href="?page=5">
+                                            <div class="acc-section">
+                                                <div class="acc-content">KIB</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="acc-section">
+                            <div class="acc-content">
+                                <ul class="acc" id="nested2">
+                                    <li>
+                                        <a href="?page=6">
+                                            <div class="acc-section">
+                                                <div class="acc-content">Rekap KIB</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </li>
                     <!--
                     <li>
                         <h3>Store Data</h3>
@@ -290,6 +320,16 @@ include "../config/config.php";
                             case '4':
                                 {
                                     include 'view/viewreport.php'; 
+                                }
+                                break;
+                            case '5':
+                                {
+                                    include 'view/viewparam.php'; 
+                                }
+                                break;
+                            case '6':
+                                {
+                                    include 'view/viewparam-1.php'; 
                                 }
                                 break;
                             default:
