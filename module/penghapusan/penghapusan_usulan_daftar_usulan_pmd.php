@@ -25,11 +25,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Usulan Penghapusan Pemindahtanganan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Daftar Usulan Penghapusan Pemusnahan</div>
+				<div class="title">Daftar Usulan Penghapusan Pemindahtanganan</div>
 				<div class="subtitle">Daftar Data</div>
 			</div>	
 		<section class="formLegend">
@@ -52,9 +52,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								}
 								
 								
-	pr($_POST);
+	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
-	pr($data);
+	// pr($data);
 							?>
 						<ul>
 							<li>
@@ -98,6 +98,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					// pr($dataArr);
 					$no=1;	
 					// pr($data);
+					if($data){
 					foreach($data as $key => $hsl_data){
 						
 						if($dataArr!="")
@@ -154,7 +155,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</td>
 					</tr>
 					
-				     <?php $no++; }?>
+				     <?php $no++; } }?>
 				</tbody>
 				<tfoot>
 					<tr>

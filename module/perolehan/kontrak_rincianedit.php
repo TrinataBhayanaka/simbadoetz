@@ -275,7 +275,6 @@ $menu_id = 10;
 
 <script type="text/javascript">
 	$(document).on('change','#kodeKelompok', function(){
-
 		var kode = $('#kodeKelompok').val();
 		var gol = kode.split(".");
 
@@ -307,13 +306,13 @@ $menu_id = 10;
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".jaringan li > input,textarea").removeAttr('disabled');
 			$(".jaringan").show('');
-		} else if(gol[0] == '05')
+		} else if(gol[0] == '05'){
 			$("#TipeAset").val('E');
 			$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
 			$(".asetlain li > input,textarea").removeAttr('disabled');
 			$(".asetlain").show('');
-		} else if(gol[0] == '06')
+		} else if(gol[0] == '06'){
 			$("#TipeAset").val('F');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,textarea").attr('disabled','disabled');
@@ -325,7 +324,7 @@ $menu_id = 10;
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
 		}			
 		
-	})
+	});
 
 	$(document).on('submit', function(){
 		var perolehan = $("#total").val();
@@ -340,9 +339,9 @@ $menu_id = 10;
 			alert("Total rincian barang melebihi nilai SPK");
 			return false;	
 		}
-	})
+	});
 
-	function totalHrg(){
+		function totalHrg(){	
 		var jml = $("#jumlah").val();
 		var hrgSatuan = $("#hrgSatuan").val();
 		var total = jml*hrgSatuan;

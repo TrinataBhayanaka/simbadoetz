@@ -18,7 +18,7 @@ $tgl=$_POST['bup_pp_tanggal'];
 $olah_tgl=  format_tanggal_db2($tgl);
 $keterangan=$_POST['bup_pp_get_keterangan'];
 $submit=$_POST['btn_action'];
-pr($_POST);
+// pr($_POST);
 // exit;
 
 // $data=$UPDATE->update_daftar_penetapan_penghapusan($id,$no,$tgl,$olah_tgl,$keterangan,$submit);

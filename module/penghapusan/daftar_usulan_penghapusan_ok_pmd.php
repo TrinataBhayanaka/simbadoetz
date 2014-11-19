@@ -51,11 +51,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Buat Usulan Penghapusan</li>
+		  <li class="active">Buat Usulan Penghapusan Pemindahtanganan</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Buat Usulan Penghapusan</div>
+			<div class="title">Buat Usulan Penghapusan Pemindahtanganan</div>
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
@@ -80,7 +80,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							// $data = $RETRIEVE->retrieve_usulan_penghapusan_eksekusi_tampil($parameter);
 							
 							$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_tampil_pmd($_GET);
-							pr($data);
+							// pr($data);
 							$no=1;
 							foreach($data as $key => $nilai){ 
 							if ($nilai[Aset_ID] !='')

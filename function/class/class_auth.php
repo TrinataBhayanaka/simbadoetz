@@ -94,7 +94,7 @@ class UserAuth
     {
 	
 		if ($SessionUser['ses_uid'] == ''){
-			$query = "SELECT menuID FROM tbl_user_menu WHERE menuAksesLogin = 1 AND menuStatus = 1";
+			$query = "SELECT menuID FROM tbl_user_menu WHERE menuAksesLogin = 1 AND menuStatus = 1 ";
 			$result = $this->DBVAR->query($query) or die ($this->DBVAR->error());
 			while ($data = $this->DBVAR->fetch_object($result))
 			{
@@ -127,7 +127,7 @@ class UserAuth
     
     public function FrontEnd_show_menu($SessionUser)
     {
-		$query = "SELECT menuID FROM tbl_user_menu WHERE menuStatus = 1 ";
+		$query = "SELECT * FROM tbl_user_menu WHERE menuStatus = 1 ";
 		$result = $this->DBVAR->query($query) or die ($this->DBVAR->error());
 		while ($menu_active = $this->DBVAR->fetch_object($result)){
 			$menuArr [] = $menu_active->menuID;
@@ -171,14 +171,15 @@ class UserAuth
 		foreach ($show_menu as $value){
 		    $query = "SELECT a.*, b.* FROM tbl_user_menu AS a LEFT JOIN tbl_user_menu_parent AS b 
 					    ON a.menuParent = b.menuParentID WHERE a.menuID = {$value}";
-		    $result = $this->DBVAR->query($query) or die ($this->DBVAR->error());	
+		    // pr($query);
+			$result = $this->DBVAR->query($query) or die ($this->DBVAR->error());	
 		    
 		    if ($this->DBVAR->num_rows($result))
 		    {
 			    $data = $this->DBVAR->fetch_object($result);
 			    
-			    $list[$data->menuParentDesc][] = $data->menuDesc;
-			    (!in_array($value, $listMenu)) ? $menuPath[] = $data->menuPath : $menuPath[] = '#';
+			    $list[$data->menuParentDesc][$data->menuID] = $data->menuDesc;
+			    (!in_array($value, $listMenu)) ? $menuPath[$data->menuID] = $data->menuPath : $menuPath[] = '#';
 			    
 		    }
 		    

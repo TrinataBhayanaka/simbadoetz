@@ -1,14 +1,13 @@
 <?php
+ob_start();
+
 include "../../config/config.php";
+include "$path/header.php";
+include "$path/title.php";
 
-?>
+include "$path/menu.php";
 
-<?php
-    include"$path/meta.php";
-    include"$path/header.php";
-    include"$path/menu.php";
-
-     $gis_idaset = $_POST['gis_idaset'];
+            $gis_idaset = $_POST['gis_idaset'];
             $gis_namaaset = $_POST['gis_namaaset'];
             $gis_nokontrak = $_POST['gis_nokontrak'];
             $gis_tahun = $_POST['gis_nokontrak'];
@@ -379,24 +378,22 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                         <?php
                                 }
                             }
-        
-        
-    
-    
-?>
-    <section id="main">
-        <ul class="breadcrumb">
-          <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-          <li><a href="#"> GIS</a><span class="divider"><b>&raquo;</b></span></li>
-          <li class="active"> GIS MAP</li>
-          <?php SignInOut();?>
-        </ul>
-        <div class="breadcrumb">
-            <div class="title"> GIS</div>
-            <div class="subtitle">Filter Data</div>
-        </div>
-        <section class="formLegend">
-             <?php
+	    
+	    
+	
+	    
+            ?>
+<html>
+    <body>
+        <div id="tengah1">	
+            <div id="frame_tengah1">
+                <div id="frame_gudang">
+                    <div id="topright">
+                        GIS
+                    </div>
+                        <div id="bottomright">
+                            
+                            <?php
                                 $param=$_SESSION['parameter_sql'];
                                 $query="SELECT a.Aset_ID FROM Aset  as a
                                               LEFT JOIN lokasi_baru AS h ON  a.Aset_ID=h.Aset_ID
@@ -501,11 +498,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                                         <div id="masuk" style="border:1px solid #004933;width: 1000px;height:500px">
                                        
                                         </div>
-            
-            
-        </section>     
-    </section>
-    
-<?php
-    include"$path/footer.php";
-?>
+                        </div>
+                </div>
+            </div>
+        </div>   
+        <?php
+            include "$path/footer.php";
+        ?>
+    </body>
+</html>	

@@ -31,7 +31,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($res) return $res;
         return false;
     }
-	   public function retrieve_usulan_penghapusan_pmd($data,$debug=false)
+	   
+	public function retrieve_usulan_penghapusan_pmd($data,$debug=false)
     {
             
         $jenisaset = $data['jenisaset'];
@@ -41,16 +42,36 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-  
-
-        $sql = array(
-                'table'=>'penggunaan as a, Aset AS b',
-                'field'=>"b.*",
-                'condition' => "a.FixPenggunaan = 1 AND a.Status=1 AND a.NotUse=1 {$filterkontrak}",
-                'joinmethod' => ' LEFT JOIN ',
-                'join' => 'a.Penggunaan_ID = b.Aset_ID'
+		
+		$sql1 = array(
+                'table'=>'usulanaset',
+                'field'=>"Aset_ID",
+                'condition' => "Jenis_Usulan='PMD'",
                 );
 
+        $res1 = $this->db->lazyQuery($sql1,$debug);
+		
+		if($res1){
+			foreach($res1 as $asetid)
+			{
+				$dataArr[]=$asetid[Aset_ID];
+			}
+			$aset_id=implode(', ',array_values($dataArr));
+			$condition="b.Aset_ID NOT IN ($aset_id) AND b.fixPenggunaan=1 AND (b.kondisi=2 OR b.kondisi=3)";
+			
+		}else{
+			$condition="fixPenggunaan=1 AND (b.kondisi=2 OR b.kondisi=3)";
+		}
+		// pr($aset_id);
+		// pr($sql1);
+        $sql = array(
+                'table'=>'Aset AS b,Kelompok AS c,Satker AS d',
+                'field'=>"b.*,c.*,d.*",
+                'condition' => "{$condition} {$filterkontrak}",
+                'joinmethod' => ' LEFT JOIN ',
+                'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
+                );
+// pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
         if ($res) return $res;
         return false;
@@ -74,17 +95,24 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
 		
-		foreach($res1 as $asetid)
+		
+		// pr($aset_id);
+		// pr($sql1);
+		if($res1){
+			foreach($res1 as $asetid)
 			{
 				$dataArr[]=$asetid[Aset_ID];
 			}
-		$aset_id=implode(', ',array_values($dataArr));
-		// pr($aset_id);
-		// pr($sql1);
+			$aset_id=implode(', ',array_values($dataArr));
+			$condition="Aset_ID NOT IN ($aset_id) AND fixPenggunaan=1 AND kondisi=3";
+			
+		}else{
+			$condition="fixPenggunaan=1 AND kondisi=3";
+		}
         $sql = array(
                 'table'=>'Aset AS b,Kelompok AS c,Satker AS d',
                 'field'=>"b.*,c.*,d.*",
-                'condition' => "Aset_ID NOT IN ($aset_id) AND fixPenggunaan=1 {$filterkontrak}",
+                'condition' => "{$condition} {$filterkontrak}",
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
                 );
@@ -99,7 +127,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		// pr($data);
 		$id = $data[penghapusanfilter];
 		$cols = implode(', ',array_values($id));
-		pr($cols);
+		// pr($cols);
 		$jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -164,7 +192,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		// pr($data);
 		$id = $data[penghapusanfilter];
 		$cols = implode(', ',array_values($id));
-		pr($cols);
+		// pr($cols);
 		$jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -628,11 +656,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	  
 
 			$sql = array(
-					'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
-					'field'=>"a.*, b.Aset_ID, e.NamaSatker, f.NamaLokasi, g.Kode",
-					'condition' => "a.fixPenggunaan=1 AND b.Jenis_Usulan='$jenis_usulan' {$filterkontrak}",
+					'table'=>'UsulanAset AS b,Aset AS a,Satker AS e,Kelompok AS g',
+					'field'=>"a.*, b.*, e.*, g.*",
+					'condition' => "a.fixPenggunaan=1 AND b.Jenis_Usulan='$jenis_usulan' AND b.StatusPenetapan=0 {$filterkontrak}",
 					'joinmethod' => ' LEFT JOIN ',
-					'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.Satker_ID,a.kodeKelompok=g.Kelompok_ID'
+					'join' => 'b.Aset_ID=a.Aset_ID,a.kodeSatker=e.Kode,a.kodeKelompok=g.Kode'
 					);
 
 			$res = $this->db->lazyQuery($sql,$debug);
@@ -740,13 +768,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     {
 		$id = $data[penetapanpenghapusan];
 		$cols = implode(', ',array_values($id));
-		pr($cols);
+		// pr($cols);
 		$uname = $_SESSION['ses_uname'];
 		
 		$jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
-
+		$jenis_hapus=$_SESSION['jenis_hapus'];
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
@@ -755,12 +783,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
 					'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
 					'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan, e.NamaSatker, f.NamaLokasi, g.Kode",
-					'condition' => "b.Aset_ID IN ($cols) AND a.fixPenggunaan=1 AND b.Jenis_Usulan='PMS' {$filterkontrak}",
+					'condition' => "b.Aset_ID IN ($cols) AND a.fixPenggunaan=1 AND b.Jenis_Usulan='$jenis_hapus' {$filterkontrak}",
 					'joinmethod' => ' LEFT JOIN ',
-					'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.Satker_ID,a.kodeKelompok=g.Kelompok_ID'
+					'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
 					);
 
         $res = $this->db->lazyQuery($sql,$debug);
+		// pr($res);exit;
         if ($res) return $res;
         return false;
 		/*
@@ -1177,7 +1206,26 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 						'condition' => "Penghapusan_ID='$data[id]'",
 						);
 		$res1 = $this->db->lazyQuery($sql1,$debug,2);
+		$sql2 = array(
+			'table'=>'PenghapusanAset',
+			'field'=>"Aset_ID",
+			'condition' => "Penghapusan_ID='$data[id]'",
+			);
+		$res2 = $this->db->lazyQuery($sql2,$debug);
+		// pr($res2);
+		foreach($res2 as $asetid)
+			{
+				$dataArr[]=$asetid[Aset_ID];
+			}
+		$aset_id=implode(', ',array_values($dataArr));
+		// pr($aset_id);
 		
+		$sql1 = array(
+			'table'=>'Aset',
+			'field'=>"fixPenggunaan=1, Status_Validasi_Barang=1 ",
+			'condition' => "Aset_ID IN ($aset_id)",
+			);
+		$res1 = $this->db->lazyQuery($sql1,$debug,2);
         // $query2="UPDATE PenghapusanAset SET Status=0 WHERE Penghapusan_ID='$id'";
         // $exec2=$this->query($query2) or die($this->error());
 		
@@ -1198,7 +1246,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	 public function store_usulan_penghapusan_pms($data,$debug=false){	
 				
-				pr($data);
+				// pr($data);
                 $asset_id=Array();
                 $no_reg=Array();
                 $nm_barang=Array();
@@ -1277,7 +1325,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             }
 			public function store_usulan_penghapusan_pmd($data,$debug=false){	
 				
-				pr($data);
+				// pr($data);
                 $asset_id=Array();
                 $no_reg=Array();
                 $nm_barang=Array();
@@ -1380,6 +1428,41 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             return false;
         }
     }
+	
+	public function delete_penetapan_penghapusan_asetid($data,$debug=false)
+    {
+       // pr($data);exit;
+	   
+	   /* $query="UPDATE Usulan SET FixUsulan=0 WHERE Usulan_ID='$id'";
+        $exec=$this->query($query) or die($this->error());
+
+
+        $query2="UPDATE Aset SET NotUse=0 WHERE Usulan_Penghapusan_ID='$id'";
+        $exec2=$this->query($query2) or die($this->error());
+		*/
+		// $query2="DELETE FROM Usulan WHERE Usulan_ID='$usulan_id'";
+        // $exec2=$this->query($query2) or die($this->error());
+		
+        $query3="DELETE FROM penghapusanaset WHERE Aset_ID='$data[asetid]'";
+        $exec3=$this->query($query3) or die($this->error());
+		
+		$sql2 = array(
+						'table'=>'usulanaset',
+						'field'=>"StatusPenetapan=0",
+						'condition' => "Aset_ID='$data[asetid]'",
+						);
+					$res2 = $this->db->lazyQuery($sql2,$debug,2);
+					
+		// pr($query3);exit;
+        // $query4="UPDATE Aset SET Usulan_Penghapusan_ID=NULL WHERE Usulan_Penghapusan_ID='$id'";
+        // $exec4=$this->query($query4) or die($this->error());
+        
+        if($exec3){
+            return true;
+        }else{
+            return false;
+        }
+    }
 	public function delete_daftar_usulan_penghapusan_pmd($id)
     {
        $usulan_id=$id['id'];
@@ -1418,7 +1501,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     // $penghapusan_id
             // )
             {
-				pr($data);
+				// pr($data);
 				$no=$data['bup_pp_noskpenghapusan'];
 				$tgl=$data['bup_pp_tanggal'];
 				$olah_tgl=  format_tanggal_db2($tgl);
@@ -1513,23 +1596,27 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     {
         $querytampil="SELECT * FROM PenghapusanAset WHERE Penghapusan_ID='$id'";
         $exectampil=  $this->query($querytampil) or die($this->error());
+		
         while($row=  $this->fetch_array($exectampil)){
 
-        $asetid = $row['Aset_ID'];
-
-        $query4="UPDATE Aset SET Dihapus=0 WHERE Aset_ID='$asetid'";
-        $exec4=$this->query($query4) or die($this->error());
+			$asetid = $row['Aset_ID'];
+			
+			$query4="UPDATE Aset SET Dihapus=0 WHERE Aset_ID='$asetid'";
+			$exec4=$this->query($query4) or die($this->error());
+			pr($query4);
+			$query="UPDATE Penghapusan SET FixPenghapusan=0 WHERE Penghapusan_ID='$id'";
+			$exec=$this->query($query) or die($this->error());
+			pr($query);
+			$query2="UPDATE UsulanAset SET StatusPenetapan=0 WHERE Penetapan_ID='$id'";
+			$exec2=$this->query($query2) or die($this->error());
+			pr($query2);
+			$query3="DELETE FROM PenghapusanAset WHERE Penghapusan_ID='$id' AND Status=0";
+			$exec3=$this->query($query3) or die($this->error());
+			pr($query3);
         }   
 
-        $query="UPDATE Penghapusan SET FixPenghapusan=0 WHERE Penghapusan_ID='$id'";
-        $exec=$this->query($query) or die($this->error());
-
-        $query2="UPDATE UsulanAset SET StatusPenetapan=0 WHERE Penetapan_ID='$id' AND Jenis_Usulan='HPS'";
-        $exec2=$this->query($query2) or die($this->error());
-
-        $query3="DELETE FROM PenghapusanAset WHERE Penghapusan_ID='$id' AND Status=0";
-        $exec3=$this->query($query3) or die($this->error());
         
+		// exit;
         if($exec3){
             return true;
         }else{
@@ -1562,6 +1649,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 					// pr($data['ValidasiPenghapusan']);
                     $penghapusan_id=$data['ValidasiPenghapusan'][$i];
                     if($data['ValidasiPenghapusan']!=""){
+					
 					$sql = array(
 						'table'=>'Penghapusan',
 						'field'=>"Status=1",
@@ -1576,6 +1664,27 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 						'table'=>'PenghapusanAset',
 						'field'=>"Status=1 ",
 						'condition' => "Penghapusan_ID='$penghapusan_id'",
+						);
+					$res1 = $this->db->lazyQuery($sql1,$debug,2);
+					
+					$sql2 = array(
+						'table'=>'PenghapusanAset',
+						'field'=>"Aset_ID",
+						'condition' => "Penghapusan_ID='$penghapusan_id'",
+						);
+					$res2 = $this->db->lazyQuery($sql2,$debug);
+					// pr($res2);
+					foreach($res2 as $asetid)
+						{
+							$dataArr[]=$asetid[Aset_ID];
+						}
+					$aset_id=implode(', ',array_values($dataArr));
+					// pr($aset_id);
+					
+					$sql1 = array(
+						'table'=>'Aset',
+						'field'=>"fixPenggunaan=0, Status_Validasi_Barang=0 ",
+						'condition' => "Aset_ID IN ($aset_id)",
 						);
 					$res1 = $this->db->lazyQuery($sql1,$debug,2);
 					

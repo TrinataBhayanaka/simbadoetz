@@ -24,7 +24,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // $date,
                 // $ses_uid
                 // );
-		pr($_POST);
+		// pr($_POST);
 		$data = $PENGHAPUSAN->store_usulan_penghapusan_pms($_POST);
         
         echo "<script>

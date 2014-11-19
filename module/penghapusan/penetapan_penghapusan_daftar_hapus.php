@@ -13,7 +13,7 @@ $id=$_GET['id'];
 
 // $data=$DELETE->delete_daftar_penetapan_penghapusan($id);
 		$data = $PENGHAPUSAN->delete_daftar_penetapan_penghapusan($id);
-
+// pr($id);exit;
 /*
 $querytampil="SELECT * FROM PenghapusanAset WHERE Penghapusan_ID='$id'";
 $exectampil=  mysql_query($querytampil) or die(mysql_error());
