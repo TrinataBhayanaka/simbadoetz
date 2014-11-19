@@ -129,7 +129,8 @@ include "../../config/config.php";
 								<td>$no.</td>
 								<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
 								<td>$nilai[noRegister] - $nilai[kodeKelompok]</td>
-								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'> <a href='$url_rewrite/module/penghapusan/penetapan_asetid_proses_hapus.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'>Delete</a></td>
+								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'> <a href='$url_rewrite/module/penghapusan/penetapan_asetid_proses_hapus.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
+ Delete</a></td>
 								</tr>
 
 								<tr>
