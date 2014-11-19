@@ -80,7 +80,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							// $data = $RETRIEVE->retrieve_usulan_penghapusan_eksekusi_tampil($parameter);
 							
 							$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_tampil_pms($_GET);
-							pr($data);
+							// pr($data);
 							$no=1;
 							foreach($data as $key => $nilai){ 
 							if ($nilai[Aset_ID] !='')
@@ -103,7 +103,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<td>$no.</td>
 							<input type='hidden' name='peman_usul_nama_aset[]' value='$nilai[Aset_ID]'>
 							<td>$nilai[noRegister] - $nilai[Kode]</td>
-							<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
+							<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'></td>
 							</tr>
 
 							<tr>
@@ -127,7 +127,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<input type='text' value='$nilai[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
 							<input type='hidden' name='fromsatker' value='$nilai[OrigSatker_ID]' size='5px' style='text-align:center' readonly = 'readonly'>
 							</td>
-							<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
+							<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' class='btn btn-warning' value='Sub Detail' onclick='spoilsub(this);'></td>
 							</tr>
 							</table>
 

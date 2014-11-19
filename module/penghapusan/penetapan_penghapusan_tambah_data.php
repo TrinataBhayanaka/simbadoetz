@@ -34,9 +34,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	pr($_POST);
+	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi($_POST);
-	pr($data);
+	// pr($data);
 	
 ?>
 	   <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
@@ -140,8 +140,8 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										<td></td>
 										<td>$no.</td>
 										<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-										<td>$nilai[noRegister] - $nilai[Kode]</td>
-										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
+										<td>$nilai[noRegister] - $nilai[kodeKelompok]</td>
+										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'></td>
 										</tr>
 
 										<tr>
@@ -165,7 +165,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										<input type='text' value='$nilai[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
 										<input type='hidden' name='fromsatker' value='$nilai[OrigSatker_ID]' size='5px' style='text-align:center' readonly = 'readonly'>
 										</td>
-										<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
+										<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' class='btn btn-warning' onclick='spoilsub(this);'></td>
 										</tr>
 										</table>
 

@@ -92,7 +92,7 @@ include "../../config/config.php";
 					
 				<?php
 				$id=$_GET['id'];
-				pr($id);
+				// pr($id);
 				if (isset($id))
 				{
 					unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
@@ -101,7 +101,7 @@ include "../../config/config.php";
 					
 						// pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data($_GET);
-						pr($data);
+						// pr($data);
 						
 				}
 				$no = 1;
@@ -128,8 +128,8 @@ include "../../config/config.php";
 								<td></td>
 								<td>$no.</td>
 								<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-								<td>$nilai[noRegister] - $nilai[Kode]</td>
-								<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
+								<td>$nilai[noRegister] - $nilai[kodeKelompok]</td>
+								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'> <a href='$url_rewrite/module/penghapusan/penetapan_asetid_proses_hapus.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'>Delete</a></td>
 								</tr>
 
 								<tr>
@@ -153,7 +153,7 @@ include "../../config/config.php";
 								<input type='text' value='$nilai[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
 								<input type='hidden' name='fromsatker' value='$nilai[OrigSatker_ID]' size='5px' style='text-align:center' readonly = 'readonly'>
 								</td>
-								<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
+								<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' class='btn btn-warning'onclick='spoilsub(this);'></td>
 								</tr>
 								</table>
 
@@ -296,8 +296,8 @@ include "../../config/config.php";
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="submit" name="btn_action" id="btn_action" value="Penetapan Penghapusan">
-						<a href="penetapan_penghapusan_daftar_isi.php?pid=1"><input type="button" name="btn_action" id="btn_action_cancel"  style="width:100px;"  value="Batal"></a>
+						<input type="submit" name="btn_action" id="btn_action" class="btn btn-primary" value="Penetapan Penghapusan">
+						<a href="penetapan_penghapusan_daftar_isi.php?pid=1"><input type="button" name="btn_action" class="btn" id="btn_action_cancel"  style="width:100px;"  value="Batal"></a>
 						<input type="hidden" name="id" value="<?php echo $id;?>">
 					</td>
 				</tr>
