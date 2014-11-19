@@ -1206,6 +1206,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 						'condition' => "Penghapusan_ID='$data[id]'",
 						);
 		$res1 = $this->db->lazyQuery($sql1,$debug,2);
+		
 		$sql2 = array(
 			'table'=>'PenghapusanAset',
 			'field'=>"Aset_ID",
@@ -1216,6 +1217,49 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		foreach($res2 as $asetid)
 			{
 				$dataArr[]=$asetid[Aset_ID];
+				
+				$sql_tipe = array(
+									'table'=>'Aset',
+									'field'=>"Aset_ID,TipeAset",
+									'condition' => "Aset_ID='$asetid[Aset_ID]'",
+									);
+								$res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
+								// pr($res_tipe);
+								// pr($res_tipe[0][Aset_ID]);
+								// pr($res_tipe[0][TipeAset]);
+								$TipeAset=$res_tipe[0][TipeAset];
+								$aset_id_valid=$res_tipe[0][Aset_ID];
+								
+								if($TipeAset=="A"){
+									$tabel="tanah";
+								}
+								elseif($TipeAset=="B"){
+									$tabel="mesin";
+								}
+								elseif(TipeAset){
+									$tabel="bangunan";
+								}
+								elseif(TipeAset){
+									$tabel="jaringan";
+								}
+								elseif($TipeAset=="E"){
+									$tabel="asetlain";
+								}
+								elseif($TipeAset=="F"){
+									$tabel="kdp";
+								}
+									// pr("---");
+								  // pr($tabel);
+									// pr("--");
+								
+								$sql1_valid = array(
+									'table'=>"$tabel",
+									'field'=>"StatusTampil=1, Status_Validasi_Barang=1 ",
+									'condition' => "Aset_ID=$aset_id_valid",
+									);
+								$res_valid = $this->db->lazyQuery($sql1_valid,$debug,2);
+								// pr($sql1_valid);
+				
 			}
 		$aset_id=implode(', ',array_values($dataArr));
 		// pr($aset_id);
@@ -1226,6 +1270,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 			'condition' => "Aset_ID IN ($aset_id)",
 			);
 		$res1 = $this->db->lazyQuery($sql1,$debug,2);
+		// exit;
         // $query2="UPDATE PenghapusanAset SET Status=0 WHERE Penghapusan_ID='$id'";
         // $exec2=$this->query($query2) or die($this->error());
 		
@@ -1625,7 +1670,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	public function update_validasi_penghapusan($data,$debug=false)
         {
-			// pr($data);
+			pr($data);
             if(isset($data)){
 				// pr($data);
                 // $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPenghapusan[]' AND UserSes = '$parameter[ses_uid]'";
@@ -1673,11 +1718,54 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 						'condition' => "Penghapusan_ID='$penghapusan_id'",
 						);
 					$res2 = $this->db->lazyQuery($sql2,$debug);
-					// pr($res2);
+					pr($res2);
 					foreach($res2 as $asetid)
 						{
-							$dataArr[]=$asetid[Aset_ID];
+								$dataArr[]=$asetid[Aset_ID];
+								// pr($asetid[Aset_ID]);
+								
+								$sql_tipe = array(
+									'table'=>'Aset',
+									'field'=>"Aset_ID,TipeAset",
+									'condition' => "Aset_ID='$asetid[Aset_ID]'",
+									);
+								$res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
+								
+								// pr($res_tipe[0][Aset_ID]);
+								// pr($res_tipe[0][TipeAset]);
+								$TipeAset=$res_tipe[0][TipeAset];
+								$aset_id_valid=$res_tipe[0][Aset_ID];
+								
+								if($TipeAset=="A"){
+									$tabel="tanah";
+								}
+								elseif($TipeAset=="B"){
+									$tabel="mesin";
+								}
+								elseif($TipeAset=="C"){
+									$tabel="bangunan";
+								}
+								elseif($TipeAset=="D"){
+									$tabel="jaringan";
+								}
+								elseif($TipeAset=="E"){
+									$tabel="asetlain";
+								}
+								elseif($TipeAset=="F"){
+									$tabel="kdp";
+								}
+									// pr("--");
+								  // pr($tabel);
+									// pr("--");
+								
+								$sql1_valid = array(
+									'table'=>"$tabel",
+									'field'=>"StatusTampil=0, Status_Validasi_Barang=0 ",
+									'condition' => "Aset_ID=$aset_id_valid",
+									);
+								$res_valid = $this->db->lazyQuery($sql1_valid,$debug,2);
 						}
+						
 					$aset_id=implode(', ',array_values($dataArr));
 					// pr($aset_id);
 					

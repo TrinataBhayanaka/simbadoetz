@@ -107,14 +107,7 @@ include "../../config/config.php";
 			
 			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post">
 			<ul>
-							<li>
-								<span>ID ASET (System ID)</span><br/>
-								<input id="lda_ia" name="kd_idaset" class="span3" type="text" >
-							</li>
-							<li>
-								<span>Nama Aset</span><br/>
-								<input isdatepicker="true"  name="kd_namaaset" class="span5"  type="text">
-							</li>
+							
 							<li>
 								<span>Nomor Kontrak</span><br/>
 								<input isdatepicker="true" id="lda_nk" class="span3" name="kd_nokontrak"  type="text">
@@ -196,9 +189,24 @@ include "../../config/config.php";
 
 							<?php selectSatker('kodeSatker','255',true,false); ?>
 
-							<li>&nbsp;</li>
-							<?php selectAset('kodeKelompok','255',true,false); ?>
-
+							<li><span class="span2">Status Aset</span>
+                                <select name="statusaset">
+                                    <option value="1">Terdistribusi</option>
+                                    <option value="0">Belum Terdistribusi</option>
+                                    
+                                </select></li>
+							<?php //selectAset('kodeKelompok','255',true,false); ?>
+							<li>
+                                <span class="span2">Jenis Aset</span>
+                                <select name="jenisaset">
+                                    <option value="1">Tanah</option>
+                                    <option value="2">Mesin</option>
+                                    <option value="3">Bangunan</option>
+                                    <option value="4">Jaringan</option>
+                                    <option value="5">Aset Lain</option>
+                                    <option value="6">KDP</option>
+                                </select>
+                            </li>
 							<li>
 								<input type='submit' value='Lanjut'  name="submit" class="btn btn-primary">
 							</li>

@@ -134,13 +134,13 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								<td>$no.</td>
 								<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
 								<td>$nilai[noRegister] - $nilai[Kode]</td>
-								<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
+								<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'></td>
 								</tr>
 
 								<tr>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
-								<td>$nilai->NamaAset</td>
+								<td>$nilai[NamaAset]</td>
 								</tr>
 								<tfoot style='display:none;'>
 								<tr>
@@ -155,10 +155,12 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								<input type='text' value='$nilai->Pemilik' size='1px' style='text-align:center' readonly = 'readonly'> - 
 								<input type='text' value='$nilai[kodeSatker]' size='10px' style='text-align:center' readonly = 'readonly'> - 
 								<input type='text' value='$nilai[Kode]' size='20px' style='text-align:center' readonly = 'readonly'> - 
-								<input type='text' value='$nilai->Ruangan' size='5px' style='text-align:center' readonly = 'readonly'>
-								<input type='hidden' name='fromsatker' value='$nilai->OrigSatker_ID' size='5px' style='text-align:center' readonly = 'readonly'>
+								<input type='text' value='$nilai[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
+								<input type='text' value='$nilai[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
+								<input type='text' value='$nilai[Ruangan]' size='5px' style='text-align:center' readonly = 'readonly'>
+								<input type='hidden' name='fromsatker' value='$nilai[OrigSatker_ID]' size='5px' style='text-align:center' readonly = 'readonly'>
 								</td>
-								<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
+								<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' class='btn btn-warning' value='Sub Detail' onclick='spoilsub(this);'></td>
 								</tr>
 								</table>
 
