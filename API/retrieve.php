@@ -9728,7 +9728,7 @@ $offset = @$_POST['record'];
         }
         $setval = implode(' AND ', $tmpsetval);
 
-        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(noRegister) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang IS NULL GROUP BY  kodeKelompok ,  kodeLokasi");
+        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang IS NULL GROUP BY  kodeKelompok ,  kodeLokasi");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
@@ -9759,7 +9759,7 @@ $offset = @$_POST['record'];
         }
         $setval = implode(' AND ', $tmpsetval);
 
-        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(noRegister) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang = '1' GROUP BY  kodeKelompok ,  kodeLokasi");
+        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang = '1' GROUP BY  kodeKelompok ,  kodeLokasi");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }

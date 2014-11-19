@@ -6,7 +6,7 @@ $menu_id = 15;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satkerkode']);
-
+// pr($get_data_filter);
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";

@@ -1532,8 +1532,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     public function store_aset($data)
     {
-
- 
         global $url_rewrite;
         unset($data['Aset_ID']);
         // pr($data);exit;
@@ -1543,9 +1541,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kodeLokasi'] = "12.33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($data['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
         $tblAset['noKontrak'] = $data['noKontrak'];
         $tblAset['TglPerolehan'] = $data['TglPerolehan'];
-        $tblAset['NilaiPerolehan'] = $data['NilaiPerolehan'];
+        $tblAset['NilaiPerolehan'] = $data['Satuan'];
         $tblAset['kondisi'] = $data['kondisi'];
-        $tblAset['Kuantitas'] = $data['Kuantitas'];
+        $tblAset['Kuantitas'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
         $tblAset['Info'] = $data['Info'];
         $tblAset['Alamat'] = $data['Alamat'];
@@ -1554,150 +1552,104 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
 
+        $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
+            while ($row = mysql_fetch_assoc($query)){
+            $startreg = $row['noRegister'];
+        }
+
+        $loops = $startreg+$data['Kuantitas'];
+        for($startreg;$startreg<$loops;$startreg++)
+        {
+            $tblAset['noRegister'] = intval($startreg)+1;
+
+            unset($tmpfield); unset($tmpvalue);
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
                 $tmpvalue[] = "'$val'";
             }
+
             $field = implode(',', $tmpfield);
             $value = implode(',', $tmpvalue);
+            $query = "INSERT INTO aset ({$field}) VALUES ({$value})";
+            // pr($query);
+            $result= $this->query($query) or die($this->error());
 
-        $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
-        while ($row = mysql_fetch_assoc($query)){
-             $i = $row['noRegister'];
-        }
-        
-        $loop = $i+$data['Kuantitas'];
-
-        $tblAset['noRegister'] = $loop;
-        $query = "INSERT INTO aset ({$field},noRegister) VALUES ({$value},'{$tblAset['noRegister']}')";
-
-        $result=  $this->query($query) or die($this->error());
-
-        $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
+            $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
             while ($row = mysql_fetch_assoc($query_id)){
-                 $tblAset['Aset_ID'] = $row['Aset_ID'];
+                $tblKib['Aset_ID'] = $row['Aset_ID'];
             }
 
-          //log
-            $logdata['Aset_ID'] = $tblAset['Aset_ID'];
-            $logdata['last_aset_id'] = $tblAset['Aset_ID'];
-            $logdata['action'] = 'insert';
-            $logdata['changeDate'] = date('Y/m/d');
-            $logdata['operator'] = "{$_SESSION['ses_uoperatorid']}";
-            // pr($data);exit;
-            foreach ($logdata as $key => $val) {
-                $tmplogfield[] = $key;
-                $tmplogvalue[] = "'$val'";
-            }
-            $fieldlog = implode(',', $tmplogfield);
-            $valuelog = implode(',', $tmplogvalue);
-
-            $query_log = "INSERT INTO log_aset ({$field},{$fieldlog},noRegister) VALUES ({$value},{$valuelog},'{$tblAset['noRegister']}')";
-            // pr($query_log);exit;
-            $result=  $this->query($query_log) or die($this->error());  
-
-         unset($tblAset['noKontrak']);
-         unset($tblAset['Kuantitas']);
-         unset($tblAset['Satuan']);
-         unset($tblAset['UserNm']);
-         unset($tblAset['TipeAset']);    
-        
-        if($data['TipeAset']=="A"){
-                $tblAset['LuasTotal'] = $data['LuasTotal'];
-                $tblAset['NoSertifikat'] = $data['NoSertifikat'];
-                $tblAset['TglSertifikat'] = $data['TglSertifikat'];
+            if($data['TipeAset']=="A"){
+                $tblKib['LuasTotal'] = $data['LuasTotal'];
+                $tblKib['NoSertifikat'] = $data['NoSertifikat'];
+                $tblKib['TglSertifikat'] = $data['TglSertifikat'];
                 $tabel = "tanah";
                 $logtabel = "log_tanah";
                 $idkey = "Tanah_ID";
             } elseif ($data['TipeAset']=="B") {
-                $tblAset['Merk'] = $data['Merk'];
-                $tblAset['Model'] = $data['Model'];
-                $tblAset['Ukuran'] = $data['Ukuran'];
+                $tblKib['Merk'] = $data['Merk'];
+                $tblKib['Model'] = $data['Model'];
+                $tblKib['Ukuran'] = $data['Ukuran'];
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
             } elseif ($data['TipeAset']=="C") {
-                $tblAset['JumlahLantai'] = $data['JumlahLantai'];
-                $tblAset['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['JumlahLantai'] = $data['JumlahLantai'];
+                $tblKib['LuasLantai'] = $data['LuasLantai'];
                 $tabel = "bangunan";
                 $logtabel = "log_bangunan";
                 $idkey = "Bangunan_ID";
             } elseif ($data['TipeAset']=="D") {
-                $tblAset['Panjang'] = $data['Panjang'];
-                $tblAset['Lebar'] = $data['Lebar'];
-                $tblAset['LuasJaringan'] = $data['LuasJaringan'];
+                $tblKib['Panjang'] = $data['Panjang'];
+                $tblKib['Lebar'] = $data['Lebar'];
+                $tblKib['LuasJaringan'] = $data['LuasJaringan'];
                 $tabel = "jaringan";
                 $logtabel = "log_jaringan";
                 $idkey = "Jaringan_ID";
             } elseif ($data['TipeAset']=="E") {
-                $tblAset['Judul'] = $data['Judul'];
-                $tblAset['Pengarang'] = $data['Pengarang'];
-                $tblAset['Penerbit'] = $data['Penerbit'];
+                $tblKib['Judul'] = $data['Judul'];
+                $tblKib['Pengarang'] = $data['Pengarang'];
+                $tblKib['Penerbit'] = $data['Penerbit'];
                 $tabel = "asetlain";
                 $logtabel = "log_asetlain";
                 $idkey = "AsetLain_ID";
             } elseif ($data['TipeAset']=="F") {
-                $tblAset['JumlahLantai'] = $data['JumlahLantai'];
-                $tblAset['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['JumlahLantai'] = $data['JumlahLantai'];
+                $tblKib['LuasLantai'] = $data['LuasLantai'];
                 $tabel = "kdp";
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
-            }   
+            }
 
-        //log
-        $logAset['action'] = 'insert';
-        $logAset['changeDate'] = date('Y/m/d');
-        $logAset['operator'] = "{$_SESSION['ses_uoperatorid']}";
-        // pr($data);exit;
-        foreach ($logAset as $key => $val) {
-            $tmplogfield2[] = $key;
-            $tmplogvalue2[] = "'$val'";
-        }
-        $fieldlog = implode(',', $tmplogfield2);
-        $valuelog = implode(',', $tmplogvalue2);
-
-        $query = mysql_query("SELECT noRegister FROM {$tabel} WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
-        while ($row = mysql_fetch_assoc($query)){
-             $startreg = $row['noRegister'];
-        }
-        
-        $loops = $startreg+$data['Kuantitas'];
-
-        for($startreg;$startreg<$loops;$startreg++)
-        {    
-            $tblAset['noRegister'] = intval($startreg)+1;
-
+            $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+            $tblKib['kodeSatker'] = $data['kodeSatker'];
+            $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
+            $tblKib['TglPerolehan'] = $data['TglPerolehan'];
+            $tblKib['NilaiPerolehan'] = $data['Satuan'];
+            $tblKib['kondisi'] = $data['kondisi'];
+            $tblKib['Info'] = $data['Info'];
+            $tblKib['Alamat'] = $data['Alamat'];
+            $tblKib['Tahun'] = $data['Tahun'];
+            $tblKib['kodeKA'] = 0;
+            $tblKib['noRegister'] = $tblAset['noRegister'];
+            
             unset($tmpfield2);
             unset($tmpvalue2);
-
-            foreach ($tblAset as $key => $val) {
+            foreach ($tblKib as $key => $val) {
                 $tmpfield2[] = $key;
                 $tmpvalue2[] = "'$val'";
             }
             $field = implode(',', $tmpfield2);
             $value = implode(',', $tmpvalue2);
-
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
             // pr($query);exit;
-            $result=  $this->query($query) or die($this->error());
-
-            $query_id = mysql_query("SELECT {$idkey} FROM {$tabel} ORDER BY {$idkey} DESC LIMIT 1");
-            
-            while ($row = mysql_fetch_assoc($query_id)){
-                 $logAset[$idkey] = $row[$idkey];
-            }
-
-            $query_log = "INSERT INTO {$logtabel} ({$field},{$fieldlog},{$idkey}) VALUES ({$value},{$valuelog},{$logAset[$idkey]})";
-            // pr($query_log);exit;
-            $result=  $this->query($query_log) or die($this->error());
-
-
-        } 
-
-            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+            $result= $this->query($query) or die($this->error());
+        }
+        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+        exit;
     }
 
     public function store_sp2d($data,$id)
