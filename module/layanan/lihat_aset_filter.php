@@ -108,22 +108,22 @@ include "../../config/config.php";
 			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post">
 			<ul>
 							<li>
-								<span>ID ASET (System ID)</span><br/>
+								<span class="span2">ID ASET (System ID)</span>
 								<input id="lda_ia" name="kd_idaset" class="span3" type="text" >
 							</li>
 							<li>
-								<span>Nama Aset</span><br/>
+								<span class="span2">Nama Aset</span>
 								<input isdatepicker="true"  name="kd_namaaset" class="span5"  type="text">
 							</li>
 							<li>
-								<span>Nomor Kontrak</span><br/>
+								<span class="span2">Nomor Kontrak</span>
 								<input isdatepicker="true" id="lda_nk" class="span3" name="kd_nokontrak"  type="text">
 							</li>
 							<li>
-								<span>Tahun Perolehan</span><br/>
+								<span class="span2">Tahun Perolehan</span>
 								<input name="kd_tahun" id="lda_tp" class="span2"  type="text" >
 							</li>
-							<li>
+							<!--<li>
 								<span>Kelompok</span><br/>
 								<div class="input-append">
 									<input type="text" name="pem_kelompok" id="pem_kelompok" style="width:480px;" readonly="readonly" value="">
@@ -191,16 +191,16 @@ include "../../config/config.php";
 										?>
 									</div>
 								</div>	
-							</li>
+							</li>-->
 							
 
 							<?php selectSatker('kodeSatker','255',true,false); ?>
 
 							<li>&nbsp;</li>
 							<?php selectAset('kodeKelompok','255',true,false); ?>
-
+							<li>&nbsp;</li>
 							<li>
-								<input type='submit' value='Lanjut'  name="submit" class="btn btn-primary">
+								<span class="span2"><input type='submit' value='Lanjut'  name="submit" class="btn btn-primary"></span>
 							</li>
 						</ul>
 						</form>
