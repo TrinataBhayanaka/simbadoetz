@@ -61,7 +61,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	include"$path/menu.php";
 	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($_POST);
-	pr($data);
+	// pr($data);
 
 
 			?>
@@ -169,18 +169,18 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			
 			<div id="demo">
 			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_usul_pms.php"> 
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td width="130px">&nbsp;</td>
+						<td  align="left">&nbsp;</td>
 						<td align="right">
 								<span><input type="submit" name="submit" class="btn" value="Usulan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
-						<th>&nbsp;</th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Informasi Aset</th>
 					</tr>
 				</thead>
@@ -198,11 +198,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					foreach ($data as $key => $value)
 					{
 					// pr($get_data_filter);
+					if($value[kondisi]==2){
+						$kondisi="Rusak Ringan";
+					}elseif($value[kondisi]==3){
+						$kondisi="Rusak Berat";
+					}
 					?>
 						
 					<tr class="gradeA">
 						<td><?php echo $no?></td>
-						<td>
+						<td class="checkbox-column">
 						<?php
 						if (($_SESSION['ses_uaksesadmin'] == 1)){
 							?>
@@ -239,13 +244,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</td>-->
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value[noRegister]?>noRegister</td>
+								<td style="font-weight:bold;"><?php echo $value[noRegister]?></td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value[Kode]?>Kode</td>
+								<td style="font-weight:bold;"><?php echo $value[Kode]?></td>
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value[NamaAset]?>NamaAset</td>
+								<td style="font-weight:bold;"><?php echo $value[NamaAset]?></td>
 							</tr>
 
 						</table>
@@ -263,7 +268,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<td>Kode Lokasi</td> <td><?php echo $value[kodeLokasi]?></td>
 							</tr>
 							<tr>
-								<td>Status</td> <td><?php echo $value->Kondisi_ID. '-' .$value->InfoKondisi?></td>
+								<td>Status</td> <td><?php echo $kondisi. ' - ' .$value[AsalUsul]?></td>
 							</tr>
 
 						</table>

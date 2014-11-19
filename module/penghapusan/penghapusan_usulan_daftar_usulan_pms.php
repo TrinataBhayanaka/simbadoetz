@@ -52,9 +52,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								}
 								
 								
-	pr($_POST);
+	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
-	pr($data);
+	// pr($data);
 							?>
 						<ul>
 							<li>
@@ -98,6 +98,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					// pr($dataArr);
 					$no=1;	
 					// pr($data);
+					if($data){
 					foreach($data as $key => $hsl_data){
 						
 						if($dataArr!="")
@@ -154,7 +155,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</td>
 					</tr>
 					
-				     <?php $no++; }?>
+				     <?php $no++; }}?>
 				</tbody>
 				<tfoot>
 					<tr>

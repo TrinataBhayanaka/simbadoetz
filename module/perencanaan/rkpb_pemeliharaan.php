@@ -23,12 +23,13 @@ foreach ($get_data_filter as $key => $hsl_data)
 }
 ?>
 
-<html>
-	<?php
-        include "$path/header.php";
-    ?>
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+?>
 	
-	<!-- Script Tangggal -->
+		<!-- Script Tangggal -->
 		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
 		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
 		<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.ui.datepicker-id.js"></script>
@@ -56,101 +57,71 @@ foreach ($get_data_filter as $key => $hsl_data)
 		<link href="<?php echo "$url_rewrite/"; ?>css/jquery-ui.css" type="text/css" rel="stylesheet">
         <!-- Script Tangggal -->
 	
-	<body>
-		<div id="content">
-			<?php
-			include "$path/title.php";
-			include "$path/menu.php";
-			?>
+	<section id="main">
+		<ul class="breadcrumb">
+			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Buat Rencana Kebutuhan Pemeliharaan Barang</li>
+			  <?php SignInOut();?>
+			</ul>
+			<div class="breadcrumb">
+				<div class="title">Buat Rencana Kebutuhan Pemeliharaan Barang</div>
+				<div class="subtitle">Pemeliharaan Data </div>
+			</div>
+		<section class="formLegend">
 			
-			<div id="tengah1">	
-				<div id="frame_tengah1">
-					<div id="frame_gudang">
-						
-						<div id="topright">
-							Buat Rencana Kebutuhan Pemeliharaan Barang
-						</div>
-						
-						<div id="bottomright">                                                                                                          
-                            <div>
-								<table border=0 width=100%>
-									<tr>		
-										<td width=50%></td>
-										<td width=25% align="right">
-											<a href="<?php echo"$url_rewrite/module/perencanaan/rkpb_tambah_data.php";?>">
-											<input type="button" value="Kembali ke Halaman Sebelumnya" >
-										</td>
-									</tr>
-								</table>
-                            </div>
+			<div class="detailright">
+				<a href="<?php echo"$url_rewrite/module/perencanaan/rkpb_tambah_data.php";?>" class="btn">
+					Kembali ke Halaman Sebelumnya</a>
 							
-							<div>
-								<!-- Form Pemeliharaan Data -->
+			</div>
+			
+			<div style="height:5px;width:100%;clear:both"></div>
+			<form name="rkpb_pemeliharaan" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkpb-proses.php" method="post">
+			<ul>
+							
+							<li>
+								<span class="span2">Tahun</span>
+								<input style="width: 50px;" name="rkpb_add_thn" type="text" value="<?php echo $select_tahun; ?>" required="required" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">SKPD</span>
+								<input style="width: 300px;" name="rkpb_add_skpd" type="text" value="<?php echo show_skpd($select_skpd); ?>" required="required" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Lokasi</span>
+								<input style="width: 300px;" name="rkpb_add_lokasi" type="text" value="<?php echo show_lokasi($select_lokasi); ?>" required="required" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Nama/Jenis Barang</span>
+								<input style="width: 300px;" name="rkpb_add_njb" type="text" value="<?php echo show_kelompok($select_njb); ?>" required="required" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Merk/Tipe</span>
+								<input style="width: 300px;" name="rkpb_add_merk" type="text" value="<?php echo $select_merk; ?>" required="required" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Kode Rekening</span>
+								<input style="width: 150px;" name="rkpb_add_korek" type="text" value="<?php echo show_namarekening($select_korek); ?>" required="required" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">Jumlah Barang Pada RKB</span>
+								<input style="width: 30px;" name="rkpb_add_jml" id="rkpb_add_jml" type="text" value="<?php echo $select_jml; ?>" required="required" readonly="readonly"/>
+							</li>
 								
-								<form name="rkpb_pemeliharaan" action="<?php echo "$url_rewrite/module/perencanaan/"; ?>rkpb-proses.php" method="post">
-									<table width="100%" style="padding:2px; margin-top:0px; border: 1px solid #004933; border-width: 1px 1px 1px 1px; clear:both;">
-										<tr bgcolor="#004933">
-											<td style="color:white;" colspan="2" align=left>
-												Tambah Data Baru
-											</td>
-										</tr>
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Tahun</td>
-											<td>
-												<input style="width: 50px;" name="rkpb_add_thn" type="text" value="<?php echo $select_tahun; ?>" required="required" readonly="readonly"/>
-											</td>
-										</tr>
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">SKPD</td>
-											<td>
-												<input style="width: 300px;" name="rkpb_add_skpd" type="text" value="<?php echo show_skpd($select_skpd); ?>" required="required" readonly="readonly"/>
-											</td>
-										</tr>
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Lokasi</td>
-											<td>
-												<input style="width: 300px;" name="rkpb_add_lokasi" type="text" value="<?php echo show_lokasi($select_lokasi); ?>" required="required" readonly="readonly"/>
-											</td>
-										</tr>
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Nama/Jenis Barang</td>
-											<td>
-												<input style="width: 300px;" name="rkpb_add_njb" type="text" value="<?php echo show_kelompok($select_njb); ?>" required="required" readonly="readonly"/>
-											</td>
-										</tr>
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Merk/Tipe</td>
-											<td>
-												<input style="width: 300px;" name="rkpb_add_merk" type="text" value="<?php echo $select_merk; ?>" required="required" readonly="readonly"/>
-											</td>
-										</tr>									
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Kode Rekening</td>
-											<td>
-												<input style="width: 150px;" name="rkpb_add_korek" type="integer" value="<?php echo show_namarekening($select_korek); ?>" required="required" readonly="readonly"/>
-											</td>
-										</tr>
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Jumlah Barang Pada RKB</td>
-											<td>
-												<input style="width: 30px;" name="rkpb_add_jml" id="rkpb_add_jml" type="integer" value="<?php echo $select_jml; ?>" required="required" readonly="readonly"/>
-											</td>
-										</tr>
-
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Harga Pemeliharaan</td>
-											<td>
-												<?php
+							<li>
+								<span class="span2">Harga Pemeliharaan</span>
+								<?php
 												$query_shpb = "SELECT Pemeliharaan FROM StandarHarga WHERE Kelompok_ID=".$select_njb." AND Spesifikasi='".$select_merk."' ";
 												$result		= mysql_query($query_shpb);
 												if($result){
 													$hasil		= mysql_fetch_array($result);
 													echo "<input type=\"text\" id=\"rkpb_add_hrg\" value=\"{$hasil['Pemeliharaan']}\" readonly=\"readonly\"/>";
 												}
-												?>
-											</td>
-										</tr>
-										<script>
+												?> 
+							</li>
+							<li>&nbsp;</li>
+							<script>
 										$( document ).ready(function() {
 											var jml = $("#rkpb_add_jml").val();
 											var harga = $("#rkpb_add_hrg").val();
@@ -164,35 +135,22 @@ foreach ($get_data_filter as $key => $hsl_data)
 											// console.log(total);
 										});
 										</script>
-										<tr>
-											<td width="25%" style="border: 1px solid #004933; color: black;">Total Harga Pemeliharaan</td>
-											<td onload="total()">
-												<input style="width: 150px;" name="rkpb_add_thrg" class="rkpb_add_thrg" type="integer" value="" required="required" readonly="readonly"/>
-											</td>
-										</tr>
-										<tr>
-											<td colspan=2 align="right" width="25%"  style="border: 1px solid #004933; color: black; ">
-												<input type="hidden" name="ID" value="<?php echo $_POST['ID']?>">
-												<input type="submit" name="submit_pem" value="Pelihara" onclick=""/>
-												<!--<input type="reset" name="reset" value="reset" />-->
-											</td>
-										</tr>
-									</table>
-								</form>
-										
-							<!-- Akhir Form Tambah Data -->
-							</div>
-							                                                                 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<?php
-		include "$path/footer.php";
-		?>
-		
-	</body>
-</html>	
-
+							<li>
+								<span class="span2">Total Harga Pemeliharaan</span>
+								<input style="width: 150px;" name="rkpb_add_thrg" class="rkpb_add_thrg" type="text" value="" required="required" readonly="readonly"/>
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="hidden" name="ID" value="<?php echo $_POST['ID']?>">
+								<input type="submit" name="submit_pem" class="btn btn-primary"value="Pelihara" onclick=""/>
+								<input type="reset" name="reset" class="btn" value="reset" />
+							</li>
+						</ul>
+						</form>
+			
+		</section>     
+	</section>
+	
+<?php
+	include"$path/footer.php";
+?>

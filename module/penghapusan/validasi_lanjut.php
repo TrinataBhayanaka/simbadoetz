@@ -58,9 +58,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/menu.php";
 	
 	
-	pr($_POST);
+	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_validasi_penghapusan($_POST);
-	pr($data);
+	// pr($data);
 	
 			?>
 
@@ -162,18 +162,18 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			
 			<div id="demo">
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses.php">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td width="130px">&nbsp;</td>
+						<td  align="left">&nbsp;</td>
 						<td align="right" colspan="3">
 						<span><input type="submit" name="submit" class="btn" value="Validasi Barang" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
-						<th>Pilihan</th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Nomor SK Penghapusan</th>
 						<th>Tanggal Penghapusan</th>
 						<th>Keterangan</th>
@@ -196,7 +196,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							?>
 					<tr class="gradeA">
 						<td><?php echo "$no";?></td>
-						<td>
+						<td  class="checkbox-column" >
 							 <?php
 								if (($_SESSION['ses_uaksesadmin'] == 1)){
 								?>

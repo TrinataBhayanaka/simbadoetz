@@ -57,9 +57,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-		pr($_POST);
+		// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter($_POST);
-		pr($data);
+		// pr($data);
 			?>
      
                     <script language="Javascript" type="text/javascript">  
@@ -139,18 +139,18 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			
 			<div id="demo">
 			<form name="myform" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data.php">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td width="130px">&nbsp;</td>
+						<td  align="left">&nbsp;</td>
 						<td align="right">
 								<span><input type="submit" name="submit" class="btn" value="Penetapan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
-						<th>&nbsp;</th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Informasi Aset</th>
 					</tr>
 				</thead>
@@ -163,11 +163,16 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						$nomor = 1;
 						foreach ($data as $key => $value)
 						{
+							if($value[kondisi]==2){
+								$kondisi="Rusak Ringan";
+							}elseif($value[kondisi]==3){
+								$kondisi="Rusak Berat";
+							}
 				?>
 						  
 					<tr class="gradeA">
 						<td><?php echo $nomor?></td>
-						<td>
+						<td  class="checkbox-column">
 							<?php
 						if (($_SESSION['ses_uaksesadmin'] == 1)){
 							?>
@@ -205,7 +210,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								</td>-->
 							</tr>
 							<tr>
-								<td style="font-weight:bold;"><?php echo $value[NomorReg]?></td>
+								<td style="font-weight:bold;"><?php echo $value[noRegister]?></td>
 							</tr>
 							<tr>
 								<td style="font-weight:bold;"><?php echo $value[Kode]?></td>
@@ -226,10 +231,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								<td>Satker</td> <td><?php echo $value[NamaSatker]?></td>
 							</tr>
 							<tr>
-								<td>Lokasi</td> <td><?php echo $value[NamaLokasi]?></td>
+								<td>Lokasi</td> <td><?php echo $value[kodeLokasi]?></td>
 							</tr>
 							<tr>
-								<td>Status</td> <td><?php echo $value[Kondisi_ID]. '-' .$value[InfoKondisi]?></td>
+								<td>Status</td> <td><?php echo $kondisi. ' - ' .$value[AsalUsul]?></td>
 							</tr>
 
 						</table>

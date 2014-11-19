@@ -13,7 +13,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
     
     $submit=$_POST['submit'];
 	$id = $_POST['penghapusanfilter'];
-	pr($id);
+	// pr($id);
     if (isset($submit))
 	{
 		unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
@@ -37,7 +37,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	
 	
 	// pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_pms($_POST);
+	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_pmd($_POST);
 	// pr($data);
 
 	
@@ -92,11 +92,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Buat Usulan Penghapusan Pemusnahan</li>
+		  <li class="active">Buat Usulan Penghapusan Pemindahtanganan</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Buat Usulan Penghapusan Pemusnahan</div>
+			<div class="title">Buat Usulan Penghapusan Pemindahtanganan</div>
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">

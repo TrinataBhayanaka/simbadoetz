@@ -112,7 +112,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                                 // pr($data);        
 							// pr($_POST);
 							$data = $PENGHAPUSAN->retrieve_daftar_validasi_penghapusan($_POST);
-							pr($data);
+							// pr($data);
 							?>
 						<ul>
 							<li>
