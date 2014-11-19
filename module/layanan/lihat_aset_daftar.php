@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
-pr($_POST);exit;
+
+$LAYANAN = new RETRIEVE_LAYANAN;
+// pr($_POST);exit;
 $menu_id = 51;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
@@ -28,21 +30,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					}
 				}
 				
-               $data['kd_idaset'] = $_POST['kd_idaset'];
-               $data['kd_namaaset'] = $_POST['kd_namaaset'];
-               $data['kd_nokontrak'] = $_POST['kd_nokontrak'];
-               $data['kd_tahun'] = $_POST['kd_tahun'];
-               $data['lokasi_id'] = $_POST['lokasi_id'];
-               $data['kelompok_id'] = $_POST['kelompok_id5'];
-               $data['satker'] = $_POST['skpd_id'];
-               // $data['ngo'] = $_POST['ngo_id'];
-               $data['paging'] = $_GET['pid'];
-               $data['sql'] = " Status_Validasi_Barang = 1";
-               $data['sql_where'] = TRUE;
-               $data['modul'] = "layanan";
-			   $getFilter = $HELPER_FILTER->filter_module($data);
-			   // pr($getFilter);
-			
+               
+	
+	$data = $LAYANAN->retrieve_layanan_aset_daftar($_POST);	
+	if ($data){
+		foreach ($data as $key => $value) {
+			if ($value['Status_Validasi_Barang']==1) $data[$key]['statusAset'] = "Terdistribusi";
+			else $data[$key]['statusAset'] = "Belum Terdistribusi";
+		}
+	}
+	// exit;		
 			?>
 
 
@@ -59,67 +56,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			</div>
 		<section class="formLegend">
 			
-			
+			<!--
 			<div class="detailLeft">
 					<span class="label label-success">Filter data : <span class="badge badge-warning"><?php echo $_SESSION['parameter_sql_total'] ?></span> Record</span>
 			</div>
-			<?php
-			// $offset = @$_POST['record'];
-
-			$param = $_SESSION['parameter_sql'];
-			$query = "$param ORDER BY Aset_ID ASC ";
-			// pr($query);
-			$res = mysql_query($query) or die(mysql_error());
-			if ($res) {
-				 $rows = mysql_num_rows($res);
-
-				 while ($data = mysql_fetch_array($res)) {
-
-					  $dataArray[] = $data['Aset_ID'];
-				 }
-			}
-			$paging		= paging($_GET['pid'], 100);
-			if($dataArray!= "") $dataImplode = implode(',',$dataArray); else $dataImplode = "";
-			// pr($dataImplode);
-			if ($dataImplode != "") {
-				$viewTable = 'lihat_daftar_aset_'.$_SESSION['ses_uoperatorid'];
-				$table = $DBVAR->ceck_table($viewTable, 1);
-				if($table['tabel'] == 0){ 
-					// echo "buat view table";
-					$query = "CREATE OR REPLACE VIEW $viewTable AS  
-							SELECT a.Aset_ID, a.NamaAset, a.Kelompok_ID, a.LastSatker_ID,
-							a.Lokasi_ID, a.LastKondisi_ID, a.Persediaan, 
-							a.Satuan, a.TglPerolehan, a.NilaiPerolehan,
-							a.Alamat, a.RTRW, a.Pemilik, a.Tahun, a.NomorReg,a.Info,
-							c.Kelompok, c.Uraian, c.Kode,
-							d.NamaLokasi, d.KodePropPerMen, d.KodeKabPerMen,
-							e.KodeSatker, e.NamaSatker, e.KodeUnit,
-							f.InfoKondisi,
-							KTR.NoKontrak
-							FROM Aset AS a 
-							LEFT JOIN KontrakAset AS KTRA ON a.Aset_ID=KTRA.Aset_ID
-							LEFT JOIN Kontrak AS KTR ON KTR.Kontrak_ID=KTRA.Kontrak_ID
-							JOIN Kelompok AS c ON a.Kelompok_ID = c.Kelompok_ID
-							LEFT JOIN Lokasi AS d ON a.Lokasi_ID = d.Lokasi_ID 
-							JOIN Satker AS e ON a.LastSatker_ID = e.Satker_ID
-							LEFT JOIN Kondisi AS f ON a.LastKondisi_ID = f.Kondisi_ID
-							WHERE a.Aset_ID IN ({$dataImplode}) ORDER BY a.Aset_ID asc";
-					// pr($query);
-					$exec = mysql_query($query) or die(mysql_error());
-				}
-
-				// echo "select view table";
-				$sqlCount 	= "SELECT * FROM $viewTable";
-				$execCount	= mysql_query($sqlCount) or die(mysql_error());
-				$count  = mysql_num_rows($execCount);
-				$sql 	= "SELECT * FROM $viewTable LIMIT $paging, 100 ";
-				// pr($sql);
-				$exec	= mysql_query($sql) or die(mysql_error());
-				while ($dataAset = mysql_fetch_object($exec)) {
-				  $row[] = $dataAset;
-				 }
-				}
-			?>
+			-->
 			<div class="detailRight">
 						
 						<ul>
@@ -149,12 +90,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<tr>
 						<th>No</th>
 						<th>Informasi aset</th>
+						<th>Status aset</th>
+						
 					</tr>
 				</thead>
 				<tbody>		
 							 
 				<?php
-				if (!empty($row)) {
+				// pr($data);
+				if (!empty($data)) {
 					$nomor = 1;
 					$page = @$_GET['pid'];
 					if ($page > 1){
@@ -162,76 +106,52 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					}else{
 						$nomor = 1;
 					}
-					 foreach ($row as $key => $value) {
+					 foreach ($data as $key => $value) {
 						  // echo"<pre>";
 						  // print_r($value);
 						  ?>
-						  
+					
 					<tr class="gradeA">
-						<td><?php echo $nomor ?></td>
+						<td><?php echo $nomor;?></td>
 						<td>
-							 <table width='100%' border="0">
-								  <tr>
-									   <td height="10px"></td>
-								  </tr>
-
-								  <tr>
-									   <td>
-											<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value->Aset_ID ?></span>
-											<span>( Aset ID - System Number )</span>
-									   </td>
-									   <td align="right">											
-											<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;horizontal-align:'right';font-weight:bold;">
-												<a href="<?php echo "$url_rewrite/module/layanan/lihat_aset_view.php"; ?>?id=<?php echo $value->Aset_ID ?>">View Detail</a>
-											</span>
-													
-									   </td>
-								  </tr>
-								  <tr>
-									   <td style="font-weight:bold;"><?php echo $value->NomorReg ?></td>
-								  </tr>
-								  <tr>
-									   <td style="font-weight:bold;"><?php echo $value->Kode ?></td>
-								  </tr>
-								  <tr>
-									   <td style="font-weight:bold;"><?php echo $value->Uraian?></td>
-								  </tr>
-
-							 </table>
-
-							 <br>
-							 <hr />
-							 <table border=0 width="100%">
-								  <tr>
-									   <td width="20%">No.Kontrak</td> 
-									   <td width="2%">&nbsp;</td>
-									   <td width="78%">&nbsp;<?php echo $value->NoKontrak ?></td>
-								  </tr>
-
-								  <tr>
-									   <td>Satker</td> 
-									   <td>&nbsp;</td>
-									   <td><?php echo '[' . $value->KodeSatker . '] ' . $value->NamaSatker ?></td>
-								  </tr>
-								  <tr>
-									   <td>Lokasi</td> 
-									   <td>&nbsp;</td>
-									   <td><?php echo $value->NamaLokasi ?></td>
-								  </tr>
-								  <tr>
-									   <td>Info</td> 
-									   <td>&nbsp;</td>
-									   <td><?php echo $value->Uraian ?></td>
-								  </tr>
-								  <tr>
-									   <td>Status</td> 
-									   <td>&nbsp;</td>
-									   <td><?php echo $value->Kondisi_ID . '-' . $value->InfoKondisi ?></td>
-								  </tr>
-								  
-							 </table>
+							 <table align="center" border="0" width="100%">
+								<tr>
+									<td width="20%">No Register</td>
+									<td><?php echo $value['noRegister'] ?></td>
+									
+								</tr>
+								<tr>
+									<td>Kode Kelompok</td>
+									<td><?php echo $value['kodeKelompok'] ?></td>
+								</tr>
+								<tr>
+									<td width="20%">Uraian</td>
+									<td><?php echo $value['Uraian'] ?></td>
+								</tr>
+								<tr>
+									<td>No Kontrak</td>
+									<td><?php echo $value['noKontrak'];?></td>
+								</tr>
+								<tr>
+									<td>Satker</td>
+									<td><?php echo $value['kodeSatker'];?> <?php echo $value['NamaSatker'];?></td>
+								</tr>
+								
+								<tr>
+									<td>Info</td>
+									<td><?php echo $value['Info'];?></td>
+								</tr>
+								<tr>
+									<td>Kondisi</td>
+									<td><?php echo $value['Kondisi_ID'] . '-' . $value['InfoKondisi'] ?></td>
+								</tr>
+							</table>
 						</td>
+						<td><?php echo $value['statusAset']?></td>
+						
 					</tr>
+
+					
 					
 				     <?php
 						  $nomor++;

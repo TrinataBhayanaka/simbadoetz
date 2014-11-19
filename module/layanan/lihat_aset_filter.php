@@ -195,10 +195,32 @@ include "../../config/config.php";
 							
 
 							<?php selectSatker('kodeSatker','255',true,false); ?>
+<<<<<<< HEAD
 
 							<li>&nbsp;</li>
 							<?php selectAset('kodeKelompok','255',true,false); ?>
 							<li>&nbsp;</li>
+=======
+
+							<li><span class="span2">Status Aset</span>
+                                <select name="statusaset">
+                                    <option value="1">Terdistribusi</option>
+                                    <option value="0">Belum Terdistribusi</option>
+                                    
+                                </select></li>
+							<?php //selectAset('kodeKelompok','255',true,false); ?>
+							<li>
+                                <span class="span2">Jenis Aset</span>
+                                <select name="jenisaset">
+                                    <option value="1">Tanah</option>
+                                    <option value="2">Mesin</option>
+                                    <option value="3">Bangunan</option>
+                                    <option value="4">Jaringan</option>
+                                    <option value="5">Aset Lain</option>
+                                    <option value="6">KDP</option>
+                                </select>
+                            </li>
+>>>>>>> 4b650971003f579b7ba9a80ebcd372bd6406f109
 							<li>
 								<span class="span2"><input type='submit' value='Lanjut'  name="submit" class="btn btn-primary"></span>
 							</li>
