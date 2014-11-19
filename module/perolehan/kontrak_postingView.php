@@ -148,7 +148,7 @@ $menu_id = 1;
 					if($kontrak['tipeAset'] == 1){
 						if($kapchek['kap'] == 0){
 			?>
-				<p><a href="<?=$url?>.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
+				<p><a href="kontrak_unpost.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 				&nbsp;</p>	
 			<?php		
 						}
