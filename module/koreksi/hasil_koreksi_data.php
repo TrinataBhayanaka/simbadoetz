@@ -22,8 +22,8 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 	{
 		var idnumber = $(item).attr('id').split('_');
 		var others = $(item).attr('others').split('_');
-		var max = $(item).attr('max');
-		if($(item).val() > max || $(item).val() == 0 )
+		var max = parseInt($(item).attr('max'));
+		if(parseInt($(item).val()) > max || $(item).val() == 0 )
 		{
 			$("#url_"+idnumber[1]).attr('disabled','disabled');
 			$("#url_"+idnumber[1]).attr('href','#');
@@ -88,7 +88,7 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 							<td><?=$value['kodeKelompok']?></td>
 							<td><?=$value['uraian']?></td>
 							<td><?=$value['kodeLokasi']?></td>
-							<td><input type="number" class="span1" id="min_<?=$i?>" others="<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$_POST['tipeAset']?>" value="<?=$value['min']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" onkeyup="getminmax(this);"> 
+							<td><input type="number" class="span1" id="min_<?=$i?>" others="<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$_POST['tipeAset']?>" value="<?=$value['min']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" onchange="getminmax(this);" onkeyup="getminmax(this);" > 
 								s/d 
 								<input type="number" class="span1" id="max_<?=$i?>" value="<?=$value['max']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" disabled>
 							</td>
