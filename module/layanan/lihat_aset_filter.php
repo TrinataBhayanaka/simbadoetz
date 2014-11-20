@@ -1,3 +1,4 @@
+ 
 <?php
 include "../../config/config.php";
 ?>
@@ -195,12 +196,11 @@ include "../../config/config.php";
 							
 
 							<?php selectSatker('kodeSatker','255',true,false); ?>
-<<<<<<< HEAD
+
 
 							<li>&nbsp;</li>
 							<?php selectAset('kodeKelompok','255',true,false); ?>
 							<li>&nbsp;</li>
-=======
 
 							<li><span class="span2">Status Aset</span>
                                 <select name="statusaset">
@@ -220,7 +220,6 @@ include "../../config/config.php";
                                     <option value="6">KDP</option>
                                 </select>
                             </li>
->>>>>>> 4b650971003f579b7ba9a80ebcd372bd6406f109
 							<li>
 								<span class="span2"><input type='submit' value='Lanjut'  name="submit" class="btn btn-primary"></span>
 							</li>

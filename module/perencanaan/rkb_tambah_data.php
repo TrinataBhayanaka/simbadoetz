@@ -128,6 +128,35 @@ if (isset($_POST['submit']))
 								<div id='isi_spesifikasi'></div>
 							</li>
 						</ul>
+                       
+                       <table border="0" cellspacing="6" style="display: none">
+                                                <tr>
+                                                    <td>Desa</td>
+                                                    <td>Kecamatan</td> 
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_desa" name="p_desa" value="" size="45"  readonly="readonly">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Kabupaten</td>
+                                                    <td>Provinsi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="p_kabupaten" name="p_kabupaten" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="p_provinsi" name="p_provinsi" value=""size="45" readonly="readonly" >
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                       </table>
 										<script>
 											function get_data_skb(skpd,lokasi,kelompok,here,data,tahun){
 											var tahun = document.getElementById(tahun).value;
