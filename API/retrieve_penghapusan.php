@@ -46,7 +46,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		$sql1 = array(
                 'table'=>'usulanaset',
                 'field'=>"Aset_ID",
-                'condition' => "Jenis_Usulan='PMD'",
+                'condition' => "Jenis_Usulan='PMS' OR Jenis_Usulan='PMD'",
                 );
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
