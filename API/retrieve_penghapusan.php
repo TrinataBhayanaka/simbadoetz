@@ -90,7 +90,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		$sql1 = array(
                 'table'=>'usulanaset',
                 'field'=>"Aset_ID",
-                'condition' => "Jenis_Usulan='PMS'",
+                'condition' => "Jenis_Usulan='PMS' OR Jenis_Usulan='PMD'",
                 );
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
@@ -1648,16 +1648,16 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 			
 			$query4="UPDATE Aset SET Dihapus=0 WHERE Aset_ID='$asetid'";
 			$exec4=$this->query($query4) or die($this->error());
-			pr($query4);
+			// pr($query4);
 			$query="UPDATE Penghapusan SET FixPenghapusan=0 WHERE Penghapusan_ID='$id'";
 			$exec=$this->query($query) or die($this->error());
-			pr($query);
+			// pr($query);
 			$query2="UPDATE UsulanAset SET StatusPenetapan=0 WHERE Penetapan_ID='$id'";
 			$exec2=$this->query($query2) or die($this->error());
-			pr($query2);
+			// pr($query2);
 			$query3="DELETE FROM PenghapusanAset WHERE Penghapusan_ID='$id' AND Status=0";
 			$exec3=$this->query($query3) or die($this->error());
-			pr($query3);
+			// pr($query3);
         }   
 
         
