@@ -185,7 +185,7 @@ $menu_id = 1;
 						<td><?=number_format($value['Satuan']*$value['Kuantitas'])?></td>
 						<td><?=number_format($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'])?></td>
 						<td><?=number_format($value['NilaiPerolehan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']))?></td>
-						<td><?=number_format($value['Satuan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']))?></td>
+						<td><?=number_format($value['Satuan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']/$value['Kuantitas']))?></td>
 						
 					</tr>
 				<?php
