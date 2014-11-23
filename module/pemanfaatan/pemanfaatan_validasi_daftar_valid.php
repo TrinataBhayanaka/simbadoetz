@@ -82,7 +82,7 @@ include "../../config/config.php";
 						<th>Nomor SKKDH</th>
 						<th>Tgl SKKDH</th>
 						<th>Keterangan</th>
-						<th>Tindakan</th>
+						<!--<th>Tindakan</th>-->
 					</tr>
 				</thead>
 				<tbody>		
@@ -106,6 +106,7 @@ include "../../config/config.php";
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
 						<td><?php echo "$hsl_data[Keterangan]";?></td>
+						<!--
 						<td>	
 						<?php
 											// pr($_SESSION);
@@ -143,7 +144,7 @@ include "../../config/config.php";
 												}
 											}									
 											?>
-						</td>
+						</td>-->
 					</tr>
 					<?php 
 							$no++; 
@@ -154,7 +155,7 @@ include "../../config/config.php";
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						
 					</tr>
 				</tfoot>
 			</table>
