@@ -23,10 +23,11 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
             if ($tgl_awal=="" && $tgl_akhir=="" && $no_penetapan_penggunaan=="" && $satker==""){
             	
     ?>
-                <script>var r=confirm('Tidak ada isian filter');
-                            if (r==false){
-                                document.location="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_filter.php";
-                            }
+                <script>
+                // var r=confirm('Tidak ada isian filter');
+                            // if (r==false){
+                                // document.location="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_filter.php";
+                            // }
                 </script>
         <?php
             }

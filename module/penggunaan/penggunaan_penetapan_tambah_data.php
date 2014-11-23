@@ -17,10 +17,11 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 		if ($_POST['tampil2']){
             if ($_POST['penggu_penet_filt_add_nmaset'] =="" && $_POST['penggu_penet_filt_add_nokontrak']=="" && $_POST['skpd_id']==""){
 		  ?>
-        <script>var r=confirm('Tidak ada isian filter');
-            if (r==false){
-            document.location='penggunaan_penetapan_filter2.php';
-            }
+        <script>
+        // var r=confirm('Tidak ada isian filter');
+        //     if (r==false){
+        //     document.location='penggunaan_penetapan_filter2.php';
+        //     }
         </script>
 		<?php
             }

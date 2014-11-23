@@ -42,10 +42,11 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
         if (isset($submit)){
             if ($tgl_awal=="" && $tgl_akhir=="" && $no_penetapan_penggunaan=="" && $alasan==""){
     ?>
-        <script>var r=confirm('Tidak ada isian filter');
-            if (r==false){
-            document.location='penggunaan_validasi_filter.php';
-            }
+        <script>
+        // var r=confirm('Tidak ada isian filter');
+        //     if (r==false){
+        //     document.location='penggunaan_validasi_filter.php';
+        //     }
         </script>				
 					
 

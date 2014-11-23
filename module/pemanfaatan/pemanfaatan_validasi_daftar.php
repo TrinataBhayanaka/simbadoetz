@@ -83,10 +83,11 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
         if (isset($submit)){
                 if ($no_penetapan=="" && $tgl_penetapan=="" && $tipe_pemanfaatan=="" && $alasan==""){
     ?>
-                <script>var r=confirm('Tidak ada isian filter');
-                            if (r==false){
-                                document.location="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_validasi_filter.php?pid";
-                            }
+                <script>
+                // var r=confirm('Tidak ada isian filter');
+                //             if (r==false){
+                //                 document.location="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_validasi_filter.php?pid";
+                //             }
                     </script>
     <?php
             }
