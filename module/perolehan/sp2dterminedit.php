@@ -48,7 +48,16 @@ $menu_id = 1;
 
 	//end SQL
 ?>
-	
+	<script>
+    jQuery(function($) {
+        $('#totalmask').autoNumeric('init');   
+        $("#datepicker").mask("9999-99-99"); 
+    });
+
+    function getCurrency(item){
+      $('#total').val($(item).autoNumeric('get'));
+    }
+  </script>
 	<section id="main">
 	<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -109,11 +118,12 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span class="span2">Tgl.SP2D</span>
-								<input type="text" name="tglsp2d" id="datepicker" value="<?=(isset($sp2d)) ? $sp2d['tglsp2d'] : '' ?>" required/>
+								<input type="text" placeholder="yyyy-mm-dd" name="tglsp2d" id="datepicker" value="<?=(isset($sp2d)) ? $sp2d['tglsp2d'] : '' ?>" required/>
 							</li>
 							<li>
 								<span  class="span2">Nilai</span>
-								<input type="text" name="nilai" id="total" value="<?=(isset($sp2d)) ? $sp2d['nilai'] : '' ?>" required/>
+								<input type="text" id="totalmask" data-a-sign="Rp " data-a-dec="," data-a-sep="." value="<?=(isset($sp2d)) ? $sp2d['nilai'] : '' ?>" onkeyup="return getCurrency(this);" required/>
+								<input type="hidden" name="nilai" id="total" value="<?=(isset($sp2d)) ? $sp2d['nilai'] : '' ?>" />
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>

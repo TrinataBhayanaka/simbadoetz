@@ -4,6 +4,7 @@
 function selectSatker($name,$size=300,$br=false,$upd=false){
 
 	global $url_rewrite;
+	// pr($_SESSION);
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
 	?>
 	<script type="text/javascript">
@@ -11,7 +12,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 	//fungsi dropselect
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
-				    minimumInputLength: 2,
+				    // minimumInputLength: 2,
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/satker.php",
 				        dataType: 'json',
@@ -19,7 +20,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 				        quietMillis: 50,
 				        data: function (term) {
 				            return {
-				                term: term
+				                term: '<?=$_SESSION['ses_satkerkode']?>'
 				            };
 				        },
 				        results: function (data) {
@@ -45,7 +46,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=($upd != false) ? 'readonly' : ''?>/>
 	</li>
 	
 	

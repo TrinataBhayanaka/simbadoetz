@@ -5,6 +5,7 @@ $menu_id = 15;
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 $get_data_filter = $RETRIEVE->retrieve_distribusiBarang($_POST);
+// pr($get_data_filter);
 ?>
 <?php
 	include"$path/meta.php";
@@ -52,9 +53,9 @@ $get_data_filter = $RETRIEVE->retrieve_distribusiBarang($_POST);
 					<tr>
 						<th>No</th>
 						<th>Nomor Dokumen</th>
-						<th>Transfer ke SKPD</th>
+						<th>SKPD Asal</th>
+						<th>Distribusi ke SKPD</th>
 						<th>Tanggal Distribusi</th>
-						<th>Detail</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
@@ -68,11 +69,11 @@ $get_data_filter = $RETRIEVE->retrieve_distribusiBarang($_POST);
 							<tr class="gradeA">
 								<td><?=$i++?></td>
 								<td><?=$value['noDokumen']?></td>
-								<td><?=$value['toSatker']?></td>
+								<td width="20%"><?=$value['NamafromSatker']?></td>
+								<td width="20%"><?=$value['NamatoSatker']?></td>
 								<td><?=$value['tglDistribusi']?></td>
-								<td><?=$value['alasan']?></td>
 								<td class="text-center">
-									<a href="kontrak_rincianhapus.php?id=<?=$value['Aset_ID']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-warning btn-small"><i class="fa fa-pencil"></i>&nbsp;Edit</a>
+									<a href="distribusi_barang_eksekusi_data.php?id=<?=$value['id']?>" class="btn btn-warning btn-small"><i class="fa fa-pencil"></i>&nbsp;Edit</a>
 									<a href="distribusi_rinc.php?id=<?=$value['id']?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Rincian</a>
 									<a href="distribusi_barang_eksekusi_data_tambah_hapus.php?id=<?=$value['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
 								</td>

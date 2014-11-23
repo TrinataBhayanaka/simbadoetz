@@ -58,10 +58,11 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 				 		<li>
 					 		<span class="span6">
 					 			<ul class="nav nav-pills" role="tablist">
-								  <li role="presentation" class="active" id="data"><a href="#" onclick="return option('data');">Rubah Data</a></li>
-								  <li role="presentation" id="kapital"><a href="#" onclick="return option('kapital');">Kapitalisasi</a></li>
-								  <li role="presentation" id="nilai"><a href="#" onclick="return option('nilai');">Koreksi Nilai</a></li>
-								  <li role="presentation" id="kondisi"><a href="#" onclick="return option('kondisi');">Rubah Kondisi</a></li>
+								  <li role="presentation" class="active" id="data"><a href="javascript:void(0)" onclick="return option('data');">Rubah Data</a></li>
+								  <li role="presentation" id="kapital"><a href="javascript:void(0)" onclick="return option('kapital');">Kapitalisasi</a></li>
+								  <li role="presentation" id="nilai"><a href="javascript:void(0)" onclick="return option('nilai');">Koreksi Nilai</a></li>
+								  <li role="presentation" id="kondisi"><a href="javascript:void(0)" onclick="return option('kondisi');">Rubah Kondisi</a></li>
+								  <li role="presentation" id="koreksi"><a href="javascript:void(0)" onclick="return option('koreksi');">Koreksi Aset</a></li>
 								</ul>
 							</span>
 						</li>
@@ -124,6 +125,12 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							<li>&nbsp;</li>
 						</ul>
 					</div>
+					<div class="detailLeft">
+						<div class="well span3">
+							<h2>Rubah Data</h2>
+							<p>Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.</p>
+						</div>
+					</div>	
 
 					<div style="height:5px;width:100%;clear:both"></div>
 
@@ -131,7 +138,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						<ul>
 							<li>
 								<span class="span2">Asal Usul</span>
-								<select id="asalusul" name="asalusul" style="width:255px" disabled>
+								<select id="asalusul" name="asalusul" style="width:255px" class="koreksi">
 									<option></option>
 									<option value="Pembelian" <?=$dataArr['aset']['AsalUsul'] == 'Pembelian' ? 'selected' : ''?>>Pembelian</option>
 									<option value="Hibah" <?=$dataArr['aset']['AsalUsul'] == 'Hibah' ? 'selected' : ''?>>Hibah</option>
@@ -458,21 +465,39 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			initKondisi();
 			$(".kapitalisasi").attr('readonly','readonly');
 			$(".ubahkondisi").attr('disabled','disabled');
+			$(".koreksi").removeAttr('disabled');
+			$(".well h2").html("Rubah Data");
+			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.");
 		} else if ($("#"+item).attr('id') == "kapital") {
 			$("textarea").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".kapitalisasi").removeAttr('readonly');
-			$(".ubahkondisi").attr('disabled','disabled');
+			$(".ubahkondisi,.koreksi").attr('disabled','disabled');
+			$(".well h2").html("Kapitalisasi");
+			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan penambahan nilai aset dengan kondisi tertentu.");
 		} else if ($("#"+item).attr('id') == "nilai") {
 			$("textarea").attr('readonly','readonly');
 			$(".kapitalisasi").removeAttr('readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".ubahkondisi").attr('disabled','disabled');
+			$(".ubahkondisi,.koreksi").attr('disabled','disabled');
+			$(".well h2").html("Koreksi Nilai");
+			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan koreksi nilai aset.");
 		} else if ($("#"+item).attr('id') == "kondisi") {
 			$("textarea").attr('readonly','readonly');
 			$(".kapitalisasi").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".ubahkondisi").removeAttr('disabled');
+			$(".koreksi").attr('disabled','disabled');
+			$(".well h2").html("Rubah Kondisi");
+			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan kondisi aset.");
+		} else if ($("#"+item).attr('id') == "koreksi") {
+			initKondisi();
+			$("textarea").removeAttr('readonly');
+			$(".kapitalisasi").removeAttr('readonly');
+			$(".ubahkondisi").removeAttr('disabled');
+			$(".koreksi").removeAttr('disabled');
+			$(".well h2").html("Koreksi Aset");
+			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan seluruh data aset.");
 		}
 	}
 </script>

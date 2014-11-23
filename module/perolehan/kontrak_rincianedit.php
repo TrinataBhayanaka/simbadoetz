@@ -51,6 +51,15 @@ $menu_id = 10;
 
 	?>
 	<!-- End Sql -->
+	<script>
+    jQuery(function($) {
+        $('#hrgmask').autoNumeric('init');    
+    });
+
+    function getCurrency(item){
+      $('#hrgSatuan').val($(item).autoNumeric('get'));
+    }
+  </script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -233,7 +242,8 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onchange="return totalHrg()" required/>
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
@@ -275,6 +285,7 @@ $menu_id = 10;
 
 <script type="text/javascript">
 	$(document).on('change','#kodeKelompok', function(){
+
 		var kode = $('#kodeKelompok').val();
 		var gol = kode.split(".");
 

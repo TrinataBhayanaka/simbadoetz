@@ -6,7 +6,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// pr($_SESSION);
+// pr($get_data_filter);
 ?>
 
 <?php
@@ -85,6 +85,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				<thead>
 					<tr>
 						<th>No</th>
+						<th>Nama Satker</th>
 						<th>No. SPK/Perjanjian Kontrak</th>
 						<th>Tanggal</th>
 						<th>Tipe Aset</th>
@@ -101,6 +102,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				?>
 					<tr class="gradeA">
 						<td><?=$no?></td>
+						<td width="20%"><?=$val['NamaSatker']?></td>
 						<td><?=$val['noKontrak']?></td>
 						<td><?=$val['tglKontrak']?></td>
 						<td><?=$val['tipeAset']?></td>
