@@ -31,10 +31,11 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
         if (isset($submit)){
                 if ($data['kd_idaset']=="" && $data['kd_namaaset']=="" && $data['kd_nokontrak']=="" && $data['satker']==""){
 			?>
-                <script>var r=confirm('Tidak ada isian filter');
-                            if (r==false){
-                                document.location="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_filter.php";
-                            }
+                <script>
+                // var r=confirm('Tidak ada isian filter');
+                //             if (r==false){
+                //                 document.location="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_filter.php";
+                //             }
                     </script>
 			<?php
             }

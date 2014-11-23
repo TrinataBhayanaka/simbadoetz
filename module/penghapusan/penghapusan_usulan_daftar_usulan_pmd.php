@@ -58,12 +58,12 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							?>
 						<ul>
 							<li>
-								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_filter_pms.php" class="btn">
+								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_filter_pmd.php" class="btn">
 								Kembali ke Form Filter</a>
 								
 							</li>
 							<li>
-								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_lanjut_pms.php?pid=1" class="btn">
+								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_lanjut_pmd.php?pid=1" class="btn">
 								Tambah Data</a>
 							</li>
 							<li>

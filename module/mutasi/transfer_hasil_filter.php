@@ -31,10 +31,11 @@ $MUTASI = new RETRIEVE_MUTASI;
      if (isset($submit)){
             if ($data['kd_idaset']=="" && $data['kd_namaaset']=="" && $data['kd_idaset']=="" && $data['kd_nokontrak']=="" && $data['kd_tahun']=="" && $data['satker']=="" && $data['kelompok_id']=="" && $data['lokasi_id']==""){
 		?>
-                <script>var r=confirm('Tidak ada isian filter');
-                            if (r==false){
-                                document.location="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_antar_skpd.php";
-                            }
+                <script>
+                // var r=confirm('Tidak ada isian filter');
+                //             if (r==false){
+                //                 document.location="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_antar_skpd.php";
+                //             }
                     </script>
         <?php
             }

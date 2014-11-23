@@ -182,8 +182,9 @@ class RETRIEVE_ADMIN extends DB {
     
     public function admin_retrieve_adm_menu_2($param)
     {
-        $queryMenu = "SELECT * FROM tbl_user_menu WHERE menuParent = ".$param['menuParentID'];
-	$resultMenu = $this->query($queryMenu);
+        $queryMenu = "SELECT * FROM tbl_user_menu WHERE menuParent = ".$param['menuParentID'] . " ORDER BY menuID";
+	// pr($queryMenu);   
+    $resultMenu = $this->query($queryMenu);
 		
 	$no = 1;
 	while ($dataMenu = $this->fetch_array($resultMenu))

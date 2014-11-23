@@ -68,7 +68,7 @@ include "../../config/config.php";
 						<th>No</th>
 						<th>Nomor SKKDH</th>
 						<th>Tgl SKKDH</th>
-						<th>Tindakan</th>
+						<!--<th>Tindakan</th>-->
 					</tr>
 				</thead>
 				<tbody>		
@@ -114,7 +114,7 @@ include "../../config/config.php";
 						<td><?php echo "$no.";?></td>
 						<td><?php echo "$hsl_data[NoSKKDH]";?>	</td>
 						<td><?php $change=$hsl_data['TglUpdate']; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
-						<td><a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>" onclick="<?=$disable?> " >Hapus</a></td>
+						<!--<td><a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>" onclick="<?=$disable?> " >Hapus</a></td>-->
 					</tr>
 					 <?php $no++; 
 					//$pid++; 
@@ -125,7 +125,7 @@ include "../../config/config.php";
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						
 					</tr>
 				</tfoot>
 			</table>
