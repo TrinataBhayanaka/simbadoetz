@@ -101,6 +101,9 @@ class UPDATE_ADMIN extends DB {
 	//$showMenu = $param['showMenu'];
 	
         //print_r($showMenu);
+    // pr($param);
+
+    // exit;
 	$query = "UPDATE tbl_user_menu SET menuStatus = 0 , menuAksesLogin = 0 ";
 	$result = $this->query($query) or die ($this->error());
 	

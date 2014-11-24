@@ -187,13 +187,18 @@ class RETRIEVE_ADMIN extends DB {
     $resultMenu = $this->query($queryMenu);
 		
 	$no = 1;
-	while ($dataMenu = $this->fetch_array($resultMenu))
-        {
-            $dataArr [] = $dataMenu;
+    $res = $this->num_rows($resultMenu);
+    // pr($res);
+    if ($res > 0){
+        while ($dataMenu = $this->fetch_array($resultMenu))
+            {
+                $dataArr [] = $dataMenu;
+            }
+            
+            return $dataArr;
         }
-        
-        return $dataArr;
     }
+	
 
     function getNews($id=false)
     {

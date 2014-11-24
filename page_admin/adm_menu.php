@@ -8,6 +8,8 @@
  * Date : 2012-08-01
  */
 
+
+
 defined('_SIMBADA_V1_') or die ('FORBIDDEN ACCESS');
 
 
@@ -126,29 +128,35 @@ if(isset($_POST['simpan']))
 		
 		
 		*/
+
+		// pr($get_menu_child);
 		$no = 1;
-		foreach($get_menu_child as $dataMenu)
-		{
-		//echo $dataMenu['menuID'];
-                        if($dataMenu['menuID'] !=='Array') $dataArray[] = $dataMenu['menuID'];
-			    
-			?>
-			
-        <tr>
-            <td align="right"><?php echo $no.'.'; ?></td>
-            <td><?php echo $dataMenu['menuDesc']?></td>
-            <td align="center"><input type="hidden" value="<?php echo $dataMenu['menuID']?>" /><? $active = $dataMenu['menuID']-1; //echo $active;?>
-                <input type="checkbox" <?php echo $disable_menu; ?> name="showMenu[]" value="<?php echo $dataMenu['menuID']?>" <?php if ($dataArr['menuStatus'][$active] > 0){echo 'checked'; }  ?> />
-                
-                
-            </td>
-            <td align="center"><input type="hidden" value="<?php echo $dataMenu['menuID']?>" />
-                <input type="checkbox" <?php echo $disable_menu; ?> name="accessMenu[]" value="<?php echo $dataMenu['menuID']?>" <?php if ($dataArr['menuAksesLogin'][$active] > 0){echo 'checked'; }?> />
-            </td>
-        </tr>
-			<?php
-			$no++;
+		if ($get_menu_child){
+
+			foreach($get_menu_child as $dataMenu)
+			{
+			// echo $dataMenu['menuID'];
+	                        if($dataMenu['menuID'] !=='Array') $dataArray[] = $dataMenu['menuID'];
+				// pr($dataMenu);  
+				?>
+				
+	        <tr>
+	            <td align="right"><?php echo $no.'.'; ?></td>
+	            <td><?php echo $dataMenu['menuDesc']?></td>
+	            <td align="center"><input type="hidden" value="<?php echo $dataMenu['menuID']?>" /><? $active = $dataMenu['menuID']; //echo $active;?>
+	                <input type="checkbox" <?php echo $disable_menu; ?> name="showMenu[]" value="<?php echo $dataMenu['menuID']?>" <?php if ($dataMenu['menuStatus'] > 0){echo 'checked'; }  ?> />
+	                
+	                
+	            </td>
+	            <td align="center"><input type="hidden" value="<?php echo $dataMenu['menuID']?>" />
+	                <input type="checkbox" <?php echo $disable_menu; ?> name="accessMenu[]" value="<?php echo $dataMenu['menuID']?>" <?php if ($dataMenu['menuAksesLogin'] > 0){echo 'checked'; }?> />
+	            </td>
+	        </tr>
+				<?php
+				$no++;
+			}
 		}
+		
                 
                 
 	}
