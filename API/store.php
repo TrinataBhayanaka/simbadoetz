@@ -2376,6 +2376,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
+        $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key."='$val'";
@@ -2464,6 +2465,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Tahun'] = $tblAset['Tahun'];
             $tblKib['kodeKA'] = 0;
             $tblKib['noRegister'] = $data['noRegister']; 
+            $tblKib['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblKib as $key => $val) {
                 $tmpfield2[] = $key."='$val'";

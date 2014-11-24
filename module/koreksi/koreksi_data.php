@@ -71,7 +71,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						<ul>
 							<li>
 								<span class="span2">Kode Pemilik</span>
-								<select id="kodepemilik" name="kodepemilik" style="width:255px">
+								<select id="kodepemilik" name="kodepemilik" style="width:255px" class="full" disabled>
 									<option value="0">0 Pemerintah Pusat</option>
 									<option value="11">11 Pemerintah Provinsi</option>
 									<option value="12" selected>12 Pemerintah Kabupaten/Kota</option>
