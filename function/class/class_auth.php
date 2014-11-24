@@ -164,10 +164,17 @@ class UserAuth
 		
 		}
             
-	
+		$query = "SELECT * FROM tbl_user_menu_parent WHERE menuOrder != 0 ORDER BY menuOrder ";
+		$dataParent = $this->DBVAR->fetch($query,1);
+
+		// pr($dataParent);
+		// pr($show_menu);
         // Variabel untuk disable menu berdasarkan ID
         $listMenu = array();
-	        
+	    
+	    
+	    // pr($newData);
+
 		foreach ($show_menu as $value){
 		    $query = "SELECT a.*, b.* FROM tbl_user_menu AS a LEFT JOIN tbl_user_menu_parent AS b 
 					    ON a.menuParent = b.menuParentID WHERE a.menuID = {$value}";
@@ -185,7 +192,20 @@ class UserAuth
 		    
 	    }
 	    
-	    return array ($list, $menuPath);
+	    // pr($list);
+	    $newList = array();
+	    if ($list){
+	    	foreach ($dataParent as $key => $value) {
+		    	if ($list[$value['menuParentDesc']]){
+		    		$newList[$value['menuParentDesc']] = $list[$value['menuParentDesc']];
+		    	}
+		    	
+		    }	
+	    }
+	    
+
+	    // pr($newList);
+	    return array ($newList, $menuPath);
         
     }
     
