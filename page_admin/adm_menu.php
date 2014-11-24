@@ -143,7 +143,7 @@ if(isset($_POST['simpan']))
 	        <tr>
 	            <td align="right"><?php echo $no.'.'; ?></td>
 	            <td><?php echo $dataMenu['menuDesc']?></td>
-	            <td align="center"><input type="hidden" value="<?php echo $dataMenu['menuID']?>" /><? $active = $dataMenu['menuID']; echo $active;?>
+	            <td align="center"><input type="hidden" value="<?php echo $dataMenu['menuID']?>" /><? $active = $dataMenu['menuID']; //echo $active;?>
 	                <input type="checkbox" <?php echo $disable_menu; ?> name="showMenu[]" value="<?php echo $dataMenu['menuID']?>" <?php if ($dataMenu['menuStatus'] > 0){echo 'checked'; }  ?> />
 	                
 	                
