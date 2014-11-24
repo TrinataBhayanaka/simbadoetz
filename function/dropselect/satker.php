@@ -1,7 +1,7 @@
 
 <?php
 
-function selectSatker($name,$size=300,$br=false,$upd=false){
+function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 
 	global $url_rewrite;
 	// pr($_SESSION);
@@ -46,7 +46,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=($upd != false) ? 'readonly' : ''?>/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
 	</li>
 	
 	
@@ -54,7 +54,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 
 }
 
-function selectAset($name,$size=300,$br=false,$upd=false){
+function selectAset($name,$size=300,$br=false,$upd=false,$status=false){
 
 	global $url_rewrite;
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
@@ -98,7 +98,7 @@ function selectAset($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Jenis Aset </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
 	</li>
 	
 	

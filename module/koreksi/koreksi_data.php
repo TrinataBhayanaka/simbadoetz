@@ -29,7 +29,8 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("select").select2({});
-			$( "#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).mask('9999-99-99');
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			initKondisi();
 			});	
 	</script>
@@ -81,16 +82,10 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 						</ul>
 						<ul>	
-							<li>
-								<span class="span2">Kode Satker</span>
-								<input type="text" name="kodeSatker" id="kodeSatker" value="<?=$dataArr['aset']['kodeSatker']?>" readonly>
-							</li>	
+							<?=selectSatker('kodeSatker','205',true,$dataArr['aset']['kodeSatker'],'disabled');?>
 						</ul>	
 						<ul>	
-							<li>
-								<span class="span2">Kode Barang</span>
-								<input type="text" name="kodeKelompok" id="kodeKelompok" value="<?=$dataArr['aset']['kodeKelompok']?>" readonly>
-							</li>
+							<?=selectAset('kodeKelompok','205',true,$dataArr['aset']['kodeKelompok'],'disabled');?>
 						</ul>
 						<ul>
 							<li>
@@ -98,7 +93,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" name="tglPerolehan" id="tglPerolehan" value="<?=$dataArr['aset']['TglPerolehan']?>" readonly/>
+										<input type="text" class="span2 full" name="tglPerolehan" id="tglPerolehan" value="<?=$dataArr['aset']['TglPerolehan']?>" disabled/>
 									</div>
 								</div>
 							</li>
@@ -107,7 +102,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" name="tglPembukuan" id="tglPembukuan" value="<?=$dataArr['aset']['TglPembukuan']?>" readonly/>
+										<input type="text" class="span2 full" name="tglPembukuan" id="tglPembukuan" value="<?=$dataArr['aset']['TglPembukuan']?>" disabled/>
 									</div>
 								</div>
 							</li>
@@ -464,39 +459,44 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		if($("#"+item).attr('id') == "data"){
 			initKondisi();
 			$(".kapitalisasi").attr('readonly','readonly');
-			$(".ubahkondisi").attr('disabled','disabled');
+			$(".ubahkondisi,.full").attr('disabled','disabled');
 			$(".koreksi").removeAttr('disabled');
 			$(".well h2").html("Rubah Data");
+			$("#kodeKelompok,#kodeSatker").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.");
 		} else if ($("#"+item).attr('id') == "kapital") {
 			$("textarea").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".kapitalisasi").removeAttr('readonly');
-			$(".ubahkondisi,.koreksi").attr('disabled','disabled');
+			$(".ubahkondisi,.koreksi,.full").attr('disabled','disabled');
 			$(".well h2").html("Kapitalisasi");
+			$("#kodeKelompok,#kodeSatker").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan penambahan nilai aset dengan kondisi tertentu.");
 		} else if ($("#"+item).attr('id') == "nilai") {
 			$("textarea").attr('readonly','readonly');
 			$(".kapitalisasi").removeAttr('readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".ubahkondisi,.koreksi").attr('disabled','disabled');
+			$(".ubahkondisi,.koreksi,.full").attr('disabled','disabled');
 			$(".well h2").html("Koreksi Nilai");
+			$("#kodeKelompok,#kodeSatker").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan koreksi nilai aset.");
 		} else if ($("#"+item).attr('id') == "kondisi") {
 			$("textarea").attr('readonly','readonly');
 			$(".kapitalisasi").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".ubahkondisi").removeAttr('disabled');
-			$(".koreksi").attr('disabled','disabled');
+			$(".koreksi,.full").attr('disabled','disabled');
 			$(".well h2").html("Rubah Kondisi");
+			$("#kodeKelompok,#kodeSatker").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan kondisi aset.");
 		} else if ($("#"+item).attr('id') == "koreksi") {
 			initKondisi();
 			$("textarea").removeAttr('readonly');
 			$(".kapitalisasi").removeAttr('readonly');
 			$(".ubahkondisi").removeAttr('disabled');
-			$(".koreksi").removeAttr('disabled');
+			$(".koreksi,.full").removeAttr('disabled');
 			$(".well h2").html("Koreksi Aset");
+			$("#kodeKelompok,#kodeSatker").select2("enable", true);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan seluruh data aset.");
 		}
 	}
