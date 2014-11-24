@@ -48,7 +48,11 @@ $menu_id = 1;
 
 	//end SQL
 ?>
-	
+	<script>
+	jQuery(function($){
+		$("#datepicker").mask("9999-99-99");
+	});
+	</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -109,7 +113,7 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span class="span2">Tgl.SP2D</span>
-								<input type="text" name="tglsp2d" id="datepicker" value="<?=(isset($sp2d)) ? $sp2d['tglsp2d'] : '' ?>" required/>
+								<input type="text" placeholder="yyyy-mm-dd" name="tglsp2d" id="datepicker" value="<?=(isset($sp2d)) ? $sp2d['tglsp2d'] : '' ?>" required/>
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>

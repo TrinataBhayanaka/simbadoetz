@@ -34,7 +34,8 @@ $menu_id = 10;
 		$(document).ready(function() {
 			$("select").select2({
 			});
-			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });	
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).mask('9999-99-99');
 		});	
 	</script>
 	<section id="main">
@@ -82,7 +83,7 @@ $menu_id = 10;
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" name="tglPerolehan" id="tglPerolehan"/>
+										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglPerolehan" id="tglPerolehan"/>
 									</div>
 								</div>
 							</li>
@@ -91,7 +92,7 @@ $menu_id = 10;
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" name="tglPembukuan" id="tglPembukuan"/>
+										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglPembukuan" id="tglPembukuan"/>
 									</div>
 								</div>
 							</li>
@@ -236,7 +237,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" class="span2" name="tglSurat" id="tglSurat" disabled/>
+								<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglSurat" id="tglSurat" disabled/>
 							</li>
 						</ul>
 						<ul class="jaringan" style="display:none">
@@ -271,7 +272,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" class="span2" name="tglDokumen" id="tglDokumen" disabled/>
+								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" disabled/>
 							</li>
 						</ul>
 						<ul class="asetlain" style="display:none">

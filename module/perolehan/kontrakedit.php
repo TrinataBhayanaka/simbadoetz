@@ -40,6 +40,16 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
  ?>
   <!-- End Sql -->
+  <script>
+    jQuery(function($) {
+        $('#nilai_front').autoNumeric('init');
+        $("#datepicker").mask("9999-99-99");    
+    });
+
+    function getCurrency(item){
+      $('#nilai').val($(item).autoNumeric('get'));
+    }
+  </script>
   <section id="main">
     <ul class="breadcrumb">
         <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -68,7 +78,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
               <li>
                 <span class="span2">Tgl.SPK/Perjanjian Kontrak</span>
 
-                <input type="text" name="tglKontrak" id="datepicker" value="<?=(isset($kontrak)) ? $kontrak[0]['tglKontrak'] : '' ?>" required/>
+                <input type="text" placeholder="yyyy-mm-dd" name="tglKontrak" id="datepicker" value="<?=(isset($kontrak)) ? $kontrak[0]['tglKontrak'] : '' ?>" required/>
 
               </li>
               <li>
@@ -81,7 +91,8 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
               </li>
               <li>
                 <span  class="span2">Nilai</span>
-                <input type="text" name="nilai" value="<?=(isset($kontrak)) ? $kontrak[0]['nilai'] : '' ?>" required/>
+                <input type="text" id="nilai_front" data-a-sign="Rp " data-a-dec="," data-a-sep="." value="<?=(isset($kontrak)) ? $kontrak[0]['nilai'] : '' ?>" onkeyup="return getCurrency(this);"  required/>
+                <input type="hidden" id="nilai" name="nilai" value="<?=(isset($kontrak)) ? $kontrak[0]['nilai'] : '' ?>" required />
               </li>
               <li>
                 <span  class="span2">Jenis Posting</span>

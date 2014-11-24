@@ -66,6 +66,7 @@
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/maskedinput/jquery.maskedinput.min.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tableCheckable/jquery.tableCheckable.js"></script>
+	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/autoNumeric/autoNumeric.js"></script>
 	   <script>
 	function change_pemilik() 
 	{

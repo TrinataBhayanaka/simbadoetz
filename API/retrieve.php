@@ -9609,12 +9609,16 @@ $offset = @$_POST['record'];
 
     public function retrieve_kontrak()
     {    
-        $sql = mysql_query("SELECT * FROM kontrak WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' ORDER BY id");
+        $sql = mysql_query("SELECT * FROM kontrak WHERE  (kodeSatker LIKE '{$_SESSION['ses_satkerkode']}%' OR UserNm = '{$_SESSION['ses_uoperatorid']}') ORDER BY id");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 if($dataKontrak['tipeAset'] == 1) $dataKontrak['tipeAset'] = 'Aset Baru';
                 elseif ($dataKontrak['tipeAset'] == 2) $dataKontrak['tipeAset'] = 'Kapitalisasi';
                 elseif ($dataKontrak['tipeAset'] == 3) $dataKontrak['tipeAset'] = 'Perubahan Status';
-                    
+
+                $sqlsatker = "SELECT NamaSatker FROM satker WHERE kode = '{$dataKontrak['kodeSatker']}' LIMIT 1";
+                $NamaSatker = $this->fetch($sqlsatker);
+                $dataKontrak['NamaSatker'] = $NamaSatker['NamaSatker'];
+
                 $kontrak[] = $dataKontrak;
             }
 
@@ -9682,6 +9686,14 @@ $offset = @$_POST['record'];
         if($setval == "") $setval = 1;
         $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
         while ($dataTrs = mysql_fetch_assoc($sql)){
+                    $sqlsatker = "SELECT NamaSatker FROM satker WHERE kode = '{$dataTrs['fromSatker']}' LIMIT 1";
+                    $NamaSatker1 = $this->fetch($sqlsatker);
+                    $dataTrs['NamafromSatker'] = $NamaSatker1['NamaSatker'];
+
+                    $sqlsatker = "SELECT NamaSatker FROM satker WHERE kode = '{$dataTrs['toSatker']}' LIMIT 1";
+                    $NamaSatker2 = $this->fetch($sqlsatker);
+                    $dataTrs['NamatoSatker'] = $NamaSatker2['NamaSatker'];
+
                     $transfer[] = $dataTrs;
                 }
         $count_transfer = count($transfer);
@@ -9713,6 +9725,14 @@ $offset = @$_POST['record'];
         $dataArr['total']= $count_transfer;
 
         return $dataArr;
+        exit;
+    }
+
+    function retrieve_transferAset($id){
+        $sql = "SELECT * FROM transfer WHERE id = '{$id}' LIMIT 1";
+        $data = $this->fetch($sql);
+
+        return $data;
         exit;
     }
 

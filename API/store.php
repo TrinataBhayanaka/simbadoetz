@@ -2102,6 +2102,25 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     } 
 
+    function store_edit_transfer($data,$id)
+    {
+
+        $data['userNm'] = $_SESSION['ses_uoperatorid']; 
+
+         foreach ($data as $key => $val) {
+                $tmpfield[] = $key."='$val'";
+            }
+            $field = implode(',', $tmpfield);
+
+        $query = "UPDATE transfer SET {$field} WHERE id = '{$id}'";
+        // pr($query_log);exit;
+        $result=  $this->query($query) or die($this->error());
+
+        return true;
+        exit;
+
+    }
+
     public function store_trs_rinc($data,$get,$table)
     {
         unset($data['example_length']);
