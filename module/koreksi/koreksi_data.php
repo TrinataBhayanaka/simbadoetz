@@ -83,7 +83,10 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						</ul>
 						<ul>	
 							<?=selectSatker('kodeSatker','205',true,$dataArr['aset']['kodeSatker'],'disabled');?>
-						</ul>	
+						</ul>
+						<ul>
+							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false,'disabled');?>
+						</ul>		
 						<ul>	
 							<?=selectAset('kodeKelompok','205',true,$dataArr['aset']['kodeKelompok'],'disabled');?>
 						</ul>
@@ -462,7 +465,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".ubahkondisi,.full").attr('disabled','disabled');
 			$(".koreksi").removeAttr('disabled');
 			$(".well h2").html("Rubah Data");
-			$("#kodeKelompok,#kodeSatker").select2("enable", false);
+			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.");
 		} else if ($("#"+item).attr('id') == "kapital") {
 			$("textarea").attr('readonly','readonly');
@@ -470,7 +473,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".kapitalisasi").removeAttr('readonly');
 			$(".ubahkondisi,.koreksi,.full").attr('disabled','disabled');
 			$(".well h2").html("Kapitalisasi");
-			$("#kodeKelompok,#kodeSatker").select2("enable", false);
+			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan penambahan nilai aset dengan kondisi tertentu.");
 		} else if ($("#"+item).attr('id') == "nilai") {
 			$("textarea").attr('readonly','readonly');
@@ -478,7 +481,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".ubahkondisi,.koreksi,.full").attr('disabled','disabled');
 			$(".well h2").html("Koreksi Nilai");
-			$("#kodeKelompok,#kodeSatker").select2("enable", false);
+			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan koreksi nilai aset.");
 		} else if ($("#"+item).attr('id') == "kondisi") {
 			$("textarea").attr('readonly','readonly');
@@ -487,7 +490,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".ubahkondisi").removeAttr('disabled');
 			$(".koreksi,.full").attr('disabled','disabled');
 			$(".well h2").html("Rubah Kondisi");
-			$("#kodeKelompok,#kodeSatker").select2("enable", false);
+			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan kondisi aset.");
 		} else if ($("#"+item).attr('id') == "koreksi") {
 			initKondisi();
@@ -496,7 +499,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".ubahkondisi").removeAttr('disabled');
 			$(".koreksi,.full").removeAttr('disabled');
 			$(".well h2").html("Koreksi Aset");
-			$("#kodeKelompok,#kodeSatker").select2("enable", true);
+			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", true);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan seluruh data aset.");
 		}
 	}

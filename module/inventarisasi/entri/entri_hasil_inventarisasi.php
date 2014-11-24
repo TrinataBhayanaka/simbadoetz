@@ -72,10 +72,13 @@ $menu_id = 10;
 							</li>
 						</ul>
 						<ul>
-							<?=selectSatker('kodeSatker','255',true,false);?>
-						</ul>	
+							<?=selectSatker('kodeSatker','255',true,false,'required');?>
+						</ul>
+						<ul>
+							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
+						</ul>		
 						<ul>	
-							<?php selectAset('kodeKelompok','255',true,false); ?>
+							<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
 						</ul>
 						<ul>
 							<li>
