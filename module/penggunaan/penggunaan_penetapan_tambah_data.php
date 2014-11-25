@@ -48,10 +48,12 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	
+
+	// pr($_POST);
+	// exit;
 	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($_POST);	
 	// pr($data);
-
+	// exit;
 ?>	
 
 		

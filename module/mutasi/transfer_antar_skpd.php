@@ -93,6 +93,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							
 							<li>
                                 <span class="span2">Jenis Aset</span>
+                                
+                                <input type="checkbox" name="jenisaset[]" value="1">Tanah
+                                <input type="checkbox" name="jenisaset[]" value="2">Mesin
+                                <input type="checkbox" name="jenisaset[]" value="3">Bangunan
+                                <input type="checkbox" name="jenisaset[]" value="4">Jaringan
+                                <input type="checkbox" name="jenisaset[]" value="5">Aset Lain
+                                <input type="checkbox" name="jenisaset[]" value="6">KDP
+                                <!--
                                 <select name="jenisaset">
                                     <option value="1">Tanah</option>
                                     <option value="2">Mesin</option>
@@ -100,7 +108,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                                     <option value="4">Jaringan</option>
                                     <option value="5">Aset Lain</option>
                                     <option value="6">KDP</option>
-                                </select>
+                                </select>-->
                             </li>
 							<li>
 								<span class="span2">Nomor Kontrak</span>
