@@ -367,24 +367,46 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
     {
         $id = $_POST['Penggunaan'];
         $cols = implode(",",array_values($id));
-        $jenisaset = $parameter['jenisaset'];
+        $jenisaset = explode(',', $parameter['jenisaset']);
 
-        $table = $this->getTableKibAlias($jenisaset);
-        $listTable = $table['listTable'];
-        $listTableAlias = $table['listTableAlias'];
+        // pr($jenisaset);
+
+        if ($jenisaset){
+
+            foreach ($jenisaset as $value) {
+
+                $table = $this->getTableKibAlias($value);
+                $listTable = $table['listTable'];
+                $listTableAlias = $table['listTableAlias'];
+                // pr($table);
+                 $sql = array(
+                        'table'=>"aset AS a, {$listTable}, kelompok AS k",
+                        'field'=>"{$listTableAlias}.*, k.Uraian",
+                        'condition'=>"a.Aset_ID IN ({$cols})",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
+                        );
+
+                $res[] = $this->db->lazyQuery($sql,$debug);
+            }
+
+            foreach ($res as $value) {
+
+                if ($value){
+
+                    foreach ($value as $val) {
+                        $newData[] = $val;
+                    } 
+                }
+                
+            }
+
+        }
+
         
-         $sql = array(
-                'table'=>"aset AS a, {$listTable}, kelompok AS k",
-                'field'=>"{$listTableAlias}.*, k.Uraian",
-                'condition'=>"a.Aset_ID IN ({$cols})",
-                'limit'=>'100',
-                'joinmethod' => 'LEFT JOIN',
-                'join' => "a.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
-                );
-
-        $res = $this->db->lazyQuery($sql,$debug);
         // pr($res);
-        if ($res) return $res;
+        if ($newData) return $newData;
         return false;
 
     }
@@ -428,7 +450,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
             foreach ($res as $value) {
 
                 if ($value){
-                    
+
                     foreach ($value as $val) {
                         $newData[] = $val;
                     } 

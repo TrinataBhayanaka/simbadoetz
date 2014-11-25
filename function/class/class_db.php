@@ -13,8 +13,8 @@ class DB
 	protected $result;
 	protected $connect;
 	protected $numRec;
-   protected $url_rewrite;
-   protected $path;
+   	protected $url_rewrite;
+   	protected $path;
 	
 	public function __construct()
 	{
@@ -455,7 +455,33 @@ class DB
 
 			break;
 
-			
+			case '3':
+				/*
+				$sql = array(
+                'table'=>'aset',
+                'field'=>'Aset_ID = 1, KodeSatker = 1010',
+                'condition'=>'Status_Validasi_Barang = 1',
+                );
+				*/
+				$condition = $data['condition'];
+				$limit = intval($data['limit']);
+				if ($limit>0) $limit = " LIMIT {$limit}";
+				else $limit = "";
+
+				$sql = "DELETE FROM {$table} WHERE {$condition} {$limit}";
+				if ($debug){
+					if ($debug>1){
+						pr($sql);
+					}else{
+						pr($sql);
+						exit;	
+					} 
+					
+				}
+				if (!$debug)$res = $this->query($sql);
+				if ($res) return true;
+
+			break;
 
 			default:
 				pr('Method no defined');
