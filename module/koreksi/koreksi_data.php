@@ -57,6 +57,9 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 				 <div class="detailLeft">
 				 	<ul>
 				 		<li>
+				 			<h2><?=$dataArr['aset']['NamaAset']?></h2>
+				 		</li>
+				 		<li>
 					 		<span class="span6">
 					 			<ul class="nav nav-pills" role="tablist">
 								  <li role="presentation" class="active" id="data"><a href="javascript:void(0)" onclick="return option('data');">Rubah Data</a></li>
@@ -82,15 +85,16 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 						</ul>
 						<ul>	
-							<?=selectSatker('kodeSatker','205',true,$dataArr['aset']['kodeSatker'],'disabled');?>
+							<?=selectSatker('kodeSatker','255',true,$dataArr['aset']['kodeSatker'],'disabled');?>
 						</ul>
 						<ul>
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false,'disabled');?>
 						</ul>		
-						<ul>	
-							<?=selectAset('kodeKelompok','205',true,$dataArr['aset']['kodeKelompok'],'disabled');?>
-						</ul>
 						<ul>
+							<li>
+								<span class="span2">Kode Aset</span>
+								<input type="text" class="span2" id="kodeKelompok" name="kodeKelompok" value="<?=$dataArr['aset']['kodeKelompok']?>" readonly/>
+							</li>
 							<li>
 								<span class="span2">Tgl. Pembelian</span>
 								<div class="control">
@@ -128,7 +132,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							<h2>Rubah Data</h2>
 							<p>Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.</p>
 						</div>
-					</div>	
+					</div>
 
 					<div style="height:5px;width:100%;clear:both"></div>
 
@@ -376,7 +380,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		}
 	})
 
-	function initKondisi(){
+	function initKondisi(){	
 			$(".rubahaset").removeAttr('readonly');
 			var kode = $('#kodeKelompok').val();
 			var gol = kode.split(".");

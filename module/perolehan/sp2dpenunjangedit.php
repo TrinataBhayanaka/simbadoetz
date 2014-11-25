@@ -121,8 +121,8 @@ $menu_id = 1;
 							</li>
 							<li>
 							<span class="span2">&nbsp;</span>
-							<button class="btn" data-dismiss="modal">Kembali</button>
-							<button class="btn btn-primary">Simpan</button>	
+							<button class="btn" type="reset">Reset</button>
+							<button class="btn btn-primary" type="submit">Simpan</button>	
 							</li>
 							
 						</ul>

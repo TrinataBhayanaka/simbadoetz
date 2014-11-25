@@ -48,10 +48,12 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	
+
+	pr($_POST);
+	// exit;
 	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($_POST);	
 	// pr($data);
-
+	// exit;
 ?>	
 
 		
@@ -185,7 +187,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 						<td  align="left"><a href="javascript:void(0)" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
 						<td align="right" >
 								<input type="submit" name="submit2" value="Penetapan Penggunaan" id="submit" disabled/>
-							<input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
+							<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
 						</td>
 					</tr>
 					<tr>

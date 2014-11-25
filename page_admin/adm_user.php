@@ -81,7 +81,7 @@ if (isset($_POST['Simpan']))
 		//print_r($menuAkese);
 	}
 	
-	$query = "INSERT INTO Operator VALUES (
+	$query = "INSERT IGNORE INTO Operator VALUES (
 		  null, '$UserNm', '$Passwd', '$NamaOperator','$JabatanOperator', '$NIPOperator', '$AksesAdmin', '$SKPD_ID', '$menuAkese')";
 	
 	// pr($query);exit;

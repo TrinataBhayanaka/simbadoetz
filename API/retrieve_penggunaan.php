@@ -367,24 +367,46 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
     {
         $id = $_POST['Penggunaan'];
         $cols = implode(",",array_values($id));
-        $jenisaset = $parameter['jenisaset'];
+        $jenisaset = explode(',', $parameter['jenisaset']);
 
-        $table = $this->getTableKibAlias($jenisaset);
-        $listTable = $table['listTable'];
-        $listTableAlias = $table['listTableAlias'];
+        // pr($jenisaset);
+
+        if ($jenisaset){
+
+            foreach ($jenisaset as $value) {
+
+                $table = $this->getTableKibAlias($value);
+                $listTable = $table['listTable'];
+                $listTableAlias = $table['listTableAlias'];
+                // pr($table);
+                 $sql = array(
+                        'table'=>"aset AS a, {$listTable}, kelompok AS k",
+                        'field'=>"{$listTableAlias}.*, k.Uraian",
+                        'condition'=>"a.Aset_ID IN ({$cols})",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
+                        );
+
+                $res[] = $this->db->lazyQuery($sql,$debug);
+            }
+
+            foreach ($res as $value) {
+
+                if ($value){
+
+                    foreach ($value as $val) {
+                        $newData[] = $val;
+                    } 
+                }
+                
+            }
+
+        }
+
         
-         $sql = array(
-                'table'=>"aset AS a, {$listTable}, kelompok AS k",
-                'field'=>"{$listTableAlias}.*, k.Uraian",
-                'condition'=>"a.Aset_ID IN ({$cols})",
-                'limit'=>'100',
-                'joinmethod' => 'LEFT JOIN',
-                'join' => "a.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
-                );
-
-        $res = $this->db->lazyQuery($sql,$debug);
         // pr($res);
-        if ($res) return $res;
+        if ($newData) return $newData;
         return false;
 
     }
@@ -401,32 +423,53 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
 
 
+        if ($jenisaset){
+
+            foreach ($jenisaset as $value) {
+                
+                $table = $this->getTableKibAlias($value);
+
+                // pr($table);
+                $listTable = $table['listTable'];
+                $listTableAlias = $table['listTableAlias'];
+
+
+                $sql = array(
+                        'table'=>"{$listTable}, aset AS a, kelompok AS k",
+                        'field'=>"{$listTableAlias}.*, k.Uraian",
+                        'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL {$filterkontrak}",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
+                        );
+
+                $res[$value] = $this->db->lazyQuery($sql,$debug);
+
+            }
+
+            foreach ($res as $value) {
+
+                if ($value){
+
+                    foreach ($value as $val) {
+                        $newData[] = $val;
+                    } 
+                }
+                
+            }
+        }
         
-        $table = $this->getTableKibAlias($jenisaset);
 
-        // pr($table);
-        $listTable = $table['listTable'];
-        $listTableAlias = $table['listTableAlias'];
-
-
-        $sql = array(
-                'table'=>"{$listTable}, aset AS a, kelompok AS k",
-                'field'=>"{$listTableAlias}.*, k.Uraian",
-                'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL {$filterkontrak}",
-                'limit'=>'100',
-                'joinmethod' => 'LEFT JOIN',
-                'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
-                );
-
-        $res = $this->db->lazyQuery($sql,$debug);
-        if ($res) return $res;
+        // pr($newData);
+        
+        if ($newData) return $newData;
         return false;
 
     }
     
     function getTableKibAlias($type=1)
     {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kd');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
@@ -435,7 +478,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS kd');
         $listTable2 = array(
                         1=>'tanah',
                         2=>'mesin',

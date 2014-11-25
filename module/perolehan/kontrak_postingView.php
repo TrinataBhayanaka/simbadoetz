@@ -49,9 +49,12 @@ $menu_id = 1;
 			}
 
 	$sql = mysql_query("SELECT COUNT(*) AS kap FROM kapitalisasi WHERE noKontrakAset = '{$kontrak['noKontrak']}'");	
-	while ($sumpost = mysql_fetch_assoc($sql)){
+	if ($sql){
+		while ($sumpost = mysql_fetch_assoc($sql)){
 				$kapchek = $sumpost;
 			}
+	}
+	
 	// pr($kapchek);
 	//end SQL
 ?>

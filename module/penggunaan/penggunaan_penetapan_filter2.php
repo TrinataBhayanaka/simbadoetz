@@ -56,6 +56,13 @@ $resetDataView = $DBVAR->is_table_exists('filter2_penggunaan_'.$SessionUser['ses
 							</li>
                             <li>
                                 <span class="span2">Jenis Aset</span>
+                                <input type="checkbox" name="jenisaset[]" value="1">Tanah
+                                <input type="checkbox" name="jenisaset[]" value="2">Mesin
+                                <input type="checkbox" name="jenisaset[]" value="3">Bangunan
+                                <input type="checkbox" name="jenisaset[]" value="4">Jaringan
+                                <input type="checkbox" name="jenisaset[]" value="5">Aset Lain
+                                <input type="checkbox" name="jenisaset[]" value="6">KDP
+                                <!--
                                 <select name="jenisaset">
                                     <option value="1">Tanah</option>
                                     <option value="2">Mesin</option>
@@ -63,12 +70,12 @@ $resetDataView = $DBVAR->is_table_exists('filter2_penggunaan_'.$SessionUser['ses
                                     <option value="4">Jaringan</option>
                                     <option value="5">Aset Lain</option>
                                     <option value="6">KDP</option>
-                                </select>
+                                </select>-->
                             </li>
-							
+							<li>&nbsp;</li>    
                             <?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
                                                    
-                                        
+                            <li>&nbsp;</li>                    
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

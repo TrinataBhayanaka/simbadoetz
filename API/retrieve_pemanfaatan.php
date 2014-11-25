@@ -21,25 +21,44 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
 
 
+        if ($jenisaset){
+
+            foreach ($jenisaset as $value) {
+
+                $table = $this->getTableKibAlias($value);
+
+                // pr($table);
+                $listTable = $table['listTable'];
+                $listTableAlias = $table['listTableAlias'];
+                $listTableAbjad = $table['listTableAbjad'];
+
+                $sql = array(
+                        'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k",
+                        'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak",
+                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND a.statusPemanfaatan = 0 {$filterkontrak}",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
+                        );
+
+                $res[] = $this->db->lazyQuery($sql,$debug);
+
+            }
+
+            foreach ($res as $value) {
+
+                if ($value){
+                    
+                    foreach ($value as $val) {
+                        $newData[] = $val;
+                    } 
+                }
+                
+            }
+        }
         
-        $table = $this->getTableKibAlias($jenisaset);
-
-        // pr($table);
-        $listTable = $table['listTable'];
-        $listTableAlias = $table['listTableAlias'];
-        $listTableAbjad = $table['listTableAbjad'];
-
-        $sql = array(
-                'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k",
-                'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak",
-                'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND a.statusPemanfaatan = 0 {$filterkontrak}",
-                'limit'=>'100',
-                'joinmethod' => 'LEFT JOIN',
-                'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
-                );
-
-        $res = $this->db->lazyQuery($sql,$debug);
-        if ($res) return $res;
+        
+        if ($newData) return $newData;
         return false;
 	}
 

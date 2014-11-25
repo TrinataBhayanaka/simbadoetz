@@ -9806,6 +9806,11 @@ $offset = @$_POST['record'];
 
         $sql = "SELECT * FROM {$data['tbl']} WHERE kodeKelompok = '{$data['kdkel']}' AND kodeLokasi = '{$data['kdlok']}' AND noRegister = '{$data['reg']}' LIMIT 1";
         $kib = $this->fetch($sql);
+
+        $sql = "SELECT Uraian FROM kelompok WHERE kode = '{$aset['kodeKelompok']}' LIMIT 1";
+        $namaAset = $this->fetch($sql);
+
+        $aset['NamaAset'] = $namaAset['Uraian'];
         
         $dataArr = array('aset' => $aset, 'kib' => $kib );
 
