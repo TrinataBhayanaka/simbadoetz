@@ -14,8 +14,8 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tahun = $_GET['tahun'];
-$kelompok=$_GET['bidang'];
+$tglperolehan = $_GET['tglperolehan'];
+// $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 // exit;
@@ -23,7 +23,7 @@ $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kib"=>$kib,
-    "tahun"=>$tahun,
+    "tglperolehan"=>$tglperolehan,
     "skpd_id"=>$skpd_id,
     "kelompok"=>$kelompok,
     "tab"=>$tab
@@ -90,18 +90,26 @@ exit;
 }
 else
 {
-	
-	$waktu=date("d-m-y_h:i:s");
+	ob_clean();
+	$waktu=date("d-m-y_h-i-s");
 	$filename ="Kartu_Inventaris_Barang_A_$waktu.xls";
-	header('Content-type: application/ms-excel');
-	header('Content-Disposition: attachment; filename='.$filename);
+	// header('Content-type: application/ms-excel');
+	// header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
-	
+	$DATABARU = "";
 	for ($i = 0; $i < $count; $i++) {
-           echo "$html[$i]";
+           $DATABARU .= "$html[$i]";
+           // $DATABARU .= "test aja";
            
      }
-     
+    
+	$a = fopen($filename, 'w');
+	fwrite($a, $DATABARU);
+	fclose($a);
+	
+	echo "<script>window.location.href='$url_rewrite/report/template/PEROLEHAN/$filename';</script>";
+	exit;
+	// echo $DATABARU;
 	
 }
 ?>

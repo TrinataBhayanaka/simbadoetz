@@ -32,7 +32,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 		<section class="formLegend">
 			<script>
 				$(document).ready(function() {
-					$('#tahun_tanah,#tahun_mesin,#tahun_bangunan,#tahun_jaringan,#tahun_tetaplainnya,#tahun_kdp,#tahun_lainnya,#tahun_neraca').keydown(function (e) {
+					/*$('#tahun_tanah,#tahun_mesin,#tahun_bangunan,#tahun_jaringan,#tahun_tetaplainnya,#tahun_kdp,#tahun_lainnya,#tahun_neraca').keydown(function (e) {
 						// Allow: backspace, delete, tab, escape, enter and .
 						if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 							 // Allow: Ctrl+A
@@ -46,7 +46,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
 							e.preventDefault();
 						}
-					});
+					});*/
+					$( "#tglPerolehanTanah,#tglPerolehanMesin,#tglPerolehanGedung,#tglPerolehanJIJ,#tglPerolehanAst,#tglPerolehanKdp,#tglPerolehanLainnya,#tglPerolehanNeraca").mask('9999-99-99');
+					$( "#tglPerolehanTanah,#tglPerolehanMesin,#tglPerolehanGedung,#tglPerolehanJIJ,#tglPerolehanAst,#tglPerolehanKdp,#tglPerolehanLainnya,#tglPerolehanNeraca" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							
 				
 					
 				
@@ -70,11 +73,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Tanah</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapTanah.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_tanah" id ="tahun_tanah" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanTanah" id="tglPerolehanTanah" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker1','255',true,false); ?>
 							<br>
@@ -91,11 +99,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Peralatan dan Mesin</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_mesin.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapMesin.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_mesin" id ="tahun_mesin" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanMesin" id="tglPerolehanMesin" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker2','255',true,false); ?>
 							<br>
@@ -112,11 +125,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Gedung dan Bangunan</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_bangunan.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapBangunan.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_bangunan" id ="tahun_bangunan" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanGedung" id="tglPerolehanGedung" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker3','255',true,false); ?>
 							<br>
@@ -133,11 +151,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Jalan, Irigasi dan Jaringan</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_jaringan.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapJaringan.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_jaringan" id ="tahun_jaringan" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanJIJ" id="tglPerolehanJIJ" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker4','255',true,false); ?>
 							<br>
@@ -154,11 +177,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Aset Tetap Lainnya</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_lainnya.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapLainnya.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_tetaplainnya" id ="tahun_tetaplainnya" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAst" id="tglPerolehanAst" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker5','255',true,false); ?>
 							<br>
@@ -175,11 +203,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Konstruksi Dalam Pengerjaan</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_kdp.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapKDP.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_kdp" id ="tahun_kdp" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanKdp" id="tglPerolehanKdp" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker6','255',true,false); ?>
 							<br>
@@ -196,11 +229,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Lainnya</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_lainnya.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetLainnya.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_lainnya" id ="tahun_lainnya" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanLainnya" id="tglPerolehanLainnya" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker7','255',true,false); ?>
 							<br>
@@ -217,11 +255,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Barang Ke Neraca</div>
 						</div>
-						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_rekapneraca.php"; ?>">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapNeraca.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tahun</span>
-								<input name="tahun_neraca" id ="tahun_neraca" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+								<span class="span2">Tanggal Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanNeraca" id="tglPerolehanNeraca" value="" required/>
+									</div>
+								</div>
 							</li>
 							<?php selectSatker('kodeSatker8','255',true,false); ?>
 							<br>

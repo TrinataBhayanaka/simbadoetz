@@ -9,17 +9,17 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
 
-$modul = $_REQUEST['menuID'];
-$mode = $_REQUEST['mode'];
-$tahun = $_REQUEST['tahun_kir'];
-$tab = $_REQUEST['tab'];
-$skpd_id = $_REQUEST['skpd_id2'];
-$kir = $_REQUEST['kir'];
-pr($_REQUEST);
+$modul = $_GET['menuID'];
+$mode = $_GET['mode'];
+$tglperolehan = $_GET['tglperolehan'];
+$tab = $_GET['tab'];
+$skpd_id = $_GET['skpd_id'];
+$kir = $_GET['kir'];
+// pr($_GET);
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "tahun"=>$tahun,
+    "tglperolehan"=>$tglperolehan,
     "skpd_id"=>$skpd_id,
     "tab"=>$tab,
 	"kir"=>$kir
@@ -33,6 +33,7 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
+// pr($query);
 // exit;
 // pr($query);
 //mengenerate query
@@ -44,14 +45,12 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
 $html=$REPORT->retrieve_html_kir($result_query, $gambar);
-$count = count($html);
-
-
+/*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
+		 echo $html[$i];     
 	}
-// exit;
+exit;*/
 $REPORT->show_status_download();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);

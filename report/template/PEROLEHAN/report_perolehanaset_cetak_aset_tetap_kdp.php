@@ -9,17 +9,17 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
 
-$modul = $_REQUEST['menuID'];
-$mode = $_REQUEST['mode'];
-$tab = $_REQUEST['tab'];
-$skpd_id = $_REQUEST['kodeSatker6'];
-$tahun = $_REQUEST['tahun_kdp'];
-$tipe=$_REQUEST['tipe_file'];
+$modul = $_GET['menuID'];
+$mode = $_GET['mode'];
+$tab = $_GET['tab'];
+$skpd_id = $_GET['skpd_id'];
+$tglperolehan = $_GET['tglperolehan'];
+$tipe=$_GET['tipe_file'];
 
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "tahun"=>$tahun,
+    "tglperolehan"=>$tglperolehan,
     "skpd_id"=>$skpd_id,
     "tab"=>$tab
 );
@@ -32,14 +32,14 @@ $REPORT->set_data($data);
 
 $satker = $skpd_id;
 
-	if ($tahun !='')
+	if ($tglperolehan !='')
 	{
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
 	
 $paramGol = '06';
-$resultParamGol = $REPORT->ceckGol($get_satker,$tahun,$paramGol);
+$resultParamGol = $REPORT->ceckGol($get_satker,$tglperolehan,$paramGol);
 
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
@@ -52,7 +52,8 @@ $html=$REPORT->retrieve_html_asetTetapkdp($resultParamGol,$gambar);
 		 echo $html[$i];     
 	}
 exit;*/
-$REPORT->show_status_download();
+if($tipe!="2"){
+$REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
@@ -61,23 +62,37 @@ $mpdf->StartProgressBarOutput(2);
 $mpdf->useGraphs = true;
 $mpdf->list_number_suffix = ')';
 $mpdf->hyphenate = true;
+//$mpdf->debug = true;
 $count = count($html);
-for ($i = 0; $i < $count; $i++) {
-     if($i==0)
-          $mpdf->WriteHTML($html[$i]);
-     else
-     {
-           $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
-           $mpdf->WriteHTML($html[$i]);
+
+	for ($i = 0; $i < $count; $i++) {
+		 if($i==0)
+			  $mpdf->WriteHTML($html[$i]);
+		 else
+		 {
+			   $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
+			   $mpdf->WriteHTML($html[$i]);
+			   
+		 }
+	}
+
+$waktu=date("d-m-y_h-i-s");
+$namafile="$path/report/output/Daftar Aset Tetap KDP_$waktu.pdf";
+$mpdf->Output("$namafile",'F');
+$namafile_web="$url_rewrite/report/output/Daftar Aset Tetap KDP_$waktu.pdf";
+echo "<script>window.location.href='$namafile_web';</script>";
+exit;
+}
+else
+{
+	$waktu=date("d-m-y_h:i:s");
+	$filename ="Daftar Aset Tetap KDP_$waktu.xls";
+	header('Content-type: application/ms-excel');
+	header('Content-Disposition: attachment; filename='.$filename);
+	$count = count($html);
+	for ($i = 0; $i < $count; $i++) {
+           echo "$html[$i]";
            
      }
 }
-
-
-$waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Daftar Aset Tetap Kdp $waktu.pdf";
-$mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Daftar Aset Tetap Kdp $waktu.pdf";
-echo "<script>window.location.href='$namafile_web';</script>";
-exit;
 ?>

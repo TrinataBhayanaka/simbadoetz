@@ -2586,7 +2586,7 @@ return $hasil_html;
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
 
                                              	$printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 												$tabletotal="
@@ -2672,6 +2672,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
                                              
                                              $skpdeh = $row->kodeSatker;
+											 $thn=$row->Tahun;
 												
                                              $satker_id=$row->kodeSatker;
 											 //==add new==//
@@ -2840,10 +2841,7 @@ return $hasil_html;
 												  </thead>";
                                                  //udah dites disini footer 
                                                     
-                                                  
-												$skpdeh = $row->KodeSatker;
-												$thn=$row->Tahun;
-												$status_print++;
+                                                $status_print++;
 
                                              }
                                              //udah dites
@@ -4631,7 +4629,7 @@ return $hasil_html;
 											}
                                                        
 											
-                                             if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
 												
 												// $printjumlahTotal= number_format($jumlahTotal);
 												$printperolehanTotal=  number_format($perolehanTotal,2,",",".");	
@@ -4910,8 +4908,8 @@ return $hasil_html;
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->kodeSatker;
-												$thn = $row->Tahun;
+												// $skpdeh = $row->kodeSatker;
+												// $thn = $row->Tahun;
 												$status_print++;
 
                                              }
@@ -6650,10 +6648,10 @@ return $hasil_html;
 												  </thead>";
                                               
                                             }
-                                                       
-												//uda dites footer disini
-                                             if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
-
+											
+                                        	//uda dites footer disini
+											 if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
+												
                                              	$printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 												$tabletotal="
 													<tr>
@@ -6736,10 +6734,10 @@ return $hasil_html;
                                                   $html[]=$head.$body.$tabletotal.$foot.$footer;
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
-                                             
                                              $skpdeh = $row->kodeSatker;
-												
-                                             $satker_id=$row->kodeSatker;
+											 $thn=$row->Tahun;
+											 $satker_id=$row->kodeSatker;
+											
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
 											   $NoBidang = $detailSatker[0];
@@ -6906,10 +6904,7 @@ return $hasil_html;
 												  </thead>";
                                                  //udah dites disini footer 
                                                     
-                                                  
-												$skpdeh = $row->KodeSatker;
-												$thn=$row->Tahun;
-												$status_print++;
+                                                $status_print++;
 
                                              }
                                              //udah dites
@@ -6954,7 +6949,7 @@ return $hasil_html;
 																</tr>";
                                                            
                                                   $no++;
-                                                 
+                                                
                                              }
                                              //udah dicoba ga muncul
                                              
@@ -7032,7 +7027,7 @@ return $hasil_html;
 											   $footer.="
                                              </body>
                                         </html>";
-                                          
+                                        
                                         if($status_print==0){
                                              $html[]=$head.$body.$tabletotal.$foot.$footer;
                                         }else{
@@ -8794,8 +8789,7 @@ return $hasil_html;
                                              else
                                              $html[]=$body.$tabletotal.$foot.$footer;
                                              $skpdeh = $row->kodeSatker;
-												
-                                             $satker_id=$row->kodeSatker;
+											 $satker_id=$row->kodeSatker;
 											 $thn =$row->Tahun;
 											 //==add new==//
 											   $detailSatker=$this->get_satker($satker_id);
@@ -8980,8 +8974,8 @@ return $hasil_html;
                                                  //udah dites disini footer 
                                                     
                                                   
-												$skpdeh = $row->kodeSatker;
-												$thn = $row->Tahun;
+												// $skpdeh = $row->kodeSatker;
+												// $thn = $row->Tahun;
 												$status_print++;
 
                                              }
@@ -9851,6 +9845,7 @@ $perolehanTotal=0;
 					if ($skpdeh == "" && $no==1){
                         $body="";
                         $skpdeh = $row->kodeSatker;
+						// $thn=$row->Tahun;
                         $satker_id=$row->kodeSatker;
 						//==add new==//
 					   $detailSatker=$this->get_satker($satker_id);
@@ -10054,7 +10049,7 @@ $body="
 }
 //====== cek 1                                                       
 //uda dites footer disini
-if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+if ($skpdeh != $row->kodeSatker && $no>1){
 // $printbarang=  number_format($barangTotal);
                         //$printpanjang= number_format($panjangTotal);
                         $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
@@ -10142,6 +10137,7 @@ $footer ="
 				else
 				$html[]=$body.$tabletotal.$foot.$footer;
 				$skpdeh = $row->kodeSatker;
+				// $thn=$row->Tahun;
 
 				$satker_id=$row->kodeSatker;
 				//==add new==//
@@ -10311,7 +10307,7 @@ $footer ="
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
             </tr></thead>";
                                                  //udah dites disini footer 
-		$skpdeh = $row->kodeSatker;
+		// $skpdeh = $row->kodeSatker;
         $status_print++;
 
           }
@@ -10711,7 +10707,7 @@ $body="
 }
 //====== cek 1                                                       
 //uda dites footer disini
-if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+if ($skpdeh != $row->kodeSatker && $no>1){
 // $printbarang=  number_format($barangTotal);
                         //$printpanjang= number_format($panjangTotal);
                         $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
@@ -10968,7 +10964,7 @@ $footer ="
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
             </tr></thead>";
                                                  //udah dites disini footer 
-		$skpdeh = $row->kodeSatker;
+		// $skpdeh = $row->kodeSatker;
         $status_print++;
 
           }
@@ -11166,6 +11162,7 @@ $perolehanTotal=0;
 					if ($skpdeh == "" && $no==1){
                         $body="";
                         $skpdeh = $row->kodeSatker;
+						$thn=$row->Tahun;
                         $satker_id=$row->kodeSatker;
 						//==add new==//
 					   $detailSatker=$this->get_satker($satker_id);
@@ -11369,7 +11366,7 @@ $body="
 }
 //====== cek 1                                                       
 //uda dites footer disini
-if ($skpdeh != $row->kodeSatker && $thn != $row->Tahun && $no>1){
+if ($skpdeh != $row->kodeSatker || $thn != $row->Tahun && $no>1){
 // $printbarang=  number_format($barangTotal);
                         //$printpanjang= number_format($panjangTotal);
                         $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
@@ -11457,6 +11454,7 @@ $footer ="
 				else
 				$html[]=$body.$tabletotal.$foot.$footer;
 				$skpdeh = $row->kodeSatker;
+				$thn=$row->Tahun;
 
 				$satker_id=$row->kodeSatker;
 				//==add new==//
@@ -11626,7 +11624,7 @@ $footer ="
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
             </tr></thead>";
                                                  //udah dites disini footer 
-		$skpdeh = $row->kodeSatker;
+		// $skpdeh = $row->kodeSatker;
         $status_print++;
 
           }

@@ -10,15 +10,16 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $kelompok=$_GET['kelompok_id2'];
 $mode = $_GET['mode'];
-$tahun = $_GET['tahun_buku_induk_inventaris'];
+$tglperolehan = $_GET['tglperolehan'];
 $tab = $_GET['tab'];
 $tipe	=$_GET['tipe_file'];
 $bukuIndk = $_GET['bukuIndk'];
+// pr($_GET);
 $data=array(
 "modul"=>$modul,
 "kelompok"=>$kelompok,
 "mode"=>$mode,
-"tahun"=>$tahun,
+"tglperolehan"=>$tglperolehan,
 "tab"=>$tab,
 "bukuIndk"=>$bukuIndk
 );
@@ -46,6 +47,8 @@ $REPORT=new report_engine();
 $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
+// pr($query);
+// exit;
 //mengenerate query
 $result_query=$REPORT->QueryBinv($query);
 $result = arrayToObject($result_query);
