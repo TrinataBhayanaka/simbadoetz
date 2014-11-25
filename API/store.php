@@ -2218,6 +2218,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
+        $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
 
         $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
@@ -2326,7 +2327,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
             $tblKib['kodeKA'] = 0;
-            $tblKib['noRegister'] = $tblAset['noRegister']; 
+            $tblKib['noRegister'] = $tblAset['noRegister'];
+            $tblKib['kodeRuangan'] = $data['kodeRuangan']; 
 
             unset($tmpfield2);
             unset($tmpvalue2);
@@ -2374,6 +2376,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
+        $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key."='$val'";
@@ -2462,6 +2465,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Tahun'] = $tblAset['Tahun'];
             $tblKib['kodeKA'] = 0;
             $tblKib['noRegister'] = $data['noRegister']; 
+            $tblKib['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblKib as $key => $val) {
                 $tmpfield2[] = $key."='$val'";

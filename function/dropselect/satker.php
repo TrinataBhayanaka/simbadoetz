@@ -1,7 +1,7 @@
 
 <?php
 
-function selectSatker($name,$size=300,$br=false,$upd=false){
+function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 
 	global $url_rewrite;
 	// pr($_SESSION);
@@ -46,7 +46,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=($upd != false) ? 'readonly' : ''?>/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
 	</li>
 	
 	
@@ -54,7 +54,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false){
 
 }
 
-function selectAset($name,$size=300,$br=false,$upd=false){
+function selectAset($name,$size=300,$br=false,$upd=false,$status=false){
 
 	global $url_rewrite;
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
@@ -98,7 +98,7 @@ function selectAset($name,$size=300,$br=false,$upd=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Jenis Aset </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px"/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
 	</li>
 	
 	
@@ -253,6 +253,59 @@ function selectRekening2($name,$size=300,$br=false,$upd=false){
 
 	<?php
 	
+
+}
+
+function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false){
+
+	global $url_rewrite;
+	// pr($_SESSION);
+	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+	?>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	//fungsi dropselect
+				$("#<?=$name?>").select2({
+               		placeholder: "Pilih Ruang",
+				    // minimumInputLength: 2,
+				    ajax: {
+				        url: "<?=$url_rewrite?>/function/api/ruang.php",
+				        dataType: 'json',
+				        type: "GET",
+				        quietMillis: 50,
+				        data: function (term) {
+				            return {
+				                term: $("#<?=$satker?>").val()
+				            };
+				        },
+				        results: function (data) {
+				            return {
+				                results: $.map(data, function (item) {
+				                    return {
+				                        text: item.Kd_Ruang+" "+item.NamaSatker,
+				                        id: item.Kd_Ruang
+				                    }	
+				                })
+				            };
+				        }
+				    }
+				});
+				var id = "<?=$upd?>";
+				if(id)
+				{
+					$("#<?=$name?>").select2('data', {id: id, text: id});	
+				}	
+				
+
+	} );
+	</script>
+	<li>
+		<span class="<?=$span?>">Kode Ruang</span><?=$enter?>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
+	</li>
+	
+	
+	<?php
 
 }
 
