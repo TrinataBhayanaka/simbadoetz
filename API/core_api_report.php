@@ -396,7 +396,7 @@ class core_api_report extends DB {
             } 
             $limit="limit 20";
 			
-			echo "param".$parameter_sql;
+			// echo "param".$parameter_sql;
 			// exit;
 			//==============================================================
 			//start update query kib a (ok)
@@ -2105,11 +2105,11 @@ class core_api_report extends DB {
 																	
 															$dataQuery = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
 															$query = $dataQuery;
-															// echo "kurang dari 2008";
+															echo "kurang dari 2008";
 															// pr($query);
 															// exit;
 														}else{
-															// echo "tahun > tahun intra";
+															echo "tahun > tahun intra";
 															$query_01 = "select T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 																			K.Kode, K.Uraian
 																		from 
@@ -2165,7 +2165,7 @@ class core_api_report extends DB {
 																	where
 																		B.kodeKelompok = K.Kode and 
 																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
-																		and B.TglPerolehan < '$tglIntraDefault $satker_03
+																		and B.TglPerolehan < '$tglIntraDefault' $satker_03
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
@@ -2184,7 +2184,7 @@ class core_api_report extends DB {
 																	where
 																		B.kodeKelompok = K.Kode and 
 																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.NilaiPerolehan >= 10000000 and B.kondisi != 3
-																		and B.TglPerolehan >= '$tglIntraDefault' $newparameter_sql_03
+																		and B.TglPerolehan >= '$tglIntraDefault' and $newparameter_sql_03
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
@@ -3109,14 +3109,16 @@ class core_api_report extends DB {
 		
 		if($satker!=""){
 			$kdSakter = "$satker";
-			$query ="SELECT kode FROM satker where kode like '$kdSakter%' and KodeUnit is not null and Gudang is not null";
+			$query ="SELECT kode FROM satker where kode like '$kdSakter%' and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
+			// echo "query =".$query; 
 			$result = $this->query($query) or die ($this->error());
 			while($data = $this->fetch_object($result)){
 				if($data != ''){
 					$getkodeSatker[] = $data->kode;
 				}	
 			}
-			
+			// pr($getkodeSatker);
+			// exit;
 			$get_satker = $this->_cek_data_satker_with_id($getkodeSatker, true);
 		}
 		else
@@ -4576,6 +4578,7 @@ class core_api_report extends DB {
 				$data ='';
 			}else{
 			// echo "array query";
+			// echo "<br>";
 				for ($i = 0; $i < count($dataQuery); $i++)
 					{
 						// echo "query_$i =".$dataQuery[$i];
@@ -4594,7 +4597,7 @@ class core_api_report extends DB {
 					}
 			}	
 		}else{
-				// echo "single query";
+				echo "single query";
 				$result_golongan = $this->query($dataQuery) or die ($this->error('error dataQuery'));
 				if ($result_golongan)
 				{
@@ -4604,6 +4607,8 @@ class core_api_report extends DB {
 					}
 				}
 		}
+		// pr($data);
+		// exit;
 		$ignoreField = array('Kode','Uraian');
 		$i=1;
 		$x=0;
@@ -4726,7 +4731,7 @@ class core_api_report extends DB {
 							}else{
 								$queryok ="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
 									   from mesin as m,kelompok as k where 
-									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.TglPerolehan <'$tglperolehan' group by m.kodeKelompok 
+									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.TglPerolehan <'$tgldefault' group by m.kodeKelompok 
 									   union all
 									   select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
 									   from mesin as m,kelompok as k where 
