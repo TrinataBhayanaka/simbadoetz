@@ -41,7 +41,7 @@ if (isset($_POST['Simpan']))
 	if ($_POST['opt_list'] == 'opt_bidang')
 	{
 		$tmp_kode = $_POST['KodeSektor'];
-		$query = "INSERT INTO Satker VALUES (NULL, NULL, ".$KodeSektor.", NULL, ".$NamaSatker.", NULL, 
+		$query = "INSERT INTO Satker (Satker_ID, Tahun, KodeSektor, KodeSatker, NamaSatker, AlamatSatker, NGO, RAND_ID, IndukSatker, NGO1_ID, NGO2_ID, NGO3_ID, NGO4_ID, CNOTE1, CNOTE2, Gudang, KodeUnit, Tmp_KodeSatker, KotaSatker, BuatKIB, Kd_Ruang) VALUES (NULL, NULL, ".$KodeSektor.", NULL, ".$NamaSatker.", NULL, 
 				0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '$tmp_kode', NULL, 0, {$KodeRuangan})";
 		// pr($query);
 		$result = mysql_query($query) or die (mysql_error());
@@ -63,7 +63,7 @@ if (isset($_POST['Simpan']))
 		{
 			$data = mysql_fetch_object($result);
 			$tmp_kode = "$data->KodeSektor.$_POST[KodeSektor].$_POST[KodeSatker]";
-			$query = "INSERT INTO Satker VALUES (NULL, NULL, '$data->KodeSektor', ".$KodeSatker.", ".$NamaSatker.", NULL, 
+			$query = "INSERT INTO Satker  (Satker_ID, Tahun, KodeSektor, KodeSatker, NamaSatker, AlamatSatker, NGO, RAND_ID, IndukSatker, NGO1_ID, NGO2_ID, NGO3_ID, NGO4_ID, CNOTE1, CNOTE2, Gudang, KodeUnit, Tmp_KodeSatker, KotaSatker, BuatKIB, Kd_Ruang) VALUES (NULL, NULL, '$data->KodeSektor', ".$KodeSatker.", ".$NamaSatker.", NULL, 
 					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, $Gudang, NULL, '$tmp_kode', ".$KotaSatker.", 0, {$KodeRuangan})";
 			//print_r($query);
 			$result = mysql_query($query) or die (mysql_error());
@@ -92,7 +92,7 @@ if (isset($_POST['Simpan']))
 		{
 			$data = mysql_fetch_object($result);
 			$tmp_kode = "$data->KodeSektor.$data->KodeSatker.$_POST[KodeUnit]";
-			$query2 = "INSERT INTO Satker VALUES (NULL, NULL, '$data->KodeSektor', '$data->KodeSatker', ".$NamaSatker.", NULL, 
+			$query2 = "INSERT INTO Satker (Satker_ID, Tahun, KodeSektor, KodeSatker, NamaSatker, AlamatSatker, NGO, RAND_ID, IndukSatker, NGO1_ID, NGO2_ID, NGO3_ID, NGO4_ID, CNOTE1, CNOTE2, Gudang, KodeUnit, Tmp_KodeSatker, KotaSatker, BuatKIB, Kd_Ruang) VALUES (NULL, NULL, '$data->KodeSektor', '$data->KodeSatker', ".$NamaSatker.", NULL, 
 					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ".$Gudang.", ".$KodeUnit.", '$tmp_kode', ".$KotaSatker.", ".$BuatKIB.", {$KodeRuangan})";
 			$result2 = mysql_query($query2) or die (mysql_error());
 			if ($result2 > 0) echo "<script type='text/javascript'>alert('Sukses'); window.location.href='?page=$_GET[page]&a=v'; </script>" ;else echo '<script type=text/javascript>alert("Gagal");</script>';
@@ -132,9 +132,9 @@ if (isset($_POST['Simpan']))
 			usleep(500);
 			*/
 			$tmp_kode = "$data->KodeSektor.$data->KodeSatker.$data->KodeUnit.$_POST[KodeUPB].$_POST[KodeRuangan]";
-			$query3 = "INSERT INTO Satker VALUES (NULL, NULL, '$data->KodeSektor', '$data->KodeSatker', ".$NamaSatker.", NULL, 
+			$query3 = "INSERT INTO Satker (Satker_ID, Tahun, KodeSektor, KodeSatker, NamaSatker, AlamatSatker, NGO, RAND_ID, IndukSatker, NGO1_ID, NGO2_ID, NGO3_ID, NGO4_ID, CNOTE1, CNOTE2, Gudang, KodeUnit, Tmp_KodeSatker, KotaSatker, BuatKIB, Kd_Ruang)  VALUES (NULL, NULL, '$data->KodeSektor', '$data->KodeSatker', ".$NamaSatker.", NULL, 
 					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, {$Gudang}, ".$KodeUnit.", '$tmp_kode', ".$KotaSatker.", ".$BuatKIB.",{$KodeRuangan})";
-			// pr($query2);
+			// pr($query3);
 			$result3 = mysql_query($query3) or die (mysql_error());
 
 			if ($result3 > 0) echo "<script type='text/javascript'>alert('Sukses'); window.location.href='?page=$_GET[page]&a=v'; </script>" ;
