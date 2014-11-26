@@ -14,17 +14,18 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tahun = $_GET['tahun'];
-$kelompok=$_GET['bidang'];
+$tglperolehan = $_GET['tglperolehan'];
+// $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
-
+// pr($_GET);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kib"=>$kib,
-    "tahun"=>$tahun,
+    "tglperolehan"=>$tglperolehan,
     "skpd_id"=>$skpd_id,
-    "kelompok"=>$kelompok,
+    // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
 
@@ -37,6 +38,7 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
+
 // mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
@@ -48,13 +50,11 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 $html=$REPORT->retrieve_html_kib_c($result_query, $gambar);
 
 /*$count = count($html);
-
-
 	for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
+		 echo $html[$i];     
 	}
-// exit;*/
+exit;*/
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	

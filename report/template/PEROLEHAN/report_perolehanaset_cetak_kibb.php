@@ -14,17 +14,17 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tahun = $_GET['tahun'];
-$kelompok=$_GET['bidang'];
+$tglperolehan = $_GET['tglperolehan'];
+// $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kib"=>$kib,
-    "tahun"=>$tahun,
+    "tglperolehan"=>$tglperolehan,
     "skpd_id"=>$skpd_id,
-    "kelompok"=>$kelompok,
+    // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
 
@@ -56,13 +56,16 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
+// pr($query);
+// exit;
+
 //mengenerate query
 // $result_query=$REPORT->retrieve_query($query);
 
 $table_name = "mesin";
 $result_query=$REPORT->QueryKib($query,$table_name);
 $result = arrayToObject($result_query);
-
+// pr($result);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
@@ -74,7 +77,8 @@ $html=$REPORT->retrieve_html_kib_b($result, $gambar);
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
-}*/
+}
+exit;*/
 if($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
@@ -108,17 +112,16 @@ exit;
 }
 else
 {
+	
 	$waktu=date("d-m-y_h:i:s");
 	$filename ="Kartu_Inventaris_Barang_B_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
-	
 	for ($i = 0; $i < $count; $i++) {
            echo "$html[$i]";
            
      }
-	
 }
 
 ?>

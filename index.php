@@ -81,7 +81,7 @@ $USERAUTH->check_sys_log();
 					?>
 					
 		<section class="logo_konten">
-			<img src="img/logo_konten.png" />
+			<img src="img/logo_konten.jpg" />
 			
 		</section> 
 		     

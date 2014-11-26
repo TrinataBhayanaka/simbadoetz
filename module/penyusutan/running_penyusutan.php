@@ -17,7 +17,9 @@ foreach($get_data_penyusutan as $val){
      $id=$val['id'];
      $kelompok=$val['KelompokAset'];
  }
+ echo "ID====$id";
      
+	 
                     $KelompokAset=array("0"=>"Peralatan dan Mesin (B)",
                                            "1"=>"Gedung dan Bangunan (C)",
                                              "2"=>"Jalan, Irigrasi, dan Jaringan (D)",
@@ -28,7 +30,9 @@ foreach($get_data_penyusutan as $val){
                case "Peralatan dan Mesin (B)":
                     $query="update  penyusutan_tahun_pertama  set StatusRunning=1 where id=$id";
                     $DBVAR->query($query) or die($DBVAR->error());
-                    $status=exec("php running_penyusutan_server.php B $id > log/penyusutan-B.txt &");
+                   // $status=exec("php running_penyusutan_server.php B $id > log/penyusutan-B.txt &");
+					  $status=exec("php running_penyusutan_server.php B $id ");
+
                    break;
 
               case "Gedung dan Bangunan (C)":

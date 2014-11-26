@@ -7,27 +7,27 @@ include "../../report_engine.php";
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-$tahun = $_REQUEST['tahun'];
+$tglperolehan = $_REQUEST['tglPerolehan'];
 $skpd_id = $_REQUEST['kodeSatker'];
-$kelompok=$_REQUEST['bidang'];
+// $kelompok=$_REQUEST['bidang'];
 $tipe=$_REQUEST['tipe_file'];
 $kib = $_REQUEST['kib'];
-
 // pr($_REQUEST);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kib"=>$kib,
-    "tahun"=>$tahun,
+    "tglPerolehan"=>$tglPerolehan,
     "skpd_id"=>$skpd_id,
-    "kelompok"=>$kelompok,
+    // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
 
 // print_r($_POST);
 // exit;
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tahun=$tahun&kib=$kib&bidang=$kelompok&tipe_file=";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tglperolehan=$tglperolehan&kib=$kib&tipe_file=$tipe";
 // echo $paramater_url;
 if(isset($kib))
 {

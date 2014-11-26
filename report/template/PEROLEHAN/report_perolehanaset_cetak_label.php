@@ -37,6 +37,7 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query();
 // pr($query);
+// exit;
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);

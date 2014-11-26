@@ -14,17 +14,17 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tahun = $_GET['tahun'];
-$kelompok=$_GET['bidang'];
+$tglperolehan = $_GET['tglperolehan'];
+// $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kib"=>$kib,
-    "tahun"=>$tahun,
+    "tglperolehan"=>$tglperolehan,
     "skpd_id"=>$skpd_id,
-    "kelompok"=>$kelompok,
+    // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
 
@@ -37,6 +37,7 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
+// exit;
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
