@@ -12,7 +12,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	//fungsi dropselect
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
-				    // minimumInputLength: 2,
+				    <?=($_SESSION['ses_satkerkode']=="") ? 'minimumInputLength: 2,' : ''?>
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/satker.php",
 				        dataType: 'json',
@@ -20,7 +20,8 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        quietMillis: 50,
 				        data: function (term) {
 				            return {
-				                term: '<?=$_SESSION['ses_satkerkode']?>'
+				                sess: '<?=$_SESSION['ses_satkerkode']?>',
+				                term: term
 				            };
 				        },
 				        results: function (data) {
