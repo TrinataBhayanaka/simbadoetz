@@ -17,7 +17,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
        	$kd_tahun = $data['kd_tahun'];
        	$lokasi_id = $data['lokasi_id'];
        	$kelompok_id = $data['kelompok_id5'];
-       	$satker = $data['skpd_id'];
+       	$satker = $data['kodeSatker'];
        	$jenisaset = $data['jenisaset'];
        	$statusaset = $data['statusaset'];
        	
