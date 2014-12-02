@@ -70,10 +70,16 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
             <h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Kontrak</span></h3>
             <ul>
               <?=selectSatker('kodeSatker','205',true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
-              <li>&nbsp;</li>
+               <li>
+                <span  class="span2">&nbsp;</span>
+                <div class="checkbox">
+                  <em id="info">
+                  </em>
+                </div>
+              </li>
               <li>
                 <span class="span2">No.SPK/Perjanjian Kontrak</span>
-                <input type="text" name="noKontrak" value="<?=(isset($kontrak)) ? $kontrak[0]['noKontrak'] : '' ?>" required/>
+                <input type="text" name="noKontrak" value="<?=(isset($kontrak)) ? $kontrak[0]['noKontrak'] : '' ?>" onchange="return check_availability(this,'info')" required/>
               </li>
               <li>
                 <span class="span2">Tgl.SPK/Perjanjian Kontrak</span>
@@ -98,7 +104,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                 <span  class="span2">Jenis Posting</span>
 				<div class="checkbox">
 					<label>
-					<input type="radio" name="tipeAset" value="1" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "1") ? 'checked' : '') : '' ?>/>&nbsp;Aset Baru
+					<input type="radio" required name="tipeAset" value="1" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "1") ? 'checked' : '') : '' ?>/>&nbsp;Aset Baru
 					</label>
 				</div>
 			</li>
@@ -106,7 +112,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                 <span  class="span2">&nbsp;</span>
 				<div class="checkbox">
 					<label>
-						<input type="radio" name="tipeAset" value="2" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "2") ? 'checked' : '') : '' ?>/>&nbsp;Kapitalisasi
+						<input type="radio" required name="tipeAset" value="2" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "2") ? 'checked' : '') : '' ?>/>&nbsp;Kapitalisasi
 					</label>
 				</div>
 			</li>
@@ -114,7 +120,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                 <span  class="span2">&nbsp;</span>
 				<div class="checkbox">
 					<label>
-					<input type="radio" name="tipeAset" value="3" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "3") ? 'checked' : '') : '' ?>/>&nbsp;Ubah Status
+					<input type="radio" required name="tipeAset" value="3" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "3") ? 'checked' : '') : '' ?>/>&nbsp;Ubah Status
 					</label>
 				</div>
               </li>
@@ -159,7 +165,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			  <li>
                 <span class="span2">
 				<button class="btn" type="reset">Reset</button>
-				<button type="submit" class="btn btn-primary">Simpan</button>
+				<button type="submit" id="btnSubmit" class="btn btn-primary">Simpan</button>
 				</span>
 			  </li>
             </ul>
@@ -175,7 +181,45 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
       
     </section>        
   </section>
-  
+  <script>
+    function check_availability(item,div){  
+      
+      //get the value  
+      var value = $(item).val();
+      
+      if(value != 0)
+      {
+        $.post("<?=$url_rewrite?>/function/api/checkAvail.php", { value: value},  
+          function(result){ 
+            
+            var newvar = result;
+            // console.log(result);
+            //if the result is 1  
+            if(newvar != true){  
+              //show that the value is available  
+              $('#'+div+'').html('No. Kontrak dapat digunakan');
+              $('#'+div+'').css("color","green");
+              $('#btnSubmit').removeAttr("disabled");
+            }else{  
+              //show that the value is NOT available  
+              $('#'+div+'').html('No. Kontrak tidak dapat digunakan'); 
+                $('#'+div+'').css("color","red");
+                $('#btnSubmit').attr("disabled","disabled");
+                
+            }  
+        }, "JSON");
+      }else
+      {
+        //show that the value is NOT available  
+              $('#'+div+'').html('No. Kontrak tidak dapat digunakan');  
+                $('#'+div+'').css("color","red");
+                $('#btnSubmit').attr("disabled","disabled");
+                
+                
+      }
+    }
+  </script>
+
 <?php
   include"$path/footer.php";
 ?>
