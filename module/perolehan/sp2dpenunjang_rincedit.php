@@ -27,47 +27,22 @@ $menu_id = 1;
 	while ($sum = mysql_fetch_array($sqlsum)){
 				$sumTotal = $sum;
 			}	
-		
+	$idsql = mysql_query("SELECT * FROM sp2d_rinc WHERE id = '{$_GET['id']}'");
+	while ($row = mysql_fetch_assoc($idsql)){
+				$rinc = $row;
+			}
+	// pr($rinc);		
 	//post
 	if(isset($_POST['kdRekening'])){
 		if($_POST['id'] == ""){
 			$dataArr = $STORE->store_sp2dpenunjang_rinc($_POST,$idKontrak);
 		} else {
-			$dataArr = $STORE->store_edit_sp2dpenunjang_rinc($_POST,$idKontrak);
+			$dataArr = $STORE->store_edit_sp2dpenunjang_rinc($_POST,$_GET);
 		}
-			echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dpenunjang_rinc.php?idsp2d={$idsp2d}&idkontrak={$kontrak[0]['id']}\>";
-
-	}
-	/*if(isset($_POST['kdRekening'])){
-
-		foreach ($_POST as $key => $val) {
-				$tmpfield[] = $key;
-				$tmpvalue[] = "'$val'";
-			}
-			pr($_POST);exit;
-			$field = implode(',', $tmpfield);
-			$value = implode(',', $tmpvalue);
-
-			$query = mysql_query("INSERT INTO sp2d_rinc ({$field}) VALUES ($value)");
-
-			$query_id = mysql_query("SELECT id FROM sp2d ORDER BY id DESC LIMIT 1");
-	        while ($row = mysql_fetch_assoc($query_id)){
-	             $data['sp2d_id'] = $row['id'];
-	        }
-			$query = mysql_query("INSERT INTO log_sp2d_rinc ({$field}) VALUES ($value)");
-
-			//sum total 
-			$sqlsum = mysql_query("SELECT SUM(jumlah) as total FROM sp2d_rinc WHERE idsp2d = '{$_POST['idsp2d']}'");
-			while ($sum = mysql_fetch_array($sqlsum)){
-						$jmlTotal = $sum;
-					}	
-
-			$updquery = mysql_query("UPDATE sp2d SET nilai = '{$jmlTotal['total']}' WHERE id = '{$_POST['idsp2d']}'");
-			
 			echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/sp2dpenunjang_rinc.php?idsp2d={$idsp2d}&idkontrak={$kontrak[0]['id']}\">";
+			exit;
 
 	}
-*/
 	//getdata
 	//ajax rekening
 	//###Tipe###
@@ -110,10 +85,11 @@ $menu_id = 1;
 				 <div class="formKontrak">
 						
 						<ul>
-							<?php selectRekening('kdRekening','205',true,false); ?><br />
+							<?php selectRekening('kdRekening','205',true,(isset($rinc) ? $rinc['kdRekening'] : false)); ?><br />
 							<li>
-								<span class="span2">Jumlah</span>
-								<input type="text" name="jumlah" />
+								<span class="span2">Nilai</span>
+								<input type="text" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=(isset($rinc)) ? $rinc['jumlah'] : ''?>" onkeyup="return getCurrency(this);" required />
+								<input type="hidden" name="jumlah" id="jumlah" value="<?=(isset($rinc)) ? $rinc['jumlah'] : ''?>">
 							</li>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -122,7 +98,7 @@ $menu_id = 1;
 							</li>
 						</ul>
 							<!-- Hidden -->
-							<input type="hidden" name="idsp2d" value="<?=$idsp2d?>" >
+							<input type="hidden" name="id" value="<?=$_GET['id']?>" >
 				
 					
 			</div>
@@ -131,7 +107,16 @@ $menu_id = 1;
 		</section> 
 		      
 	</section>
-	
+	<script type="text/javascript">
+	    jQuery(function($) {
+	        $('#hrgmask').autoNumeric('init');  
+	    });
+
+	    function getCurrency(item){
+	      $('#jumlah').val($(item).autoNumeric('get'));
+	    }
+
+	  </script>
 <?php
 	include"$path/footer.php";
 ?>

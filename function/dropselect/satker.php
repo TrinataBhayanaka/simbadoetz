@@ -118,7 +118,7 @@ function selectRekening($name,$size=300,$br=false,$upd=false){
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Kode Rekening",
                		dropdownAutoWidth: 'true',
-				    minimumInputLength: 2,
+				    minimumInputLength: 3,
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/rekening.php",
 				        dataType: 'json',

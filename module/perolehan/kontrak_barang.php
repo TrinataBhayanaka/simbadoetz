@@ -23,8 +23,8 @@ $menu_id = 10;
 			}
 
 	//get data
-	$RKsql = mysql_query("SELECT kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
-	while ($dataRKontrak = mysql_fetch_array($RKsql)){
+	$RKsql = mysql_query("SELECT Aset_ID,kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
+	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
 	if($rKontrak){
@@ -185,7 +185,9 @@ $menu_id = 10;
 						<?php
 							if($kontrak[0]['n_status'] != 1){
 						?>
-						<a href="kontrak_rincianhapus.php?idKel=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i></a></td>
+						<!--<a href="kontrak_rincianubah.php?id=<?=$value['Aset_ID']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-warning btn-small" ><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>-->
+						<a href="kontrak_rincianhapus.php?id=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						</td>
 						<?php
 						} else {
 							echo "<span class='label label-Success'>Sudah di posting</span>";
