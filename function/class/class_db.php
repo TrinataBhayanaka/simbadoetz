@@ -388,6 +388,8 @@ class DB
 				}
 
 				logFile($sql);
+				
+
 				if ($debug){
 					if ($debug>1){
 						pr($sql);

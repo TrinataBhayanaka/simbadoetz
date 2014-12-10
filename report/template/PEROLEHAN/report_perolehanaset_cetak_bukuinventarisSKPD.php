@@ -101,7 +101,7 @@ $count = count($html);
 		 }
 	}
 
-$waktu=date("d-m-y_h:i:s");
+$waktu=date("d-m-y_h-i-s");
 $namafile="$path/report/output/Buku Inventaris SKPD_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
 $namafile_web="$url_rewrite/report/output/Buku Inventaris SKPD_$waktu.pdf";

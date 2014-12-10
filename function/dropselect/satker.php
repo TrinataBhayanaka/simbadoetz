@@ -12,7 +12,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	//fungsi dropselect
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
-				    // minimumInputLength: 2,
+				    <?=($_SESSION['ses_satkerkode']=="") ? 'minimumInputLength: 2,' : ''?>
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/satker.php",
 				        dataType: 'json',
@@ -20,7 +20,8 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        quietMillis: 50,
 				        data: function (term) {
 				            return {
-				                term: '<?=$_SESSION['ses_satkerkode']?>'
+				                sess: '<?=$_SESSION['ses_satkerkode']?>',
+				                term: term
 				            };
 				        },
 				        results: function (data) {
@@ -117,7 +118,7 @@ function selectRekening($name,$size=300,$br=false,$upd=false){
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Kode Rekening",
                		dropdownAutoWidth: 'true',
-				    minimumInputLength: 2,
+				    minimumInputLength: 3,
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/rekening.php",
 				        dataType: 'json',
@@ -301,6 +302,59 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Ruang</span><?=$enter?>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
+	</li>
+	
+	
+	<?php
+
+}
+
+function selectSatkerFree($name,$size=300,$br=false,$upd=false,$status=false){
+
+	global $url_rewrite;
+	// pr($_SESSION);
+	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+	?>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	//fungsi dropselect
+				$("#<?=$name?>").select2({
+               		placeholder: "Pilih Unit Pengelola Barang",
+				    minimumInputLength: 2,
+				    ajax: {
+				        url: "<?=$url_rewrite?>/function/api/satker.php",
+				        dataType: 'json',
+				        type: "GET",
+				        quietMillis: 50,
+				        data: function (term) {
+				            return {
+				                term: term
+				            };
+				        },
+				        results: function (data) {
+				            return {
+				                results: $.map(data, function (item) {
+				                    return {
+				                        text: item.kode+" "+item.NamaSatker,
+				                        id: item.kode
+				                    }	
+				                })
+				            };
+				        }
+				    }
+				});
+				var id = "<?=$upd?>";
+				if(id)
+				{
+					$("#<?=$name?>").select2('data', {id: id, text: id});	
+				}	
+				
+
+	} );
+	</script>
+	<li>
+		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
 	</li>
 	

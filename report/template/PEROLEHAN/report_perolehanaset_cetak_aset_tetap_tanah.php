@@ -38,9 +38,12 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
+// pr($get_satker);
+	
 $paramGol = '01';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglperolehan,$paramGol);
-
+// pr($resultParamGol);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 

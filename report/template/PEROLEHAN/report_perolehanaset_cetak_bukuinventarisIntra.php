@@ -57,8 +57,6 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-// pr($query);
-// exit;
 
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;

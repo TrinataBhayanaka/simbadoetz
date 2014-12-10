@@ -19,13 +19,23 @@ $menu_id = 10;
 	<?php
 
 		//kontrak
-		$idKontrak = $_GET['id'];
+		$idKontrak = $_GET['tmpthis'];
 		$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}' LIMIT 1");
 			while ($dataKontrak = mysql_fetch_assoc($sql)){
 					$kontrak[] = $dataKontrak;
 				}
 		// pr($kontrak);
-
+		$sqlrinc = mysql_query("SELECT * FROM aset WHERE Aset_ID = '{$_GET['id']}'");
+		while ($row = mysql_fetch_assoc($sqlrinc)){
+					$rkontrak = $row;
+					if($row['TipeAset'] == "A") $rkontrak['table'] = 'tanah';
+					elseif ($row['TipeAset'] == "B") $rkontrak['table'] = 'mesin';
+					elseif ($row['TipeAset'] == "C") $rkontrak['table'] = 'bangunan';
+					elseif ($row['TipeAset'] == "D") $rkontrak['table'] = 'jaringan';
+					elseif ($row['TipeAset'] == "E") $rkontrak['table'] = 'asetlain';
+					elseif ($row['TipeAset'] == "F") $rkontrak['table'] = 'kdp';
+				}
+		pr($rkontrak);		
 		if(isset($_POST['kodeKelompok'])){
 		    if($_POST['Aset_ID'] == "")
 		    {
@@ -51,9 +61,10 @@ $menu_id = 10;
 
 	?>
 	<!-- End Sql -->
-	<script>
+	<script type="text/javascript">
     jQuery(function($) {
-        $('#hrgmask,#total').autoNumeric('init');    
+        $('#hrgmask,#total').autoNumeric('init');
+        initKondisi('<?=$rkontrak['kodeKelompok']?>');    
     });
 
     function getCurrency(item){
@@ -99,7 +110,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span  class="labelInfo">Total Rincian Barang</span>
-								<input type="text" id="totalRB" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
+								<input type="text" id="totalRB" value="<?=isset($sumTotal) ? number_format($sumTotal['total']-$rkontrak['NilaiPerolehan']) : '0'?>" disabled/>
 							</li>
 						</ul>
 							
@@ -154,7 +165,7 @@ $menu_id = 10;
 			<form action="" method="POST">
 				 <div class="formKontrak">
 						<ul>
-							<?php selectAset('kodeKelompok','255',true,false); ?>
+							<?php selectAset('kodeKelompok','255',true,$rkontrak['kodeKelompok'],'disabled'); ?>
 						</ul>
 						<ul class="tanah" style="display:none">
 							<li>
@@ -243,17 +254,17 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
-								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$rkontrak['NilaiPerolehan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=$rkontrak['NilaiPerolehan']?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
-								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/>
-								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
+								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=$rkontrak['NilaiPerolehan']?>" readonly/>
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=$rkontrak['NilaiPerolehan']?>" >
 							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Info'] : ''?></textarea>
+								<textarea name="Info" class="span3" ><?=$rkontrak['Info']?></textarea>
 							</li>
 							<li>
 								<span class="span2">
@@ -265,14 +276,14 @@ $menu_id = 10;
 					</div>
 					<!-- hidden -->
 					<input type="hidden" name="Aset_ID" value="">
-					<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
+					<!--<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
 					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
 					<input type="hidden" name="TglPerolehan" value="<?=$kontrak[0]['tglKontrak']?>">
 					<input type="hidden" name="kondisi" value="1">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 					<input type="hidden" name="Tahun" value="<?=date('Y', strtotime($kontrak[0]['tglKontrak']));?>">
-					<input type="hidden" name="TipeAset" id="TipeAset" value="">
+					<input type="hidden" name="TipeAset" id="TipeAset" value="">-->
 			
 		</form>
 		</div>  
@@ -286,58 +297,11 @@ $menu_id = 10;
 ?>
 
 <script type="text/javascript">
-	$(document).on('change','#kodeKelompok', function(){
+	// $(document).on('change','#kodeKelompok', function(){
 
-		var kode = $('#kodeKelompok').val();
-		var gol = kode.split(".");
-
-		if(gol[0] == '01')
-		{
-			$("#TipeAset").val('A');
-			$(".mesin,.bangunan,.jaringan,.asetlain,.kdp").hide('');
-			$(".mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".tanah li > input,textarea").removeAttr('disabled');
-			$(".tanah").show('');
-		} else if(gol[0] == '02')
-		{
-			$("#TipeAset").val('B');
-			$(".tanah,.bangunan,.jaringan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".mesin li > input,textarea").removeAttr('disabled');
-			$(".mesin").show('');
-		} else if(gol[0] == '03')
-		{
-			$("#TipeAset").val('C');
-			$(".tanah,.mesin,.jaringan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".bangunan li > input,textarea").removeAttr('disabled');
-			$(".bangunan").show('');
-		} else if(gol[0] == '04')
-		{
-			$("#TipeAset").val('D');
-			$(".tanah,.mesin,.bangunan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".jaringan li > input,textarea").removeAttr('disabled');
-			$(".jaringan").show('');
-		} else if(gol[0] == '05'){
-			$("#TipeAset").val('E');
-			$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
-			$(".asetlain li > input,textarea").removeAttr('disabled');
-			$(".asetlain").show('');
-		} else if(gol[0] == '06'){
-			$("#TipeAset").val('F');
-			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,textarea").attr('disabled','disabled');
-			$(".kdp li > input,textarea").removeAttr('disabled');
-			$(".kdp").show('');
-		} else {
-			$("#TipeAset").val('G');
-			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
-		}			
+					
 		
-	});
+	// });
 
 	$(document).on('submit', function(){
 		var perolehan = $("#total").val();
@@ -353,6 +317,56 @@ $menu_id = 10;
 			return false;	
 		}
 	});
+
+		function initKondisi(item){
+			var kode = item;
+			var gol = kode.split(".");
+			if(gol[0] == '01')
+			{
+				$("#TipeAset").val('A');
+				$(".mesin,.bangunan,.jaringan,.asetlain,.kdp").hide('');
+				$(".mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > input,textarea").removeAttr('disabled');
+				$(".tanah").show('');
+			} else if(gol[0] == '02')
+			{
+				$("#TipeAset").val('B');
+				$(".tanah,.bangunan,.jaringan,.asetlain,.kdp").hide('');
+				$(".tanah li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".mesin li > input,textarea").removeAttr('disabled');
+				$(".mesin").show('');
+			} else if(gol[0] == '03')
+			{
+				$("#TipeAset").val('C');
+				$(".tanah,.mesin,.jaringan,.asetlain,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".bangunan li > input,textarea").removeAttr('disabled');
+				$(".bangunan").show('');
+			} else if(gol[0] == '04')
+			{
+				$("#TipeAset").val('D');
+				$(".tanah,.mesin,.bangunan,.asetlain,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".jaringan li > input,textarea").removeAttr('disabled');
+				$(".jaringan").show('');
+			} else if(gol[0] == '05'){
+				$("#TipeAset").val('E');
+				$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+				$(".asetlain li > input,textarea").removeAttr('disabled');
+				$(".asetlain").show('');
+			} else if(gol[0] == '06'){
+				$("#TipeAset").val('F');
+				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,textarea").attr('disabled','disabled');
+				$(".kdp li > input,textarea").removeAttr('disabled');
+				$(".kdp").show('');
+			} else {
+				$("#TipeAset").val('G');
+				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+			}
+		}
 
 		function totalHrg(){	
 		var jml = $("#jumlah").val();
