@@ -9,6 +9,8 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	 $data = $PEMANFAATAN->pemanfaatan_daftar_penetapan_tambah_eksekusi($_POST);
+// pr($data);
 ?>
 	<script type="text/javascript">
 		function show_confirm()

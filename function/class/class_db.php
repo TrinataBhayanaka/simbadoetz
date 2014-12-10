@@ -269,7 +269,7 @@ class DB
 	    
 	    $date = date('Y-m-d H:i:s');
 	    $actionList = array(1=>'insert',2=>'update');
-	    $addField = array('changeDate'=>$date,'action'=>$actionList[$action],'operator'=>$_SESSION['ses_uoperatorid']);
+	    $addField = array('changeDate'=>$date,'action'=>$action,'operator'=>$_SESSION['ses_uoperatorid']);
 
 
 	    foreach ($table as $value) {
