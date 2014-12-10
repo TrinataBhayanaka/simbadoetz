@@ -23,13 +23,13 @@ class UserAuth
     public function check_login_user($dataUser)
 	{
             if ($dataUser['is_login']){
-				$query = "SELECT O.*,S.NamaSatker,S.KodeSatker FROM Operator O left join Satker S on O.Satker_ID=S.Satker_ID WHERE OperatorID = {$dataUser['is_login']} LIMIT 1";
+				$query = "SELECT O.*,S.NamaSatker,S.KodeSatker, S.kode FROM Operator O left join Satker S on O.Satker_ID=S.Satker_ID WHERE OperatorID = {$dataUser['is_login']} LIMIT 1";
 			}else{
 				if ($dataUser['token'] == 1){
 				
-					$query = "SELECT O.*,S.NamaSatker,S.KodeSatker FROM Operator O left join Satker S on O.Satker_ID=S.Satker_ID WHERE UserNm ='$dataUser[username]' AND Passwd ='$dataUser[password]' AND AksesAdmin = 1 LIMIT 1";
+					$query = "SELECT O.*,S.NamaSatker,S.KodeSatker,S.kode FROM Operator O left join Satker S on O.Satker_ID=S.Satker_ID WHERE UserNm ='$dataUser[username]' AND Passwd ='$dataUser[password]' AND AksesAdmin = 1 LIMIT 1";
 				}else{
-					$query = "SELECT O.*,S.NamaSatker,S.KodeSatker FROM Operator O left join Satker S on O.Satker_ID=S.Satker_ID WHERE UserNm ='$dataUser[username]' AND Passwd ='$dataUser[password]' LIMIT 1";
+					$query = "SELECT O.*,S.NamaSatker,S.KodeSatker,S.kode FROM Operator O left join Satker S on O.Satker_ID=S.Satker_ID WHERE UserNm ='$dataUser[username]' AND Passwd ='$dataUser[password]' LIMIT 1";
 				}
 			}
 			

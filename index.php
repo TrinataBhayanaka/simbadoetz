@@ -5,6 +5,9 @@
  */
 
 //error_reporting(0);
+ini_set("session.cookie_lifetime", "3600");
+session_cache_expire(60);
+
 function curPageURL() {
      $pageURL = 'http';
      if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {

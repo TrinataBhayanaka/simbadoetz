@@ -387,7 +387,7 @@ class DB
 					$sql = "SELECT {$field} FROM {$table} WHERE {$whereCondition} {$limit}";
 				}
 
-				
+				logFile($sql);
 				if ($debug){
 					if ($debug>1){
 						pr($sql);
