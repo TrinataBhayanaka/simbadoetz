@@ -7,12 +7,13 @@ include "../../report_engine.php";
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $kelompok = $_REQUEST['kelompok_id2'];
-$tglperolehan = $_REQUEST['tglPerolehan_biid'];
+$tglawalperolehan = $_REQUEST['tglPerolehan_Awal_biid'];
+$tglakhirperolehan = $_REQUEST['tglPerolehan_Akhir_biid'];
 $tab = $_REQUEST['tab'];
 $tipe	=$_REQUEST['tipe_file'];
 $bukuIndk  = $_REQUEST['bukuIndk'];
 // pr($_REQUEST);
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&tglperolehan=$tglperolehan&kelompok_id2=$kelompok&bukuIndk=$bukuIndk&&tipe_file=";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&tglawalperolehan=$tglawalperolehan&tglakhirperolehan=$tglakhirperolehan&kelompok_id2=$kelompok&bukuIndk=$bukuIndk&&tipe_file=";
 
 $REPORT=new report_engine();
   

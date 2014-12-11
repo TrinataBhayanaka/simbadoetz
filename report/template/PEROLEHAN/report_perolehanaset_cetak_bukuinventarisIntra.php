@@ -12,7 +12,8 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglperolehan=$_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $intra = $_GET['intra'];
 $tipe=$_GET['tipe_file'];
@@ -22,7 +23,8 @@ $REPORT=new report_engine();
 
 $data=array(
     "modul"=>$modul,
-	"tglperolehan"=>$tglperolehan,
+	"tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     "mode"=>$mode,
     "tab"=>$tab,
@@ -57,14 +59,16 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-
+// pr($query);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 $result_query=$REPORT->QueryBinv($query);
-// pr($result_query);
 // exit;
 $result = arrayToObject($result_query);
+// pr($result_query);
+// exit;
 
 
 $html=$REPORT->retrieve_html_bukuinventaris_intra($result,$gambar);
@@ -74,7 +78,7 @@ $html=$REPORT->retrieve_html_bukuinventaris_intra($result,$gambar);
 		 
 		 echo $html[$i];     
 	}
-exit;*/
+exit;	*/
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

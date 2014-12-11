@@ -10,7 +10,8 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $kelompok=$_GET['kelompok_id2'];
 $mode = $_GET['mode'];
-$tglperolehan = $_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tab = $_GET['tab'];
 $tipe	=$_GET['tipe_file'];
 $bukuIndk = $_GET['bukuIndk'];
@@ -19,7 +20,8 @@ $data=array(
 "modul"=>$modul,
 "kelompok"=>$kelompok,
 "mode"=>$mode,
-"tglperolehan"=>$tglperolehan,
+"tglawalperolehan"=>$tglawalperolehan,
+"tglakhirperolehan"=>$tglakhirperolehan,
 "tab"=>$tab,
 "bukuIndk"=>$bukuIndk
 );
@@ -52,6 +54,8 @@ $query=$REPORT->list_query($data);
 //mengenerate query
 $result_query=$REPORT->QueryBinv($query);
 $result = arrayToObject($result_query);
+// pr($result);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 //retrieve html
