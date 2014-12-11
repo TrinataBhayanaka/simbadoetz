@@ -865,6 +865,17 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 					);
 
 			$res = $this->db->lazyQuery($sql,$debug);
+
+            $asetid[$val['Aset_ID']] = $listTable[implode(',', $res[0])];
+            if ($res){
+            
+            foreach ($asetid as $key => $value) {
+
+                $this->db->logIt($tabel=array($value), $Aset_ID=$key, 7);
+            }
+
+            return true;
+        } 
 			if ($res) return $res;
 			return false;
 	// echo "masukk";
@@ -1128,6 +1139,16 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 					);
 
 			$res = $this->db->lazyQuery($sql,$debug);
+             $asetid[$val['Aset_ID']] = $listTable[implode(',', $res[0])];
+            if ($res){
+            
+            foreach ($asetid as $key => $value) {
+
+                $this->db->logIt($tabel=array($value), $Aset_ID=$key, 7);
+            }
+
+            return true;
+        } 
 			if ($res) return $res;
 			return false;
 		
