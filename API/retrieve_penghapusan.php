@@ -67,7 +67,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Aset AS b,Kelompok AS c,Satker AS d',
                 'field'=>"b.*,c.*,d.*",
-                'condition' => "{$condition} {$filterkontrak}",
+                'condition' => "{$condition} {$filterkontrak} GROUP BY b.Aset_ID",
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
                 );
@@ -112,7 +112,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Aset AS b,Kelompok AS c,Satker AS d',
                 'field'=>"b.*,c.*,d.*",
-                'condition' => "{$condition} {$filterkontrak}",
+                'condition' => "{$condition} {$filterkontrak} GROUP BY b.Aset_ID",
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
                 );
@@ -140,7 +140,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Aset AS a,Satker AS e, Kelompok AS g',
                 'field'=>"a.*,e.*, g.*",
-                'condition' => "a.Aset_ID IN ($cols) {$filterkontrak}",
+                'condition' => "a.Aset_ID IN ($cols) {$filterkontrak} GROUP BY a.Aset_ID",
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'a.KodeSatker=e.Kode,a.kodeKelompok=g.Kode'
                 );
