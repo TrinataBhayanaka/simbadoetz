@@ -11,6 +11,15 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 	include"$path/menu.php";
 	
 	$data = $LAYANAN->retrieve_history_aset($_GET);	
+	if (!$data){
+		?>
+		<script>
+		alert('Tidak ada histori aset');
+		document.location="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_filter.php";
+        
+        </script>
+		<?php
+	}
 	// pr($data);
 ?>
 	
