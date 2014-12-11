@@ -1,6 +1,8 @@
 <?php
 include "../../config/config.php";
 
+$LAYANAN = new RETRIEVE_LAYANAN;
+
 ?>
 
 <?php
@@ -8,6 +10,8 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	$data = $LAYANAN->retrieve_history_aset($_GET);	
+	// pr($data);
 ?>
 	
 	<!-- End Sql -->
@@ -32,16 +36,16 @@ include "../../config/config.php";
 						<ul>
 							<li>
 								<span class="labelInfo">Kode Barang</span>
-								<input type="text" value="<?=$kontrak[0]['noKontrak']?>" disabled/>
+								<input type="text" value="<?=$data[0]['noRegister']?>" disabled/>
 							</li>
 							<li>
 								<span class="labelInfo">Kode Lokasi</span>
-								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
+								<input type="text" value="<?=$data[0]['kodeLokasi']?>" disabled/>
 							</li>
 
 							<li>
 								<span class="labelInfo">Nilai Perolehan</span>
-								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
+								<input type="text" value="<?=number_format($data[0]['NilaiPerolehan'])?>" disabled/>
 							</li>
 						</ul>
 							
@@ -51,11 +55,11 @@ include "../../config/config.php";
 						<ul>
 							<li>
 								<span class="labelInfo">Nama Barang</span>
-								<input type="text" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
+								<input type="text" value="<?=$data[0]['Uraian']?>" disabled/>
 							</li>
 							<li>
 								<span  class="labelInfo">SKPD</span>
-								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
+								<input type="text" value="<?=$data[0]['kodeSatker']?>" disabled/>
 							</li>
 						</ul>
 							
@@ -77,17 +81,17 @@ include "../../config/config.php";
 				</thead>
 				<tbody>
 				<?php
-					// if($rKontrak){
-					// 	$i = 1;
-					// 	foreach ($rKontrak as $key => $value) {
+					if($data){
+						$i = 1;
+						foreach ($data as $key => $value) {
 							
 						
 				?>
 					<tr class="gradeA">
 						<td><?=$i?></td>
-						<td><?=$value['kodeKelompok']?></td>
-						<td><?=$value['uraian']?></td>
-						<td class="center"><?=$value['Kuantitas']?></td>
+						<td><?=$value['changeDate']?></td>
+						<td><?=$value['Nm_Riwayat']?></td>
+						<td class="center"><?=$value['NamaSatker'][0]['NamaSatker']?></td>
 						<td class="center">
 						<?php
 							// if($kontrak[0]['n_status'] != 1){
@@ -103,9 +107,9 @@ include "../../config/config.php";
 						</td>
 					</tr>
 				<?php
-					// 	$i++;
-					// 	}
-					// }	
+						$i++;
+						}
+					}	
 				?>
 				</tbody>
 				<tfoot>
