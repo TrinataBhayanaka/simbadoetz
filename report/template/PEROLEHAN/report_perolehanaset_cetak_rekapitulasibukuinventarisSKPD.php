@@ -12,7 +12,8 @@ require ('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglperolehan = $_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
@@ -23,7 +24,8 @@ $REPORT=new report_engine();
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "tglperolehan"=>$tglperolehan,
+    "tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
 	"tab"=>$tab
 );
@@ -34,14 +36,14 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 
 $satker = $skpd_id;
 
-	if ($tglperolehan !='')
+	if ($tglawalperolehan !='' && $tglakhirperolehan !='')
 	{
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
 // pr($get_satker);
 
-$result_query = $REPORT->get_report_rekap_inv_skpd($get_satker, $tglperolehan);
+$result_query = $REPORT->get_report_rekap_inv_skpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
 // exit;	
 //retrieve html
 $html=$REPORT->retrieve_html_rekapitulasi_bukuinventaris_skpd($result_query,$gambar);

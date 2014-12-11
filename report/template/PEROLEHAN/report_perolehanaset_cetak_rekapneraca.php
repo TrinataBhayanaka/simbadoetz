@@ -12,7 +12,8 @@ require ('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglperolehan = $_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
@@ -22,7 +23,8 @@ $REPORT=new report_engine();
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "tglperolehan"=>$tglperolehan,
+	"tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
 	"tab"=>$tab
 );
@@ -33,18 +35,15 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 
 $satker = $skpd_id;
 
-	if ($tglperolehan !='')
+	if ($tglawalperolehan !='' && $tglakhirperolehan)
 	{
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
 // pr($get_satker);
 // exit;	
-$resultParamGol = $REPORT->ceckneraca($get_satker,$tglperolehan);	
+$resultParamGol = $REPORT->ceckneraca($get_satker,$tglawalperolehan,$tglakhirperolehan);	
 	
-	// pr($get_satker);
-// $result_query = $REPORT->get_report_rekap_inv_skpd($get_satker, $tahun);
-
 //retrieve html
 $html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar);
 /*$count = count($html);
