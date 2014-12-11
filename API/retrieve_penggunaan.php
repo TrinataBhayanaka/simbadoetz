@@ -422,7 +422,9 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
 
-
+        if (count($jenisaset)>0) $jenisaset = $jenisaset;
+        else $jenisaset = array(1,2,3,4,5,6);
+        
         if ($jenisaset){
 
             foreach ($jenisaset as $value) {
