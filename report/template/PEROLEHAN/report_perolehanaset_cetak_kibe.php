@@ -120,9 +120,7 @@ else
 	
 	$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
-           echo "$html[$i]";
-           
-     }
+           echo "$html[$i]";     }
 }
 
 ?>

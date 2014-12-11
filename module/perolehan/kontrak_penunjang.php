@@ -59,7 +59,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				    </span>
 					<span class="text">SP2D</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_penunjang.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perolehan/kontrak_penunjang.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">4</i>
@@ -106,7 +106,8 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
 						<td class="center">
-						<a href="sp2dpenunjang.php?id=<?=$val['id']?>" class="btn btn-info btn-small"><i class="icon-plus icon-white"></i>&nbsp;tambah</a>
+						<a href="sp2dpenunjang.php?id=<?=$val['id']?>" class="btn btn-info btn-small">
+							<?=($val['n_status'] != 1) ? '<i class="icon-plus icon-white"></i>&nbsp;tambah' : '<i class="fa fa-eye"></i>&nbsp;View'?></a>
 						</td>
 						
 					</tr>

@@ -189,7 +189,7 @@ $data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($_POST);
 			
 			<div id="demo">
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_eksekusi_data.php?pid=1">
-				<input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
+				<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>

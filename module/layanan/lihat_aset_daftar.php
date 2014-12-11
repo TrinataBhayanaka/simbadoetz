@@ -18,6 +18,7 @@ $SessionUser = $SESSION->get_session_user();
                // pr($_POST);
                // exit;
 			   // unset($_SESSION['parameter_sql']);
+		/*
 				if ($_POST['kd_idaset'] == "" && $_POST['kd_namaaset'] == "" && $_POST['kd_nokontrak'] == "" && $_POST['kd_tahun'] == "" && $_POST['skpd_id'] == "" && $_POST['lokasi_id'] == "" && $_POST['kelompok_id5'] == "") {
                     ?>
                     <script>var r=confirm('Tidak ada isian filter');
@@ -28,11 +29,13 @@ $SessionUser = $SESSION->get_session_user();
                     </script>
 				<?php
 					}
-				}
+	*/
+					}
 				
                
 	
 	$data = $LAYANAN->retrieve_layanan_aset_daftar($_POST);	
+	// pr($data);
 	if ($data){
 		foreach ($data as $key => $value) {
 			if ($value['Status_Validasi_Barang']==1) $data[$key]['statusAset'] = "Terdistribusi";
@@ -147,7 +150,15 @@ $SessionUser = $SESSION->get_session_user();
 								</tr>
 							</table>
 						</td>
-						<td><?php echo $value['statusAset']?></td>
+						<td>
+							<?php echo $value['statusAset']?>
+							<?php if ($value['Status_Validasi_Barang']==1){?>
+
+							<a href="<?php echo "$url_rewrite/module/layanan/history_aset.php?id=$value[Aset_ID]&jenisaset=$value[TipeAset]"; ?>">
+									   <input type="submit" name="Lanjut" class="btn" value="Lihat Histori" >
+								 </a>
+							<?php } ?>
+						</td>
 						
 					</tr>
 

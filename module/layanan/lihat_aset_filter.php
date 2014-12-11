@@ -108,6 +108,8 @@ include "../../config/config.php";
 			
 			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post">
 			<ul>
+							
+				<!--
 							<li>
 								<span class="span2">ID ASET (System ID)</span>
 								<input id="lda_ia" name="kd_idaset" class="span3" type="text" >
@@ -115,7 +117,7 @@ include "../../config/config.php";
 							<li>
 								<span class="span2">Nama Aset</span>
 								<input isdatepicker="true"  name="kd_namaaset" class="span5"  type="text">
-							</li>
+							</li>-->
 							<li>
 								<span class="span2">Nomor Kontrak</span>
 								<input isdatepicker="true" id="lda_nk" class="span3" name="kd_nokontrak"  type="text">
@@ -198,14 +200,16 @@ include "../../config/config.php";
 							<?php selectSatker('kodeSatker','255',true,false); ?>
 
 
-							<li>&nbsp;</li>
-							<?php selectAset('kodeKelompok','255',true,false); ?>
+							<!--<li>&nbsp;</li>-->
+							<?php //selectAset('kodeKelompok','255',true,false); ?>
 							<li>&nbsp;</li>
 
 							<li><span class="span2">Status Aset</span>
                                 <select name="statusaset">
                                     <option value="1">Terdistribusi</option>
                                     <option value="0">Belum Terdistribusi</option>
+                                    <!--<option value="22">Digunakan</option>
+                                    <option value="23">Dimanfaatkan</option>-->
                                     
                                 </select></li>
 							<?php //selectAset('kodeKelompok','255',true,false); ?>

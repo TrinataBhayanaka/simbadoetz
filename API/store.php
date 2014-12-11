@@ -1735,6 +1735,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         return true;
     }
+
     public function store_edit_sp2d($data,$id)
     {
 
@@ -1786,24 +1787,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
-        $data['sp2d_id'] = $data['id'];
-        $data['action'] = 'update';
-        $data['changeDate'] = date('Y/m/d');
-        $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
-        // pr($data);exit;
-        unset($data['id']);
-        foreach ($data as $key => $val) {
-            $tmplogfield[] = $key;
-            $tmplogvalue[] = "'$val'";
-        }
-        $field = implode(',', $tmplogfield);
-        $value = implode(',', $tmplogvalue);
-
-        $query_log = "INSERT INTO log_sp2d_rinc ({$field}) VALUES ($value)";
-        // pr($query_log);exit;
-        $result=  $this->query($query_log) or die($this->error());
-
         return true;
+        exit;
     }
 
     public function store_aset_kapitalisasi($data,$aset)
@@ -2094,7 +2079,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $value = implode(',', $tmpvalue);
 
         $query = "INSERT INTO transfer ({$field}) VALUES ({$value})";
-        // pr($query_log);exit;
+        //pr($query);exit;
         $result=  $this->query($query) or die($this->error());
 
         return true;
@@ -2358,25 +2343,23 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
  
         global $url_rewrite;
-        // pr($data);exit;
-        $kodeSatker = explode(".",$data['kodeSatker']);
-        $tblAset['kodeKelompok'] = $data['kodeKelompok'];
-        $tblAset['kodeSatker'] = $data['kodeSatker'];
-        $tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));
-        $tblAset['kodeLokasi'] = $data['kodeLokasi'];
-        $tblAset['TglPerolehan'] = $data['tglPerolehan'];
-        $tblAset['TglPembukuan'] = $data['tglPembukuan'];
-        $tblAset['NilaiPerolehan'] = $data['Satuan'];
-        $tblAset['kondisi'] = $data['kondisi'];
-        $tblAset['AsalUsul'] = $data['asalusul'];
-        $tblAset['Kuantitas'] = $data['Kuantitas'];
-        $tblAset['Satuan'] = $data['Satuan'];
-        $tblAset['Info'] = $data['Info'];
-        $tblAset['Alamat'] = $data['Alamat'];
+        //pr($data);
+        if(isset($data['kodeKelompok'])) $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+        if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
+        if(isset($data['kodeLokasi'])) $tblAset['kodeLokasi'] = $data['kodeLokasi'];
+        if(isset($data['tglPerolehan'])) {$tblAset['TglPerolehan'] = $data['tglPerolehan'];$tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));}
+        if(isset($data['tglPembukuan'])) $tblAset['TglPembukuan'] = $data['tglPembukuan'];
+        if(isset($data['NilaiPerolehan'])) $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        if(isset($data['kondisi'])) $tblAset['kondisi'] = $data['kondisi'];
+        if(isset($data['asalusul'])) $tblAset['AsalUsul'] = $data['asalusul'];
+        if(isset($data['Kuantitas'])) $tblAset['Kuantitas'] = $data['Kuantitas'];
+        if(isset($data['Satuan'])) $tblAset['Satuan'] = $data['Satuan'];
+        if(isset($data['Info'])) $tblAset['Info'] = $data['Info'];
+        if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
-        $tblAset['TipeAset'] = $data['TipeAset'];
+        if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
-        $tblAset['kodeRuangan'] = $data['kodeRuangan'];
+        if(isset($data['kodeRuangan'])) $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key."='$val'";
@@ -2384,7 +2367,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
 
             $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
-            // pr($query);
+            //pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
 
@@ -2451,21 +2434,21 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 exit;
             }
 
-            $tblKib['kodeKelompok'] = $data['kodeKelompok'];
-            $tblKib['kodeSatker'] = $data['kodeSatker'];
-            $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
-            $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
-            $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
-            $tblKib['NilaiPerolehan'] = $data['Satuan'];
+            if(isset($data['kodeKelompok'])) $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+            if(isset($data['kodeSatker'])) $tblKib['kodeSatker'] = $data['kodeSatker'];
+            if(isset($data['kodeLokasi'])) $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
+            if(isset($tblAset['Tglperolehan'])) $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
+            if(isset($tblAset['TglPembukuan'])) $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
+            if(isset($data['Satuan'])) $tblKib['NilaiPerolehan'] = $data['Satuan'];
             $tblKib['StatusTampil'] = 1;
-            $tblKib['kondisi'] = $data['kondisi'];
-            $tblKib['AsalUsul'] = $data['AsalUsul'];
-            $tblKib['Info'] = $data['Info'];
-            $tblKib['Alamat'] = $data['Alamat'];
-            $tblKib['Tahun'] = $tblAset['Tahun'];
+            if(isset($data['kondisi'])) $tblKib['kondisi'] = $data['kondisi'];
+            if(isset($data['AsalUsul'])) $tblKib['AsalUsul'] = $data['AsalUsul'];
+            if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
+            if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
+            if(isset($data['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
             $tblKib['kodeKA'] = 0;
-            $tblKib['noRegister'] = $data['noRegister']; 
-            $tblKib['kodeRuangan'] = $data['kodeRuangan'];
+            if(isset($data['noRegister'])) $tblKib['noRegister'] = $data['noRegister']; 
+            if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblKib as $key => $val) {
                 $tmpfield2[] = $key."='$val'";

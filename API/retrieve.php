@@ -9609,7 +9609,8 @@ $offset = @$_POST['record'];
 
     public function retrieve_kontrak()
     {    
-        $sql = mysql_query("SELECT * FROM kontrak WHERE  (kodeSatker LIKE '{$_SESSION['ses_satkerkode']}%' OR UserNm = '{$_SESSION['ses_uoperatorid']}') ORDER BY id");
+        if($_SESSION['ses_ujabatan'] != '1') $cond = "WHERE (kodeSatker LIKE '{$_SESSION['ses_satkerkode']}%' OR UserNm = '{$_SESSION['ses_uoperatorid']}')";
+        $sql = mysql_query("SELECT * FROM kontrak {$cond} ORDER BY id");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 if($dataKontrak['tipeAset'] == 1) $dataKontrak['tipeAset'] = 'Aset Baru';
                 elseif ($dataKontrak['tipeAset'] == 2) $dataKontrak['tipeAset'] = 'Kapitalisasi';

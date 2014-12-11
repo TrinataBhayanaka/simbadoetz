@@ -182,8 +182,8 @@ $menu_id = 1;
 						<td><?=$value['uraian']?></td>
 						<td class="center"><?=number_format($value['jumlah'])?></td>
 						<td class="center">
-						<!--<a href="#" class="btn btn-success"><i class="icon-edit icon-white"></i></a>-->
-						<a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjang_rinc_hapus.php/?id=<?=$value['id']?>&idsp2d=<?=$idsp2d?>&idkontrak=<?=$idKontrak?>" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
+						<a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjang_rincedit.php/?id=<?=$value['id']?>&idsp2d=<?=$idsp2d?>&idkontrak=<?=$idKontrak?>" class="btn btn-warning btn-small"><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>
+						<a href="<?=$url_rewrite?>/module/perolehan/sp2dpenunjang_rinc_hapus.php/?id=<?=$value['id']?>&idsp2d=<?=$idsp2d?>&idkontrak=<?=$idKontrak?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus data?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
 						</td>
 					</tr>
 				<?php
@@ -202,68 +202,7 @@ $menu_id = 1;
 			<div class="spacer"></div>
 			
 			
-		</section> 
-		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div id="titleForm" class="modal-header" >
-				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				  <h3 id="myModalLabel">Form Rincian SP2D Penunjang</h3>
-				</div>
-			<form action="" method="POST">
-				<div class="modal-body">
-				 <div class="formKontrak">
-						<h3 class="grs-bottom"><span class="titleForm">Rincian SP2D Penunjang </span></h3>
-						<ul>
-							<li>
-								<span class="labelkontrak">Rekening</span>
-								<select id="tipe" onchange="autoKelompok('tipe','kelompok')">
-									<option value="0">--Pilih Tipe--</option>
-									<?php
-										foreach ($Tipe as $key => $val) {
-											echo "<option value='{$val['KodeRekening']}'>{$val['NamaRekening']}</option>";
-										}
-									?>
-								</select><span>	
-							</li>
-							<li id="likelompok" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="kelompok" onchange="autoKelompok('kelompok','jenis')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="lijenis" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="jenis" onchange="autoKelompok('jenis','objek')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="liobjek" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="objek" onchange="autoKelompok('objek','rincianobjek')">
-									<option></option>
-								</select>	
-							</li>
-							<li id="lirincianobjek" style="display:none">
-								<span class="labelkontrak"></span>
-								<select id="rincianobjek" name="kdRekening" >
-									<option></option>
-								</select>	
-							</li>
-							<li>
-								<span class="labelkontrak">Jumlah</span>
-								<input type="text" name="jumlah" />
-							</li>
-						</ul>
-							<!-- Hidden -->
-							<input type="hidden" name="idsp2d" value="<?=$idsp2d?>" >
-					</div>
-					
-			</div>
-			<div class="modal-footer">
-			  <button class="btn" data-dismiss="modal">Kembali</button>
-			  <button class="btn btn-primary">Simpan</button>
-			</div>
-		</form>
-		</div>        
+		</section>        
 	</section>
 	
 <?php
