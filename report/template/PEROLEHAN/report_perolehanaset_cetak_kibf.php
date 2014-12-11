@@ -20,7 +20,8 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tglperolehan = $_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 // $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
@@ -29,7 +30,8 @@ $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kib"=>$kib,
-    "tglperolehan"=>$tglperolehan,
+    "tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
@@ -47,6 +49,7 @@ $query=$REPORT->list_query($data);
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 

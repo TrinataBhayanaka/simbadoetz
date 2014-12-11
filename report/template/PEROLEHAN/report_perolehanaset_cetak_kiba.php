@@ -8,13 +8,16 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
-
+// echo "url = ".$url_rewrite;
+// echo "path = ".$path;
+// exit;
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tglperolehan = $_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 // $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
@@ -23,7 +26,8 @@ $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kib"=>$kib,
-    "tglperolehan"=>$tglperolehan,
+    "tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     "kelompok"=>$kelompok,
     "tab"=>$tab
@@ -87,6 +91,29 @@ $mpdf->Output("$namafile",'F');
 $namafile_web="$url_rewrite/report/output/Kartu Inventaris Barang A $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
+	/*ob_clean();
+	$waktu=date("d-m-y_h-i-s");
+	$filename ="Kartu_Inventaris_Barang_A_$waktu.html";
+	// $filename ="$path/report/output/Kartu_Inventaris_Barang_A_$waktu.html";
+	// $filename="$url_rewrite/report/output/Kartu_Inventaris_Barang_A_$waktu.html";
+	$count = count($html);
+	$DATABARU = "";
+		for ($i = 0; $i < $count; $i++) {
+			   $DATABARU .= "$html[$i]";
+		}
+    $a = fopen($filename, 'w');
+	fwrite($a, $DATABARU);
+	fclose($a);
+	header("Content-Type: application/pdf");
+	header("Content-Disposition: attachment; filename=".$filename);
+	flush();
+	# Run HTMLDOC to provide the PDF file to the user...
+	passthru("htmldoc -t pdf --quiet --jpeg --webpage --landscape −−no−strict '$filename'");
+	
+	// $namafile_web="$url_rewrite/report/output/Kartu_Inventaris_Barang_A_$waktu.html";
+	// $namafile_web="$url_rewrite/report/template/PEROLEHAN/Kartu_Inventaris_Barang_A_$waktu.html";
+	// echo "<script>window.location.href='$namafile_web';</script>";
+	exit;*/
 }
 else
 {

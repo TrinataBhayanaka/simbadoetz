@@ -12,14 +12,17 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglperolehan=$_GET['tglperolehan'];
+$mode = $_GET['mode'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tipe=$_GET['tipe_file'];
 $REPORT=new report_engine();
 // pr($_GET);
 // exit;
 $data=array(
     "modul"=>$modul,
-    "tglperolehan"=>$tglperolehan,
+    "tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "mode"=>$mode,
     "tab"=>$tab
 );
@@ -29,7 +32,7 @@ $REPORT->set_data($data);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-$result_query = $REPORT->get_report_rekap_inv_daerah($tglperolehan);
+$result_query = $REPORT->get_report_rekap_inv_daerah($tglawalperolehan,$tglakhirperolehan);
 
 $html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar);
 /*$count = count($html);
