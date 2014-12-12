@@ -45,7 +45,7 @@ if($_GET['id']){
 			
 			<form action='' method='post' name='formvalid'>
 			<ul>
-				<?=selectSatker('toSatker','205',true,(isset($dataArr) ? $dataArr['toSatker'] : ''));?>
+				<?=selectAllSatker('toSatker','205',true,(isset($dataArr) ? $dataArr['toSatker'] : ''));?>
 			</ul>
 			<ul>
 							<li>
