@@ -65,7 +65,7 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
     function retrieve_usulan_pemanfaatan_eksekusi($data,$debug=false)
     {
 
-        $jenisaset = $data['jenisaset'];
+        // $jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
 
@@ -77,24 +77,46 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
         if ($pemanfaatan) $filterkontrak .= " AND a.Aset_ID IN ({$pemanfaatan}) ";
 
         
-        $table = $this->getTableKibAlias($jenisaset);
+        $jenisaset = explode(',', $data['jenisaset']);
+        // pr($data);
+         if ($jenisaset){
 
-        // pr($table);
-        $listTable = $table['listTable'];
-        $listTableAlias = $table['listTableAlias'];
-        $listTableAbjad = $table['listTableAbjad'];
+            foreach ($jenisaset as $value) {
 
-        $sql = array(
-                'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
-                'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker, s.AlamatSatker",
-                'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 {$filterkontrak}",
-                'limit'=>'100',
-                'joinmethod' => 'LEFT JOIN',
-                'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
-                );
+                $table = $this->getTableKibAlias($value);
+        
+                $listTable = $table['listTable'];
+                $listTableAlias = $table['listTableAlias'];
+                $listTableAbjad = $table['listTableAbjad'];
 
-        $res = $this->db->lazyQuery($sql,$debug);
-        if ($res) return $res;
+                $sql = array(
+                        'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
+                        'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker, s.AlamatSatker",
+                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 {$filterkontrak} GROUP BY a.Aset_ID",
+                        'limit'=>'100',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                        );
+
+                $res[] = $this->db->lazyQuery($sql,$debug);
+
+            }
+
+            foreach ($res as $value) {
+
+                if ($value){
+
+                    foreach ($value as $val) {
+                        $newData[] = $val;
+                    } 
+                }
+                
+            }
+
+        }
+
+        
+        if ($newData) return $newData;
         return false;
     } 
 
@@ -174,7 +196,7 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
             $sql = array(
                     'table'=>"UsulanAset AS ua, aset AS a, kelompok AS k, satker AS s",
                     'field'=>"a.*, k.Uraian, s.NamaSatker",
-                    'condition'=>"ua.Penetapan_ID = 0 AND StatusPenetapan = 0 {$filter}",
+                    'condition'=>"ua.Penetapan_ID = 0 AND StatusPenetapan = 0 {$filter} GROUP BY a.Aset_ID",
                     'limit'=>'100',
                     'joinmethod' => 'LEFT JOIN',
                     'join' => "ua.Aset_ID = a.Aset_ID, a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
@@ -357,7 +379,7 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
                 $sql = array(
                         'table'=>"Usulan AS u, aset AS a, kelompok AS k, satker AS s",
                         'field'=>"u.*, k.Uraian, s.NamaSatker",
-                        'condition'=>"u.Penetapan_ID = 0 AND u.FixUsulan = 0 AND u.Status IS NULL AND u.Usulan_ID = '{$value}' {$filter}",
+                        'condition'=>"u.Penetapan_ID = 0 AND u.FixUsulan = 0 AND u.Status IS NULL AND u.Usulan_ID = '{$value}' {$filter} GROUP BY a.Aset_ID",
                         'limit'=>'100',
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "u.Aset_ID = a.Aset_ID, a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
@@ -386,6 +408,7 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
                 }
             }
 
+            // pr($aset);
             if ($aset){
                 foreach ($aset as $value) {
 
@@ -400,7 +423,7 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
                 $sql = array(
                         'table'=>"aset AS a, kelompok AS k, satker AS s",
                         'field'=>"a.*, k.Uraian, s.NamaSatker",
-                        'condition'=>"a.Aset_ID IN ({$implode}) ",
+                        'condition'=>"a.Aset_ID IN ({$implode}) GROUP BY a.Aset_ID",
                         'limit'=>'100',
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
@@ -458,7 +481,14 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
 
         $result = $this->db->lazyQuery($sql,$debug,1); 
         
-       
+        $listTable = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp');
+
         for($i=0;$i<$panjang;$i++){
             
             $tmp=$nmaset[$i];
@@ -510,10 +540,29 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
             // $query3="UPDATE Aset SET CurrentPemanfaatan_ID='$pemanfaatan_id', LastPemanfaatan_ID='$pemanfaatan_id' WHERE Aset_ID='$asset_id[$i]'";
             // $result3=mysql_query($query3) or die(mysql_error());
 
+            $sql = array(
+                    'table'=>'aset',
+                    'field'=>"TipeAset",
+                    'condition' => "Aset_ID={$asset_id[$i]}",
+                    );
+            $result = $this->db->lazyQuery($sql,$debug);
+            $asetid[$asset_id[$i]] = $listTable[implode(',', $result[0])];
 
+           
+            
         }
 
-        if ($result) return true;
+        
+
+        if ($result){
+            
+            foreach ($asetid as $key => $value) {
+
+                $this->db->logIt($tabel=array($value), $Aset_ID=$key, 23);
+            }
+
+            return true;
+        } 
         return false;
     }
 

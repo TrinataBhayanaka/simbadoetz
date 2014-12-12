@@ -13,14 +13,16 @@ $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
-$tglperolehan = $_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
 // exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "tglperolehan"=>$tglperolehan,
+	"tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     "tab"=>$tab
 );
@@ -33,15 +35,15 @@ $REPORT->set_data($data);
 
 $satker = $skpd_id;
 
-	if ($tglperolehan !='')
+	if ($tglawalperolehan !='' && $tglakhirperolehan)
 	{
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
 	
 $paramGol = '02';
-$resultParamGol = $REPORT->ceckGol($get_satker,$tglperolehan,$paramGol);
-
+$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 

@@ -11,7 +11,8 @@ require_once('../../../function/mpdf/mpdf.php');
 
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
-$tglperolehan = $_GET['tglperolehan'];
+$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kir = $_GET['kir'];
@@ -19,7 +20,8 @@ $kir = $_GET['kir'];
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "tglperolehan"=>$tglperolehan,
+    "tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     "tab"=>$tab,
 	"kir"=>$kir
@@ -35,7 +37,6 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 // pr($query);
 // exit;
-// pr($query);
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
@@ -51,7 +52,8 @@ $html=$REPORT->retrieve_html_kir($result_query, $gambar);
 		 echo $html[$i];     
 	}
 exit;*/
-$REPORT->show_status_download();
+if($tipe!="2"){
+$REPORT->show_status_download_kib();	
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
@@ -78,6 +80,19 @@ $mpdf->Output("$namafile",'F');
 $namafile_web="$url_rewrite/report/output/Kartu Inventaris Ruangan $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
-
+}
+else 
+{
+	$waktu=date("dymhis");
+	$filename ="Kartu Inventaris Ruangan_$waktu.xls";
+	header('Content-type: application/ms-excel');
+	header('Content-Disposition: attachment; filename='.$filename);
+	
+	$count = count($html);
+	for ($i = 0; $i < $count; $i++) {
+           echo "$html[$i]";
+           
+     }
+}
 
 ?>

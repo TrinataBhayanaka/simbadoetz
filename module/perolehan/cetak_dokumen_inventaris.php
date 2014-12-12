@@ -50,9 +50,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kib.php"; ?>">
 						 <script>
 						$(document).ready(function() {
-							$( "#tglPerolehan,#tglPerolehan_kir,#tglPerolehan_bis,#tglPerolehan_biid,#tglPerolehan_intra,#tglPerolehan_ekstra,#tglPerolehan_rekapbis,#tglPerolehan_induk").mask('9999-99-99');
-							$( "#tglPerolehan,#tglPerolehan_kir,#tglPerolehan_bis,#tglPerolehan_biid,#tglPerolehan_intra,#tglPerolehan_ekstra,#tglPerolehan_rekapbis,#tglPerolehan_induk" ).datepicker({ dateFormat: 'yy-mm-dd' });
-							$('#tahun_kib,#tahun_kir,#tahun_buku_inventaris_skpd,#tahun_buku_induk_inventaris,#tahun_rekap_buku_inventaris_skpd,#ThnbukuIntra,#ThnbukuEkstra,#tahun_label').keydown(function (e) {
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk").mask('9999-99-99');
+							$( "#tahun_label").mask('9999');
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							/*$('#tahun_label').keydown(function (e) {
 								// Allow: backspace, delete, tab, escape, enter and .
 								if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 									 // Allow: Ctrl+A
@@ -66,7 +67,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
 									e.preventDefault();
 								}
-							});
+							});*/
 						
 						});
 						
@@ -85,11 +86,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>&nbsp;
 							</li>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan" id="tglPerolehan" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_1" id="tglPerolehan_1" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_2" id="tglPerolehan_2" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -206,13 +216,22 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<div class="titleTab">Kartu Inventaris Ruangan</div>
 						</div>
 						   <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kir.php"; ?>">
-			<ul>
+						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_kir" id="tglPerolehan_kir" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_kir" id="tglPerolehan_awal_kir" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_akhir_kir" id="tglPerolehan_akhir_kir" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -264,11 +283,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						  <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/skpd.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_bis" id="tglPerolehan_bis" value="" required/>
+										<input type="text" class="span2 full" name="tglawalPerolehan_bis" id="tglawalPerolehan_bis" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglakhirPerolehan_bis" id="tglakhirPerolehan_bis" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -341,11 +369,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<input name="tahun_rekap_buku_inventaris_skpd" id="tahun_rekap_buku_inventaris_skpd" maxlength="4" type="text" value="<?php echo date('Y')?>" required>
 							</li>-->
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_rekapbis" id="tglPerolehan_rekapbis" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_rekapbis" id="tglPerolehan_awal_rekapbis" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_akhir_rekapbis" id="tglPerolehan_akhir_rekapbis" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -393,13 +430,22 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<div class="titleTab">Buku Induk Inventaris Daerah</div>
 						</div>
 						<form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/induk.php"; ?>">
-			<ul>
+							<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_biid" id="tglPerolehan_biid" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_Awal_biid" id="tglPerolehan_Awal_biid" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_Akhir_biid" id="tglPerolehan_Akhir_biid" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -444,11 +490,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapinduk.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_induk" id="tglPerolehan_induk" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_induk" id="tglPerolehan_awal_induk" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_akhir_induk" id="tglPerolehan_akhir_induk" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -474,11 +529,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/intra.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_intra" id="tglPerolehan_intra" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_intra" id="tglPerolehan_awal_intra" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_akhir_intra" id="tglPerolehan_akhir_intra" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -509,11 +573,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/ekstra.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_ekstra" id="tglPerolehan_ekstra" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_ekstra" id="tglPerolehan_awal_ekstra" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehan_akhir_ekstra" id="tglPerolehan_akhir_ekstra" value="" required/>
 									</div>
 								</div>
 							</li>

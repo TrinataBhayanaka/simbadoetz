@@ -14,8 +14,8 @@ $kelompok=$_REQUEST['bidang'];
 $tipe=$_REQUEST['tipe_file'];
 $kib = $_REQUEST['kib'];
 
-pr($_REQUEST);
-exit;
+// pr($_REQUEST);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,

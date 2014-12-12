@@ -47,8 +47,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							e.preventDefault();
 						}
 					});*/
-					$( "#tglPerolehanTanah,#tglPerolehanMesin,#tglPerolehanGedung,#tglPerolehanJIJ,#tglPerolehanAst,#tglPerolehanKdp,#tglPerolehanLainnya,#tglPerolehanNeraca").mask('9999-99-99');
-					$( "#tglPerolehanTanah,#tglPerolehanMesin,#tglPerolehanGedung,#tglPerolehanJIJ,#tglPerolehanAst,#tglPerolehanKdp,#tglPerolehanLainnya,#tglPerolehanNeraca" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$( "#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-99-99');
+					$( "#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd" ).datepicker({ dateFormat: 'yy-mm-dd' });
 							
 				
 					
@@ -66,6 +66,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#rbdp3" data-toggle="tab">Daftar Aset Tetap - Konstruksi Dalam Pengerjaan</a></li>
 						<li><a href="#lainnya" data-toggle="tab">Daftar Aset Lainnya</a></li>
 						<li><a href="#neraca" data-toggle="tab">Rekapitulasi Barang Ke Neraca</a></li>
+						<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>
+						<!--<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>-->
 					  </ul>
 					  
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -76,11 +78,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapTanah.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanTanah" id="tglPerolehanTanah" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalTanah" id="tglPerolehanAwalTanah" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirTanah" id="tglPerolehanAkhirTanah" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -102,11 +113,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapMesin.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanMesin" id="tglPerolehanMesin" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalMesin" id="tglPerolehanAwalMesin" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirMesin" id="tglPerolehanAkhirMesin" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -128,11 +148,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapBangunan.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanGedung" id="tglPerolehanGedung" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalGedung" id="tglPerolehanAwalGedung" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirGedung" id="tglPerolehanAkhirGedung" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -154,11 +183,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapJaringan.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanJIJ" id="tglPerolehanJIJ" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalJIJ" id="tglPerolehanAwalJIJ" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirJIJ" id="tglPerolehanAkhirJIJ" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -180,11 +218,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapLainnya.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAst" id="tglPerolehanAst" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalAst" id="tglPerolehanAwalAst" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirAst" id="tglPerolehanAkhirAst" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -206,11 +253,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetTetapKDP.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanKdp" id="tglPerolehanKdp" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalKdp" id="tglPerolehanAwalKdp" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirKdp" id="tglPerolehanAkhirKdp" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -232,11 +288,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/asetLainnya.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanLainnya" id="tglPerolehanLainnya" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalLainnya" id="tglPerolehanAwalLainnya" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirLainnya" id="tglPerolehanAkhirLainnya" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -258,11 +323,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapNeraca.php"; ?>">
 						<ul>
 							<li>
-								<span class="span2">Tanggal Perolehan</span>
+								<span class="span2">Tanggal Awal</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanNeraca" id="tglPerolehanNeraca" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalNeraca" id="tglPerolehanAwalNeraca" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirNeraca" id="tglPerolehanAkhirNeraca" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -276,7 +350,78 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+						<div class="tab-pane" id="lapmutasi">
+						<div class="breadcrumb">
+							<div class="titleTab">Laporan Mutasi Barang</div>
+						</div>
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/LapMutasi.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAwalLapMutasi" id="tglPerolehanAwalLapMutasi" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirLapMutasi" id="tglPerolehanAkhirLapMutasi" value="" required/>
+									</div>
+								</div>
+							</li>
+							<?php selectSatker('kodeSatker9','255',true,false); ?>
+							<br>
+							<input type="hidden" name="menuID" value="14">
+							<input type="hidden" name="mode" value="1">
+							<input type="hidden" name="tab" value="3">
+							<input type="hidden" name="bukuInv" value="bukuInv">
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+						</div>
+						<div class="tab-pane" id="lapmutasiskpd">
+						<div class="breadcrumb">
+							<div class="titleTab">Laporan Mutasi Barang Antar SKPD</div>
+						</div>
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/LapMutasiSkpd.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAwalLapMutasiSkpd" id="tglPerolehanAwalLapMutasiSkpd" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirLapMutasiSkpd" id="tglPerolehanAkhirLapMutasiSkpd" value="" required/>
+									</div>
+								</div>
+							</li>
+							<?php selectSatker('kodeSatker10','255',true,false); ?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+						</div>
 						</div>
 			</div> 
 			

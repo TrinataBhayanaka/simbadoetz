@@ -57,7 +57,7 @@ class Session
 		$_SESSION['ses_utoken'] = str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz');
                         
                          $_SESSION['ses_satkerid'] = $data['Satker_ID']; 
-                         $_SESSION['ses_satkerkode'] = $data['KodeSatker']; 
+                         $_SESSION['ses_satkerkode'] = $data['kode']; 
 		
                         if($data['NamaSatker'])
                               $_SESSION['ses_satkername'] =$data['NamaSatker'] ; 

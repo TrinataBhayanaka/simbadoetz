@@ -257,7 +257,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
             foreach ($asetid as $key => $value) {
 
-                $this->db->logIt($tabel=array($value), $Aset_ID=$key);
+                $this->db->logIt($tabel=array($value), $Aset_ID=$key, 22);
             }
         }
 
@@ -289,7 +289,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         // $getTable = $this->getTableKibAlias($tabeltmp);
         // $tabel = $getTable['listTableAbjad'];
 
-        $TipeAset = 
+        // $TipeAset = 
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*',
@@ -422,7 +422,9 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
 
-
+        if (count($jenisaset)>0) $jenisaset = $jenisaset;
+        else $jenisaset = array(1,2,3,4,5,6);
+        
         if ($jenisaset){
 
             foreach ($jenisaset as $value) {
