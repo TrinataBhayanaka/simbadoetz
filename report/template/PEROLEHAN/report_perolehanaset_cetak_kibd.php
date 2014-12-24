@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
+include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -14,9 +15,14 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
-// $kelompok=$_GET['bidang'];
+$tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 $data=array(
@@ -47,15 +53,21 @@ $result_query=$REPORT->retrieve_query($query);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
 //retrieve html
-$html=$REPORT->retrieve_html_kib_d($result_query, $gambar);
+$html=$REPORT->retrieve_html_kib_d($result_query, $gambar, $tanggalCetak);
 /*$count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
+		 echo $html[$i];     
 	}
-// exit;*/
+exit;*/
 if($tipe!="2"){
 $REPORT->show_status_download_kib();	
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

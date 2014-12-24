@@ -12,29 +12,29 @@ function format_tanggal($tgl) {
 
         switch($bln)
         {
-            case "01" : $namaBln = "Jan";
+            case "01" : $namaBln = "Januari";
                       break;
-            case "02" : $namaBln = "Feb";
+            case "02" : $namaBln = "Februari";
                       break;
-            case "03" : $namaBln = "Mar";
+            case "03" : $namaBln = "Maret";
                        break;
-            case "04" : $namaBln = "Apr";
+            case "04" : $namaBln = "April";
                        break;
             case "05" : $namaBln = "Mei";
                      break;
-            case "06" : $namaBln = "Jun";
+            case "06" : $namaBln = "Juni";
                      break;
-            case "07" : $namaBln = "Jul";
+            case "07" : $namaBln = "Juli";
                      break;
-            case "08" : $namaBln = "Agu";
+            case "08" : $namaBln = "Agustus";
                      break;
-            case "09" : $namaBln = "Sep";
+            case "09" : $namaBln = "September";
                      break;
-            case "10" : $namaBln = "Okt";
+            case "10" : $namaBln = "Oktober";
                      break;
-            case "11" : $namaBln = "Nov";
+            case "11" : $namaBln = "November";
                          break;
-            case "12" : $namaBln = "Des";
+            case "12" : $namaBln = "Desember";
                          break;
         }
         $tgl_full="$hari $namaBln $tahun";

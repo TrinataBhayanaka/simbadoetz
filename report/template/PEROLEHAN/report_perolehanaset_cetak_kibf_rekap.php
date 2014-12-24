@@ -1,7 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
-//include ('../../../function/tanggal/tanggal.php');
+include ('../../../function/tanggal/tanggal.php');
 
 //==============================================================
 //echo "$path <br/> $url_rewrite";
@@ -20,6 +20,7 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $rekap = $_GET['rekap'];
+$tglcetak = $_GET['tglcetak'];
 // $tahun = $_GET['tahun'];
 // $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
@@ -49,8 +50,14 @@ $result_query=$REPORT->retrieve_query($query);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
 // exit;
-$html=$REPORT->retrieve_html_kib_f_rekap($result_query,$gambar);
+$html=$REPORT->retrieve_html_kib_f_rekap($result_query,$gambar,$tanggalCetak);
 //echo'ada';
 //exit();
 /*$count = count($html);

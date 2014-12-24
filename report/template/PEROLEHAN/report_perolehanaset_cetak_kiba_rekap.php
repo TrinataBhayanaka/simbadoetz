@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
+include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -16,6 +17,7 @@ $skpd_id = $_GET['skpd_id'];
 $rekap = $_GET['rekap'];
 // $tahun = $_GET['tahun'];
 // $kelompok=$_GET['bidang'];
+$tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 // exit;
@@ -47,14 +49,20 @@ $result_query=$REPORT->retrieve_query($query);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 // exit;
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
 //retrieve html
-$html=$REPORT->retrieve_html_kib_a_rekap($result_query, $gambar);
+$html=$REPORT->retrieve_html_kib_a_rekap($result_query, $gambar,$tanggalCetak);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
-		 // echo $html[$i];     
+		 echo $html[$i];     
 	}
-// exit;*/
+exit;*/
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

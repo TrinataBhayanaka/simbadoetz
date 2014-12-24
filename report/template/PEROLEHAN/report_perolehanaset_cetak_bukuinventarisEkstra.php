@@ -73,9 +73,9 @@ $result = arrayToObject($result_query);
 // exit;
 
 $html=$REPORT->retrieve_html_bukuinventaris_ekstra($result,$gambar);
-$count = count($html);
+/*$count = count($html);
 
-/*for ($i = 0; $i < $count; $i++) {
+for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}

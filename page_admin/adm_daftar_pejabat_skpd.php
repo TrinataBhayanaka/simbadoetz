@@ -13,7 +13,7 @@ include 'header.php';
 
 if (isset($_POST['idbtn']))
 {
-    
+	// echo "masukk";
     //echo '<script type=text/javascript>alert("Sukses");</script>';
     //$query = "INSERT INTO Pejabat VALUES (null, )";
     
@@ -72,13 +72,17 @@ if (isset($_POST['idbtn']))
 	}
 	else
     {
+	// echo "masukk";
+	// pr($_POST);
+    // exit;
     	for ($i = 0; $i <= 5; $i++) {
         	$query = "INSERT INTO Pejabat VALUES ('".$_POST['idnamajabatan'][$i]."',
             		'".$_POST['Satker_ID']."',
             		'".$_POST['idnamapjb'][$i]."',
                     '".$_POST['idnippjb'][$i]."',
-                    'NULL', NULL, '{$_POST['jabatan'][$i]}')";
-            //print_r($query);echo '<br>';
+                    '{$_POST['jabatan'][$i]}',' ' )";
+            print_r($query);echo '<br>';
+			// exit;
             $result = $DBVAR->query($query) or die ($DBVAR->error());
             if ($result)
             {
@@ -333,9 +337,8 @@ if (isset($_POST['idbtn']))
                                              
                                         }
                                     }
-                                    
-                                    
-                                                
+                                    // echo"<pre>";
+                                    // print_r($dat);
                                     ?>
         
         

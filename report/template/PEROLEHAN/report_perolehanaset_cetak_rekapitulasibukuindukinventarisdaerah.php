@@ -1,7 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
-
+include ('../../../function/tanggal/tanggal.php');
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
 define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or absolute URI - not a file system path
@@ -13,8 +13,14 @@ $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $mode = $_GET['mode'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
+$tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
 $REPORT=new report_engine();
 // pr($_GET);
@@ -32,16 +38,23 @@ $REPORT->set_data($data);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
+
 $result_query = $REPORT->get_report_rekap_inv_daerah($tglawalperolehan,$tglakhirperolehan);
 
-$html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar);
+$html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar,$tanggalCetak);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {
 		 
-		 // echo $html[$i];     
-	}*/
-// exit;
+		 echo $html[$i];     
+	}
+exit;*/
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

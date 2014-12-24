@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
+include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -8,17 +9,20 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
-// echo "url = ".$url_rewrite;
-// echo "path = ".$path;
-// exit;
+
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
-// $kelompok=$_GET['bidang'];
+$tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 // exit;
@@ -32,8 +36,7 @@ $data=array(
     "kelompok"=>$kelompok,
     "tab"=>$tab
 );
-// pr($data);
-// exit;
+
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -52,7 +55,14 @@ $result_query=$REPORT->retrieve_query($query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 // exit;
 //retrieve html
-$html=$REPORT->retrieve_html_kib_a($result_query, $gambar);
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
+
+$html=$REPORT->retrieve_html_kib_a($result_query, $gambar,$tanggalCetak);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

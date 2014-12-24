@@ -1,7 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
-//include ('../../../function/tanggal/tanggal.php');
+include ('../../../function/tanggal/tanggal.php');
 
 //==============================================================
 //echo "$path <br/> $url_rewrite";
@@ -20,9 +20,14 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kib = $_GET['kib'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
-// $kelompok=$_GET['bidang'];
+$tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 // exit;
@@ -53,10 +58,15 @@ $result_query=$REPORT->retrieve_query($query);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
 // exit;
 $html=$REPORT->retrieve_html_kib_f($result_query,$gambar);
-//echo'ada';
-//exit();
+
 /*$count = count($html);
 //pr($count);
 

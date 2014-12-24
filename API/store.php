@@ -1711,7 +1711,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $value = implode(',', $tmpvalue);
 
             $query = "INSERT INTO sp2d_rinc ({$field}) VALUES ($value)";
-            $result=  $this->query($query) or die($this->error());
+            // pr($query);exit;
+			$result=  $this->query($query) or die($this->error());
 
         $query_id = mysql_query("SELECT id FROM sp2d_rinc ORDER BY id DESC LIMIT 1");
         while ($row = mysql_fetch_assoc($query_id)){
@@ -1730,7 +1731,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $value = implode(',', $tmplogvalue);
 
         $query_log = "INSERT INTO log_sp2d_rinc ({$field}) VALUES ($value)";
-
+		
         $result=  $this->query($query_log) or die($this->error());
 
         return true;

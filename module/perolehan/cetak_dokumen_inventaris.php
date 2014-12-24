@@ -37,8 +37,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li><a href="#rbiskpd" data-toggle="tab">Rekapitulasi Buku Inventaris SKPD</a></li>
 						<li><a href="#biid" data-toggle="tab">Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
-						<li><a href="#bkintra" data-toggle="tab">Buku Inventaris Aset</a></li>
-						<li><a href="#bkekstra" data-toggle="tab">Buku Inventaris Non Aset</a></li>
+						<!--<li><a href="#bkintra" data-toggle="tab">Buku Inventaris Aset</a></li>
+						<li><a href="#bkekstra" data-toggle="tab">Buku Inventaris Non Aset</a></li>-->
 						<li><a href="#label" data-toggle="tab">Label Kode Barang</a></li>
 						</ul>
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -50,9 +50,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kib.php"; ?>">
 						 <script>
 						$(document).ready(function() {
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk").mask('9999-99-99');
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk").mask('9999-99-99');
 							$( "#tahun_label").mask('9999');
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk" ).datepicker({ dateFormat: 'yy-mm-dd' });
 							/*$('#tahun_label').keydown(function (e) {
 								// Allow: backspace, delete, tab, escape, enter and .
 								if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -90,7 +90,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_1" id="tglPerolehan_1" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_1" id="tglPerolehan_1" value="" />
 									</div>
 								</div>
 							</li>
@@ -103,8 +103,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectSatker('kodeSatker','255',true,false,'required'); ?>
+							<?php selectAllSatker('kodeSatker','255',true,false,'required'); ?>
 							<br />
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakKib" id="tglCetakKib" value=""/>
+									</div>
+								</div>
+							</li>
 							<!--<li>
 								<span class="span2">Nama Skpd </span>
 								<div class="input-append">
@@ -168,8 +177,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Tahun</span>
 								<input name="tahun" id ="tahun_rekap_kib" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
 							</li>-->
-							<?php selectSatker('kodeSatker7','255',true,false); ?>
+							<?php selectAllSatker('kodeSatker7','255',true,false); ?>
 							<br />
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakRekapKib" id="tglCetakRekapKib" value=""/>
+									</div>
+								</div>
+							</li>
 							<!--<li>
 								<span class="span2">Nama Skpd </span>
 								<div class="input-append">
@@ -222,7 +240,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_awal_kir" id="tglPerolehan_awal_kir" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_kir" id="tglPerolehan_awal_kir" value=""/>
 									</div>
 								</div>
 							</li>
@@ -235,8 +253,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectSatker('kodeSatker2','255',true,false); ?>
+							<?php selectAllSatker('kodeSatker2','255',true,false); ?>
 							<br>
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakKir" id="tglCetakKir" value=""/>
+									</div>
+								</div>
+							</li>
 							<!--<li>
 								<span class="span2">Nama Skpd </span>
 								<div class="input-append">
@@ -287,7 +314,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglawalPerolehan_bis" id="tglawalPerolehan_bis" value="" required/>
+										<input type="text" class="span2 full" name="tglawalPerolehan_bis" id="tglawalPerolehan_bis" value="" />
 									</div>
 								</div>
 							</li>
@@ -317,8 +344,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectSatker('kodeSatker3','255',true,false); ?>
+							<?php selectAllSatker('kodeSatker3','255',true,false); ?>
 							<br>
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakBiv" id="tglCetakBiv" value=""/>
+									</div>
+								</div>
+							</li>
 							<!--<li>
 								<span class="span2">Nama Skpd </span>
 								<div class="input-append">
@@ -373,7 +409,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_awal_rekapbis" id="tglPerolehan_awal_rekapbis" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_rekapbis" id="tglPerolehan_awal_rekapbis" value="" />
 									</div>
 								</div>
 							</li>
@@ -386,8 +422,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectSatker('kodeSatker4','255',true,false); ?>
+							<?php selectAllSatker('kodeSatker4','255',true,false); ?>
 							<br>
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakRekapBiv" id="tglCetakRekapBiv" value=""/>
+									</div>
+								</div>
+							</li>
 							<!--<li>
 								<span class="span2">Nama Skpd</span>
 								<div class="input-append">
@@ -436,7 +481,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_Awal_biid" id="tglPerolehan_Awal_biid" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_Awal_biid" id="tglPerolehan_Awal_biid" value="" />
 									</div>
 								</div>
 							</li>
@@ -464,6 +509,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 												radiokelompok($style,"kelompok_id2",'kelompok2','ldakelompokfilter2');
 											?>
 										</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakBivIndk" id="tglCetakBivIndk" value=""/>
+									</div>
 								</div>
 							</li>
 							<!--<li>
@@ -494,7 +548,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_awal_induk" id="tglPerolehan_awal_induk" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehan_awal_induk" id="tglPerolehan_awal_induk" value="" />
 									</div>
 								</div>
 							</li>
@@ -504,6 +558,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
 										<input type="text" class="span2 full" name="tglPerolehan_akhir_induk" id="tglPerolehan_akhir_induk" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakRekapBivIndk" id="tglCetakRekapBivIndk" value=""/>
 									</div>
 								</div>
 							</li>
@@ -520,94 +583,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="menuID" value="14">
 						<input type="hidden" name="mode" value="1">
 						<input type="hidden" name="tab" value="6">
-						</form>
-						</div>
-						<div class="tab-pane" id="bkintra">
-						<div class="breadcrumb">
-							<div class="titleTab">Buku Inventaris Aset</div>
-						</div>
-						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/intra.php"; ?>">
-						<ul>
-							<li>
-								<span class="span2">Tanggal Awal</span>
-								<div class="control">
-									<div class="input-prepend">
-										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_awal_intra" id="tglPerolehan_awal_intra" value="" required/>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Tanggal Akhir</span>
-								<div class="control">
-									<div class="input-prepend">
-										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_akhir_intra" id="tglPerolehan_akhir_intra" value="" required/>
-									</div>
-								</div>
-							</li>
-							<li>
-								<?php selectSatker('kodeSatker5','255',true,false); ?>
-								<br>
-							</li>
-							<!--<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input  input id="tanggal5"  name="cdi_rbiid_tglreport" value="">(format tanggal dd/mm/yy)
-							</li>-->
-							<li>
-								<span class="span2">&nbsp;</span>
-								 <input type="submit" name="bkintra" class="btn btn-primary" onClick="sendit_5()" value="Lanjut" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
-							</li>
-						</ul>
-						<input type="hidden" name="menuID" value="14">
-						<input type="hidden" name="mode" value="1">
-						<input type="hidden" name="tab" value="7">
-						<input type="hidden" name="intra" value="intra">
-						</form>
-						</div>
-						<div class="tab-pane" id="bkekstra">
-						<div class="breadcrumb">
-							<div class="titleTab">Buku Inventaris Non Aset</div>
-						</div>
-						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/ekstra.php"; ?>">
-						<ul>
-							<li>
-								<span class="span2">Tanggal Awal</span>
-								<div class="control">
-									<div class="input-prepend">
-										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_awal_ekstra" id="tglPerolehan_awal_ekstra" value="" required/>
-									</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Tanggal Akhir</span>
-								<div class="control">
-									<div class="input-prepend">
-										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_akhir_ekstra" id="tglPerolehan_akhir_ekstra" value="" required/>
-									</div>
-								</div>
-							</li>
-							<li>
-								<?php selectSatker('kodeSatker6','255',true,false); ?>
-								<br>
-							</li>
-							<!--<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input  input id="tanggal5"  name="cdi_rbiid_tglreport" value="">(format tanggal dd/mm/yy)
-							</li>-->
-							<li>
-								<span class="span2">&nbsp;</span>
-								 <input type="submit" name="bkekstra" class="btn btn-primary" onClick="sendit_5()" value="Lanjut" />
-								<input type="reset" name="reset" class="btn" value="Bersihkan Data">
-							</li>
-						</ul>
-						<input type="hidden" name="menuID" value="14">
-						<input type="hidden" name="mode" value="1">
-						<input type="hidden" name="tab" value="8">
-						<input type="hidden" name="ekstra" value="ekstra">
 						</form>
 						</div>
 						<div class="tab-pane" id="label">
@@ -631,7 +606,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									<option value="06">F Konstruksi dan Pengerjaan</option>
 							  </select>
 							</li>
-							<?php selectSatker('kodeSatker8','255',true,false); ?>
+							<?php selectAllSatker('kodeSatker8','255',true,false); ?>
 							<br>
 							<!--<li>
 								<span class="span2">Nama Skpd </span>
