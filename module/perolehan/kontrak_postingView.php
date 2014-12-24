@@ -28,6 +28,10 @@ $menu_id = 1;
 				$tmp = $uraian;
 				$rKontrak[$key]['uraian'] = $tmp['Uraian'];
 			}
+		$sql = mysql_query("SELECT COUNT(*) AS rdist FROM transferaset WHERE kodeKelompok = '{$value['kodeKelompok']}' AND kodeLokasi = '{$value['kodeLokasi']}'");
+		while ($sumpost = mysql_fetch_assoc($sql)){
+					$distchek[] = $sumpost;
+				}	
 	}
 
 	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
@@ -40,7 +44,7 @@ $menu_id = 1;
 	while ($sum = mysql_fetch_assoc($sqlsum)){
 				$sumTotal = $sum;
 			}
-	// pr($sumsp2d);
+	// pr($unpost);
 
 	//unposting
 	$sql = mysql_query("SELECT COUNT(*) AS dist FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND Status_Validasi_Barang = 1");
@@ -54,8 +58,12 @@ $menu_id = 1;
 				$kapchek = $sumpost;
 			}
 	}
-	
-	// pr($kapchek);
+	foreach ($distchek as $key => $value) {
+		if(in_array(1, $value)){
+			$countdist = $countdist + 1;
+		} 
+	}
+	// pr($countdist);
 	//end SQL
 ?>
 	
@@ -150,10 +158,11 @@ $menu_id = 1;
 				if($unpost['dist'] == 0){
 					if($kontrak['tipeAset'] == 1){
 						if($kapchek['kap'] == 0){
-			?>
+							if($countdist == 0){ 
+			?>		
 				<p><a href="kontrak_unpost.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 				&nbsp;</p>	
-			<?php		
+			<?php			} else {echo "* Data sudah dipergunakan di distribusi barang";}
 						}
 					}
 				}

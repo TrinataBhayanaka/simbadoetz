@@ -165,7 +165,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			
 			<div id="demo">
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
-			<input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
+			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
@@ -179,6 +179,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr>
 						<th>No</th>
 						<th>&nbsp;</th>
+						<th>Uraian</th>
 						<th>Satker</th>
 						<th>Lokasi</th>
 						<th>No Kontrak</th>
@@ -210,7 +211,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 													
 						</td>
 						
-						
+						<td style="font-weight: bold;"> <?php echo "$value[Uraian]";?> </td>
 						<td style="font-weight: bold;"> <?php echo "$value[kodeSatker]- $value[NamaSatker]";?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[kodeLokasi]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>	

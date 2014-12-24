@@ -34,7 +34,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $sql = array(
                         'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
                         'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
-                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak}",
+                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} GROUP BY a.Aset_ID",
                         'limit'=>'100',
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
@@ -125,7 +125,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $sql = array(
                         'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
                         'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
-                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak}",
+                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} GROUP BY a.Aset_ID",
                         'limit'=>'100',
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
@@ -166,6 +166,13 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $getKIB = $this->getTableKibAlias($jenisaset);
                 
 
+                $listTable = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp');
 
 
                 $panjang=count($nmaset);
@@ -192,7 +199,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $no_reg[$i]=$tmp_olah[1];
                     $nm_barang[$i]=$tmp_olah[2];
                     
-                    $logData = $this->db->logIt(array($getKIB['listTableOri']), $asset_id[$i]);
+                    // $logData = $this->db->logIt(array($getKIB['listTableOri']), $asset_id[$i]);
 
                     $lokasiBaru = ubahLokasi($lokasiAwal[$i],$satker);
                     
@@ -231,7 +238,16 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                                 );
 
                         $res2 = $this->db->lazyQuery($sql2,$debug,2);
-                    
+                        
+                        $sqlKib = array(
+                                'table'=>"{$getKIB['listTableOri']}",
+                                'field'=>"kodeSatker='$satker', kodeLokasi = '{$lokasiBaru}', noRegister='$gabung_nomor_reg_tujuan', NotUse=0",
+                                'condition'=>"Aset_ID='$asset_id[$i]'",
+                                );
+
+                        $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+
+
                         $sql3 = array(
                                 'table'=>"PenggunaanAset",
                                 'field'=>"StatusMutasi=1, Mutasi_ID='$mutasi_id'",
@@ -241,9 +257,27 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         $res3 = $this->db->lazyQuery($sql3,$debug,2);
 
                         
-                    
+                        $sql = array(
+                                'table'=>'aset',
+                                'field'=>"TipeAset",
+                                'condition' => "Aset_ID={$asset_id[$i]}",
+                                );
+                        $result = $this->db->lazyQuery($sql,$debug);
+                        $asetid[$asset_id[$i]] = $listTable[implode(',', $result[0])];
                     
                 }
+
+                if ($result){
+            
+                    foreach ($asetid as $key => $value) {
+
+                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, 3);
+                    }
+
+                    return true;
+                } 
+
+                return false;
         }
 
         function getTableKibAlias($type=1)

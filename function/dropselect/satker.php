@@ -12,6 +12,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	//fungsi dropselect
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
+               		dropdownAutoWidth: 'true',
 				    <?=($_SESSION['ses_satkerkode']=="") ? 'minimumInputLength: 2,' : ''?>
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/satker.php",
@@ -67,7 +68,11 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
                		dropdownAutoWidth: 'true',
+<<<<<<< HEAD
 				    <?=($_SESSION['ses_satkerkode']=="") ? 'minimumInputLength: 2,' : ''?>
+=======
+				    minimumInputLength: 2,
+>>>>>>> b5295cf96013607ee240fb1376efb16edd323c99
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/satker.php",
 				        dataType: 'json',
@@ -76,7 +81,11 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        data: function (term) {
 				            return {
 				            	free: true,
+<<<<<<< HEAD
 				                sess: '<?=$_SESSION['ses_satkerkode']?>',
+=======
+				                sess: '',
+>>>>>>> b5295cf96013607ee240fb1376efb16edd323c99
 				                term: term
 				            };
 				        },
@@ -121,6 +130,7 @@ function selectAset($name,$size=300,$br=false,$upd=false,$status=false){
 	//fungsi dropselect
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Jenis Aset",
+               		dropdownAutoWidth: 'true',
 				    minimumInputLength: 2,
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/aset.php",
