@@ -78,7 +78,7 @@ class report_engine extends core_api_report {
 
 public function retrieve_html_neraca($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
 {
-pr($dataArr);
+// pr($dataArr);
 $index_id = 0;
 $detailSatker=$this->get_satker($skpd_id);
 $NoBidang = $detailSatker[0];
@@ -216,10 +216,16 @@ foreach ($dataArr as $satker_id => $value)
           <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
         </tr>
         </thead>
-        <tbody>";
+        <tbody>
+		<tr>
+			<td>&nbsp;</td>
+			<td style=\"text-align: left; font-weight: bold;\">ASET TETAP</td>
+			<td>&nbsp;</td>
+			<td>$totALL</td>
+		</tr>";
     
     // $no =1;
-    
+    // echo "total all".$totALL;
     foreach ($value as $keys => $data)
     {	
 		// pr($keys);
@@ -229,11 +235,22 @@ foreach ($dataArr as $satker_id => $value)
 		$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
 		$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 		$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-		if($keys == '01_Tanah'){
+		
+		// $totalALL += $TotalNilai[0];
+		// echo "total nilai ".$totalALL;
+		//this is for all value
+		// if($keys != '07_Aset Lainnya'){
+			// $totalALL += $TotalNilai[0];
+		// }
+		
+		
+		//this is for header 
+		/*if($keys == '01_Tanah'){
 			$header ="<tr>
 						<td>&nbsp;</td>
 						<td style=\"text-align: left; font-weight: bold;\">ASET TETAP</td>
 						<td>&nbsp;</td>
+						<td>$totalALL</td>
 					  </tr>"; 
 				  
 		}elseif($keys == '07_Aset Lainnya'){
@@ -252,8 +269,30 @@ foreach ($dataArr as $satker_id => $value)
 			
 		}else{
 			$header="";
+		}*/
+	
+		if($keys != '07_Aset Lainnya'){
+			$totalALL = $totalALL + $TotalNilai[0];
+			$jmlALL = $jmlALL + $TotalNilai[1];
+			$header = "";
+		}else{
+			
+			$header="
+			<tr>
+				<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET TETAP</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
+			</tr>";
+			  $totalALL = $TotalNilai[0];
+			  $jmlALL = $TotalNilai[1];
+			  $header.="<tr>
+				<td>&nbsp;</td>
+				<td style=\"text-align: left; font-weight: bold;\">ASET LAINNYA</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
 		}
-		 $html .= "$header
+		$html .= "$header
 				<tr>
 					<td style=\"text-align: center; font-weight: bold;\">$kode_1_parent</td>
 					<td style=\"text-align: left; font-weight: bold;\">$kode_2_parent</td>
@@ -308,8 +347,8 @@ foreach ($dataArr as $satker_id => $value)
 			$ex_1 = explode("_",$nilai_1);
 				$jumlah_1 = $ex_1[0];
 				$nilai_1= $ex_1[1];
-			$jmlFix = intval($jumlah_1);
-			$nilaiFix = intval($nilai_1);	
+			$jmlFix = $jumlah_1;
+			$nilaiFix = $nilai_1;	
 		}
 		// echo $jmlFix;
 		// echo "<br>";
@@ -317,13 +356,28 @@ foreach ($dataArr as $satker_id => $value)
 		// echo "<br>";
 		
 		
-                $html .= "<tr>
+               
+				
+				 $html .= "<tr>
 						<td style=\"text-align: right;\">$kode_1_child</td>
                         <td style=\"text-align: ;\">$kode_2_child</td>
                         <td style=\"text-align: center;\">".number_format($jmlFix,0,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($nilaiFix,2,",",".")."</td>
                       </tr>";
-                $total_perolehan += ($nilaiFix);
+				 if($kode_1_child == '07.24'){
+					$html .="<tr>
+								<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET LAINNYA</td>
+								<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
+								<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
+							</tr>
+							</table>
+							</tbody>
+						</body>
+					</html>";
+				 }	  
+					  
+                // $total_perolehan += ($nilaiFix);
+				
         }
         // $no++;
         $jmlFix = 0;
@@ -339,7 +393,8 @@ foreach ($dataArr as $satker_id => $value)
 			</tbody>
 		</body>
 	</html>"; */ 
-	$total_perolehan = 0;	
+	$total_perolehan = 0;
+	// $totALL = $totalALL;	
     $hasil_html[]=$html;
 }
 return $hasil_html;
@@ -22616,7 +22671,7 @@ public function get_hak_pakai($hak_tanah){
 			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' ";
 		}else{
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-			WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi = '3' 
+			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
 			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
 			and StatusValidasi =1 and kodeLokasi like '12%' ";
 		}
@@ -22633,8 +22688,15 @@ public function get_hak_pakai($hak_tanah){
 				
 				$NilaiFix += $Nilai;
 				$jmlFix += $jml;
+				
+				$tempAllNilaiFix [] = $NilaiFix;
+				$tempAlljmlFix [] = $jmlFix;
+				
 			}
 		}
+		
+		// pr($tempAllNilaiFix);
+		// pr($tempAlljmlFix);
 		// echo "NilaiFix =".$NilaiFix;
 		// echo "<br>";
 		// echo "jmlFix =".$jmlFix;
