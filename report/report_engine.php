@@ -22627,7 +22627,7 @@ public function get_hak_pakai($hak_tanah){
 		$thnFix = $ceckTgl[0];
 		// kodeKelompok like '03.11%'
 		$KodeKa = "OR kodeKA != 0";
-		$KodeKaAsetLain = "AND kodeKA != 0";
+		$KodeKaCondt1 = "AND kodeKA != 0";
 		if($gol == '01'){
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
@@ -22642,7 +22642,7 @@ public function get_hak_pakai($hak_tanah){
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						";
+						$KodeKaCondt1";
 			
 			}elseif($thnceck >= $thnDefault){
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
@@ -22657,6 +22657,7 @@ public function get_hak_pakai($hak_tanah){
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1
 						union all 
 						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
@@ -22673,7 +22674,7 @@ public function get_hak_pakai($hak_tanah){
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						";
+						$KodeKaCondt1";
 			
 			}elseif($thnceck >= $thnDefault){
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
@@ -22688,6 +22689,7 @@ public function get_hak_pakai($hak_tanah){
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1
 						union all 
 						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
@@ -22709,7 +22711,7 @@ public function get_hak_pakai($hak_tanah){
 			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
-			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaAsetLain
+			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1
 			";
 		}
 		
