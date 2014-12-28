@@ -22488,6 +22488,9 @@ public function get_hak_pakai($hak_tanah){
 		$ceckTgl = explode ('-',$tglAkhirDefault);
 		$thnFix = $ceckTgl[0];
 		
+		$KodeKa = "OR kodeKA = 1";
+		$KodeKaCondt1 = "AND kodeKA = 1";
+		
 		if($gol == '01'){
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE kodeSatker like '$satker_id%'  
@@ -22500,27 +22503,30 @@ public function get_hak_pakai($hak_tanah){
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3'
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";
 			
 			}elseif($thnceck >= $thnDefault){
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 300000 $KodeKa)";
 			}else{
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+						$KodeKaCondt1
 						union all 
 						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault'
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and NilaiPerolehan >= 300000 and kodeLokasi like '12%' ";
+						and (NilaiPerolehan >= 300000 $KodeKa) and kodeLokasi like '12%' ";
 			}
 		}elseif($gol == '03'){
 			if($thnFix < $thnDefault){
@@ -22528,27 +22534,30 @@ public function get_hak_pakai($hak_tanah){
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3'
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";
 			
 			}elseif($thnceck >= $thnDefault){
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 10000000 $KodeKa)";
 			}else{
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+						$KodeKaCondt1
 						union all 
 						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
 						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and NilaiPerolehan >= 10000000 and kodeLokasi like '12%' ";
+						and (NilaiPerolehan >= 10000000 $KodeKa) and kodeLokasi like '12%' ";
 			}
 		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
@@ -22626,8 +22635,8 @@ public function get_hak_pakai($hak_tanah){
 		$ceckTgl = explode ('-',$tglAkhirDefault);
 		$thnFix = $ceckTgl[0];
 		// kodeKelompok like '03.11%'
-		$KodeKa = "OR kodeKA != 0";
-		$KodeKaCondt1 = "AND kodeKA != 0";
+		$KodeKa = "OR kodeKA = 1";
+		$KodeKaCondt1 = "AND kodeKA = 1";
 		if($gol == '01'){
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
@@ -22643,7 +22652,12 @@ public function get_hak_pakai($hak_tanah){
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1";
-			
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						";*/
 			}elseif($thnceck >= $thnDefault){
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
@@ -22666,6 +22680,19 @@ public function get_hak_pakai($hak_tanah){
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and kodeLokasi like '12%' 
 						and (NilaiPerolehan >= 300000 $KodeKa)";
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						union all 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and kodeLokasi like '12%' 
+						and (NilaiPerolehan >= 300000 $KodeKa)";*/		
 			}
 		}elseif($gol == '03'){
 			if($thnFix < $thnDefault){
@@ -22675,14 +22702,19 @@ public function get_hak_pakai($hak_tanah){
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1";
-			
-			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 10000000 $KodeKa)";
+						";*/
+			}elseif($thnceck >= $thnDefault){
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+					WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+					and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+					and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+					and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+					and (NilaiPerolehan >= 10000000 $KodeKa)";
 			}else{
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
@@ -22698,6 +22730,19 @@ public function get_hak_pakai($hak_tanah){
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and kodeLokasi like '12%' 
 						and (NilaiPerolehan >= 10000000 $KodeKa)";
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						union all 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and kodeLokasi like '12%' 
+						and (NilaiPerolehan >= 10000000 $KodeKa)";	*/
 			}
 		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
@@ -22715,8 +22760,8 @@ public function get_hak_pakai($hak_tanah){
 			";
 		}
 		
-		// echo "query =".$query;
-		// echo "<br>";
+		echo "query =".$query;
+		echo "<br>";
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	
