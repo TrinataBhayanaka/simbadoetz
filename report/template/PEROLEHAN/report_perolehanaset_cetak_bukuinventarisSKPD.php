@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
+include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -12,8 +13,14 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul 	= $_GET['menuID'];
 $kelompok=$_GET['kelompok_id'];
 $mode 	= $_GET['mode'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
+$tglcetak = $_GET['tglcetak'];
 $tab 	= $_GET['tab'];
 $penanda='1';
 $skpd_id = $_GET['skpd_id'];
@@ -72,8 +79,14 @@ $result = arrayToObject($result_query);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
 //retrieve html
-$html=$REPORT->retrieve_html_bukuiinventariskpd($result, $gambar);
+$html=$REPORT->retrieve_html_bukuiinventariskpd($result, $gambar, $tanggalCetak);
 /*$count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {

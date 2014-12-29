@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
+include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -12,8 +13,14 @@ require ('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
+$tglcetak = $_GET['tglcetak'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
@@ -34,6 +41,13 @@ $REPORT->set_data($data);
 
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
+
 $satker = $skpd_id;
 
 	if ($tglawalperolehan !='' && $tglakhirperolehan !='')
@@ -42,11 +56,11 @@ $satker = $skpd_id;
 		
 	}
 // pr($get_satker);
-
+// exit;
 $result_query = $REPORT->get_report_rekap_inv_skpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
 // exit;	
 //retrieve html
-$html=$REPORT->retrieve_html_rekapitulasi_bukuinventaris_skpd($result_query,$gambar);
+$html=$REPORT->retrieve_html_rekapitulasi_bukuinventaris_skpd($result_query,$gambar,$tanggalCetak);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 

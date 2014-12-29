@@ -76,96 +76,88 @@ class report_engine extends core_api_report {
 		} 
 
 
-public function retrieve_html_neraca($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_neraca($dataArr,$gambar)
 {
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
 // pr($dataArr);
+// exit;
 $index_id = 0;
-$detailSatker=$this->get_satker($skpd_id);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-   
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
-}
-
 foreach ($dataArr as $satker_id => $value)
 {
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
 	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
     $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
@@ -203,272 +195,7 @@ foreach ($dataArr as $satker_id => $value)
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head
-      </tbody>
-    </table>
-    <br>
-    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
-      <thead>
-        <tr>
-          <td style=\" text-align: center; font-weight: bold; width: \">KODE</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
-        </tr>
-        </thead>
-        <tbody>
 		<tr>
-			<td>&nbsp;</td>
-			<td style=\"text-align: left; font-weight: bold;\">ASET TETAP</td>
-			<td>&nbsp;</td>
-			<td>$totALL</td>
-		</tr>";
-    
-    // $no =1;
-    // echo "total all".$totALL;
-    foreach ($value as $keys => $data)
-    {	
-		// pr($keys);
-		$exp = explode('_',$keys);
-		$kode_1_parent = $exp[0];
-		$kode_2_parent = end($exp);
-		$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
-		$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-		$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-		
-		// $totalALL += $TotalNilai[0];
-		// echo "total nilai ".$totalALL;
-		//this is for all value
-		// if($keys != '07_Aset Lainnya'){
-			// $totalALL += $TotalNilai[0];
-		// }
-		
-		
-		//this is for header 
-		/*if($keys == '01_Tanah'){
-			$header ="<tr>
-						<td>&nbsp;</td>
-						<td style=\"text-align: left; font-weight: bold;\">ASET TETAP</td>
-						<td>&nbsp;</td>
-						<td>$totalALL</td>
-					  </tr>"; 
-				  
-		}elseif($keys == '07_Aset Lainnya'){
-			$header="<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					  </tr>
-					  <tr>
-						<td>&nbsp;</td>
-						<td style=\"text-align: left; font-weight: bold;\">ASET LAINNYA</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					  </tr>";
-			
-		}else{
-			$header="";
-		}*/
-	
-		if($keys != '07_Aset Lainnya'){
-			$totalALL = $totalALL + $TotalNilai[0];
-			$jmlALL = $jmlALL + $TotalNilai[1];
-			$header = "";
-		}else{
-			
-			$header="
-			<tr>
-				<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET TETAP</td>
-				<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
-				<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
-			</tr>";
-			  $totalALL = $TotalNilai[0];
-			  $jmlALL = $TotalNilai[1];
-			  $header.="<tr>
-				<td>&nbsp;</td>
-				<td style=\"text-align: left; font-weight: bold;\">ASET LAINNYA</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			  </tr>";
-		}
-		$html .= "$header
-				<tr>
-					<td style=\"text-align: center; font-weight: bold;\">$kode_1_parent</td>
-					<td style=\"text-align: left; font-weight: bold;\">$kode_2_parent</td>
-					<td style=\"text-align: center;\">$TotalJmlFix</td>
-					<td style=\"text-align: center;\">$TotalNilaiFix</td>
-				  </tr>";
-        
-        foreach ($data as $index => $value)
-        {
-		// pr($value);
-		$exp2 = explode('_',$index);
-		$kode_1_child = $exp2[0];
-		$kode_2_child = end($exp2);
-		// pr($value[0]);
-		$val =count($value[0]);
-		 
-		if($val == 2){
-			$hit = 2;
-			/*echo "<br>";
-			echo "hit =".$hit;
-			echo "<br>";*/
-				
-			$nilai_1 =$value[0][0];
-			$nilai_2 =$value[0][1];
-			$ex_1 = explode("_",$nilai_1);
-			// pr($ex_1);
-				$jumlah_1 = $ex_1[0];
-				$nilai_1= $ex_1[1];	
-			$ex_2 = explode("_",$nilai_2);
-			// pr($ex_2);
-				$jumlah_2 = $ex_2[0];
-				$nilai_2 = $ex_2[1];	
-			/*echo "jumlah_1 =".$jumlah_1;
-			echo "<br>";
-			echo "jumlah_2 =".$jumlah_2;
-			echo "<br>";
-			echo "nilai_1 =".$nilai_1;
-			echo "<br>";
-			echo "nilai_2 =".$nilai_2;
-			echo "<br>";*/
-			$jmlFix = ($jumlah_1) + ($jumlah_2);
-			/*echo "jmlFix =".$jmlFix;
-			echo "<br>";
-			// echo "jumlah_2 =".$jumlah_2;*/
-			$nilaiFix = ($nilai_1) + ($nilai_2);
-			/*echo "nilaiFix =".$nilaiFix;
-			echo "<br>";*/
-		}else{
-			$hit = 1;
-			// echo "hit =".$hit; 
-			$nilai_1 =$value[0][0];
-			$ex_1 = explode("_",$nilai_1);
-				$jumlah_1 = $ex_1[0];
-				$nilai_1= $ex_1[1];
-			$jmlFix = $jumlah_1;
-			$nilaiFix = $nilai_1;	
-		}
-		// echo $jmlFix;
-		// echo "<br>";
-		// echo $nilaiFix;
-		// echo "<br>";
-		
-		
-               
-				
-				 $html .= "<tr>
-						<td style=\"text-align: right;\">$kode_1_child</td>
-                        <td style=\"text-align: ;\">$kode_2_child</td>
-                        <td style=\"text-align: center;\">".number_format($jmlFix,0,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($nilaiFix,2,",",".")."</td>
-                      </tr>";
-				 if($kode_1_child == '07.24'){
-					$html .="<tr>
-								<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET LAINNYA</td>
-								<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
-								<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
-							</tr>
-							</table>
-							</tbody>
-						</body>
-					</html>";
-				 }	  
-					  
-                // $total_perolehan += ($nilaiFix);
-				
-        }
-        // $no++;
-        $jmlFix = 0;
-		$nilaiFix = 0;
-    }
-		/*$html .="
-			
-			<tr>
-				<td colspan = \"3\" align=\"center\" style=\"font-weight: bold;\">TOTAL</td>
-				<td align=\"right\" style=\"font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>"; */ 
-	$total_perolehan = 0;
-	// $totALL = $totalALL;	
-    $hasil_html[]=$html;
-}
-return $hasil_html;
-}		
-		
-//end		
-		
-public function retrieve_html_asetTetapTanah($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-// pr($dataArr);
-// exit;
-$detailSatker=$this->get_satker($skpd_id);
-// pr($detailSatker);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
@@ -487,10 +214,161 @@ if($hit == 1){
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\" text-align: center; font-weight: bold; width: \">KODE</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		$exp = explode('_',$keys);
+		$kode_1_parent = $exp[0];
+		$kode_2_parent = end($exp);
+		 $html .= "<tr>
+					<td style=\"text-align: center; font-weight: bold;\">$kode_1_parent</td>
+					<td style=\"text-align: left; font-weight: bold;\">$kode_2_parent</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+		$exp2 = explode('_',$index);
+		$kode_1_child = $exp2[0];
+		$kode_2_child = end($exp2);
+		// pr($value[0]);
+		$val =count($value[0]);
+		if($val == 2){
+			$hit = 2;
+			$nilai = intval($value[0][0]) + intval($value[0][1]);
+			
+		}else{
+			$hit =1;
+			$nilai = $value[0][0];
+			
+		}
+		
+                $html .= "<tr>
+						<td style=\"text-align: right;\">$kode_1_child</td>
+                        <td style=\"text-align: ;\">$kode_2_child</td>
+                        <td style=\"text-align: right;\">".number_format($nilai,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($nilai);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
 }
+return $hasil_html;
+}		
+		
+//end		
+		
+public function retrieve_html_asetTetapTanah($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
 
-$html = "<html>
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
      http-equiv=\"content-type\">
@@ -528,153 +406,7 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head 
-      </tbody>
-    </table>
-    <br>
-	<table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
-      <thead>
 		<tr>
-          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
-        </tr>
-        </thead>
-        <tbody>";
-$index_id = 0;
-$no =1;
-foreach ($dataArr as $satker_id => $value)
-{
-	$NamaSatker = $this->get_NamaSatker($satker_id);
-	$gol= '01';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-    foreach ($value as $keys => $data)
-    {	
-		 $html .= "<tr>
-						<td style=\"text-align: center; font-weight: bold;\">$no</td>
-						<td  style=\"font-weight: bold;\">$NamaSatker</td>
-						<td>&nbsp;</td>
-						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			       </tr>
-				  <tr>
-					<td style=\"text-align: center;\">&nbsp;</td>
-					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
-					<td style=\"text-align: center;\">&nbsp; </td>
-					<td style=\"text-align: left; font-weight: bold;\"></td>
-					<td style=\"text-align: center;\">&nbsp;</td>
-				  </tr>";
-        
-        foreach ($data as $index => $value)
-        {
-                $html .= "<tr>
-						<td style=\"text-align: ;\">&nbsp;</td>
-                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
-                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
-                        <td style=\"text-align: right;\">".number_format($value->LuasTotal,0,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
-                      </tr>";
-                $total_perolehan += ($value->NilaiPerolehan);
-                $total_perolehan_kel += ($value->NilaiPerolehan);
-        }
-		$html .="<tr>
-				<td></td>
-				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
-				<td></td>
-				<td></td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
-			</tr>";
-		$total_perolehan_kel= 0;
-    } 
-	$no++;
-}
-
-$html .="
-			
-			<tr>
-				<td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>";   
-	$total_perolehan = 0;	
-    $hasil_html[]=$html;
-	return $hasil_html;
-
-}		
-
-public function retrieve_html_asetTetapMesin($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-
-$detailSatker=$this->get_satker($skpd_id);
-// pr($detailSatker);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
@@ -693,10 +425,149 @@ if($hit == 1){
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasTotal,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
 }
+return $hasil_html;
 
-$html = "<html>
+
+}		
+
+public function retrieve_html_asetTetapMesin($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
      http-equiv=\"content-type\">
@@ -717,7 +588,10 @@ $html = "<html>
         </tr>
       </tbody>
     </table>
-    <br>
+    <br>";
+    
+    $html .="
+    
     <table style=\"text-align: left; width: 100%;\" border=\"0\"
      cellpadding=\"2\" cellspacing=\"2\">
       <tbody>
@@ -731,157 +605,7 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head 
-      </tbody>
-    </table>
-    <br>
-    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
-      <thead>
-        <tr>
-          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
-        </tr>
-        </thead>
-        <tbody>";
-		
-$index_id = 0;
-$no =1;
-foreach ($dataArr as $satker_id => $value)
-{
-	$NamaSatker = $this->get_NamaSatker($satker_id);
-	$gol= '02';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-	$html.="<tr>
-				<td style=\"text-align: center; font-weight: bold;\">$no</td>
-				<td style=\"text-align: left; font-weight: bold;\">$NamaSatker</td>
-				<td style=\"text-align: center; font-weight: bold;\">$TotalJmlFix</td>
-				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			  </tr>";
-    foreach ($value as $keys => $data)
-    {	
-		$html .= "
-				  <tr>
-					<td style=\"text-align: center; font-weight: bold;\"></td>
-					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
-					<td style=\"text-align: center;\">&nbsp; </td>
-					<td style=\"text-align: center;\">&nbsp;</td>
-				  </tr>";
-        
-        foreach ($data as $index => $value)
-        {
-                $html .= "<tr>
-						<td style=\"text-align: ;\">&nbsp;</td>
-                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
-                        <td style=\"text-align: center;\">&nbsp;$value->jumlah</td>
-                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
-                      </tr>";
-                $total += ($value->jumlah);
-                $total_perolehan += ($value->Nilai);
-				$total_kel += ($value->jumlah);
-                $total_perolehan_kel += ($value->Nilai);
-				// $tot_perkel=
-        }
-		$html .="<tr>
-				<td></td>
-				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
-				<td style=\"text-align: center; font-weight: bold;\">".number_format($total_kel,0,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
-			</tr>";
-		$total_kel = 0;
-		$total_perolehan_kel= 0;	
-    }
-	
-	$no++;	
-}
-$html .="
-			
-			<tr>
-				<td colspan = \"2\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
-				<td style=\"text-align: center; font-weight: bold;\">".number_format($total,0,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>";   
-	$total_perolehan = 0;	
-    $hasil_html[]=$html;
-return $hasil_html;
-
-
-}		
-
-public function retrieve_html_asetTetapGedung($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-// pr($dataArr);
-// exit;
-$detailSatker=$this->get_satker($skpd_id);
-// pr($detailSatker);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
 		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
@@ -900,10 +624,146 @@ if($hit == 1){
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: center;\">&nbsp;$value->jumlah</td>
+                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->Nilai);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"3\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
 }
+return $hasil_html;
 
-$html = "<html>
+
+}		
+
+public function retrieve_html_asetTetapGedung($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
      http-equiv=\"content-type\">
@@ -941,153 +801,7 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head 
-      </tbody>
-    </table>
-    <br>
-	<table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
-      <thead>
 		<tr>
-          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
-        </tr>
-        </thead>
-        <tbody>";
-$index_id = 0;
-$no =1;
-foreach ($dataArr as $satker_id => $value)
-{
-	$NamaSatker = $this->get_NamaSatker($satker_id);
-	$gol= '03';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-    foreach ($value as $keys => $data)
-    {	
-		 $html .= "<tr>
-						<td style=\"text-align: center; font-weight: bold;\">$no</td>
-						<td  style=\"font-weight: bold;\">$NamaSatker</td>
-						<td>&nbsp;</td>
-						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			       </tr>
-				  <tr>
-					<td style=\"text-align: center;\">&nbsp;</td>
-					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
-					<td style=\"text-align: center;\">&nbsp; </td>
-					<td style=\"text-align: left; font-weight: bold;\"></td>
-					<td style=\"text-align: center;\">&nbsp;</td>
-				  </tr>";
-        
-        foreach ($data as $index => $value)
-        {
-                $html .= "<tr>
-						<td style=\"text-align: ;\">&nbsp;</td>
-                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
-                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
-                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
-                      </tr>";
-                $total_perolehan += ($value->NilaiPerolehan);
-                $total_perolehan_kel += ($value->NilaiPerolehan);
-        }
-		$html .="<tr>
-				<td></td>
-				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
-				<td></td>
-				<td></td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
-			</tr>";
-		$total_perolehan_kel= 0;
-    } 
-	$no++;
-}
-
-$html .="
-			
-			<tr>
-				<td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>";   
-	$total_perolehan = 0;	
-    $hasil_html[]=$html;
-	return $hasil_html;
-}		
-		
-public function retrieve_html_asetTetapJaringan($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-// pr($dataArr);
-// exit;
-$detailSatker=$this->get_satker($skpd_id);
-// pr($detailSatker);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
@@ -1106,10 +820,149 @@ if($hit == 1){
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
 }
+return $hasil_html;
 
-$html = "<html>
+
+}		
+		
+public function retrieve_html_asetTetapJaringan($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
      http-equiv=\"content-type\">
@@ -1147,152 +1000,7 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head 
-      </tbody>
-    </table>
-    <br>
-	<table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
-      <thead>
 		<tr>
-          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
-        </tr>
-        </thead>
-        <tbody>";
-$index_id = 0;
-$no =1;
-foreach ($dataArr as $satker_id => $value)
-{
-	$NamaSatker = $this->get_NamaSatker($satker_id);
-	$gol= '04';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-    foreach ($value as $keys => $data)
-    {	
-		 $html .= "<tr>
-						<td style=\"text-align: center; font-weight: bold;\">$no</td>
-						<td  style=\"font-weight: bold;\">$NamaSatker</td>
-						<td>&nbsp;</td>
-						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			       </tr>
-				  <tr>
-					<td style=\"text-align: center;\">&nbsp;</td>
-					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
-					<td style=\"text-align: center;\">&nbsp; </td>
-					<td style=\"text-align: left; font-weight: bold;\"></td>
-					<td style=\"text-align: center;\">&nbsp;</td>
-				  </tr>";
-        
-        foreach ($data as $index => $value)
-        {
-                $html .= "<tr>
-						<td style=\"text-align: ;\">&nbsp;</td>
-                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
-                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
-                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
-                      </tr>";
-                $total_perolehan += ($value->NilaiPerolehan);
-                $total_perolehan_kel += ($value->NilaiPerolehan);
-        }
-		$html .="<tr>
-				<td></td>
-				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
-				<td></td>
-				<td></td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
-			</tr>";
-		$total_perolehan_kel= 0;
-    } 
-	$no++;
-}
-
-$html .="
-			
-			<tr>
-				<td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>";   
-	$total_perolehan = 0;	
-    $hasil_html[]=$html;
-	return $hasil_html;
-}		
-	
-public function retrieve_html_asetTetapLainnya($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-
-$detailSatker=$this->get_satker($skpd_id);
-// pr($detailSatker);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
@@ -1311,10 +1019,149 @@ if($hit == 1){
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasJaringan,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
 }
+return $hasil_html;
 
-$html = "<html>
+
+}		
+	
+public function retrieve_html_asetTetapLainnya($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
      http-equiv=\"content-type\">
@@ -1329,13 +1176,16 @@ $html = "<html>
      style=\"width: 80px; height: 85px;\" alt=\"\"
      src=\"$gambar\"></td>
           <td style=\"width: 902px; text-align: center;\">
-          <h3>DAFTAR ASET TETAP LAINNYA</h3>
-          <h3>MESIN</h3>
+          <h3>DAFTAR ASET TETAP</h3>
+          <h3>ASET TETAP LAINNYA</h3>
           </td>
         </tr>
       </tbody>
     </table>
-    <br>
+    <br>";
+    
+    $html .="
+    
     <table style=\"text-align: left; width: 100%;\" border=\"0\"
      cellpadding=\"2\" cellspacing=\"2\">
       <tbody>
@@ -1349,158 +1199,7 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head 
-      </tbody>
-    </table>
-    <br>
-    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
-      <thead>
-        <tr>
-          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
-        </tr>
-        </thead>
-        <tbody>";
-		
-$index_id = 0;
-$no =1;
-foreach ($dataArr as $satker_id => $value)
-{
-	$NamaSatker = $this->get_NamaSatker($satker_id);
-	$gol= '05';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-	$html.="<tr>
-				<td style=\"text-align: center; font-weight: bold;\">$no</td>
-				<td style=\"text-align: left; font-weight: bold;\">$NamaSatker</td>
-				<td style=\"text-align: center; font-weight: bold;\">$TotalJmlFix</td>
-				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			  </tr>";
-    foreach ($value as $keys => $data)
-    {	
-		$html .= "
-				  <tr>
-					<td style=\"text-align: center; font-weight: bold;\"></td>
-					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
-					<td style=\"text-align: center;\">&nbsp; </td>
-					<td style=\"text-align: center;\">&nbsp;</td>
-				  </tr>";
-        
-        foreach ($data as $index => $value)
-        {
-                $html .= "<tr>
-						<td style=\"text-align: ;\">&nbsp;</td>
-                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
-                        <td style=\"text-align: center;\">&nbsp;$value->jumlah</td>
-                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
-                      </tr>";
-                $total += ($value->jumlah);
-                $total_perolehan += ($value->Nilai);
-				$total_kel += ($value->jumlah);
-                $total_perolehan_kel += ($value->Nilai);
-				// $tot_perkel=
-        }
-		$html .="<tr>
-				<td></td>
-				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
-				<td style=\"text-align: center; font-weight: bold;\">".number_format($total_kel,0,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
-			</tr>";
-		$total_kel = 0;
-		$total_perolehan_kel= 0;	
-    }
-	
-	$no++;	
-}
-$html .="
-			
-			<tr>
-				<td colspan = \"2\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
-				<td style=\"text-align: center; font-weight: bold;\">".number_format($total,0,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>";   
-	$total_perolehan = 0;	
-    $hasil_html[]=$html;
-return $hasil_html;
-
-
-
-}		
-
-public function retrieve_html_asetTetapkdp($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-// pr($dataArr);
-// exit;
-$detailSatker=$this->get_satker($skpd_id);
-// pr($detailSatker);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
 		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
@@ -1519,10 +1218,146 @@ if($hit == 1){
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: center;\">&nbsp;$value->jumlah</td>
+                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->Nilai);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"3\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
 }
+return $hasil_html;
 
-$html = "<html>
+
+}		
+
+public function retrieve_html_asetTetapkdp($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
      http-equiv=\"content-type\">
@@ -1560,151 +1395,7 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head 
-      </tbody>
-    </table>
-    <br>
-	<table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
-      <thead>
 		<tr>
-          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
-          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
-        </tr>
-        </thead>
-        <tbody>";
-$index_id = 0;
-$no =1;
-foreach ($dataArr as $satker_id => $value)
-{
-	$NamaSatker = $this->get_NamaSatker($satker_id);
-	$gol= '06';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-    foreach ($value as $keys => $data)
-    {	
-		 $html .= "<tr>
-						<td style=\"text-align: center; font-weight: bold;\">$no</td>
-						<td  style=\"font-weight: bold;\">$NamaSatker</td>
-						<td>&nbsp;</td>
-						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			       </tr>
-				  <tr>
-					<td style=\"text-align: center;\">&nbsp;</td>
-					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
-					<td style=\"text-align: center;\">&nbsp; </td>
-					<td style=\"text-align: left; font-weight: bold;\"></td>
-					<td style=\"text-align: center;\">&nbsp;</td>
-				  </tr>";
-        
-        foreach ($data as $index => $value)
-        {
-                $html .= "<tr>
-						<td style=\"text-align: ;\">&nbsp;</td>
-                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
-                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
-                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
-                      </tr>";
-                $total_perolehan += ($value->NilaiPerolehan);
-                $total_perolehan_kel += ($value->NilaiPerolehan);
-        }
-		$html .="<tr>
-				<td></td>
-				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
-				<td></td>
-				<td></td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
-			</tr>";
-		$total_perolehan_kel= 0;
-    } 
-	$no++;
-}
-
-$html .="
-			
-			<tr>
-				<td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>";   
-	$total_perolehan = 0;	
-    $hasil_html[]=$html;
-	return $hasil_html;
-}		
-
-public function retrieve_html_asetLainnya($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-$detailSatker=$this->get_satker($skpd_id);
-// pr($detailSatker);
-$NoBidang = $detailSatker[0];
-$NoUnitOrganisasi = $detailSatker[1];
-$NoSubUnitOrganisasi = $detailSatker[2];
-$NoUPB = $detailSatker[3];
-
-if($NoBidang !=""){
-	$paramKodeLokasi = $NoBidang;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != ""){
-	$paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-}
-if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-}
-$Bidang = $detailSatker[4][0];
-$UnitOrganisasi = $detailSatker[4][1];
-$SubUnitOrganisasi = $detailSatker[4][2];
-$UPB = $detailSatker[4][3];
-
-$ex = explode('.',$skpd_id);
-$hit = count($ex);
-
-if($hit == 1){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-}elseif($hit == 2){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 3){
-	$head = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-}elseif($hit == 4){
-	$head = "<tr>
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
@@ -1723,10 +1414,149 @@ if($hit == 1){
           <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td style=\"text-align: center; font-weight: bold; width: \">No</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+        </thead>
+        <tbody>";
+    
+    $no =1;
+    
+    foreach ($value as $keys => $data)
+    {	
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
+					<td style=\"text-align: center;\">&nbsp; </td>
+					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+                $html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                      </tr>";
+                $total_perolehan += ($value->NilaiPerolehan);
+        }
+        $no++;
+        
+    }
+		$html .="
+			
+			<tr>
+				<td colspan = \"4\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>";   
+	$total_perolehan = 0;	
+    $hasil_html[]=$html;
 }
+return $hasil_html;
 
-$html = "<html>
+
+}		
+
+public function retrieve_html_asetLainnya($dataArr,$gambar)
+{
+include ('../../../function/tanggal/tanggal.php');
+//$index = 0;
+
+// pr($dataArr);
+// exit;
+$index_id = 0;
+foreach ($dataArr as $satker_id => $value)
+{
+	// pr($satker_id);
+	// echo "satker ".$satker_id;
+	
+	//==add new==//
+   $detailSatker=$this->get_satker($satker_id);
+   $NoBidang = $detailSatker[0];
+   $NoUnitOrganisasi = $detailSatker[1];
+   $NoSubUnitOrganisasi = $detailSatker[2];
+   $NoUPB = $detailSatker[3];
+   
+   if($NoBidang !=""){
+		$paramKodeLokasi = $NoBidang;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+		$paramKodeLokasi = $NoUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+   }
+   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+   }
+   $Bidang = $detailSatker[4][0];
+   $UnitOrganisasi = $detailSatker[4][1];
+   $SubUnitOrganisasi = $detailSatker[4][2];
+   $UPB = $detailSatker[4][3];
+   // $noReg=substr($row->NomorReg,0,17);
+   // $noKodeLokasi=substr($row->NomorReg,0,5);
+   //==end new==//
+    list ($nip_pengurus, $nama_jabatan_pengurus) = $this->get_jabatan($satker_id,'3');
+    list ($nip_pengguna, $nama_jabatan_pengguna) = $this->get_jabatan($satker_id,'4');
+    if($nip_pengurus!="")
+    {
+        $nip_pengurus_fix=$nip_pengurus;
+    }
+    else
+    {
+        $nip_pengurus_fix='........................................';
+    }
+
+    if($nip_pengguna!="")
+    {
+        $nip_pengguna_fix=$nip_pengguna;
+    }
+    else
+    {
+        $nip_pengguna_fix='........................................';
+    }
+
+    if($nama_jabatan_pengurus!="")
+    {
+        $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+    }
+    else
+    {
+        $nama_jabatan_pengurus_fix='........................................';
+    }
+
+    if($nama_jabatan_pengguna!="")
+    {
+        $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+    }
+    else
+    {
+        $nama_jabatan_pengguna_fix='........................................';
+    }
+
+
+
+// foreach ($data_array as $key => $value)
+// {
+    
+    $html = "<html>
         <head>
       <meta content=\"text/html; charset=UTF-8\"
      http-equiv=\"content-type\">
@@ -1741,13 +1571,16 @@ $html = "<html>
      style=\"width: 80px; height: 85px;\" alt=\"\"
      src=\"$gambar\"></td>
           <td style=\"width: 902px; text-align: center;\">
-          <h3>DAFTAR ASET TETAP</h3>
+          <h3>DAFTAR ASET </h3>
           <h3>ASET LAINNYA</h3>
           </td>
         </tr>
       </tbody>
     </table>
-    <br>
+    <br>";
+    
+    $html .="
+    
     <table style=\"text-align: left; width: 100%;\" border=\"0\"
      cellpadding=\"2\" cellspacing=\"2\">
       <tbody>
@@ -1761,7 +1594,26 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
           <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
         </tr>
-		$head 
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>
       </tbody>
     </table>
     <br>
@@ -1775,28 +1627,14 @@ $html = "<html>
         </tr>
         </thead>
         <tbody>";
-		
-$index_id = 0;
-$no =1;
-foreach ($dataArr as $satker_id => $value)
-{
-	$NamaSatker = $this->get_NamaSatker($satker_id);
-	$gol= ' ';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-	$html.="<tr>
-				<td style=\"text-align: center; font-weight: bold;\">$no</td>
-				<td style=\"text-align: left; font-weight: bold;\">$NamaSatker</td>
-				<td style=\"text-align: center; font-weight: bold;\">$TotalJmlFix</td>
-				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			  </tr>";
+    
+    $no =1;
+    
     foreach ($value as $keys => $data)
     {	
-		$html .= "
-				  <tr>
-					<td style=\"text-align: center; font-weight: bold;\"></td>
-					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
+		 $html .= "<tr>
+					<td style=\"text-align: center;\">$no</td>
+					<td style=\"text-align: left; font-weight: bold;\">$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
 					<td style=\"text-align: center;\">&nbsp;</td>
 				  </tr>";
@@ -1805,34 +1643,20 @@ foreach ($dataArr as $satker_id => $value)
         {
                 $html .= "<tr>
 						<td style=\"text-align: ;\">&nbsp;</td>
-                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: ;\">&nbsp;- $value->Uraian</td>
                         <td style=\"text-align: center;\">&nbsp;$value->jml</td>
                         <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
                       </tr>";
-                $total += ($value->jml);
                 $total_perolehan += ($value->Nilai);
-				$total_kel += ($value->jml);
-                $total_perolehan_kel += ($value->Nilai);
-				// $tot_perkel=
         }
-		$html .="<tr>
-				<td></td>
-				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
-				<td style=\"text-align: center; font-weight: bold;\">".number_format($total_kel,0,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
-			</tr>";
-		$total_kel = 0;
-		$total_perolehan_kel= 0;	
+        $no++;
+        
     }
-	
-	$no++;	
-}
-$html .="
+		$html .="
 			
 			<tr>
-				<td colspan = \"2\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
-				<td style=\"text-align: center; font-weight: bold;\">".number_format($total,0,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
+				<td colspan = \"3\" align=\"center\">TOTAL</td>
+				<td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
 			</tr>
 			</table>
 			</tbody>
@@ -1840,6 +1664,7 @@ $html .="
 	</html>";   
 	$total_perolehan = 0;	
     $hasil_html[]=$html;
+}
 return $hasil_html;
 
 
@@ -22136,7 +21961,7 @@ public function get_satker($satker){
 		}
     }
 	$parameter ="";
-	if($KodeSektor != ""){
+	/*if($KodeSektor != ""){
 		$parameter = 1;
 		// echo "lv1";
 	}
@@ -22147,7 +21972,7 @@ public function get_satker($satker){
 	if($KodeSektor != "" && $KodeSatker != "" && $KodeUnit !=""){
 		// echo "lv3";
 		$parameter = 3;
-	}
+	}*/
 	if($KodeSektor != "" && $KodeSatker != "" && $KodeUnit !="" && $Gudang){
 		// echo "lv4";
 		$parameter = 4;
@@ -22155,11 +21980,11 @@ public function get_satker($satker){
 	// echo "parameter =".$parameter;	
 	// exit;
 	switch($parameter){
-		case 1:
+		/*case 1:
 			// echo "lv1";
 			//cek lvl 1		
 				$querylv1="select KodeSektor,KodeSatker,KodeUnit,Gudang,NamaSatker from satker 
-						where kode='$satker' 
+						where Satker_ID='$satker' 
 						AND KodeSektor is not null 
 						AND KodeSatker is null 
 						AND KodeUnit is null 
@@ -22175,7 +22000,7 @@ public function get_satker($satker){
 						//cek lvl 2
 						if($KodeSektor != ""){
 							$query2="select KodeSektor,KodeSatker,KodeUnit,Gudang,NamaSatker from satker 
-									where kode='$satker' 
+									where Satker_ID='$satker' 
 									AND KodeSektor = '$KodeSektor'
 									AND KodeSatker IS NULL
 									AND KodeUnit IS NULL
@@ -22199,7 +22024,7 @@ public function get_satker($satker){
 			// echo "lv2";
 				//cek lvl 2		
 				$querylv2="select KodeSektor,KodeSatker,KodeUnit,Gudang,NamaSatker from satker 
-						where kode='$satker' 
+						where Satker_ID='$satker' 
 						AND KodeSektor is not null 
 						AND KodeSatker is not null  
 						AND KodeUnit is null 
@@ -22240,7 +22065,7 @@ public function get_satker($satker){
 			// echo "masukkk";	
 				//cek lvl 3		
 				$querylv3="select KodeSektor,KodeSatker,KodeUnit,Gudang,NamaSatker from satker 
-						where kode='$satker' 
+						where Satker_ID='$satker' 
 						AND KodeSektor is not null 
 						AND KodeSatker is not null  
 						AND KodeUnit is not null 
@@ -22278,7 +22103,7 @@ public function get_satker($satker){
 							}
 						
 				}
-		break;
+		break;*/
 		case 4:
 			// echo "lv4";
 				//cek lvl 4		
@@ -22287,8 +22112,7 @@ public function get_satker($satker){
 						AND KodeSektor is not null 
 						AND KodeSatker is not null  
 						AND KodeUnit is not null 
-						AND Gudang is not null 
-						AND Kd_Ruang is null		
+						AND Gudang is not null   
 						ORDER BY Satker_ID ASC";
 				// pr($query);
 				$resultlv4=$this->retrieve_query($querylv4);
@@ -22306,8 +22130,7 @@ public function get_satker($satker){
 									where KodeSektor = '$KodeSektor'
 									AND (KodeSatker = '$KodeSatker' OR KodeSatker IS NULL) 
 									AND (KodeUnit = '$KodeUnit' OR KodeUnit IS NULL)
-									AND (Gudang = '$Gudang' OR Gudang IS NULL)
-									AND Kd_Ruang is null										
+									AND (Gudang = '$Gudang' OR Gudang IS NULL)		
 									ORDER BY Satker_ID ASC";	
 						}
 						// pr($query2);
@@ -22366,7 +22189,7 @@ public function get_hak_pakai($hak_tanah){
     return $hak;
      }
     
-	public function get_mutasi($noRegister,$kodeKelompok,$kodeLokasi,$kodeSatker){
+public function get_mutasi($noRegister,$kodeKelompok,$kodeLokasi,$kodeSatker){
 	$split = explode("-", $noRegister);
 	$awal = $split[0];
 	$akhir = end($split);
@@ -22390,13 +22213,13 @@ public function get_hak_pakai($hak_tanah){
 		}
 		$AsetIdFix = implode(',',$AsetId);
 	}
-	/*echo "<br>";
+	echo "<br>";
 	echo $query;
 	echo "<br>";
 	pr($AsetId);
 	echo "<br>";
 	echo "asetidfix=".$AsetIdFix;
-	echo "<br>";*/
+	echo "<br>";
 	// echo "asetid =".$AsetId;*/
 	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerTujuan ='$kodeSatker'  ";
 	$resultDataTambah=$this->retrieve_query($queryDataTambah);
@@ -22413,13 +22236,13 @@ public function get_hak_pakai($hak_tanah){
 			$getDataKurang=$value->jml;
 		}
 	}
-	/*echo $queryDataTambah;
+	echo $queryDataTambah;
 	echo "<br>";
 	echo "hasil tambah=".$getDataTambah;
 	echo "<br>";
 	echo $queryDataKurang;
 	echo "<br>";
-	echo "hasil kurang=".$getDataKurang;*/
+	echo "hasil kurang=".$getDataKurang;
 	// exit;
 	return array($getDataKurang,$getDataTambah);
 	}	
@@ -22440,308 +22263,9 @@ public function get_hak_pakai($hak_tanah){
 		}
 	return $Nilai;
 	}
-	
-	public function get_NamaSatker($satker_id){
-		$query = "select NamaSatker from satker where kode ='$satker_id' and Kd_Ruang is null";
-		
-		$result=$this->retrieve_query($query);
-		if($result!=""){
-			foreach($result as $value){
-				$NamaSatker=$value->NamaSatker;
-			}
-		}
-	return $NamaSatker;
-	
-	}
-	
-	public function get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
-		if($gol == '01'){
-			$paramGol ="tanah";
-			$kondisi ="";
-		}elseif($gol == '02'){
-			$paramGol ="mesin";
-			$kondisi ="and kondisi != 3";
-		}elseif($gol == '03'){
-			$paramGol ="bangunan";
-			$kondisi ="and kondisi != 3";
-		}elseif($gol == '04'){
-			$paramGol ="jaringan";
-			$kondisi ="and kondisi != 3";
-		}elseif($gol == '05'){
-			$paramGol ="asetlain";
-			$kondisi ="and kondisi != 3";
-		}elseif($gol == '06'){
-			$paramGol ="kdp";
-			$kondisi ="and kondisi != 3";
-		}else{
-			$paramGol ="aset";
-			$kondisi ="and kondisi = 3";
-		}
-		$tglDefault = '2008-01-01';
-		$thnDefault ="2008";
-			
-		$tglAwalDefault = $tglawalperolehan;
-		$ceckTglAw = explode ('-',$tglAwalDefault);
-		$thnceck = $ceckTglAw[0];
-		
-		$tglAkhirDefault = $tglakhirperolehan;
-		$ceckTgl = explode ('-',$tglAkhirDefault);
-		$thnFix = $ceckTgl[0];
-		
-		if($gol == '01'){
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE kodeSatker like '$satker_id%'  
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
-		}elseif($gol == '02'){
-			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3'
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
-			
-			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
-			}else{
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
-						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault'
-						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and NilaiPerolehan >= 300000 and kodeLokasi like '12%' ";
-			}
-		}elseif($gol == '03'){
-			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3'
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
-			
-			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
-			}else{
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
-						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
-						WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and NilaiPerolehan >= 10000000 and kodeLokasi like '12%' ";
-			}
-		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-			WHERE kodeSatker like '$satker_id%' and kondisi != '3' 
-			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
-			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
-			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' ";
-		}else{
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
-			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
-			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
-			and StatusValidasi =1 and kodeLokasi like '12%' ";
-		}
-		
-		// echo "query =".$query;
-		// echo "<br>";
-		$result=$this->retrieve_query($query);
-		// pr($result);
-		// exit;	
-		if($result!=""){
-			foreach($result as $value){
-				$Nilai=$value->nilai;
-				$jml=$value->jml;
-				
-				$NilaiFix += $Nilai;
-				$jmlFix += $jml;
-			}
-		}
-		// echo "NilaiFix =".$NilaiFix;
-		// echo "<br>";
-		// echo "jmlFix =".$jmlFix;
-	return array($NilaiFix,$jmlFix);
-	
-	}
 
-    public function get_TotalNilaiNeraca($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
-		if($gol == '01'){
-			$paramGol ="tanah";
-			$kondisi ="";
-			$kodeKelompok ="kodeKelompok like '01%' and";
-		}elseif($gol == '02'){
-			$paramGol ="mesin";
-			$kondisi ="and kondisi != 3";
-			$kodeKelompok ="kodeKelompok like '02%' and";
-		}elseif($gol == '03'){
-			$paramGol ="bangunan";
-			$kondisi ="and kondisi != 3";
-			$kodeKelompok ="kodeKelompok like '03%' and";
-		}elseif($gol == '04'){
-			$paramGol ="jaringan";
-			$kondisi ="and kondisi != 3";
-			$kodeKelompok ="kodeKelompok like '04%' and";
-		}elseif($gol == '05'){
-			$paramGol ="asetlain";
-			$kondisi ="and kondisi != 3";
-			$kodeKelompok ="kodeKelompok like '05%' and";
-		}elseif($gol == '06'){
-			$paramGol ="kdp";
-			$kondisi ="and kondisi != 3";
-			$kodeKelompok ="kodeKelompok like '06%' and";
-		}else{
-			$paramGol ="aset";
-			$kondisi ="and kondisi = 3";
-			$kodeKelompok ="kodeKelompok like '07%' and";
-		}
-		$tglDefault = '2008-01-01';
-		$thnDefault ="2008";
-			
-		$tglAwalDefault = $tglawalperolehan;
-		$ceckTglAw = explode ('-',$tglAwalDefault);
-		$thnceck = $ceckTglAw[0];
-		
-		$tglAkhirDefault = $tglakhirperolehan;
-		$ceckTgl = explode ('-',$tglAkhirDefault);
-		$thnFix = $ceckTgl[0];
-		// kodeKelompok like '03.11%'
-		$KodeKa = "OR kodeKA != 0";
-		$KodeKaCondt1 = "AND kodeKA != 0";
-		if($gol == '01'){
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						";
-		}elseif($gol == '02'){
-			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1";
-			
-			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 300000 $KodeKa)";
-			}else{
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1
-						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and kodeLokasi like '12%' 
-						and (NilaiPerolehan >= 300000 $KodeKa)";
-			}
-		}elseif($gol == '03'){
-			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1";
-			
-			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 10000000 $KodeKa)";
-			}else{
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1
-						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
-						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and kodeLokasi like '12%' 
-						and (NilaiPerolehan >= 10000000 $KodeKa)";
-			}
-		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-			WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
-			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
-			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
-			";
-		}else{
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
-			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
-			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
-			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1
-			";
-		}
-		
-		// echo "query =".$query;
-		// echo "<br>";
-		$result=$this->retrieve_query($query);
-		// pr($result);
-		// exit;	
-		if($result!=""){
-			foreach($result as $value){
-				$Nilai=$value->nilai;
-				$jml=$value->jml;
-				
-				$NilaiFix += $Nilai;
-				$jmlFix += $jml;
-				
-				$tempAllNilaiFix [] = $NilaiFix;
-				$tempAlljmlFix [] = $jmlFix;
-				
-			}
-		}
-		
-		// pr($tempAllNilaiFix);
-		// pr($tempAlljmlFix);
-		// echo "NilaiFix =".$NilaiFix;
-		// echo "<br>";
-		// echo "jmlFix =".$jmlFix;
-	return array($NilaiFix,$jmlFix);
-	
-	} 
+
+     
      
  }
      

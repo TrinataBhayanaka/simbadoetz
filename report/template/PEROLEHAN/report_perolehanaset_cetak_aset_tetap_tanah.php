@@ -14,7 +14,12 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $tab = $_GET['tab'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tipe=$_GET['tipe_file'];
 // PR($_GET);
@@ -42,7 +47,7 @@ $satker = $skpd_id;
 		
 	}
 // pr($get_satker);
-	
+// exit;	
 $paramGol = '01';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
 // pr($resultParamGol);
@@ -51,7 +56,7 @@ $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperole
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_asetTetapTanah($resultParamGol,$gambar);
+$html=$REPORT->retrieve_html_asetTetapTanah($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

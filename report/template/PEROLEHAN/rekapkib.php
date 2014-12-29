@@ -8,6 +8,7 @@ $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
 // $tahun = $_REQUEST['tahun'];
 $skpd_id = $_REQUEST['kodeSatker7'];
+$tglcetak = $_REQUEST['tglCetakRekapKib'];
 // $kelompok=$_REQUEST['bidang'];
 $tipe=$_REQUEST['tipe_file'];
 $rekap = $_REQUEST['rekap'];
@@ -26,7 +27,7 @@ $data=array(
 // print_r($_POST);
 // exit;
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&rekap=$rekap&tipe_file=";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&rekap=$rekap&tglcetak=$tglcetak&tipe_file=";
 // echo $paramater_url;
 if(isset($rekap))
 {

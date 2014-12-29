@@ -98,7 +98,7 @@ $menu_id = 1;
 							</li>
 						</ul>
 							<!-- Hidden -->
-							<input type="hidden" name="id" value="<?=$_GET['id']?>" >
+							<input type="hidden" name="idsp2d" value="<?=$_GET['idsp2d']?>" >
 				
 					
 			</div>

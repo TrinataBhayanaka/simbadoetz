@@ -12,7 +12,13 @@ require ('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
+$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
@@ -33,25 +39,26 @@ $REPORT->set_data($data);
 
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-$satker = $skpd_id;
+// $satker = $skpd_id;
 
-	if ($tglawalperolehan !='' && $tglakhirperolehan)
+	/*if ($tglawalperolehan !='' && $tglakhirperolehan)
 	{
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
-	}
+	}*/
 // pr($get_satker);
 // exit;	
-$resultParamGol = $REPORT->ceckneraca($get_satker,$tglawalperolehan,$tglakhirperolehan);	
-	
+// $resultParamGol = $REPORT->ceckneraca($get_satker,$tglawalperolehan,$tglakhirperolehan);	
+$resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan);	
+// exit;	
 //retrieve html
-$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar);
-/*$count = count($html);
+$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
-exit;*/
+exit;
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();

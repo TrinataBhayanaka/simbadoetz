@@ -1,7 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
-
+include ('../../../function/tanggal/tanggal.php');
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
 define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or absolute URI - not a file system path
@@ -11,8 +11,14 @@ require_once('../../../function/mpdf/mpdf.php');
 
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
+$tglcetak = $_GET['tglcetak'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kir = $_GET['kir'];
@@ -27,6 +33,26 @@ $data=array(
 	"kir"=>$kir
 );
 
+function arrayToObject($result_query) {
+	if (!is_array($result_query)) {
+		return $result_query;
+	}
+	
+	$object = new stdClass();
+	if (is_array($result_query) && count($result_query) > 0) {
+		foreach ($result_query as $name=>$value) {
+			// $name = strtolower(trim($name));
+			// if (!empty($name)) {
+				$object->$name = arrayToObject($value);
+			// }
+		}
+		return $object;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -38,14 +64,23 @@ $query=$REPORT->list_query($data);
 // pr($query);
 // exit;
 //mengenerate query
-$result_query=$REPORT->retrieve_query($query);
-// pr($result_query);
+$result_query=$REPORT->QueryBinv($query);
+
+$result = arrayToObject($result_query);
+// pr($result);
 // exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
+
 //retrieve html
-$html=$REPORT->retrieve_html_kir($result_query, $gambar);
+$html=$REPORT->retrieve_html_kir($result, $gambar, $tanggalCetak);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 
