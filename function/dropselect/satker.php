@@ -68,7 +68,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
                		dropdownAutoWidth: 'true',
-				    minimumInputLength: 2,
+				    <?=($_SESSION['ses_satkerkode']=="") ? 'minimumInputLength: 2,' : ''?>
 				    ajax: {
 				        url: "<?=$url_rewrite?>/function/api/satker.php",
 				        dataType: 'json',
@@ -77,7 +77,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        data: function (term) {
 				            return {
 				            	free: true,
-				                sess: '',
+				                sess: '<?=$_SESSION['ses_satkerkode']?>',
 				                term: term
 				            };
 				        },
