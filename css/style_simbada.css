@@ -318,7 +318,7 @@ nav li h3{
 	padding:0px 20px;
 	margin-bottom:0px;
 	margin-top:0px;
-	font-size:14px;
+	font-size:16px;
 	/*border-top-right-radius:2px;
 	border-bottom-right-radius:2px;*/
 }
@@ -328,7 +328,7 @@ nav li li{
 	border-bottom:1px solid #02432f;
 	border-left:2px solid #B1B3B2;
 	border-right:2px solid #003C2A;
-	font-size:12px;
+	font-size:14px;
 	padding:5px 20px;
 }
 nav li li table{
