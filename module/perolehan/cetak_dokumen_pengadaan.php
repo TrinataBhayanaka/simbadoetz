@@ -68,7 +68,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#rbdp3" data-toggle="tab">Daftar Aset Tetap - Konstruksi Dalam Pengerjaan</a></li>
 						<li><a href="#lainnya" data-toggle="tab">Daftar Aset Lainnya</a></li>
 						<li><a href="#neraca" data-toggle="tab">Rekapitulasi Barang Ke Neraca</a></li>
-						<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>
+						<!--<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>-->
 						<!--<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>-->
 					  </ul>
 					  
@@ -496,7 +496,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						<div class="tab-pane" id="lapmutasiskpd">
+						<!--<div class="tab-pane" id="lapmutasiskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Mutasi Barang Antar SKPD</div>
 						</div>
@@ -530,7 +530,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						</div>
+						</div>-->
 			</div> 
 			
 			

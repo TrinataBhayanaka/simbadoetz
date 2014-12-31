@@ -965,15 +965,16 @@ foreach ($dataArr as $satker_id => $value)
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+		$html.="<tr>
+					<td style=\"text-align: center; font-weight: bold;\">$no</td>
+					<td  style=\"font-weight: bold;\">$NamaSatker</td>
+					<td>&nbsp;</td>
+					<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
+					<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+			   </tr>";
     foreach ($value as $keys => $data)
     {	
-		 $html .= "<tr>
-						<td style=\"text-align: center; font-weight: bold;\">$no</td>
-						<td  style=\"font-weight: bold;\">$NamaSatker</td>
-						<td>&nbsp;</td>
-						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			       </tr>
+		 $html .= "
 				  <tr>
 					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
@@ -1171,16 +1172,16 @@ foreach ($dataArr as $satker_id => $value)
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-    foreach ($value as $keys => $data)
+    $html.="<tr>
+				<td style=\"text-align: center; font-weight: bold;\">$no</td>
+				<td  style=\"font-weight: bold;\">$NamaSatker</td>
+				<td>&nbsp;</td>
+				<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+		   </tr>";
+	foreach ($value as $keys => $data)
     {	
 		 $html .= "<tr>
-						<td style=\"text-align: center; font-weight: bold;\">$no</td>
-						<td  style=\"font-weight: bold;\">$NamaSatker</td>
-						<td>&nbsp;</td>
-						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			       </tr>
-				  <tr>
 					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
@@ -1584,16 +1585,16 @@ foreach ($dataArr as $satker_id => $value)
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	$html.="<tr>
+				<td style=\"text-align: center; font-weight: bold;\">$no</td>
+				<td  style=\"font-weight: bold;\">$NamaSatker</td>
+				<td>&nbsp;</td>
+				<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+		   </tr>";
     foreach ($value as $keys => $data)
     {	
 		 $html .= "<tr>
-						<td style=\"text-align: center; font-weight: bold;\">$no</td>
-						<td  style=\"font-weight: bold;\">$NamaSatker</td>
-						<td>&nbsp;</td>
-						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			       </tr>
-				  <tr>
 					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
@@ -2179,7 +2180,7 @@ return $hasil_html;
 			 </table>";
 			 
 			   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-			   $footer.="
+			   $akhir_footer="
 			 </body>
 		</html>";   
 				
@@ -2533,7 +2534,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                               $footer.="
+                                               $akhir_footer="
                                              </body>
                                         </html>"; 
                                         	
@@ -2544,7 +2545,7 @@ return $hasil_html;
 
                                            }
 										// pr($html);   
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }
    	
@@ -2873,7 +2874,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
 											
@@ -3207,7 +3208,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                           
@@ -3217,7 +3218,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }   
          
      }
@@ -3554,7 +3555,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -3914,7 +3915,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                         	
@@ -3924,7 +3925,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }
 
@@ -4275,7 +4276,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";  
 											 //udah dites footer
@@ -4657,7 +4658,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                         
@@ -4667,7 +4668,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }          
 	 
@@ -5011,7 +5012,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											    
@@ -5385,7 +5386,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -5395,7 +5396,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }        
 
@@ -5737,7 +5738,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											    
@@ -6091,7 +6092,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -6101,7 +6102,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }        
 
@@ -6437,7 +6438,7 @@ return $hasil_html;
 			 </table>";
 			 
 			   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-			   $footer.="
+			   $akhir_footer="
 			 </body>
 		</html>";   
 				
@@ -6791,7 +6792,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                               $footer.="
+                                               $akhir_footer="
                                              </body>
                                         </html>"; 
                                         	
@@ -6802,7 +6803,7 @@ return $hasil_html;
 
                                            }
 										// pr($html);   
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }
    
@@ -7131,7 +7132,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
 											
@@ -7465,7 +7466,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                         
@@ -7475,7 +7476,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }   
          
      }
@@ -7812,7 +7813,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -8175,7 +8176,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                         	
@@ -8185,7 +8186,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }
 
@@ -8540,7 +8541,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";  
 											 //udah dites footer
@@ -8925,7 +8926,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                         
@@ -8935,7 +8936,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }          
 
@@ -9282,7 +9283,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											    
@@ -9655,7 +9656,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -9665,7 +9666,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }        
 
@@ -10007,7 +10008,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											    
@@ -10359,7 +10360,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -10369,7 +10370,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }        
 
@@ -10699,7 +10700,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $footer.="
+	   $akhir_footer="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -11056,7 +11057,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -11065,7 +11066,7 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
          
      }
@@ -11393,7 +11394,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $footer.="
+	   $akhir_footer="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -11714,7 +11715,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -11723,7 +11724,7 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
          
      }
@@ -12053,7 +12054,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $footer.="
+	   $akhir_footer="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -12410,7 +12411,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -12419,7 +12420,7 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
          
      }
@@ -12755,13 +12756,13 @@ if($dataArr!="")
                 </table>";
             
             $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-            $footer.="
+            $akhir_footer="
                 </body>
             </html>";      
                                        
             $html[]=$head.$body.$tabletotal.$foot.$footer;;
             //echo $status_print;
-            return $html;
+            $html[]=$akhir_footer; return $html;
           }
          
      }
@@ -13131,7 +13132,7 @@ if($dataArr!="")
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -13506,7 +13507,7 @@ if($dataArr!="")
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";         
 														
@@ -13517,7 +13518,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;  
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }
 	 
@@ -13622,7 +13623,7 @@ if($dataArr!="")
                                              // $html[]=$body.$footer;
 
                                            // }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
          
     } 
@@ -13972,7 +13973,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $footer.="
+	   $akhir_footer="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -14350,7 +14351,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -14359,7 +14360,7 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
          
      }
@@ -14487,7 +14488,7 @@ $footer ="
         </html>";    
         $html[]=$head.$body.$tabletotal.$foot;
             }						
-    return $html;
+    $html[]=$akhir_footer; return $html;
 } 
 
 //Standar Harga	Pemeliharaan (ok)
@@ -14607,7 +14608,7 @@ if($dataArr!="")
             </html>";    
             $html[]=$head.$body.$tabletotal.$foot;
         }
-        return $html;
+        $html[]=$akhir_footer; return $html;
 					  
      }
         
@@ -15001,7 +15002,7 @@ if($dataArr!="")
           }
 		  
 		  
-		  return $html;
+		  $html[]=$akhir_footer; return $html;
 		  
      }
      
@@ -15214,7 +15215,7 @@ if($dataArr!="")
         </table>";
         $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
         $footer= $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-        $footer.="
+        $akhir_footer="
             </body>
         </html>";      
         $barangTotal=0;
@@ -15408,7 +15409,7 @@ if($dataArr!="")
                 </table>";
 
                 $footer= $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                $footer.="
+                $akhir_footer="
                 </body>
             </html>";     
 
@@ -15418,7 +15419,7 @@ if($dataArr!="")
                      $html[]=$body.$tabletotal.$foot.$footer;
 
                    }
-        return $html;
+        $html[]=$akhir_footer; return $html;
 	
           }
      }
@@ -15640,7 +15641,7 @@ if($dataArr!="")
                    </tr>
                 </table>";
                 $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                $footer.="
+                $akhir_footer="
                     </body>
                 </html>";      
 
@@ -15854,7 +15855,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											 $footer.="
+											 $akhir_footer="
                                              </body>
                                         </html>";
 											
@@ -15864,7 +15865,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;  
+              $html[]=$akhir_footer; return $html;  
           }
      }
 
@@ -16090,7 +16091,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -16309,7 +16310,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>"; 
 											
@@ -16319,7 +16320,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
 	
           }
          
@@ -16548,7 +16549,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -16769,7 +16770,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -16779,7 +16780,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;  
+              $html[]=$akhir_footer; return $html;  
           }
          
      }
@@ -17034,7 +17035,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -17254,7 +17255,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>";
 											
@@ -17264,7 +17265,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
 	
           }
      }
@@ -17519,7 +17520,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>";     
 											 //udah dites footer
@@ -17735,7 +17736,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $footer.="
+                                             $akhir_footer="
                                              </body>
                                         </html>";
 											
@@ -17745,7 +17746,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;  
+              $html[]=$akhir_footer; return $html;  
           }
      }
 
@@ -17932,7 +17933,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $footer.="
+	   $akhir_footer="
 	 </body>
 </html>";   
 //echo $html;
@@ -18223,7 +18224,7 @@ foreach ($dataArr as $satker_id => $value)
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $footer.="
+	   $akhir_footer="
 	 </body>
 </html>";   
     //echo $html;
@@ -18947,7 +18948,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
 											
@@ -19250,7 +19251,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                           
@@ -19260,7 +19261,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }   
          
      }
@@ -19597,7 +19598,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -19926,7 +19927,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                         	
@@ -19936,7 +19937,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }
 
@@ -20288,7 +20289,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";  
 											 //udah dites footer
@@ -20642,7 +20643,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";
                                         
@@ -20652,7 +20653,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }          
 
@@ -20998,7 +20999,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											    
@@ -21338,7 +21339,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -21348,7 +21349,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }        
 
@@ -21689,7 +21690,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											    
@@ -22010,7 +22011,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $footer.="
+											   $akhir_footer="
                                              </body>
                                         </html>";      
 											
@@ -22020,7 +22021,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              return $html;
+              $html[]=$akhir_footer; return $html;
           }
      }        
  
@@ -22760,8 +22761,8 @@ public function get_hak_pakai($hak_tanah){
 			";
 		}
 		
-		echo "query =".$query;
-		echo "<br>";
+		// echo "query =".$query;
+		// echo "<br>";
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	
