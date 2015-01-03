@@ -100,6 +100,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<select name="jenis_hapus">
 									<option value="PMD">Pemindahtanganan</option>
 									<option value="PMS">Pemusnahan</option>
+                                    <option value="PSB">Penghapusan Sebagian</option>
 								</select>
 							</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>

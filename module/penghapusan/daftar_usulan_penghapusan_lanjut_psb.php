@@ -202,6 +202,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						$kondisi="Rusak Ringan";
 					}elseif($value[kondisi]==3){
 						$kondisi="Rusak Berat";
+					}elseif($value[kondisi]==1){
+						$kondisi="Baik";
 					}
 					?>
 						

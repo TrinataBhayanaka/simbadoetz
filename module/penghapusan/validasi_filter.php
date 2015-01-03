@@ -95,6 +95,7 @@ include "../../config/config.php";
 								<select name="jenis_hapus">
 									<option value="PMD">Pemindahtanganan</option>
 									<option value="PMS">Pemusnahan</option>
+									<option value="PSB">Penghapusan Sebagian</option>
 								</select>
 							</li>
 							<li>

@@ -38,7 +38,9 @@
 		<!--[if IE]>
 		<link rel="stylesheet" type="text/css" href="ie_office.css" />
 		<![endif]-->
+
 	<body>
+	
 	<div id="content">
 	<?php
 		include"$path/menu.php";
