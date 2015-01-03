@@ -50,9 +50,9 @@ $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperole
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-/*$html=$REPORT->retrieve_html_asetLainnya($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_asetLainnya($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
 
-$count = count($html);
+/*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
 	}

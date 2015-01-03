@@ -12,8 +12,14 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
+$tglcetak = $_GET['tglcetak'];
 $skpd_id = $_GET['skpd_id'];
 $ekstra = $_GET['ekstra'];
 $tipe=$_GET['tipe_file'];
@@ -73,9 +79,9 @@ $result = arrayToObject($result_query);
 // exit;
 
 $html=$REPORT->retrieve_html_bukuinventaris_ekstra($result,$gambar);
-/*$count = count($html);
+$count = count($html);
 
-for ($i = 0; $i < $count; $i++) {
+/*for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}

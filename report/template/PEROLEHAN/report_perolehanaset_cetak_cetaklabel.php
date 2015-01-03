@@ -13,8 +13,8 @@ $skpd_id = $_REQUEST['kodeSatker8'];
 // $kelompok=$_REQUEST['kelompok'];
 $tahun = $_REQUEST['tahun_label'];
 $gol = $_REQUEST['gol'];
-pr($_REQUEST);
-exit;
+// pr($_REQUEST);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
