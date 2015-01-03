@@ -171,7 +171,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	 public function retrieve_usulan_penghapusan_eksekusi_pms($data,$debug=false)
     {
-		pr($data);
+		// pr($data);
 		$id = $data[penghapusanfilter];
 		$cols = implode(', ',array_values($id));
 		// pr($cols);
@@ -191,16 +191,16 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'a.KodeSatker=e.Kode,a.kodeKelompok=g.Kode'
                 );
-         pr($sql);
+         // pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
-        pr($res);
+        // pr($res);
         if ($res) return $res;
         return false;
 	
     }
 	 public function retrieve_usulan_penghapusan_eksekusi_pmd($data,$debug=false)
     {
-		pr($data);
+		// pr($data);
 		$id = $data[penghapusanfilter];
 		$cols = implode(', ',array_values($id));
 		// pr($cols);
@@ -220,10 +220,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'a.KodeSatker=e.Kode,a.kodeKelompok=g.Kode'
                 );
-        pr($sql);
+        // pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
 
-        pr($res);
+        // pr($res);
         if ($res) return $res;
         return false;
 		
@@ -411,7 +411,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
     public function retrieve_daftar_penetapan_penghapusan($data,$debug=false)
     {
-        pr($data);
+        // pr($data);
         $jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -427,7 +427,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
 				'limit'=>'100',
                 );
-        pr($sql);
+        // pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
         if ($res) return $res;
         return false;
