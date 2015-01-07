@@ -47,8 +47,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							e.preventDefault();
 						}
 					});*/
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd,#tglCetakIntra,#tglCetakEkstra").mask('9999-99-99');
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd,#tglCetakIntra,#tglCetakEkstra" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb").mask('9999-99-99');
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb" ).datepicker({ dateFormat: 'yy-mm-dd' });
 							
 				
 					
@@ -68,8 +68,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#rbdp3" data-toggle="tab">Daftar Aset Tetap - Konstruksi Dalam Pengerjaan</a></li>
 						<li><a href="#lainnya" data-toggle="tab">Daftar Aset Lainnya</a></li>
 						<li><a href="#neraca" data-toggle="tab">Rekapitulasi Barang Ke Neraca</a></li>
+						<li><a href="#rekapskpd" data-toggle="tab">Rekapitulasi Barang Per SKPD</a></li>
+						<li><a href="#rekapupb" data-toggle="tab">Rekapitulasi Barang Per UPB</a></li>
 						<!--<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>-->
-						<!--<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>-->
+						<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>
 					  </ul>
 					  
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -458,7 +460,81 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						<div class="tab-pane" id="lapmutasi">
+						
+						<div class="tab-pane" id="rekapskpd">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Barang Per SKPD</div>
+						</div>
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapbarangskpd.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAwalrbp" id="tglPerolehanAwalrbp" value="" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirrbp" id="tglPerolehanAkhirrbp" value="" required/>
+									</div>
+								</div>
+							</li>
+							<?php selectAllSatker('kodeSatker13','255',true,false); ?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+						</div>
+						
+						<div class="tab-pane" id="rekapupb">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Barang Per UPB</div>
+						</div>
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapbarangupb.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAwalrbupb" id="tglPerolehanAwalrbupb" value="" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirrbupb" id="tglPerolehanAkhirrbupb" value="" required/>
+									</div>
+								</div>
+							</li>
+							<?php selectAllSatker('kodeSatker14','255',true,false); ?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+						</div>
+						
+						
+						
+						
+						<!--<div class="tab-pane" id="lapmutasi">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Mutasi Barang</div>
 						</div>
@@ -495,8 +571,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 						</ul>
 						</form>
-						</div>
-						<!--<div class="tab-pane" id="lapmutasiskpd">
+						</div>-->
+						
+						<div class="tab-pane" id="lapmutasiskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Mutasi Barang Antar SKPD</div>
 						</div>
@@ -507,7 +584,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAwalLapMutasiSkpd" id="tglPerolehanAwalLapMutasiSkpd" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAwalLapMutasiSkpd" id="tglPerolehanAwalLapMutasiSkpd" value="" />
 									</div>
 								</div>
 							</li>
@@ -530,7 +607,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						</div>-->
+						</div>
 			</div> 
 			
 			
