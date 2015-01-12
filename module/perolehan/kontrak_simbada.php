@@ -78,16 +78,17 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			
 			<p><a href="kontrakedit.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Kontrak</a>
 			&nbsp;
-			<!-- <a class="btn btn-danger btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Kontrak Simral</a>
-			&nbsp; --></p>	
+			<a href="pledit.php" class="btn btn-danger btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Pembelian Langsung</a>
+			&nbsp;</p>	
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
 						<th>No</th>
 						<th>Nama Satker</th>
-						<th>No. SPK/Perjanjian Kontrak</th>
+						<th>No. Dokumen</th>
 						<th>Tanggal</th>
+						<th>Jenis Dokumen</th>
 						<th>Tipe Aset</th>
 						<th>Nilai</th>
 						<th>Action</th>
@@ -105,6 +106,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td width="20%"><?=$val['NamaSatker']?></td>
 						<td><?=$val['noKontrak']?></td>
 						<td><?=$val['tglKontrak']?></td>
+						<td><?=($val['tipe_kontrak'] == 2) ? 'Pembelian Langsung' : 'Kontrak'?></td>
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
 						<td class="center">

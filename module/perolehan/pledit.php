@@ -55,19 +55,19 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
         <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
         <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
         <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
-        <li class="active">Tambah Kontrak</li>
+        <li class="active">Pembelian Langsung</li>
         <?php SignInOut();?>
       </ul>
       <div class="breadcrumb">
-        <div class="title">Kontrak</div>
-        <div class="subtitle">Tambah Kontrak</div>
+        <div class="title">Pembelian Langsung</div>
+        <div class="subtitle">Tambah Pembelian Langsung</div>
       </div>    
 
     <section class="formLegend">
       
       <form action="" method="POST">
          <div class="formKontrak">
-            <h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Kontrak</span></h3>
+            <h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Pembelian Langsung</span></h3>
             <ul>
               <?=selectSatker('kodeSatker','205',true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
                <li>
@@ -78,11 +78,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                 </div>
               </li>
               <li>
-                <span class="span2">No.SPK/Perjanjian Kontrak</span>
+                <span class="span2">No. Dokumen</span>
                 <input type="text" name="noKontrak" value="<?=(isset($kontrak)) ? $kontrak[0]['noKontrak'] : '' ?>" onchange="return check_availability(this,'info')" required/>
               </li>
               <li>
-                <span class="span2">Tgl.SPK/Perjanjian Kontrak</span>
+                <span class="span2">Tgl. Dokumen</span>
 
                 <input type="text" placeholder="yyyy-mm-dd" name="tglKontrak" id="datepicker" value="<?=(isset($kontrak)) ? $kontrak[0]['tglKontrak'] : '' ?>" required/>
 
@@ -176,7 +176,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
         <!-- Hidden -->
         <input type="hidden" name="id" value="<?=(isset($kontrak)) ? $kontrak[0]['id'] : '' ?>"/>
         <input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>"/>
-        <input type="hidden" name="tipe_kontrak" value="1"/>
+        <input type="hidden" name="tipe_kontrak" value="2"/>
 
       </form>
       
