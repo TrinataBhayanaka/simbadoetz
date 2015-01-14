@@ -84,7 +84,7 @@ else
 							else
 							{
 							?>
-									<a data-toggle="modal" href="#myModal3" class=""> <i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login</a>
+									<a data-toggle="modal" href="#myModal3" class=""> <i class="fa fa-sign-in fa-2x"></i>&nbsp;&nbsp;Login</a>
 							
 							<?php
 							}
