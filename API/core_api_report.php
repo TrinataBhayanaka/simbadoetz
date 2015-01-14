@@ -1935,8 +1935,7 @@ class core_api_report extends DB {
 												  break;
 												  case '8':
 												  {
-													// echo "dknakdnakdnkj";
-													// echo $parameter_sql;
+													//ekstra non aset
 													// exit;
 													if($parameter_sql != ''){
 														// echo "masukkk";
@@ -2348,7 +2347,7 @@ class core_api_report extends DB {
 																//Daftar Aset Tetap - Tanah
 																if($parameter_sql!="" ){
 																
-																	echo "masuk Daftar Aset Tetap - Tanah";
+																	// echo "masuk Daftar Aset Tetap - Tanah";
 																	if($query_satker_fix != ""){
 																		$query ="SELECT T.kodeSatker,s.NamaSatker,k.Uraian, T.Alamat, T.LuasTotal, T.NilaiPerolehan FROM tanah as T, kelompok as k,satker as s WHERE k.Kode = T.kodeKelompok and s.kode = T.kodeSatker  and $parameter_sql order by T.kodeSatker, T.kodeKelompok " ;	
 																	}else{
@@ -3289,747 +3288,7 @@ class core_api_report extends DB {
     }
     
     
-    public function get_report_rekap_LMB_daerah_semester($parameter)
-    {
-        //$Satker_ID = $parameter['Satker_ID'];
-        $Satker_ID = '11077, 10257';
-        $query_get_golongan_1 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='10416' and a.Aset_ID in (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_2 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='10416' and a.Aset_ID in (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_3 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='10416' and a.Aset_ID in (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_4 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='10416' and a.Aset_ID in (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_5 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='10416' and a.Aset_ID in (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_6 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='10416' and a.Aset_ID in (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_7 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='10416' and a.Aset_ID in (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31' UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        
-        $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
-        
-        for ($i = 0; $i <=6; $i++)
-        {
-            $result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
-            if ($result_golongan)
-            {
-               
-                while ($data = $this->fetch_object($result_golongan))
-                {
-                    $dataArr['Golongan_'.($i+1)] [] = $data;
-                }
-            }
-            
-            $result_golongan = '';
-        }
-        
-        return $dataArr;
-    }
-    
-
-    
-    public function get_rekap_awal($parameter)
-    {
-        /*
-        $golongan = $parameter['golongan'];
-        $tanggal_awal = $parameter['tanggal_awal'];
-        $Satker_ID = $parameter['Satker_ID'];
-        */
-        $golongan = '01';
-        $tanggal_awal = '2011-12-31';
-        //$parameter = array('10252');
-        
-        foreach ($parameter as $Satker_ID => $value)
-        {
-            $query_get_awal_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                    where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_awal_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                    where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_awal_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                    where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_awal_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                    where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_awal_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                    where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_awal_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                    where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_awal_golongan_7 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                    where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            
-            $query_get_mutasi_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_mutasi_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_mutasi_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_mutasi_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_mutasi_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_mutasi_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_mutasi_golongan_7 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-                                    
-            $query_get_akhir_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                            (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                            UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                            where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                            k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_akhir_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                            (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                            UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                            where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                            k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_akhir_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                            (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                            UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                            where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                            k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_akhir_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                            (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                            UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                            where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                            k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_akhir_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                            (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                            UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                            where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                            k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_akhir_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                            (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                            UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                            where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                            k.Bidang, k.Uraian order by k.Kode ";
-            $query_get_akhir_golongan_7 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                            (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                            UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                            UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                            where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                            k.Bidang, k.Uraian order by k.Kode ";
-                                            
-            
-            $data_awal_Golongan = array('query_get_awal_golongan_1', 'query_get_awal_golongan_2', 'query_get_awal_golongan_3', 'query_get_awal_golongan_4', 'query_get_awal_golongan_5', 'query_get_awal_golongan_6', 'query_get_awal_golongan_7');
-            
-            $data_mutasi_golongan = array('query_get_mutasi_golongan_1', 'query_get_mutasi_golongan_2', 'query_get_mutasi_golongan_3', 'query_get_mutasi_golongan_4', 'query_get_mutasi_golongan_5', 'query_get_mutasi_golongan_6', 'query_get_mutasi_golongan_7');
-            
-            $data_akhir_golongan = array('query_get_akhir_golongan_1', 'query_get_akhir_golongan_2', 'query_get_akhir_golongan_3', 'query_get_akhir_golongan_4', 'query_get_akhir_golongan_5', 'query_get_akhir_golongan_6', 'query_get_akhir_golongan_7');
-            
-            for ($i = 0; $i <=6; $i++)
-            {
-                $result_golongan = $this->query($$data_awal_Golongan[$i]) or die ($this->error('error golongan'));
-                if ($result_golongan)
-                {
-                   
-                    while ($data = $this->fetch_object($result_golongan))
-                    {
-                        $dataArr[$Satker_ID][$value[0]]['Awal']['Golongan_'.($i+1)][] = $data;
-                        
-                    }
-                }
-                
-                //$result_golongan = '';
-            }
-            for ($i = 0; $i <=6; $i++)
-            {
-                $result_golongan = $this->query($$data_mutasi_golongan[$i]) or die ($this->error('error golongan'));
-                if ($result_golongan)
-                {
-                   
-                    while ($data = $this->fetch_object($result_golongan))
-                    {
-                        $dataArr[$Satker_ID][$value[0]]['Mutasi']['Golongan_'.($i+1)][] = $data;
-                        
-                    }
-                }
-                
-                //$result_golongan = '';
-            }
-            for ($i = 0; $i <=6; $i++)
-            {
-                $result_golongan = $this->query($$data_akhir_golongan[$i]) or die ($this->error('error golongan'));
-                if ($result_golongan)
-                {
-                   
-                    while ($data = $this->fetch_object($result_golongan))
-                    {
-                        $dataArr[$Satker_ID][$value[0]]['Akhir']['Golongan_'.($i+1)][] = $data;
-                        
-                    }
-                }
-                
-                //$result_golongan = '';
-            }
-            
-            return $dataArr;
-        }
-    }
-    
-    public function get_rekap_mutasi($parameter)
-    {
-        /*
-        $golongan = $parameter['golongan'];
-        $tanggal_awal = $parameter['tanggal_awal'];
-        $tanggal_akhir = $parameter['tanggal_akhir'];
-        $Satker_ID = $parameter['Satker_ID'];
-        */
-        $golongan = '01';
-        $tanggal_awal = '2012-01-01';
-        $tanggal_akhir = '2012-12-31';
-        
-        foreach ($parameter as $Satker_ID => $value)
-        {
-            $query_get_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $query_get_golongan_7 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                    (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                    UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                    UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                    where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                    ";
-            $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
-            
-            
-            for ($i = 0; $i <=6; $i++)
-            {
-                $result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
-                if ($result_golongan)
-                {
-                   
-                    while ($data = $this->fetch_object($result_golongan))
-                    {
-                        $dataArr[$Satker_ID][$value[0]]['Mutasi']['Golongan_'.($i+1)][] = $data;
-                        
-                    }
-                }
-                
-                //$result_golongan = '';
-            }
-            
-            return $dataArr;
-        }
-        
-        /*
-        $Satker_ID = '10252';
-        
-        $query = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                        where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                        ";
-        $result = $this->query($query) or die ($this->error('error 1'));
-        if ($result)
-        {
-            while ($data = $this->fetch_object($result))
-            {
-                $dataArr[$Satker_ID]['Mutasi'][] = $data;
-            }
-            return $dataArr;
-        }
-        else
-        {
-            return false;
-        }
-        */
-    }
-    
-    public function get_rekap_akhir($parameter)
-    {
-        /*
-        $golongan = $parameter['golongan'];
-        $tanggal_akhir = $parameter['tanggal_akhir'];
-        $Satker_ID = $parameter['Satker_ID'];
-        */
-        $golongan = '01';
-        $tanggal_akhir = '2012-12-31';
-        $Satker_ID = '10252';
-        
-        $query = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                        UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                        UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                        where k.Golongan='$golongan' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                        k.Bidang, k.Uraian order by k.Kode ";
-        $result = $this->query($query) or die ($this->error('error 1'));
-        if ($result)
-        {
-            while ($data = $this->fetch_object($result))
-            {
-                $dataArr[$Satker_ID]['Akhir'][] = $data;
-            }
-            
-            return $dataArr;
-        }
-        else
-        {
-            return false;
-        } 
-    }
-    
-    
-    public function get_rekap_mutasi_barang_skpd_semesteran($parameter)
-    {
-        $query_awal = "select AZ.NomorReg,AZ.NamaAset,AZ.Kuantitas,AZ.NilaiPerolehan,AZ.AsalUsul,AZ.Tahun,
-                        BG.Konstruksi, BG.StatusTanah,
-                        SA.KodeSektor, SA.KodeSatker, SA.NamaSatker, 
-                        KL.Kode,
-                        KI.InfoKondisi, KI.Baik, KI.RusakRingan, KI.RusakBerat, 
-                        TN.NoSertifikat, TN.TglSertifikat, 
-                        MS.Merk, MS.Pabrik,MS.NoRangka, MS.NoMesin, MS.Bobot from Aset AZ 
-                        left outer join Satker SA on AZ.LastSatker_ID=SA.Satker_ID 
-                        left outer join Kelompok KL on AZ.Kelompok_ID=KL.Kelompok_ID 
-                        left outer join Kondisi KI on AZ.LastKondisi_ID=KI.Kondisi_ID 
-                        left outer join Tanah TN on AZ.Aset_ID=TN.Aset_ID 
-                        left outer join Mesin MS on AZ.Aset_ID=MS.Aset_ID 
-                        left outer join Bangunan BG on AZ.Aset_ID=BG.Aset_ID 
-                        left outer join Jaringan JR on AZ.Aset_ID=JR.Aset_ID 
-                        left outer join AsetLain AL on AZ.Aset_ID=AL.Aset_ID 
-                        left outer join KDP P on AZ.Aset_ID=P.Aset_ID 
-                        left outer join KontrakAset KA on AZ.Aset_ID=KA.Aset_ID
-                        left outer join Kontrak KO on KA.Kontrak_ID=KO.Kontrak_ID where AZ.Aset_ID in 
-                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='2011-12-31' 
-                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='2011-12-31'  
-                        UNION SELECT Aset_ID FROM Aset where TglPerolehan <='2011-12-31' 
-                        UNION SELECT Aset_ID FROM Aset where TglHapus <='2011-12-31' ) 
-                        order by LastSatker_ID ";
-        $query_mutasi = "select AZ.NomorReg,AZ.NamaAset,AZ.Kuantitas,AZ.NilaiPerolehan,AZ.AsalUsul,AZ.Tahun,
-                        BG.Konstruksi, BG.StatusTanah,
-                        SA.KodeSektor, SA.KodeSatker, SA.NamaSatker, 
-                        KL.Kode,
-                        KI.InfoKondisi, KI.Baik, KI.RusakRingan, KI.RusakBerat, 
-                        TN.NoSertifikat, TN.TglSertifikat, 
-                        MS.Merk, MS.Pabrik,MS.NoRangka, MS.NoMesin, MS.Bobot from Aset AZ 
-                        left outer join Satker SA on AZ.LastSatker_ID=SA.Satker_ID 
-                        left outer join Kelompok KL on AZ.Kelompok_ID=KL.Kelompok_ID 
-                        left outer join Kondisi KI on AZ.LastKondisi_ID=KI.Kondisi_ID 
-                        left outer join Tanah TN on AZ.Aset_ID=TN.Aset_ID 
-                        left outer join Mesin MS on AZ.Aset_ID=MS.Aset_ID 
-                        left outer join Bangunan BG on AZ.Aset_ID=BG.Aset_ID 
-                        left outer join Jaringan JR on AZ.Aset_ID=JR.Aset_ID 
-                        left outer join AsetLain AL on AZ.Aset_ID=AL.Aset_ID 
-                        left outer join KDP P on AZ.Aset_ID=P.Aset_ID 
-                        left outer join KontrakAset KA on AZ.Aset_ID=KA.Aset_ID
-                        left outer join Kontrak KO on KA.Kontrak_ID=KO.Kontrak_ID where AZ.Aset_ID in 
-                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='2012-01-01' and TglKuantitas <='2012-12-31' 
-                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='2012-01-01' and TglNilai <='2012-12-31' 
-                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='2012-01-01' and TglPerolehan <='2012-12-31'
-                        UNION SELECT Aset_ID FROM Aset where TglHapus >='2012-01-01' and TglHapus <='2012-12-31' ) 
-                        order by LastSatker_ID ";
-        $query_akhir = "select AZ.NomorReg,AZ.NamaAset,AZ.Kuantitas,AZ.NilaiPerolehan,AZ.AsalUsul,AZ.Tahun,
-                        BG.Konstruksi, BG.StatusTanah,
-                        SA.KodeSektor, SA.KodeSatker, SA.NamaSatker, 
-                        KL.Kode,
-                        KI.InfoKondisi, KI.Baik, KI.RusakRingan, KI.RusakBerat, 
-                        TN.NoSertifikat, TN.TglSertifikat, 
-                        MS.Merk, MS.Pabrik,MS.NoRangka, MS.NoMesin, MS.Bobot from Aset AZ 
-                        left outer join Satker SA on AZ.LastSatker_ID=SA.Satker_ID 
-                        left outer join Kelompok KL on AZ.Kelompok_ID=KL.Kelompok_ID 
-                        left outer join Kondisi KI on AZ.LastKondisi_ID=KI.Kondisi_ID 
-                        left outer join Tanah TN on AZ.Aset_ID=TN.Aset_ID 
-                        left outer join Mesin MS on AZ.Aset_ID=MS.Aset_ID 
-                        left outer join Bangunan BG on AZ.Aset_ID=BG.Aset_ID 
-                        left outer join Jaringan JR on AZ.Aset_ID=JR.Aset_ID 
-                        left outer join AsetLain AL on AZ.Aset_ID=AL.Aset_ID 
-                        left outer join KDP P on AZ.Aset_ID=P.Aset_ID 
-                        left outer join KontrakAset KA on AZ.Aset_ID=KA.Aset_ID
-                        left outer join Kontrak KO on KA.Kontrak_ID=KO.Kontrak_ID where AZ.Aset_ID in 
-                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='2012-12-31' 
-                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='2012-12-31'  
-                        UNION SELECT Aset_ID FROM Aset where TglPerolehan <='2012-12-31' 
-                        UNION SELECT Aset_ID FROM Aset where TglHapus <='2012-12-31' ) 
-                        order by LastSatker_ID ";
-                        
-        $array_var = array('query_awal','query_mutasi','query_akhir');
-        
-        $result_awal = $this->query($query_awal) or die ($this->error());
-        $result_mutasi = $this->query($query_mutasi) or die ($this->error());
-        $result_akhir = $this->query($query_akhir) or die ($this->error());
-        
-        while ($data_awal = $this->fetch_object($result_awal))
-        {
-            
-            $dataArr['awal'] [] = $data_awal;
-        }
-        
-        while ($data_mutasi = $this->fetch_object($result_mutasi))
-        {
-            
-            $dataArr['mutasi'] [] = $data_mutasi;
-        }
-        while ($data_akhir = $this->fetch_object($result_akhir))
-        {
-            
-            $dataArr['akhir'] [] = $data_akhir;
-        }
-        
-        return $dataArr;
-    }
-    
-    
-    public function get_rekap_laporan_mutasi($parameter, $tanggal_awal, $tanggal_akhir)
-    {
-        
-        
-        
-        if ($parameter !='')
-        {
-            foreach ($parameter as $Satker_ID => $value)
-            {
-                
-                //echo $Satker_ID.'<br>>';
-                $query_get_awal_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                        where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_awal_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                        where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_awal_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                        where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_awal_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                        where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_awal_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                        where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_awal_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                        where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_awal_golongan_7 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where  TglNilai < '$tanggal_awal'  
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan < '$tanggal_awal' 
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus < '$tanggal_awal' ) 
-                                        where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                
-                $query_get_mutasi_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                        where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_mutasi_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                        where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_mutasi_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                        where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_mutasi_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                        where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_mutasi_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                        where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_mutasi_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                        where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                $query_get_mutasi_golongan_7 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                        (SELECT Aset_ID FROM KuantitasAset where TglKuantitas >='$tanggal_awal' and TglKuantitas <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM NilaiAset where TglNilai >='$tanggal_awal' and TglNilai <='$tanggal_akhir' 
-                                        UNION SELECT Aset_ID FROM Aset where TglPerolehan >='$tanggal_awal' and TglPerolehan <='$tanggal_akhir'
-                                        UNION SELECT Aset_ID FROM Aset where TglHapus >='$tanggal_awal' and TglHapus <='$tanggal_akhir' ) 
-                                        where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode 
-                                        ";
-                                        
-                $query_get_akhir_golongan_1 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                                (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                                UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                                where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                                k.Bidang, k.Uraian order by k.Kode ";
-                $query_get_akhir_golongan_2 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                                (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                                UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                                where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                                k.Bidang, k.Uraian order by k.Kode ";
-                $query_get_akhir_golongan_3 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                                (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                                UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                                where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                                k.Bidang, k.Uraian order by k.Kode ";
-                $query_get_akhir_golongan_4 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                                (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                                UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                                where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                                k.Bidang, k.Uraian order by k.Kode ";
-                $query_get_akhir_golongan_5 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                                (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                                UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                                where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                                k.Bidang, k.Uraian order by k.Kode ";
-                $query_get_akhir_golongan_6 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                                (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                                UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                                where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                                k.Bidang, k.Uraian order by k.Kode ";
-                $query_get_akhir_golongan_7 = "select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left outer join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left outer join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID IN ($Satker_ID) and a.Aset_ID in 
-                                                (SELECT Aset_ID FROM KuantitasAset where  TglKuantitas <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM NilaiAset where  TglNilai <='$tanggal_akhir'  
-                                                UNION SELECT Aset_ID FROM Aset where TglPerolehan <='$tanggal_akhir' 
-                                                UNION SELECT Aset_ID FROM Aset where TglHapus <='$tanggal_akhir' ) 
-                                                where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan,
-                                                k.Bidang, k.Uraian order by k.Kode ";
-                                                
-                
-                $data_awal_Golongan = array('query_get_awal_golongan_1', 'query_get_awal_golongan_2', 'query_get_awal_golongan_3', 'query_get_awal_golongan_4', 'query_get_awal_golongan_5', 'query_get_awal_golongan_6', 'query_get_awal_golongan_7');
-                
-                $data_mutasi_golongan = array('query_get_mutasi_golongan_1', 'query_get_mutasi_golongan_2', 'query_get_mutasi_golongan_3', 'query_get_mutasi_golongan_4', 'query_get_mutasi_golongan_5', 'query_get_mutasi_golongan_6', 'query_get_mutasi_golongan_7');
-                
-                $data_akhir_golongan = array('query_get_akhir_golongan_1', 'query_get_akhir_golongan_2', 'query_get_akhir_golongan_3', 'query_get_akhir_golongan_4', 'query_get_akhir_golongan_5', 'query_get_akhir_golongan_6', 'query_get_akhir_golongan_7');
-                
-                //print_r($$data_awal_Golongan[0]);
-                //echo $query_get_akhir_golongan_2;
-                //$content="";
-                $hargaawal="";
-                $hargaakhir="";
-                $hargamutasi="";
-                for ($i = 0; $i <=6; $i++)
-                {
-                    $result_awal= $this->query($$data_awal_Golongan[$i]) or die ($this->error('error golongan'));
-                    $result_mutasi = $this->query($$data_mutasi_golongan[$i]) or die ($this->error('error golongan'));
-                    $result_akhir = $this->query($$data_akhir_golongan[$i]) or die ($this->error('error golongan'));
-                    
-                    while ($data_awal = $this->fetch_object($result_awal))
-                    {
-                        //$dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)]['Awal'][] = $data_awal;
-                        $kode=($i+1);
-                        
-                        
-                        //$content[$Satker_ID]['NamaSatker'] =$value;
-                        $content[$Satker_ID]['Golongan_'.$kode]['Gol'] =$data_awal->Golongan;
-                        $content[$Satker_ID]['Golongan_'.$kode]['NamaSatker'] =$value[0];
-                        $content[$Satker_ID]['Golongan_'.$kode]['Bidang'][]=$data_awal->Bidang;
-                        $content[$Satker_ID]['Golongan_'.$kode]['NamaBidang'][]=$data_awal->Uraian;
-                        $content[$Satker_ID]['Golongan_'.$kode]['Jml_Awal'][]=$data_awal->Jumlah;
-                        $content[$Satker_ID]['Golongan_'.$kode]['Harga_Awal'][]=$data_awal->NilaiPerolehan;
-                   //   $hargaawal[$Satker_ID]['Golongan_'.$kode]['Jml'][]=$data_awal->Jumlah;
-                     // $hargaawal[$Satker_ID]['Golongan_'.$kode]['Harga'][]=$data_awal->NilaiPerolehan;
-                    //$test_data_arr1[$Satker_ID]['Golongan_'.$kode]['oke']  = $data_awal->Uraian;
-                    //$test_data_arr1[$Satker_ID]['Golongan_'.$kode]['oke1'] [] = $data_awal->Uraian;
-                        //echo $data_awal->Uraian.'<br>';
-                        //$data_content[] = $content;
-                    
-                    }
-                    while ($data_mutasi = $this->fetch_object($result_mutasi))
-                    {
-                        //$dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)]['Mutasi'][] = $data_mutasi;
-                        $kode=($i+1);
-                        $content[$Satker_ID]['Golongan_'.$kode]['Jml_Mutasi'][]=$data_mutasi->Jumlah;
-                        $content[$Satker_ID]['Golongan_'.$kode]['Harga_Mutasi'][]=$data_mutasi->NilaiPerolehan;
-                        //  
-                        //$hargamutasi[$Satker_ID]['Golongan_'+$kode]['Jml'][]=$data_awal->Jumlah;
-                        //$hargamutasi[$Satker_ID]['Golongan_'+$kode]['Harga'][]=$data_awal->NilaiPerolehan;
-                        
-                    }
-                    while ($data_akhir = $this->fetch_object($result_akhir))
-                    {
-                        //$dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)]['Akhir'][] = $data_akhir;
-                        $kode=($i+1);
-                        $content[$Satker_ID]['Golongan_'.$kode]['Jml_Akhir'][]=$data_akhir->Jumlah;
-                        $content[$Satker_ID]['Golongan_'.$kode]['Harga_Akhir'][]=$data_akhir->NilaiPerolehan;
-                   //  
-                       //$hargaakhir[$Satker_ID]['Golongan_'+$kode]['Jml'][]=$data_awal->Jumlah;
-                       //$hargaakhir[$Satker_ID]['Golongan_'+$kode]['Harga'][]=$data_awal->NilaiPerolehan;
-                        
-                    }
-                  //  $dataArr[$Satker_ID][$value[0]]['nama_satker']['Akhir'][]=$value[0];
-                    
-                    //$result_golongan = '';
-                }
-                
-                
-                
-            }
-            return $content;    
-        }
-        else
-        {
-            return false;
-        }
-        
-        //return $test_data_arr1;
-    }
-    
-    
+ 
     public function set_output_name_pdf($parameter)
     {
         $date = date('d-m-Y H:i:s');
@@ -4378,7 +3637,7 @@ class core_api_report extends DB {
 				}
 		}
 		// pr($data);
-		// exit;
+		/* exit; */
 		$ignoreField = array('Kode','Uraian');
 		$i=1;
 		$x=0;
@@ -4740,33 +3999,483 @@ class core_api_report extends DB {
 		return 	$getdata;
 	}
 	
-	public function MutasiSkpd ($satker,$tglawalperolehan,$tglakhirperolehan){
-		$queryBerkurang ="select Aset_ID,SatkerAwal,SatkerTujuan from mutasiaset where  SatkerAwal = '$satker'";		
-		$resultBerkurang = $this->query($queryBerkurang) or die ($this->error('error'));	
-		if($resultBerkurang !=''){
-			while ($data = $this->fetch_object($resultBerkurang))
-			{
-				$dataBrkrngAset_ID[]= $data->Aset_ID;
-				$dataBrkrngSatkerAwal[]= $data->SatkerAwal;
+	public function barangskpd($satker_id,$tglawalperolehan,$tglakhirperolehan){
+		// echo "satker id =".$satker_id;
+		$ceck = explode('.', $satker_id);
+		// pr($ceck);
+		$count = count($ceck);
+		// pr($count);
+		if($count == 1){
+			$qsat = "SELECT kode,NamaSatker FROM satker WHERE kode LIKE '$satker_id%' and Kd_Ruang is null and Gudang is null and KodeUnit is null and KodeSatker is not null ";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
 			}
-			$Aset_IDFix = implode(',',$dataBrkrngAset_ID);
-			$SatkerAwalFix = implode(',',$dataBrkrngSatkerAwal);
-		}
-		$queryGetTipeAset ="select Aset_ID,TipeAset from aset where  Aset_ID in ($Aset_IDFix) and kodeSatker in ($SatkerAwalFix) and TglPerolehan >= 'tglawalperolehan' and TglPerolehan <='tglakhirperolehan'";		
-		$resultGetTipeAset = $this->query($queryGetTipeAset) or die ($this->error('error'));	
-		if($resultGetTipeAset !=''){
-			while ($data2 = $this->fetch_object($resultGetTipeAset))
-			{
-				$dataGetBrkrngAset_ID[]= $data2->Aset_ID;
-				$dataGetBrkrngTipeAset[]= $data2->TipeAset;
+		}else{
+			$qsat = "SELECT kode,NamaSatker FROM satker WHERE kode = '$satker_id' and Kd_Ruang is null ";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+					// $satker[] = $dtrsat->kode;
+				}	
 			}
 		}
 		
+		// pr($satker);
+		// echo $satker[0];
+		$tglDefault = '2008-01-01';
+		$thnDefault ="2008";
+			
+		$tglAwalDefault = $tglawalperolehan;
+		$ceckTglAw = explode ('-',$tglAwalDefault);
+		$thnceck = $ceckTglAw[0];
 		
+		$tglAkhirDefault = $tglakhirperolehan;
+		$ceckTgl = explode ('-',$tglAkhirDefault);
+		$thnFix = $ceckTgl[0];
+		
+		$KodeKa = "OR kodeKA = 1";
+		$KodeKaCondt1 = "AND kodeKA = 1";
+		
+		// foreach ($satker as $data){
+		foreach ($satker as $data=>$satker_id){
+		
+			$query_01 = "SELECT sum(NilaiPerolehan) as nilai FROM tanah
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							";
+			$query_02_default = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1";
+							
+			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							and (NilaiPerolehan >= 300000 $KodeKa)";
+							
+			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1
+							union all 
+							SELECT sum(NilaiPerolehan) as Nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan >= 300000 $KodeKa)";
+			
+			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1";
+							
+			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
+						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 10000000 $KodeKa)";
+							
+			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai  FROM bangunan
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1
+							union all 
+							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan >= 10000000 $KodeKa)";	
+							
+			$query_04 = "SELECT sum(NilaiPerolehan) as nilai FROM jaringan
+				WHERE kodeSatker like '$satker_id%'  
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+				
+			$query_05 = "SELECT sum(NilaiPerolehan) as nilai FROM asetlain
+				WHERE kodeSatker like '$satker_id%'  
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";	
+
+			$query_06 = "SELECT sum(NilaiPerolehan) as nilai FROM kdp
+				WHERE kodeSatker like '$satker_id%' 
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+				
+			$query_07 = "SELECT sum(NilaiPerolehan) as nilai FROM aset
+				WHERE kodeSatker like '$satker_id%' 
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
+				and StatusValidasi =1 and kodeLokasi and kondisi = 3 like '12%' $KodeKaCondt1";	
+			
+			if($thnFix < $thnDefault){
+				// echo "tahun kurang dari 2008";
+				$queryALL = array($query_01,$query_02_default,$query_03_default,$query_04,$query_05,$query_06,$query_07);
+			}elseif($thnceck >= $thnDefault){
+				// echo "tahun diatas dari 2008";
+				$queryALL = array($query_01,$query_02_condt_1,$query_03_condt_1,$query_04,$query_05,$query_06,$query_07);
+			}else{
+				// echo "<2008 >2008";
+				$queryALL = array($query_01,$query_02_condt_2,$query_03_condt_2,$query_04,$query_05,$query_06,$query_07);
+				// $queryALL = array($query_02_condt_2);
+			}
+		// $hitung  = count($queryALL);
+		// echo "hitung".$hitung;
+		// pr($queryALL);
+		// exit;
+			
+			for ($i = 0; $i < count($queryALL); $i++)
+			{
+				
+				/*echo "<br>";
+				echo "query_$i =".$queryALL[$i];
+				echo "<br>";
+				echo "<br>";*/
+				// exit;
+				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
+				// echo "masukk";
+					// exit;
+				
+				if($result){
+					// $i = 0;
+					while ($dataAll = $this->fetch_object($result))
+					{
+						// $datafix[] = $data3->nilai;
+						if($dataAll->nilai == NULL){
+							$nilai = 0;
+						}else{
+							$nilai = $dataAll->nilai;
+						}
+						$getdata[$data][]= $nilai;
+					}
+					
+							
+				}
+				
+			}
+			// pr($data);
+			
+		}
+		// pr($getdata);
+		
+		// exit;
+		return $getdata;
+			
+	}
+	
+	public function barangupb($satker_id,$tglawalperolehan,$tglakhirperolehan){
+		if($satker_id){
+			$qsat = "SELECT kode,NamaSatker FROM satker where kode like '$satker_id%' and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}
+		}
+		
+		// pr($satker);
+		// exit;
+		$tglDefault = '2008-01-01';
+		$thnDefault ="2008";
+			
+		$tglAwalDefault = $tglawalperolehan;
+		$ceckTglAw = explode ('-',$tglAwalDefault);
+		$thnceck = $ceckTglAw[0];
+		
+		$tglAkhirDefault = $tglakhirperolehan;
+		$ceckTgl = explode ('-',$tglAkhirDefault);
+		$thnFix = $ceckTgl[0];
+		
+		$KodeKa = "OR kodeKA = 1";
+		$KodeKaCondt1 = "AND kodeKA = 1";
+		
+		foreach ($satker as $data=>$satker_id){
+		
+			$query_01 = "SELECT sum(NilaiPerolehan) as nilai FROM tanah
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							";
+			$query_02_default = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1";
+							
+			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							and (NilaiPerolehan >= 300000 $KodeKa)";
+							
+			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1
+							union all 
+							SELECT sum(NilaiPerolehan) as Nilai FROM mesin
+							WHERE kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan >= 300000 $KodeKa)";
+			
+			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1";
+							
+			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
+						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 10000000 $KodeKa)";
+							
+			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai  FROM bangunan
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							$KodeKaCondt1
+							union all 
+							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan >= 10000000 $KodeKa)";	
+							
+			$query_04 = "SELECT sum(NilaiPerolehan) as nilai FROM jaringan
+				WHERE kodeSatker like '$satker_id%'  
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+				
+			$query_05 = "SELECT sum(NilaiPerolehan) as nilai FROM asetlain
+				WHERE kodeSatker like '$satker_id%'  
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";	
+
+			$query_06 = "SELECT sum(NilaiPerolehan) as nilai FROM kdp
+				WHERE kodeSatker like '$satker_id%' 
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+				
+			$query_07 = "SELECT sum(NilaiPerolehan) as nilai FROM aset
+				WHERE kodeSatker like '$satker_id%' 
+				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
+				and StatusValidasi =1 and kondisi = 3 and kodeLokasi like '12%' $KodeKaCondt1";	
+			
+			if($thnFix < $thnDefault){
+				// echo "tahun kurang dari 2008";
+				$queryALL = array($query_01,$query_02_default,$query_03_default,$query_04,$query_05,$query_06,$query_07);
+			}elseif($thnceck >= $thnDefault){
+				// echo "tahun diatas dari 2008";
+				$queryALL = array($query_01,$query_02_condt_1,$query_03_condt_1,$query_04,$query_05,$query_06,$query_07);
+			}else{
+				// echo "<2008 >2008";
+				$queryALL = array($query_01,$query_02_condt_2,$query_03_condt_2,$query_04,$query_05,$query_06,$query_07);
+				// $queryALL = array($query_02_condt_2);
+			}
+		// $hitung  = count($queryALL);
+		// echo "hitung".$hitung;
+		// pr($queryALL);
+		// exit;
+			
+			for ($i = 0; $i < count($queryALL); $i++)
+			{
+				
+				/*echo "<br>";
+				echo "query_$i =".$queryALL[$i];
+				echo "<br>";
+				echo "<br>";*/
+				// exit;
+				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
+				// echo "masukk";
+					// exit;
+				
+				if($result){
+					// $i = 0;
+					while ($dataAll = $this->fetch_object($result))
+					{
+						// $datafix[] = $data3->nilai;
+						if($dataAll->nilai == NULL){
+							$nilai = 0;
+						}else{
+							$nilai = $dataAll->nilai;
+						}
+						$getdata[$data][]= $nilai;
+					}
+					
+							
+				}
+				
+			}
+			// pr($data);
+			
+		}
+		// pr($getdata);
+		// exit;
+		return $getdata;
+			
 	}
 	
 	
-	
+	public function MutasiSkpd ($satker,$tglawal,$tglakhir){
+		// pr($satker);
+		// exit;
+		foreach ($satker as $key){
+			$queryBerkurang ="select Aset_ID,SatkerAwal,SatkerTujuan from mutasiaset where  SatkerAwal = '$key'";		
+			// pr($queryBerkurang);
+			// exit;
+			$resultBerkurang = $this->query($queryBerkurang) or die ($this->error('error'));	
+			if($resultBerkurang !=''){
+				while ($data = $this->fetch_object($resultBerkurang))
+				{
+					$dataBrkrngAset_ID[]= $data->Aset_ID;
+					$dataBrkrngSatkerAwal[]= $data->SatkerAwal;
+					$dataBrkrngSatkerTujuan[]= $data->SatkerTujuan;
+				}
+			}
+		}	
+		// pr($dataBrkrngSatkerAwal);
+		// pr($dataBrkrngSatkerTujuan);
+		 if($dataBrkrngAset_ID != '' && $dataBrkrngSatkerTujuan){
+			if(count($dataBrkrngAset_ID) > 1 && count($dataBrkrngSatkerAwal) > 1){
+				// echo "ga kessini ajaaa";
+				$Aset_IDFix = implode(',',$dataBrkrngAset_ID);
+				$SatkerAwalFix = implode(',',$dataBrkrngSatkerTujuan);
+			}else{
+				// echo "sini ajaaa";
+				$Aset_IDFix = $dataBrkrngAset_ID[0];
+				$SatkerAwalFix = $dataBrkrngSatkerTujuan[0];
+			}
+			
+			$query_tanah = "SELECT t.*,k.Uraian FROM log_tanah as t, kelompok as k ,satker as st
+							WHERE t.kodeKelompok = k.Kode and t.Aset_ID in ($Aset_IDFix) 
+							and t.kodeSatker = st.kode and t.kodeSatker in ('$SatkerAwalFix') 
+							and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir'";	
+			
+			$query_mesin = "SELECT m.* ,k.Uraian,st.kode,st.NamaSatker FROM log_mesin as m , kelompok as k ,satker as st
+							WHERE m.kodeKelompok = k.Kode and m.Aset_ID in ($Aset_IDFix) 
+							and m.kodeSatker = st.kode and m.kodeSatker in ('$SatkerAwalFix') 
+							and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'";			
+			
+			$query_bangunan = "SELECT b.*,k.Uraian FROM log_bangunan as b, kelompok as k ,satker as st
+						    WHERE b.kodeKelompok = k.Kode and b.Aset_ID in ($Aset_IDFix) 
+							and b.kodeSatker = st.kode and b.kodeSatker in ('$SatkerAwalFix') 
+							and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'";
+			
+			$query_jaringan = "SELECT j.*,k.Uraian FROM log_jaringan as j, kelompok as k ,satker as st
+							WHERE j.kodeKelompok = k.Kode and j.Aset_ID in ($Aset_IDFix) 
+							and j.kodeSatker = st.kode and j.kodeSatker in ('$SatkerAwalFix') 
+							and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'";	
+			
+			$query_asettetaplainnya = "SELECT at.*,k.Uraian FROM log_asetlain as at, kelompok as k ,satker as st
+							WHERE at.kodeKelompok = k.Kode and at.Aset_ID in ($Aset_IDFix) 
+							and at.kodeSatker = st.kode and at.kodeSatker in ('$SatkerAwalFix') 
+							and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'";		
+			
+			$query_kdp = "SELECT kd.*,k.Uraian FROM log_kdp as kd, kelompok as k ,satker as st
+							WHERE kd.kodeKelompok = k.Kode and kd.Aset_ID in ($Aset_IDFix) 
+							and kd.kodeSatker = st.kode and kd.kodeSatker in ('$SatkerAwalFix') 
+							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";	
+			
+			/*$query_tanah = "SELECT t.*,k.Uraian FROM log_tanah as t, kelompok as k ,satker as st
+							WHERE t.kodeKelompok = k.Kode and t.Aset_ID = '$dataBrkrngAset_ID[0]' 
+							and t.kodeSatker = st.kode and t.kodeSatker = '$dataBrkrngSatkerTujuan[0]' 
+							and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir'";	
+			
+			$query_mesin = "SELECT m.* ,k.Uraian,st.kode,st.NamaSatker FROM log_mesin as m , kelompok as k ,satker as st
+							WHERE m.kodeKelompok = k.Kode and m.Aset_ID = '$dataBrkrngAset_ID[0]' 
+							and m.kodeSatker = st.kode and m.kodeSatker = '$dataBrkrngSatkerTujuan[0]' 
+							and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'";			
+			
+			$query_bangunan = "SELECT b.*,k.Uraian FROM log_bangunan as b, kelompok as k ,satker as st
+						    WHERE b.kodeKelompok = k.Kode and b.Aset_ID = '$dataBrkrngAset_ID[0]' 
+							and b.kodeSatker = st.kode and b.kodeSatker = '$dataBrkrngSatkerTujuan[0]' 
+							and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'";
+			
+			$query_jaringan = "SELECT j.*,k.Uraian FROM log_jaringan as j, kelompok as k ,satker as st
+							WHERE j.kodeKelompok = k.Kode and j.Aset_ID = '$dataBrkrngAset_ID[0]' 
+							and j.kodeSatker = st.kode and j.kodeSatker = '$dataBrkrngSatkerTujuan[0]' 
+							and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'";	
+			
+			$query_asettetaplainnya = "SELECT at.*,k.Uraian FROM log_asetlain as at, kelompok as k ,satker as st
+							WHERE at.kodeKelompok = k.Kode and at.Aset_ID = '$dataBrkrngAset_ID[0]' 
+							and at.kodeSatker = st.kode and at.kodeSatker = '$dataBrkrngSatkerTujuan[0]'
+							and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'";		
+			
+			$query_kdp = "SELECT kd.*,k.Uraian FROM log_kdp as kd, kelompok as k ,satker as st
+							WHERE kd.kodeKelompok = k.Kode and kd.Aset_ID = '$dataBrkrngAset_ID[0]' 
+							and kd.kodeSatker = st.kode and kd.kodeSatker = '$dataBrkrngSatkerTujuan[0]' 
+							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";*/
+							
+			$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
+			for ($i = 0; $i < count($queryALL); $i++)
+			{
+				/*echo "<br>";
+				echo "query_$i =".$queryALL[$i];
+				echo "<br>";
+				echo "<br>";*/
+				// exit;
+				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
+				
+				if($result){
+					// $i = 0;
+					while ($dataAll = $this->fetch_object($result))
+					{
+						
+						// $getdata[$dataBrkrngSatkerAwal[0]][]= $dataAll;
+						$getdata[]= $dataAll;
+					}
+				}
+			}
+		}
+		// pr($getdata);	
+		// exit;	
+		// }
+		return $getdata;
+	}
 }
 
 ?>
