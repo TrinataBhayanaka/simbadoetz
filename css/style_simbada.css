@@ -44,7 +44,7 @@ div#containerSimda{
 	background-size: 37px 38px;
 	background-repeat:no-repeat;
 	background-position:left;
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	margin-right:-10px;
 	width:300px;
 	padding-top:12px;
@@ -164,7 +164,7 @@ section.formLegendInve .titleSp2dTermin{
 	margin-top:-20px;
 	margin-left:10px;
 	font-size:12px;
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:2px 40px;
 	width:150px;
 	border-radius:2px;
@@ -174,7 +174,7 @@ section.formLegendInve .titleSp2dPenunjang{
 	margin-top:-20px;
 	margin-left:10px;
 	font-size:12px;
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:2px 40px;
 	width:180px;
 	border-radius:2px;
@@ -184,7 +184,7 @@ section.formLegendInve .titleSp2dRPenunjang{
 	margin-top:-20px;
 	margin-left:10px;
 	font-size:12px;
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:2px 40px;
 	width:200px;
 	border-radius:2px;
@@ -198,7 +198,7 @@ section.formLegend .titleSp2dTermin{
 	margin-top:-20px;
 	margin-left:10px;
 	font-size:12px;
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:2px 40px;
 	width:150px;
 	border-radius:2px;
@@ -208,7 +208,7 @@ section.formLegend .titleSp2dPenunjang{
 	margin-top:-20px;
 	margin-left:10px;
 	font-size:12px;
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:2px 40px;
 	width:180px;
 	border-radius:2px;
@@ -218,7 +218,7 @@ section.formLegend .titleSp2dRPenunjang{
 	margin-top:-20px;
 	margin-left:10px;
 	font-size:12px;
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:2px 40px;
 	width:200px;
 	border-radius:2px;
@@ -289,7 +289,7 @@ section.formLegend .titleSp2dRPenunjang{
 	border-bottom:1px solid #EEEEEE;
 }
 .formKontrak span.titleForm{
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:5px 40px 5px 20px;
 	border-top-left-radius:5px;
 	border-top-right-radius:60px 40px;
@@ -298,7 +298,7 @@ section.formLegend .titleSp2dRPenunjang{
 	border-bottom:1px solid #EEEEEE;
 }
 .formPerusahaan span.titleForm{
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	padding:5px 40px 5px 20px;
 	border-top-left-radius:5px;
 	border-top-right-radius:60px 40px;
@@ -313,7 +313,7 @@ nav ul{
 	list-style:none;
 }
 nav li h3{
-	background-color:#003C2A;
+	background-color:#231E1C;
 	color:#CEE2FA;
 	padding:0px 20px;
 	margin-bottom:0px;
@@ -323,11 +323,11 @@ nav li h3{
 	border-bottom-right-radius:2px;*/
 }
 nav li li{
-	background-color:#024d36;
+	background-color:#7E4B41;
 	border-top:1px solid #046a4b;
 	border-bottom:1px solid #02432f;
 	border-left:2px solid #B1B3B2;
-	border-right:2px solid #003C2A;
+	border-right:2px solid #231E1C;
 	font-size:14px;
 	padding:5px 20px;
 }
@@ -335,7 +335,7 @@ nav li li table{
 	color:#fff;
 }
 nav li li table a{
-	background-color:#024d36;
+	background-color:#7E4B41;
 
 }
 nav li a{
@@ -354,7 +354,7 @@ nav li a:hover{
 	color:#000;
 }
 nav li a li:hover{
-	background-color:#A3CE4B;
+	background-color:#ED6946;
 	transition:background 1s ease;
 	text-decoration:none;
 }
