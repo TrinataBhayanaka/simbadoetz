@@ -156,6 +156,12 @@ $menu_id = 10;
 			<div>
 			<form action="" method="POST">
 				 <div class="formKontrak">
+				 		<ul>
+							<?=selectSatker('kodeSatker','255',true,false,'required');?>
+						</ul>
+				 		<ul>
+							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
+						</ul>
 						<ul>
 							<?php selectAset('kodeKelompok','255',true,false); ?>
 						</ul>
