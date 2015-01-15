@@ -84,11 +84,12 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<tr>
 						<th>No</th>
 						<th>Nama Satker</th>
-						<th>No. SPK/Perjanjian Kontrak</th>
+						<th>No. Dokumen</th>
 						<th>Tanggal</th>
+						<th>Jenis Dokumen</th>
 						<th>Tipe Aset</th>
 						<th>Nilai</th>
-						<th>Rincian Barang</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -103,9 +104,10 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td width="20%"><?=$val['NamaSatker']?></td>
 						<td><?=$val['noKontrak']?></td>
 						<td><?=$val['tglKontrak']?></td>
+						<td><?=($val['tipe_kontrak'] == 2) ? 'Pembelian Langsung' : 'Kontrak'?></td>
 						<td><?=$val['tipeAset']?></td>
 						<td><?=number_format($val['nilai'])?></td>
-						<td class="center">	
+						<td class="center">
 						<a href="kontrak_barang.php?id=<?=$val['id']?>" class="btn btn-info btn-small">
 							<?=($val['n_status'] != 1) ? '<i class="icon-plus icon-white"></i>&nbsp;tambah' : '<i class="fa fa-eye"></i>&nbsp;View'?></a>
 						</td>

@@ -1832,24 +1832,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                  $tblAset['Aset_ID'] = $row['Aset_ID'];
             }
 
-          //log
-            $logdata['Aset_ID'] = $tblAset['Aset_ID'];
-            $logdata['last_aset_id'] = $tblAset['Aset_ID'];
-            $logdata['action'] = 'insert';
-            $logdata['changeDate'] = date('Y/m/d');
-            $logdata['operator'] = "{$_SESSION['ses_uoperatorid']}";
-            // pr($data);exit;
-            foreach ($logdata as $key => $val) {
-                $tmplogfield[] = $key;
-                $tmplogvalue[] = "'$val'";
-            }
-            $fieldlog = implode(',', $tmplogfield);
-            $valuelog = implode(',', $tmplogvalue);
-
-            $query_log = "INSERT INTO log_aset ({$field},{$fieldlog},noRegister) VALUES ({$value},{$valuelog},'{$tblAset['noRegister']}')";
-            // pr($query_log);exit;
-            $result=  $this->query($query_log) or die($this->error()); 
-
         $kapital['idKontrak'] = $aset['id'];
         $kapital['Aset_ID'] = $aset['idaset'];
         $kapital['asetKapitalisasi'] = $logdata['Aset_ID'];
@@ -2025,11 +2007,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             while ($row = mysql_fetch_assoc($query_id)){
                  $logAset[$idkey] = $row[$idkey];
             }
-
-            $query_log = "INSERT INTO {$logtabel} ({$field},{$fieldlog},{$idkey}) VALUES ({$value},{$valuelog},{$logAset[$idkey]})";
-            // pr($query_log);exit;
-            $result=  $this->query($query_log) or die($this->error());
-
 
         }  
 
