@@ -1560,22 +1560,28 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             }
 
             if($data['TipeAset']=="A"){
+                $tblKib['HakTanah'] = $data['HakTanah'];
                 $tblKib['LuasTotal'] = $data['LuasTotal'];
                 $tblKib['NoSertifikat'] = $data['NoSertifikat'];
                 $tblKib['TglSertifikat'] = $data['TglSertifikat'];
+                $tblKib['Penggunaan'] = $data['Penggunaan'];
                 $tabel = "tanah";
                 $logtabel = "log_tanah";
                 $idkey = "Tanah_ID";
             } elseif ($data['TipeAset']=="B") {
+                $tblKib['Pabrik'] = $data['Pabrik'];
                 $tblKib['Merk'] = $data['Merk'];
                 $tblKib['Model'] = $data['Model'];
                 $tblKib['Ukuran'] = $data['Ukuran'];
+                $tblKib['NoMesin'] = $data['NoMesin'];
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
             } elseif ($data['TipeAset']=="C") {
                 $tblKib['JumlahLantai'] = $data['JumlahLantai'];
                 $tblKib['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['Beton'] = $data['Beton'];
+                $tblKib['NoSurat'] = $data['NoSurat'];
                 $tabel = "bangunan";
                 $logtabel = "log_bangunan";
                 $idkey = "Bangunan_ID";
@@ -1583,6 +1589,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['Panjang'] = $data['Panjang'];
                 $tblKib['Lebar'] = $data['Lebar'];
                 $tblKib['LuasJaringan'] = $data['LuasJaringan'];
+                $tblKib['Konstruksi'] = $data['Konstruksi'];
+                $tblKib['NoDokumen'] = $data['NoDokumen'];
+                $tblKib['tglDokumen'] = $data['tglDokumen'];
                 $tabel = "jaringan";
                 $logtabel = "log_jaringan";
                 $idkey = "Jaringan_ID";
@@ -1590,12 +1599,17 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['Judul'] = $data['Judul'];
                 $tblKib['Pengarang'] = $data['Pengarang'];
                 $tblKib['Penerbit'] = $data['Penerbit'];
+                $tblKib['Spesifikasi'] = $data['Spesifikasi'];
+                $tblKib['AsalDaerah'] = $data['AsalDaerah'];
+                $tblKib['Material'] = $data['Material'];
+                $tblKib['Ukuran'] = $data['Ukuran'];
                 $tabel = "asetlain";
                 $logtabel = "log_asetlain";
                 $idkey = "AsetLain_ID";
             } elseif ($data['TipeAset']=="F") {
                 $tblKib['JumlahLantai'] = $data['JumlahLantai'];
                 $tblKib['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['Beton'] = $data['Beton'];
                 $tabel = "kdp";
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
@@ -1905,24 +1919,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                  $tblAset['Aset_ID'] = $row['Aset_ID'];
             }
 
-          //log
-            $logdata['Aset_ID'] = $tblAset['Aset_ID'];
-            $logdata['last_aset_id'] = $tblAset['Aset_ID'];
-            $logdata['action'] = 'insert';
-            $logdata['changeDate'] = date('Y/m/d');
-            $logdata['operator'] = "{$_SESSION['ses_uoperatorid']}";
-            // pr($data);exit;
-            foreach ($logdata as $key => $val) {
-                $tmplogfield[] = $key;
-                $tmplogvalue[] = "'$val'";
-            }
-            $fieldlog = implode(',', $tmplogfield);
-            $valuelog = implode(',', $tmplogvalue);
-
-            $query_log = "INSERT INTO log_aset ({$field},{$fieldlog},noRegister) VALUES ({$value},{$valuelog},'{$tblAset['noRegister']}')";
-            // pr($query_log);exit;
-            $result=  $this->query($query_log) or die($this->error());
-
          unset($tblAset['noKontrak']);
          unset($tblAset['Kuantitas']);
          unset($tblAset['Satuan']);
@@ -1930,22 +1926,28 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
          unset($tblAset['TipeAset']);    
         
         if($data['TipeAset']=="A"){
+                $tblAset['HakTanah'] = $data['HakTanah'];
                 $tblAset['LuasTotal'] = $data['LuasTotal'];
                 $tblAset['NoSertifikat'] = $data['NoSertifikat'];
                 $tblAset['TglSertifikat'] = $data['TglSertifikat'];
+                $tblAset['Penggunaan'] = $data['Penggunaan'];
                 $tabel = "tanah";
                 $logtabel = "log_tanah";
                 $idkey = "Tanah_ID";
             } elseif ($data['TipeAset']=="B") {
+                $tblAset['Pabrik'] = $data['Pabrik'];
                 $tblAset['Merk'] = $data['Merk'];
                 $tblAset['Model'] = $data['Model'];
                 $tblAset['Ukuran'] = $data['Ukuran'];
+                $tblAset['NoMesin'] = $data['NoMesin'];
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
             } elseif ($data['TipeAset']=="C") {
                 $tblAset['JumlahLantai'] = $data['JumlahLantai'];
                 $tblAset['LuasLantai'] = $data['LuasLantai'];
+                $tblAset['Beton'] = $data['Beton'];
+                $tblAset['NoSurat'] = $data['NoSurat'];
                 $tabel = "bangunan";
                 $logtabel = "log_bangunan";
                 $idkey = "Bangunan_ID";
@@ -1953,6 +1955,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblAset['Panjang'] = $data['Panjang'];
                 $tblAset['Lebar'] = $data['Lebar'];
                 $tblAset['LuasJaringan'] = $data['LuasJaringan'];
+                $tblAset['Konstruksi'] = $data['Konstruksi'];
+                $tblAset['NoDokumen'] = $data['NoDokumen'];
+                $tblAset['tglDokumen'] = $data['tglDokumen'];
                 $tabel = "jaringan";
                 $logtabel = "log_jaringan";
                 $idkey = "Jaringan_ID";
@@ -1960,12 +1965,17 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblAset['Judul'] = $data['Judul'];
                 $tblAset['Pengarang'] = $data['Pengarang'];
                 $tblAset['Penerbit'] = $data['Penerbit'];
+                $tblAset['Spesifikasi'] = $data['Spesifikasi'];
+                $tblAset['AsalDaerah'] = $data['AsalDaerah'];
+                $tblAset['Material'] = $data['Material'];
+                $tblAset['Ukuran'] = $data['Ukuran'];
                 $tabel = "asetlain";
                 $logtabel = "log_asetlain";
                 $idkey = "AsetLain_ID";
             } elseif ($data['TipeAset']=="F") {
                 $tblAset['JumlahLantai'] = $data['JumlahLantai'];
                 $tblAset['LuasLantai'] = $data['LuasLantai'];
+                $tblAset['Beton'] = $data['Beton'];
                 $tabel = "kdp";
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";

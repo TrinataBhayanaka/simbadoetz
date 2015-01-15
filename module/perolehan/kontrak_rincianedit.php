@@ -53,7 +53,10 @@ $menu_id = 10;
 	<!-- End Sql -->
 	<script>
     jQuery(function($) {
-        $('#hrgmask,#total').autoNumeric('init');    
+        $('#hrgmask,#total').autoNumeric('init');
+        $("select").select2({});
+        $( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
+		$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('9999-99-99');    
     });
 
     function getCurrency(item){
@@ -158,7 +161,15 @@ $menu_id = 10;
 						</ul>
 						<ul class="tanah" style="display:none">
 							<li>
-								<span class="span2">Luas Total</span>
+								<span class="span2">Hak Tanah</span>
+								<select id="hakpakai" name="HakTanah" style="width:255px" disabled>
+									<option value="Hak Pakai">Hak Pakai</option>
+									<option value="Hak Pengelolaan">Hak Pengelolaan</option>
+								</select>
+							</li>
+							<li>&nbsp;</li>
+							<li>
+								<span class="span2">Luas (M2)</span>
 								<input type="text" class="span3" name="LuasTotal" disabled/>
 							</li>
 							<li>
@@ -167,7 +178,11 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Tgl. Sertifikat</span>
-								<input type="text" class="span3" name="TglSertifikat" id="datepicker" disabled/>
+								<input type="text" class="span2" name="TglSertifikat" id="datepicker" disabled/>
+							</li>
+							<li>
+								<span class="span2">Penggunaan</span>
+								<input type="text" class="span3" name="Penggunaan" disabled/>
 							</li>
 						</ul>
 						<ul class="mesin" style="display:none">
@@ -176,36 +191,84 @@ $menu_id = 10;
 								<input type="text" class="span3" name="Merk" disabled/>
 							</li>
 							<li>
-								<span class="span2">Model</span>
+								<span class="span2">Type</span>
 								<input type="text" class="span3" name="Model" disabled/>
 							</li>
 							<li>
-								<span class="span2">Ukuran</span>
+								<span class="span2">Ukuran / CC</span>
 								<input type="text" class="span3" name="Ukuran" disabled/>
+							</li>
+							<li>
+								<span class="span2">No. Pabrik</span>
+								<input type="text" class="span3" name="Pabrik" disabled/>
+							</li>
+							<li>
+								<span class="span2">No. Mesin</span>
+								<input type="text" class="span3" name="NoMesin" disabled/>
+							</li>
+							<li>
+								<span class="span2">No. BPKB</span>
+								<input type="text" class="span3" name="NoBPKB" disabled/>
+							</li>
+							<li>
+								<span class="span2">Bahan</span>
+								<input type="text" class="span3" name="Material" disabled/>
+							</li>
+							<li>
+								<span class="span2">No. Rangka</span>
+								<input type="text" class="span3" name="NoRangka" disabled/>
 							</li>
 						</ul>
 						<ul class="bangunan" style="display:none">
+							<li>
+								<span class="span2">Beton / Tidak</span>
+								<select id="beton_bangunan" name="Beton" style="width:155px" disabled>
+									<option value="1">Beton</option>
+									<option value="2">Tidak</option>
+								</select>
+							</li>
+							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
 								<input type="text" class="span3" name="JumlahLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['JumlahLantai'] : ''?>" disabled/>
 							</li>
 							<li>
-								<span class="span2">Luas Lantai</span>
+								<span class="span2">Luas Lantai (M2)</span>
 								<input type="text" class="span3" name="LuasLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
+							</li>
+							<li>
+								<span class="span2">No. Dokumen</span>
+								<input type="text" class="span3" name="NoSurat" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
+							</li>
+							<li>
+								<span class="span2">Tgl. Dokumen</span>
+								<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglSurat" id="tglSurat" disabled/>
 							</li>
 						</ul>
 						<ul class="jaringan" style="display:none">
 							<li>
-								<span class="span2">Panjang</span>
-								<input type="text" class="span3" name="Panjang" disabled/>
+								<span class="span2">Konstruksi</span>
+								<input type="text" class="span3" name="Konstruksi" disabled/>
 							</li>
 							<li>
-								<span class="span2">Lebar</span>
-								<input type="text" class="span3" name="Lebar" disabled/>
+								<span class="span2">Panjang (KM)</span>
+								<input type="text" class="span2" name="Panjang" disabled/>
 							</li>
 							<li>
-								<span class="span2">Luas Jaringan</span>
-								<input type="text" class="span3" name="LuasJaringan" disabled/>
+								<span class="span2">Lebar (M)</span>
+								<input type="text" class="span2" name="Lebar" disabled/>
+							</li>
+							<li>
+								<span class="span2">Luas (M2)</span>
+								<input type="text" class="span2" name="LuasJaringan" disabled/>
+							</li>
+							<li>
+								<span class="span2">No. Dokumen</span>
+								<input type="text" class="span3" name="NoDokumen" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
+							</li>
+							<li>
+								<span class="span2">Tgl. Dokumen</span>
+								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" disabled/>
 							</li>
 						</ul>
 						<ul class="asetlain" style="display:none">
@@ -221,8 +284,32 @@ $menu_id = 10;
 								<span class="span2">Penerbit</span>
 								<input type="text" class="span3" name="Penerbit" disabled/>
 							</li>
+							<li>
+								<span class="span2">Spesifikasi</span>
+								<input type="text" class="span3" name="Spesifikasi" disabled/>
+							</li>
+							<li>
+								<span class="span2">Asal Daerah</span>
+								<input type="text" class="span3" name="AsalDaerah" disabled/>
+							</li>
+							<li>
+								<span class="span2">Bahan</span>
+								<input type="text" class="span3" name="Material" disabled/>
+							</li>
+							<li>
+								<span class="span2">Ukuran</span>
+								<input type="text" class="span3" name="Ukuran" disabled/>
+							</li>
 						</ul>
 						<ul class="kdp" style="display:none">
+							<li>
+								<span class="span2">Beton / Tidak</span>
+								<select id="beton_kdp" name="Beton" style="width:155px">
+									<option value="1">Beton</option>
+									<option value="2">Tidak</option>
+								</select>
+							</li>
+							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
 								<input type="text" class="span3" name="JumlahLantai" disabled/>
@@ -233,6 +320,15 @@ $menu_id = 10;
 							</li>
 						</ul>
 						<ul>
+							<li>
+								<span class="span2">Tgl. Perolehan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="TglPerolehan" id="tglPerolehan" required/>
+									</div>
+								</div>
+							</li>
 							<li>
 								<span class="span2">Alamat</span>
 								<textarea name="Alamat" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Alamat'] : ''?></textarea>
@@ -268,7 +364,6 @@ $menu_id = 10;
 					<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
 					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
-					<input type="hidden" name="TglPerolehan" value="<?=$kontrak[0]['tglKontrak']?>">
 					<input type="hidden" name="kondisi" value="1">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 					<input type="hidden" name="Tahun" value="<?=date('Y', strtotime($kontrak[0]['tglKontrak']));?>">
@@ -297,6 +392,8 @@ $menu_id = 10;
 			$(".mesin,.bangunan,.jaringan,.asetlain,.kdp").hide('');
 			$(".mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".tanah li > input,textarea").removeAttr('disabled');
+			$("#hakpakai").removeAttr('disabled');
+			$("#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".tanah").show('');
 		} else if(gol[0] == '02')
 		{
@@ -304,6 +401,7 @@ $menu_id = 10;
 			$(".tanah,.bangunan,.jaringan,.asetlain,.kdp").hide('');
 			$(".tanah li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".mesin li > input,textarea").removeAttr('disabled');
+			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".mesin").show('');
 		} else if(gol[0] == '03')
 		{
@@ -311,6 +409,8 @@ $menu_id = 10;
 			$(".tanah,.mesin,.jaringan,.asetlain,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".bangunan li > input,textarea").removeAttr('disabled');
+			$("#beton_bangunan").removeAttr('disabled');
+			$("#hakpakai,#beton_kdp").attr('disabled','disabled');
 			$(".bangunan").show('');
 		} else if(gol[0] == '04')
 		{
@@ -318,29 +418,34 @@ $menu_id = 10;
 			$(".tanah,.mesin,.bangunan,.asetlain,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".jaringan li > input,textarea").removeAttr('disabled');
+			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".jaringan").show('');
 		} else if(gol[0] == '05'){
 			$("#TipeAset").val('E');
 			$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
 			$(".asetlain li > input,textarea").removeAttr('disabled');
+			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".asetlain").show('');
 		} else if(gol[0] == '06'){
 			$("#TipeAset").val('F');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,textarea").attr('disabled','disabled');
 			$(".kdp li > input,textarea").removeAttr('disabled');
+			$("#beton_kdp").removeAttr('disabled');
+			$("#hakpakai,#beton_bangunan").attr('disabled','disabled');
 			$(".kdp").show('');
 		} else {
 			$("#TipeAset").val('G');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 		}			
 		
 	});
 
 	$(document).on('submit', function(){
-		var perolehan = $("#total").val();
+		var perolehan = $("#nilaiPerolehan").val();
 		var total = $("#totalRB").val();
 		var spk = $("#spk").val();
 		var str = parseInt(spk.replace(/[^0-9\.]+/g, ""));
