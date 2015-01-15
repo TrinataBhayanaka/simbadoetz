@@ -1084,7 +1084,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	public function update_validasi_penghapusan($data,$debug=false)
         {
 			// pr($data);
-            exit;
+            // exit;
             if(isset($data)){
 			
                     $cnt=count($data['ValidasiPenghapusan']);
