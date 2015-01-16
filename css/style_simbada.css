@@ -324,9 +324,9 @@ nav li h3{
 }
 nav li li{
 	background-color:#7E4B41;
-	border-top:1px solid #046a4b;
-	border-bottom:1px solid #02432f;
-	border-left:2px solid #B1B3B2;
+	border-top:1px solid #E9C8BE;
+	border-bottom:1px solid #231E1C;
+	border-left:2px solid #231E1C;
 	border-right:2px solid #231E1C;
 	font-size:14px;
 	padding:5px 20px;
@@ -376,7 +376,7 @@ aside{
 }
 footer{
 	margin-top:30px;
-	background-color:#15422E;
+	background-color:#E1C7BB;
 	height:50px;
 	clear:both;
 }

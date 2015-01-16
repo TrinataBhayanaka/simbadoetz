@@ -3446,9 +3446,9 @@ class core_api_report extends DB {
         <div id="frame_header">
                 <div id="header"></div>
         </div>
-        <div id="list_header">
+        <!-- <div id="list_header"> 
            
-        </div>
+        </div>-->
         <div style="border-style:solid; width:40%; margin:20px auto; border-width:1px; box-shadow:5px 5px 5px #ccd" align="center">
             <table border="0">
                 <tr>
