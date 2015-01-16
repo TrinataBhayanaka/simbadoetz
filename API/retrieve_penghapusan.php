@@ -563,6 +563,101 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		
 		
     }
+    public function delete_update_daftar_validasi_penghapusan_psb($data,$debug=false)
+    {
+        // pr($data);
+        $sql = array(
+                        'table'=>'Penghapusan',
+                        'field'=>"Status=0",
+                        'condition' => "Penghapusan_ID='$data[id]'",
+                        );
+        $res = $this->db->lazyQuery($sql,$debug,2);
+                    
+        // $query="UPDATE Penghapusan SET Status=0 WHERE Penghapusan_ID='$id'";
+        // $exec=$this->query($query) or die($this->error());
+        
+        $sql1 = array(
+                        'table'=>'PenghapusanAset',
+                        'field'=>"Status=0",
+                        'condition' => "Penghapusan_ID='$data[id]'",
+                        );
+        $res1 = $this->db->lazyQuery($sql1,$debug,2);
+        
+        $sql2 = array(
+            'table'=>'PenghapusanAset',
+            'field'=>"Aset_ID,NilaiPerolehan,kondisi",
+            'condition' => "Penghapusan_ID='$data[id]'",
+            );
+        $res2 = $this->db->lazyQuery($sql2,$debug);
+        // pr($res2);
+        foreach($res2 as $asetid)
+            {
+                $dataArr[]=$asetid[Aset_ID];
+                
+                $sql_tipe = array(
+                                    'table'=>'Aset',
+                                    'field'=>"Aset_ID,TipeAset",
+                                    'condition' => "Aset_ID='$asetid[Aset_ID]'",
+                                    );
+                                $res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
+                                // pr($res_tipe);
+                                // pr($res_tipe[0][Aset_ID]);
+                                // pr($res_tipe[0][TipeAset]);
+                                $TipeAset=$res_tipe[0][TipeAset];
+                                $aset_id_valid=$res_tipe[0][Aset_ID];
+                                
+                                if($TipeAset=="A"){
+                                    $tabel="tanah";
+                                }
+                                elseif($TipeAset=="B"){
+                                    $tabel="mesin";
+                                }
+                                elseif(TipeAset){
+                                    $tabel="bangunan";
+                                }
+                                elseif(TipeAset){
+                                    $tabel="jaringan";
+                                }
+                                elseif($TipeAset=="E"){
+                                    $tabel="asetlain";
+                                }
+                                elseif($TipeAset=="F"){
+                                    $tabel="kdp";
+                                }
+                                    // pr("---");
+                                  // pr($tabel);
+                                    // pr("--");
+                                
+                                $sql1_valid = array(
+                                    'table'=>"$tabel",
+                                    'field'=>"StatusTampil=1, Status_Validasi_Barang=1 ",
+                                    'condition' => "Aset_ID=$aset_id_valid",
+                                    );
+                                $res_valid = $this->db->lazyQuery($sql1_valid,$debug,2);
+                                // pr($sql1_valid);
+
+                                $sql1 = array(
+                                    'table'=>'Aset',
+                                    'field'=>"fixPenggunaan=1, Status_Validasi_Barang=1,NilaiPerolehan='$asetid[NilaiPerolehan]',kondisi='$asetid[kondisi]' ",
+                                    'condition' => "Aset_ID='$asetid[Aset_ID]'",
+                                    );
+                                $res1 = $this->db->lazyQuery($sql1,$debug,2);
+                
+            }
+        $aset_id=implode(', ',array_values($dataArr));
+        // pr($aset_id);
+        
+        // $sql1 = array(
+        //  'table'=>'Aset',
+        //  'field'=>"fixPenggunaan=1, Status_Validasi_Barang=1 ",
+        //  'condition' => "Aset_ID IN ($aset_id)",
+        //  );
+        // $res1 = $this->db->lazyQuery($sql1,$debug,2);
+        // exit;
+        
+        if ($res1) return $res1;
+            return false;
+    }
 	 public function delete_update_daftar_validasi_penghapusan($data,$debug=false)
     {
 		// pr($data);
@@ -989,6 +1084,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	public function update_validasi_penghapusan($data,$debug=false)
         {
 			// pr($data);
+            // exit;
             if(isset($data)){
 			
                     $cnt=count($data['ValidasiPenghapusan']);
@@ -1093,6 +1189,140 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             
             if ($res1) return $res1;
 			return false;
+        }
+        public function update_validasi_penghapusan_PSB($data,$debug=false)
+        {
+            // pr($data);
+           
+            if(isset($data)){
+            
+                    $cnt=count($data['ValidasiPenghapusan']);
+                    // echo "$cnt";
+
+                for ($i=0; $i<$cnt; $i++){
+                    //echo "$i";
+                    // pr($data['ValidasiPenghapusan']);
+                    $penghapusan_id=$data['ValidasiPenghapusan'][$i];
+                    if($data['ValidasiPenghapusan']!=""){
+                    
+                    $sql = array(
+                        'table'=>'Penghapusan',
+                        'field'=>"Status=1",
+                        'condition' => "Penghapusan_ID='$penghapusan_id'",
+                        );
+                    $res = $this->db->lazyQuery($sql,$debug,2);
+                    
+                    // $query="UPDATE Penghapusan SET Status=1 WHERE Penghapusan_ID='$explodeID[$i]'";
+                    // $exec=$this->query($query) or die($this->error());
+                    
+                    $sql1 = array(
+                        'table'=>'PenghapusanAset',
+                        'field'=>"Status=1 ",
+                        'condition' => "Penghapusan_ID='$penghapusan_id'",
+                        );
+                    $res1 = $this->db->lazyQuery($sql1,$debug,2);
+                    
+                    $sql2 = array(
+                        'table'=>'PenghapusanAset',
+                        'field'=>"Aset_ID",
+                        'condition' => "Penghapusan_ID='$penghapusan_id'",
+                        );
+                    $res2 = $this->db->lazyQuery($sql2,$debug);
+                    $cntres2=count($res2);
+                    // echo $cntres2;
+                    for ($j=0; $j<$cntres2; $j++){
+                        $res2[$j]['nilaiPerolehanpsb']=$data['nilaiPerolehanpsb'][$j];
+                        $res2[$j]['nilaiPerolehan']=$data['nilaiPerolehan'][$j];
+                        $res2[$j]['kondisipsb']=$data['kondisipsb'][$j];
+                        
+                    }
+
+                    // pr($res2); 
+                    foreach($res2 as $asetid)
+                        {
+                                $dataArr[]=$asetid[Aset_ID];
+                                // pr($asetid[Aset_ID]);
+                              
+                                $sql12 = array(
+                                    'table'=>'PenghapusanAset',
+                                    'field'=>"Status=1,NilaiPerolehan='$asetid[nilaiPerolehan]',kondisi='$asetid[kondisipsb]' ",
+                                    'condition' => "Aset_ID='$asetid[Aset_ID]' ",
+                                    );
+                                // pr($sql12);
+                                // exit;
+                                $res12 = $this->db->lazyQuery($sql12,$debug,2);
+
+                                $sql_tipe = array(
+                                    'table'=>'Aset',
+                                    'field'=>"Aset_ID,TipeAset",
+                                    'condition' => "Aset_ID='$asetid[Aset_ID]'",
+                                    );
+                                $res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
+                                
+                                // pr($res_tipe[0][Aset_ID]);
+                                // pr($res_tipe[0][TipeAset]);
+                                $TipeAset=$res_tipe[0][TipeAset];
+                                $aset_id_valid=$res_tipe[0][Aset_ID];
+                                
+                                if($TipeAset=="A"){
+                                    $tabel="tanah";
+                                }
+                                elseif($TipeAset=="B"){
+                                    $tabel="mesin";
+                                }
+                                elseif($TipeAset=="C"){
+                                    $tabel="bangunan";
+                                }
+                                elseif($TipeAset=="D"){
+                                    $tabel="jaringan";
+                                }
+                                elseif($TipeAset=="E"){
+                                    $tabel="asetlain";
+                                }
+                                elseif($TipeAset=="F"){
+                                    $tabel="kdp";
+                                }
+                                    // pr("--");
+                                  // pr($tabel);
+                                    // pr("--");
+                                
+                                $sql1_valid = array(
+                                    'table'=>"$tabel",
+                                    'field'=>"StatusTampil=1, Status_Validasi_Barang=1 ",
+                                    'condition' => "Aset_ID=$aset_id_valid",
+                                    );
+                                $res_valid = $this->db->lazyQuery($sql1_valid,$debug,2);
+
+                                 $sql1 = array(
+                                    'table'=>'Aset',
+                                    'field'=>"fixPenggunaan=1, Status_Validasi_Barang=1, kondisi=1,NilaiPerolehan='$asetid[nilaiPerolehanpsb]' ",
+                                    'condition' => "Aset_ID='$asetid[Aset_ID]'",
+                                    );
+                                $res1 = $this->db->lazyQuery($sql1,$debug,2);
+                        }
+                        
+                    // $aset_id=implode(', ',array_values($dataArr));
+                    // pr($aset_id);
+                    
+                    // $sql1 = array(
+                    //     'table'=>'Aset',
+                    //     'field'=>"fixPenggunaan=1, Status_Validasi_Barang=1, kondisi=1 ",
+                    //     'condition' => "Aset_ID IN ($aset_id)",
+                    //     );
+                    // $res1 = $this->db->lazyQuery($sql1,$debug,2);
+                    
+                    // $query2="UPDATE PenghapusanAset SET Status=1 WHERE Penghapusan_ID='$explodeID[$i]'";
+                    // $exec2=$this->query($query2) or die($this->error());
+                   
+                   }
+                }
+
+                // $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='ValidasiPenghapusan[]' AND UserSes='$parameter[ses_uid]'";
+                // $exec_hapus=  $this->query($query_hapus_apl) or die($this->error());
+            }
+            
+            if ($res1) return $res1;
+            return false;
         }
 		
 	public function retrieve_penetapan_penghapusan_edit_data($data,$debug=false)

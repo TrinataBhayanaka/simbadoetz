@@ -112,7 +112,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                                 // pr($data);        
 							// pr($_POST);
 							$data = $PENGHAPUSAN->retrieve_daftar_validasi_penghapusan($_POST);
-							pr($data);
+							// pr($data);
 							?>
 						<ul>
 							<li>
@@ -173,7 +173,14 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<td><?php echo "$hsl_data[AlasanHapus]";?></td>
 						<td>	
 						<!--<a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan_validasi.php?menu_id=40&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||--> 
+						<?php if($_SESSION['jenis_hapus']=="PSB"){ 
+						?>
+						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus_psb.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+						<?php
+						}else{ ?>
 						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+						<?php } ?>
+
 						</td>
 					</tr>
 					

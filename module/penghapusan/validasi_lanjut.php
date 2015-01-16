@@ -59,6 +59,8 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	
 	
 	// pr($_POST);
+	// pr($_SESSION);
+	$fleg_jenishps = str_replace(' ', '', $_SESSION['jenis_hapus']);
 	$data = $PENGHAPUSAN->retrieve_validasi_penghapusan($_POST);
 	// pr($data);
 	
@@ -168,12 +170,24 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<td width="130px">&nbsp;</td>
 						<td  align="left">&nbsp;</td>
 						<td align="right" colspan="3">
-						<span><input type="submit" name="submit" class="btn" value="Validasi Barang" id="submit" disabled/></span>
+						<?php if($_SESSION['jenis_hapus']=="PSB"){ 
+						echo "&nbsp;";
+						}else{ ?>
+						
+							<span><input type="submit" name="submit" class="btn" value="Validasi Barang" id="submit" disabled/></span>
+						<?php } ?>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
-						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th class="checkbox-column">
+						<?php if($_SESSION['jenis_hapus']=="PSB"){ 
+						echo "&nbsp;";
+						}else{ ?>
+							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
+
+						<?php } ?>
+						</th>
 						<th>Nomor SK Penghapusan</th>
 						<th>Tanggal Penghapusan</th>
 						<th>Keterangan</th>
@@ -200,7 +214,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							 <?php
 								if (($_SESSION['ses_uaksesadmin'] == 1)){
 								?>
+						<?php if($_SESSION['jenis_hapus']=="PSB"){ ?>
+						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_daftar_psb.php?id=<?php echo "$value[Penghapusan_ID]";?>" class="btn btn-success">Validasi</a>
+					<?php	}else{ ?>
 								<input type="checkbox" class="checkbox" onchange="enable()" name="ValidasiPenghapusan[]" value="<?php echo $value['Penghapusan_ID'];?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value['Penghapusan_ID']) echo 'checked';}?>/>
+								<?php } ?>
 
 								<?php
 							}else{

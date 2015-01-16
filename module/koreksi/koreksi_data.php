@@ -29,8 +29,8 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("select").select2({});
-			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).mask('9999-99-99');
-			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			initKondisi();
 			});	
 	</script>
@@ -110,6 +110,19 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
 										<input type="text" class="span2 full" name="tglPembukuan" id="tglPembukuan" value="<?=$dataArr['aset']['TglPembukuan']?>" disabled/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Dok. Perubahan</span>
+								<input type="text" class="span3" name="dokperubahan" id="dokperubahan" value="<?=$dataArr['aset']['dokperubahan']?>"/>
+							</li>
+							<li>
+								<span class="span2">Tgl. Perubahan</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2" name="tglPerubahan" id="tglPerubahan" value="<?=$dataArr['aset']['tglPerubahan']?>"/>
 									</div>
 								</div>
 							</li>
