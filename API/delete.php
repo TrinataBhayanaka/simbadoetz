@@ -501,10 +501,9 @@ class DELETE extends DB
         $selAset = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$data['noKontrak']}'");
         while ($dataAset = mysql_fetch_assoc($selAset)){
                     $aset[] = $dataAset;
-                }
-        foreach($aset as $key => $value){
-            $this->delete_aset($value,$value['Aset_ID'],$data['noKontrak']);    
-        }
+                } 
+        // pr($aset);exit;             
+        $this->delete_aset($aset);    
 
         $selrincsp2d = mysql_query("SELECT id FROM sp2d WHERE type='2' AND idKontrak = '{$data['id']}' ");
         while ($datapen = mysql_fetch_assoc($selrincsp2d)){
@@ -522,17 +521,6 @@ class DELETE extends DB
         $data['action'] = 'delete';
         $data['changeDate'] = date('Y/m/d');
         $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
-        // pr($data);exit;
-        foreach ($data as $key => $val) {
-            $tmplogfield[] = $key;
-            $tmplogvalue[] = "'$val'";
-        }
-        $field = implode(',', $tmplogfield);
-        $value = implode(',', $tmplogvalue);
-
-        $query_log = "INSERT INTO log_kontrak ({$field}) VALUES ($value)";
-
-        $result=  $this->query($query_log) or die($this->error());
 
             echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_simbada.php\">";
     
@@ -613,7 +601,7 @@ class DELETE extends DB
 
         global $url_rewrite;
 
-        // pr($data);exit;
+        // pr($data);
 
         foreach ($data as $key => $val) {
             $query = "DELETE FROM aset WHERE Aset_ID = '{$val['Aset_ID']}'";

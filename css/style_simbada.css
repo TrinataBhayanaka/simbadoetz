@@ -243,7 +243,7 @@ section.formLegend .titleSp2dRPenunjang{
 	list-style:none;
 }
 #titleForm{
-	background-color:#145C38;
+	background-color:#835747;
 	color:#fff;
 	border-top-left-radius:4px;
 	border-top-right-radius:4px;
@@ -313,8 +313,8 @@ nav ul{
 	list-style:none;
 }
 nav li h3{
-	background-color:#231E1C;
-	color:#CEE2FA;
+	background-color:#55473E;
+	color:#FFFFFF;
 	padding:0px 20px;
 	margin-bottom:0px;
 	margin-top:0px;
@@ -323,11 +323,12 @@ nav li h3{
 	border-bottom-right-radius:2px;*/
 }
 nav li li{
-	background-color:#7E4B41;
-	border-top:1px solid #E9C8BE;
-	border-bottom:1px solid #231E1C;
-	border-left:2px solid #231E1C;
-	border-right:2px solid #231E1C;
+
+	background-color:#635247;
+	border-top:1px solid #756155;
+	border-bottom:1px solid #8a5d54;
+	border-left:2px solid #B1B3B2;
+	border-right:2px solid #756155;
 	font-size:14px;
 	padding:5px 20px;
 }
@@ -335,23 +336,23 @@ nav li li table{
 	color:#fff;
 }
 nav li li table a{
-	background-color:#7E4B41;
+	background-color:#635247;
 
 }
 nav li a{
 	background-color:#4A5B6D;
 	text-decoration:none;
-	color:#CEE2FA;
+	color:#FFFFFF;
 }
 nav li a.iconHOme{
 	background-color:#4A5B6D;
 	text-decoration:none;
-	color:#CEE2FA;
+	color:#FFFFFF;
 	text-align:center;
 }
 nav li a:hover{
 	text-decoration:none;
-	color:#000;
+	color:#fff;
 }
 nav li a li:hover{
 	background-color:#ED6946;
@@ -376,7 +377,7 @@ aside{
 }
 footer{
 	margin-top:30px;
-	background-color:#E1C7BB;
+	background-color:#635247;
 	height:50px;
 	clear:both;
 }

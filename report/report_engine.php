@@ -14055,7 +14055,7 @@ if($dataArr!="")
     } 
 
 //mutasi
-    public function  retrieve_html_laporan_mutasi($dataArr,$gambar){
+    public function  retrieve_html_laporan_mutasi($dataArr,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak){
          
 if($dataArr!="")
 {
@@ -14134,8 +14134,9 @@ $perolehanTotalMutasi=0;
 						$thnLokasi= substr($row->Tahun,2,4);
 						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   //==end new==//
-                        list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                       
+			    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");	
                 if($nip_pengurus!="")
                 {
                     $nip_pengurus_fix=$nip_pengurus;
@@ -14353,17 +14354,16 @@ $footer ="
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
 		  </tr>
-		  
 		  <tr>
-			   <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
 		  </tr>
 		  <tr>
 			   <td colspan=\"11\" style=\"height: 80px\"></td>
@@ -14449,8 +14449,43 @@ $footer ="
 				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   
 			   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");	
+                if($nip_pengurus!="")
+                {
+                    $nip_pengurus_fix=$nip_pengurus;
+                }
+                else
+                {
+                    $nip_pengurus_fix='........................................';
+                }
+
+                if($nip_pengguna!="")
+                {
+                    $nip_pengguna_fix=$nip_pengguna;
+                }
+                else
+                {
+                    $nip_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengguna!="")
+                {
+                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+                }
+                else
+                {
+                    $nama_jabatan_pengguna_fix='........................................';
+                }
+
+                if($nama_jabatan_pengurus!="")
+                {
+                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+                }
+                else
+                {
+                    $nama_jabatan_pengurus_fix='........................................';
+                }
 				 
 					
 
@@ -14605,9 +14640,9 @@ $footer ="
 
           }
                                              //udah dites
-					$barangTotal = $barangTotal + $row->Kuantitas;
-					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-					$perolehan = number_format($row->NilaiPerolehan);
+					// $barangTotal = $barangTotal + $row->Kuantitas;
+					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan_Awal;
+					// $perolehan = number_format($row->NilaiPerolehan);
 					
 					$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
                                         
@@ -14627,47 +14662,115 @@ $footer ="
 						$ketKondisi = "";
 					} 
 					$noReg=$row->noRegister;
-					$kuantitas=count($noReg);
-					$split = explode("-", $row->noRegister);
-					if (count($split) == 1){
-						// $hasil = 1;
-						$nilaiPrlhn = $row->NilaiPerolehan;
-						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
-						$kuantitas = 1;
-					}else{
-						$awal = $split[0];
-						$akhir = end($split);
-						$hasil = (intval($akhir) - intval($awal)) + 1;
-						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
-						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
-						$kuantitas = $hasil;
-					}
-					//coba mutasi aja
-					$mutasi= $this->get_mutasi($row->noRegister,$row->kodeKelompok,$row->kodeLokasi,$row->kodeSatker);
-					$berkurang = $mutasi[0];
-					$bertambah = end($mutasi);
-					if($berkurang != 0){
-						$jmlKurang = $berkurang;
-						$nilaiPrlhnMutasiKurang = $jmlKurang * $row->NilaiPerolehan;
-						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-					}else{
-						$jmlKurang = 0;
-						$nilaiPrlhnMutasiKurang = $jmlKurang;
-						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-					}
+					$nilaiPrlhn = $row->NilaiPerolehan_Awal;
+					$kuantitas = 1;
+					$nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
 					
-					if($bertambah !=0){
-						$jmlTambah = $bertambah;
-						$nilaiPrlhnMutasiTambah = $jmlTambah * $row->NilaiPerolehan;
-						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+					if($row->Kd_Riwayat != 3){
+						// jika kondisi 
+						// 2(Ubah Kapitalisasi)
+						// 21(Koreksi Nilai)
+						// 7(penghapusan sebagian)
+						
+						//proses mutasi
+						$mutasi= $this->get_mutasi($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
+						// pr($mutasi);
+						$berkurang = $mutasi[0];
+						$bertambah = $mutasi[1];
+						
+						//bertambah
+						$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
+						// echo "selisih".$cekSelisih;
+						if($cekSelisih >= 0){
+							$valAdd = $cekSelisih;
+							$valSubst = 0;
+						}else{
+							$valAdd = 0;
+							$valSubst = $cekSelisih;
+						}
+						
+						//berkurang
+						if($berkurang != 0){
+							$jmlKurang = $berkurang;
+							$nilaiPrlhnMutasiKurang = ($jmlKurang * $row->NilaiPerolehan) + $valSubst;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						}else{
+							// echo "sini";
+							$jmlKurang = 0;
+							$nilaiPrlhnMutasiKurang = $valSubst;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						}
+						
+						//bertambah
+						if($bertambah !=0){
+							$jmlTambah = $bertambah;
+							$nilaiPrlhnMutasiTambah = $valAdd;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						}else{
+							$jmlTambah = 1;
+							$nilaiPrlhnMutasiTambah = $valAdd;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						}
+						
+						
+						// $jmlTambah = 1;
+						// $nilaiPrlhnMutasiTambah = $valAdd;
+						// $nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						
+						$jmlHasilMutasi = 1;
+						$nilaiPerolehanHasilMutasi = $row->NilaiPerolehan_Awal +$nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+						
 					}else{
-						$jmlTambah = 0;
-						$nilaiPrlhnMutasiTambah = $jmlTambah;
-						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						// echo " == 3 ";
+						// jika kondisi 3(pindah skpd)
+						//cek mutasi tujuan untuk nilai yang bertambah
+						$mutasi= $this->get_mutasi($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
+						
+						// $berkurang = $mutasi[0];
+						$bertambah = $mutasi[1];
+						
+						//cek nilai lainya bertambah dengan kondisi riwayat 2,21,7
+						$OtherAddvalue= $this->MutasiAddvalue($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
+						if($OtherAddvalue != '' ){
+							
+							$nilaiPerolehanAdd = $OtherAddvalue[0];
+							$cekSelisih =($nilaiPerolehanAdd - $row->NilaiPerolehan_Awal);
+							
+							if($cekSelisih >= 0){
+								$valAdd = $cekSelisih;
+								$valSubst = 0;
+
+							}else{
+								$valAdd = 0;
+								$valSubst = $cekSelisih;
+								$jmlKurang = 1;
+								$nilaiPrlhnMutasiKurang = $valSubst;
+								$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+							}							
+						}else{
+							$jmlKurang = 0;
+							$nilaiPrlhnMutasiKurang = 0;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+							$nilaiPerolehanAdd = 0;
+						}
+						
+						//bertambah
+						if($bertambah !=0){
+							$jmlTambah = $bertambah;
+							$nilaiPrlhnMutasiTambah = ($jmlTambah * $row->NilaiPerolehan) + $valAdd;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						}else{
+							$jmlTambah = 1;
+							$nilaiPrlhnMutasiTambah = $jmlTambah + $valAdd;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						}
+						
+						$jmlHasilMutasi = 1;
+						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+						
 					}
-					$jmlHasilMutasi = $kuantitas - $jmlKurang + $jmlTambah;
-					$nilaiPerolehanHasilMutasi = $nilaiPrlhn - $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
-					$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 					
 					$perolehanTotalKurang = $perolehanTotalKurang + $nilaiPrlhnMutasiKurang;
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
@@ -14676,7 +14779,7 @@ $footer ="
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
-									<td style=\"width: 83px; text-align:center;\">$row->Kode</td>
+									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok</td>
 									<td style=\"width: 64px; text-align:center;\">$noReg</td>
 									<td style=\"width: 118px;\">$row->Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
@@ -14731,19 +14834,18 @@ $footer ="
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
-                                                  </tr>
-                                                  
-                                                  <tr>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
                                                   </tr>
                                                   <tr>
+													   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
+													   <td>&nbsp;</td>
+													   <td>&nbsp;</td>
+													   <td>&nbsp;</td>
+													   <td>&nbsp;</td>
+													   <td>&nbsp;</td>
+													   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
+												  </tr>
+                                                 <tr>
                                                        <td colspan=\"11\" style=\"height: 80px\"></td>
                                                   </tr>
                                                   
@@ -14828,11 +14930,10 @@ if($dataArr!="")
     $skpdeh="";
     $barangTotal=0;
     $perolehanTotal=0;
-    
-    foreach ($dataArr as $row)
-        
+    // pr($dataArr);
+    foreach ($dataArr as $row)   
     {
-    // if ($skpdeh == "" && $no==1){
+    if ($skpdeh == "" && $no==1){
         $body="";
         $skpdeh = $row->kodeSatker;
 		$asetid = $row->Aset_ID;
@@ -14863,7 +14964,8 @@ if($dataArr!="")
 	   // $noReg=substr($row->NomorReg,0,17);
 	   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 	   $thnLokasi= substr($row->kodeLokasi,15,2);
-	   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+	   // $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+	   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 
 	   
         
@@ -14994,7 +15096,7 @@ if($dataArr!="")
                 <td style=\"text-align:center; font-weight: bold; width: 72px;\">11</td>
             </tr>	
 		</thead>";
-    // }
+    }
 	
             ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
             ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
@@ -15013,6 +15115,7 @@ if($dataArr!="")
 			} 
 			
 			$mutasi = $this->getSatkerMutasiBertambah($asetid,$getSatkerMutasiAwal,$tglawal,$tglakhir);
+			// pr($mutasi);
 			if($mutasi){
 				$bertambah = $mutasi[0];
 				$nilaibertambahFix = number_format($bertambah,2,",",".");
@@ -18452,7 +18555,7 @@ if($dataArr!="")
   
  //rekapitulasi buku induk inventaris (ok)
  //=============================================================================================
- public function retrieve_html_rekapitulasi_bukuinventarisdaerah($dataArr,$gambar,$tanggalCetak)
+ public function retrieve_html_rekapitulasi_bukuinventarisdaerah($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan)
 {
 // include ('../../../function/tanggal/tanggal.php');
 
@@ -18527,7 +18630,7 @@ foreach ($dataArr as $data)
         if ($index == 0)
         {
 			$gol = $value->Golongan;
-			$sumNilai = $this->get_sumNilai($satker_id,$gol);
+			$sumNilai = $this->get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 			$totNilai = number_format($sumNilai,2,",",".");
             $html .= "<tr>
                     <td style=\"text-align: center;\">$no</td>
@@ -18642,7 +18745,7 @@ return $hasil_html;
 
 //rekapitulasi buku inventaris skpd (ok)     
 //=============================================================================================
-public function retrieve_html_rekapitulasi_bukuinventaris_skpd($dataArr,$gambar,$tanggalCetak)
+public function retrieve_html_rekapitulasi_bukuinventaris_skpd($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan)
 {
 // pr($dataArr);
 // exit;
@@ -18817,7 +18920,7 @@ foreach ($dataArr as $satker_id => $value)
             if ($index == 0)
             {
 				$gol = $value->Golongan;
-				$sumNilai = $this->get_sumNilai($satker_id,$gol);
+				$sumNilai = $this->get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 				$totNilai = number_format($sumNilai,2,",",".");
                 $html .= "<tr>
                         <td style=\"text-align: center;\">$no</td>
@@ -23045,8 +23148,9 @@ public function get_hak_pakai($hak_tanah){
     return $hak;
      }
     
-	public function get_mutasi($noRegister,$kodeKelompok,$kodeLokasi,$kodeSatker){
-	$split = explode("-", $noRegister);
+	// public function get_mutasi($noRegister,$kodeKelompok,$kodeLokasi,$kodeSatker,$tglawal,$tglakhir){
+	public function get_mutasi($Aset,$kodeSatker,$tglawal,$tglakhir){
+	/*$split = explode("-", $noRegister);
 	$awal = $split[0];
 	$akhir = end($split);
 	if (count($split) == 1){
@@ -23069,15 +23173,18 @@ public function get_hak_pakai($hak_tanah){
 		}
 		$AsetIdFix = implode(',',$AsetId);
 	}
-	/*echo "<br>";
+	
+	echo "<br>";
 	echo $query;
 	echo "<br>";
-	pr($AsetId);
+	// pr($AsetId);
 	echo "<br>";
 	echo "asetidfix=".$AsetIdFix;
-	echo "<br>";*/
+	echo "<br>";
 	// echo "asetid =".$AsetId;*/
-	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerTujuan ='$kodeSatker'  ";
+	
+	// $queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerTujuan ='$kodeSatker'  ";
+	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and SatkerTujuan ='$kodeSatker'  ";
 	$resultDataTambah=$this->retrieve_query($queryDataTambah);
 	if($resultDataTambah!=""){
 		foreach($resultDataTambah as $value){
@@ -23085,13 +23192,75 @@ public function get_hak_pakai($hak_tanah){
 		}
 	}
 	
-	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerAwal ='$kodeSatker'";
+	//cek untuk skpd
+	// $queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and Awal ='$kodeSatker'";
+	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and Awal ='$kodeSatker'";
 	$resultDataKurang=$this->retrieve_query($queryDataKurang);
 	if($resultDataKurang!=""){
 		foreach($resultDataKurang as $value){
 			$getDataKurang=$value->jml;
 		}
 	}
+	
+	if($getDataKurang != 0){
+		/*echo "masuk lagi";
+		echo "<br/>";
+		echo "masuk lagi lagi";*/
+		$query_tanah = "SELECT t.NilaiPerolehan FROM log_tanah as t
+						WHERE t.Aset_ID in ($AsetIdFix) 
+						and t.kodeSatker in ('$kodeSatker') 
+						and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir' 
+						and t.Kd_Riwayat = 3";	
+		
+		$query_mesin = "SELECT m.NilaiPerolehan FROM log_mesin as m 
+						WHERE m.Aset_ID in ($AsetIdFix) 
+						and m.kodeSatker in ('$kodeSatker') 
+						and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'
+						and m.Kd_Riwayat = 3";			
+		
+		$query_bangunan = "SELECT b.NilaiPerolehan FROM log_bangunan as b
+						WHERE b.Aset_ID in ($AsetIdFix) 
+						and b.kodeSatker in ('$kodeSatker') 
+						and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'
+						and b.Kd_Riwayat = 3";
+		
+		$query_jaringan = "SELECT j.NilaiPerolehan FROM log_jaringan as j
+						WHERE j.Aset_ID in ($AsetIdFix) 
+						and j.kodeSatker in ('$kodeSatker') 
+						and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'
+						and j.Kd_Riwayat = 3";	
+		
+		$query_asettetaplainnya = "SELECT at.NilaiPerolehan FROM log_asetlain as at
+						WHERE at.Aset_ID in ($AsetIdFix) 
+						and at.kodeSatker in ('$kodeSatker') 
+						and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'
+						and at.Kd_Riwayat = 3";		
+		
+		$query_kdp = "SELECT kd.NilaiPerolehan FROM log_kdp as kd
+						WHERE kd.Aset_ID in ($AsetIdFix) 
+						and kd.kodeSatker in ('$kodeSatker') 
+						and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'
+						and kd.Kd_Riwayat = 3";	
+		
+		$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
+		for ($i = 0; $i < count($queryALL); $i++)
+		{
+			/*echo "<br>";
+			echo "query_$i =".$queryALL[$i];
+			echo "<br>";
+			echo "<br>";*/
+			// exit;
+			// $result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));*/
+			$result=$this->retrieve_query($queryALL[$i]);
+			if($result){
+				foreach($result as $data){
+					
+					$NilaiSkpd[]= $data->NilaiPerolehan;
+				}
+			}
+		}				
+	}
+	
 	/*echo $queryDataTambah;
 	echo "<br>";
 	echo "hasil tambah=".$getDataTambah;
@@ -23099,8 +23268,10 @@ public function get_hak_pakai($hak_tanah){
 	echo $queryDataKurang;
 	echo "<br>";
 	echo "hasil kurang=".$getDataKurang;*/
+	
 	// exit;
-	return array($getDataKurang,$getDataTambah);
+	// return array($getDataKurang,$getDataTambah,$NilaiSkpd);
+	return array($getDataKurang,$getDataTambah,$NilaiSkpd);
 	}	
    
 	public function getSatkerMutasi($asetid,$skpdeh){
@@ -23181,11 +23352,78 @@ public function get_hak_pakai($hak_tanah){
 		return $Satwal;
 	}
 	
-	public function get_sumNilai($satker_id,$gol){
+	public function MutasiAddvalue($asetid,$satker_id,$tglAwal,$tglAkhir){
+		$query_01 = "SELECT NilaiPerolehan
+						FROM 
+							log_tanah 
+						where 
+							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
+		$query_02 = "SELECT NilaiPerolehan
+						FROM 
+							log_mesin
+						where 
+							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
+		$query_03 = "SELECT NilaiPerolehan
+						FROM 
+							log_bangunan
+						where 
+							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
+		$query_04 = "SELECT NilaiPerolehan
+						FROM 
+							log_jaringan
+						where 
+							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
+		$query_05 = "SELECT NilaiPerolehan
+						FROM 
+							log_asetlain
+						where 
+							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
+		$query_06 = "SELECT NilaiPerolehan
+						FROM 
+							log_kdp 
+						where 
+							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
+		
+		
+			// $queryALL = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+			$queryALLAdd = array($query_01);
+			
+			
+			for ($i = 0; $i < count($queryALLAdd); $i++)
+			{
+				
+				/*echo "<br>";
+				echo "query_$i =".$queryALLAdd[$i];
+				echo "<br>";
+				echo "<br>";*/
+				$result=$this->retrieve_query($queryALLAdd[$i]);
+				if($result!=""){
+					foreach($result as $value){
+						$Nilai[]=$value->NilaiPerolehan;
+					}
+				}
+			}	
+	// pr($Nilai);
+	// echo"kocakkk";
+	// exit;
+	// pr($getAddNPA);
+	// exit;
+	return $Nilai;
+}
+	
+	public function get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
 		if($satker_id !=""){
-			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' ";
+			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' 
+					  and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
 		}else{
-			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeKelompok like '$gol%' ";
+			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeKelompok like '$gol%' 
+					and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
 		}
 		// echo "query".$query;
 		// echo "<br>";
