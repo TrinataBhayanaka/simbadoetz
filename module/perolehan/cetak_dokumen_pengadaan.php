@@ -47,12 +47,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							e.preventDefault();
 						}
 					});*/
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb").mask('9999-99-99');
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglPerolehanAwalLapMutasi,#tglPerolehanAkhirLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAkhirLapMutasiSkpd,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb" ).datepicker({ dateFormat: 'yy-mm-dd' });
-							
-				
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi").mask('9999-99-99');
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd").mask('9999-01-01');	
+					$("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-31');	
 					
-				
 				});
 				
 			</script>
@@ -70,7 +69,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#neraca" data-toggle="tab">Rekapitulasi Barang Ke Neraca</a></li>
 						<li><a href="#rekapskpd" data-toggle="tab">Rekapitulasi Barang Per SKPD</a></li>
 						<li><a href="#rekapupb" data-toggle="tab">Rekapitulasi Barang Per UPB</a></li>
-						<!--<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>-->
+						<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>
 						<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>
 					  </ul>
 					  
@@ -534,7 +533,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						
 						
 						
-						<!--<div class="tab-pane" id="lapmutasi">
+						<div class="tab-pane" id="lapmutasi">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Mutasi Barang</div>
 						</div>
@@ -558,8 +557,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectSatker('kodeSatker9','255',true,false); ?>
+							<?php selectAllSatker('kodeSatker9','255',true,false); ?>
 							<br>
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakMutasi" id="tglCetakMutasi" value=""/>
+									</div>
+								</div>
+							</li>
 							<input type="hidden" name="menuID" value="14">
 							<input type="hidden" name="mode" value="1">
 							<input type="hidden" name="tab" value="3">
@@ -571,7 +579,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 						</ul>
 						</form>
-						</div>-->
+						</div>
 						
 						<div class="tab-pane" id="lapmutasiskpd">
 						<div class="breadcrumb">
@@ -584,7 +592,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAwalLapMutasiSkpd" id="tglPerolehanAwalLapMutasiSkpd" value="" />
+										<input type="text" class="span2 full" name="tglPerolehanAwalLapMutasiSkpd" id="tglPerolehanAwalLapMutasiSkpd" value="" required/>
 									</div>
 								</div>
 							</li>

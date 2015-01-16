@@ -140,8 +140,7 @@ else
 					
 			</div>
 			<div class="modal-footer">
-			  <button class="btn" type="button" data-dismiss="modal">Kembali</button>
-			  <input type="submit" value="Login" name="login" class="btn btn-success" id="drop_sebagai" />
+			  <input type="submit" value="Login" name="login" class="btn btn-default" id="drop_sebagai" />
 			</div>
 			</form>
 		</div>  

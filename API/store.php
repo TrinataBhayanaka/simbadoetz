@@ -1516,6 +1516,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         unset($data['Aset_ID']);
         // pr($data);exit;
         $kodeSatker = explode(".",$data['kodeSatker']);
+        $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         $tblAset['kodeSatker'] = $data['kodeSatker'];
         $tblAset['kodeLokasi'] = "12.33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($data['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
