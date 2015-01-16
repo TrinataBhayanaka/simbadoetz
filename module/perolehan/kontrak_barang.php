@@ -143,11 +143,15 @@ $menu_id = 10;
 						$link = "kontrak_rincianedit.php";
 					} elseif ($kontrak[0]['tipeAset'] == 2) {
 						$link = "search_aset_filter.php";
+						$display = "display:none";
 					} elseif ($kontrak[0]['tipeAset'] == 3) {
 						$link = "search_kdp.php";
+						$display = "display:none";
 					}
 			?>	
 				<p><a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
+				&nbsp;
+				<a href="importmenu.php?id=<?=$kontrak[0]['id']?>" class="btn btn-success btn-small" style="<?=$display?>"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Import xls</a>
 				&nbsp;</p>
 			<?php
 				} else {
