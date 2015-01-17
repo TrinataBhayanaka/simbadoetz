@@ -17,15 +17,17 @@ a{text-decoration: none;
 	color:#3a3a3a;}
 
 #frame_header{border: 0px solid red;
-				height: 97px;
+				height: 153px;
 				background-image: url(img_stat/bg_header.png);
 				}
 			#header{outline: 0px solid blue;
-				height: 97px;
+				height: 153px;
+				width:100%;
 				background-image: url(img_stat/logo_header.png);
 				background-repeat: no-repeat;
 				margin: auto;
 				}
+				
 			#list_header{border-bottom: 2px solid #ffca00;
 				height: 28px;
 				background-color:#ffca00;

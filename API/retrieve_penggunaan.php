@@ -256,9 +256,11 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
             }
 
             foreach ($asetid as $key => $value) {
-
+                logFile('log data penggunaan, Aset_ID ='.$key);
                 $this->db->logIt($tabel=array($value), $Aset_ID=$key, 22);
             }
+        }else{
+            logFile('gagal log penggunaan');
         }
 
         

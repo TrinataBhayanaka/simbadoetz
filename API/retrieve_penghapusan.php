@@ -46,7 +46,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		$sql1 = array(
                 'table'=>'usulanaset',
                 'field'=>"Aset_ID",
-                'condition' => "Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB'",
+                'condition' => "(Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB') AND StatusValidasi='0'",
                 );
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
@@ -90,7 +90,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		$sql1 = array(
                 'table'=>'usulanaset',
                 'field'=>"Aset_ID",
-                'condition' => "Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB'",
+                'condition' => "(Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB') AND StatusValidasi='0'",
                 );
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
@@ -135,7 +135,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql1 = array(
                 'table'=>'usulanaset',
                 'field'=>"Aset_ID",
-                'condition' => "Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB'",
+                'condition' => "(Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB') AND StatusValidasi='0'",
                 );
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
@@ -380,11 +380,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'condition' => "FixUsulan=1 AND Jenis_Usulan='PMD' {$filterkontrak}",
 				'limit'=>'100',
                 );
-
+        
         $res = $this->db->lazyQuery($sql,$debug);
         if ($res) return $res;
         return false;
-     
+    
     }
     public function retrieve_daftar_usulan_penghapusan_psb($data,$debug=false)
     {
@@ -600,6 +600,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                     'condition' => "Aset_ID='$asetid[Aset_ID]'",
                                     );
                                 $res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
+                  $sql_usulaset = array(
+                                    'table'=>'usulanaset',
+                                    'field'=>"StatusValidasi='0'",
+                                    'condition' => "Aset_ID='$asetid[Aset_ID]'",
+                                    );
+                                $res_usulaset = $this->db->lazyQuery($sql_usulaset,$debug,2);
                                 // pr($res_tipe);
                                 // pr($res_tipe[0][Aset_ID]);
                                 // pr($res_tipe[0][TipeAset]);
@@ -1251,6 +1257,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 // pr($sql12);
                                 // exit;
                                 $res12 = $this->db->lazyQuery($sql12,$debug,2);
+
+                                $sql_usulaset = array(
+                                    'table'=>'usulanaset',
+                                    'field'=>"StatusValidasi='1'",
+                                    'condition' => "Aset_ID='$asetid[Aset_ID]'",
+                                    );
+                                $res_usulaset = $this->db->lazyQuery($sql_usulaset,$debug,2);
 
                                 $sql_tipe = array(
                                     'table'=>'Aset',
