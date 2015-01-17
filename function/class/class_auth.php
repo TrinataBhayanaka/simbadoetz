@@ -92,7 +92,8 @@ class UserAuth
     
     public function FrontEnd_check_akses_menu($menu_id, $SessionUser)
     {
-	
+		global $url_rewrite;
+
 		if ($SessionUser['ses_uid'] == ''){
 			$query = "SELECT menuID FROM tbl_user_menu WHERE menuAksesLogin = 1 AND menuStatus = 1 ";
 			$result = $this->DBVAR->query($query) or die ($this->DBVAR->error());
@@ -103,7 +104,7 @@ class UserAuth
 			
 			if (in_array($menu_id, $dataArr))
 			{
-				echo '<script type=text/javascript>alert("Maaf anda harus login dahulu"); history.back();</script>';
+				echo "<script type=text/javascript>alert('Maaf anda harus login dahulu'); window.location.href=$url_rewrite;</script>";
 			}
 			
 			
