@@ -1757,7 +1757,6 @@ $html = "<html>
      src=\"$gambar\"></td>
           <td style=\"width: 902px; text-align: center;\">
           <h3>DAFTAR ASET TETAP LAINNYA</h3>
-          <h3>MESIN</h3>
           </td>
         </tr>
       </tbody>

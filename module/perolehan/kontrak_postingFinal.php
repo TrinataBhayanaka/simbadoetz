@@ -47,6 +47,33 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       }
 
       $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = '1', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'");
+      
+      //log
+      $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+      $sqlquery = mysql_query($sqlkib);
+      while ($dataAset = mysql_fetch_assoc($sqlquery)){
+              $kib = $dataAset;
+          }
+      $kib['changeDate'] = date("Y-m-d");
+      $kib['action'] = 1;
+      $kib['operator'] = $_SESSION['ses_uoperatorid'];
+      $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
+      if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
+
+     
+            unset($tmpField);
+            unset($tmpValue);
+            foreach ($kib as $key => $val) {
+              $tmpField[] = $key;
+              $tmpValue[] = "'".$val."'";
+            }
+             
+            $fileldImp = implode(',', $tmpField);
+            $dataImp = implode(',', $tmpValue);
+
+            $sql = mysql_query("INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})");
+               
+           
   }
 
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
