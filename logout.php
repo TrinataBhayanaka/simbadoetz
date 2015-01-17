@@ -33,9 +33,16 @@ else if (isset($_GET['utoken']))
 {
 	
 	$clear_apl_userasetlist = $DELETE->clear_table_apl_userasetlist($_SESSION['ses_uname']);
-	$logout = $USERAUTH->is_user_logout($_SESSION['ses_uoperatorid']);
 	
+	if (isset($_SESSION['ses_uoperatorid'])){
+		$logout = $USERAUTH->is_user_logout($_SESSION['ses_uoperatorid']);
+	}else{
+		// pr($url_rewrite);
+		echo "<script type=text/javascript>window.location.href='".$url_rewrite."'</script>";
+		exit;
+	} 
 	
+	// pr($logout);
 	if ($logout){
 		unset($_SESSION['ses_uid']);
 		unset($_SESSION['ses_uoperatorid']);
@@ -51,7 +58,7 @@ else if (isset($_GET['utoken']))
 		  unset($_SESSION['ses_satkerid']);
                          unset($_SESSION['ses_satkername']);
                           unset($_SESSION['ses_satkerkode']);
-		header('location:./');
+		echo "<script type=text/javascript>window.location.href='".$url_rewrite."'</script>";
 	}
 	
 	
