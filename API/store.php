@@ -2491,7 +2491,12 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     $fileldImp = implode(',', $tmpField);
                     $dataImp = implode(',', $tmpValue);
 
-                    $sql = mysql_query("INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})");
+                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                    logFile($sql);
+                    if ($debug){
+                        pr($sql); exit;
+                    }
+                    $execquery = mysql_query($sql);
                     
 
         echo "<script>alert('Data Berhasil Disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
