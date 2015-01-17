@@ -2479,7 +2479,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
               if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
 
-              pr($kib);
+              // pr($kib);
               
                     unset($tmpField);
                     unset($tmpValue);
