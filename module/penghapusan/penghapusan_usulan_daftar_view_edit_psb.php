@@ -107,7 +107,7 @@ include "../../config/config.php";
 				$no = 1;
 				// pr($data);
 				$coo=count($data['dataArr']);
-				pr($coo);
+				// pr($coo);
 							foreach ($data['dataArr'] as $keys => $nilai)
 							{
 

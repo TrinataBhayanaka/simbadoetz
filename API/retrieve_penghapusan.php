@@ -95,7 +95,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
 		
-		pr($res1);
+		// pr($res1);
 		// pr($aset_id);
 		// pr($sql1);
 		if($res1){
@@ -1176,7 +1176,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	 public function store_penetapan_penghapusan($data,$debug=false)
         
             {
-				pr($data);
+				// pr($data);
                 $UsulanID=implode(",",$data['UsulanID']);
                 // pr($UsulanID);
                 // exit;
@@ -1514,7 +1514,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
             // //     $this->db->logIt($tabel=array($value), $Aset_ID=$key, 7);
             // // }
-            //             }
+                        }
                         
                     // $aset_id=implode(', ',array_values($dataArr));
                     // pr($aset_id);
