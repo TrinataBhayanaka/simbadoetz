@@ -5,7 +5,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 // pr($_POST);exit;
 // $menu_id = 51;
 $SessionUser = $SESSION->get_session_user();
-// $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+$USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 ?>
 <?php
 	include"$path/meta.php";
