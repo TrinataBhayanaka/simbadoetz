@@ -2458,7 +2458,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             }
 
             $field = implode(',', $tmpfield2);
-            $value = implode(',', $tmpvalue2);
+            // $value = implode(',', $tmpvalue2);
 
             $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";
             // pr($query);exit;
