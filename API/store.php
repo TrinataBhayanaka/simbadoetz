@@ -1832,10 +1832,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             while ($row = mysql_fetch_assoc($query_id)){
                  $tblAset['Aset_ID'] = $row['Aset_ID'];
             }
+         // pr($tblAset);   
 
         $kapital['idKontrak'] = $aset['id'];
         $kapital['Aset_ID'] = $aset['idaset'];
-        $kapital['asetKapitalisasi'] = $logdata['Aset_ID'];
+        $kapital['asetKapitalisasi'] = $tblAset['Aset_ID'];
         $kapital['noRegister'] = $aset['noreg'];
         $kapital['nilai'] = $tblAset['NilaiPerolehan'];
         $kapital['tipeAset'] = $aset['tipeaset'];
@@ -2299,6 +2300,33 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
+            //log
+              $sqlkib = "SELECT * FROM {$tabel} ORDER BY {$idkey} DESC LIMIT 1";
+              $sqlquery = mysql_query($sqlkib);
+              while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                      $kib = $dataAset;
+                  }
+              $kib['changeDate'] = date("Y-m-d");
+              $kib['action'] = 1;
+              $kib['operator'] = $_SESSION['ses_uoperatorid'];
+              $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
+              if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
+
+             
+                    unset($tmpField);
+                    unset($tmpValue);
+                    foreach ($kib as $key => $val) {
+                      $tmpField[] = $key;
+                      $tmpValue[] = "'".$val."'";
+                    }
+                     
+                    $fileldImp = implode(',', $tmpField);
+                    $dataImp = implode(',', $tmpValue);
+
+                    $sql = mysql_query("INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})");
+                       
+                 
+
         }
 
         echo "<script>alert('Data Berhasil Disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/entri/entri_hasil_inventarisasi.php\">";
@@ -2312,7 +2340,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
  
         global $url_rewrite;
-        //pr($data);
+        // pr($data);exit;
         if(isset($data['kodeKelompok'])) $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
         if(isset($data['kodeLokasi'])) $tblAset['kodeLokasi'] = $data['kodeLokasi'];
@@ -2419,6 +2447,12 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             if(isset($data['noRegister'])) $tblKib['noRegister'] = $data['noRegister']; 
             if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $data['kodeRuangan'];
 
+            $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+              $sqlquery = mysql_query($sqlkib);
+              while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                      $kib_old = $dataAset;
+                  }  
+
             foreach ($tblKib as $key => $val) {
                 $tmpfield2[] = $key."='$val'";
             }
@@ -2430,7 +2464,35 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
-    
+            //log
+              $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+              $sqlquery = mysql_query($sqlkib);
+              while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                      $kib = $dataAset;
+                  }      
+              $kib['changeDate'] = date("Y-m-d");
+              $kib['action'] = 3;
+              $kib['operator'] = $_SESSION['ses_uoperatorid'];
+              $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
+              if($data['rubahkondisi']) $kib['Kd_Riwayat'] = 1;
+              if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
+              if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
+              if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
+
+              pr($kib);
+              
+                    unset($tmpField);
+                    unset($tmpValue);
+                    foreach ($kib as $key => $val) {
+                      $tmpField[] = $key;
+                      $tmpValue[] = "'".$val."'";
+                    }
+                     
+                    $fileldImp = implode(',', $tmpField);
+                    $dataImp = implode(',', $tmpValue);
+
+                    $sql = mysql_query("INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})");
+                    
 
         echo "<script>alert('Data Berhasil Disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
 

@@ -32,11 +32,16 @@ $menu_id = 10;
 	<!-- End Sql -->
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({
 			});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('9999-99-99');
 		});	
+
+		function getCurrency(item){
+	      $('#hrgSatuan').val($(item).autoNumeric('get'));
+	    }
 	</script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -124,11 +129,15 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onchange="return totalHrg()" required/>
+								<!-- <input type="text" class="span3" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onchange="return totalHrg()" required/> -->
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
-								<input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/>
+								<!-- <input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/> -->
+								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/>
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
 							</li>
 							<li>
 								<span class="span2">Info</span>
