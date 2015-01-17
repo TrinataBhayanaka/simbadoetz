@@ -4,8 +4,6 @@ include "../../config/config.php";
 	$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	
     $menu_id = 39;
-
-	$id=$_GET['id'];
     ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
     $SessionUser = $SESSION->get_session_user();
     $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
@@ -76,24 +74,25 @@ include "../../config/config.php";
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Validasi Penghapusan</li>
+		  <li class="active">Penetapan Penghapusan</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Validasi Penghapusan</div>
-			<div class="subtitle">Penghapusan Sebagian</div>
+			<div class="title">Penetapan Penghapusan</div>
+			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
 			
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses_psb.php">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_edit_proses.php">
 			<table width="100%" style="border: 1px solid #004933;">
 				<tr>
-					<td style="height:25px; font-weight:bold;" colspan="3"><u style="font-weight:bold;">
-
-						<input type='hidden' name='ValidasiPenghapusan' value='<?php echo $id; ?>'>
-						Daftar aset yang akan dibuatkan validasi penghapusan sebagian :</u></td>
+					<td style="height:25px; font-weight:bold;" colspan="3"><u style="font-weight:bold;">Daftar aset yang akan dibuatkan penetapan penghapusan :</u></td>
 				</tr>
+				<tr>
+					
 				<?php
+				$id=$_GET['id'];
+				// pr($id);
 				if (isset($id))
 				{
 					unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
@@ -102,27 +101,12 @@ include "../../config/config.php";
 					
 						// pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data($_GET);
-						pr($data);
+						// pr($data);
 						
 				}
-				foreach ($data['dataArr'] as $valueUsulan) {
-							
-						
-						?>
-						<tr>
-							<td><?php echo $valueUsulan['Usulan_ID'];?>
-								<input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/>
-							</td>
-						</tr>
-				<tr>
-					
-				<?php
-				// pr($id);
-				$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_validasi($valueUsulan['Usulan_ID']);
-				
 				$no = 1;
 				// pr($data);
-							foreach ($dataUsulanAset as $keys => $nilai)
+							foreach ($data['dataArr'] as $keys => $nilai)
 							{
 
 								if ($nilai[Aset_ID] !='')
@@ -144,11 +128,9 @@ include "../../config/config.php";
 								<td></td>
 								<td>$no.</td>
 								<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-								<input type='hidden' name='kondisipsb[]' value='$nilai[kondisi]'>
-
-								<td>$nilai[noRegister] - $nilai[kodeKelompok]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								Nilai Perolehan <input type='text' readonly='readonly' style='width:130px; text-align:right' name='nilaiPerolehan[]' value='$nilai[NilaiPerolehan]'>&nbsp;&nbsp; Ubah Nilai Perolehan<input type='text' style='width:130px;text-align:right' name='nilaiPerolehanpsb[]'  ></td>
-								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'></td>
+								<td>$nilai[noRegister] - $nilai[kodeKelompok]</td>
+								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'> <a href='$url_rewrite/module/penghapusan/penetapan_asetid_proses_hapus.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
+ Delete</a></td>
 								</tr>
 
 								<tr>
@@ -285,12 +267,42 @@ include "../../config/config.php";
 			$row=$data['dataRow'];		
 			?>
 					</tr>
-					<?php
-						}
-					?>
 			</table>
 			<br/>
-			<input type="submit" class="btn btn-primary" value="Validasi Penghapusan Sebagian"/>
+			<table width='100%'>
+				<tr>
+					<td width="200px">Nomor SK Penghapusan</td>
+					<td><input type="text" style="width: 150px;" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?php echo $row[NoSKHapus]?>"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>Tanggal SK Penghapusan</td>
+					<td> <input name="bup_pp_tanggal" style="width: 150px;" type="text" id="tanggal12" value="<?php $change=$row[TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?>"/></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>Keterangan Penghapusan</td>
+					<td><textarea rows="4" cols="50" id="idinfohapus" name="bup_pp_get_keterangan"><?php echo "$row[AlasanHapus]";?></textarea></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						<input type="submit" name="btn_action" id="btn_action" class="btn btn-primary" value="Penetapan Penghapusan">
+						<a href="penetapan_penghapusan_daftar_isi.php?pid=1"><input type="button" name="btn_action" class="btn" id="btn_action_cancel"  style="width:100px;"  value="Batal"></a>
+						<input type="hidden" name="id" value="<?php echo $id;?>">
+					</td>
+				</tr>
+			</table>
 			</form>
 		</section>     
 	</section>
