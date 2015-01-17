@@ -105,7 +105,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         function retrieve_mutasi_eksekusi($data,$debug=false)
         {
 
-                $jenisaset = $data['jenisaset'];
+                $jenisaset = explode(',', $data['jenisaset']);
                 $nokontrak = $data['nokontrak'];
                 $kodeSatker = $data['kodeSatker'];
 
@@ -116,25 +116,39 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
                 if ($mutasi) $filterkontrak .= " AND a.Aset_ID IN ({$mutasi}) ";
 
-                
-                $table = $this->getTableKibAlias($jenisaset);
+                foreach ($jenisaset as $value) {
 
-                // pr($jenisaset);
-                $listTable = $table['listTable'];
-                $listTableAlias = $table['listTableAlias'];
-                $listTableAbjad = $table['listTableAbjad'];
+                    $table = $this->getTableKibAlias($value);
 
-                $sql = array(
-                        'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
-                        'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
-                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} GROUP BY a.Aset_ID",
-                        'limit'=>'100',
-                        'joinmethod' => 'LEFT JOIN',
-                        'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
-                        );
+                    // pr($table);
+                    $listTable = $table['listTable'];
+                    $listTableAlias = $table['listTableAlias'];
+                    $listTableAbjad = $table['listTableAbjad'];
 
-                $res = $this->db->lazyQuery($sql,$debug);
-                if ($res) return $res;
+                    $sql = array(
+                            'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
+                            'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
+                            'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} GROUP BY a.Aset_ID",
+                            'limit'=>'100',
+                            'joinmethod' => 'LEFT JOIN',
+                            'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                            );
+
+                    $res[] = $this->db->lazyQuery($sql,$debug);
+                }
+
+                foreach ($res as $value) {
+
+                    if ($value){
+                        
+                        foreach ($value as $val) {
+                            $newData[] = $val;
+                        } 
+                    }
+                    
+                }
+
+                if ($newData) return $newData;
                 return false;
         }
 
@@ -270,10 +284,18 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 }
 
                 if ($result){
-            
+                    
+                    $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
+
+                    foreach ($_POST as $key => $value) {
+                        if(in_array($value, $noDok)) $noDokumen = $_POST[$value];
+                        else $noDokumen = '-';
+                    }
+                    
+
                     foreach ($asetid as $key => $value) {
 
-                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, 3);
+                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl);
                     }
 
                     return true;

@@ -38,10 +38,37 @@ $sql = mysql_query("SELECT * FROM kapitalisasi WHERE idKontrak = '{$noKontrak['i
 while ($dataKapital = mysql_fetch_assoc($sql)){
             $kapital[] = $dataKapital;
         }
-
+// pr($kapital);
 foreach ($kapital as $key => $value) {
   $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
   $sqlaset = mysql_query("UPDATE aset SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+
+  //log
+  $sqlkib = "SELECT * FROM {$value['tipeAset']} WHERE Aset_ID = '{$value['Aset_ID']}'";
+  $sqlquery = mysql_query($sqlkib);
+  while ($dataAset = mysql_fetch_assoc($sqlquery)){
+          $kib = $dataAset;
+      }    
+  $kib['changeDate'] = date("Y-m-d");
+  $kib['action'] = 3;
+  $kib['operator'] = $_SESSION['ses_uoperatorid'];
+  $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
+  $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'] + $value['nilai'];
+  $kib['Kd_Riwayat'] = 2;    
+  
+  
+        unset($tmpField);
+        unset($tmpValue);
+        foreach ($kib as $key => $val) {
+          $tmpField[] = $key;
+          $tmpValue[] = "'".$val."'";
+        }
+         
+        $fileldImp = implode(',', $tmpField);
+        $dataImp = implode(',', $tmpValue);
+
+        $sql = mysql_query("INSERT INTO log_{$value['tipeAset']} ({$fileldImp}) VALUES ({$dataImp})");
+  
 }
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;

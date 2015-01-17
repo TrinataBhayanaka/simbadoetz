@@ -261,15 +261,27 @@ class DB
 		return $result;
 	}
 
-	function logIt($table=array(),$Aset_ID=false,$action=1, $debug=false)
+	function logIt($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false, $debug=false)
 	{
 
 	    if (empty($table)) return false;
 	    if (empty($Aset_ID)) return false;
 	    
 	    $date = date('Y-m-d H:i:s');
+	    if ($tgl) $tglProses = $tgl;
+	    else $tglProses = '0000-00-00';
+
+	    if ($No_Dokumen) $noDok = $No_Dokumen;
+	    else $noDok = '-';
+
 	    $actionList = array(1=>'insert',2=>'update');
-	    $addField = array('changeDate'=>$date,'action'=>$action,'operator'=>$_SESSION['ses_uoperatorid']);
+	    $addField = array(
+	    				'changeDate'=>$date,
+	    				'action'=>$action,
+	    				'operator'=>$_SESSION['ses_uoperatorid'],
+	    				'TglPerubahan'=>$tglProses,
+	    				'Kd_Riwayat'=>$action,
+	    				'No_Dokumen'=>$noDok);
 
 
 	    foreach ($table as $value) {
@@ -282,8 +294,13 @@ class DB
 	        	foreach ($mergeField as $key => $val) {
 	        		$tmpField[] = $key;
 	        		$tmpValue[] = "'".$val."'";
+
+	        		if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";
 	        	}
-	        	 
+	        	
+	        	$tmpField[] = 'NilaiPerolehan_Awal';
+	        	$tmpValue[] = $NilaiPerolehan_Awal;
+
 	        	$fileldImp = implode(',', $tmpField);
 	        	$dataImp = implode(',', $tmpValue);
 
@@ -299,7 +316,7 @@ class DB
 
 	        
 	    }
-
+	    logFile('class_db :: Gagal insert log');
 	    return false;
 	}
 

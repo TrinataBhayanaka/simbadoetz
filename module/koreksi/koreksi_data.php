@@ -115,14 +115,14 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Dok. Perubahan</span>
-								<input type="text" class="span3" name="dokperubahan" id="dokperubahan" value="<?=$dataArr['aset']['dokperubahan']?>"/>
+								<input type="text" class="span3" name="dokperubahan" id="dokperubahan" value="<?=$dataArr['aset']['dokperubahan']?>" required/>
 							</li>
 							<li>
 								<span class="span2">Tgl. Perubahan</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" name="tglPerubahan" id="tglPerubahan" value="<?=$dataArr['aset']['tglPerubahan']?>"/>
+										<input type="text" class="span2" name="tglPerubahan" id="tglPerubahan" value="<?=$dataArr['aset']['tglPerubahan']?>" required/>
 									</div>
 								</div>
 							</li>
@@ -356,6 +356,10 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 					<input type="hidden" name="TipeAset" id="TipeAset" value="">
 					<input type="hidden" name="noRegister" value="<?=$dataArr['kib']['noRegister']?>">
 					<input type="hidden" name="kodeLokasi" value="<?=$dataArr['kib']['kodeLokasi']?>">
+					<input type="hidden" name="rubahkondisi" id="rubahkondisi" value="1" disabled>
+					<input type="hidden" name="koreksinilai" id="koreksinilai" value="1" disabled>
+					<input type="hidden" name="rubahdata" id="rubahdata" value="1">
+					<input type="hidden" name="pindahruang" id="pindahruang" value="1" disabled>
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>
 			<li>
@@ -479,8 +483,8 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		if($("#"+item).attr('id') == "data"){
 			initKondisi();
 			$(".kapitalisasi").attr('readonly','readonly');
-			$(".ubahkondisi,.full").attr('disabled','disabled');
-			$(".koreksi").removeAttr('disabled');
+			$(".ubahkondisi,.full,#rubahkondisi,#koreksinilai,#pindahruang").attr('disabled','disabled');
+			$(".koreksi,#rubahdata").removeAttr('disabled');
 			$(".well h2").html("Rubah Data");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.");
@@ -488,15 +492,16 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$("textarea").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".kapitalisasi").removeAttr('readonly');
-			$(".ubahkondisi,.koreksi,.full").attr('disabled','disabled');
+			$(".ubahkondisi,.koreksi,.full,#rubahkondisi,#koreksinilai,#rubahdata,#pindahruang").attr('disabled','disabled');
 			$(".well h2").html("Kapitalisasi");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan penambahan nilai aset dengan kondisi tertentu.");
 		} else if ($("#"+item).attr('id') == "nilai") {
 			$("textarea").attr('readonly','readonly');
 			$(".kapitalisasi").removeAttr('readonly');
+			$("#koreksinilai").removeAttr('disabled');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".ubahkondisi,.koreksi,.full").attr('disabled','disabled');
+			$(".ubahkondisi,.koreksi,.full,#rubahkondisi,#rubahdata,#pindahruang").attr('disabled','disabled');
 			$(".well h2").html("Koreksi Nilai");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan koreksi nilai aset.");
@@ -504,8 +509,8 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$("textarea").attr('readonly','readonly');
 			$(".kapitalisasi").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".ubahkondisi").removeAttr('disabled');
-			$(".koreksi,.full").attr('disabled','disabled');
+			$(".ubahkondisi,#rubahkondisi").removeAttr('disabled');
+			$(".koreksi,.full,#koreksinilai,#rubahdata,#pindahruang").attr('disabled','disabled');
 			$(".well h2").html("Rubah Kondisi");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan kondisi aset.");
@@ -514,7 +519,8 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$("textarea").removeAttr('readonly');
 			$(".kapitalisasi").removeAttr('readonly');
 			$(".ubahkondisi").removeAttr('disabled');
-			$(".koreksi,.full").removeAttr('disabled');
+			$(".koreksi,.full,#pindahruang").removeAttr('disabled');
+			$("#rubahkondisi,#koreksinilai,#rubahdata").attr('disabled','disabled');
 			$(".well h2").html("Koreksi Aset");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", true);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan seluruh data aset.");
