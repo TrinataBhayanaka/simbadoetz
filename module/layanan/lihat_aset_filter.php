@@ -90,6 +90,23 @@ include "../../config/config.php";
 
           });
 
+          	function checkJenisAset()
+            {
+                var jenisaset1 = $('.jenisaset1').is(":checked")
+                var jenisaset2 = $('.jenisaset2').is(":checked")
+                var jenisaset3 = $('.jenisaset3').is(":checked")
+                var jenisaset4 = $('.jenisaset4').is(":checked")
+                var jenisaset5 = $('.jenisaset5').is(":checked")
+                var jenisaset6 = $('.jenisaset6').is(":checked")
+
+                if (jenisaset1 == false && jenisaset2 == false && jenisaset3 == false && jenisaset4 == false && jenisaset5 == false && jenisaset6 == false){
+                    alert('Pilih Jenis Aset');
+                    return false;
+                }
+
+                
+            }
+
      </script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -106,7 +123,7 @@ include "../../config/config.php";
 		
 		<section class="formLegend">
 			
-			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post">
+			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post" onsubmit="return checkJenisAset()">
 			<ul>
 							
 				<!--
@@ -215,12 +232,12 @@ include "../../config/config.php";
 							<?php //selectAset('kodeKelompok','255',true,false); ?>
 							<li>
                                 <span class="span2">Jenis Aset</span>
-                                <input type="checkbox" name="jenisaset[]" value="1">Tanah
-                                <input type="checkbox" name="jenisaset[]" value="2">Mesin
-                                <input type="checkbox" name="jenisaset[]" value="3">Bangunan
-                                <input type="checkbox" name="jenisaset[]" value="4">Jaringan
-                                <input type="checkbox" name="jenisaset[]" value="5">Aset Lain
-                                <input type="checkbox" name="jenisaset[]" value="6">KDP
+                                <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
+                                <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
+                                <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
+                                <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
+                                <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
+                                <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
                                 <!--
                                 <select name="jenisaset">
                                     <option value="1">Tanah</option>

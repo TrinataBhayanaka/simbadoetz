@@ -34,8 +34,13 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	// pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi($_POST);
+	if($_POST['submit']==''){
+	$dataPost=$_SESSION['dataPost'];
+	}else{
+	$_SESSION['dataPost']=$_POST;
+	$dataPost=$_SESSION['dataPost'];
+	}
+	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi($dataPost);
 	// pr($data);
 	
 ?>
@@ -112,15 +117,30 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses.php">
 					<table width="100%">
 						<tr>
-							<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar aset yang akan dibuatkan penetapan penggunaan :</u></td>
+							<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar Usulan yang akan dibuatkan penetapan Penghapusan :</u></td>
+						</tr>
+						<?php
+						$jmlUsulan=count($data['dataRow']);
+						$disabledForm="";
+						foreach ($data['dataRow'] as $valueUsulan) {
+							
+						
+						?>
+						<tr>
+							<td>Usulan ID [<?php echo $valueUsulan['Usulan_ID'];?>]
+								<input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/>
+							</td>
 						</tr>
 						<tr>
 									<?php
-									// pr($_SESSION);
+									
+									$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
+									// pr($dataUsulanAset);
+									// StatusKonfirmasi
 									$no = 1;
-									foreach ($data as $keys => $nilai)
+									foreach ($dataUsulanAset as $keys => $nilai)
 									{
-
+											
 										if ($nilai[Aset_ID] !='')
 										{
 										if ($nilai->AsetOpr == 0)
@@ -132,7 +152,25 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										$pilih="selected='selected'";
 										if($nilai->SumberAset =='hibah')
 										$pilih2="selected='selected'";
-		
+
+										if($nilai[StatusKonfirmasi]==1){
+											$textLabel="Diterima";
+											$labelColor="label label-success";
+										}elseif($nilai[StatusKonfirmasi]==2){
+											$textLabel="Ditolak";
+											$labelColor="label label-danger";
+										}else{
+											$textLabel="Ditunda";
+											$labelColor="label label-warning";
+											$disabled="
+										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
+										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
+										}
+										if($nilai[StatusKonfirmasi]==0){
+											$disabledForm="disabled";
+										}
+
+
 									echo "<tr>
 										<td style='border: 1px solid #004933; height:50px; padding:2px;'>
 										<table width='100%'>
@@ -140,8 +178,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										<td></td>
 										<td>$no.</td>
 										<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-										<td>$nilai[noRegister] - $nilai[kodeKelompok]</td>
-										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'></td>
+										<td>$nilai[noRegister] - $nilai[kodeKelompok] &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
+										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'>
+										$disabled
+										</td>
 										</tr>
 
 										<tr>
@@ -278,12 +318,16 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 									?>
 								
 							</tr>
+							<?php
+								}
+							?>
+
 					</table>
 					<br/>
 					<table width='100%'>
 						<tr>
 							<td width="200px">Nomor SK Penghapusan</td>
-							<td><input type="text" style="width: 150px;" id="idnoskhapus" name="bup_pp_noskpenghapusan"></td>
+							<td><input type="text" style="width: 150px;" id="idnoskhapus" name="bup_pp_noskpenghapusan" <?php echo $disabledForm;?>></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -291,7 +335,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</tr>
 						<tr>
 							<td>Tanggal SK Penghapusan</td>
-							<td> <input name="bup_pp_tanggal" style="width: 150px;" type="text" id="tanggal12"/></td>
+							<td> <input name="bup_pp_tanggal" style="width: 150px;" type="text" id="tanggal12" <?php echo $disabledForm;?>/></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -299,7 +343,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</tr>
 						<tr>
 							<td>Keterangan Penghapusan</td>
-							<td><textarea rows="4" cols="50" id="idinfohapus" name="bup_pp_get_keterangan"></textarea></td>
+							<td><textarea rows="4" cols="50" id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?>></textarea></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -308,7 +352,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<input type="submit" name="btn_action" class="btn btn-primary" id="btn_action" value="Penetapan Penghapusan">
+								<input type="submit" name="btn_action" class="btn btn-primary" id="btn_action" value="Penetapan Penghapusan" <?php echo $disabledForm;?>>
 								<a href="penetapan_penghapusan_tambah_lanjut.php?pid=1"><input type="button" name="btn_action" id="btn_action_cancel"  class="btn" style="width:100px;"  value="Batal"></a>
 							
 							</td>

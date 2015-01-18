@@ -38,20 +38,8 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		// $totaldata = end($countdata) + 1;
 		
         
-	   if (isset($submit)){
-            if ($aset_id=="" && $nama_aset=="" && $no_kontrak=="" && $kd_tahun=="" && $kelompok=="" && $lokasi=="" && $satker==""){
-    ?>
-        <script>var r=confirm('Tidak ada isian filter');
-            if (r==false){
-            document.location='penetapan_penghapusan_tambah_aset.php';
-            }
-        </script>
-     <?php
-            }
-        }
-    
-        
-?>
+	?>
+      
 <?php
 	include"$path/meta.php";
 	include"$path/header.php";
@@ -136,129 +124,108 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
-			
 			<div id="demo">
 			<form name="myform" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data.php">
 			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<tr>
-						<td width="130px">&nbsp;</td>
-						<td  align="left">&nbsp;</td>
-						<td align="right">
+						
+						<td align="right" colspan="5">
 								<span><input type="submit" name="submit" class="btn" value="Penetapan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						<th>Informasi Aset</th>
+						<th>Nomor Usulan</th>
+						<th>Tgl Usulan</th>
+						<th>Aset</th>
+						<!--<th>Tindakan</th>-->
 					</tr>
 				</thead>
 				<tbody>		
 							 
-				<?php
-					if (!empty($data))
-					{
-					
-						$nomor = 1;
-						foreach ($data as $key => $value)
-						{
-							if($value[kondisi]==2){
-								$kondisi="Rusak Ringan";
-							}elseif($value[kondisi]==3){
-								$kondisi="Rusak Berat";
+				 <?php
+                                        
+					// pr($dataArr);
+					$no=1;	
+					// pr($data);
+					if($data){
+					foreach($data as $key => $hsl_data){
+						
+						if($dataArr!="")
+							{
+								(in_array($hsl_data['Usulan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
 							}
 				?>
 						  
 					<tr class="gradeA">
-						<td><?php echo $nomor?></td>
+						<td><?php echo "$no";?></td>
 						<td  class="checkbox-column">
 							<?php
 						if (($_SESSION['ses_uaksesadmin'] == 1)){
 							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $value[Aset_ID];?>" 
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
 							<?php for ($j = 0; $j <= count($get_data_filter['asetuser']); $j++){
-								if ($get_data_filter['asetuser'][$j]==$value[Aset_ID]) echo 'checked';}
+								if ($get_data_filter['asetuser'][$j]==$hsl_data[Usulan_ID]) echo 'checked';}
 							?>/>
 							<?php
 						}else{
 							if ($get_data_filter['asetuser']){
-							if (in_array($value[Aset_ID], $get_data_filter['asetuser'])){
+							if (in_array($hsl_data[Usulan_ID], $get_data_filter['asetuser'])){
 							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $value[Aset_ID];?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value[Aset_ID]) echo 'checked';}?>/>							<?php
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$hsl_data[Usulan_ID]) echo 'checked';}?>/>							<?php
 							}
 						}
 						}
 						
 						?>
 						</td>
-						<td>	
-						<table width='100%'>
-							<tr>
-								<td height="10px"></td>
-							</tr>
-
-							<tr>
-								<td>
-									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value[Aset_ID]?></span>
-									<span>( Aset ID - System Number )</span>
-								</td>
-								<!--
-								<td align="right"><span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;horizontal-align:'right';font-weight:bold;">
-									
-									 <a href='validasi_data_aset.php?id=<?php //echo $value->Aset_ID?>'>Validasi</a></span>
-								</td>-->
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value[noRegister]?></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value[Kode]?></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value[NamaAset]?></td>
-							</tr>
-
-						</table>
-
-						<br>
-						<hr />
-						<table>
-							<tr>
-								<td width="30%"> No.Kontrak</td> <td><?php echo $value[NoKontrak]?></td>
-							</tr>
-							<tr>
-								<td>Satker</td> <td><?php echo $value[NamaSatker]?></td>
-							</tr>
-							<tr>
-								<td>Lokasi</td> <td><?php echo $value[kodeLokasi]?></td>
-							</tr>
-							<tr>
-								<td>Status</td> <td><?php echo $kondisi. ' - ' .$value[AsalUsul]?></td>
-							</tr>
-
-						</table>
+						<td>
+							<?php echo "$hsl_data[Usulan_ID]";?>
+						</td>
+						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
+						<td>
+							<ul type="1">
+						<?php
+						$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($hsl_data[Aset_ID]);
+							
+							$noAset=1;
+							foreach ($dataAset as $valueAset) {
+								if($valueAset[StatusKonfirmasi]==1){
+									$textLabel="Diterima";
+									$labelColor="label label-success";
+								}elseif($valueAset[StatusKonfirmasi]==2){
+									$textLabel="Ditolak";
+									$labelColor="label label-danger";
+								}else{
+									$textLabel="Ditunda";
+									$labelColor="label label-warning";
+								}
+								echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+							$noAset++;
+							}
+						?>
+							</ul>
 						</td>
 					</tr>
 					
-				     <?php
-						$nomor++;
-						$pid++;
-					 }
-				}
-				?>
+				     <?php $no++; } }?>
 				</tbody>
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 					</tr>
 				</tfoot>
 			</table>
+
 			</form>
 			</div>
 			<div class="spacer"></div>
+			
 			
 			
 		</section> 
