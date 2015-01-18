@@ -34,8 +34,13 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	// pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi($_POST);
+	if($_POST['submit']==''){
+	$dataPost=$_SESSION['dataPost'];
+	}else{
+	$_SESSION['dataPost']=$_POST;
+	$dataPost=$_SESSION['dataPost'];
+	}
+	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi($dataPost);
 	// pr($data);
 	
 ?>
@@ -112,15 +117,40 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses.php">
 					<table width="100%">
 						<tr>
-							<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar aset yang akan dibuatkan penetapan penggunaan :</u></td>
+							<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar Usulan yang akan dibuatkan penetapan Penghapusan :</u></td>
+						</tr>
+						<?php
+						$jmlUsulan=count($data['dataRow']);
+									// pr($jmlUsulan);
+									// $a=array(1,2);
+									// pr($a);
+// if (array_key_exists("1",$a))
+//   {
+//   echo "Key exists!";
+//   }
+// else
+//   {
+//   echo "Key does not exist!";
+//   }
+						foreach ($data['dataRow'] as $valueUsulan) {
+							
+						
+						?>
+						<tr>
+							<td><?php echo $valueUsulan['Usulan_ID'];?>
+								<input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/>
+							</td>
 						</tr>
 						<tr>
 									<?php
-									// pr($_SESSION);
+									
+									$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
+									// pr($dataUsulanAset);
+									// StatusKonfirmasi
 									$no = 1;
-									foreach ($data as $keys => $nilai)
+									foreach ($dataUsulanAset as $keys => $nilai)
 									{
-
+											
 										if ($nilai[Aset_ID] !='')
 										{
 										if ($nilai->AsetOpr == 0)
@@ -132,7 +162,22 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										$pilih="selected='selected'";
 										if($nilai->SumberAset =='hibah')
 										$pilih2="selected='selected'";
-		
+
+										if($nilai[StatusKonfirmasi]==1){
+											$textLabel="Diterima";
+											$labelColor="label label-success";
+											$disabled="disabled";
+										}elseif($nilai[StatusKonfirmasi]==2){
+											$textLabel="Ditolak";
+											$disabled="disabled";
+											$labelColor="label label-danger";
+										}else{
+											$textLabel="Ditunda";
+											$labelColor="label label-warning";
+											$disabled="";
+										}
+
+
 									echo "<tr>
 										<td style='border: 1px solid #004933; height:50px; padding:2px;'>
 										<table width='100%'>
@@ -140,8 +185,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										<td></td>
 										<td>$no.</td>
 										<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-										<td>$nilai[noRegister] - $nilai[kodeKelompok]</td>
-										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'></td>
+										<td>$nilai[noRegister] - $nilai[kodeKelompok] &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
+										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'>
+										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' $disabled>Diterima</a>
+										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' $disabled>Ditolak</a>
+										</td>
 										</tr>
 
 										<tr>
@@ -278,6 +326,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 									?>
 								
 							</tr>
+							<?php
+								}
+							?>
+
 					</table>
 					<br/>
 					<table width='100%'>

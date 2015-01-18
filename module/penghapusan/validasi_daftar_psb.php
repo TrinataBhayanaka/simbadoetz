@@ -93,10 +93,7 @@ include "../../config/config.php";
 						<input type='hidden' name='ValidasiPenghapusan' value='<?php echo $id; ?>'>
 						Daftar aset yang akan dibuatkan validasi penghapusan sebagian :</u></td>
 				</tr>
-				<tr>
-					
 				<?php
-				// pr($id);
 				if (isset($id))
 				{
 					unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
@@ -108,9 +105,24 @@ include "../../config/config.php";
 						// pr($data);
 						
 				}
+				foreach ($data['dataArr'] as $valueUsulan) {
+							
+						
+						?>
+						<tr>
+							<td><?php echo $valueUsulan['Usulan_ID'];?>
+								<input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/>
+							</td>
+						</tr>
+				<tr>
+					
+				<?php
+				// pr($id);
+				$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_validasi($valueUsulan['Usulan_ID']);
+				
 				$no = 1;
 				// pr($data);
-							foreach ($data['dataArr'] as $keys => $nilai)
+							foreach ($dataUsulanAset as $keys => $nilai)
 							{
 
 								if ($nilai[Aset_ID] !='')
@@ -273,6 +285,9 @@ include "../../config/config.php";
 			$row=$data['dataRow'];		
 			?>
 					</tr>
+					<?php
+						}
+					?>
 			</table>
 			<br/>
 			<input type="submit" class="btn btn-primary" value="Validasi Penghapusan Sebagian"/>

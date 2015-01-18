@@ -140,11 +140,13 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 												if($_SESSION['ses_uaksesadmin'] == 1){
 												// echo "masukkkkkk";
 												?>
-													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_view_edit_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success" onclick="return confirm('View Data');">View</a>
 												<?php	
 												}elseif($_SESSION['ses_uoperatorid'] == $hsl_data[UserNm]){
 												?>
-													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger" onclick="return confirm('Hapus Data');">Hapus</a>
+													<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_view_edit_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success" onclick="return confirm('View Data');">View</a>
 											
 												<?php
 												}else{
