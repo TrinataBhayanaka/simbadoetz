@@ -107,7 +107,7 @@ include "../../config/config.php";
 				$no = 1;
 				// pr($data);
 				$coo=count($data['dataArr']);
-				pr($coo);
+				// pr($coo);
 							foreach ($data['dataArr'] as $keys => $nilai)
 							{
 
@@ -278,7 +278,7 @@ include "../../config/config.php";
 			</table>
 			<br/>
 					
-					<a href="penghapusan_usulan_daftar_usulan_pmd.php?pid=1"><input type="button" name="btn_action" class="btn" id="btn_action_cancel"  style="width:100px;"  value="Kembali"></a>
+					<a href="penghapusan_usulan_daftar_usulan_pms.php?pid=1"><input type="button" name="btn_action" class="btn" id="btn_action_cancel"  style="width:100px;"  value="Kembali"></a>
 					
 					
 			</form>

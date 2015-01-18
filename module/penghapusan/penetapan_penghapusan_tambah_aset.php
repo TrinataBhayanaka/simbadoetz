@@ -28,7 +28,7 @@ include "../../config/config.php";
 			
 			 <form method="POST" action="<?php echo"$url_rewrite";?>/module/penghapusan/penetapan_penghapusan_tambah_lanjut.php?pid=1">
 			<ul>
-							<li>
+							<!-- <li>
 								<span class="span2">ID&nbsp;Aset&nbsp;(System&nbsp;ID)</span>
 								<input style="width: 200px;" id="bup_pp_sp_asetid" name="bup_pp_sp_asetid" type="text" >
 							</li>
@@ -39,12 +39,12 @@ include "../../config/config.php";
 							<li>
 								<span class="span2">Nomor&nbsp;Kontrak</span>
 								<input isdatepicker="true" style="width: 200px;" id="bup_pp_sp_nokontrak" name="bup_pp_sp_nokontrak"  type="text">
-							</li>
+							</li> -->
 							<li>
 								<span class="span2">Tahun&nbsp;Perolehan</span>
 								<input name="bup_pp_sp_tahun" id="bup_pp_sp_tahun"  type="text" >
 							</li>
-							<li>
+							<!-- <li>
 								<span class="span2">Kelompok</span>
 								<div class="input-append">
 										<input type="text" name="pem_kelompok" id="pem_kelompok" class="span5" readonly="readonly" value="">
@@ -61,8 +61,8 @@ include "../../config/config.php";
 											?>
 										</div>
 								</div>
-							</li>
-							<li>
+							</li> -->
+							<!-- <li>
 								<span class="span2">Pilih Lokasi</span>
 								<div class="input-append">
 									<input type="text" name="entri_lokasi" id="entri_lokasi" class="span5" readonly="readonly" placeholder="(Semua Kelompok)">
@@ -79,7 +79,7 @@ include "../../config/config.php";
 														?>
 											</div>
 								</div>
-							</li>
+							</li> -->
 							<li>
 								<span class="span2">SKPD</span>
 								<div class="input-append">

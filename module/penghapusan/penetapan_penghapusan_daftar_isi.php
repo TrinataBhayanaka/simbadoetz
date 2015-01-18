@@ -133,6 +133,7 @@ include "../../config/config.php";
 						<th>No</th>
 						<th>Nomor SK Penghapusan</th>
 						<th>Tgl Penghapusan</th>
+						<th>USulan</th>
 						<th>Tindakan</th>
 					</tr>
 				</thead>
@@ -158,6 +159,38 @@ include "../../config/config.php";
 							<?php echo "$row[NoSKHapus]";?>
 						</td>
 						<td><?php $change=$row[TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
+						<td>
+							
+						<?php
+						$dataUsulan = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_UsulanAset($row[Usulan_ID]);
+							
+							foreach ($dataUsulan as $valueUsulan) {
+								echo "Usulan ID[".$valueUsulan['Usulan_ID']."]<br/>";
+								echo "<ul>";
+								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($valueUsulan[Aset_ID]);
+								$noAset=1;
+								// pr($dataAset);
+								foreach ($dataAset as $valueAset) {
+
+									if($valueAset[StatusKonfirmasi]==1){
+										$textLabel="Diterima";
+										$labelColor="label label-success";
+									}elseif($valueAset[StatusKonfirmasi]==2){
+										$textLabel="Ditolak";
+										$labelColor="label label-danger";
+									}else{
+										$textLabel="Ditunda";
+										$labelColor="label label-warning";
+									}
+									echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+									$noAset++;
+								}
+								echo "</ul>";
+							
+							}
+						?>
+							
+						</td>
 						<td align="center">	
 						 <!--<a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan.php?menu_id=39&mode=1&id=<?php echo "$row[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||--> 
 						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_edit.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;

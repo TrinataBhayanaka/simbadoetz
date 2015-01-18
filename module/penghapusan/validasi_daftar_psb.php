@@ -110,7 +110,7 @@ include "../../config/config.php";
 						
 						?>
 						<tr>
-							<td><?php echo $valueUsulan['Usulan_ID'];?>
+							<td>Usulan ID [<?php echo $valueUsulan['Usulan_ID'];?>]
 								<input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/>
 							</td>
 						</tr>

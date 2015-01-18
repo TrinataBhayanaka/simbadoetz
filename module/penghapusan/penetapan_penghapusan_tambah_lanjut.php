@@ -185,8 +185,28 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<?php echo "$hsl_data[Usulan_ID]";?>
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
-						<td>	aset
-						
+						<td>
+							<ul type="1">
+						<?php
+						$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($hsl_data[Aset_ID]);
+							
+							$noAset=1;
+							foreach ($dataAset as $valueAset) {
+								if($valueAset[StatusKonfirmasi]==1){
+									$textLabel="Diterima";
+									$labelColor="label label-success";
+								}elseif($valueAset[StatusKonfirmasi]==2){
+									$textLabel="Ditolak";
+									$labelColor="label label-danger";
+								}else{
+									$textLabel="Ditunda";
+									$labelColor="label label-warning";
+								}
+								echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+							$noAset++;
+							}
+						?>
+							</ul>
 						</td>
 					</tr>
 					

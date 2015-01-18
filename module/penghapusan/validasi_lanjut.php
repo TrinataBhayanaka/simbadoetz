@@ -190,6 +190,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</th>
 						<th>Nomor SK Penghapusan</th>
 						<th>Tanggal Penghapusan</th>
+						<th>Usulan</th>
 						<th>Keterangan</th>
 					</tr>
 				</thead>
@@ -235,6 +236,38 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</td>
 						<td><?php echo "$value[NoSKHapus]";?></td>
 						<td><?php $change=$value['TglHapus']; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
+						<td>
+							
+						<?php
+						$dataUsulan = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_UsulanAset($value[Usulan_ID]);
+							
+							foreach ($dataUsulan as $valueUsulan) {
+								echo "Usulan ID[".$valueUsulan['Usulan_ID']."]<br/>";
+								echo "<ul>";
+								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($valueUsulan[Aset_ID]);
+								$noAset=1;
+								// pr($dataAset);
+								foreach ($dataAset as $valueAset) {
+
+									if($valueAset[StatusKonfirmasi]==1){
+										$textLabel="Diterima";
+										$labelColor="label label-success";
+									}elseif($valueAset[StatusKonfirmasi]==2){
+										$textLabel="Ditolak";
+										$labelColor="label label-danger";
+									}else{
+										$textLabel="Ditunda";
+										$labelColor="label label-warning";
+									}
+									echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+									$noAset++;
+								}
+								echo "</ul>";
+							
+							}
+						?>
+							
+						</td>
 						<td>	
 							<?php echo "$value[AlasanHapus]";?>
 						</td>
@@ -243,6 +276,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
