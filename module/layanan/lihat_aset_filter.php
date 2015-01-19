@@ -107,6 +107,8 @@ include "../../config/config.php";
                 
             }
 
+
+            $( "#lda_tp" ).mask('9999'); 
      </script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -141,7 +143,7 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span class="span2">Tahun Perolehan</span>
-								<input name="kd_tahun" id="lda_tp" class="span2"  type="text" >
+								<input name="kd_tahun" id="lda_tp" class="span2"  type="text" required placeholder="Tahun (ex:2015)" maxlength="4">
 							</li>
 							<!--<li>
 								<span>Kelompok</span><br/>
