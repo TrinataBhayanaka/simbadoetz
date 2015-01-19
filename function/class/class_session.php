@@ -145,6 +145,28 @@ class Session
                             unset($_SESSION['ses_satkerkode']);
 		echo '<script>window.location.href="./"</script>';
 	}
+
+	function smartFilter($sesName=false, $debug=false)
+	{
+
+		global $url_rewrite;
+
+		$data = false;
+		$prefix = "ses_param_".$sesName;
+
+		if ($_POST){ 
+			unset($_SESSION[$prefix]);
+			$_SESSION[$prefix] = $_POST;
+			// redirect($url_rewrite.'/module/'.$sesName.'/'.$fileName.'.php');
+			// exit;
+		}
+
+		if ($debug) pr($_SESSION[$prefix]);
+
+		$data = $_SESSION[$prefix];
+		if ($data) return $data;
+		return false;
+	}
 }
 
 

@@ -17,7 +17,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	if ($_POST['submit']){
                // pr($_POST);
                // exit;
-			   // unset($_SESSION['parameter_sql']);
+		
 		/*
 				if ($_POST['kd_idaset'] == "" && $_POST['kd_namaaset'] == "" && $_POST['kd_nokontrak'] == "" && $_POST['kd_tahun'] == "" && $_POST['skpd_id'] == "" && $_POST['lokasi_id'] == "" && $_POST['kelompok_id5'] == "") {
                     ?>
@@ -30,11 +30,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				<?php
 					}
 	*/
-					}
+
+
+	}
 				
-               
-	
-	$data = $LAYANAN->retrieve_layanan_aset_daftar($_POST);	
+    $filterParam = $SESSION->smartFilter('layanan');
+	$data = $LAYANAN->retrieve_layanan_aset_daftar($filterParam);	
 	// pr($data);
 	if ($data){
 		foreach ($data as $key => $value) {
@@ -64,6 +65,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<span class="label label-success">Filter data : <span class="badge badge-warning"><?php echo $_SESSION['parameter_sql_total'] ?></span> Record</span>
 			</div>
 			-->
+		<?php $HELPER_FILTER->back($link=$url_rewrite.'/module/layanan/lihat_aset_filter.php',$val='Kembali ke halaman utama : Cari aset',$page=1)?>
+			<!--
 			<div class="detailRight">
 						
 						<ul>
@@ -83,7 +86,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 						</ul>
 							
-					</div>
+			</div>-->
+
 			<div style="height:5px;width:100%;clear:both"></div>
 			
 			
