@@ -61,8 +61,6 @@ $menu_id = 10;
 				}
 		  $xlsdata[$no]['noRegister'] = $lastreg + 1;		
 		  $xlsdata[$no]['noKontrak'] = $_POST['noKontrak'];
-		  $xlsdata[$no]['kondisi'] = 1;
-		  $xlsdata[$no]['Kuantitas'] = 1;
 		  $xlsdata[$no]['Info'] = $data->val($i,16);
 		  $xlsdata[$no]['kodeRuangan'] = $_POST['kodeRuangan'];
 		  $xlsdata[$no]['TipeAset'] = 'E';
@@ -74,8 +72,8 @@ $menu_id = 10;
 		  $xlsdata[$no]['Spesifikasi'] = $data->val($i,7);
 		  $xlsdata[$no]['AsalDaerah'] = $data->val($i,8);
 		  $xlsdata[$no]['Material'] = $data->val($i,9);
-		  $xlsdata[$no]['GUID'] = $data->val($i,10);
-		  $xlsdata[$no]['Ukuran'] = $data->val($i,11);
+		  $xlsdata[$no]['Ukuran'] = $data->val($i,10);
+		  $xlsdata[$no]['Alamat'] = $data->val($i,11);
 		  $xlsdata[$no]['Jumlah'] = $data->val($i,12);
 		  $no++;
 		}
@@ -90,6 +88,7 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#btn-dis").removeAttr("disabled");
+
 			}
 			else
 			{
@@ -142,7 +141,7 @@ $menu_id = 10;
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-				<form action="" method=POST name="checks" ID="Form2">
+				<form action="hasil_kibe.php" method=POST name="checks" ID="Form2">
 					<p><button type="submit" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Pilih</button>
 							&nbsp;</p>
 
@@ -155,9 +154,10 @@ $menu_id = 10;
 									<th>Kode Kelompok</th>
 									<th>Nama Barang</th>
 									<th>Kode Lokasi</th>
-									<th>No. Registrasi</th>
+									<th>No.Reg</th>
 									<th>Jumlah</th>
 									<th>Nilai</th>
+									<th>Total</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -165,18 +165,22 @@ $menu_id = 10;
 								if($xlsdata)
 								{
 									$i = 1;
+									$total = 0;
 									foreach ($xlsdata as $key => $value) {
 							?>
 									<tr class="gradeA">
-										<td class="checkbox-column"><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" value="<?=$value['tabel']?>_<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$value['min']?>-<?=$value['max']?>" onchange="return AreAnyCheckboxesChecked();"></td>
+										<td class="checkbox-column"><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" 
+											value="<?=$value['kodeSatker']?>|<?=$value['TglPerolehan']?>|<?=$value['Tahun']?>|<?=$value['kodeLokasi']?>|<?=$value['kodeKelompok']?>|<?=$value['noRegister']?>|<?=$value['noKontrak']?>|<?=$value['Info']?>|<?=$value['kodeRuangan']?>|<?=$value['TipeAset']?>|<?=$value['Judul']?>|<?=$value['Pengarang']?>|<?=$value['Penerbit']?>|<?=$value['Spesifikasi']?>|<?=$value['AsalDaerah']?>|<?=$value['Material']?>|<?=$value['Alamat']?>|<?=$value['Ukuran']?>|<?=$value['Jumlah']?>|<?=$value['NilaiPerolehan']?>" onchange="return AreAnyCheckboxesChecked();"></td>
 										<td><?=$value['kodeKelompok']?></td>
 										<td><?=$value['uraian']?></td>
 										<td><?=$value['kodeLokasi']?></td>
 										<td><?=$value['noRegister']?></td>
 										<td><?=$value['Jumlah']?></td>
-										<td><?=$value['NilaiPerolehan']?></td>
+										<td><?=number_format($value['NilaiPerolehan'])?></td>
+										<td><?=number_format($value['Jumlah']*$value['NilaiPerolehan'])?></td>
 									</tr>
 							<?php
+									$total = $total + ($value['Jumlah']*$value['NilaiPerolehan']);
 									$i++;
 									}
 								}	
@@ -185,12 +189,15 @@ $menu_id = 10;
 							</tbody>
 							<tfoot>
 								<tr>
-									<th colspan="5">&nbsp;</th>
+									<th colspan="7">&nbsp;</th>
+									<!-- <th><label id=""><?=number_format($total)?></label></th> -->
 								</tr>
 							</tfoot>
 						</table>
 					
 						</div>
+						<input type="hidden" name="kontrakid" value="<?=$_POST['kontrakid']?>">
+						<input type="hidden" name="jenisaset" value="<?=$_POST['jenisaset']?>">
 						</form>
 			<div class="spacer"></div>
 			    

@@ -94,8 +94,18 @@ $menu_id = 10;
 						</ul>
 							
 					</div>
+			
 			<div style="height:5px;width:100%;clear:both"></div>
-
+			
+			<div class="detailRight">
+				<ul>
+					<li>
+						<a href="import/template.zip" class="btn btn-success btn-small"><i class="fa fa-download"></i>&nbsp;&nbsp;Download xls Template</a>
+				&nbsp;
+					</li>
+				</ul>	
+			</div>
+			
 			<div>
 			<form method="POST" enctype="multipart/form-data" action="import/proses_kibe.php">
 				 <div class="formKontrak">
