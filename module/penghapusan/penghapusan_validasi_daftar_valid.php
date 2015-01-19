@@ -209,10 +209,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<!-- <a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan_validasi.php?menu_id=40&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||  -->
 						<?php if($_SESSION['jenis_hapus']=="PSB"){ 
 						?>
-						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus_psb.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+						<!-- <a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus_psb.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a> -->
 						<?php
 						}else{ ?>
-						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+						<!-- <a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a> -->
 						<?php } ?>
 
 						</td>

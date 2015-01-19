@@ -13,7 +13,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
-        // //pr($jenisaset);
+        // ////pr($jenisaset);
 
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
@@ -36,12 +36,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	public function retrieve_usulan_penghapusan_pmd($data,$debug=false)
     {
             
-        // //pr($data);
+        // ////pr($data);
         $jenisaset = $data['jenisaset'];
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
         $tahun = $data['bup_tahun'];
-        // //pr($jenisaset);
+        // ////pr($jenisaset);
 
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND b.noKontrak = '{$nokontrak}' ";
@@ -49,14 +49,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($tahun) $filterkontrak .= " AND b.Tahun = '{$tahun}' ";
 		if($jenisaset){
             $jmlJnsAset=count($jenisaset);
-            // //pr($jmlJnsAset);
+            // ////pr($jmlJnsAset);
             $queryJenisAset.="AND ";
             if($jmlJnsAset>1){
               $queryJenisAset.="(";
             }
             $flegaset=1;
             foreach ($jenisaset as $key => $valjenisAset) {
-                // //pr($valjenisAset);
+                // ////pr($valjenisAset);
 
                 $queryJenisAset.="b.TipeAset='$valjenisAset'";
                 if($jmlJnsAset>1 && $flegaset<$jmlJnsAset){
@@ -68,7 +68,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
               $queryJenisAset.=")";
             }
             $filterkontrak .= $queryJenisAset;
-            // //pr($queryJenisAset);
+            // ////pr($queryJenisAset);
         }
 		$sql1 = array(
                 'table'=>'usulanaset',
@@ -77,7 +77,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 );
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
-		// //pr($res1);
+		// ////pr($res1);
 		if($res1){
 			foreach($res1 as $asetid)
 			{
@@ -89,8 +89,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		}else{
 			$condition="fixPenggunaan=1 AND (b.kondisi=2 OR b.kondisi=3)";
 		}
-		// //pr($aset_id);
-		// //pr($sql1);
+		// ////pr($aset_id);
+		// ////pr($sql1);
 
         $sql = array(
                 'table'=>'Aset AS b,Kelompok AS c,Satker AS d',
@@ -99,7 +99,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
                 );
-// //pr($sql);
+// ////pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
 
 
@@ -113,7 +113,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
         $tahun = $data['bup_tahun'];
-        // //pr($jenisaset);
+        // ////pr($jenisaset);
 
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND b.noKontrak = '{$nokontrak}' ";
@@ -121,14 +121,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($tahun) $filterkontrak .= " AND b.Tahun = '{$tahun}' ";
         if($jenisaset){
             $jmlJnsAset=count($jenisaset);
-            // //pr($jmlJnsAset);
+            // ////pr($jmlJnsAset);
             $queryJenisAset.="AND ";
             if($jmlJnsAset>1){
               $queryJenisAset.="(";
             }
             $flegaset=1;
             foreach ($jenisaset as $key => $valjenisAset) {
-                // //pr($valjenisAset);
+                // ////pr($valjenisAset);
 
                 $queryJenisAset.="b.TipeAset='$valjenisAset'";
                 if($jmlJnsAset>1 && $flegaset<$jmlJnsAset){
@@ -140,7 +140,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
               $queryJenisAset.=")";
             }
             $filterkontrak .= $queryJenisAset;
-            // //pr($queryJenisAset);
+            // ////pr($queryJenisAset);
         }
 		$sql1 = array(
                 'table'=>'usulanaset',
@@ -150,9 +150,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
 		
-		// //pr($res1);
-		// //pr($aset_id);
-		// //pr($sql1);
+		// ////pr($res1);
+		// ////pr($aset_id);
+		// ////pr($sql1);
 		if($res1){
 			foreach($res1 as $asetid)
 			{
@@ -171,7 +171,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
                 );
-// //pr($sql);
+// ////pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
         if ($res) return $res;
         return false;
@@ -183,7 +183,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
         $tahun = $data['bup_tahun'];
-        // //pr($jenisaset);
+        // ////pr($jenisaset);
 
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND b.noKontrak = '{$nokontrak}' ";
@@ -191,14 +191,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($tahun) $filterkontrak .= " AND b.Tahun = '{$tahun}' ";
         if($jenisaset){
             $jmlJnsAset=count($jenisaset);
-            // //pr($jmlJnsAset);
+            // ////pr($jmlJnsAset);
             $queryJenisAset.="AND ";
             if($jmlJnsAset>1){
               $queryJenisAset.="(";
             }
             $flegaset=1;
             foreach ($jenisaset as $key => $valjenisAset) {
-                // //pr($valjenisAset);
+                // ////pr($valjenisAset);
 
                 $queryJenisAset.="b.TipeAset='$valjenisAset'";
                 if($jmlJnsAset>1 && $flegaset<$jmlJnsAset){
@@ -210,7 +210,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
               $queryJenisAset.=")";
             }
             $filterkontrak .= $queryJenisAset;
-            // //pr($queryJenisAset);
+            // ////pr($queryJenisAset);
         }
         $sql1 = array(
                 'table'=>'usulanaset',
@@ -219,10 +219,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 );
 
         $res1 = $this->db->lazyQuery($sql1,$debug);
-        // //pr($res1);
+        // ////pr($res1);
         
-        // //pr($aset_id);
-        // //pr($sql1);
+        // ////pr($aset_id);
+        // ////pr($sql1);
         if($res1){
             foreach($res1 as $asetid)
             {
@@ -242,7 +242,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
                 );
 
-        // //pr($sql);
+        // ////pr($sql);
 
         $res = $this->db->lazyQuery($sql,$debug);
 
@@ -251,10 +251,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	 public function retrieve_usulan_penghapusan_eksekusi_pms($data,$debug=false)
     {
-		// //pr($data);
+		// ////pr($data);
 		$id = $data[penghapusanfilter];
 		$cols = implode(', ',array_values($id));
-		// //pr($cols);
+		// ////pr($cols);
 		$jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -271,19 +271,19 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'a.KodeSatker=e.Kode,a.kodeKelompok=g.Kode'
                 );
-         // //pr($sql);
+         // ////pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
-        // //pr($res);
+        // ////pr($res);
         if ($res) return $res;
         return false;
 	
     }
 	 public function retrieve_usulan_penghapusan_eksekusi_pmd($data,$debug=false)
     {
-		// //pr($data);
+		// ////pr($data);
 		$id = $data[penghapusanfilter];
 		$cols = implode(', ',array_values($id));
-		// //pr($cols);
+		// ////pr($cols);
 		$jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -300,20 +300,20 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'a.KodeSatker=e.Kode,a.kodeKelompok=g.Kode'
                 );
-        // //pr($sql);
+        // ////pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
 
-        // //pr($res);
+        // ////pr($res);
         if ($res) return $res;
         return false;
 		
     }
      public function retrieve_usulan_penghapusan_eksekusi_psb($data,$debug=false)
     {
-        // //pr($data);
+        // ////pr($data);
         $id = $data[penghapusanfilter];
         $cols = implode(', ',array_values($id));
-        // //pr($cols);
+        // ////pr($cols);
         $jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -468,15 +468,15 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
      public function retrieve_daftar_usulan_penghapusan_UsulanAset($data,$debug=false)
     {
-        // //pr($data);
+        // ////pr($data);
         // $jenisaset = $data['jenisaset'];
         // $nokontrak = $data['nokontrak'];
         // $kodeSatker = $data['kodeSatker'];
-        // //pr($data);
+        // ////pr($data);
         // $filterkontrak = "";
         // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-        // //pr($data);
+        // ////pr($data);
         $sql = array(
                 'table'=>'Usulan',
                 'field'=>" * ",
@@ -491,8 +491,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
     public function retrieve_daftar_usulan_penghapusan_aset($data,$debug=false)
     {
-    //pr($data);
-    // //pr($_SESSION);
+    ////pr($data);
+    // ////pr($_SESSION);
         // $jenisaset = $data['jenisaset'];
         // $nokontrak = $data['nokontrak'];
         // $kodeSatker = $dataFilter['kodeSatker'];
@@ -500,7 +500,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         // $filterkontrak = "";
         // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-        // //pr($data);
+        // ////pr($data);
     // if($kodeSatker){
     //      $sql = array(
     //                 'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
@@ -529,8 +529,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         
         $res = $this->db->lazyQuery($sql,$debug);
     // }
-    // //pr($sql);
-        // //pr($res);exit;
+    // ////pr($sql);
+        // ////pr($res);exit;
         if ($res) return $res;
         return false;
     
@@ -541,11 +541,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         // $jenisaset = $data['jenisaset'];
         // $nokontrak = $data['nokontrak'];
         // $kodeSatker = $data['kodeSatker'];
-        pr($data);
+        //pr($data);
         // $filterkontrak = "";
         // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-        // //pr($data);
+        // ////pr($data);
          $sql = array(
                     'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
                     'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan,b.StatusKonfirmasi, e.NamaSatker, f.NamaLokasi, g.Kode",
@@ -562,7 +562,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //         );
         
         $res = $this->db->lazyQuery($sql,$debug);
-        pr($sql);
+        //pr($sql);
         if ($res) return $res;
         return false;
     
@@ -593,19 +593,19 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
     public function retrieve_daftar_penetapan_penghapusan($data,$debug=false)
     {
-        //pr($data);
+        ////pr($data);
         $jenisaset = $data['jenisaset'];
         $noskpenghapusan = $data['bup_pu_noskpenghapusan'];
         if($data['bup_pu_tanggalhapus']){
             $tglExplode =explode("/",$data['bup_pu_tanggalhapus']) ;
-            // //pr($tglExplode);
+            // ////pr($tglExplode);
              $tanggalhapus=$tglExplode[2]."-".$tglExplode[1]."-".$tglExplode[0];
          }else{
             $tanggalhapus="";
          }
         $kodeSatker = $data['kodeSatker'];
 		$jenis_hapus=$_SESSION['jenis_hapus'];
-		// //pr($_SESSION);
+		// ////pr($_SESSION);
         $filterkontrak = "";
         if ($noskpenghapusan) $filterkontrak .= " AND NoSKHapus = '{$noskpenghapusan}' ";
         if ($tanggalhapus) $filterkontrak .= " AND TglHapus = '{$tanggalhapus}' ";
@@ -624,13 +624,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 //         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                 //         'limit'=>'100',
                 //         );
-                //pr($sqlHPSaset);
+                ////pr($sqlHPSaset);
                 $resHPSaset = $this->db->lazyQuery($sqlHPSaset,$debug);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 $arrayHPSaset=array();
-                //pr($arrayHPSaset);
+                ////pr($arrayHPSaset);
                 foreach ($resHPSaset as $valueHPSaset) {
-                    //pr($valueHPSaset[Penghapusan_ID]);
+                    ////pr($valueHPSaset[Penghapusan_ID]);
                     if(in_array($valueHPSaset[Penghapusan_ID],$arrayHPSaset)){
 
                     }else{
@@ -639,9 +639,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                     // if()
                 }
-                // //pr($arrayHPSaset);
+                // ////pr($arrayHPSaset);
                     $QueryHPSID=implode(",",$arrayHPSaset);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 
                 if($resHPSaset){
             		$sql = array(
@@ -650,11 +650,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
             				'limit'=>'100',
                             );
-                    //pr($sql);
+                    ////pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
                 }
-                //pr($res);
+                ////pr($res);
             }else{
                 $sql = array(
                         'table'=>'penghapusan',
@@ -662,10 +662,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                         'limit'=>'100',
                         );
-                //pr($sql);
+                ////pr($sql);
 
                 $res = $this->db->lazyQuery($sql,$debug);
-                //pr($res);
+                ////pr($res);
             }
         // exit;
         if ($res) return $res;
@@ -675,14 +675,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	
 	 public function retrieve_penetapan_penghapusan_filter($data,$debug=false)
     {
-            //pr($data);
+            ////pr($data);
 			$jenisaset = $data['jenisaset'];
 			$nousulan = $data['bup_pp_sp_nousulan'];
 			$kodeSatker = $data['kodeSatker'];
 			$jenis_usulan=$_SESSION['jenis_hapus'];
             if($data['bup_pp_sp_tglusul']){
                 $tglExplode =explode("/",$data['bup_pp_sp_tglusul']) ;
-                // //pr($tglExplode);
+                // ////pr($tglExplode);
                  $tanggalhapus=$tglExplode[2]."-".$tglExplode[1]."-".$tglExplode[0];
              }else{
                 $tanggalhapus="";
@@ -695,14 +695,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
            $filterkontrak2 = "";
             if($jenisaset){
             $jmlJnsAset=count($jenisaset);
-            // //pr($jmlJnsAset);
+            // ////pr($jmlJnsAset);
             $queryJenisAset.="AND ";
             if($jmlJnsAset>1){
               $queryJenisAset.="(";
             }
             $flegaset=1;
             foreach ($jenisaset as $key => $valjenisAset) {
-                // //pr($valjenisAset);
+                // ////pr($valjenisAset);
 
                 $queryJenisAset.="a.TipeAset='$valjenisAset'";
                 if($jmlJnsAset>1 && $flegaset<$jmlJnsAset){
@@ -714,9 +714,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
               $queryJenisAset.=")";
             }
             $filterkontrak2 .= $queryJenisAset;
-            // //pr($queryJenisAset);
+            // ////pr($queryJenisAset);
         }
-        // //pr($filterkontrak);
+        // ////pr($filterkontrak);
 
 			/*$sql = array(
 					'table'=>'UsulanAset AS b,Aset AS a,Satker AS e,Kelompok AS g',
@@ -743,13 +743,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 //         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                 //         'limit'=>'100',
                 //         );
-                //pr($sqlHPSaset);
+                ////pr($sqlHPSaset);
                 $resHPSaset = $this->db->lazyQuery($sqlHPSaset,$debug);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 $arrayHPSaset=array();
-                //pr($arrayHPSaset);
+                ////pr($arrayHPSaset);
                 foreach ($resHPSaset as $valueHPSaset) {
-                    //pr($valueHPSaset[Usulan_ID]);
+                    ////pr($valueHPSaset[Usulan_ID]);
                     if(in_array($valueHPSaset[Usulan_ID],$arrayHPSaset)){
 
                     }else{
@@ -758,9 +758,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                     // if()
                 }
-                // //pr($arrayHPSaset);
+                // ////pr($arrayHPSaset);
                     $QueryHPSID=implode(",",$arrayHPSaset);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 
                 if($resHPSaset){
                     $sql = array(
@@ -769,11 +769,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'condition' => "Usulan_ID IN ($QueryHPSID) AND FixUsulan=1 AND Jenis_Usulan='$jenis_usulan'  AND StatusPenetapan=0 {$filterkontrak}",
                             'limit'=>'100',
                             );
-                    //pr($sql);
+                    ////pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
                 }
-                //pr($res);
+                ////pr($res);
             }else{
                 $sql = array(
                     'table'=>'Usulan',
@@ -792,9 +792,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     {
 		$id = $data[penetapanpenghapusan];
 		$cols = implode(', ',array_values($id));
-		// //pr($cols);
+		// ////pr($cols);
 		$uname = $_SESSION['ses_uname'];
-		// //pr($data);
+		// ////pr($data);
 		$jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -822,7 +822,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 );
         
             $res = $this->db->lazyQuery($sql,$debug);
-		// //pr($res);exit;
+		// ////pr($res);exit;
         if ($res) return array('dataArr'=>$res1, 'dataRow'=>$res);
         return false;
 		
@@ -831,13 +831,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     {
         // $id = $data[penetapanpenghapusan];
         // $cols = implode(', ',array_values($id));
-        // //pr($cols);
+        // ////pr($cols);
         // $uname = $_SESSION['ses_uname'];
-        // //pr($data);
+        // ////pr($data);
         // $jenisaset = $data['jenisaset'];
         // $nokontrak = $data['nokontrak'];
         // $kodeSatker = $data['kodeSatker'];
-        // //pr($data);
+        // ////pr($data);
         $jenis_hapus=$_SESSION['jenis_hapus'];
         // $filterkontrak = "";
         // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
@@ -862,7 +862,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //         );
         
         //     $res = $this->db->lazyQuery($sql,$debug);
-        // // //pr($res);exit;
+        // // ////pr($res);exit;
         if ($res) return $res;
         return false;
         
@@ -871,13 +871,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     {
         // $id = $data[penetapanpenghapusan];
         // $cols = implode(', ',array_values($id));
-        // //pr($cols);
+        // ////pr($cols);
         // $uname = $_SESSION['ses_uname'];
-        // //pr($data);
+        // ////pr($data);
         // $jenisaset = $data['jenisaset'];
         // $nokontrak = $data['nokontrak'];
         // $kodeSatker = $data['kodeSatker'];
-        // //pr($data);
+        // ////pr($data);
         $jenis_hapus=$_SESSION['jenis_hapus'];
         // $filterkontrak = "";
         // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
@@ -902,14 +902,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //         );
         
         //     $res = $this->db->lazyQuery($sql,$debug);
-        // // //pr($res);exit;
+        // // ////pr($res);exit;
         if ($res) return $res;
         return false;
         
     }
 	public function retrieve_validasi_penghapusan($data,$debug=false)
     {
-			// //pr($data);
+			// ////pr($data);
 			// $jenisaset = $data['jenisaset'];
 			// $nokontrak = $data['nokontrak'];
 			// $kodeSatker = $data['kodeSatker'];
@@ -918,7 +918,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $noskpenghapusan = $data['bup_pu_noskpenghapusan'];
             if($data['bup_pu_tanggalhapus']){
                 $tglExplode =explode("/",$data['bup_pu_tanggalhapus']) ;
-                // //pr($tglExplode);
+                // ////pr($tglExplode);
                  $tanggalhapus=$tglExplode[2]."-".$tglExplode[1]."-".$tglExplode[0];
              }else{
                 $tanggalhapus="";
@@ -946,13 +946,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 //         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                 //         'limit'=>'100',
                 //         );
-                //pr($sqlHPSaset);
+                ////pr($sqlHPSaset);
                 $resHPSaset = $this->db->lazyQuery($sqlHPSaset,$debug);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 $arrayHPSaset=array();
-                //pr($arrayHPSaset);
+                ////pr($arrayHPSaset);
                 foreach ($resHPSaset as $valueHPSaset) {
-                    //pr($valueHPSaset[Penghapusan_ID]);
+                    ////pr($valueHPSaset[Penghapusan_ID]);
                     if(in_array($valueHPSaset[Penghapusan_ID],$arrayHPSaset)){
 
                     }else{
@@ -961,9 +961,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                     // if()
                 }
-                // //pr($arrayHPSaset);
+                // ////pr($arrayHPSaset);
                     $QueryHPSID=implode(",",$arrayHPSaset);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 
                 if($resHPSaset){
                     $sql = array(
@@ -972,11 +972,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                             'limit'=>'100',
                             );
-                    //pr($sql);
+                    ////pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
                 }
-                //pr($res);
+                ////pr($res);
             }else{
                 $sql = array(
                         'table'=>'penghapusan',
@@ -984,10 +984,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                         'limit'=>'100',
                         );
-                //pr($sql);
+                ////pr($sql);
 
                 $res = $this->db->lazyQuery($sql,$debug);
-                //pr($res);
+                ////pr($res);
             }
 
 			// $sql = array(
@@ -997,9 +997,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 			// 		'limit'=>'100',
 			// 		);
 
-   //          // //pr($sql);
+   //          // ////pr($sql);
 			// $res = $this->db->lazyQuery($sql,$debug);
-            // //pr($res);
+            // ////pr($res);
             // $asetid[$val['Aset_ID']] = $listTable[implode(',', $res[0])];
         //     if ($res){
             
@@ -1017,7 +1017,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	public function retrieve_validasi_penghapusan2($data,$debug=false)
     {
-            // //pr($data);
+            // ////pr($data);
             // $jenisaset = $data['jenisaset'];
             // $nokontrak = $data['nokontrak'];
             // $kodeSatker = $data['kodeSatker'];
@@ -1026,7 +1026,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $noskpenghapusan = $data['bup_pu_noskpenghapusan'];
             if($data['bup_pu_tanggalhapus']){
                 $tglExplode =explode("/",$data['bup_pu_tanggalhapus']) ;
-                // //pr($tglExplode);
+                // ////pr($tglExplode);
                  $tanggalhapus=$tglExplode[2]."-".$tglExplode[1]."-".$tglExplode[0];
              }else{
                 $tanggalhapus="";
@@ -1054,13 +1054,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 //         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                 //         'limit'=>'100',
                 //         );
-                //pr($sqlHPSaset);
+                ////pr($sqlHPSaset);
                 $resHPSaset = $this->db->lazyQuery($sqlHPSaset,$debug);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 $arrayHPSaset=array();
-                //pr($arrayHPSaset);
+                ////pr($arrayHPSaset);
                 foreach ($resHPSaset as $valueHPSaset) {
-                    //pr($valueHPSaset[Penghapusan_ID]);
+                    ////pr($valueHPSaset[Penghapusan_ID]);
                     if(in_array($valueHPSaset[Penghapusan_ID],$arrayHPSaset)){
 
                     }else{
@@ -1069,9 +1069,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                     // if()
                 }
-                // //pr($arrayHPSaset);
+                // ////pr($arrayHPSaset);
                     $QueryHPSID=implode(",",$arrayHPSaset);
-                //pr($resHPSaset);
+                ////pr($resHPSaset);
                 
                 if($resHPSaset){
                     $sql = array(
@@ -1080,11 +1080,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=1 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                             'limit'=>'100',
                             );
-                    //pr($sql);
+                    ////pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
                 }
-                //pr($res);
+                ////pr($res);
             }else{
                 $sql = array(
                         'table'=>'penghapusan',
@@ -1092,10 +1092,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "FixPenghapusan=1 AND Status=1 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                         'limit'=>'100',
                         );
-                //pr($sql);
+                ////pr($sql);
 
                 $res = $this->db->lazyQuery($sql,$debug);
-                //pr($res);
+                ////pr($res);
             }
 
             // $sql = array(
@@ -1105,9 +1105,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             //      'limit'=>'100',
             //      );
 
-   //          // //pr($sql);
+   //          // ////pr($sql);
             // $res = $this->db->lazyQuery($sql,$debug);
-            // //pr($res);
+            // ////pr($res);
             // $asetid[$val['Aset_ID']] = $listTable[implode(',', $res[0])];
         //     if ($res){
             
@@ -1161,7 +1161,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
     public function delete_update_daftar_validasi_penghapusan_psb($data,$debug=false)
     {
-        // //pr($data);
+        // ////pr($data);
         $sql = array(
                         'table'=>'Penghapusan',
                         'field'=>"Status=0",
@@ -1185,7 +1185,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             'condition' => "Penghapusan_ID='$data[id]'",
             );
         $res2 = $this->db->lazyQuery($sql2,$debug);
-        // //pr($res2);
+        // ////pr($res2);
         foreach($res2 as $asetid)
             {
                 $dataArr[]=$asetid[Aset_ID];
@@ -1202,9 +1202,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                     'condition' => "Aset_ID='$asetid[Aset_ID]'",
                                     );
                                 $res_usulaset = $this->db->lazyQuery($sql_usulaset,$debug,2);
-                                // //pr($res_tipe);
-                                // //pr($res_tipe[0][Aset_ID]);
-                                // //pr($res_tipe[0][TipeAset]);
+                                // ////pr($res_tipe);
+                                // ////pr($res_tipe[0][Aset_ID]);
+                                // ////pr($res_tipe[0][TipeAset]);
                                 $TipeAset=$res_tipe[0][TipeAset];
                                 $aset_id_valid=$res_tipe[0][Aset_ID];
                                 
@@ -1226,9 +1226,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 elseif($TipeAset=="F"){
                                     $tabel="kdp";
                                 }
-                                    // //pr("---");
-                                  // //pr($tabel);
-                                    // //pr("--");
+                                    // ////pr("---");
+                                  // ////pr($tabel);
+                                    // ////pr("--");
                                 
                                 $sql1_valid = array(
                                     'table'=>"$tabel",
@@ -1236,7 +1236,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                     'condition' => "Aset_ID=$aset_id_valid",
                                     );
                                 $res_valid = $this->db->lazyQuery($sql1_valid,$debug,2);
-                                // //pr($sql1_valid);
+                                // ////pr($sql1_valid);
 
                                 $sql1 = array(
                                     'table'=>'Aset',
@@ -1247,7 +1247,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 
             }
         $aset_id=implode(', ',array_values($dataArr));
-        // //pr($aset_id);
+        // ////pr($aset_id);
         
         // $sql1 = array(
         //  'table'=>'Aset',
@@ -1262,7 +1262,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	 public function delete_update_daftar_validasi_penghapusan($data,$debug=false)
     {
-		// //pr($data);
+		// ////pr($data);
 		$sql = array(
 						'table'=>'Penghapusan',
 						'field'=>"Status=0",
@@ -1286,7 +1286,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 			'condition' => "Penghapusan_ID='$data[id]'",
 			);
 		$res2 = $this->db->lazyQuery($sql2,$debug);
-		// //pr($res2);
+		// ////pr($res2);
 		foreach($res2 as $asetid)
 			{
 				$dataArr[]=$asetid[Aset_ID];
@@ -1297,9 +1297,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 									'condition' => "Aset_ID='$asetid[Aset_ID]'",
 									);
 								$res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
-								// //pr($res_tipe);
-								// //pr($res_tipe[0][Aset_ID]);
-								// //pr($res_tipe[0][TipeAset]);
+								// ////pr($res_tipe);
+								// ////pr($res_tipe[0][Aset_ID]);
+								// ////pr($res_tipe[0][TipeAset]);
 								$TipeAset=$res_tipe[0][TipeAset];
 								$aset_id_valid=$res_tipe[0][Aset_ID];
 								
@@ -1321,9 +1321,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 								elseif($TipeAset=="F"){
 									$tabel="kdp";
 								}
-									// //pr("---");
-								  // //pr($tabel);
-									// //pr("--");
+									// ////pr("---");
+								  // ////pr($tabel);
+									// ////pr("--");
 								
 								$sql1_valid = array(
 									'table'=>"$tabel",
@@ -1331,11 +1331,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 									'condition' => "Aset_ID=$aset_id_valid",
 									);
 								$res_valid = $this->db->lazyQuery($sql1_valid,$debug,2);
-								// //pr($sql1_valid);
+								// ////pr($sql1_valid);
 				
 			}
 		$aset_id=implode(', ',array_values($dataArr));
-		// //pr($aset_id);
+		// ////pr($aset_id);
 		
 		$sql1 = array(
 			'table'=>'Aset',
@@ -1350,7 +1350,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	 public function store_usulan_penghapusan_pms($data,$debug=false){	
 				
-				// //pr($data);
+				// ////pr($data);
                 $asset_id=Array();
                 $no_reg=Array();
                 $nm_barang=Array();
@@ -1402,7 +1402,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             }
 			public function store_usulan_penghapusan_pmd($data,$debug=false){	
 				
-				// //pr($data);
+				// ////pr($data);
                 $asset_id=Array();
                 $no_reg=Array();
                 $nm_barang=Array();
@@ -1455,7 +1455,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             }
             public function store_usulan_penghapusan_psb($data,$debug=false){   
                 
-                // //pr($data);
+                // ////pr($data);
                 $asset_id=Array();
                 $no_reg=Array();
                 $nm_barang=Array();
@@ -1540,7 +1540,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 						);
 					$res2 = $this->db->lazyQuery($sql2,$debug,2);
 					
-		// //pr($query3);exit;
+		// ////pr($query3);exit;
         // $query4="UPDATE Aset SET Usulan_Penghapusan_ID=NULL WHERE Usulan_Penghapusan_ID='$id'";
         // $exec4=$this->query($query4) or die($this->error());
         
@@ -1564,7 +1564,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         );
                     $res2 = $this->db->lazyQuery($sql2,$debug,2);
                     
-        // //pr($query3);exit;
+        // ////pr($query3);exit;
         // $query4="UPDATE Aset SET Usulan_Penghapusan_ID=NULL WHERE Usulan_Penghapusan_ID='$id'";
         // $exec4=$this->query($query4) or die($this->error());
         
@@ -1588,7 +1588,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         );
                     $res2 = $this->db->lazyQuery($sql2,$debug,2);
                     
-        // //pr($query3);exit;
+        // ////pr($query3);exit;
         // $query4="UPDATE Aset SET Usulan_Penghapusan_ID=NULL WHERE Usulan_Penghapusan_ID='$id'";
         // $exec4=$this->query($query4) or die($this->error());
         
@@ -1611,14 +1611,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "Usulan_ID='$data[id]'",
                         );
                     $res1 = $this->db->lazyQuery($sql1,$debug,0);
-        // //pr($res1);
+        // ////pr($res1);
         // $resc=count($res1);
-        // //pr($resc);
+        // ////pr($resc);
         foreach ($res1 as $value1) {
            $asetID_array[]=$value1[Aset_ID];
         }
         $asetID=implode(",",$asetID_array);
-        // //pr($asetID);
+        // ////pr($asetID);
         // exit;
         $sql2 = array(
                         'table'=>'usulan',
@@ -1627,7 +1627,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         );
         $res2 = $this->db->lazyQuery($sql2,$debug,2);
                     
-        // //pr($query3);exit;
+        // ////pr($query3);exit;
         // $query4="UPDATE Aset SET Usulan_Penghapusan_ID=NULL WHERE Usulan_Penghapusan_ID='$id'";
         // $exec4=$this->query($query4) or die($this->error());
         
@@ -1674,9 +1674,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	 public function store_penetapan_penghapusan($data,$debug=false)
         
             {
-				// //pr($data);
+				// ////pr($data);
                 $UsulanID=implode(",",$data['UsulanID']);
-                // //pr($UsulanID);
+                // ////pr($UsulanID);
                 // exit;
 				$no=$data['bup_pp_noskpenghapusan'];
 				$tgl=$data['bup_pp_tanggal'];
@@ -1699,7 +1699,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 							'field'=>'Penghapusan_ID,Usulan_ID, NoSKHapus, TglHapus, AlasanHapus, Jenis_Hapus, Status, UserNm, FixPenghapusan',
 							'value' => "'','$UsulanID','$no', '$olah_tgl', '$keterangan','$jenis_hapus', '0','$UserNm', '1'",
 							);
-                 // //pr($sql);exit;
+                 // ////pr($sql);exit;
 				$res = $this->db->lazyQuery($sql,$debug,1);
 			
 
@@ -1760,19 +1760,19 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 			
 			$query4="UPDATE Aset SET Dihapus=0 WHERE Aset_ID='$asetid'";
 			$exec4=$this->query($query4) or die($this->error());
-			// //pr($query4);
+			// ////pr($query4);
 			$query="UPDATE Penghapusan SET FixPenghapusan=0 WHERE Penghapusan_ID='$id'";
 			$exec=$this->query($query) or die($this->error());
-			// //pr($query);
+			// ////pr($query);
 			$query2="UPDATE UsulanAset SET StatusPenetapan=0,StatusKonfirmasi=0 WHERE Penetapan_ID='$id'";
 			$exec2=$this->query($query2) or die($this->error());
 
             $query2="UPDATE Usulan SET StatusPenetapan=0 WHERE Penetapan_ID='$id'";
             $exec2=$this->query($query2) or die($this->error());
-			// //pr($query2);
+			// ////pr($query2);
 			$query3="DELETE FROM PenghapusanAset WHERE Penghapusan_ID='$id' AND Status=0";
 			$exec3=$this->query($query3) or die($this->error());
-			// //pr($query3);
+			// ////pr($query3);
         }   
 
         
@@ -1785,7 +1785,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     }
 	public function update_validasi_penghapusan($data,$debug=false)
         {
-			// //pr($data);
+			// ////pr($data);
             // exit;
             if(isset($data)){
 			
@@ -1794,7 +1794,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                 for ($i=0; $i<$cnt; $i++){
                     //echo "$i";
-					// //pr($data['ValidasiPenghapusan']);
+					// ////pr($data['ValidasiPenghapusan']);
                     $penghapusan_id=$data['ValidasiPenghapusan'][$i];
                     if($data['ValidasiPenghapusan']!=""){
 					
@@ -1821,11 +1821,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 						'condition' => "Penghapusan_ID='$penghapusan_id'",
 						);
 					$res2 = $this->db->lazyQuery($sql2,$debug);
-					// //pr($res2);
+					// ////pr($res2);
 					foreach($res2 as $asetid)
 						{
 								$dataArr[]=$asetid[Aset_ID];
-								// //pr($asetid[Aset_ID]);
+								// ////pr($asetid[Aset_ID]);
 								
 								$sql_tipe = array(
 									'table'=>'Aset',
@@ -1834,8 +1834,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 									);
 								$res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
 								
-								// //pr($res_tipe[0][Aset_ID]);
-								// //pr($res_tipe[0][TipeAset]);
+								// ////pr($res_tipe[0][Aset_ID]);
+								// ////pr($res_tipe[0][TipeAset]);
 								$TipeAset=$res_tipe[0][TipeAset];
 								$aset_id_valid=$res_tipe[0][Aset_ID];
 								
@@ -1857,9 +1857,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 								elseif($TipeAset=="F"){
 									$tabel="kdp";
 								}
-									// //pr("--");
-								  // //pr($tabel);
-									// //pr("--");
+									// ////pr("--");
+								  // ////pr($tabel);
+									// ////pr("--");
 								
 								$sql1_valid = array(
 									'table'=>"$tabel",
@@ -1870,7 +1870,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 						}
 						
 					$aset_id=implode(', ',array_values($dataArr));
-					// //pr($aset_id);
+					// ////pr($aset_id);
 					
 					$sql1 = array(
 						'table'=>'Aset',
@@ -1894,7 +1894,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         }
         public function update_validasi_penghapusan_PSB($data,$debug=false)
         {
-            //pr($data);
+            ////pr($data);
            
             if(isset($data)){
             
@@ -1903,7 +1903,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                 for ($i=0; $i<$cnt; $i++){
                     //echo "$i";
-                    // //pr($data['ValidasiPenghapusan']);
+                    // ////pr($data['ValidasiPenghapusan']);
                     $penghapusan_id=$data['ValidasiPenghapusan'][$i];
                     if($data['ValidasiPenghapusan']!=""){
                     
@@ -1920,8 +1920,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "Penghapusan_ID='$penghapusan_id'",
                         );
                     $resHPS = $this->db->lazyQuery($dataHPS,$debug);
-                    //pr($resHPS);
-                    //pr($data);
+                    ////pr($resHPS);
+                    ////pr($data);
                     // $query="UPDATE Penghapusan SET Status=1 WHERE Penghapusan_ID='$explodeID[$i]'";
                     // $exec=$this->query($query) or die($this->error());
                     
@@ -1938,10 +1938,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "Penghapusan_ID='$penghapusan_id'",
                         );
                     $res2 = $this->db->lazyQuery($sql2,$debug);
-                    // //pr($res2);
+                    // ////pr($res2);
                     // foreach ($res2 as $key => $value) {
-                    //     //pr($value);
-                    //     //pr($key);
+                    //     ////pr($value);
+                    //     ////pr($key);
                     //     echo "===";
                     //                 logFile('log data penghapusan, Aset_ID ='.$key);
                     //                 $this->db->logIt($tabel=array($value), $Aset_ID=$key, 22);
@@ -1961,7 +1961,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         
                     }
 
-                    // //pr($res2); 
+                    // ////pr($res2); 
                      $listTable = array(
                         'A'=>'tanah',
                         'B'=>'mesin',
@@ -1972,22 +1972,22 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     foreach($res23 as $asetid)
                         {
                                 $dataArr[]=$asetid[Aset_ID];
-                                // //pr($asetid[Aset_ID]);
+                                // ////pr($asetid[Aset_ID]);
                          $sql9 = array(
                     'table'=>'aset',
                     'field'=>"TipeAset",
                     'condition' => "Aset_ID={$asetid[Aset_ID]}",
                     );
                     $result9 = $this->db->lazyQuery($sql9,$debug);
-                    // //pr($result9);
+                    // ////pr($result9);
                     $asetid9[$asetid[Aset_ID]] = $listTable[implode(',', $result9[0])];
-                    // //pr($asetid9);
+                    // ////pr($asetid9);
                                 $sql12 = array(
                                     'table'=>'PenghapusanAset',
                                     'field'=>"Status=1,NilaiPerolehan='$asetid[nilaiPerolehan]',kondisi='$asetid[kondisipsb]' ",
                                     'condition' => "Aset_ID='$asetid[Aset_ID]' ",
                                     );
-                                // //pr($sql12);
+                                // ////pr($sql12);
                                 // exit;
                                 $res12 = $this->db->lazyQuery($sql12,$debug,2);
 
@@ -2005,8 +2005,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                     );
                                 $res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
                                 
-                                // //pr($res_tipe[0][Aset_ID]);
-                                // //pr($res_tipe[0][TipeAset]);
+                                // ////pr($res_tipe[0][Aset_ID]);
+                                // ////pr($res_tipe[0][TipeAset]);
                                 $TipeAset=$res_tipe[0][TipeAset];
                                 $aset_id_valid=$res_tipe[0][Aset_ID];
                                 
@@ -2028,9 +2028,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 elseif($TipeAset=="F"){
                                     $tabel="kdp";
                                 }
-                                    // //pr("--");
-                                  // //pr($tabel);
-                                    // //pr("--");
+                                    // ////pr("--");
+                                  // ////pr($tabel);
+                                    // ////pr("--");
                                 
                                 $sql1_valid = array(
                                     'table'=>"$tabel",
@@ -2065,11 +2065,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // //     $this->db->logIt($tabel=array($value), $Aset_ID=$key, 7);
             // // }
                         }
-                        // //pr($asetid9);
+                        // ////pr($asetid9);
                        
                         
                     // $aset_id=implode(', ',array_values($dataArr));
-                    // //pr($aset_id);
+                    // ////pr($aset_id);
                     
                     // $sql1 = array(
                     //     'table'=>'Aset',
@@ -2293,7 +2293,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 					
 					
                 // $query="UPDATE Penghapusan SET NoSKHapus='$no', TglHapus='$olah_tgl', AlasanHapus='$keterangan' WHERE Penghapusan_ID='$id'";
-                // //pr($query);
+                // ////pr($query);
 				// $exec=$this->query($query) or die($this->error());
             }
             
