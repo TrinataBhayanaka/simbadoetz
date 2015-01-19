@@ -90,16 +90,16 @@ include "../../config/config.php";
 				</tr>
 				<?php
 				$id=$_GET['id'];
-				// pr($id);
+				// //pr($id);
 				if (isset($id))
 				{
 					unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 					$parameter = array('id'=>$id);
 					// $data = $RETRIEVE->retrieve_penetapan_penghapusan_edit_data($parameter);
 					
-						// pr($_POST);
+						// //pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data($_GET);
-						// pr($data);
+						// //pr($data);
 						
 				}
 				foreach ($data['dataArr'] as $valueUsulan) {
@@ -116,7 +116,7 @@ include "../../config/config.php";
 				<?php
 				$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
 				$no = 1;
-				pr($dataUsulanAset);
+				//pr($dataUsulanAset);
 							foreach ($dataUsulanAset as $keys => $nilai)
 							{
 
@@ -289,7 +289,7 @@ include "../../config/config.php";
 								}
 							}
 			$row=$data['dataRow'];		
-			// pr($row);
+			// //pr($row);
 			?>
 					</tr>
 					<?php
