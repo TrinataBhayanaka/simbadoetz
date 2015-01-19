@@ -141,9 +141,9 @@ include "../../config/config.php";
 							 
 				 <?php
                                                                             
-				 '<pre>';
+				 // '<pre>';
 				//print_r($data['dataArr']);
-				echo '</pre>';
+				// echo '</pre>';
 				
 				$nomor = 1;
 				if (!empty($data))
@@ -163,7 +163,7 @@ include "../../config/config.php";
 							
 						<?php
 						$dataUsulan = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_UsulanAset($row[Usulan_ID]);
-							
+						// pr($dataUsulan);	
 							foreach ($dataUsulan as $valueUsulan) {
 								echo "Usulan ID[".$valueUsulan['Usulan_ID']."]<br/>";
 								echo "<ul>";
@@ -182,7 +182,7 @@ include "../../config/config.php";
 										$textLabel="Ditunda";
 										$labelColor="label label-warning";
 									}
-									echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+									echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeSatker']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
 									$noAset++;
 								}
 								echo "</ul>";

@@ -130,7 +130,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										$textLabel="Ditunda";
 										$labelColor="label label-warning";
 									}
-								echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+								echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeSatker']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
 							$noAset++;
 							}
 						?>

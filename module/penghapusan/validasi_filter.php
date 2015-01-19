@@ -67,6 +67,11 @@ include "../../config/config.php";
                                 });
                         });
                     </script>
+				<script>
+                jQuery(function($){
+                   $("#jenis_hapus").select2();
+                });
+                </script>
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -84,21 +89,35 @@ include "../../config/config.php";
 			<ul>
 							<li>
 								<span class="span2">No. SK Penghapusan</span>
-								<input type="text" name="bup_val_noskpenghapusan" placeholder="" style="width:200px;" id="">&nbsp;<span id="errmsg">
+								<input type="text" name="bup_pu_noskpenghapusan" placeholder="" style="width:200px;" id="">&nbsp;<span id="errmsg">
 							</li>
 							<li>
 								<span class="span2">Tanggal SK Penghapusan</span>
-								<input type="text" name="bup_val_tglskpenghapusan" placeholder="" style="width:200px;" id="tanggal12">
+								<input type="text" name="bup_pu_tanggalhapus" placeholder="" style="width:200px;" id="tanggal12">
 							</li>
 							<li>
 								<span class="span2">Jenis Penghapusan</span>
-								<select name="jenis_hapus">
+								<select name="jenis_hapus" id="jenis_hapus" style="width:205px">
 									<option value="PMD">Pemindahtanganan</option>
 									<option value="PMS">Pemusnahan</option>
 									<option value="PSB">Penghapusan Sebagian</option>
 								</select>
 							</li>
-							<li>
+							
+                            <li>&nbsp;</li>
+							<!-- <li>
+                                <span class="span2">Jenis Aset</span>
+                                <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
+                                <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
+                                <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
+                                <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
+                                <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
+                                <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
+                            </li>    
+                            <li>&nbsp;</li> -->
+							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                            <li>&nbsp;</li>
+							<!-- <li>
 								<span class="span2">Satker</span>
 								<div class="input-append">
 										<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" placeholder="(Semua SKPD)" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
@@ -152,7 +171,7 @@ include "../../config/config.php";
 										?>
 									</div>
 								</div>
-							</li>
+							</li> -->
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

@@ -35,7 +35,7 @@ include "../../config/config.php";
 		<section class="formLegend">
 			
 			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pms.php?pid=1">
-			<ul>
+			<ul><!-- 
 							<li>
 								<span class="span2">ID Aset (System ID)</span>
 								<input type='text' style="width: 200px;" name="bup_idaset" placeholder=""/>
@@ -43,7 +43,7 @@ include "../../config/config.php";
 							<li>
 								<span class="span2">Nama Aset</span>
 								<input type='text' style="width: 480px;" name="bup_namaaset" placeholder=""/>
-							</li>
+							</li> -->
 							<li>
 								<span class="span2">Nomor Kontrak</span>
 								<input type='text' style="width: 200px;" name="bup_nokontrak" placeholder=""/>
@@ -52,7 +52,15 @@ include "../../config/config.php";
 								<span class="span2">Tahun Perolehan</span>
 								<input type='text'  name="bup_tahun" placeholder=""/>
 							</li>
-							<?=selectAset('kodeKelompok',$width='205',$br=true,false)?>
+							<li>
+                                <span class="span2">Jenis Aset</span>
+                                <input type="checkbox" name="jenisaset[]" value="A" class="jenisaset1">Tanah
+                                <input type="checkbox" name="jenisaset[]" value="B" class="jenisaset2">Mesin
+                                <input type="checkbox" name="jenisaset[]" value="C" class="jenisaset3">Bangunan
+                                <input type="checkbox" name="jenisaset[]" value="D" class="jenisaset4">Jaringan
+                                <input type="checkbox" name="jenisaset[]" value="E" class="jenisaset5">Aset Lain
+                                <input type="checkbox" name="jenisaset[]" value="F" class="jenisaset6">KDP
+                            </li>  
                             <li>&nbsp;</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
                             <li>&nbsp;</li>

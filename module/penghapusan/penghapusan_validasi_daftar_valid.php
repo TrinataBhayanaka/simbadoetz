@@ -111,7 +111,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								// $data = $RETRIEVE->retrieve_daftar_validasi_penghapusan($parameter);
                                 // pr($data);        
 							// pr($_POST);
-							$data = $PENGHAPUSAN->retrieve_daftar_validasi_penghapusan($_POST);
+							$data = $PENGHAPUSAN->retrieve_validasi_penghapusan2($_POST);
 							// pr($data);
 							?>
 						<ul>
@@ -176,11 +176,12 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							
 						<?php
 						$dataUsulan = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_UsulanAset($hsl_data[Usulan_ID]);
-							
+							// pr($dataUsulan);
 							foreach ($dataUsulan as $valueUsulan) {
 								echo "Usulan ID[".$valueUsulan['Usulan_ID']."]<br/>";
+								echo "Usulan ID[".$valueUsulan['Aset_ID']."]<br/>";
 								echo "<ul>";
-								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($valueUsulan[Aset_ID]);
+								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset_valid($valueUsulan[Aset_ID]);
 								$noAset=1;
 								// pr($dataAset);
 								foreach ($dataAset as $valueAset) {
