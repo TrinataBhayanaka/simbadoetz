@@ -90,7 +90,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
             
         }
-
+        $( "#mutasi_trans_filt_thn" ).mask('9999');
+                    
     </script>
    
 	<section id="main">
@@ -134,7 +135,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<span class="span2">Tahun Perolehan</span>
-								<input  type="text" placeholder="" name="mutasi_trans_filt_thn" id="" style=""/>&nbsp;<span id="errmsg"></span>
+								<input  type="text" name="mutasi_trans_filt_thn" id="mutasi_trans_filt_thn" style="" required="required" placeholder="Tahun (ex:2015)" maxlength="4"/>&nbsp;<span id="errmsg"></span>
 							</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
 							

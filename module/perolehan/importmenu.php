@@ -94,16 +94,39 @@ $menu_id = 10;
 						</ul>
 							
 					</div>
+			
 			<div style="height:5px;width:100%;clear:both"></div>
-
+			
+			<div class="detailRight">
+				<ul>
+					<li>
+						<a href="import/template.zip" class="btn btn-success btn-small"><i class="fa fa-download"></i>&nbsp;&nbsp;Download xls Template</a>
+				&nbsp;
+					</li>
+				</ul>	
+			</div>
+			
 			<div>
-			<form action="" method="POST">
+			<form method="POST" enctype="multipart/form-data" action="import/proses_kibe.php">
 				 <div class="formKontrak">
 				 		<ul>
 							<?=selectSatker('kodeSatker','255',true,false,'required');?>
 						</ul>
 				 		<ul>
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
+						</ul>
+						<ul>
+							<li>
+								<span class="span2">Jenis Aset</span>
+								<select id="jenisaset" name="jenisaset" style="width:255px">
+									<!-- <option value="a">KIB A - Tanah</option> -->
+									<!-- <option value="b">KIB B - Bangunan</option> -->
+									<!-- <option value="c">KIB C - Mesin</option> -->
+									<!-- <option value="d">KIB D - Jaringan</option> -->
+									<option value="asetlain">KIB E - Aset Tetap Lain</option>
+									<!-- <option value="f">KIB F - KDP</option> -->
+								</select>
+							</li>
 						</ul>
 						<ul>
 							<li>
@@ -118,15 +141,10 @@ $menu_id = 10;
 							
 					</div>
 					<!-- hidden -->
-					<input type="hidden" name="Aset_ID" value="">
-					<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
+					<input type="hidden" name="kontrakid" value="<?=$kontrak[0]['id']?>">
 					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
-					<input type="hidden" name="kondisi" value="1">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
-					<input type="hidden" name="Tahun" value="<?=date('Y', strtotime($kontrak[0]['tglKontrak']));?>">
-					<input type="hidden" name="TipeAset" id="TipeAset" value="">
-			
 		</form>
 		</div>  
 			    

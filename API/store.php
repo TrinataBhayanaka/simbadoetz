@@ -1495,18 +1495,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $data['action'] = 'update';
         $data['changeDate'] = date('Y/m/d');
         $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
-        // pr($data);exit;
-        foreach ($data as $key => $val) {
-            $tmplogfield[] = $key;
-            $tmplogvalue[] = "'$val'";
-        }
-        $field = implode(',', $tmplogfield);
-        $value = implode(',', $tmplogvalue);
-
-        $query_log = "INSERT INTO log_kontrak ({$field}) VALUES ($value)";
-        // pr($query_log);exit;
-        $result=  $this->query($query_log) or die($this->error());
-
+        
             echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_simbada.php\">";
     }
 
@@ -1643,6 +1632,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             $result= $this->query($query) or die($this->error());
         }
+        if(isset($data['xls'])) return true;
         echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
         exit;
     }
