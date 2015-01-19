@@ -58,11 +58,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/menu.php";
 	
 	
-	// pr($_POST);
-	// pr($_SESSION);
+	// //pr($_POST);
+	// //pr($_SESSION);
 	$fleg_jenishps = str_replace(' ', '', $_SESSION['jenis_hapus']);
 	$data = $PENGHAPUSAN->retrieve_validasi_penghapusan($_POST);
-	// pr($data);
+	// //pr($data);
 	
 			?>
 
@@ -246,7 +246,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								echo "<ul>";
 								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset_valid($valueUsulan[Aset_ID]);
 								$noAset=1;
-								pr($dataAset);
+								//pr($dataAset);
 								foreach ($dataAset as $valueAset) {
 
 									if($valueAset[StatusKonfirmasi]==1){
