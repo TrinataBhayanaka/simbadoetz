@@ -217,7 +217,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 
                         	$dataArr = $DBVAR->fetch($query,1);
                         	foreach ($dataArr as $key => $value) {
-                        		$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = $value[Satker_ID]";
+                        		$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = {intval($value[Satker_ID])}";
                             	$dataArr[$key]['operator'] = $DBVAR->fetch($sql,1);
                             	
                         	}
