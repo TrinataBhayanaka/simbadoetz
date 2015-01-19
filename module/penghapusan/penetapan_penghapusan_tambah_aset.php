@@ -12,16 +12,41 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-?>
+?><script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
+                <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
+                <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.ui.datepicker-id.js"></script>
+                <script>
+                    $(function()
+                    {
+                    $('#tanggal1').datepicker($.datepicker.regional['id']);
+                    $('#tanggal2').datepicker($.datepicker.regional['id']);
+                    $('#tanggal3').datepicker($.datepicker.regional['id']);
+                    $('#tanggal4').datepicker($.datepicker.regional['id']);
+                    $('#tanggal5').datepicker($.datepicker.regional['id']);
+                    $('#tanggal6').datepicker($.datepicker.regional['id']);
+                    $('#tanggal7').datepicker($.datepicker.regional['id']);
+                    $('#tanggal8').datepicker($.datepicker.regional['id']);
+                    $('#tanggal9').datepicker($.datepicker.regional['id']);
+                    $('#tanggal10').datepicker($.datepicker.regional['id']);
+                    $('#tanggal11').datepicker($.datepicker.regional['id']);
+                    $('#tanggal12').datepicker($.datepicker.regional['id']);
+                    $('#tanggal13').datepicker($.datepicker.regional['id']);
+                    $('#tanggal14').datepicker($.datepicker.regional['id']);
+                    $('#tanggal15').datepicker($.datepicker.regional['id']);
+
+                    }
+
+                    );
+                </script>   
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Penetapan Penghapusan</li>
+		  <li class="active">Daftar Usulan Penetapan Penghapusan</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Penetapan Penghapusan</div>
+			<div class="title">Daftar Usulan Penetapan Penghapusan</div>
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
@@ -35,15 +60,28 @@ include "../../config/config.php";
 							<li>
 								<span class="span2">Nama&nbsp;Aset</span>
 								<input isdatepicker="true" style="width: 480px;"  name="bup_pp_sp_namaaset"  type="text">
-							</li>
-							<li>
-								<span class="span2">Nomor&nbsp;Kontrak</span>
-								<input isdatepicker="true" style="width: 200px;" id="bup_pp_sp_nokontrak" name="bup_pp_sp_nokontrak"  type="text">
 							</li> -->
 							<li>
-								<span class="span2">Tahun&nbsp;Perolehan</span>
-								<input name="bup_pp_sp_tahun" id="bup_pp_sp_tahun"  type="text" >
+								<span class="span2">Nomor&nbsp;Usulan</span>
+								<input isdatepicker="true" style="width: 200px;" id="bup_pp_sp_nousulan" name="bup_pp_sp_nousulan"  type="text">
 							</li>
+							<li>
+								<span class="span2">Tanggal&nbsp;Usulan</span>
+								<input id="tanggal13" name="bup_pp_sp_tglusul" id="bup_pp_sp_tglusul"  type="text" >
+							</li>
+
+							<!-- <li>
+                                <span class="span2">Jenis Aset</span>
+                                <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
+                                <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
+                                <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
+                                <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
+                                <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
+                                <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
+                            </li>     -->
+                            <li>&nbsp;</li>
+							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                            <li>&nbsp;</li>
 							<!-- <li>
 								<span class="span2">Kelompok</span>
 								<div class="input-append">
@@ -79,7 +117,7 @@ include "../../config/config.php";
 														?>
 											</div>
 								</div>
-							</li> -->
+							</li> 
 							<li>
 								<span class="span2">SKPD</span>
 								<div class="input-append">
@@ -96,7 +134,7 @@ include "../../config/config.php";
 										?>
 									</div>
 								</div>
-							</li>
+							</li>-->
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />

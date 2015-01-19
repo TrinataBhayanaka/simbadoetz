@@ -88,7 +88,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<th>No</th>
 						<th>Nomor Usulan</th>
 						<th>Tgl Usulan</th>
-						<th>Aset</th>
+						<!-- <th>Aset</th> -->
 						<th>Tindakan</th>
 					</tr>
 				</thead>
@@ -114,7 +114,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<?php echo "$hsl_data[Usulan_ID]";?>
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
-						<td>
+						<!-- <td>
 							<ul type="1">
 						<?php
 						$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($hsl_data[Aset_ID]);
@@ -130,12 +130,12 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										$textLabel="Ditunda";
 										$labelColor="label label-warning";
 									}
-								echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+								echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeSatker']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
 							$noAset++;
 							}
 						?>
 							</ul>
-						</td>
+						</td> -->
 						<td>	
 						 <!--<a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_usulan_aset_yang_akan_dihapuskan.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" target="_blank">Cetak</a> || -->
 											<?php
@@ -187,7 +187,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						<!-- <th>&nbsp;</th> -->
 						<th>&nbsp;</th>
 					</tr>
 				</tfoot>

@@ -102,7 +102,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<td></td>
 							<td>$no.</td>
 							<input type='hidden' name='peman_usul_nama_aset[]' value='$nilai[Aset_ID]'>
-							<td>$nilai[noRegister] - $nilai[Kode]</td>
+							<td>$nilai[Aset_ID] - $nilai[kodeSatker]</td>
 							<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'></td>
 							</tr>
 
