@@ -40,6 +40,8 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 
 		<section class="formLegend">
 			
+		<?php $HELPER_FILTER->back($url_rewrite.'/module/layanan/lihat_aset_daftar.php')?>
+
 			<div class="detailLeft">
 						
 						<ul>

@@ -451,6 +451,36 @@ class helper_filter {
           return $dataAsetUser;
      }
 
+     function back($url=false, $text=false, $paging=false)
+     {
+          
+          if ($text) $value = $text;
+          else $value = "Kembali ke halaman sebelumnya";
+          ?>
+          <div class="detailRight">
+               <ul>
+                    <li>
+                         <a href="<?php echo $url; ?>">
+                                 <input type="submit" name="Lanjut" class="btn" value="<?=$value?>" >
+                          </a>
+                    </li>
+                    <?php if ($paging):?>
+                    <li>
+                         <input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid'] ?>">
+                           <input type="hidden" class="hiddenrecord" value="<?php echo @$count ?>">
+                            <ul class="pager">
+                                   <li><a href="#" class="buttonprev" >Previous</a></li>
+                                   <li>Page</li>
+                                   <li><a href="#" class="buttonnext">Next</a></li>
+                              </ul>
+                    </li>
+                    <?php endif;?>
+               </ul>
+                    
+          </div>
+          <br><br>
+          <?php
+     }
 }
 
 ?>
