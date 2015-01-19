@@ -82,17 +82,46 @@ $menu_id = 10;
 	<!-- End Sql -->
 
 	<script>
+		jQuery(function($) {
+	        $('#totalxls').autoNumeric('init', {mDec:0});
+	        
+	    });
+
+		function getCurrency(item){
+	      $('#totalxls').val($(item).autoNumeric('get'));
+	    }
+
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
+			var totalnilai = 0;	
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#btn-dis").removeAttr("disabled");
-
+			    var checkedValues = $('input:checkbox:checked').map(function() {
+				    var data = this.value.split("|");
+				    var nilai = data[18]*data[19];
+				    if(nilai){
+				    	totalnilai = parseInt(totalnilai) + parseInt(nilai);	
+				    }
+				    $("#totalxls").val(totalnilai);
+				     $('#totalxls').autoNumeric('set', totalnilai);
+				    // console.log(totalnilai);
+				}).get();
+				var rule = totalnilai + parseInt($("#totalRBreal").val());
+				if(rule > $("#spkreal").val()){
+					$('#info').html('Nilai melebihin total SPK'); 
+                	$('#info').css("color","red");
+					$('#btn-dis').attr("disabled","disabled");		
+				} else {
+					$('#info').html('');
+				}
+				// console.log(rule);
 			}
 			else
 			{
 			   $('#btn-dis').attr("disabled","disabled");
+			   $("#totalxls").val(0);
 			}}, 100);
 		}
 	</script>
@@ -132,11 +161,24 @@ $menu_id = 10;
 							<li>
 								<span class="labelInfo">Nilai SPK</span>
 								<input type="text" id="spk" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
+								<input type="hidden" id="spkreal" value="<?=$kontrak[0]['nilai']?>" disabled/>
 							</li>
 							<li>
 								<span  class="labelInfo">Total Rincian Barang</span>
 								<input type="text" id="totalRB" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
+								<input type="hidden" id="totalRBreal" value="<?=isset($sumTotal) ? $sumTotal['total'] : '0'?>" disabled/>
 							</li>
+							<li>
+								<span  class="labelInfo">Total Nilai Data yang dipilih</span>
+								<input type="text" id="totalxls" data-a-sep="," value="<?=number_format(0)?>" disabled/>
+							</li>
+							<li>
+				                <span  class="span2">&nbsp;</span>
+				                <div class="checkbox">
+				                  <em id="info">
+				                  </em>
+				                </div>
+				            </li>
 						</ul>
 							
 					</div>
