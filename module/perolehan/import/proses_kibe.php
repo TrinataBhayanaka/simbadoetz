@@ -75,6 +75,10 @@ $menu_id = 10;
 		  $xlsdata[$no]['Ukuran'] = $data->val($i,10);
 		  $xlsdata[$no]['Alamat'] = $data->val($i,11);
 		  $xlsdata[$no]['Jumlah'] = $data->val($i,12);
+
+		  if($xlsdata[$no]['NilaiPerolehan'] == '' || $xlsdata[$no]['NilaiPerolehan'] == 0){
+		  	$xlsdata[$no]['disabled'] = "hidden";
+		  } else $xlsdata[$no]['disabled'] = "checkbox";
 		  $no++;
 		}
 		// pr($xlsdata);
@@ -211,7 +215,7 @@ $menu_id = 10;
 									foreach ($xlsdata as $key => $value) {
 							?>
 									<tr class="gradeA">
-										<td class="checkbox-column"><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" 
+										<td class="checkbox-column"><input type="<?=$value['disabled']?>" id="check_<?=$i?>" class="icheck-input" name="aset[]" 
 											value="<?=$value['kodeSatker']?>|<?=$value['TglPerolehan']?>|<?=$value['Tahun']?>|<?=$value['kodeLokasi']?>|<?=$value['kodeKelompok']?>|<?=$value['noRegister']?>|<?=$value['noKontrak']?>|<?=$value['Info']?>|<?=$value['kodeRuangan']?>|<?=$value['TipeAset']?>|<?=$value['Judul']?>|<?=$value['Pengarang']?>|<?=$value['Penerbit']?>|<?=$value['Spesifikasi']?>|<?=$value['AsalDaerah']?>|<?=$value['Material']?>|<?=$value['Alamat']?>|<?=$value['Ukuran']?>|<?=$value['Jumlah']?>|<?=$value['NilaiPerolehan']?>" onchange="return AreAnyCheckboxesChecked();"></td>
 										<td><?=$value['kodeKelompok']?></td>
 										<td><?=$value['uraian']?></td>
