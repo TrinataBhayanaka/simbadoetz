@@ -319,7 +319,65 @@ class DB
 	    logFile('class_db :: Gagal insert log');
 	    return false;
 	}
+	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false, $debug=false)
+	{
 
+	    if (empty($table)) return false;
+	    if (empty($Aset_ID)) return false;
+	    
+	    $date = date('Y-m-d H:i:s');
+	    if ($tgl) $tglProses = $tgl;
+	    else $tglProses = '0000-00-00';
+
+	    if ($No_Dokumen) $noDok = $No_Dokumen;
+	    else $noDok = '-';
+
+	    $actionList = array(1=>'insert',2=>'update');
+	    $addField = array(
+	    				'changeDate'=>$date,
+	    				'action'=>$action,
+	    				'operator'=>$_SESSION['ses_uoperatorid'],
+	    				'TglPerubahan'=>$tglProses,
+	    				'Kd_Riwayat'=>$action,
+	    				'No_Dokumen'=>$noDok,
+	    				'NilaiPerolehan_Awal'=>$Nilai_awal);
+
+
+	    foreach ($table as $value) {
+	    	
+	    	// $field['log_id'] = get_auto_increment($value);
+			$field = $this->getFieldName($value,$Aset_ID);
+			$mergeField = array_merge($field, $addField);
+	        
+	        if ($mergeField){
+	        	foreach ($mergeField as $key => $val) {
+	        		$tmpField[] = $key;
+	        		$tmpValue[] = "'".$val."'";
+
+	        		// if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";
+	        	}
+	        	
+	        	// $tmpField[] = 'NilaiPerolehan_Awal';
+	        	// $tmpValue[] = $NilaiPerolehan_Awal;
+
+	        	$fileldImp = implode(',', $tmpField);
+	        	$dataImp = implode(',', $tmpValue);
+
+	        	$sql = "INSERT INTO log_{$value} ({$fileldImp}) VALUES ({$dataImp})";
+	        	logFile($sql);
+	        	if ($debug){
+	        		pr($sql); exit;
+	        	}
+	        	$res = $this->query($sql);
+	        	if ($res)return true;	
+	        	
+	        }
+
+	        
+	    }
+	    logFile('class_db :: Gagal insert log');
+	    return false;
+	}
 	public function fetch($data=false, $loop=false, $dbuse=0)
 	{
 		/* $dbuse [0] = config default database */

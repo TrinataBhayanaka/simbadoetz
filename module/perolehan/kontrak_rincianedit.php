@@ -470,6 +470,7 @@ $menu_id = 10;
 		var hrgSatuan = $("#hrgSatuan").val();
 		var total = jml*hrgSatuan;
 		$("#total").val(total);
+		$('#total').autoNumeric('set', total);
 		$('#nilaiPerolehan').val($("#total").autoNumeric('get'));
 	}
 </script>

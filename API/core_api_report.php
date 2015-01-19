@@ -29,6 +29,7 @@ class core_api_report extends DB {
      var $label;
      var $gol;
      var $aset;
+	 var $kb;
 	 
      var $tab;
      var $tahun;
@@ -101,6 +102,7 @@ class core_api_report extends DB {
 		  $this->modul=$hasil_data['modul'];
 		  $this->mode=$hasil_data['mode'];
 		  $this->kib=$hasil_data['kib'];
+		  $this->kb=$hasil_data['kb'];
 		  $this->rekap=$hasil_data['rekap'];
 		  $this->label=$hasil_data['label'];
 		  $this->gol=$hasil_data['gol'];
@@ -151,6 +153,7 @@ class core_api_report extends DB {
           $modul=$this->modul;
           $mode=$this->mode;
           $kib=$this->kib;
+          $kb=$this->kb;
           $rekap=$this->rekap;
           $label=$this->label;
           $gol=$this->gol;
@@ -227,6 +230,79 @@ class core_api_report extends DB {
 				$query_satker_fix = " KDPA.kodeSatker LIKE '$skpd_id%'";
 			}
 			
+			//kartu barang
+			if($kb != ''){
+				
+				if($kb == 'KB-A'){
+					$param = "T";
+				}elseif($kb == 'KB-B'){
+					$param = "M";
+				}elseif($kb == 'KB-C'){
+					$param = "B";
+				}elseif($kb == 'KB-D'){
+					$param = "J";	
+				}elseif($kb == 'KB-E'){
+					$param = "AL";	
+				}else{
+					$param = "KDPA";
+				}
+				echo "param =".$param;
+				// exit;
+				
+				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id =="" && $kelompok == ""){
+					// echo "sini";
+					$query_tgl_awal = " $param.TglPerubahan >= '$tglawalperolehan' ";
+					$query_tgl_akhir = " $param.TglPerubahan <= '$tglakhirperolehan' ";
+				}	
+				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id !="" && $kelompok != ""){
+					$query_tgl_awal = " $param.TglPerubahan >= '$tglawalperolehan' ";
+					$query_tgl_akhir = " $param.TglPerubahan <= '$tglakhirperolehan' ";
+					$query_satker_fix = " $param.kodeSatker LIKE '$skpd_id%'";
+					
+					$IDkelompok = "$kelompok";
+					$query_change_satker="SELECT Kode FROM Kelompok as K
+											WHERE Kelompok_ID = $IDkelompok";
+					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
+					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
+						$dataRow2Kel[]=$proses_kode_kel['Kode'];
+					}
+					if($dataRow2Kel!=""){
+						$query_kelompok_fix =" $param.kodeKelompok = '".$dataRow2Kel[0]."'";
+					}
+				}
+				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id =="" && $kelompok != ""){
+					$query_tgl_awal = " $param.TglPerubahan >= '$tglawalperolehan' ";
+					$query_tgl_akhir = " $param.TglPerubahan <= '$tglakhirperolehan' ";
+					
+					// if($kelompok != ""){
+					$IDkelompok = "$kelompok";
+					$query_change_satker="SELECT Kode FROM Kelompok as K
+											WHERE Kelompok_ID = $IDkelompok";
+					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
+					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
+						$dataRow2Kel[]=$proses_kode_kel['Kode'];
+					}
+					if($dataRow2Kel!=""){
+						$query_kelompok_fix ="$param.kodeKelompok = '".$dataRow2Kel[0]."'";
+					}
+			
+				}
+				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id !="" && $kelompok == ""){
+					$query_tgl_awal = " $param.TglPerubahan >= '$tglawalperolehan' ";
+					$query_tgl_akhir = " $param.TglPerubahan <= '$tglakhirperolehan' ";
+					$query_satker_fix = " $param.kodeSatker LIKE '$skpd_id%'";
+				}
+			}
+			/*echo "<br>";
+			echo $query_tgl_awal;
+			echo "<br>";
+			echo $query_tgl_akhir;
+			echo "<br>";
+			echo $query_kelompok_fix;
+			echo "<br>";
+			echo $query_satker_fix;
+			echo "<br>";*/
+			// exit;
 			// echo "masuk";
 		//this for rekap kib a -kib f
 			if($rekap =='RekapKIB-A')
@@ -362,13 +438,12 @@ class core_api_report extends DB {
 					$query_tgl_akhir = " TglPerolehan <= '$tglakhirperolehan' ";
 				}elseif($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id != ""){
 					// echo "sini";
-					echo "skpd =".$skpd_id;
+					// echo "skpd =".$skpd_id;
 					$query_tgl_awal = " TglPerolehan >= '$tglawalperolehan' ";
 					$query_tgl_akhir = " TglPerolehan <= '$tglakhirperolehan' ";
 					$query_satker_fix = " kodeSatker LIKE '$skpd_id%'";
 				}	
 			}
-			
 			
 			if($label == 'label'){
 				if($tahun !='' && $skpd_id == ""){
@@ -405,7 +480,6 @@ class core_api_report extends DB {
 			if($skpd_id!="" && $parameter_sql==""){
 				$parameter_sql=$query_satker_fix;
             }
-			
             if($skpd_id!="" && $parameter_sql==""){
 				$parameter_sql=$query_satker_fix;
             }
@@ -420,6 +494,97 @@ class core_api_report extends DB {
 			// echo "param =".$parameter_sql;
 			
 			// exit;
+			
+			
+			//start update query kib a (ok)
+			$kb_a_condition = "select 
+													T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.TglPerubahan,
+													K.Kode, K.Uraian
+												from 
+													log_tanah as T,kelompok as K
+												where
+													T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+													and $parameter_sql
+												order by 
+													T.Aset_ID,T.kodeKelompok,T.kodeSatker,T.TglPerubahan $limit";
+			
+			$kb_a_default   = "";	
+			
+			$kb_b_condition = "select 
+													M.Aset_ID,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+													M.Silinder,M.kodeLokasi,M.noRegister, M.TglPerubahan,K.Kode, K.Uraian
+												from 
+													log_mesin as M,kelompok as K 
+												where 
+													M.kodeKelompok=K.Kode and 
+													M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and $parameter_sql
+												order by 
+													M.Aset_ID,M.kodeKelompok,M.kodeSatker,M.TglPerubahan $limit";
+										
+			$kb_b_default = "";								
+          
+			$kb_c_condition = "select B.Aset_ID, B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+											B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.noRegister,B.Alamat,
+											B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+											B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											log_bangunan as B,kelompok as K  
+											where
+											B.kodeKelompok = K.Kode and 
+											B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 
+											and $parameter_sql
+											order by
+												B.Aset_ID,B.kodeKelompok,B.kodeSatker,B.TglPerubahan $limit";
+			//ok
+			$kb_c_default = "";
+			$kb_d_condition = "select J.Aset_ID, J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+											J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.noRegister,J.Alamat,
+											J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+											J.kondisi, J.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											log_jaringan as J,kelompok as K  
+											where
+											J.kodeKelompok = K.Kode and 
+											J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 
+											and $parameter_sql
+											order by 
+												J.Aset_ID,J.kodeKelompok,J.kodeSatker,J.TglPerubahan $limit";
+          
+		  $kb_d_default = "";
+			$kb_e_condition = "select AL.Aset_ID,AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+											AL.kondisi, AL.kodeLokasi,AL.noRegister
+											K.Kode, K.Uraian
+											from 
+											log_asetlain as AL,kelompok as K  
+											where
+											AL.kodeKelompok = K.Kode and 
+											AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 
+											and $parameter_sql
+											order by 
+												AL.Aset_ID,AL.kodeKelompok,AL.kodeSatker,AL.TglPerubahan $limit";
+											
+			$kb_e_default = "";
+	     	$kb_f_condition = "select KDPA.Aset_ID, KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+											KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.noRegister,KDPA.Alamat,
+											KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+											KDPA.kondisi, KDPA.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											log_kdp as KDPA,kelompok as K  
+											where
+											KDPA.kodeKelompok = K.Kode and 
+											KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+											and $parameter_sql
+											order by 
+												KDPA.Aset_ID,KDPA.kodeKelompok,KDPA.kodeSatker,KDPA.TglPerubahan $limit";
+          
+		  $kb_f_default = "";
+			
 			//==============================================================
 			//start update query kib a (ok)
 			$Modul_1_Mode_1_Case_a_condition = "select 
@@ -1270,8 +1435,76 @@ class core_api_report extends DB {
                                                   break;
                                                   case '4':
                                                   {
-                                                       //Rekapitulasi Buku Inventaris SKPD
-													   $status = true;
+                                                      //kartu barang
+													if (isset($kb))
+													  {
+														switch ($kb)
+														{
+                                                                 case 'KB-A':
+                                                                 {
+																	if($parameter_sql!="" ) {
+                                                                                     $query = $kb_a_condition; 
+																					 // echo "masukkk";
+																	}
+																	if($parameter_sql=="" ) {
+                                                                                $query = $kb_a_default; 
+																	}
+                                                                 }		
+                                                                 break;
+                                                                 case 'KB-B':
+                                                                 {
+                                                                      if($parameter_sql!="" ){
+                                                                                $query = $kb_b_condition;
+																								}
+                                                                      if($parameter_sql=="" ) {
+                                                                                $query = $kb_b_default;
+																								}
+                                                                 }
+                                                                 break;
+                                                                 case 'KB-C':
+                                                                 {
+                                                                      if($parameter_sql!="" ){
+                                                                                $query = $kb_c_condition;
+                                                                      }
+                                                                      if($parameter_sql=="" ) {
+                                                                                $query = $kb_c_default;
+                                                                      }
+                                                                 }
+                                                                 break;
+                                                                 case 'KB-D':
+                                                                 {
+                                                                      if($parameter_sql!="" ){
+                                                                                $query = $kb_d_condition;
+                                                                      }
+                                                                      if($parameter_sql=="" ){
+                                                                                $query = $kb_d_default;
+                                                                      }
+                                                                 }
+                                                                 break;
+                                                                 
+                                                                 case 'KB-E':
+                                                                 {
+                                                                      if($parameter_sql!="" ){
+                                                                                $query = $kb_e_condition;
+                                                                       }
+                                                                      if($parameter_sql=="" ){
+                                                                                $query = $kb_e_default;
+                                                                      }
+                                                                 }
+                                                                 break;
+														
+                                                                 case 'KB-F':
+                                                                 {
+                                                                      if($parameter_sql!="" ){
+                                                                                $query = $kb_f_condition;	
+                                                                      }
+                                                                      if($parameter_sql=="" ){
+                                                                                $query = $kb_f_default;	
+                                                                      }
+                                                                 }
+                                                                 break;
+																}
+                                                       }  
                                                   }
                                                   break;
                                                   case '5':
@@ -1985,10 +2218,10 @@ class core_api_report extends DB {
 														// $newparameter_sql_05 = implode('AND ', $param_05);
 														// $newparameter_sql_06 = implode('AND ', $param_06);
 														// pr($param);
-														$KodeKa_mesin = "OR M.kodeKA = 1";
-														$KodeKa_bangunan = "OR B.kodeKA = 1";
-														$KodeKaCondt1_mesin = "AND M.kodeKA = 1";
-														$KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
+														// $KodeKa_mesin = "OR M.kodeKA = 1";
+														// $KodeKa_bangunan = "OR B.kodeKA = 1";
+														// $KodeKaCondt1_mesin = "AND M.kodeKA = 1";
+														// $KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
 														if($thnceck >= $thnExtraDefault){
 																
 															$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
@@ -2795,32 +3028,6 @@ class core_api_report extends DB {
      }
 	 
     
-    
-    public function _cek_data_satker_($tahun){
-		
-		//print_r($parameter);
-		//$tahun = $parameter['tahun'];
-		//echo 'ada'.$tahun;
-        $query = "  select a.LastSatker_ID, b.NamaSatker from Aset as a left outer join Satker as b 
-					on a.LastSatker_ID = b.Satker_ID
-                    where a.NIlaiPerolehan is not null group by a.LastSatker_ID ";
-        //print_r($query);
-		$result = $this->query($query) or die ($this->error());
-        
-        while($data = $this->fetch_object($result)){
-            if ($data->NamaSatker !='')
-            {
-                
-                $rekap[$data->LastSatker_ID][] = $data->NamaSatker;
-                
-            }
-            
-			
-        }
-        
-        return $rekap;
-    }
-    
     public function _cek_data_satker_with_id($param, $bool){
 		
 		if ($bool == TRUE)
@@ -3027,9 +3234,6 @@ class core_api_report extends DB {
         return $dataArr;
     }
     
-    
-    
-    
     //REVISI REKAP SKPD
     public function get_report_rekap_inv_skpd($parameter,$tglawalperolehan,$tglakhirperolehan)
     {
@@ -3118,174 +3322,9 @@ class core_api_report extends DB {
 			// pr($dataArr);
 			// exit;
 			return $dataArr;
-			
-		
-        
-    }
-    
-    //Rekapitulasi Pengadaan BMD	
-    //REVISI REKAP PENGADAAN
-    //Rekapitulasi Pengadaan BMD	
-    public function get_report_rekap_pengadaan_BMD($param)
-		{
-		/*echo"<pre>";
-        print_r($param);
-        echo"</pre>";*/
-         
-        if ($param['tanggal_awal'] !='')
-        {
-			$tanggal_awal = " and a.TglPerolehan >= '$param[tanggal_awal]' ";
-			
-		}
-		if ($param['tanggal_akhir'] !='')
-        {
-			$tanggal_akhir = " and a.TglPerolehan <= '$param[tanggal_akhir]' ";
-			
-		}
-		
-		$TAMBAHAN_QUERY='a.Status_Validasi_Barang=1';
-		foreach ($param['Satker_ID'] as $Satker_ID => $value)
-		{
-			
-			$query_get_golongan_1 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan !=2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker CC on a.LastSatker_ID=CC.Satker_ID left join KontrakAset KA on KA.Aset_ID= a.Aset_ID left join Kontrak KO on KO.Kontrak_ID= KA.Kontrak_ID left join KontrakSP2D KS on KS.Kontrak_ID= KO.Kontrak_ID left join SP2D S on S.SP2D_ID= KS.SP2D_ID where  k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-			$query_get_golongan_2 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan !=2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker CC on a.LastSatker_ID=CC.Satker_ID left join KontrakAset KA on KA.Aset_ID= a.Aset_ID left join Kontrak KO on KO.Kontrak_ID= KA.Kontrak_ID left join KontrakSP2D KS on KS.Kontrak_ID= KO.Kontrak_ID left join SP2D S on S.SP2D_ID= KS.SP2D_ID where  k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-			$query_get_golongan_3 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan !=2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker CC on a.LastSatker_ID=CC.Satker_ID left join KontrakAset KA on KA.Aset_ID= a.Aset_ID left join Kontrak KO on KO.Kontrak_ID= KA.Kontrak_ID left join KontrakSP2D KS on KS.Kontrak_ID= KO.Kontrak_ID left join SP2D S on S.SP2D_ID= KS.SP2D_ID where  k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-			$query_get_golongan_4 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan !=2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker CC on a.LastSatker_ID=CC.Satker_ID left join KontrakAset KA on KA.Aset_ID= a.Aset_ID left join Kontrak KO on KO.Kontrak_ID= KA.Kontrak_ID left join KontrakSP2D KS on KS.Kontrak_ID= KO.Kontrak_ID left join SP2D S on S.SP2D_ID= KS.SP2D_ID where  k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-			$query_get_golongan_5 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan !=2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker CC on a.LastSatker_ID=CC.Satker_ID left join KontrakAset KA on KA.Aset_ID= a.Aset_ID left join Kontrak KO on KO.Kontrak_ID= KA.Kontrak_ID left join KontrakSP2D KS on KS.Kontrak_ID= KO.Kontrak_ID left join SP2D S on S.SP2D_ID= KS.SP2D_ID where  k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-			$query_get_golongan_6 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan !=2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker CC on a.LastSatker_ID=CC.Satker_ID left join KontrakAset KA on KA.Aset_ID= a.Aset_ID left join Kontrak KO on KO.Kontrak_ID= KA.Kontrak_ID left join KontrakSP2D KS on KS.Kontrak_ID= KO.Kontrak_ID left join SP2D S on S.SP2D_ID= KS.SP2D_ID where  k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-			$query_get_golongan_7 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan !=2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker CC on a.LastSatker_ID=CC.Satker_ID left join KontrakAset KA on KA.Aset_ID= a.Aset_ID left join Kontrak KO on KO.Kontrak_ID= KA.Kontrak_ID left join KontrakSP2D KS on KS.Kontrak_ID= KO.Kontrak_ID left join SP2D S on S.SP2D_ID= KS.SP2D_ID where  k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode";
-			
-			$dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
-			// pr($query_get_golongan_1);
-			//echo"<br>";
-			//print_r($query_get_golongan_1);
-			
-			//exit;
-			for ($i = 0; $i <=6; $i++)
-			{
-				$result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
-				
-				if ($result_golongan)
-				{
-				   //echo 'ada';
-					while ($data = $this->fetch_object($result_golongan))
-					{
-						$dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)][] = $data;
-					}
-				}
-				
-				//$result_golongan = '';
-			}
-        }
-        return $dataArr;
-    }
-    
-	//REVISI REKAP PEMELIHARAAN 
- //Rekapitulasi Pemeliharaan BMD
-    public function get_report_rekap_pemeliharaan_BMD($param)
-    {
-		/*echo"<pre>";
-        print_r($param);
-        echo"</pre>";*/
-        
-        if ($param['tanggal_awal'] !='')
-        {
-			$tanggal_awal = " and p.TglPemeliharaan >= '$param[tanggal_awal]' ";
-			
-		}
-		if ($param['tanggal_akhir'] !='')
-        {
-			$tanggal_akhir = " and p.TglPemeliharaan <= '$param[tanggal_akhir]' ";
-			
-		}
-		$TAMBAHAN_QUERY='a.Status_Validasi_Barang=1';
-		foreach ($param['Satker_ID'] as $Satker_ID => $value)
-		{
-        $query_get_golongan_1 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(p.Biaya) as Biaya from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join (Aset a join Pemeliharaan p on p.Aset_ID=a.Aset_ID) on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='$Satker_ID' and $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_2 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(p.Biaya) as Biaya from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join (Aset a join Pemeliharaan p on p.Aset_ID=a.Aset_ID) on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='$Satker_ID' and $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_3 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(p.Biaya) as Biaya from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join (Aset a join Pemeliharaan p on p.Aset_ID=a.Aset_ID) on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='$Satker_ID' and $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_4 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(p.Biaya) as Biaya from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join (Aset a join Pemeliharaan p on p.Aset_ID=a.Aset_ID) on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='$Satker_ID' and $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_5 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(p.Biaya) as Biaya from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join (Aset a join Pemeliharaan p on p.Aset_ID=a.Aset_ID) on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='$Satker_ID' and $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_6 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(p.Biaya) as Biaya from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join (Aset a join Pemeliharaan p on p.Aset_ID=a.Aset_ID) on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='$Satker_ID' and $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        $query_get_golongan_7 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, count(a.Aset_ID) as Jumlah, sum(p.Biaya) as Biaya from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join (Aset a join Pemeliharaan p on p.Aset_ID=a.Aset_ID) on a.Kelompok_ID = x.Kelompok_ID and a.LastSatker_ID='$Satker_ID' and $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-        
-        $dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
-        
-        pr($query_get_golongan_2);	
-		//exit;
-			
-        for ($i = 0; $i <=6; $i++)
-        {
-            $result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
-            if ($result_golongan)
-            {
-               
-                while ($data = $this->fetch_object($result_golongan))
-					{
-						$dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)][] = $data;
-					}
-            }
-            
-            //$result_golongan = '';
-        }
-        }
-        return $dataArr;
-    }
-   
-	//REVISI REKAP HIBAH
- //Rekapitulasi Penerimaan Barang Dari Pihak III
-    public function get_report_rekap_penerimaan_pihak_ketiga($param)
-    {
-        /*echo"<pre>";
-        print_r($param);
-        echo"</pre>";*/
-        
-        if ($param['tanggal_awal'] !='')
-        {
-			$tanggal_awal = " and a.TglPerolehan >= '$param[tanggal_awal]' ";
-			
-		}
-		if ($param['tanggal_akhir'] !='')
-        {
-			$tanggal_akhir = " and a.TglPerolehan <= '$param[tanggal_akhir]' ";
-			
-		}
-		$TAMBAHAN_QUERY='a.Status_Validasi_Barang=1';
-		foreach ($param['Satker_ID'] as $Satker_ID => $value)
-		{
-			$query_get_golongan_1 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan, o.NamaSatker from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan =2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker o on a.OrigSatker_ID=o.Satker_ID left join Satker cc on a.LastSatker_ID=cc.Satker_ID left join Satker c on c.KodeSektor=cc.KodeSektor and c.KodeSatker=cc.KodeSatker and c.KodeUnit is null left join Kelompok d on a.Kelompok_ID=d.Kelompok_ID left join Kondisi e on e.Kondisi_ID=a.LastKondisi_ID where k.Golongan='01' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-			$query_get_golongan_2 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan, o.NamaSatker from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan =2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker o on a.OrigSatker_ID=o.Satker_ID left join Satker cc on a.LastSatker_ID=cc.Satker_ID left join Satker c on c.KodeSektor=cc.KodeSektor and c.KodeSatker=cc.KodeSatker and c.KodeUnit is null left join Kelompok d on a.Kelompok_ID=d.Kelompok_ID left join Kondisi e on e.Kondisi_ID=a.LastKondisi_ID where k.Golongan='02' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-			$query_get_golongan_3 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan, o.NamaSatker from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan =2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker o on a.OrigSatker_ID=o.Satker_ID left join Satker cc on a.LastSatker_ID=cc.Satker_ID left join Satker c on c.KodeSektor=cc.KodeSektor and c.KodeSatker=cc.KodeSatker and c.KodeUnit is null left join Kelompok d on a.Kelompok_ID=d.Kelompok_ID left join Kondisi e on e.Kondisi_ID=a.LastKondisi_ID where k.Golongan='03' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-			$query_get_golongan_4 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan, o.NamaSatker from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan =2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker o on a.OrigSatker_ID=o.Satker_ID left join Satker cc on a.LastSatker_ID=cc.Satker_ID left join Satker c on c.KodeSektor=cc.KodeSektor and c.KodeSatker=cc.KodeSatker and c.KodeUnit is null left join Kelompok d on a.Kelompok_ID=d.Kelompok_ID left join Kondisi e on e.Kondisi_ID=a.LastKondisi_ID where k.Golongan='04' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-			$query_get_golongan_5 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan, o.NamaSatker from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan =2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker o on a.OrigSatker_ID=o.Satker_ID left join Satker cc on a.LastSatker_ID=cc.Satker_ID left join Satker c on c.KodeSektor=cc.KodeSektor and c.KodeSatker=cc.KodeSatker and c.KodeUnit is null left join Kelompok d on a.Kelompok_ID=d.Kelompok_ID left join Kondisi e on e.Kondisi_ID=a.LastKondisi_ID where k.Golongan='05' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-			$query_get_golongan_6 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan, o.NamaSatker from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan =2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker o on a.OrigSatker_ID=o.Satker_ID left join Satker cc on a.LastSatker_ID=cc.Satker_ID left join Satker c on c.KodeSektor=cc.KodeSektor and c.KodeSatker=cc.KodeSatker and c.KodeUnit is null left join Kelompok d on a.Kelompok_ID=d.Kelompok_ID left join Kondisi e on e.Kondisi_ID=a.LastKondisi_ID where k.Golongan='06' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-			$query_get_golongan_7 = "   select k.Kode, k.Golongan, k.Bidang, k.Uraian, sum(a.Kuantitas) as Jumlah, sum(a.NilaiPerolehan) as NilaiPerolehan, o.NamaSatker from Kelompok k left join Kelompok x on x.Golongan = k.Golongan and x.Bidang = k.Bidang left join Aset a on a.Kelompok_ID = x.Kelompok_ID and a.CaraPerolehan =2 and a.LastSatker_ID='$Satker_ID' AND $TAMBAHAN_QUERY $tanggal_awal $tanggal_akhir left join Satker o on a.OrigSatker_ID=o.Satker_ID left join Satker cc on a.LastSatker_ID=cc.Satker_ID left join Satker c on c.KodeSektor=cc.KodeSektor and c.KodeSatker=cc.KodeSatker and c.KodeUnit is null left join Kelompok d on a.Kelompok_ID=d.Kelompok_ID left join Kondisi e on e.Kondisi_ID=a.LastKondisi_ID where k.Golongan='07' and k.Kelompok is null and k.Sub is null and k.SubSub is null group by k.Kode, k.Golongan, k.Bidang, k.Uraian order by k.Kode ";
-			
-			$dataGolongan = array('query_get_golongan_1', 'query_get_golongan_2', 'query_get_golongan_3', 'query_get_golongan_4', 'query_get_golongan_5', 'query_get_golongan_6', 'query_get_golongan_7');
-			
-			// print_r($query_get_golongan_1);	
-			//exit;
-        for ($i = 0; $i <=6; $i++)
-        {
-            $result_golongan = $this->query($$dataGolongan[$i]) or die ($this->error('error golongan'));
-            if ($result_golongan)
-            {
-               
-                while ($data = $this->fetch_object($result_golongan))
-					{
-						$dataArr[$Satker_ID][$value[0]]['Golongan_'.($i+1)][] = $data;
-					}
-            }
-            
-            //$result_golongan = '';
-        }
-		
-        }
-        return $dataArr;
-    }
+	}
     
     
- 
     public function set_output_name_pdf($parameter)
     {
         $date = date('d-m-Y H:i:s');
@@ -3703,7 +3742,6 @@ class core_api_report extends DB {
 				// pr($register_no);
 				for($m=0;$m<count($register_no)-1;$m++){
 					$data[$keys]['noRegister']=$register_no[$m];
-					
 					array_push($iman,$data[$keys]);
 				}
 				$x++;

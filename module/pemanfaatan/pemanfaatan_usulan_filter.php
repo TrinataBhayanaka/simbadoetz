@@ -119,6 +119,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
                                     <option value="6">KDP</option>
                                 </select>-->
                             </li>
+                            <li>&nbsp;</li>
 							<li>
 								<span class="span2">No. Kontrak</span>
 								<input type="text" name="peman_usulan_filt_nokontrak" placeholder="" style="width:200px;"></span>
@@ -128,7 +129,8 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 								<input name="peman_usulan_filt_tahun" id="peman_usulan_filt_tahun"  type="text" required placeholder="Tahun (ex:2015)" maxlength="4">
 							</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
-							<li>
+							<li>&nbsp;</li>
+                            <li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
 								<input type="reset" name="reset" class="btn" value="Bersihkan Data">

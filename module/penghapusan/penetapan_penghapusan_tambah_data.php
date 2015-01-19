@@ -178,7 +178,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										<td></td>
 										<td>$no.</td>
 										<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-										<td>$nilai[noRegister] - $nilai[kodeKelompok] &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
+										<td>$nilai[Aset_ID] - $nilai[kodeSatker] &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
 										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'>
 										$disabled
 										</td>

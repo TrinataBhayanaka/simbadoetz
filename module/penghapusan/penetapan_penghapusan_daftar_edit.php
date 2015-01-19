@@ -116,7 +116,7 @@ include "../../config/config.php";
 				<?php
 				$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
 				$no = 1;
-				// pr($data);
+				pr($dataUsulanAset);
 							foreach ($dataUsulanAset as $keys => $nilai)
 							{
 
@@ -150,7 +150,7 @@ include "../../config/config.php";
 								<td></td>
 								<td>$no.</td>
 								<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-								<td>$nilai[noRegister] - $nilai[kodeKelompok]  &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
+								<td>$nilai[Aset_ID] - $nilai[kodeSatker]  &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
 								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'> 
 								<!--		<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success'>Diterima</a>
 										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger'>Ditolak</a>

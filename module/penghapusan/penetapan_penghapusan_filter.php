@@ -67,7 +67,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
                             });
                     });
                 </script>
-				
+				<script>
+                jQuery(function($){
+                   $("#jenis_hapus").select2();
+                });
+                </script>
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -83,13 +87,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 			
 			<form name="form" method="POST" action="<?php echo "$url_rewrite"; ?>/module/penghapusan/penetapan_penghapusan_daftar_isi.php?pid=1">
 			<ul>
-							<li>
+							<!-- <li>
 								<span class="span2">Tanggal awal</span>
 								<input type="text" name="bup_pu_tanggalawal" placeholder="" style="width:200px;" id="tanggal12" />
-							</li>
+							</li> -->
 							<li>
-								<span class="span2">Tanggal akhir</span>
-								<input type="text" name="bup_pu_tanggalakhir" placeholder="" style="width:200px;" id="tanggal13"/>
+								<span class="span2">Tanggal Hapus</span>
+								<input type="text" name="bup_pu_tanggalhapus" placeholder="" style="width:200px;" id="tanggal13"/>
 							</li>
 							<li>
 								<span class="span2">No. SK Penghapusan</span>
@@ -97,12 +101,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							</li>
 							<li>
 								<span class="span2">Jenis Penghapusan</span>
-								<select name="jenis_hapus">
+
+								<select name="jenis_hapus" id="jenis_hapus" style="width:205px">
 									<option value="PMD">Pemindahtanganan</option>
 									<option value="PMS">Pemusnahan</option>
                                     <option value="PSB">Penghapusan Sebagian</option>
 								</select>
 							</li>
+                             <li>&nbsp;</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
                             <li>&nbsp;</li>
 							<li>
