@@ -145,6 +145,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<th>No</th>
 						<th>Nomor SK Penghapusan</th>
 						<th>Tgl Penghapusan</th>
+						<th>Aset</th>
 						<th>Keterangan</th>
 						<th>Tindakan</th>
 					</tr>
@@ -171,8 +172,40 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</td>
 						<td><?php $change=$hsl_data[TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
 						<td><?php echo "$hsl_data[AlasanHapus]";?></td>
+						<td>
+							
+						<?php
+						$dataUsulan = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_UsulanAset($hsl_data[Usulan_ID]);
+							
+							foreach ($dataUsulan as $valueUsulan) {
+								echo "Usulan ID[".$valueUsulan['Usulan_ID']."]<br/>";
+								echo "<ul>";
+								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($valueUsulan[Aset_ID]);
+								$noAset=1;
+								// pr($dataAset);
+								foreach ($dataAset as $valueAset) {
+
+									if($valueAset[StatusKonfirmasi]==1){
+										$textLabel="Diterima";
+										$labelColor="label label-success";
+									}elseif($valueAset[StatusKonfirmasi]==2){
+										$textLabel="Ditolak";
+										$labelColor="label label-danger";
+									}else{
+										$textLabel="Ditunda";
+										$labelColor="label label-warning";
+									}
+									echo "<li>".$noAset.".  Aset ID[".$valueAset['Aset_ID']."][".$valueAset['kodeKelompok']."]<span class='".$labelColor."'>".$textLabel."</span></li>";
+									$noAset++;
+								}
+								echo "</ul>";
+							
+							}
+						?>
+							
+						</td>
 						<td>	
-						<!--<a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan_validasi.php?menu_id=40&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||--> 
+						<!-- <a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan_validasi.php?menu_id=40&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||  -->
 						<?php if($_SESSION['jenis_hapus']=="PSB"){ 
 						?>
 						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus_psb.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
@@ -192,6 +225,8 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+
 						<th>&nbsp;</th>
 					</tr>
 				</tfoot>

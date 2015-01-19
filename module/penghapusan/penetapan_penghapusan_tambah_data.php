@@ -121,23 +121,13 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</tr>
 						<?php
 						$jmlUsulan=count($data['dataRow']);
-									// pr($jmlUsulan);
-									// $a=array(1,2);
-									// pr($a);
-// if (array_key_exists("1",$a))
-//   {
-//   echo "Key exists!";
-//   }
-// else
-//   {
-//   echo "Key does not exist!";
-//   }
+						$disabledForm="";
 						foreach ($data['dataRow'] as $valueUsulan) {
 							
 						
 						?>
 						<tr>
-							<td><?php echo $valueUsulan['Usulan_ID'];?>
+							<td>Usulan ID [<?php echo $valueUsulan['Usulan_ID'];?>]
 								<input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/>
 							</td>
 						</tr>
@@ -166,15 +156,18 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										if($nilai[StatusKonfirmasi]==1){
 											$textLabel="Diterima";
 											$labelColor="label label-success";
-											$disabled="disabled";
 										}elseif($nilai[StatusKonfirmasi]==2){
 											$textLabel="Ditolak";
-											$disabled="disabled";
 											$labelColor="label label-danger";
 										}else{
 											$textLabel="Ditunda";
 											$labelColor="label label-warning";
-											$disabled="";
+											$disabled="
+										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
+										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
+										}
+										if($nilai[StatusKonfirmasi]==0){
+											$disabledForm="disabled";
 										}
 
 
@@ -187,8 +180,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
 										<td>$nilai[noRegister] - $nilai[kodeKelompok] &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
 										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'>
-										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' $disabled>Diterima</a>
-										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' $disabled>Ditolak</a>
+										$disabled
 										</td>
 										</tr>
 
@@ -335,7 +327,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					<table width='100%'>
 						<tr>
 							<td width="200px">Nomor SK Penghapusan</td>
-							<td><input type="text" style="width: 150px;" id="idnoskhapus" name="bup_pp_noskpenghapusan"></td>
+							<td><input type="text" style="width: 150px;" id="idnoskhapus" name="bup_pp_noskpenghapusan" <?php echo $disabledForm;?>></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -343,7 +335,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</tr>
 						<tr>
 							<td>Tanggal SK Penghapusan</td>
-							<td> <input name="bup_pp_tanggal" style="width: 150px;" type="text" id="tanggal12"/></td>
+							<td> <input name="bup_pp_tanggal" style="width: 150px;" type="text" id="tanggal12" <?php echo $disabledForm;?>/></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -351,7 +343,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						</tr>
 						<tr>
 							<td>Keterangan Penghapusan</td>
-							<td><textarea rows="4" cols="50" id="idinfohapus" name="bup_pp_get_keterangan"></textarea></td>
+							<td><textarea rows="4" cols="50" id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?>></textarea></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
@@ -360,7 +352,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-								<input type="submit" name="btn_action" class="btn btn-primary" id="btn_action" value="Penetapan Penghapusan">
+								<input type="submit" name="btn_action" class="btn btn-primary" id="btn_action" value="Penetapan Penghapusan" <?php echo $disabledForm;?>>
 								<a href="penetapan_penghapusan_tambah_lanjut.php?pid=1"><input type="button" name="btn_action" id="btn_action_cancel"  class="btn" style="width:100px;"  value="Batal"></a>
 							
 							</td>

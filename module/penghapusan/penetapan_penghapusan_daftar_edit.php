@@ -99,7 +99,7 @@ include "../../config/config.php";
 					
 						// pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data($_GET);
-						pr($data);
+						// pr($data);
 						
 				}
 				foreach ($data['dataArr'] as $valueUsulan) {
@@ -107,7 +107,7 @@ include "../../config/config.php";
 						
 						?>
 						<tr>
-							<td><?php echo $valueUsulan['Usulan_ID'];?>
+							<td>Usulan ID [<?php echo $valueUsulan['Usulan_ID'];?>]
 								<input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/>
 							</td>
 						</tr>
@@ -289,6 +289,7 @@ include "../../config/config.php";
 								}
 							}
 			$row=$data['dataRow'];		
+			// pr($row);
 			?>
 					</tr>
 					<?php
@@ -300,7 +301,7 @@ include "../../config/config.php";
 			<table width='100%'>
 				<tr>
 					<td width="200px">Nomor SK Penghapusan</td>
-					<td><input type="text" style="width: 150px;" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?php echo $row[NoSKHapus]?>"></td>
+					<td><input type="text" style="width: 150px;" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?php echo $row[0][NoSKHapus]?>"></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -308,7 +309,7 @@ include "../../config/config.php";
 				</tr>
 				<tr>
 					<td>Tanggal SK Penghapusan</td>
-					<td> <input name="bup_pp_tanggal" style="width: 150px;" type="text" id="tanggal12" value="<?php $change=$row[TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?>"/></td>
+					<td> <input name="bup_pp_tanggal" style="width: 150px;" type="text" id="tanggal12" value="<?php $change=$row[0][TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?>"/></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -316,7 +317,7 @@ include "../../config/config.php";
 				</tr>
 				<tr>
 					<td>Keterangan Penghapusan</td>
-					<td><textarea rows="4" cols="50" id="idinfohapus" name="bup_pp_get_keterangan"><?php echo "$row[AlasanHapus]";?></textarea></td>
+					<td><textarea rows="4" cols="50" id="idinfohapus" name="bup_pp_get_keterangan"><?php echo $row[0][AlasanHapus];?></textarea></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
