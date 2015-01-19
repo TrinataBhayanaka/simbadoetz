@@ -235,7 +235,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
                         	foreach ($dataArr as $key => $value) {
                         		?>
 
-									<li><span><?= ($value['NamaSatker']=="" && $value['JabatanOperator']=1) ? 'Administrator' : $value['NamaSatker'];?></span>
+									<li><span><?= ($value['NamaSatker']=="" && $value['JabatanOperator']==1) ? 'Administrator' : $value['NamaSatker'];?></span>
 										<ul>
 											<?php foreach ($value['operator'] as $val):?>
 											<div class="<?php if (isset($_GET['a'])){if ($_GET['a']== $val['OperatorID']) echo 'datalist_inlist_selected';} ?>" >
