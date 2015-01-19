@@ -145,9 +145,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<th>No</th>
 						<th>Nomor SK Penghapusan</th>
 						<th>Tgl Penghapusan</th>
-						<th>Aset</th>
+						<!-- <th>Aset</th>
 						<th>Keterangan</th>
-						<th>Tindakan</th>
+						<th>Tindakan</th> -->
 					</tr>
 				</thead>
 				<tbody>		
@@ -171,8 +171,8 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<?php echo "$hsl_data[NoSKHapus]";?>
 						</td>
 						<td><?php $change=$hsl_data[TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
-						<td><?php echo "$hsl_data[AlasanHapus]";?></td>
-						<td>
+						<!-- <td><?php echo "$hsl_data[AlasanHapus]";?></td> -->
+						<!-- <td>
 							
 						<?php
 						$dataUsulan = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_UsulanAset($hsl_data[Usulan_ID]);
@@ -204,18 +204,18 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							}
 						?>
 							
-						</td>
-						<td>	
+						</td> 
+						<!-- <td>	
 						<!-- <a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan_validasi.php?menu_id=40&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||  -->
 						<?php if($_SESSION['jenis_hapus']=="PSB"){ 
 						?>
-						<!-- <a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus_psb.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a> -->
+						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus_psb.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 						<?php
 						}else{ ?>
 						<!-- <a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penghapusan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a> -->
 						<?php } ?>
 
-						</td>
+						<!-- </td> --> 
 					</tr>
 					
 				    <?php $no++; } }?>
@@ -225,10 +225,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						<!-- <th>&nbsp;</th>
 						<th>&nbsp;</th>
 
-						<th>&nbsp;</th>
+						<th>&nbsp;</th> -->
 					</tr>
 				</tfoot>
 			</table>
