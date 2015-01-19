@@ -30,6 +30,12 @@ function clean($data) {
      return trim(strip_tags($data));
 }
 
+function redirect($data) {
+     
+     echo "<meta http-equiv=\"refresh\" content=\"0; url={$data}\">";
+
+}
+
 function writelog($data) {
      $date = date('d-m-Y');
      $file = fopen("../log/log_sys_$date.txt", "w");
