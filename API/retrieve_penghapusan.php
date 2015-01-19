@@ -806,7 +806,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         $sql1 = array(
 					'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
-					'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan, e.NamaSatker, f.NamaLokasi, g.Kode",
+					'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan,b.NilaiPerolehanTmp, e.NamaSatker, f.NamaLokasi, g.Kode",
 					'condition' => "b.Usulan_ID IN ($cols) AND a.fixPenggunaan=1 AND b.Jenis_Usulan='$jenis_hapus' {$filterkontrak} GROUP BY a.Aset_ID",
 					'joinmethod' => ' LEFT JOIN ',
 					'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
@@ -846,7 +846,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         $sql = array(
                     'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
-                    'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan,b.StatusKonfirmasi, e.NamaSatker, f.NamaLokasi, g.Kode",
+                    'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan,b.NilaiPerolehanTmp,b.StatusKonfirmasi, e.NamaSatker, f.NamaLokasi, g.Kode",
                     'condition' => "b.Usulan_ID=$data AND a.fixPenggunaan=1 AND b.Jenis_Usulan='$jenis_hapus' GROUP BY a.Aset_ID",
                     'joinmethod' => ' LEFT JOIN ',
                     'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
@@ -886,7 +886,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         $sql = array(
                     'table'=>'UsulanAset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
-                    'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan,b.StatusKonfirmasi, e.NamaSatker, f.NamaLokasi, g.Kode",
+                    'field'=>"a.*, b.Aset_ID,b.Jenis_Usulan,b.NilaiPerolehanTmp,b.StatusKonfirmasi, e.NamaSatker, f.NamaLokasi, g.Kode",
                     'condition' => "b.Usulan_ID=$data AND a.fixPenggunaan=1 AND b.Jenis_Usulan='$jenis_hapus' AND b.StatusKonfirmasi=1 GROUP BY a.Aset_ID",
                     'joinmethod' => ' LEFT JOIN ',
                     'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
@@ -1455,7 +1455,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             }
             public function store_usulan_penghapusan_psb($data,$debug=false){   
                 
-                // ////pr($data);
+                // pr($data);
+             // exit;
                 $asset_id=Array();
                 $no_reg=Array();
                 $nm_barang=Array();
@@ -1488,18 +1489,19 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     
                     $sql1 = array(
                         'table'=>'UsulanAset',
-                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan",
-                        'value' => "'$usulan_id','','$asset_id[$i]','PSB','0'",
+                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
+                        'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','{$data[Nilaiperolehanpsb][$i]}','{$data[kondisi][$i]}'",
                         );
                     $res1 = $this->db->lazyQuery($sql1,$debug,1);
-                    
+                    // pr($sql1);
+                       // exit;
                   
-                    $sql2 = array(
-                        'table'=>'Aset',
-                        'field'=>"Usulan_Penghapusan_ID='$usulan_id'",
-                        'condition' => "Aset_ID='{$asset_id[$i]}'",
-                        );
-                    $res2 = $this->db->lazyQuery($sql2,$debug,2);
+                    // $sql2 = array(
+                    //     'table'=>'Aset',
+                    //     'field'=>"Usulan_Penghapusan_ID='$usulan_id'",
+                    //     'condition' => "Aset_ID='{$asset_id[$i]}'",
+                    //     );
+                    // $res2 = $this->db->lazyQuery($sql2,$debug,2);
                     
                  
                 }
@@ -2255,7 +2257,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
             $sql = array(
                     'table'=>'usulanaset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
-                    'field'=>"a.*, e.NamaSatker, e.KodeSatker, f.NamaLokasi, g.Kode,g.Uraian",
+                    'field'=>"a.*,b.*, e.NamaSatker, e.KodeSatker, f.NamaLokasi, g.Kode,g.Uraian",
                     'condition' => "b.Usulan_ID='$id' {$filterkontrak} GROUP BY a.Aset_ID",
                     'joinmethod' => ' LEFT JOIN ',
                     'join' => 'b.Aset_ID=a.Aset_ID , a.kodeLokasi=f.Lokasi_ID, a.kodeSatker=e.Satker_ID, a.kodeKelompok=g.Kelompok_ID' 

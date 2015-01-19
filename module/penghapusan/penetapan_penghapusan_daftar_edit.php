@@ -142,6 +142,11 @@ include "../../config/config.php";
 											$textLabel="Ditunda";
 											$labelColor="label label-warning";
 										}
+										if($_SESSION[jenis_hapus]=="PSB"){
+											$PSB="&nbsp;&nbsp;&nbsp;<br/>NilaiPerolehan : <input type='text' name='NilaiPerolehan[]' value='$nilai[NilaiPerolehan]' readonly/><br/> Ubah NilaiPerolehan : <input type='text' name='Nilaiperolehanpsb[]' value='$nilai[NilaiPerolehanTmp]' readonly />";
+										}else{
+											$PSB="";
+										}
 
 							echo "<tr>
 								<td style='border: 1px solid #004933; height:50px; padding:2px;'>
@@ -150,7 +155,7 @@ include "../../config/config.php";
 								<td></td>
 								<td>$no.</td>
 								<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-								<td>$nilai[Aset_ID] - $nilai[kodeSatker]  &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
+								<td>$nilai[Aset_ID] - $nilai[kodeSatker]  &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span>{$PSB}</td>
 								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'> 
 								<!--		<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success'>Diterima</a>
 										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger'>Ditolak</a>

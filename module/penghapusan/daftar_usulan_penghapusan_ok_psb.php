@@ -61,7 +61,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		<section class="formLegend">
 			<table width="100%">
 				<tr>
-					<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Aset yang baru saja diusulkan untuk pemanfaatan:</u></td>
+					<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Aset yang baru saja diusulkan untuk Penghapusan:</u></td>
 				</tr>
 				<tr>
 					<td style="border: 1px solid #004933; height:50px; padding:2px;">
@@ -70,7 +70,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								$usulan_id=$_GET['usulan_id'];
 							?>
 							<tr>
-								<td colspan=4 style="color:red; font-weight:bold;">No. Usulan Pemanfaatan : <?php echo "$usulan_id";?></td>
+								<td colspan=4 style="color:red; font-weight:bold;">No. Usulan Penghapusan : <?php echo "$usulan_id";?></td>
 							</tr>
 							<?php
 							

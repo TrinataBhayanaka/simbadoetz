@@ -147,7 +147,7 @@ include "../../config/config.php";
 								<input type='hidden' name='kondisipsb[]' value='$nilai[kondisi]'>
 
 								<td>$nilai[Aset_ID] - $nilai[kodeSatker]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								Nilai Perolehan <input type='text' readonly='readonly' style='width:130px; text-align:right' name='nilaiPerolehan[]' value='$nilai[NilaiPerolehan]'>&nbsp;&nbsp; Ubah Nilai Perolehan<input type='text' style='width:130px;text-align:right' name='nilaiPerolehanpsb[]'  ></td>
+								Nilai Perolehan <input type='text' readonly='readonly' style='width:130px; text-align:right' name='nilaiPerolehan[]' value='$nilai[NilaiPerolehan]'>&nbsp;&nbsp; Ubah Nilai Perolehan<input type='text' style='width:130px;text-align:right' name='nilaiPerolehanpsb[]' value='$nilai[NilaiPerolehanTmp]' readonly></td>
 								<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'></td>
 								</tr>
 
