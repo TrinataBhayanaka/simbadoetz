@@ -21,6 +21,26 @@ include "../../config/config.php";
 			<script type="text/javascript" src="<?php echo "$url_rewrite";?>/JS2/simbada.js"></script>
 			<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
 			<script type="text/javascript" src="<?php echo "$url_rewrite/";?>JS/ajax_checkbox.js"></script>
+	 <script type="text/javascript">
+	function checkJenisAset()
+            {
+                var jenisaset1 = $('.jenisaset1').is(":checked")
+                var jenisaset2 = $('.jenisaset2').is(":checked")
+                var jenisaset3 = $('.jenisaset3').is(":checked")
+                var jenisaset4 = $('.jenisaset4').is(":checked")
+                var jenisaset5 = $('.jenisaset5').is(":checked")
+                var jenisaset6 = $('.jenisaset6').is(":checked")
+
+                if (jenisaset1 == false && jenisaset2 == false && jenisaset3 == false && jenisaset4 == false && jenisaset5 == false && jenisaset6 == false){
+                    alert('Pilih Jenis Aset');
+                    return false;
+                }
+
+                
+            }
+
+            $( "#lda_tp" ).mask('9999'); 
+            </script>
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -34,7 +54,7 @@ include "../../config/config.php";
 		</div>
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pms.php?pid=1">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pms.php?pid=1" onsubmit="return checkJenisAset()">
 			<ul><!-- 
 							<li>
 								<span class="span2">ID Aset (System ID)</span>
@@ -50,7 +70,7 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span class="span2">Tahun Perolehan</span>
-								<input type='text'  name="bup_tahun" placeholder="" required/>
+								<input type='text' id="#lda_tp" maxlength="4"  name="bup_tahun" placeholder="" required/>
 							</li>
 							<li>
                                 <span class="span2">Jenis Aset</span>

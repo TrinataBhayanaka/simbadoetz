@@ -62,10 +62,10 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								Kembali ke Form Filter</a>
 								
 							</li>
-							<li>
+							<!-- <li>
 								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_lanjut_psb.php?pid=1" class="btn">
 								Tambah Data</a>
-							</li>
+							</li> -->
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
