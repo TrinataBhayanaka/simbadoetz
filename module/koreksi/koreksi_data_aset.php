@@ -37,8 +37,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<ul>
 				<li>
 					<span class="span2">Tahun Perolehan</span>
-					<input name="Tahun" id="Tahun" class="span1"  type="text" required>
+					<input name="Tahun" id="Tahun" class="span1"  type="text">
 				</li>
+				<?=selectSatker('kodeSatker','235',true,false,'required');?>
+				<li>&nbsp;</li>
 				<?php selectAset('kodeKelompok','235',true,false); ?>
 				<li>&nbsp;</li>
 				<li>
