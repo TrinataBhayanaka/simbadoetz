@@ -27,9 +27,9 @@ $mutasi_id=get_auto_increment("Mutasi");
 
 
 // pr($_POST);
-$data = $MUTASI->store_mutasi_barang($_POST);
+$data = $MUTASI->retrieve_fixMutasi($_POST);
 // exit;
-echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/transfer_antar_skpd.php?pid=1';</script>";
+echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/validasi_transfer_antar_skpd.php?pid=1';</script>";
 
 
 exit;
