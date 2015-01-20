@@ -85,7 +85,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 		</div>
 		<section class="formLegend">
 			
-			<form name="form" method="POST" action="<?php echo "$url_rewrite"; ?>/module/penghapusan/penetapan_penghapusan_daftar_isi.php?pid=1" onsubmit="return requiredFilter(true,false)">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite"; ?>/module/penghapusan/penetapan_penghapusan_daftar_isi.php?pid=1" onsubmit="return requiredFilter(false,false)">
 			<ul>
 							<!-- <li>
 								<span class="span2">Tanggal awal</span>
