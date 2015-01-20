@@ -1558,11 +1558,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $asset_id[$i]=$tmp_olah[0];
                         $no_reg[$i]=$tmp_olah[1];
                         $nm_barang[$i]=$tmp_olah[2];
+                        $NilaiPerolehan=$data[Nilaiperolehanpsb][$i];
+                        $kondisi=$data[kondisi][$i];
                         // pr($asetid);
                         $sql1 = array(
                             'table'=>'UsulanAset',
                             'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
-                            'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','$data[Nilaiperolehanpsb][$i]','$data[kondisi][$i]'",
+                            'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','$NilaiPerolehan','$kondisi'",
                             );
                         pr($sql1);
                     
