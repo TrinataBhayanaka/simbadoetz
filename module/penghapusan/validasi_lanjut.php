@@ -58,7 +58,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	include"$path/menu.php";
 	
 	
-	// //pr($_POST);
+	// pr($_POST);
 	// //pr($_SESSION);
 	$fleg_jenishps = str_replace(' ', '', $_SESSION['jenis_hapus']);
 	$data = $PENGHAPUSAN->retrieve_validasi_penghapusan($_POST);
