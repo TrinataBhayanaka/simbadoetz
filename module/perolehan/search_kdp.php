@@ -47,8 +47,9 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span>Kode Registrasi</span><br/>
-								<input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px"> . 
-								<input type="number" name="noRegister" class="span1" required>
+								<input type="number" name="noRegister1" class="span1" min="1" value="1" required> -
+								<!-- <input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px"> .  -->
+								<input type="number" name="noRegister2" class="span1" min="1" value="1" required>
 							</li>
 							<li>
 								<input type="hidden" name="tipeAset" value="kdp">

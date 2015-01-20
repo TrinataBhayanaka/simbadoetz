@@ -9647,6 +9647,8 @@ $offset = @$_POST['record'];
     function retrieve_searchAset($data,$kodesatker)
     {
         $table = $data['tipeAset']; unset($data['tipeAset']);
+        $noreg1 = $data['noRegister1'];unset($data['noRegister1']);
+        $noreg2 = $data['noRegister2'];unset($data['noRegister2']);
         // pr(array_filter($data));exit;
 
         $dataclean = array_filter($data);
@@ -9656,7 +9658,7 @@ $offset = @$_POST['record'];
         }
         $setval = implode(' AND ', $tmpsetval);
 
-        $sql = mysql_query("SELECT * FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1'");
+        $sql = mysql_query("SELECT * FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND noRegister BETWEEN {$noreg1} AND {$noreg2}");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
