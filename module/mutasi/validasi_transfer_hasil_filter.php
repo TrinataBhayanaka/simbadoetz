@@ -168,6 +168,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
+					<!--
 					<tr>
 						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
 						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
@@ -175,7 +176,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<td  align="right">   
 							<input type="submit" name="submit" value="Pengeluaran Barang" id="submit" disabled/>
 						</td>
-					</tr>
+					</tr>-->
 					<tr>
 						
 						<th>NoSKKDH</th>
