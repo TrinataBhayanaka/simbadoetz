@@ -125,7 +125,7 @@ include "../../config/config.php";
 		
 		<section class="formLegend">
 			
-			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post" onsubmit="return checkJenisAset()">
+			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post" onsubmit="return requiredFilter()">
 			<ul>
 							
 				<!--

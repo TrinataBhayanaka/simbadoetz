@@ -163,7 +163,7 @@ $menu_id = 10;
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
 						</ul>
 						<ul>
-							<?php selectAset('kodeKelompok','255',true,false); ?>
+							<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
 						</ul>
 						<ul class="tanah" style="display:none">
 							<li>

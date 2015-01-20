@@ -3623,9 +3623,12 @@ class core_api_report extends DB {
 			$text_register=implode(",",$register);
 	        //$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
 			$register_no=explode(",",$this->sortirNoReg($text_register));
-			for($m=0;$m<count($register_no)-1;$m++){
-				$data[$keys]['noRegister']=$register_no[$m];
-				array_push($iman,$data[$keys])  ;
+			for($m=0;$m<=count($register_no);$m++){
+				if($register_no[$m]!="")
+					{
+					$data[$keys]['noRegister']=$register_no[$m];
+					array_push($iman,$data[$keys])  ;
+					}
 			}
 			$i++;
 		}

@@ -65,11 +65,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
     <section class="formLegend">
       
-      <form action="" method="POST">
+      <form action="" method="POST" id="myform">
          <div class="formKontrak">
             <h3 class="grs-bottom"><i class="fa fa-file-text"></i>&nbsp;<span>Kontrak</span></h3>
             <ul>
-              <?=selectSatker('kodeSatker','205',true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+              <?=selectSatker('kodeSatker','205',true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false,'required');?>
                <li>
                 <span  class="span2">&nbsp;</span>
                 <div class="checkbox">
