@@ -85,7 +85,7 @@ include "../../config/config.php";
 		</div>
 		<section class="formLegend">
 			
-			 <form name="form" method="POST" action="<?php echo "$url_rewrite/"; ?>/module/penghapusan/validasi_lanjut.php?pid=1" onsubmit="return requiredFilter(false)">
+			 <form name="form" method="POST" action="<?php echo "$url_rewrite/"; ?>/module/penghapusan/validasi_lanjut.php?pid=1" onsubmit="return requiredFilter(false,false)">
 			<ul>
 							<li>
 								<span class="span2">No. SK Penghapusan</span>
