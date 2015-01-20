@@ -230,3 +230,35 @@ $(document).ready(function(){
 
 });
 	 
+function requiredFilter(jenisaset=true, satker=true, satkerid="kodeSatker")
+{
+
+	if (jenisaset){
+		var jenisaset1 = $('.jenisaset1').is(":checked")
+	    var jenisaset2 = $('.jenisaset2').is(":checked")
+	    var jenisaset3 = $('.jenisaset3').is(":checked")
+	    var jenisaset4 = $('.jenisaset4').is(":checked")
+	    var jenisaset5 = $('.jenisaset5').is(":checked")
+	    var jenisaset6 = $('.jenisaset6').is(":checked")
+
+	    if (jenisaset1 == false && jenisaset2 == false && jenisaset3 == false && jenisaset4 == false && jenisaset5 == false && jenisaset6 == false){
+	        alert('Pilih Jenis Aset');
+	        return false;
+	    }
+	}
+
+
+	if (satker){
+
+		var kode = $('#'+satkerid).val();
+		console.log(kode);
+		
+		if (kode==false || kode==""){
+			alert('Pilih Satker');
+			return false;
+		}
+
+	}
+	
+
+}
