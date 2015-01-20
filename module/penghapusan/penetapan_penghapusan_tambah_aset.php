@@ -51,7 +51,7 @@ include "../../config/config.php";
 		</div>
 		<section class="formLegend">
 			
-			 <form method="POST" action="<?php echo"$url_rewrite";?>/module/penghapusan/penetapan_penghapusan_tambah_lanjut.php?pid=1">
+			 <form method="POST" action="<?php echo"$url_rewrite";?>/module/penghapusan/penetapan_penghapusan_tambah_lanjut.php?pid=1" onsubmit="return requiredFilter(false)">
 			<ul>
 							<!-- <li>
 								<span class="span2">ID&nbsp;Aset&nbsp;(System&nbsp;ID)</span>
