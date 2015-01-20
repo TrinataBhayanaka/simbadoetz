@@ -1777,8 +1777,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 				 
 				 $sql = array(
 							'table'=>'penghapusan',
-							'field'=>'Penghapusan_ID,Usulan_ID, NoSKHapus, TglHapus, AlasanHapus, Jenis_Hapus, Status, UserNm, FixPenghapusan',
-							'value' => "'','$UsulanID','$no', '$olah_tgl', '$keterangan','$jenis_hapus', '0','$UserNm', '1'",
+							'field'=>'Usulan_ID, NoSKHapus, TglHapus, AlasanHapus, Jenis_Hapus, Status, UserNm, FixPenghapusan',
+							'value' => "$UsulanID','$no', '$olah_tgl', '$keterangan','$jenis_hapus', '0','$UserNm', '1'",
 							);
                  // //////pr($sql);exit;
 				$res = $this->db->lazyQuery($sql,$debug,1);
