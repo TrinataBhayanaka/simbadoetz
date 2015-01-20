@@ -10,12 +10,12 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	if($status == "required"){
 	?>
 		<script type="text/javascript">
-			$(document).on('submit',function(){
-				if($("#<?=$name?>").val() == ""){
-					alert("Kode Satker tidak boleh kosong");
-					return false;
-				}
-			})
+			// $(document).on('submit',function(){
+			// 	if($("#<?=$name?>").val() == ""){
+			// 		alert("Kode Satker tidak boleh kosong");
+			// 		return false;
+			// 	}
+			// })
 		</script>
 	<?php	
 	}
@@ -79,12 +79,12 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	if($status == "required"){
 	?>
 		<script type="text/javascript">
-			$(document).on('submit',function(){
-				if($("#<?=$name?>").val() == ""){
-					alert("Kode Satker tidak boleh kosong");
-					return false;
-				}
-			})
+			// $(document).on('submit',function(){
+			// 	if($("#<?=$name?>").val() == ""){
+			// 		alert("Kode Satker tidak boleh kosong");
+			// 		return false;
+			// 	}
+			// })
 		</script>
 	<?php	
 	}
