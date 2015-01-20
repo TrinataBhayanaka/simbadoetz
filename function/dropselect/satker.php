@@ -16,6 +16,14 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 			// 		return false;
 			// 	}
 			// })
+
+			function newruangan(){
+				if($("#<?=$satker?>").val() != ""){
+					$('#addruangan').css("display","");
+				} else {
+					$('#addruangan').css("display","none");
+				}
+			}
 		</script>
 	<?php	
 	}
@@ -24,6 +32,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	<script type="text/javascript">
 	$(document).ready(function() {
 	//fungsi dropselect
+
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Unit Pengelola Barang",
                		dropdownAutoWidth: 'true',
@@ -62,7 +71,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return newruangan();"/>
 	</li>
 	
 	
@@ -366,6 +375,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 	<script type="text/javascript">
 	$(document).ready(function() {
 	//fungsi dropselect
+
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Ruang",
 				    // minimumInputLength: 2,
@@ -401,13 +411,15 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 	} );
 
 	$('.detailLeft').on('click', '#simpan', function (){
-        
+       $.post('<?=$url_rewrite?>/function/api/addruang.php', {ruangan:$("#ruangan").val(), kodesatker:$("#<?=$satker?>").val()}, function(data){
+	
+		})
     });
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Ruang</span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>&nbsp;
-		<!-- <a data-toggle="modal" href="#addruang" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a> -->
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> />&nbsp;
+		<a style="display:none" data-toggle="modal" href="#addruang" class="btn btn-small btn-success" id="addruangan"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
 	</li>
 	
 	<div id="addruang" class="modal hide fade  login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -422,7 +434,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 						<ul>
 							<li>
 								<span class="span2">Nama Ruangan</span>
-								<input type="text" name="ruangan"/>
+								<input type="text" name="ruangan" id="ruangan"/>
 							</li>
 						</ul>
 							
@@ -430,7 +442,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 					
 			</div>
 			<div class="modal-footer">
-			  <input type="button" value="Save" name="save" class="btn btn-default" id="simpan" />
+			  <input type="button" value="Save" name="save" class="btn btn-default" id="simpan" data-dismiss="modal" />
 			</div>
 		</div> 
 	
