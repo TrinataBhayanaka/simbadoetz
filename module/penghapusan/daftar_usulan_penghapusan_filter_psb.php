@@ -54,7 +54,7 @@ include "../../config/config.php";
 		</div>
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_psb.php?pid=1" onsubmit="return requiredFilter()">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_psb.php?pid=1" onsubmit="return requiredFilter(true,false)">
 			<ul>
 							<!-- <li>
 								<span class="span2">ID Aset (System ID)</span>

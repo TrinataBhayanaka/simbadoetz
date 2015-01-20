@@ -84,10 +84,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 				$dataArr[]=$asetid[Aset_ID];
 			}
 			$aset_id=implode(', ',array_values($dataArr));
-			$condition="b.Aset_ID NOT IN ($aset_id) AND b.fixPenggunaan=1 AND (b.kondisi=2 OR b.kondisi=3)";
+			$condition="b.Aset_ID NOT IN ($aset_id) AND b.fixPenggunaan=1 AND (b.kondisi=1 OR b.kondisi=2 OR b.kondisi=3)";
 			
 		}else{
-			$condition="fixPenggunaan=1 AND (b.kondisi=2 OR b.kondisi=3)";
+			$condition="fixPenggunaan=1 AND (b.kondisi=1 OR b.kondisi=2 OR b.kondisi=3)";
 		}
 		// //////pr($aset_id);
 		// //////pr($sql1);

@@ -243,51 +243,34 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						?>
 						</td>
 						<td>
-							<table width='100%'>
-							<tr>
-								<td height="10px"></td>
-							</tr>
-
-							<tr>
-								<td>
-									<span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;font-weight:bold;"><?php echo$value[Aset_ID]?></span>
-									<span>( Aset ID - System Number )</span>
-								</td>
-								<!--
-								<td align="right"><span style="padding:1px 5px 1px 5px; background-color:#eeeeee; border: 1px solid #cccccc;horizontal-align:'right';font-weight:bold;">
-									
-									 <a href='validasi_data_aset.php?id=<?php //echo $value->Aset_ID?>'>Validasi</a></span>
-								</td>-->
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value[noRegister]?></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value[Kode]?></td>
-							</tr>
-							<tr>
-								<td style="font-weight:bold;"><?php echo $value[NamaAset]?></td>
-							</tr>
-
-						</table>
-
-						<br>
-						<hr />
-						<table>
-							<tr>
-								<td width="30%"> No.Kontrak</td> <td><?php echo $value[noKontrak]?></td>
-							</tr>
-							<tr>
-								<td>Satker</td> <td><?php echo '['.$value[kodeSatker].'] '.$value[NamaSatker]?></td>
-							</tr>
-							<tr>
-								<td>Kode Lokasi</td> <td><?php echo $value[kodeLokasi]?></td>
-							</tr>
-							<tr>
-								<td>Status</td> <td><?php echo $kondisi. ' - ' .$value[AsalUsul]?></td>
-							</tr>
-
-						</table>
+							<ul>
+								<li>
+									<span class="span3"><span class="label label-info"><?php echo$value[Aset_ID]?></span>( Aset ID - System Number )</span>
+									<br/>
+								</li>
+								<li>
+									<span class="span3"><?php echo $value[noRegister]?></span><br/>
+								</li>
+								<li>
+									<span class="span3">[<?php echo $value[kodeKelompok]?>]<?php echo $value[Uraian]?></span><br/>
+								</li>
+								<li>&nbsp;</li>
+								<li>
+									<span class="span2">No.Kontrak</span> : <?php echo $value[noKontrak]?>
+								</li>
+								<li>
+									<span class="span2">Satker</span> : <?php echo '['.$value[kodeSatker].'] '?>
+								</li>
+								<li>
+									<span class="span2">&nbsp;</span>  <?php echo $value[NamaSatker];?>
+								</li>
+								<li>
+									<span class="span2">Kode Lokasi</span> : <?php echo $value[kodeLokasi]?>
+								</li>
+								<li>
+									<span class="span2">Status</span> : <?php echo $kondisi. ' - ' .$value[AsalUsul]?>
+								</li>
+							</ul><br/>
 						</td>
 					</tr>
 					
