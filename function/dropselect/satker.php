@@ -431,11 +431,16 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
     });
 
     $(document).on('click', '#delruangan', function (){
-	   if($("#<?=$name?>").val() != ""){	
-	       $.post('<?=$url_rewrite?>/function/api/delruang.php', {ruangan:$("#<?=$name?>").val(), kodesatker:$("#<?=$satker?>").val(),tahun:$("#tahunRuangan").val()}, function(data){
-				$("#<?=$name?>").select2("val", "");
-				$('#delruangan').css("display","none");
-			})
+	   if($("#<?=$name?>").val() != ""){
+	   		var popup = confirm("Hapus Ruangan?");
+	   		if(popup == true){	
+		       $.post('<?=$url_rewrite?>/function/api/delruang.php', {ruangan:$("#<?=$name?>").val(), kodesatker:$("#<?=$satker?>").val(),tahun:$("#tahunRuangan").val()}, function(data){
+					$("#<?=$name?>").select2("val", "");
+					$('#delruangan').css("display","none");
+			   })
+	   		} else {
+	   			return false;
+	   		}
    		}
     });
 	</script>
