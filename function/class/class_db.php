@@ -499,6 +499,7 @@ class DB
 					} 
 					
 				}
+				logFile($sql);
 				if (!$debug) $res = $this->query($sql);
 				if ($res) return true;
 
@@ -527,6 +528,7 @@ class DB
 					} 
 					
 				}
+				logFile($sql);
 				if (!$debug)$res = $this->query($sql);
 				if ($res) return true;
 
