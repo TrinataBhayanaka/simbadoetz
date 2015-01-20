@@ -1,0 +1,16 @@
+ALTER TABLE `log_tanah` ADD `MasaManfaat` INT NULL , ADD `AkumulasiPenyusutan` DECIMAL(50,0) NULL , ADD `NilaiBuku` DECIMAL(50,0) NULL , ADD `PenyusutanPerTahun` DECIMAL(50,0) NULL ; 
+ALTER TABLE `log_mesin` ADD `MasaManfaat` INT NULL , ADD `AkumulasiPenyusutan` DECIMAL(50,0) NULL , ADD `NilaiBuku` DECIMAL(50,0) NULL , ADD `PenyusutanPerTahun` DECIMAL(50,0) NULL ; 
+ALTER TABLE `log_bangunan` ADD `MasaManfaat` INT NULL , ADD `AkumulasiPenyusutan` DECIMAL(50,0) NULL , ADD `NilaiBuku` DECIMAL(50,0) NULL , ADD `PenyusutanPerTahun` DECIMAL(50,0) NULL ; 
+ALTER TABLE `log_jaringan` ADD `MasaManfaat` INT NULL , ADD `AkumulasiPenyusutan` DECIMAL(50,0) NULL , ADD `NilaiBuku` DECIMAL(50,0) NULL , ADD `PenyusutanPerTahun` DECIMAL(50,0) NULL ; 
+ALTER TABLE `log_kdp` ADD `MasaManfaat` INT NULL , ADD `AkumulasiPenyusutan` DECIMAL(50,0) NULL , ADD `NilaiBuku` DECIMAL(50,0) NULL , ADD `PenyusutanPerTahun` DECIMAL(50,0) NULL ; 
+ALTER TABLE `log_asetlain` ADD `MasaManfaat` INT NULL , ADD `AkumulasiPenyusutan` DECIMAL(50,0) NULL , ADD `NilaiBuku` DECIMAL(50,0) NULL , ADD `PenyusutanPerTahun` DECIMAL(50,0) NULL ; 
+
+
+//untuk junet
+
+ALTER TABLE `usulanaset` ADD `StatusValidasi` INT NULL DEFAULT '0' , ADD `StatusKonfirmasi` INT NULL DEFAULT '0' ;
+ALTER TABLE `penghapusan` ADD `Usulan_ID` TEXT NULL ;
+
+ALTER TABLE `usulanaset` ADD `NilaiPerolehan` DECIMAL(50,4) NULL ;
+ALTER TABLE `usulanaset` ADD `kondisi` TINYINT NULL DEFAULT '0' ;
+ALTER TABLE `usulanaset` CHANGE `NilaiPerolehan` `NilaiPerolehanTmp` DECIMAL(50,4) NULL DEFAULT NULL, CHANGE `kondisi` `kondisiTmp` TINYINT(4) NULL DEFAULT '0';

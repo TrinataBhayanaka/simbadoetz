@@ -98,7 +98,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 		</div>
 		<section class="formLegend">
 			
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_daftar.php?pid=1" onsubmit="return checkJenisAset()">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_daftar.php?pid=1" onsubmit="return requiredFilter()">
 			<ul>
 							
 							<li>
