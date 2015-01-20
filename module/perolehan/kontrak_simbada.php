@@ -113,7 +113,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<?php
 						if($val['n_status'] != 1){
 						?>	
-							<a href="kontrakedit.php?id=<?=$val['id']?>" class="btn btn-warning btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
+							<a href="<?=($val['tipe_kontrak'] == 1) ? 'kontrakedit' : 'pledit'?>.php?id=<?=$val['id']?>" class="btn btn-warning btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
 							<a href="kontrakhapus.php?id=<?=$val['id']?>" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
 						<?php
 						} else {
