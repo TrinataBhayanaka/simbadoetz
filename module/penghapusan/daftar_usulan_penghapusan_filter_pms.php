@@ -54,7 +54,7 @@ include "../../config/config.php";
 		</div>
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pms.php?pid=1" onsubmit="return requiredFilter()">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pms.php?pid=1" onsubmit="return requiredFilter(true,false)">
 			<ul><!-- 
 							<li>
 								<span class="span2">ID Aset (System ID)</span>
@@ -70,7 +70,7 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span class="span2">Tahun Perolehan</span>
-								<input type='text' id="#lda_tp" maxlength="4"  name="bup_tahun" placeholder="" required/>
+								<input type='text' id="#lda_tp" maxlength="4"  name="bup_tahun" placeholder="" />
 							</li>
 							<li>
                                 <span class="span2">Jenis Aset</span>

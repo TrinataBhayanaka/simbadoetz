@@ -40,15 +40,19 @@ include "../../config/config.php";
 		<section class="formLegend">
 			
 			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/perolehan/"; ?>search_aset_daftar.php?id=<?=$idkontrak?>" method="post">
+			<ul>	
+							<?php selectAset('kodeKelompok','255',false,false); ?>
+			</ul>
 			<ul>
 							<li>
 								<span>Tahun Perolehan</span><br/>
 								<input name="Tahun" id="Tahun" class="span2"  type="text" required>
 							</li>
 							<li>
-								<span>Kode Registrasi</span><br/>
-								<input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px"> . 
-								<input type="number" name="noRegister" class="span1" min="1" required>
+								<span>No Registrasi</span><br/>
+								<input type="number" name="noRegister1" class="span1" min="1" value="1" required> -
+								<!-- <input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px"> .  -->
+								<input type="number" name="noRegister2" class="span1" min="1" value="1" required>
 							</li>
 							<li>
 								<span>Jenis Aset</span><br/>
