@@ -107,7 +107,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 		</div>
 		<section class="formLegend">
 			
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_hasil_filter.php?pid=1" onsubmit="return requiredFilter(true,false)">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_hasil_filter.php?pid=1" onsubmit="return requiredFilter(true,false)">
 			<ul>
 							
 							<li>
