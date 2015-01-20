@@ -86,18 +86,6 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	
 		<script language="Javascript" type="text/javascript">  
 	
-		function AreAnyCheckboxesChecked () 
-		{
-			setTimeout(function() {
-		  if ($("#Form2 input:checkbox:checked").length > 0)
-			{
-			    $("#btn-dis").removeAttr("disabled");
-			}
-			else
-			{
-			   $('#btn-dis').attr("disabled","disabled");
-			}}, 100);
-		}
 				function enable(){  
 				var tes=document.getElementsByTagName('*');
 				var button=document.getElementById('submit');
@@ -131,6 +119,21 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					}
 				}
 			</script>
+				<script>
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			}}, 100);
+		}
+		</script>
+
           <section id="main">
 			<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -176,7 +179,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			
 			
 			<div id="demo">
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses.php">
+			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses.php">
 			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<tr>
