@@ -133,7 +133,8 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								<td></td>
 								<td>$no.</td>
 								<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-								<td>$nilai[Aset_ID] - $nilai[kodeSatker]</td>
+								<input type='hidden' name='kondisi[]' value='$nilai[kondisi]'>
+								<td>$nilai[Aset_ID] - $nilai[kodeSatker]&nbsp;&nbsp;&nbsp;<br/>NilaiPerolehan : <input type='text' name='NilaiPerolehan[]' value='$nilai[NilaiPerolehan]' readonly/> Ubah NilaiPerolehan : <input type='text' name='Nilaiperolehanpsb[]' /> </td>
 								<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'></td>
 								</tr>
 

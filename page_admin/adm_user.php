@@ -186,6 +186,11 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 //print_r($menu_enable);
 
 ?>
+
+<link rel="stylesheet" href="css/jquery.treeview.css" />
+<script src="js/jquery.cookie.js" type="text/javascript"></script>
+<script src="js/jquery.treeview.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/treeView.js"></script>
 <table align="center" width="100%" border="0" cellpadding="0" cellspacing="5" style="margin-top:10px; border: 1px solid #c0c0c0;background-color:white;">
     <td>
         <table width="100%" align="center" cellpadding="0" cellspacing="5" border="0">
@@ -199,8 +204,58 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
                             <a href="?page=3&p=d&a=<?php echo $_GET['a'].'&i='.$shufle; ?>"style="color:#3A574E;">Tambah User</a>
                         </span>
                     </div>
-                            <?php
 
+                    <?php
+
+                        $query = "SELECT s.NamaSatker, o.Satker_ID, o.JabatanOperator FROM Operator AS o
+                        			LEFT JOIN satker AS s ON o.Satker_ID = s.Satker_ID
+                        			GROUP BY o.Satker_ID
+                        			ORDER BY s.NamaSatker ASC";
+                        $result = mysql_query($query) or die (mysql_error());
+                        $sumRec = mysql_num_rows($result);
+                        if( $sumRec ) {
+
+                        	$dataArr = $DBVAR->fetch($query,1);
+                        	foreach ($dataArr as $key => $value) {
+                        		$Satker_ID = intval($value['Satker_ID']);
+                        		$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = $Satker_ID";
+                            	$dataArr[$key]['operator'] = $DBVAR->fetch($sql,1);
+                            	
+                        	}
+                            // while( $data = mysql_fetch_assoc($result) ) {
+
+                            	// $dataArr[] = $data;
+
+                            // }
+                        }
+
+                        // pr($dataArr);
+                        if ($dataArr){
+                        	echo '<ul id="red" class="treeview-red">';
+                        	foreach ($dataArr as $key => $value) {
+                        		?>
+
+									<li><span><?= ($value['NamaSatker']=="" && $value['JabatanOperator']==1) ? 'Administrator' : $value['NamaSatker'];?></span>
+										<ul>
+											<?php foreach ($value['operator'] as $val):?>
+											<div class="<?php if (isset($_GET['a'])){if ($_GET['a']== $val['OperatorID']) echo 'datalist_inlist_selected';} ?>" >
+											<li><a class="datalist_inlist" href="?page=3&p=d&a=<?php echo $val['OperatorID']; ?>"><span><?=$val['NamaOperator']?></span></a></li>
+											</div>
+											<?php endforeach;?>
+										</ul>
+									</li>
+								
+                        		<?php
+                        	}
+                        	echo '</ul>';
+                        }
+                        // pr($dataArr);
+                    ?>
+
+                    
+
+                            <?php
+                            /*
                                 $query = "SELECT * FROM Operator ORDER BY OperatorID ASC";
                                 $result = mysql_query($query) or die (mysql_error());
                                 $sumRec = mysql_num_rows($result);
@@ -213,7 +268,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
                             <?
                                 }
 
-                            } 
+                            } */
                             ?>
                 </td>
                 <td valign="top" align="left" style="padding:0px;">

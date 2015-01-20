@@ -136,6 +136,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 									
 									$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
 									// pr($dataUsulanAset);
+									// pr($_SESSION);
 									// StatusKonfirmasi
 									$no = 1;
 									foreach ($dataUsulanAset as $keys => $nilai)
@@ -169,8 +170,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										if($nilai[StatusKonfirmasi]==0){
 											$disabledForm="disabled";
 										}
-
-
+										if($_SESSION[jenis_hapus]=="PSB"){
+											$PSB="&nbsp;&nbsp;&nbsp;<br/>NilaiPerolehan : <input type='text' name='NilaiPerolehan[]' value='$nilai[NilaiPerolehan]' readonly/><br/> Ubah NilaiPerolehan : <input type='text' name='Nilaiperolehanpsb[]' value='$nilai[NilaiPerolehanTmp]' readonly />";
+										}else{
+											$PSB="";
+										}
 									echo "<tr>
 										<td style='border: 1px solid #004933; height:50px; padding:2px;'>
 										<table width='100%'>
@@ -178,7 +182,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 										<td></td>
 										<td>$no.</td>
 										<input type='hidden' name='penghapusan_nama_aset[]' value='$nilai[Aset_ID]'>
-										<td>$nilai[Aset_ID] - $nilai[kodeSatker] &nbsp;&nbsp;&nbsp;&nbsp;<span class='".$labelColor."'>".$textLabel."</span></td>
+										<td>$nilai[Aset_ID] - $nilai[kodeSatker] <span class='".$labelColor."'>".$textLabel."</span>{$PSB} </td>
 										<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' class='btn' onclick='spoiler(this);'>
 										$disabled
 										</td>

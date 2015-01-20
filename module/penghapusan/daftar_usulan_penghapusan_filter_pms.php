@@ -50,7 +50,7 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span class="span2">Tahun Perolehan</span>
-								<input type='text'  name="bup_tahun" placeholder=""/>
+								<input type='text'  name="bup_tahun" placeholder="" required/>
 							</li>
 							<li>
                                 <span class="span2">Jenis Aset</span>

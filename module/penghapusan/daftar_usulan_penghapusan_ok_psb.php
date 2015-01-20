@@ -61,7 +61,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		<section class="formLegend">
 			<table width="100%">
 				<tr>
-					<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Aset yang baru saja diusulkan untuk pemanfaatan:</u></td>
+					<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Aset yang baru saja diusulkan untuk Penghapusan:</u></td>
 				</tr>
 				<tr>
 					<td style="border: 1px solid #004933; height:50px; padding:2px;">
@@ -70,7 +70,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 								$usulan_id=$_GET['usulan_id'];
 							?>
 							<tr>
-								<td colspan=4 style="color:red; font-weight:bold;">No. Usulan Pemanfaatan : <?php echo "$usulan_id";?></td>
+								<td colspan=4 style="color:red; font-weight:bold;">No. Usulan Penghapusan : <?php echo "$usulan_id";?></td>
 							</tr>
 							<?php
 							
@@ -102,7 +102,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 							<td></td>
 							<td>$no.</td>
 							<input type='hidden' name='peman_usul_nama_aset[]' value='$nilai[Aset_ID]'>
-							<td>$nilai[Aset_ID] - $nilai[kodeSatker]</td>
+							<td>$nilai[Aset_ID] - $nilai[kodeSatker]&nbsp;&nbsp;&nbsp;<br/>NilaiPerolehan : <input type='text' name='NilaiPerolehan[]' value='$nilai[NilaiPerolehan]' readonly/><br/> Ubah NilaiPerolehan : <input type='text' name='Nilaiperolehanpsb[]' value='$nilai[NilaiPerolehanTmp]' readonly /></td>
 							<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn' value='View Detail' onclick='spoiler(this);'></td>
 							</tr>
 

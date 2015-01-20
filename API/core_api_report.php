@@ -489,7 +489,7 @@ class core_api_report extends DB {
             if ($kelompok!="" && $parameter_sql==""){
 				$parameter_sql=$query_kelompok_fix;
             } 
-            $limit="limit 100";
+            // $limit="limit 100";
 			
 			// echo "param =".$parameter_sql;
 			
@@ -1877,7 +1877,7 @@ class core_api_report extends DB {
 																		from 
 																			tanah as T,kelompok as K
 																		where
-																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1  AND T.kodeLokasi like '12%'
 																			and $newparameter_sql_01
 																		group by 
 																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
@@ -1892,7 +1892,7 @@ class core_api_report extends DB {
 																			Mesin as M,kelompok as K 
 																		where 
 																			M.kodeKelompok=K.Kode and 
-																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3 AND M.kodeLokasi like '12%'
 																			and $newparameter_sql_02 $KodeKaCondt1_mesin
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
@@ -1910,7 +1910,7 @@ class core_api_report extends DB {
 																		Bangunan as B,kelompok as K  
 																	where
 																		B.kodeKelompok = K.Kode and 
-																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3 AND B.kodeLokasi like '12%'
 																		and $newparameter_sql_03 $KodeKaCondt1_bangunan
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
@@ -1929,7 +1929,7 @@ class core_api_report extends DB {
 																		Jaringan as J,kelompok as K  
 																	where
 																		J.kodeKelompok = K.Kode and 
-																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3 AND J.kodeLokasi like '12%'
 																		and $newparameter_sql_04
 																	group by 
 																		J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
@@ -1948,7 +1948,7 @@ class core_api_report extends DB {
 																		AsetLain as AL,kelompok as K  
 																	where
 																		AL.kodeKelompok = K.Kode and 
-																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3 AND AL.kodeLokasi like '12%'
 																		and $newparameter_sql_05
 																	group by 
 																		AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
@@ -1967,7 +1967,7 @@ class core_api_report extends DB {
 																		KDP as KDPA,kelompok as K  
 																	where
 																		KDPA.kodeKelompok = K.Kode and 
-																		KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+																		KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1 AND KDPA.kodeLokasi like '12%'
 																		and $newparameter_sql_06
 																	group by 
 																		KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
@@ -2009,7 +2009,7 @@ class core_api_report extends DB {
 																		from 
 																			tanah as T,kelompok as K
 																		where
-																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 AND T.kodeLokasi like '12%'
 																			and $newparameter_sql_01
 																		group by 
 																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
@@ -2024,8 +2024,8 @@ class core_api_report extends DB {
 																			Mesin as M,kelompok as K 
 																		where 
 																			M.kodeKelompok=K.Kode and 
-																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3
-																			AND $extQuery_B_default $satker_02 $KodeKaCondt1_mesin
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3 AND M.kodeLokasi like '12%'
+																			AND $extQuery_B_default $KodeKaCondt1_mesin
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
@@ -2040,7 +2040,7 @@ class core_api_report extends DB {
 																			Mesin as M,kelompok as K 
 																		where 
 																			M.kodeKelompok=K.Kode and 
-																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and (M.NilaiPerolehan >= 300000 $KodeKa_mesin) and M.kondisi != 3
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and (M.NilaiPerolehan >= 300000 $KodeKa_mesin) and M.kondisi != 3 AND M.kodeLokasi like '12%'
 																			AND $extQuery_B_cndt 
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
@@ -2058,7 +2058,7 @@ class core_api_report extends DB {
 																		Bangunan as B,kelompok as K  
 																	where
 																		B.kodeKelompok = K.Kode and 
-																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3 AND B.kodeLokasi like '12%'
 																		AND $extQuery_C_default $KodeKaCondt1_bangunan
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
@@ -2077,7 +2077,7 @@ class core_api_report extends DB {
 																		Bangunan as B,kelompok as K  
 																	where
 																		B.kodeKelompok = K.Kode and 
-																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and (B.NilaiPerolehan >= 10000000 $KodeKa_bangunan) and B.kondisi != 3
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and (B.NilaiPerolehan >= 10000000 $KodeKa_bangunan) and B.kondisi != 3 AND B.kodeLokasi like '12%'
 																		AND $extQuery_C_cndt
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
@@ -2096,7 +2096,7 @@ class core_api_report extends DB {
 																		Jaringan as J,kelompok as K  
 																	where
 																		J.kodeKelompok = K.Kode and 
-																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3
+																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3 AND J.kodeLokasi like '12%'
 																		and $newparameter_sql_04
 																	group by 
 																		J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
@@ -2115,7 +2115,7 @@ class core_api_report extends DB {
 																		AsetLain as AL,kelompok as K  
 																	where
 																		AL.kodeKelompok = K.Kode and 
-																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3
+																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3 AND AL.kodeLokasi like '12%'
 																		and $newparameter_sql_05
 																	group by 
 																		AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
@@ -2146,13 +2146,14 @@ class core_api_report extends DB {
 																	
 															if($thnceck < $thnIntraDefault){
 																// echo "sini aja";
-																$dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+																// $dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+																$dataQuery = array($query_02_default,$query_02_condt);
 															}elseif($thnceck >= $thnIntraDefault || $thnceck < $thnFix){
 																// echo "tahun awal tidak sama tahun akhir";
 																$dataQuery = array($query_01,$query_02_condt,$query_03_condt,$query_04,$query_05,$query_06);
 															}else{
 																// echo "tahun awal sama tahun akhir";
-																$dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+																$dataQuery = array($query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
 															}
 															// pr($dataQuery);
 															// exit;
@@ -3547,14 +3548,14 @@ class core_api_report extends DB {
 							$awal = sprintf("%04s", $awal);
 							$akhir = sprintf("%04s", $akhir);
 							$output.=$awal.""."-"."".$akhir;
-							$output.=", ";
+							if($i!=$arrlength)$output.=", ";
 							$awal=$temp;
 							$akhir="";
 						}else{
 							$awal = sprintf("%04s", $awal);
 							
 							$output.=$awal;
-							$output.=", ";
+							if($i!=$arrlength)$output.=", ";
 							$awal = $temp;
 						}
 					}
@@ -3740,15 +3741,18 @@ class core_api_report extends DB {
 				//$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
 				$register_no=explode(",",$this->sortirNoReg($text_register));
 				// pr($register_no);
-				for($m=0;$m<count($register_no)-1;$m++){
-					$data[$keys]['noRegister']=$register_no[$m];
-					array_push($iman,$data[$keys]);
+				for($m=0;$m<=count($register_no);$m++){
+					if($register_no[$m]!="")
+					{
+						$data[$keys]['noRegister']=$register_no[$m];
+						array_push($iman,$data[$keys]);
+						}
 				}
 				$x++;
 				$i++;
 			}
 			// pr($data);
-			// exit;
+			//exit;
 			return $iman;
 		}
 		else{
