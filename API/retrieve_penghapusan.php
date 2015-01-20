@@ -1952,7 +1952,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         }
         public function update_validasi_penghapusan_PSB($data,$debug=false)
         {
-            //////pr($data);
+           // pr($data);
            
             if(isset($data)){
             
@@ -1962,7 +1962,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 for ($i=0; $i<$cnt; $i++){
                     //echo "$i";
                     // //////pr($data['ValidasiPenghapusan']);
-                    $penghapusan_id=$data['ValidasiPenghapusan'][$i];
+                    $penghapusan_id=$data['ValidasiPenghapusan'];
                     if($data['ValidasiPenghapusan']!=""){
                     
                     $sql = array(
@@ -1996,7 +1996,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "Penghapusan_ID='$penghapusan_id'",
                         );
                     $res2 = $this->db->lazyQuery($sql2,$debug);
-                    // //////pr($res2);
+                 //   pr($res2);
                     // foreach ($res2 as $key => $value) {
                     //     //////pr($value);
                     //     //////pr($key);
@@ -2009,7 +2009,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'field'=>"Aset_ID",
                         'condition' => "Penetapan_ID='$penghapusan_id' AND StatusKonfirmasi=1",
                         );
+//pr($sql23);
                     $res23 = $this->db->lazyQuery($sql23,$debug);
+//pr($res23);
+//exit;
                     $cntres2=count($res23);
                     // echo $cntres2;
                     for ($j=0; $j<$cntres2; $j++){
