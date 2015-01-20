@@ -85,6 +85,19 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	</script>
 	
 		<script language="Javascript" type="text/javascript">  
+	
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#btn-dis").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#btn-dis').attr("disabled","disabled");
+			}}, 100);
+		}
 				function enable(){  
 				var tes=document.getElementsByTagName('*');
 				var button=document.getElementById('submit');
