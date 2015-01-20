@@ -209,8 +209,9 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 
                         $query = "SELECT s.NamaSatker, o.Satker_ID, o.JabatanOperator FROM Operator AS o
                         			LEFT JOIN satker AS s ON o.Satker_ID = s.Satker_ID
+
                         			GROUP BY o.Satker_ID
-                        			ORDER BY s.NamaSatker ASC";
+                        			ORDER BY s.NamaSatker ASC ";
                         $result = mysql_query($query) or die (mysql_error());
                         $sumRec = mysql_num_rows($result);
                         if( $sumRec ) {
@@ -218,9 +219,15 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
                         	$dataArr = $DBVAR->fetch($query,1);
                         	foreach ($dataArr as $key => $value) {
                         		$Satker_ID = intval($value['Satker_ID']);
-                        		$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = $Satker_ID";
-                            	$dataArr[$key]['operator'] = $DBVAR->fetch($sql,1);
-                            	
+                        		if ($Satker_ID>0){
+                        			$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = $Satker_ID";
+                            		
+                        		}else{
+                        			$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID IS NULL";
+                            		 
+                        		}
+                        		$dataArr[$key]['operator'] = $DBVAR->fetch($sql,1);
+                            		
                         	}
                             // while( $data = mysql_fetch_assoc($result) ) {
 
