@@ -410,7 +410,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 
 	} );
 
-	$('.detailLeft').on('click', '#simpan', function (){
+	$(document).on('click', '#simpan', function (){
        $.post('<?=$url_rewrite?>/function/api/addruang.php', {ruangan:$("#ruangan").val(), kodesatker:$("#<?=$satker?>").val()}, function(data){
 	
 		})
