@@ -1566,9 +1566,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
                             'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','$NilaiPerolehan','$kondisi'",
                             );
-                        pr($sql1);
+                    //     pr($sql1);
                     
-                    exit;
+                    // exit;
                         $res1 = $this->db->lazyQuery($sql1,$debug,1);
 
                         // //pr($sql1);
