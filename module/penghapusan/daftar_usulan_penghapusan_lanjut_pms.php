@@ -253,16 +253,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</li>
 								<li>&nbsp;</li>
 								<li>
-									<span class="span2">No.Kontrak</span> : <?php echo $value[noKontrak]?>
+									<span class="span2">No.Kontrak</span> : <?php echo $value[noKontrak]?><br/>
 								</li>
 								<li>
-									<span class="span2">Satker</span> : <?php echo '['.$value[kodeSatker].'] '?>
+									<span class="span2">Satker</span> : <?php echo '['.$value[kodeSatker].'] '?><br/>
 								</li>
 								<li>
-									<span class="span2">&nbsp;</span>  <?php echo $value[NamaSatker];?>
+									<span class="span2">&nbsp;</span>  <?php echo $value[NamaSatker];?><br/>
 								</li>
 								<li>
-									<span class="span2">Kode Lokasi</span> : <?php echo $value[kodeLokasi]?>
+									<span class="span2">Kode Lokasi</span> : <?php echo $value[kodeLokasi]?><br/>
 								</li>
 								<li>
 									<span class="span2">Status</span> : <?php echo $kondisi. ' - ' .$value[AsalUsul]?>
