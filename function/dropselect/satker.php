@@ -18,7 +18,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 			// })
 
 			function newruangan(){
-				if($("#<?=$satker?>").val() != ""){
+				if($("#<?=$name?>").val() != "" && $("#tahunRuangan").val() != ""){
 					$('#addruangan').css("display","");
 				} else {
 					$('#addruangan').css("display","none");
@@ -386,7 +386,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 
 	$(document).ready(function() {
 	//fungsi dropselect
-
+				$( "#tahunRuangan" ).mask('9999');  
 				$("#<?=$name?>").select2({
                		placeholder: "Pilih Ruang",
 				    // minimumInputLength: 2,
@@ -397,7 +397,8 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 				        quietMillis: 50,
 				        data: function (term) {
 				            return {
-				                term: $("#<?=$satker?>").val()
+				                term: $("#<?=$satker?>").val(),
+				                tahun: $("#tahunRuangan").val()
 				            };
 				        },
 				        results: function (data) {
@@ -423,18 +424,23 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 
 	$(document).on('click', '#simpan', function (){
 	   if($("#ruangan").val() != ""){	
-	       $.post('<?=$url_rewrite?>/function/api/addruang.php', {ruangan:$("#ruangan").val(), kodesatker:$("#<?=$satker?>").val()}, function(data){
+	       $.post('<?=$url_rewrite?>/function/api/addruang.php', {ruangan:$("#ruangan").val(), kodesatker:$("#<?=$satker?>").val(),tahun:$("#tahunRuangan").val()}, function(data){
 		
 			})
    		}
     });
 
     $(document).on('click', '#delruangan', function (){
-	   if($("#<?=$name?>").val() != ""){	
-	       $.post('<?=$url_rewrite?>/function/api/delruang.php', {ruangan:$("#<?=$name?>").val(), kodesatker:$("#<?=$satker?>").val()}, function(data){
-				$("#<?=$name?>").select2("val", "");
-				$('#delruangan').css("display","none");
-			})
+	   if($("#<?=$name?>").val() != ""){
+	   		var popup = confirm("Hapus Ruangan?");
+	   		if(popup == true){	
+		       $.post('<?=$url_rewrite?>/function/api/delruang.php', {ruangan:$("#<?=$name?>").val(), kodesatker:$("#<?=$satker?>").val(),tahun:$("#tahunRuangan").val()}, function(data){
+					$("#<?=$name?>").select2("val", "");
+					$('#delruangan').css("display","none");
+			   })
+	   		} else {
+	   			return false;
+	   		}
    		}
     });
 	</script>
@@ -453,7 +459,9 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 		}
 	</style>
 	<li>
-		<span class="<?=$span?>">Kode Ruang</span><?=$enter?>
+		<span class="<?=$span?>">Tahun Ruangan</span><?=$enter?>
+		<input type="text" name="tahun" class="span1" id="tahunRuangan" onchange="return newruangan();"/><br>
+		<span class="<?=$span?>">Kode Ruangan</span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return editruang();"/>&nbsp;
 		<a style="display:none" data-toggle="modal" href="#addruang" class="btn btn-success btn-circle" id="addruangan" title="Tambah"><i class="fa fa-plus simbol"></i></a>
 		<!-- <a style="display:none" data-toggle="modal" href="#editruang" class="btn btn-info btn-circle" id="editruangan" title="Edit"><i class="fa fa-pencil simbol"></i></a> -->
