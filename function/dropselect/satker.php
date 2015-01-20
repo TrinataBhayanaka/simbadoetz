@@ -4,8 +4,22 @@
 function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 
 	global $url_rewrite;
-	// pr($_SESSION);
+	// pr($status);
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+
+	if($status == "required"){
+	?>
+		<script type="text/javascript">
+			$(document).on('submit',function(){
+				if($("#<?=$name?>").val() == ""){
+					alert("Kode Satker tidak boleh kosong");
+					return false;
+				}
+			})
+		</script>
+	<?php	
+	}
+
 	?>
 	<script type="text/javascript">
 	$(document).ready(function() {
@@ -61,6 +75,20 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	global $url_rewrite;
 	// pr($_SESSION);
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+
+	if($status == "required"){
+	?>
+		<script type="text/javascript">
+			$(document).on('submit',function(){
+				if($("#<?=$name?>").val() == ""){
+					alert("Kode Satker tidak boleh kosong");
+					return false;
+				}
+			})
+		</script>
+	<?php	
+	}
+
 	?>
 	<script type="text/javascript">
 	$(document).ready(function() {
@@ -116,6 +144,20 @@ function selectAset($name,$size=300,$br=false,$upd=false,$status=false){
 
 	global $url_rewrite;
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+
+	if($status == "required"){
+	?>
+		<script type="text/javascript">
+			$(document).on('submit',function(){
+				if($("#<?=$name?>").val() == ""){
+					alert("Jenis aset tidak boleh kosong");
+					return false;
+				}
+			})
+		</script>
+	<?php	
+	}
+
 	?>
 	<script type="text/javascript">
 	$(document).ready(function() {
