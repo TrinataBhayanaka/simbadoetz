@@ -1952,8 +1952,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         }
         public function update_validasi_penghapusan_PSB($data,$debug=false)
         {
-            //////pr($data);
-           
+
+            // pr($data);
+           // exit;
+
             if(isset($data)){
             
                     $cnt=count($data['ValidasiPenghapusan']);
@@ -1962,7 +1964,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 for ($i=0; $i<$cnt; $i++){
                     //echo "$i";
                     // //////pr($data['ValidasiPenghapusan']);
-                    $penghapusan_id=$data['ValidasiPenghapusan'][$i];
+                    $penghapusan_id=$data['ValidasiPenghapusan'];
                     if($data['ValidasiPenghapusan']!=""){
                     
                     $sql = array(
@@ -1996,7 +1998,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "Penghapusan_ID='$penghapusan_id'",
                         );
                     $res2 = $this->db->lazyQuery($sql2,$debug);
-                    // //////pr($res2);
+                 //   pr($res2);
                     // foreach ($res2 as $key => $value) {
                     //     //////pr($value);
                     //     //////pr($key);
@@ -2009,7 +2011,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'field'=>"Aset_ID",
                         'condition' => "Penetapan_ID='$penghapusan_id' AND StatusKonfirmasi=1",
                         );
+//pr($sql23);
                     $res23 = $this->db->lazyQuery($sql23,$debug);
+
+                    // pr($res23);
+                    // exit;
+
                     $cntres2=count($res23);
                     // echo $cntres2;
                     for ($j=0; $j<$cntres2; $j++){
@@ -2030,14 +2037,18 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     foreach($res23 as $asetid)
                         {
                                 $dataArr[]=$asetid[Aset_ID];
-                                // //////pr($asetid[Aset_ID]);
+                                // pr($asetid[Aset_ID]);
+
+                                // pr($dataArr);
+                                
                          $sql9 = array(
                     'table'=>'aset',
                     'field'=>"TipeAset",
                     'condition' => "Aset_ID={$asetid[Aset_ID]}",
                     );
                     $result9 = $this->db->lazyQuery($sql9,$debug);
-                    // //////pr($result9);
+                    // pr($result9);
+                    // exit;
                     $asetid9[$asetid[Aset_ID]] = $listTable[implode(',', $result9[0])];
                     // //////pr($asetid9);
                                 $sql12 = array(
@@ -2059,7 +2070,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 $sql_tipe = array(
                                     'table'=>'Aset',
                                     'field'=>"Aset_ID,TipeAset",
-                                    'condition' => "Aset_ID='$asetid[Aset_ID]'",
+                                    'condition' => "Aset_ID='{$asetid[Aset_ID]}'",
                                     );
                                 $res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
                                 
