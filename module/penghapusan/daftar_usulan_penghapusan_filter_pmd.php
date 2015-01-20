@@ -55,7 +55,7 @@ include "../../config/config.php";
 		</div>
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pmd.php?pid=1" onsubmit="return checkJenisAset()">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_lanjut_pmd.php?pid=1" onsubmit="return requiredFilter()">
 			<ul>
 							<!-- <li>
 								<span class="span2">ID Aset (System ID)</span>
