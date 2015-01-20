@@ -167,7 +167,7 @@ include "../../config/config.php";
 							foreach ($dataUsulan as $valueUsulan) {
 								echo "Usulan ID[".$valueUsulan['Usulan_ID']."]<br/>";
 								echo "<ul>";
-								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset($valueUsulan[Aset_ID]);
+								$dataAset = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_aset_tetap($valueUsulan[Aset_ID]);
 								$noAset=1;
 								// pr($dataAset);
 								foreach ($dataAset as $valueAset) {

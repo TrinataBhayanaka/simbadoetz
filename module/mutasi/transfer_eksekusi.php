@@ -356,7 +356,7 @@ include "../../config/config.php";
                                                     <tr>
                                                        
 														<td colspan="6">
-                                                            <?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                                                            <?=selectAllSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
 							
                                                         </td>
 														<td>&nbsp;</td>

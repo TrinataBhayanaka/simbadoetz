@@ -100,6 +100,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				}
 			}
 		</script>
+		<script>
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			}}, 100);
+		}
+		</script>
 
           <section id="main">
 			<ul class="breadcrumb">
@@ -168,7 +182,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			
 			
 			<div id="demo">
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_usul_psb.php"> 
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/daftar_usulan_penghapusan_usul_psb.php" ID="Form2"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>

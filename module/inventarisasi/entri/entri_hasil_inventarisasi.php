@@ -35,6 +35,7 @@ $menu_id = 10;
 			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({
 			});
+			   
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('9999-99-99');
 		});	

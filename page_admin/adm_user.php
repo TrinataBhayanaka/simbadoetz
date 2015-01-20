@@ -207,19 +207,27 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 
                     <?php
 
-                        $query = "SELECT s.NamaSatker, o.Satker_ID FROM Operator AS o
+                        $query = "SELECT s.NamaSatker, o.Satker_ID, o.JabatanOperator FROM Operator AS o
                         			LEFT JOIN satker AS s ON o.Satker_ID = s.Satker_ID
-                        			WHERE s.NamaSatker IS NOT NULL GROUP BY o.Satker_ID
-                        			ORDER BY s.NamaSatker ASC";
+
+                        			GROUP BY o.Satker_ID
+                        			ORDER BY s.NamaSatker ASC ";
                         $result = mysql_query($query) or die (mysql_error());
                         $sumRec = mysql_num_rows($result);
                         if( $sumRec ) {
 
                         	$dataArr = $DBVAR->fetch($query,1);
                         	foreach ($dataArr as $key => $value) {
-                        		$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = $value[Satker_ID]";
-                            	$dataArr[$key]['operator'] = $DBVAR->fetch($sql,1);
-                            	
+                        		$Satker_ID = intval($value['Satker_ID']);
+                        		if ($Satker_ID>0){
+                        			$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = $Satker_ID";
+                            		
+                        		}else{
+                        			$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID IS NULL";
+                            		 
+                        		}
+                        		$dataArr[$key]['operator'] = $DBVAR->fetch($sql,1);
+                            		
                         	}
                             // while( $data = mysql_fetch_assoc($result) ) {
 
@@ -234,7 +242,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
                         	foreach ($dataArr as $key => $value) {
                         		?>
 
-									<li><span><?=$value['NamaSatker']?></span>
+									<li><span><?= ($value['NamaSatker']=="" && $value['JabatanOperator']==1) ? 'Administrator' : $value['NamaSatker'];?></span>
 										<ul>
 											<?php foreach ($value['operator'] as $val):?>
 											<div class="<?php if (isset($_GET['a'])){if ($_GET['a']== $val['OperatorID']) echo 'datalist_inlist_selected';} ?>" >

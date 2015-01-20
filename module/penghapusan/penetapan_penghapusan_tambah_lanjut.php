@@ -52,6 +52,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			?>
      
                     <script language="Javascript" type="text/javascript">  
+                    
                             function enable(){  
                             var tes=document.getElementsByTagName('*');
                             var button=document.getElementById('submit');
