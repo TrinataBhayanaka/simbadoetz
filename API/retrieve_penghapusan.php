@@ -1562,7 +1562,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $sql1 = array(
                             'table'=>'UsulanAset',
                             'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
-                            'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','$data[Nilaiperolehanpsb][$i]','$data[kondisi][$i]'",
+                            'value' => "'$usulan_id','','$asset_id[0]','PSB','0','$data[Nilaiperolehanpsb][0]','$data[kondisi][0]'",
                             );
                         // pr($sql1);
                     
