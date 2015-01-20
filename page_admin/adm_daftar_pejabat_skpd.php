@@ -43,7 +43,7 @@ if (isset($_POST['idbtn']))
     //echo '<script type=text/javascript>alert("Sukses");</script>';
     //$query = "INSERT INTO Pejabat VALUES (null, )";
     
-    $query = "SELECT Pejabat_ID FROM Pejabat WHERE Satker_ID =".$_POST['Satker_ID'];
+    $query = "SELECT Pejabat_ID FROM Pejabat WHERE Satker_ID ={$_POST['Satker_ID']} AND Tahun = '{$_POST[tahun]}'";
     // echo $query;
     $result = $DBVAR->query($query) or die ($DBVAR->error());
     if ($DBVAR->num_rows($result))
