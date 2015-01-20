@@ -373,6 +373,17 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
 	?>
 	<script type="text/javascript">
+
+	function editruang(){
+		if($("#<?=$name?>").val() != ""){
+			$('#editruangan').css("display","");
+			$('#delruangan').css("display","");
+		} else {
+			$('#editruangan').css("display","none");
+			$('#delruangan').css("display","none");
+		}
+	}
+
 	$(document).ready(function() {
 	//fungsi dropselect
 
@@ -410,16 +421,43 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 
 	} );
 
-	$('.detailLeft').on('click', '#simpan', function (){
-       $.post('<?=$url_rewrite?>/function/api/addruang.php', {ruangan:$("#ruangan").val(), kodesatker:$("#<?=$satker?>").val()}, function(data){
-	
-		})
+	$(document).on('click', '#simpan', function (){
+	   if($("#ruangan").val() != ""){	
+	       $.post('<?=$url_rewrite?>/function/api/addruang.php', {ruangan:$("#ruangan").val(), kodesatker:$("#<?=$satker?>").val()}, function(data){
+		
+			})
+   		}
+    });
+
+    $(document).on('click', '#delruangan', function (){
+	   if($("#<?=$name?>").val() != ""){	
+	       $.post('<?=$url_rewrite?>/function/api/delruang.php', {ruangan:$("#<?=$name?>").val(), kodesatker:$("#<?=$satker?>").val()}, function(data){
+				$("#<?=$name?>").select2("val", "");
+				$('#delruangan').css("display","none");
+			})
+   		}
     });
 	</script>
+	<style type="text/css">
+		.btn-circle {
+		  width: 25px;
+		  height: 25px;
+		  text-align: center;
+		  padding: 0px 0;
+		  font-size: 12px;
+		  line-height: 1.42;
+		  border-radius: 15px;
+		}
+		.simbol {
+			margin-top: 8px;
+		}
+	</style>
 	<li>
 		<span class="<?=$span?>">Kode Ruang</span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> />&nbsp;
-		<a style="display:none" data-toggle="modal" href="#addruang" class="btn btn-small btn-success" id="addruangan"><i class="fa fa-plus"></i>&nbsp;Tambah</a>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return editruang();"/>&nbsp;
+		<a style="display:none" data-toggle="modal" href="#addruang" class="btn btn-success btn-circle" id="addruangan" title="Tambah"><i class="fa fa-plus simbol"></i></a>
+		<!-- <a style="display:none" data-toggle="modal" href="#editruang" class="btn btn-info btn-circle" id="editruangan" title="Edit"><i class="fa fa-pencil simbol"></i></a> -->
+		<a style="display:none" data-toggle="modal" href="#delruang" class="btn btn-danger btn-circle" id="delruangan" title="Hapus"><i class="fa fa-trash simbol"></i></a>
 	</li>
 	
 	<div id="addruang" class="modal hide fade  login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

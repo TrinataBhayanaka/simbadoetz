@@ -1423,7 +1423,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 				 $sql = array(
 							'table'=>'Usulan',
 							'field'=>'Aset_ID, Penetapan_ID, Jenis_Usulan, UserNm, TglUpdate, GUID, FixUsulan',
-							'value' => "'$aset', '', 'PMS', '$UserNm', '$date', '$ses_uid', '1'",
+							'value' => "'$aset', '0', 'PMS', '$UserNm', '$date', '$ses_uid', '1'",
 							);
 				$res = $this->db->lazyQuery($sql,$debug,1);
 				
@@ -1440,16 +1440,16 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 					$sql1 = array(
 						'table'=>'UsulanAset',
 						'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan",
-						'value' => "'$usulan_id','','$asset_id[$i]','PMS','0'",
+						'value' => "'$usulan_id','0','$asset_id[$i]','PMS','0'",
 						);
 					$res1 = $this->db->lazyQuery($sql1,$debug,1);
 					
-					$sql2 = array(
-						'table'=>'Aset',
-						'field'=>"Usulan_Penghapusan_ID='$usulan_id'",
-						'condition' => "Aset_ID='{$asset_id[$i]}'",
-						);
-					$res2 = $this->db->lazyQuery($sql2,$debug,2);
+					// $sql2 = array(
+					// 	'table'=>'Aset',
+					// 	'field'=>"Usulan_Penghapusan_ID='$usulan_id'",
+					// 	'condition' => "Aset_ID='{$asset_id[$i]}'",
+					// 	);
+					// $res2 = $this->db->lazyQuery($sql2,$debug,2);
 					
                    
                 }
@@ -1475,7 +1475,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 				 $sql = array(
 							'table'=>'Usulan',
 							'field'=>'Aset_ID, Penetapan_ID, Jenis_Usulan, UserNm, TglUpdate, GUID, FixUsulan',
-							'value' => "'$aset', '', 'PMD', '$UserNm', '$date', '$ses_uid', '1'",
+							'value' => "'$aset', '0', 'PMD', '$UserNm', '$date', '$ses_uid', '1'",
 							);
 				$res = $this->db->lazyQuery($sql,$debug,1);
 				
@@ -1492,7 +1492,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 					$sql1 = array(
 						'table'=>'UsulanAset',
 						'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan",
-						'value' => "'$usulan_id','','$asset_id[$i]','PMD','0'",
+						'value' => "'$usulan_id','0','$asset_id[$i]','PMD','0'",
 						);
 					$res1 = $this->db->lazyQuery($sql1,$debug,1);
 					
@@ -1529,7 +1529,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                  $sql = array(
                             'table'=>'Usulan',
                             'field'=>'Aset_ID, Penetapan_ID, Jenis_Usulan, UserNm, TglUpdate, GUID, FixUsulan',
-                            'value' => "'$aset', '', 'PSB', '$UserNm', '$date', '$ses_uid', '1'",
+                            'value' => "'$aset', '0', 'PSB', '$UserNm', '$date', '$ses_uid', '1'",
                             );
                 $res = $this->db->lazyQuery($sql,$debug,1);
 
@@ -1564,7 +1564,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $sql1 = array(
                             'table'=>'UsulanAset',
                             'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
-                            'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','$NilaiPerolehan','$kondisi'",
+                            'value' => "'$usulan_id','0','$asset_id[$i]','PSB','0','$NilaiPerolehan','$kondisi'",
                             );
                     //     pr($sql1);
                     
@@ -1778,7 +1778,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 				 $sql = array(
 							'table'=>'penghapusan',
 							'field'=>'Penghapusan_ID,Usulan_ID, NoSKHapus, TglHapus, AlasanHapus, Jenis_Hapus, Status, UserNm, FixPenghapusan',
-							'value' => "'','$UsulanID','$no', '$olah_tgl', '$keterangan','$jenis_hapus', '0','$UserNm', '1'",
+							'value' => "'0','$UsulanID','$no', '$olah_tgl', '$keterangan','$jenis_hapus', '0','$UserNm', '1'",
 							);
                  // //////pr($sql);exit;
 				$res = $this->db->lazyQuery($sql,$debug,1);
