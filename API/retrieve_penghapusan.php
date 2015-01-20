@@ -21,7 +21,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		
 
         $sql = array(
-                'table'=>'Aset AS a,Kelompok AS c,Satker AS e',
+                'table'=>'aset AS a,kelompok AS c,satker AS e',
                 'field'=>"a.*, c.Kelompok, c.Kode, e.*",
                 'condition' => "a.StatusValidasi = 1 AND a.Status_Validasi_Barang=1 AND a.NotUse=1 AND a.Dihapus=0 {$filterkontrak} GROUP BY a.Aset_ID",
                 'joinmethod' => ' LEFT JOIN ',
@@ -1511,7 +1511,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             }
             public function store_usulan_penghapusan_psb($data,$debug=false){   
                 
-                // //pr($data);
+                // pr($data);
              // exit;
                 $asset_id=Array();
                 $no_reg=Array();
@@ -1532,35 +1532,56 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'value' => "'$aset', '', 'PSB', '$UserNm', '$date', '$ses_uid', '1'",
                             );
                 $res = $this->db->lazyQuery($sql,$debug,1);
-                
-                
 
-                for($i=0;$i<$panjang;$i++){
+                // pr($panjang);
+                // if($panjang==2){
 
-                    $tmp=$nmaset[$i];
-                    $tmp_olah=explode("<br>",$tmp);
-                    $asset_id[$i]=$tmp_olah[0];
-                    $no_reg[$i]=$tmp_olah[1];
-                    $nm_barang[$i]=$tmp_olah[2];
+                //     $nmaset=$data['penghapusan_nama_aset'][0];
+                //     $nmaset=$data['penghapusan_nama_aset'][0];
+
+                //      $sql1 = array(
+                //             'table'=>'UsulanAset',
+                //             'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
+                //             'value' => "'$usulan_id','','$data[penghapusan_nama_aset][0]','PSB','0','$data[Nilaiperolehanpsb][0]','$data[kondisi][0]'",
+                //             );
+                //         pr($sql1);
                     
-                    $sql1 = array(
-                        'table'=>'UsulanAset',
-                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
-                        'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','{$data[Nilaiperolehanpsb][$i]}','{$data[kondisi][$i]}'",
-                        );
-                    $res1 = $this->db->lazyQuery($sql1,$debug,1);
-                    // //pr($sql1);
-                       // exit;
-                  
-                    // $sql2 = array(
-                    //     'table'=>'Aset',
-                    //     'field'=>"Usulan_Penghapusan_ID='$usulan_id'",
-                    //     'condition' => "Aset_ID='{$asset_id[$i]}'",
-                    //     );
-                    // $res2 = $this->db->lazyQuery($sql2,$debug,2);
+                //     exit;
+                //         $res1 = $this->db->lazyQuery($sql1,$debug,1);
+
+                //     // exit;
+                // }else{
+                    for($i=0;$i<$panjang;$i++){
+
+                        $tmp=$nmaset[$i];
+                        $tmp_olah=explode("<br>",$tmp);
+                        $asset_id[$i]=$tmp_olah[0];
+                        $no_reg[$i]=$tmp_olah[1];
+                        $nm_barang[$i]=$tmp_olah[2];
+                        pr($asetid);
+                        $sql1 = array(
+                            'table'=>'UsulanAset',
+                            'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
+                            'value' => "'$usulan_id','','$asset_id[$i]','PSB','0','$data[Nilaiperolehanpsb][$i]','$data[kondisi][$i]'",
+                            );
+                        // pr($sql1);
                     
+                    // exit;
+                        $res1 = $this->db->lazyQuery($sql1,$debug,1);
+
+                        // //pr($sql1);
+                           // exit;
+                      
+                        // $sql2 = array(
+                        //     'table'=>'Aset',
+                        //     'field'=>"Usulan_Penghapusan_ID='$usulan_id'",
+                        //     'condition' => "Aset_ID='{$asset_id[$i]}'",
+                        //     );
+                        // $res2 = $this->db->lazyQuery($sql2,$debug,2);
+                            
                  
                 }
+            // }
 
                
             }
