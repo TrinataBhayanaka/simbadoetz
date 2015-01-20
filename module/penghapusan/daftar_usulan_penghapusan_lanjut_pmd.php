@@ -223,23 +223,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<tr class="gradeA">
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
-						<?php
-						if (($_SESSION['ses_uaksesadmin'] == 1)){
-							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" 
-								<?php for ($j = 0; $j <= count($dataAsetUser); $j++){
-										if ($dataAsetUser[$j]==$value[Aset_ID]) echo 'checked';}?>/>
-							<?php
-						}else{
-							if ($dataAsetUser){
-							if (in_array($value->Aset_ID, $dataAsetUser)){
-							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$value[Aset_ID]) echo 'checked';}?>/>							<?php
-							}
-						}
-						}
 						
-						?>
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" 
+						
 						</td>
 						<td>
 							<ul>
