@@ -65,7 +65,7 @@ $resetDataView = $DBVAR->is_table_exists('filter2_penggunaan_'.$SessionUser['ses
 		</div>
 		<section class="formLegend">
 			
-			 <form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_tambah_data.php?pid=1" onsubmit="return checkJenisAset()">
+			 <form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_tambah_data.php?pid=1" onsubmit="return requiredFilter()">
 			<ul>
 							
 							<li>
