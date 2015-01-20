@@ -77,7 +77,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        data: function (term) {
 				            return {
 				            	free: true,
-				                sess: '<?=$_SESSION['ses_satkerkode']?>',
+				                sess: '',
 				                term: term
 				            };
 				        },
@@ -357,12 +357,40 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 				
 
 	} );
+
+	$('.detailLeft').on('click', '#simpan', function (){
+        
+    });
 	</script>
 	<li>
 		<span class="<?=$span?>">Kode Ruang</span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>&nbsp;
+		<!-- <a data-toggle="modal" href="#addruang" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a> -->
 	</li>
 	
+	<div id="addruang" class="modal hide fade  login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div id="titleForm" class="modal-header" >
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				  <h3 id="myModalLabel">Tambah Ruangan</h3>
+				</div>
+				<div class="modal-body">
+				
+				<div class="detailLeft">
+						
+						<ul>
+							<li>
+								<span class="span2">Nama Ruangan</span>
+								<input type="text" name="ruangan"/>
+							</li>
+						</ul>
+							
+					</div>
+					
+			</div>
+			<div class="modal-footer">
+			  <input type="button" value="Save" name="save" class="btn btn-default" id="simpan" />
+			</div>
+		</div> 
 	
 	<?php
 
