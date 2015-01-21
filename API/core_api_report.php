@@ -2147,8 +2147,8 @@ class core_api_report extends DB {
 																	
 															if($thnceck < $thnIntraDefault){
 																// echo "sini aja";
-																// $dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
-																$dataQuery = array($query_02_default,$query_02_condt);
+																$dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+																// $dataQuery = array($query_02_default,$query_02_condt);
 															}elseif($thnceck >= $thnIntraDefault || $thnceck < $thnFix){
 																// echo "tahun awal tidak sama tahun akhir";
 																$dataQuery = array($query_01,$query_02_condt,$query_03_condt,$query_04,$query_05,$query_06);
@@ -4750,10 +4750,10 @@ class core_api_report extends DB {
 			// $queryALL = array($query_mesin);
 			for ($i = 0; $i < count($queryALL); $i++)
 			{
-				/*echo "<br>";
+				echo "<br>";
 				echo "query_$i =".$queryALL[$i];
 				echo "<br>";
-				echo "<br>";*/
+				echo "<br>";
 				// exit;
 				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
 				
