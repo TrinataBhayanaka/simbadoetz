@@ -150,9 +150,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         // ////////pr($jenisaset);
 
         $filterkontrak = "";
-        if ($nokontrak) $filterkontrak .= " AND b.noKontrak = '{$nokontrak}' ";
-        if ($kodeSatker) $filterkontrak .= " AND b.kodeSatker = '{$kodeSatker}' ";
-        if ($tahun) $filterkontrak .= " AND b.Tahun = '{$tahun}' ";
+        if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' ";
+        if ($tahun) $filterkontrak .= " AND ast.Tahun = '{$tahun}' ";
         // if($jenisaset){
         //     $jmlJnsAset=count($jenisaset);
         //     // ////////pr($jmlJnsAset);
@@ -285,9 +285,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         // ////////pr($jenisaset);
 
         $filterkontrak = "";
-        if ($nokontrak) $filterkontrak .= " AND b.noKontrak = '{$nokontrak}' ";
-        if ($kodeSatker) $filterkontrak .= " AND b.kodeSatker = '{$kodeSatker}' ";
-        if ($tahun) $filterkontrak .= " AND b.Tahun = '{$tahun}' ";
+        if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
+        if ($kodeSatker) $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' ";
+        if ($tahun) $filterkontrak .= " AND ast.Tahun = '{$tahun}' ";
         // if($jenisaset){
         //     $jmlJnsAset=count($jenisaset);
         //     // ////////pr($jmlJnsAset);
