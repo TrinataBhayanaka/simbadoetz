@@ -138,7 +138,7 @@ if (isset($_POST['Simpan']))
 			$tmp_kode = "$data->KodeSatker.$_POST[KodeUnit].$_POST[KodeUPB]";
 			$query3 = "INSERT INTO Satker (Satker_ID, Tahun, KodeSektor, KodeSatker, NamaSatker, AlamatSatker, NGO, RAND_ID, IndukSatker, NGO1_ID, NGO2_ID, NGO3_ID, NGO4_ID, CNOTE1, CNOTE2, Gudang, KodeUnit, Tmp_KodeSatker, KotaSatker, BuatKIB, Kd_Ruang, kode)  VALUES (NULL, NULL, '$data->KodeSektor', '$data->KodeSatker', ".$NamaSatker.", NULL, 
 					0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, {$Gudang}, ".$KodeUnit.", '$tmpKodeRuang', ".$KotaSatker.", ".$BuatKIB.",{$KodeRuangan},'$tmp_kode')";
-			pr($query3);
+			// pr($query3);
 
 			logFile($query3);
 			$result3 = mysql_query($query3) or die (mysql_error());
