@@ -10,12 +10,12 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	if($status == "required"){
 	?>
 		<script type="text/javascript">
-			// $(document).on('submit',function(){
-			// 	if($("#<?=$name?>").val() == ""){
-			// 		alert("Kode Satker tidak boleh kosong");
-			// 		return false;
-			// 	}
-			// })
+			$(document).on('submit',function(){
+				if($("#<?=$name?>").val() == ""){
+					alert("Kode Satker tidak boleh kosong");
+					return false;
+				}
+			})
 
 			function newruangan(){
 				if($("#<?=$name?>").val() != "" && $("#tahunRuangan").val() != ""){
@@ -88,12 +88,12 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	if($status == "required"){
 	?>
 		<script type="text/javascript">
-			// $(document).on('submit',function(){
-			// 	if($("#<?=$name?>").val() == ""){
-			// 		alert("Kode Satker tidak boleh kosong");
-			// 		return false;
-			// 	}
-			// })
+			$(document).on('submit',function(){
+				if($("#<?=$name?>").val() == ""){
+					alert("Kode Satker tidak boleh kosong");
+					return false;
+				}
+			})
 		</script>
 	<?php	
 	}
@@ -468,7 +468,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 		<a style="display:none" data-toggle="modal" href="#delruang" class="btn btn-danger btn-circle" id="delruangan" title="Hapus"><i class="fa fa-trash simbol"></i></a>
 	</li>
 	
-	<div id="addruang" class="modal hide fade  login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="addruang" class="modal hide fade  login myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div id="titleForm" class="modal-header" >
 				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				  <h3 id="myModalLabel">Tambah Ruangan</h3>
@@ -479,8 +479,8 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 						
 						<ul>
 							<li>
-								<span class="span2">Nama Ruangan</span>
-								<input type="text" name="ruangan" id="ruangan"/>
+								<span >Nama Ruangan</span>
+								<input type="text" class="span3" name="ruangan" id="ruangan"/>
 							</li>
 						</ul>
 							

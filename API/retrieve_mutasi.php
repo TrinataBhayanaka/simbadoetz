@@ -440,7 +440,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     
                     $sql2 = array(
                             'table'=>"Aset",
-                            'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1",
+                            'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = NULL",
                             'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                             );
 
