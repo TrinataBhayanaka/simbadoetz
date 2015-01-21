@@ -154,6 +154,20 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 					} 
 				}
 			</script>
+			<script>
+				function AreAnyCheckboxesChecked () 
+				{
+					setTimeout(function() {
+				  if ($("#Form2 input:checkbox:checked").length > 0)
+					{
+					    $("#submit").removeAttr("disabled");
+					}
+					else
+					{
+					   $('#submit').attr("disabled","disabled");
+					}}, 100);
+				}
+				</script>	
 
           <section id="main">
 			<ul class="breadcrumb">
@@ -200,19 +214,17 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 			
 			
 			<div id="demo">
-			 <form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_validasi_proses.php?pid=1">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			 <form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_validasi_proses.php?pid=1">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
-						  <td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-						<td align=right>
-							<input type="submit" name="submit" value="Validasi Barang" id="submit" disabled/>
+						 <td align=right colspan="5">
+							<input type="submit" name="submit" value="Validasi Barang" class="btn btn-primary" id="submit" disabled/>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
-						<th>Pilihan</th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Nomor SKKDH</th>
 						<th>Tanggal SKKDH</th>
 						<th>Keterangan</th>
@@ -234,7 +246,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 						  
 					<tr class="gradeA">
 						<td><?php echo "$no";?></td>
-						<td>
+						<td class="checkbox-column">
 							<input type="checkbox" class="checkbox" onchange="enable()" name="ValidasiPemanfaatan[]" value="<?php echo $id?>" 
 							<?php for ($j = 0; $j <= count($explode); $j++){if ($explode[$j]==$id) echo 'checked';}?>/>
 						</td>
