@@ -239,7 +239,7 @@ section.formLegend .titleSp2dRPenunjang{
 #myModal2 li{
 	list-style:none;
 }
-#myModal3 li{
+.myModal3 li{
 	list-style:none;
 }
 #titleForm{
@@ -260,11 +260,11 @@ section.formLegend .titleSp2dRPenunjang{
 	display:inline-block;
 }
 
-#myModal3 .formLogin li .labellogin{
+.myModal3 .formLogin li .labellogin{
 	width:100px;
 	display:inline-block;
 }
-#myModal3.login{
+.myModal3.login{
 	width:400px;
 	height:200px;
 	margin:0 auto;
@@ -351,8 +351,12 @@ nav li a.iconHOme{
 	text-align:center;
 }
 nav li a:hover{
-	text-decoration:none;
-	color:#fff;
+	  color:#fff;
+	  text-decoration:none;
+	  transition: all 1s ease;
+	  -webkit-transition: all 1s ease;
+	  -moz-transition: all 1s ease;
+	  -ms-transition: all 1s ease;
 }
 nav li a li:hover{
 	background-color:#ED6946;
@@ -482,5 +486,13 @@ footer{
     text-align: center;
     margin-top: 20px;
   }
+}
+
+.ahover {
+	color:#fff;
+}
+
+.ahover:hover {
+	color:orange;
 }
 

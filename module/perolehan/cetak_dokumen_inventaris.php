@@ -102,7 +102,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectAllSatker('kodeSatker','255',true,false,'required'); ?>
+							<?php //selectAllSatker('kodeSatker','255',true,false,'required'); 
+								if($_SESSION[ses_uoperatorid] == '1'){
+										selectAllSatker('kodeSatker','255',true,false); 
+									}else{
+										selectSatker('kodeSatker','255',true,false); 
+									}
+							?>
 							<br />
 							<li>
 								<span class="span2">Tanggal Cetak</span>
@@ -176,7 +182,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<span class="span2">Tahun</span>
 								<input name="tahun" id ="tahun_rekap_kib" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
 							</li>-->
-							<?php selectAllSatker('kodeSatker7','255',true,false); ?>
+							<?php //selectAllSatker('kodeSatker7','255',true,false); 
+								if($_SESSION[ses_uoperatorid] == '1'){
+										selectAllSatker('kodeSatker7','255',true,false); 
+									}else{
+										selectSatker('kodeSatker7','255',true,false); 
+									}
+							
+							?>
 							<br />
 							<li>
 								<span class="span2">Tanggal Cetak</span>
@@ -252,7 +265,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectAllSatker('kodeSatker2','255',true,false); ?>
+							<?php //selectAllSatker('kodeSatker2','255',true,false); 
+								if($_SESSION[ses_uoperatorid] == '1'){
+										selectAllSatker('kodeSatker2','255',true,false); 
+									}else{
+										selectSatker('kodeSatker2','255',true,false); 
+									}
+							
+							?>
 							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
@@ -343,7 +363,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectAllSatker('kodeSatker3','255',true,false); ?>
+							<?php //selectAllSatker('kodeSatker3','255',true,false); 
+								if($_SESSION[ses_uoperatorid] == '1'){
+										selectAllSatker('kodeSatker3','255',true,false); 
+									}else{
+										selectSatker('kodeSatker3','255',true,false); 
+									}
+							
+							?>
 							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
@@ -421,7 +448,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php selectAllSatker('kodeSatker4','255',true,false); ?>
+							<?php //selectAllSatker('kodeSatker4','255',true,false);
+								if($_SESSION[ses_uoperatorid] == '1'){
+										selectAllSatker('kodeSatker4','255',true,false); 
+									}else{
+										selectSatker('kodeSatker4','255',true,false); 
+									}
+							?>
 							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
@@ -605,7 +638,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									<option value="06">F Konstruksi dan Pengerjaan</option>
 							  </select>
 							</li>
-							<?php selectAllSatker('kodeSatker8','255',true,false); ?>
+							<?php //selectAllSatker('kodeSatker8','255',true,false); 
+								if($_SESSION[ses_uoperatorid] == '1'){
+										selectAllSatker('kodeSatker8','255',true,false); 
+									}else{
+										selectSatker('kodeSatker8','255',true,false); 
+									}
+							?>
 							<br>
 							<!--<li>
 								<span class="span2">Nama Skpd </span>
@@ -698,7 +737,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 										</div>
 								</div>
 							</li>
-							<?php selectAllSatker('kodeSatker10','255',true,false,'required'); ?>
+							<?php selectAllSatker('kodeSatker10','255',true,false); ?>
 							<br />
 							<li>
 								<span class="span2">Tanggal Cetak</span>

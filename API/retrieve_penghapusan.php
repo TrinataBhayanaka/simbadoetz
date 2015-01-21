@@ -169,10 +169,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'field'=>"b.*,c.*,d.*",
                 'condition' => "{$condition} {$filterkontrak} GROUP BY b.Aset_ID",
                 'joinmethod' => ' LEFT JOIN ',
-                'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode'
+                'join' => 'b.kodeKelompok = c.Kode, b.KodeSatker = d.Kode',
+                'LIMIT'=>'10'
                 );
 // //////pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
+        // pr($res);
         if ($res) return $res;
         return false;
     }
