@@ -166,7 +166,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Jumlah</span>
-								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=$dataArr['aset']['Kuantitas']?>" onchange="return totalHrg()" required readonly/>
+								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="1" onchange="return totalHrg()" required readonly/>
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
