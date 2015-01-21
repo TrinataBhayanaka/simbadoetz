@@ -8,8 +8,34 @@
  * Date : 2012-08-01
  */
 include '../config/config.php';
-include 'header.php';
+
 //defined('_SIMBADA_V1_') or die ('FORBIDDEN ACCESS');
+
+
+if (isset($_POST['ajaxPejabat'])){
+
+    $date = $_POST['tahun'];
+    $id = $_POST['id'];
+
+    $sql = "SELECT * FROM Pejabat WHERE Tahun = '{$date}' AND Satker_ID = '{$id}'";
+    $res = $DBVAR->query($sql) or die ($DBVAR->error());
+    if ($DBVAR->num_rows($res))
+    {
+        while ($dataObj = $DBVAR->fetch_array($res))
+        {
+            $dat[] = $dataObj;
+        }
+
+        // pr($dat);
+        print json_encode(array('status'=>true, 'rec' => $dat));         
+    }else{
+        print json_encode(array('status'=>false));
+    }
+
+    exit;
+}
+
+include 'header.php';
 
 if (isset($_POST['idbtn']))
 {
@@ -17,7 +43,7 @@ if (isset($_POST['idbtn']))
     //echo '<script type=text/javascript>alert("Sukses");</script>';
     //$query = "INSERT INTO Pejabat VALUES (null, )";
     
-    $query = "SELECT Pejabat_ID FROM Pejabat WHERE Satker_ID =".$_POST['Satker_ID'];
+    $query = "SELECT Pejabat_ID FROM Pejabat WHERE Satker_ID ={$_POST['Satker_ID']} AND Tahun = '{$_POST[tahun]}'";
     // echo $query;
     $result = $DBVAR->query($query) or die ($DBVAR->error());
     if ($DBVAR->num_rows($result))
@@ -76,17 +102,18 @@ if (isset($_POST['idbtn']))
 	// pr($_POST);
     // exit;
     	for ($i = 0; $i <= 5; $i++) {
-        	$query = "INSERT INTO Pejabat VALUES ('".$_POST['idnamajabatan'][$i]."',
+        	$query = "INSERT INTO Pejabat (NamaJabatan, Satker_ID, NamaPejabat, NIPPejabat, Jabatan, Tahun) VALUES ('".$_POST['idnamajabatan'][$i]."',
             		'".$_POST['Satker_ID']."',
             		'".$_POST['idnamapjb'][$i]."',
                     '".$_POST['idnippjb'][$i]."',
-                    '{$_POST['jabatan'][$i]}',' ' )";
-            print_r($query);echo '<br>';
+                    '{$_POST['jabatan'][$i]}',
+                    '{$_POST[tahun]}')";
+            // print_r($query);echo '<br>';
 			// exit;
             $result = $DBVAR->query($query) or die ($DBVAR->error());
             if ($result)
             {
-            	//echo '<script type=text/javascript>alert("Sukses");</script>';
+            	// echo '<script type=text/javascript>alert("Sukses");</script>';
             }
         }
         echo '<script type=text/javascript>alert("Sukses");</script>';
@@ -94,6 +121,56 @@ if (isset($_POST['idbtn']))
 }
 ?>
 
+<script type="text/javascript">
+    $(document).on('change','#tahunjabatan', function(){
+
+        var tahun = $(this).val();
+        var pr = $('.hiddenurl_pr').val();
+        var sp = $('.hiddenurl_sp').val();
+        var ssp = $('.hiddenurl_ssp').val();
+        var sssp = $('.hiddenurl_sssp').val();
+
+        var idUrl = null;
+        
+        if (pr>0) idUrl = pr;
+        if (sp>0) idUrl = sp;
+        if (ssp>0) idUrl = ssp;
+        if (sssp>0) idUrl = sssp;
+
+        $.post(basedomain+'/page_admin/adm_daftar_pejabat_skpd.php',{ajaxPejabat:true, id:idUrl, tahun:tahun}, function(data){
+
+            var html = "";
+
+            if (data.status==true){
+                $.each(data.rec, function(i,value){
+
+                    $('#idnamapjb_'+i).val(value.NamaPejabat);
+                    $('#idnippjb_'+i).val(value.NIPPejabat);
+                    $('#jabatan_'+i).val(value.Jabatan);
+                    
+                })
+            } else {
+               for (var i = 0; i <= 5; i++) {
+                    $('#idnamapjb_'+i).val('');
+                    $('#idnippjb_'+i).val('');
+                    $('#jabatan_'+i).val('');
+               };
+            }
+            
+            
+
+        }, "JSON")  
+        // alert(idUrl);
+    })
+
+    
+
+</script>
+
+<input type="hidden" class="hiddenurl_pr" value="<?=intval($_GET[pr])?>">
+<input type="hidden" class="hiddenurl_sp" value="<?=intval($_GET[sp])?>">
+<input type="hidden" class="hiddenurl_ssp" value="<?=intval($_GET[ssp])?>">
+<input type="hidden" class="hiddenurl_sssp" value="<?=intval($_GET[sssp])?>">
 <table align="center" width="100%" border="0" cellpadding="0" cellspacing="5" style="margin-top:10px; border: 1px solid #c0c0c0;background-color:white;">
     <td>
         <form method="post" action=""> 
@@ -301,6 +378,8 @@ if (isset($_POST['idbtn']))
                                 <div id="testid">&nbsp;</div>
                                 
                                     <?php
+
+                                    $date = '2007';
                                     if (isset($_GET['pr']))
                                     {
                                     	if (isset($_GET['sp']))
@@ -310,21 +389,21 @@ if (isset($_POST['idbtn']))
 
                                                 if (isset($_GET['sssp']))
                                                 {
-                                                    $sql = "SELECT * FROM Pejabat WHERE Satker_ID = ".$_GET['sssp'];
+                                                    $sql = "SELECT * FROM Pejabat WHERE Tahun = '{$date}' AND Satker_ID = ".$_GET['sssp'];
                                                 }else{
-                                                    $sql = "SELECT * FROM Pejabat WHERE Satker_ID = ".$_GET['ssp'];
+                                                    $sql = "SELECT * FROM Pejabat WHERE Tahun = '{$date}' AND Satker_ID = ".$_GET['ssp'];
                                                 }
 												
 											}
 											else
 											{
-												$sql = "SELECT * FROM Pejabat WHERE Satker_ID = ".$_GET['sp'];
+												$sql = "SELECT * FROM Pejabat WHERE Tahun = '{$date}' AND Satker_ID = ".$_GET['sp'];
                                     		}
                                     		
 										}
                                     	else
                                     	{
-                                    		 $sql = "SELECT * FROM Pejabat WHERE Satker_ID = ".$_GET['pr'];
+                                    		 $sql = "SELECT * FROM Pejabat WHERE Tahun = '{$date}' AND Satker_ID = ".$_GET['pr'];
                                     	}
                                        
                                         $res = $DBVAR->query($sql) or die ($DBVAR->error());
@@ -341,11 +420,17 @@ if (isset($_POST['idbtn']))
                                     // print_r($dat);
                                     ?>
         
-        
+
                                 <table height="100%" width="100%" style="padding:10px;">
                                     <tbody>
                                         <tr>
-                                            <th align="center" width="150" style="color: #3A574E;"></th>
+                                            <th align="center" width="150" style="color: #3A574E;">Tahun  
+                                                <select name="tahun" id="tahunjabatan">
+                                                    <?php for($i=2007; $i<=date('Y'); $i++):?>
+                                                    <option value="<?=$i?>" <?php if ($dat[0]->Tahun==$i)echo 'selected'?>><?=$i?></option>
+                                                    <?php endfor;?>
+                                                </select>
+                                            </th>
                                             <th align="center" width="*" style="color: #3A574E;">Nama Pejabat</th>
                                             <th align="center" width="50" style="color: #3A574E;">NIP</th>
                                             <th align="center" width="50" style="color: #3A574E;">Jabatan</th>
@@ -391,7 +476,7 @@ if (isset($_POST['idbtn']))
                                                 <input type="text" value="<?=$dat[2]->NIPPejabat; ?>" id="idnippjb_2" name="idnippjb[2]" required="required">
                                             </td>
                                             <td align="left">
-                                                <input type="text" value="<?=$dat[2]->Jabatan; ?>" id="jabatan" name="jabatan[2]"></td>
+                                                <input type="text" value="<?=$dat[2]->Jabatan; ?>" id="jabatan_2" name="jabatan[2]"></td>
                                         </tr>
                                         <tr>
                                             <td align="left">
@@ -405,7 +490,7 @@ if (isset($_POST['idbtn']))
                                                 <input type="text" value="<?=$dat[3]->NIPPejabat; ?>" id="idnippjb_3" name="idnippjb[3]" required="required">
                                             </td>
                                             <td align="left">
-                                                <input type="text" value="<?=$dat[3]->Jabatan; ?>" id="jabatan" name="jabatan[3]"></td>
+                                                <input type="text" value="<?=$dat[3]->Jabatan; ?>" id="jabatan_3" name="jabatan[3]"></td>
                                         </tr>
                                         <tr>
                                             <td align="left">
@@ -419,7 +504,7 @@ if (isset($_POST['idbtn']))
                                                 <input type="text" value="<?=$dat[4]->NIPPejabat; ?>" id="idnippjb_4" name="idnippjb[4]" required="required">
                                             </td>
                                             <td align="left">
-                                                <input type="text" value="<?=$dat[4]->Jabatan; ?>" id="jabatan" name="jabatan[4]"></td>
+                                                <input type="text" value="<?=$dat[4]->Jabatan; ?>" id="jabatan_4" name="jabatan[4]"></td>
                                         </tr>
                                         <tr>
                                             <td align="left">
@@ -433,7 +518,7 @@ if (isset($_POST['idbtn']))
                                                 <input type="text" value="<?=$dat[5]->NIPPejabat; ?>" id="idnippjb_5" name="idnippjb[5]" required="required">
                                             </td>
                                             <td align="left">
-                                                <input type="text" value="<?=$dat[5]->Jabatan; ?>" id="jabatan" name="jabatan[5]"></td>
+                                                <input type="text" value="<?=$dat[5]->Jabatan; ?>" id="jabatan_5" name="jabatan[5]"></td>
                                         </tr>      
                                         <tr>
                                             <td colspan="4"><hr size="1"></td>
