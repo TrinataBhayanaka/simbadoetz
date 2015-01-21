@@ -55,12 +55,11 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
-// pr($get_satker);
-// exit;
+
 $result_query = $REPORT->get_report_rekap_inv_skpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
-// exit;	
+
 //retrieve html
-$html=$REPORT->retrieve_html_rekapitulasi_bukuinventaris_skpd($result_query,$gambar,$tanggalCetak);
+$html=$REPORT->retrieve_html_rekapitulasi_bukuinventaris_skpd($result_query,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 

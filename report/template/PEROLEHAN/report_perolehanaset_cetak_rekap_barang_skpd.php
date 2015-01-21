@@ -85,7 +85,7 @@ exit;
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Rekapitulasi Barang Ke Neraca_$waktu.xls";
+	$filename ="Rekapitulasi_Barang_Ke_Neraca_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

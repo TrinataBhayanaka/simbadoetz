@@ -4671,7 +4671,8 @@ class core_api_report extends DB {
 					$dataBrkrngSatkerTujuan[]= "kodeSatker = "."'".$data->SatkerTujuan."'";
 				}
 			}
-		}	
+		}
+			
 		$dataBrkrngAset_ID = array_unique($dataBrkrngAset_ID);
 		$dataBrkrngSatkerAwal = array_unique($dataBrkrngSatkerAwal);
 		$dataBrkrngSatkerTujuan = array_unique($dataBrkrngSatkerTujuan);
@@ -4694,12 +4695,12 @@ class core_api_report extends DB {
 						$param_05[]="at.".$newBrkrngSatkerTujuan[$q];
 						$param_06[]="kd.".$newBrkrngSatkerTujuan[$q];
 					}
-				pr($param_01);
+				/*pr($param_01);
 				pr($param_02);
 				pr($param_03);
 				pr($param_04);
 				pr($param_05);
-				pr($param_06);
+				pr($param_06);*/
 					$newparameter_sql_01 = implode(' OR ', $param_01);
 					echo "param1".$newparameter_sql_01;
 					$newparameter_sql_02 = implode(' OR ', $param_02);
@@ -4712,6 +4713,13 @@ class core_api_report extends DB {
 				// echo "sini ajaaa";
 				$Aset_IDFix = $dataBrkrngAset_ID[0];
 				$SatkerAwalFix = $dataBrkrngSatkerTujuan[0];
+				
+				$newparameter_sql_01  = "t.$SatkerAwalFix";
+				$newparameter_sql_02  = "m.$SatkerAwalFix";
+				$newparameter_sql_03  = "b.$SatkerAwalFix";
+				$newparameter_sql_04  = "j.$SatkerAwalFix";
+				$newparameter_sql_05  = "at.$SatkerAwalFix";
+				$newparameter_sql_06  = "kd.$SatkerAwalFix";
 			}
 			
 			// echo "newparameter_sql_01 ".$newparameter_sql_01; 
@@ -4747,14 +4755,14 @@ class core_api_report extends DB {
 							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";	
 			
 							
-			// $queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
-			$queryALL = array($query_mesin);
+			$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
+			// $queryALL = array($query_mesin);
 			for ($i = 0; $i < count($queryALL); $i++)
 			{
-				echo "<br>";
+				/*echo "<br>";
 				echo "query_$i =".$queryALL[$i];
 				echo "<br>";
-				echo "<br>";
+				echo "<br>";*/
 				// exit;
 				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
 				

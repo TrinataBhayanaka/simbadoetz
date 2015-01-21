@@ -50,6 +50,7 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 // exit;	
 // $resultParamGol = $REPORT->ceckneraca($get_satker,$tglawalperolehan,$tglakhirperolehan);	
 $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan);	
+// pr($resultParamGol);
 // exit;	
 //retrieve html
 $html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);

@@ -1,7 +1,6 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
-include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -13,16 +12,10 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglawal = $_GET['tglawalperolehan'];
-if($tglawal != ''){
-	$tglawalperolehan = $tglawal;
-}else{
-	$tglawalperolehan = '0000-00-00';
-}
+$tglawalperolehan = $_GET['tglawalperolehan'];
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
-$tglcetak = $_GET['tglcetak'];
 $skpd_id = $_GET['skpd_id'];
-$intra = $_GET['intra'];
+$bukuInv = $_GET['bukuInv'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 // exit;
@@ -35,7 +28,7 @@ $data=array(
     "skpd_id"=>$skpd_id,
     "mode"=>$mode,
     "tab"=>$tab,
-    "intra"=>"intra"
+    "bukuInv"=>"bukuInv"
 );
 
 function arrayToObject($result_query) {
@@ -71,22 +64,14 @@ $query=$REPORT->list_query($data);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-if($tglcetak != ''){
-	$tanggalCetak = format_tanggal($tglcetak);	
-}else{
-	$tglcetak = date("Y-m-d");
-	$tanggalCetak = format_tanggal($tglcetak);	
-}
-
 $result_query=$REPORT->QueryBinv($query);
-// pr($result_query);
 // exit;
 $result = arrayToObject($result_query);
 // pr($result_query);
 // exit;
 
 
-$html=$REPORT->retrieve_html_bukuinventaris_intra($result,$gambar,$tanggalCetak);
+$html=$REPORT->retrieve_html_laporan_mutasi($result,$gambar);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {
@@ -131,7 +116,7 @@ else
 {
 	
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Buku_Inventaris_Aset_$waktu.xls";
+	$filename ="Buku Inventaris Aset_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
