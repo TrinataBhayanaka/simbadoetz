@@ -737,7 +737,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 										</div>
 								</div>
 							</li>
-							<?php selectAllSatker('kodeSatker10','255',true,false,'required'); ?>
+							<?php selectAllSatker('kodeSatker10','255',true,false); ?>
 							<br />
 							<li>
 								<span class="span2">Tanggal Cetak</span>
