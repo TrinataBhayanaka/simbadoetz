@@ -2464,6 +2464,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               $kib['action'] = 3;
               $kib['operator'] = $_SESSION['ses_uoperatorid'];
               $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
+              $kib['GUID'] = $data['GUID'];
               if($data['rubahkondisi']) $kib['Kd_Riwayat'] = 1;
               if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
