@@ -18,5 +18,7 @@
                     autoArrows: true
             });
     });
+
+    var basedomain = "<?php echo $url_rewrite?>";
     </script>
 </head>

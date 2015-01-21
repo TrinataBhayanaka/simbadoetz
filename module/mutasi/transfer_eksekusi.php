@@ -12,7 +12,7 @@ include "../../config/config.php";
 
 	$MUTASI = new RETRIEVE_MUTASI;
 
-	// pr($_POST);
+	pr($_POST);
     $data = $MUTASI->retrieve_mutasi_eksekusi($_POST);
 
 

@@ -261,12 +261,15 @@ class DB
 		return $result;
 	}
 
-	function logIt($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false, $debug=false)
+	function logIt($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false, $text= false, $debug=false)
 	{
 
 	    if (empty($table)) return false;
 	    if (empty($Aset_ID)) return false;
 	    
+	    if ($text) $actionText = $text;
+	    else $actionText = $action;
+
 	    $date = date('Y-m-d H:i:s');
 	    if ($tgl) $tglProses = $tgl;
 	    else $tglProses = '0000-00-00';
@@ -277,7 +280,7 @@ class DB
 	    $actionList = array(1=>'insert',2=>'update');
 	    $addField = array(
 	    				'changeDate'=>$date,
-	    				'action'=>$action,
+	    				'action'=>$actionText,
 	    				'operator'=>$_SESSION['ses_uoperatorid'],
 	    				'TglPerubahan'=>$tglProses,
 	    				'Kd_Riwayat'=>$action,
