@@ -186,16 +186,21 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
-						<td width="130px">&nbsp;</td>
-						<td  align="left">&nbsp;</td>
-						<td align="right">
+						<td colspan="10" align="right">
 								<span><input type="submit" name="submit" class="btn" value="Usulan Penghapusan" id="submit" disabled/></span>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						<th>Informasi Aset</th>
+						<th>Kode</th>
+						<th>No Register</th>
+						<th>No Kontrak</th>
+						<th>Uraian</th>
+						<th>Satker</th>
+						<th>Tanggal Perolehan</th>
+						<th>Nilai Perolehan</th>
+						<th>Status</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -216,48 +221,50 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						$kondisi="Rusak Ringan";
 					}elseif($value[kondisi]==3){
 						$kondisi="Rusak Berat";
-					}elseif($value[kondisi]==1){
-						$kondisi="Baik";
 					}
+					// pr($value[TglPerolehan]);
+					$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
+					// pr($TglPerolehanTmp);
+					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+
+
 					?>
 						
 					<tr class="gradeA">
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
-					
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" 
 						
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
+							
+						</td>
+
+						<td>
+							<?php echo $value[Kode]?>
 						</td>
 						<td>
-							<ul>
-								<li>
-									<span class="span3"><span class="label label-info"><?php echo$value[Aset_ID]?></span>( Aset ID - System Number )</span>
-									<br/>
-								</li>
-								<li>
-									<span class="span3"><?php echo $value[noRegister]?></span><br/>
-								</li>
-								<li>
-									<span class="span3">[<?php echo $value[kodeKelompok]?>]<?php echo $value[Uraian]?></span><br/>
-								</li>
-								<li>&nbsp;</li>
-								<li>
-									<span class="span2">No.Kontrak</span> : <?php echo $value[noKontrak]?><br/>
-								</li>
-								<li>
-									<span class="span2">Satker</span> : <?php echo '['.$value[kodeSatker].'] '?><br/>
-								</li>
-								<li>
-									<span class="span2">&nbsp;</span>  <?php echo $value[NamaSatker];?><br/>
-								</li>
-								<li>
-									<span class="span2">Kode Lokasi</span> : <?php echo $value[kodeLokasi]?><br/>
-								</li>
-								<li>
-									<span class="span2">Status</span> : <?php echo $kondisi. ' - ' .$value[AsalUsul]?><br/>
-								</li>
-							</ul><br/>
+							<?php echo $value[noRegister]?>
 						</td>
+						<td>
+							<?php echo $value[noKontrak]?>
+						</td>
+						<td>
+							<!-- [<?php echo $value[kodeKelompok]?>]<br/> -->
+							<?php echo $value[Uraian]?>
+						</td>
+						<td>
+							<?php echo '['.$value[kodeSatker].'] '?><br/>
+							<?php echo $value[NamaSatker];?>
+						</td>
+						<td>
+							<?php echo $TglPerolehan;?>
+						</td>
+						<td>
+							<?php echo $value[NilaiPerolehan]?>
+						</td>
+						<td>
+							<?php echo $kondisi. ' - ' .$value[AsalUsul]?>
+						</td>
+							
 					</tr>
 					
 				   <?php
@@ -272,6 +279,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
