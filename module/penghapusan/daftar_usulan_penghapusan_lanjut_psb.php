@@ -193,10 +193,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<tr>
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						<th>Kode</th>
 						<th>No Register</th>
 						<th>No Kontrak</th>
-						<th>Uraian</th>
+						<th>Kode / Uraian</th>
+						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
@@ -239,10 +239,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
-
-						<td>
-							<?php echo $value[Kode]?>
-						</td>
 						<td>
 							<?php echo $value[noRegister]?>
 						</td>
@@ -250,8 +246,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							<?php echo $value[noKontrak]?>
 						</td>
 						<td>
-							<!-- [<?php echo $value[kodeKelompok]?>]<br/> -->
+							 [<?php echo $value[kodeKelompok]?>]<br/> 
 							<?php echo $value[Uraian]?>
+						</td>
+						<td>
+							<?php echo $value[Merk]?> <?php if ($value[Model]) echo $value[Model];?>
 						</td>
 						<td>
 							<?php echo '['.$value[kodeSatker].'] '?><br/>

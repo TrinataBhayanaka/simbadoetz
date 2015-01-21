@@ -74,12 +74,12 @@ include "../../config/config.php";
 							</li>
 							<li>
                                 <span class="span2">Jenis Aset</span>
-                                <input type="checkbox" name="jenisaset[]" value="A" class="jenisaset1">Tanah
-                                <input type="checkbox" name="jenisaset[]" value="B" class="jenisaset2">Mesin
-                                <input type="checkbox" name="jenisaset[]" value="C" class="jenisaset3">Bangunan
-                                <input type="checkbox" name="jenisaset[]" value="D" class="jenisaset4">Jaringan
-                                <input type="checkbox" name="jenisaset[]" value="E" class="jenisaset5">Aset Lain
-                                <input type="checkbox" name="jenisaset[]" value="F" class="jenisaset6">KDP
+                                <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
+                                <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
+                                <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
+                                <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
+                                <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
+                                <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
                             </li>  
                             <li>&nbsp;</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
