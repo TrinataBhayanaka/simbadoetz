@@ -127,6 +127,10 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 									</div>
 								</div>
 							</li>
+							<li>
+								<span class="span2">Keterangan Koreksi</span>
+								<textarea name="GUID" class="span3"><?=$dataArr['aset']['GUID']?></textarea>
+							</li>
 						</ul>
 						<ul>
 							<li>
@@ -138,7 +142,6 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 									<option value="3" <?=$dataArr['kib']['kondisi'] == '3' ? 'selected' : ''?>>Rusak Berat</option>
 								</select>
 							</li>
-							<li>&nbsp;</li>
 						</ul>
 					</div>
 					<div class="detailLeft">
