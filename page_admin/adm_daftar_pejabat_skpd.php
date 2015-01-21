@@ -60,7 +60,7 @@ if (isset($_POST['idbtn']))
             	$query = "UPDATE Pejabat SET NamaJabatan = '".$_POST['idnamajabatan'][$i]."', 
                           Satker_ID ='".$_POST['Satker_ID']."',NamaPejabat = '".$_POST['idnamapjb'][$i]."', 
                           NIPPejabat = '".$_POST['idnippjb'][$i]."', 
-                          Jabatan = '{$_POST['jabatan'][$i]}'
+                          GUID = '{$_POST['jabatan'][$i]}'
                           WHERE Pejabat_ID = ".$valArr[$i]->Pejabat_ID;
 				// pr($query);
 	        $result = $DBVAR->query($query) or die ($DBVAR->error());
@@ -75,7 +75,7 @@ if (isset($_POST['idbtn']))
              	$query = "UPDATE Pejabat SET NamaJabatan = '".$_POST['idnamajabatan'][$i]."', 
                           Satker_ID ='".$_POST['Satker_ID']."',NamaPejabat = '".$_POST['idnamapjb'][$i]."', 
                           NIPPejabat = '".$_POST['idnippjb'][$i]."' ,
-                          Jabatan = '{$_POST['jabatan'][$i]}'
+                          GUID = '{$_POST['jabatan'][$i]}'
                           WHERE Satker_ID = ".$valArr[$i]->Pejabat_ID;
                 //echo $query;
 		$result = $DBVAR->query($query) or die ($DBVAR->error());
@@ -102,7 +102,7 @@ if (isset($_POST['idbtn']))
 	// pr($_POST);
     // exit;
     	for ($i = 0; $i <= 5; $i++) {
-        	$query = "INSERT INTO Pejabat (NamaJabatan, Satker_ID, NamaPejabat, NIPPejabat, Jabatan, Tahun) VALUES ('".$_POST['idnamajabatan'][$i]."',
+        	$query = "INSERT INTO Pejabat (NamaJabatan, Satker_ID, NamaPejabat, NIPPejabat, GUID, Tahun) VALUES ('".$_POST['idnamajabatan'][$i]."',
             		'".$_POST['Satker_ID']."',
             		'".$_POST['idnamapjb'][$i]."',
                     '".$_POST['idnippjb'][$i]."',
