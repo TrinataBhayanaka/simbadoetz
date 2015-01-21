@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
+include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -12,11 +13,16 @@ require_once('../../../function/mpdf/mpdf.php');
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
-$tglawalperolehan = $_GET['tglawalperolehan'];
+$tglawal = $_GET['tglawalperolehan'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
-$bukuInv = $_GET['bukuInv'];
 $tipe=$_GET['tipe_file'];
+$tglcetak=$_GET['tglcetak'];
 // pr($_GET);
 // exit;
 $REPORT=new report_engine();
@@ -31,26 +37,6 @@ $data=array(
     "bukuInv"=>"bukuInv"
 );
 
-function arrayToObject($result_query) {
-	if (!is_array($result_query)) {
-		return $result_query;
-	}
-	
-	$object = new stdClass();
-	if (is_array($result_query) && count($result_query) > 0) {
-		foreach ($result_query as $name=>$value) {
-			// $name = strtolower(trim($name));
-			// if (!empty($name)) {
-				$object->$name = arrayToObject($value);
-			// }
-		}
-		return $object;
-	}
-	else {
-		return FALSE;
-	}
-}
-
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -58,20 +44,22 @@ $REPORT=new report_engine();
 $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
-$query=$REPORT->list_query($data);
-// pr($query);
-// exit;
+$result=$REPORT->MutasiBarang($skpd_id,$tglawalperolehan,$tglakhirperolehan);
+
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-$result_query=$REPORT->QueryBinv($query);
-// exit;
-$result = arrayToObject($result_query);
-// pr($result_query);
-// exit;
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);	
+}
 
 
-$html=$REPORT->retrieve_html_laporan_mutasi($result,$gambar);
+// pr($result);
+// exit;
+$html=$REPORT->retrieve_html_laporan_mutasi($result,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {

@@ -75,506 +75,10 @@ class report_engine extends core_api_report {
 
 		} 
 
-public function retrieve_html_kb_a($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{
-echo "masukkk";
-// pr($dataArr);
-// exit;
-foreach ($dataArr as $asetID => $value)
-{
-	echo "asetid =".$asetID ;
-	echo "<br>";
-	//isi nilai asetID
-    foreach ($value as $keys =>$kocak)
-    {	
-		//isi nilainya
-		//skenario log tanah
-		//===============================================
-		//1 - kapitalisasi
-			//cek koderiawayat  
-			//2 	Ubah Kapitalisasi,
-			//7 	Penghapusan Sebagian
-			//21 	Koreksi Nilai
-		//jika ada nilainya foreach aja dgn tampilan html
-		$ceckKapt = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
-		
-		
-		
-		//===============================================
-		
-		
-		//2 - perubahan dokumen
-			//cek koderiawayat  
-			//18 	Ubah Data
-		//jika ada nilainya foreach aja dgn tampilan html
-		
-		//3 - pindah skpd dan ruangan
-			//cek koderiawayat  
-			//18 	Ubah Data
-		//jika ada nilainya foreach aja dgn tampilan html
-		
-		//3 - pindah skpd dan ruangan
-			//cek koderiawayat  
-			//18 	Ubah Data
-		//jika ada nilainya foreach aja dgn tampilan html
-		
-	
-		
-		
-		pr($kocak);
-		echo "kodeKelompok =".$kocak->kodeKelompok ;
-		echo "<br>";
-	}
-        
-}
-		
-    // $hasil_html[]=$html;
-	exit;
-	return $hasil_html;
-}
-// return $hasil_html;
-		
-		
-		
-		
-public function retrieve_html_rekap_barang_skpd($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{	
-	// pr($dataArr);
-	// exit;
-if($skpd_id != ''){	
-	$detailSatker=$this->get_satker($skpd_id);
-	$NoBidang = $detailSatker[0];
-	$NoUnitOrganisasi = $detailSatker[1];
-	$NoSubUnitOrganisasi = $detailSatker[2];
-	$NoUPB = $detailSatker[3];
 
-	if($NoBidang !=""){
-		$paramKodeLokasi = $NoBidang;
-	}
-	if($NoBidang !="" && $NoUnitOrganisasi != ""){
-		$paramKodeLokasi = $NoUnitOrganisasi;
-	}
-	if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-	}
-	if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-	}
-	$Bidang = $detailSatker[4][0];
-	$UnitOrganisasi = $detailSatker[4][1];
-	$SubUnitOrganisasi = $detailSatker[4][2];
-	$UPB = $detailSatker[4][3];
-	   
-	$ex = explode('.',$skpd_id);
-	$hit = count($ex);
-
-	if($hit == 1){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			";
-	}elseif($hit == 2){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-			</tr>";
-	}elseif($hit == 3){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-			</tr>";
-	}elseif($hit == 4){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-			</tr>";
-	}
-}else{
-	$head = '';
-}
-	$html = "<html>
-        <head>
-      <meta content=\"text/html; charset=UTF-8\"
-     http-equiv=\"content-type\">
-      <title></title>
-    </head>
-    <body>
-    <table style=\"text-align: left; width: 100%;\" border=\"0\"
-     cellpadding=\"2\" cellspacing=\"2\">
-      <tbody>
-        <tr>
-          <td style=\"width: 150px; text-align: LEFT;\"><img
-     style=\"width: 80px; height: 85px;\" alt=\"\"
-     src=\"$gambar\"></td>
-          <td style=\"width: 902px; text-align: center;\">
-          <h3>REKAPITULASI BARANG PER SKPD</h3>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br>";
-	$html .="
-    <table style=\"text-align: left; width: 100%;\" border=\"0\"
-     cellpadding=\"2\" cellspacing=\"2\">
-      <tbody>
-        <tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
-        </tr>
-        <tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
-        </tr>
-		$head
-      </tbody>
-    </table><br>
-	<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-	<tr>
-		<td style=\"text-align: center; font-weight: bold;\">KODE SKPD</td>
-		<td style=\"text-align: center; font-weight: bold;\">NAMA SKPD </td>
-		<td style=\"text-align: center; font-weight: bold;\">TANAH</td>
-		<td style=\"text-align: center; font-weight: bold;\">PERALATAN DAN <br>MESIN</td>
-		<td style=\"text-align: center; font-weight: bold;\">BANGUNAN DAN <br>GEDUNG</td>
-		<td style=\"text-align: center; font-weight: bold;\">JALAN, <br>JARINGAN DAN IRIGASI</td>
-		<td style=\"text-align: center; font-weight: bold;\">ASET TETAP <br>LAINNNYA</td>
-		<td style=\"text-align: center; font-weight: bold;\">KDP</td>
-		<td style=\"text-align: center; font-weight: bold;\">ASET LAIN</td>
-		<td style=\"text-align: center; font-weight: bold;\">JUMLAH</td>
-	</tr>";
-	
-	foreach ($dataArr as $data=>$value)
-	{
-		$exp = explode('_',$data);
-		$kodeSatker = $exp[0];
-		$namaSatker = end($exp);
-		
-		$cekjmlArray = count($value); 
-		if($cekjmlArray ==  9){
-			$nilai_tanah =$value[0];
-			$nilai_mesin =$value[1] + $value[2];
-			$nilai_bangunan =$value[3] + $value[4];
-			$nilai_jaringan =$value[5];
-			$nilai_asettetaplain =$value[6];
-			$nilai_kdp =$value[7];
-			$nilai_asetlain =$value[8];
-			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;
-					 
-			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;
-							
-		}else{
-			$nilai_tanah =$value[0];
-			$nilai_mesin =$value[1];
-			$nilai_bangunan =$value[2];
-			$nilai_jaringan =$value[3];
-			$nilai_asettetaplain =$value[4];
-			$nilai_kdp =$value[5];
-			$nilai_asetlain =$value[6];
-			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;
-			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;		 
-		}
-		
-		$html.="<tr>
-					<td style=\" text-align: center;\">$kodeSatker</td>
-					<td style=\"width: 300px; text-align: left;\">$namaSatker</td>
-					<td style=\"text-align: right; \">".number_format($nilai_tanah,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_mesin,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_bangunan,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_jaringan,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_asettetaplain,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_kdp,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_asetlain,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($total,2,",",".")."</td>
-				</tr>
-			";
-		$total = 0;
-		$TotAllFix += $TotAll;
-		$totalTanah += $nilai_tanah; 	
-		$totalMesin += $nilai_mesin; 	
-		$totalBangunan += $nilai_bangunan; 	
-		$totalJaringan += $nilai_jaringan; 	
-		$totalAsetTetap += $nilai_asettetaplain; 	
-		$totalKdp += $nilai_kdp; 	
-		$totalAsetLain += $nilai_asetlain; 
-		
-	}
-	$html.="<tr>
-				<td colspan =\"2\" style=\"text-align: center; \">JUMLAH</td>
-				<td style=\"text-align: right; \">".number_format($totalTanah,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalMesin,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalBangunan,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalJaringan,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalAsetTetap,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalKdp,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalAsetLain,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($TotAllFix,2,",",".")."</td>
-			</tr>";
-	$html.="</table></body></html>";
-	 $hasil_html[]=$html;
-return $hasil_html;
-}		
-
-public function retrieve_html_rekap_barang_upb($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
-{	
-	// pr($dataArr);
-	// exit;
-if($skpd_id != ''){	
-	$detailSatker=$this->get_satker($skpd_id);
-	$NoBidang = $detailSatker[0];
-	$NoUnitOrganisasi = $detailSatker[1];
-	$NoSubUnitOrganisasi = $detailSatker[2];
-	$NoUPB = $detailSatker[3];
-
-	if($NoBidang !=""){
-		$paramKodeLokasi = $NoBidang;
-	}
-	if($NoBidang !="" && $NoUnitOrganisasi != ""){
-		$paramKodeLokasi = $NoUnitOrganisasi;
-	}
-	if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-	}
-	if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-		$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-	}
-	$Bidang = $detailSatker[4][0];
-	$UnitOrganisasi = $detailSatker[4][1];
-	$SubUnitOrganisasi = $detailSatker[4][2];
-	$UPB = $detailSatker[4][3];
-	   
-	$ex = explode('.',$skpd_id);
-	$hit = count($ex);
-
-	if($hit == 1){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			";
-	}elseif($hit == 2){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-			</tr>";
-	}elseif($hit == 3){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-			</tr>";
-	}elseif($hit == 4){
-		$head = "<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-			</tr>
-			<tr>
-			  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
-			  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-			  <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-			</tr>";
-	}
-}else{
-	$head = "";
-}	
-	$html = "<html>
-        <head>
-      <meta content=\"text/html; charset=UTF-8\"
-     http-equiv=\"content-type\">
-      <title></title>
-    </head>
-    <body>
-    <table style=\"text-align: left; width: 100%;\" border=\"0\"
-     cellpadding=\"2\" cellspacing=\"2\">
-      <tbody>
-        <tr>
-          <td style=\"width: 150px; text-align: LEFT;\"><img
-     style=\"width: 80px; height: 85px;\" alt=\"\"
-     src=\"$gambar\"></td>
-          <td style=\"width: 902px; text-align: center;\">
-          <h3>REKAPITULASI BARANG PER UPB</h3>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br>";
-	$html .="
-    <table style=\"text-align: left; width: 100%;\" border=\"0\"
-     cellpadding=\"2\" cellspacing=\"2\">
-      <tbody>
-        <tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
-        </tr>
-        <tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
-        </tr>
-		$head
-      </tbody>
-    </table><br>
-	<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-	<tr>
-		<td style=\"text-align: center; font-weight: bold;\">KODE SKPD</td>
-		<td style=\"text-align: center; font-weight: bold;\">NAMA SKPD </td>
-		<td style=\"text-align: center; font-weight: bold;\">TANAH</td>
-		<td style=\"text-align: center; font-weight: bold;\">PERALATAN DAN <br>MESIN</td>
-		<td style=\"text-align: center; font-weight: bold;\">BANGUNAN DAN <br>GEDUNG</td>
-		<td style=\"text-align: center; font-weight: bold;\">JALAN, <br>JARINGAN DAN IRIGASI</td>
-		<td style=\"text-align: center; font-weight: bold;\">ASET TETAP <br>LAINNNYA</td>
-		<td style=\"text-align: center; font-weight: bold;\">KDP</td>
-		<td style=\"text-align: center; font-weight: bold;\">ASET LAIN</td>
-		<td style=\"text-align: center; font-weight: bold;\">JUMLAH</td>
-	</tr>";
-	
-	foreach ($dataArr as $data=>$value)
-	{
-		$exp = explode('_',$data);
-		$kodeSatker = $exp[0];
-		$namaSatker = end($exp);
-		
-		$cekjmlArray = count($value); 
-		if($cekjmlArray ==  9){
-			$nilai_tanah =$value[0];
-			$nilai_mesin =$value[1] + $value[2];
-			$nilai_bangunan =$value[3] + $value[4];
-			$nilai_jaringan =$value[5];
-			$nilai_asettetaplain =$value[6];
-			$nilai_kdp =$value[7];
-			$nilai_asetlain =$value[8];
-			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;
-					 
-			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;
-							
-		}else{
-			$nilai_tanah =$value[0];
-			$nilai_mesin =$value[1];
-			$nilai_bangunan =$value[2];
-			$nilai_jaringan =$value[3];
-			$nilai_asettetaplain =$value[4];
-			$nilai_kdp =$value[5];
-			$nilai_asetlain =$value[6];
-			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;
-			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain;		 
-		}
-		
-		$html.="<tr>
-					<td style=\" text-align: center;\">$kodeSatker</td>
-					<td style=\"width: 300px; text-align: left;\">$namaSatker</td>
-					<td style=\"text-align: right; \">".number_format($nilai_tanah,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_mesin,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_bangunan,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_jaringan,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_asettetaplain,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_kdp,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($nilai_asetlain,2,",",".")."</td>
-					<td style=\"text-align: right;\">".number_format($total,2,",",".")."</td>
-				</tr>
-			";
-		$total = 0;
-		$TotAllFix += $TotAll;
-		$totalTanah += $nilai_tanah; 	
-		$totalMesin += $nilai_mesin; 	
-		$totalBangunan += $nilai_bangunan; 	
-		$totalJaringan += $nilai_jaringan; 	
-		$totalAsetTetap += $nilai_asettetaplain; 	
-		$totalKdp += $nilai_kdp; 	
-		$totalAsetLain += $nilai_asetlain; 
-		
-	}
-	$html.="<tr>
-				<td colspan =\"2\" style=\"text-align: center; \">JUMLAH</td>
-				<td style=\"text-align: right; \">".number_format($totalTanah,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalMesin,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalBangunan,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalJaringan,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalAsetTetap,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalKdp,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($totalAsetLain,2,",",".")."</td>
-				<td style=\"text-align: right;\">".number_format($TotAllFix,2,",",".")."</td>
-			</tr>";
-	$html.="</table></body></html>";
-	 $hasil_html[]=$html;
-return $hasil_html;
-}		
-		
 public function retrieve_html_neraca($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
 {
 // pr($dataArr);
-// exit;
 $index_id = 0;
 $detailSatker=$this->get_satker($skpd_id);
 $NoBidang = $detailSatker[0];
@@ -1461,16 +965,15 @@ foreach ($dataArr as $satker_id => $value)
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-		$html.="<tr>
-					<td style=\"text-align: center; font-weight: bold;\">$no</td>
-					<td  style=\"font-weight: bold;\">$NamaSatker</td>
-					<td>&nbsp;</td>
-					<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-					<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-			   </tr>";
     foreach ($value as $keys => $data)
     {	
-		 $html .= "
+		 $html .= "<tr>
+						<td style=\"text-align: center; font-weight: bold;\">$no</td>
+						<td  style=\"font-weight: bold;\">$NamaSatker</td>
+						<td>&nbsp;</td>
+						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
+						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+			       </tr>
 				  <tr>
 					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
@@ -1668,16 +1171,16 @@ foreach ($dataArr as $satker_id => $value)
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-    $html.="<tr>
-				<td style=\"text-align: center; font-weight: bold;\">$no</td>
-				<td  style=\"font-weight: bold;\">$NamaSatker</td>
-				<td>&nbsp;</td>
-				<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-		   </tr>";
-	foreach ($value as $keys => $data)
+    foreach ($value as $keys => $data)
     {	
 		 $html .= "<tr>
+						<td style=\"text-align: center; font-weight: bold;\">$no</td>
+						<td  style=\"font-weight: bold;\">$NamaSatker</td>
+						<td>&nbsp;</td>
+						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
+						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+			       </tr>
+				  <tr>
 					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
@@ -1827,6 +1330,7 @@ $html = "<html>
      src=\"$gambar\"></td>
           <td style=\"width: 902px; text-align: center;\">
           <h3>DAFTAR ASET TETAP LAINNYA</h3>
+          <h3>MESIN</h3>
           </td>
         </tr>
       </tbody>
@@ -2080,16 +1584,16 @@ foreach ($dataArr as $satker_id => $value)
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-	$html.="<tr>
-				<td style=\"text-align: center; font-weight: bold;\">$no</td>
-				<td  style=\"font-weight: bold;\">$NamaSatker</td>
-				<td>&nbsp;</td>
-				<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
-				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
-		   </tr>";
     foreach ($value as $keys => $data)
     {	
 		 $html .= "<tr>
+						<td style=\"text-align: center; font-weight: bold;\">$no</td>
+						<td  style=\"font-weight: bold;\">$NamaSatker</td>
+						<td>&nbsp;</td>
+						<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
+						<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+			       </tr>
+				  <tr>
 					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
@@ -2675,7 +2179,7 @@ return $hasil_html;
 			 </table>";
 			 
 			   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-			   $akhir_footer="
+			   $footer.="
 			 </body>
 		</html>";   
 				
@@ -3029,7 +2533,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                               $akhir_footer="
+                                               $footer.="
                                              </body>
                                         </html>"; 
                                         	
@@ -3040,7 +2544,7 @@ return $hasil_html;
 
                                            }
 										// pr($html);   
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }
    	
@@ -3369,7 +2873,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
 											
@@ -3703,7 +3207,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                           
@@ -3713,7 +3217,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }   
          
      }
@@ -4050,7 +3554,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -4410,7 +3914,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                         	
@@ -4420,7 +3924,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }
 
@@ -4771,7 +4275,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";  
 											 //udah dites footer
@@ -5153,7 +4657,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                         
@@ -5163,7 +4667,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }          
 	 
@@ -5507,7 +5011,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											    
@@ -5881,7 +5385,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -5891,7 +5395,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }        
 
@@ -6233,7 +5737,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											    
@@ -6587,7 +6091,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -6597,7 +6101,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }        
 
@@ -6933,7 +6437,7 @@ return $hasil_html;
 			 </table>";
 			 
 			   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-			   $akhir_footer="
+			   $footer.="
 			 </body>
 		</html>";   
 				
@@ -7287,7 +6791,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                               $akhir_footer="
+                                               $footer.="
                                              </body>
                                         </html>"; 
                                         	
@@ -7298,7 +6802,7 @@ return $hasil_html;
 
                                            }
 										// pr($html);   
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }
    
@@ -7627,7 +7131,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
 											
@@ -7961,7 +7465,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                         
@@ -7971,7 +7475,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }   
          
      }
@@ -8308,7 +7812,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -8671,7 +8175,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                         	
@@ -8681,7 +8185,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }
 
@@ -9036,7 +8540,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";  
 											 //udah dites footer
@@ -9421,7 +8925,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                         
@@ -9431,7 +8935,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }          
 
@@ -9778,7 +9282,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											    
@@ -10151,7 +9655,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -10161,7 +9665,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }        
 
@@ -10503,7 +10007,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											    
@@ -10855,7 +10359,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -10865,7 +10369,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }        
 
@@ -11195,7 +10699,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $akhir_footer="
+	   $footer.="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -11451,8 +10955,7 @@ $footer ="
 					}else{
 						$awal = $split[0];
 						$akhir = end($split);
-						// $hasil = (intval($akhir) - intval($awal)) + 1;
-						$hasil = ($akhir - $awal) + 1;
+						$hasil = (intval($akhir) - intval($awal)) + 1;
 						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
 						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
 						$kuantitas = $hasil;
@@ -11553,7 +11056,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -11562,7 +11065,7 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
          
      }
@@ -11890,7 +11393,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $akhir_footer="
+	   $footer.="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -12211,7 +11714,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -12220,7 +11723,7 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
          
      }
@@ -12550,7 +12053,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $akhir_footer="
+	   $footer.="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -12907,7 +12410,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -12916,7 +12419,7 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
          
      }
@@ -13252,13 +12755,13 @@ if($dataArr!="")
                 </table>";
             
             $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-            $akhir_footer="
+            $footer.="
                 </body>
             </html>";      
                                        
             $html[]=$head.$body.$tabletotal.$foot.$footer;;
             //echo $status_print;
-            $html[]=$akhir_footer; return $html;
+            return $html;
           }
          
      }
@@ -13356,9 +12859,7 @@ if($dataArr!="")
 											   $noReg=substr($row->NomorReg,0,17);
 											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 												$thnLokasi= substr($row->Tahun,2,4);
-												// $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-											   
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 													list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
 											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
@@ -13552,7 +13053,7 @@ if($dataArr!="")
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->kodeSatker || $tahun != $row->Tahun || $ruangan != $row->kodeRuangan  && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $ruangan != $row->kodeRuangan && $no>1){
 
                                              $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
                                                $tabletotal="
@@ -13630,7 +13131,7 @@ if($dataArr!="")
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -13645,7 +13146,6 @@ if($dataArr!="")
                                              $ruangan = $row->kodeRuangan;
 											  $satker_id=$row->kodeSatker;
 											  $tahun = $row->Tahun;
-											  
 												//==add new==//
 											   $NamaRuangan = $this->get_Ruangan($tahun,$satker_id,$ruangan);
 											   if($NamaRuangan == ''){
@@ -13677,8 +13177,7 @@ if($dataArr!="")
 											   $noReg=substr($row->NomorReg,0,17);
 											   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 												$thnLokasi= substr($row->Tahun,2,4);
-												// $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
 											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
@@ -14007,7 +13506,7 @@ if($dataArr!="")
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";         
 														
@@ -14018,7 +13517,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;  
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }
 	 
@@ -14123,13 +13622,13 @@ if($dataArr!="")
                                              // $html[]=$body.$footer;
 
                                            // }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
          
     } 
 
 //mutasi
-    public function  retrieve_html_laporan_mutasi($dataArr,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak){
+    public function  retrieve_html_laporan_mutasi($dataArr,$gambar){
          
 if($dataArr!="")
 {
@@ -14208,9 +13707,8 @@ $perolehanTotalMutasi=0;
 						$thnLokasi= substr($row->Tahun,2,4);
 						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   //==end new==//
-                       
-			    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");	
+                        list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
                 if($nip_pengurus!="")
                 {
                     $nip_pengurus_fix=$nip_pengurus;
@@ -14428,16 +13926,17 @@ $footer ="
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
 		  </tr>
+		  
 		  <tr>
-			   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
 		  </tr>
 		  <tr>
 			   <td colspan=\"11\" style=\"height: 80px\"></td>
@@ -14473,7 +13972,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $akhir_footer="
+	   $footer.="
 	 </body>
 </html>";       
                                                 //udah dites footer
@@ -14523,43 +14022,8 @@ $footer ="
 				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   
 			   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");	
-                if($nip_pengurus!="")
-                {
-                    $nip_pengurus_fix=$nip_pengurus;
-                }
-                else
-                {
-                    $nip_pengurus_fix='........................................';
-                }
-
-                if($nip_pengguna!="")
-                {
-                    $nip_pengguna_fix=$nip_pengguna;
-                }
-                else
-                {
-                    $nip_pengguna_fix='........................................';
-                }
-
-                if($nama_jabatan_pengguna!="")
-                {
-                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
-                }
-                else
-                {
-                    $nama_jabatan_pengguna_fix='........................................';
-                }
-
-                if($nama_jabatan_pengurus!="")
-                {
-                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
-                }
-                else
-                {
-                    $nama_jabatan_pengurus_fix='........................................';
-                }
+                list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
+                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
 				 
 					
 
@@ -14714,9 +14178,9 @@ $footer ="
 
           }
                                              //udah dites
-					// $barangTotal = $barangTotal + $row->Kuantitas;
-					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan_Awal;
-					// $perolehan = number_format($row->NilaiPerolehan);
+					$barangTotal = $barangTotal + $row->Kuantitas;
+					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
+					$perolehan = number_format($row->NilaiPerolehan);
 					
 					$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
                                         
@@ -14736,115 +14200,47 @@ $footer ="
 						$ketKondisi = "";
 					} 
 					$noReg=$row->noRegister;
-					$nilaiPrlhn = $row->NilaiPerolehan_Awal;
-					$kuantitas = 1;
-					$nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
-					
-					if($row->Kd_Riwayat != 3){
-						// jika kondisi 
-						// 2(Ubah Kapitalisasi)
-						// 21(Koreksi Nilai)
-						// 7(penghapusan sebagian)
-						
-						//proses mutasi
-						$mutasi= $this->get_mutasi($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
-						// pr($mutasi);
-						$berkurang = $mutasi[0];
-						$bertambah = $mutasi[1];
-						
-						//bertambah
-						$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
-						// echo "selisih".$cekSelisih;
-						if($cekSelisih >= 0){
-							$valAdd = $cekSelisih;
-							$valSubst = 0;
-						}else{
-							$valAdd = 0;
-							$valSubst = $cekSelisih;
-						}
-						
-						//berkurang
-						if($berkurang != 0){
-							$jmlKurang = $berkurang;
-							$nilaiPrlhnMutasiKurang = ($jmlKurang * $row->NilaiPerolehan) + $valSubst;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-						}else{
-							// echo "sini";
-							$jmlKurang = 0;
-							$nilaiPrlhnMutasiKurang = $valSubst;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-						}
-						
-						//bertambah
-						if($bertambah !=0){
-							$jmlTambah = $bertambah;
-							$nilaiPrlhnMutasiTambah = $valAdd;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						}else{
-							$jmlTambah = 1;
-							$nilaiPrlhnMutasiTambah = $valAdd;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						}
-						
-						
-						// $jmlTambah = 1;
-						// $nilaiPrlhnMutasiTambah = $valAdd;
-						// $nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						
-						$jmlHasilMutasi = 1;
-						$nilaiPerolehanHasilMutasi = $row->NilaiPerolehan_Awal +$nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
-						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
-						
+					$kuantitas=count($noReg);
+					$split = explode("-", $row->noRegister);
+					if (count($split) == 1){
+						// $hasil = 1;
+						$nilaiPrlhn = $row->NilaiPerolehan;
+						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+						$kuantitas = 1;
 					}else{
-						// echo " == 3 ";
-						// jika kondisi 3(pindah skpd)
-						//cek mutasi tujuan untuk nilai yang bertambah
-						$mutasi= $this->get_mutasi($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
-						
-						// $berkurang = $mutasi[0];
-						$bertambah = $mutasi[1];
-						
-						//cek nilai lainya bertambah dengan kondisi riwayat 2,21,7
-						$OtherAddvalue= $this->MutasiAddvalue($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
-						if($OtherAddvalue != '' ){
-							
-							$nilaiPerolehanAdd = $OtherAddvalue[0];
-							$cekSelisih =($nilaiPerolehanAdd - $row->NilaiPerolehan_Awal);
-							
-							if($cekSelisih >= 0){
-								$valAdd = $cekSelisih;
-								$valSubst = 0;
-
-							}else{
-								$valAdd = 0;
-								$valSubst = $cekSelisih;
-								$jmlKurang = 1;
-								$nilaiPrlhnMutasiKurang = $valSubst;
-								$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							}							
-						}else{
-							$jmlKurang = 0;
-							$nilaiPrlhnMutasiKurang = 0;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							$nilaiPerolehanAdd = 0;
-						}
-						
-						//bertambah
-						if($bertambah !=0){
-							$jmlTambah = $bertambah;
-							$nilaiPrlhnMutasiTambah = ($jmlTambah * $row->NilaiPerolehan) + $valAdd;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						}else{
-							$jmlTambah = 1;
-							$nilaiPrlhnMutasiTambah = $jmlTambah + $valAdd;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						}
-						
-						$jmlHasilMutasi = 1;
-						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
-						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
-						
+						$awal = $split[0];
+						$akhir = end($split);
+						$hasil = (intval($akhir) - intval($awal)) + 1;
+						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+						$kuantitas = $hasil;
 					}
+					//coba mutasi aja
+					$mutasi= $this->get_mutasi($row->noRegister,$row->kodeKelompok,$row->kodeLokasi,$row->kodeSatker);
+					$berkurang = $mutasi[0];
+					$bertambah = end($mutasi);
+					if($berkurang != 0){
+						$jmlKurang = $berkurang;
+						$nilaiPrlhnMutasiKurang = $jmlKurang * $row->NilaiPerolehan;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+					}else{
+						$jmlKurang = 0;
+						$nilaiPrlhnMutasiKurang = $jmlKurang;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+					}
+					
+					if($bertambah !=0){
+						$jmlTambah = $bertambah;
+						$nilaiPrlhnMutasiTambah = $jmlTambah * $row->NilaiPerolehan;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+					}else{
+						$jmlTambah = 0;
+						$nilaiPrlhnMutasiTambah = $jmlTambah;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+					}
+					$jmlHasilMutasi = $kuantitas - $jmlKurang + $jmlTambah;
+					$nilaiPerolehanHasilMutasi = $nilaiPrlhn - $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
+					$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 					
 					$perolehanTotalKurang = $perolehanTotalKurang + $nilaiPrlhnMutasiKurang;
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
@@ -14853,7 +14249,7 @@ $footer ="
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
-									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok</td>
+									<td style=\"width: 83px; text-align:center;\">$row->Kode</td>
 									<td style=\"width: 64px; text-align:center;\">$noReg</td>
 									<td style=\"width: 118px;\">$row->Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
@@ -14908,18 +14304,19 @@ $footer ="
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                  </tr>
+                                                  
+                                                  <tr>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengguna Barang</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td>&nbsp;</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\">Pengurus Barang</td>
                                                   </tr>
                                                   <tr>
-													   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
-													   <td>&nbsp;</td>
-													   <td>&nbsp;</td>
-													   <td>&nbsp;</td>
-													   <td>&nbsp;</td>
-													   <td>&nbsp;</td>
-													   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
-												  </tr>
-                                                 <tr>
                                                        <td colspan=\"11\" style=\"height: 80px\"></td>
                                                   </tr>
                                                   
@@ -14953,7 +14350,7 @@ $footer ="
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
                                         if($status_print==0){
@@ -14962,284 +14359,11 @@ $footer ="
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
          
      }
 
-//mutasi skpd (ok)
-	public function  retrieve_html_laporan_mutasi_skpd($dataArr,$gambar,$tglawal,$tglakhir){
-
-if($dataArr!="")
-{
-    // include ('../../../function/tanggal/tanggal.php');
-    $head = "
-        <html>
-            <head>
-                <style>
-                        table
-                        {
-                            font-size:10pt;
-                            font-family:Arial;
-                            border-collapse: collapse;											
-                            border-spacing:0;
-                        }
-                        h3
-                        {
-                            font-family:Arial;	
-                            font-size:13pt;
-                            color:#000;
-
-                        }
-                        p
-                        {
-                            font-size:10pt;
-                            font-family:Arial;
-                            font-weight:bold;
-                        }
-                </style>
-            </head>";
-
-    $no=1;
-    $skpdeh="";
-    $barangTotal=0;
-    $perolehanTotal=0;
-    // pr($dataArr);
-    foreach ($dataArr as $row)   
-    {
-    if ($skpdeh == "" && $no==1){
-        $body="";
-        $skpdeh = $row->kodeSatker;
-		$asetid = $row->Aset_ID;
-		
-	   $getSatkerMutasiAwal=$this->getSatkerMutasi($asetid,$skpdeh);
-	   $detailSatker=$this->get_satker($getSatkerMutasiAwal);
-	   $NoBidang = $detailSatker[0];
-	   $NoUnitOrganisasi = $detailSatker[1];
-	   $NoSubUnitOrganisasi = $detailSatker[2];
-	   $NoUPB = $detailSatker[3];
-	   
-	   if($NoBidang !=""){
-			$paramKodeLokasi = $NoBidang;
-	   }
-	   if($NoBidang !="" && $NoUnitOrganisasi != ""){
-			$paramKodeLokasi = $NoUnitOrganisasi;
-	   }
-	   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
-			$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
-	   }
-	   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
-			$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-	   }
-	   $Bidang = $detailSatker[4][0];
-	   $UnitOrganisasi = $detailSatker[4][1];
-	   $SubUnitOrganisasi = $detailSatker[4][2];
-	   $UPB = $detailSatker[4][3];
-	   // $noReg=substr($row->NomorReg,0,17);
-	   $noKodeLokasi=substr($row->kodeLokasi,0,8);
-	   $thnLokasi= substr($row->kodeLokasi,15,2);
-	   // $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-	   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-
-	   
-        
-    $body="
-        <body>
-          <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
-            <thead>
-                <tr>
-                     <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
-                     <td style=\"width: 90%; text-align: center;\">
-                        <h3>LAPORAN MUTASI BARANG ANTAR SKPD</h3>
-                        <h4>PERIODE</h4>
-                    </td>
-                </tr>
-            </thead>
-            </table>
-            <br />
-            <br />
-            <table border=\"0\" width=\"100%\">
-                <tr align=\"left\" >
-			   <td >
-					<p>PROVINSI</p>
-			   </td>
-			   <td width=\"65%\">
-					<p>:&nbsp;$this->NAMA_PROVINSI</p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
-		  <tr>
-			   <td style=\"font-weight: bold; width=20%\">
-					<p>KABUPATEN/KOTA</p>
-			   </td>
-			   <td width=\"60%\">
-
-				   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
-		  <tr>
-			   <td style=\"font-weight: bold; width=20%\">
-					<p>BIDANG</p>
-			   </td>
-			   <td width=\"60%\">
-
-				   <p>:&nbsp;$Bidang</p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
-		  <tr>
-			   <td style=\"font-weight: bold; width=20%\">
-					<p>UNIT ORGANISASI</p>
-			   </td>
-			   <td width=\"60%\">
-
-				   <p>:&nbsp;$UnitOrganisasi</p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
-		   <tr>
-			   <td style=\"font-weight: bold; width=20%\">
-					<p>SUB UNIT ORGANISASI</p>
-			   </td>
-			   <td width=\"60%\">
-
-				   <p>:&nbsp;$SubUnitOrganisasi</p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
-		  <tr>
-			   <td style=\"font-weight: bold; width=20%\">
-					<p>UPB</p>
-			   </td>
-			   <td width=\"60%\">
-
-				   <p>:&nbsp;$UPB</p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
-		  <tr align=\"left\">
-			   <td width=\"20%\">
-					<p>NO. KODE LOKASI</p> 
-			   </td>
-			   <td width=\"60%\">
-					<p>:&nbsp;$kodeLokasi</p>
-			   </td>
-			   <td width=\"20%\">&nbsp;</td>
-		  </tr>
-            </table>
-            <br />
-            <br />
-		<table  style=\"width: 100%; height: 330px; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
-        <thead>
-			<tr>
-                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
-                <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi Barang (B,KB,RB)</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Berkurang<br/><hr>Bertambah</td>
-                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">SKPD</td>
-            </tr>
-			
-            <tr>
-                <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 47px;\">No Urut</td>
-                <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 118px;\">Nama/Jenis Barang</td>
-                <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 64px;\">Kode Barang</td>
-                <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 10px;\">Register</td>
-                <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 120px;\">Merk / Type</td>
-                <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 120px;\">No.Sertifikat<br>No. pabrik<br>No.Chasis Mesin</td>
-                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">TUJUAN</td>
-				
-                
-			</tr>
-			<tr>
-				<td style=\"text-align:center; font-weight: bold;\">Kode</td>
-                <td style=\"text-align:center; font-weight: bold;\">Nama</td>
-			</tr>
-            <tr>
-                <td style=\"text-align:center; font-weight: bold; width: 47px;\">1</td>
-                <td style=\"text-align:center; font-weight: bold; width: 83px;\">2</td>
-                <td style=\"text-align:center; font-weight: bold; width: 64px;\">3</td>
-                <td style=\"text-align:center; font-weight: bold; width: 118px;\">4</td>
-                <td style=\"text-align:center; font-weight: bold; width: 45px;\">5</td>
-                <td style=\"text-align:center; font-weight: bold; width: 120px;\">6</td>
-                <td style=\"text-align:center; font-weight: bold; width: 70px;\">7</td>
-                <td style=\"text-align:center; font-weight: bold; width: 70px;\">8</td>
-                <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
-                <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
-                <td style=\"text-align:center; font-weight: bold; width: 72px;\">11</td>
-            </tr>	
-		</thead>";
-    }
-	
-            ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
-            ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
-            ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;	           
-			$kondisi= $row->kondisi;
-			if ($kondisi == '1') {
-				$ketKondisi = "Baik";
-			}
-			elseif ($kondisi == '2') {
-				$ketKondisi = "Kurang Baik";
-			}
-			elseif ($kondisi == '3') {
-				$ketKondisi = "Rusak Berat";
-			}else{
-				$ketKondisi = "";
-			} 
-			
-			$mutasi = $this->getSatkerMutasiBertambah($asetid,$getSatkerMutasiAwal,$tglawal,$tglakhir);
-			// pr($mutasi);
-			if($mutasi){
-				$bertambah = $mutasi[0];
-				$nilaibertambahFix = number_format($bertambah,2,",",".");
-			}else{
-				$bertambah = 0;
-				$nilaibertambahFix = number_format($bertambah,2,",",".");
-			}
-			// echo "mutasi =".$mutasi[0]; 		
-			$nilaiPrlhn = $row->NilaiPerolehan;
-			$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
-			$perolehanTotal = $perolehanTotal + $nilaiPrlhn;			
-			$perolehanTotal_2 = $perolehanTotal_2 + $bertambah;			
-            $body.="
-                <tr>
-                    <td style=\"text-align:center;  width: 47px;\">$no</td>
-					<td style=\"text-align:center;  width: 83px;\">$row->Uraian</td>
-					<td style=\"text-align:center;  width: 64px;\">$row->kodeKelompok</td>
-					<td style=\"text-align:center;  width: 118px;\">$row->noRegister</td>
-					<td style=\"text-align:center;  width: 45px;\">$row->Merk</td>
-					<td style=\"text-align:center;  width: 120px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
-					<td style=\"text-align:center;  width: 70px;\">$row->Material</td>
-					<td style=\"text-align:center;  width: 70px;\">$ketKondisi</td>
-					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix<br/><hr>$nilaibertambahFix</td>
-					<td style=\"text-align:center;  width: 72px;\">$row->kode</td>
-					<td style=\"text-align:center;  width: 200px;\">$row->NamaSatker</td>
-                </tr>";
-                                                            
-            $no++;
-        }
-                                            
-            // $printbarang=  number_format($barangTotal);
-            $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
-            $printperolehanTotal_2=  number_format($perolehanTotal_2,2,",",".");
-            $tabletotal="<tr>
-                            <td colspan=\"8\" style=\"font-weight: bold; text-align: center;\">Jumlah</td>
-                            <td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal<br><hr>$printperolehanTotal_2</td>
-                            <td  colspan=\"2\">&nbsp;</td>
-                        </tr>
-                    </table>"; 
-			$akhir_footer="
-                </body>
-            </html>";      
-                                       
-            $html[]=$head.$body.$tabletotal.$akhir_footer;
-            //echo $status_print;
-            // $html[]=$akhir_footer; 
-			return $html;
-          }
-         
-     }
 	 
 
 //MERLI     
@@ -15363,7 +14487,7 @@ if($dataArr!="")
         </html>";    
         $html[]=$head.$body.$tabletotal.$foot;
             }						
-    $html[]=$akhir_footer; return $html;
+    return $html;
 } 
 
 //Standar Harga	Pemeliharaan (ok)
@@ -15483,7 +14607,7 @@ if($dataArr!="")
             </html>";    
             $html[]=$head.$body.$tabletotal.$foot;
         }
-        $html[]=$akhir_footer; return $html;
+        return $html;
 					  
      }
         
@@ -15877,7 +15001,7 @@ if($dataArr!="")
           }
 		  
 		  
-		  $html[]=$akhir_footer; return $html;
+		  return $html;
 		  
      }
      
@@ -16090,7 +15214,7 @@ if($dataArr!="")
         </table>";
         $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
         $footer= $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-        $akhir_footer="
+        $footer.="
             </body>
         </html>";      
         $barangTotal=0;
@@ -16284,7 +15408,7 @@ if($dataArr!="")
                 </table>";
 
                 $footer= $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                $akhir_footer="
+                $footer.="
                 </body>
             </html>";     
 
@@ -16294,7 +15418,7 @@ if($dataArr!="")
                      $html[]=$body.$tabletotal.$foot.$footer;
 
                    }
-        $html[]=$akhir_footer; return $html;
+        return $html;
 	
           }
      }
@@ -16516,7 +15640,7 @@ if($dataArr!="")
                    </tr>
                 </table>";
                 $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                $akhir_footer="
+                $footer.="
                     </body>
                 </html>";      
 
@@ -16730,7 +15854,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											 $akhir_footer="
+											 $footer.="
                                              </body>
                                         </html>";
 											
@@ -16740,7 +15864,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;  
+              return $html;  
           }
      }
 
@@ -16966,7 +16090,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -17185,7 +16309,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>"; 
 											
@@ -17195,7 +16319,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
 	
           }
          
@@ -17424,7 +16548,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -17645,7 +16769,7 @@ if($dataArr!="")
                                                   </tr>
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>";      
 											
@@ -17655,7 +16779,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;  
+              return $html;  
           }
          
      }
@@ -17910,7 +17034,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>";      
 											 //udah dites footer
@@ -18130,7 +17254,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>";
 											
@@ -18140,7 +17264,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
 	
           }
      }
@@ -18395,7 +17519,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>";     
 											 //udah dites footer
@@ -18611,7 +17735,7 @@ if($dataArr!="")
 
                                              </table>";
                                              $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                             $akhir_footer="
+                                             $footer.="
                                              </body>
                                         </html>";
 											
@@ -18621,7 +17745,7 @@ if($dataArr!="")
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;  
+              return $html;  
           }
      }
 
@@ -18629,7 +17753,7 @@ if($dataArr!="")
   
  //rekapitulasi buku induk inventaris (ok)
  //=============================================================================================
- public function retrieve_html_rekapitulasi_bukuinventarisdaerah($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan)
+ public function retrieve_html_rekapitulasi_bukuinventarisdaerah($dataArr,$gambar,$tanggalCetak)
 {
 // include ('../../../function/tanggal/tanggal.php');
 
@@ -18704,7 +17828,7 @@ foreach ($dataArr as $data)
         if ($index == 0)
         {
 			$gol = $value->Golongan;
-			$sumNilai = $this->get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+			$sumNilai = $this->get_sumNilai($satker_id,$gol);
 			$totNilai = number_format($sumNilai,2,",",".");
             $html .= "<tr>
                     <td style=\"text-align: center;\">$no</td>
@@ -18808,7 +17932,7 @@ $footer ="
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $akhir_footer="
+	   $footer.="
 	 </body>
 </html>";   
 //echo $html;
@@ -18819,7 +17943,7 @@ return $hasil_html;
 
 //rekapitulasi buku inventaris skpd (ok)     
 //=============================================================================================
-public function retrieve_html_rekapitulasi_bukuinventaris_skpd($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_rekapitulasi_bukuinventaris_skpd($dataArr,$gambar,$tanggalCetak)
 {
 // pr($dataArr);
 // exit;
@@ -18994,7 +18118,7 @@ foreach ($dataArr as $satker_id => $value)
             if ($index == 0)
             {
 				$gol = $value->Golongan;
-				$sumNilai = $this->get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+				$sumNilai = $this->get_sumNilai($satker_id,$gol);
 				$totNilai = number_format($sumNilai,2,",",".");
                 $html .= "<tr>
                         <td style=\"text-align: center;\">$no</td>
@@ -19099,7 +18223,7 @@ foreach ($dataArr as $satker_id => $value)
 
 	 </table>";
 	   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-	   $akhir_footer="
+	   $footer.="
 	 </body>
 </html>";   
     //echo $html;
@@ -19823,7 +18947,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
 											
@@ -20126,7 +19250,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                           
@@ -20136,7 +19260,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }   
          
      }
@@ -20473,7 +19597,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -20802,7 +19926,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                         	
@@ -20812,7 +19936,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }
 
@@ -21164,7 +20288,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";  
 											 //udah dites footer
@@ -21518,7 +20642,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";
                                         
@@ -21528,7 +20652,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }          
 
@@ -21874,7 +20998,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											    
@@ -22214,7 +21338,7 @@ return $hasil_html;
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -22224,7 +21348,7 @@ return $hasil_html;
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }        
 
@@ -22565,7 +21689,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											    
@@ -22886,7 +22010,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 
                                              </table>";
                                                $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-											   $akhir_footer="
+											   $footer.="
                                              </body>
                                         </html>";      
 											
@@ -22896,13 +22020,13 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
                                              $html[]=$body.$tabletotal.$foot.$footer;
 
                                            }
-              $html[]=$akhir_footer; return $html;
+              return $html;
           }
      }        
  
 //==========================================================================================   
     
-	public function get_status_tanah($status_tanah){
+public function get_status_tanah($status_tanah){
 	if($status_tanah == 10)
 		$status = "Tanah Pemda";
 	else if($status_tanah == 20)
@@ -22916,7 +22040,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	return $status;
 }
     
-	public function get_jabatan($satker,$jabatan){
+public function get_jabatan($satker,$jabatan){
 	if($jabatan=="1")
 		$namajabatan="Atasan Langsung";
 	else if ($jabatan=="2")
@@ -22958,8 +22082,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 		
 	}
 //add new 
-	public function get_Ruangan($tahun,$satker,$kdRuang){
-	if($tahun != '' || $tahun != '0'){
+public function get_Ruangan($tahun,$satker,$kdRuang){
+	if($tahun != '' && $tahun > 2014){
 		$query_getRuangan="SELECT NamaSatker FROM satker WHERE kode ='$satker' and Kd_Ruang ='$kdRuang' and Tahun ='$tahun'";	
 	}else{
 		$query_getRuangan="SELECT NamaSatker FROM satker WHERE kode ='$satker' and Kd_Ruang ='$kdRuang'";	
@@ -22972,13 +22096,33 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 			$Ruang=$value->NamaSatker;
 		}
 	}
-	// pr($Ruang);
+	
 	return $Ruang;
 }
 
-	public function get_satker($satker){
+public function get_satker($satker){
 	
-	
+	/*$query="select KodeSektor from satker where Satker_ID='$satker' ";
+	// pr($query);
+	$result=$this->retrieve_query($query);
+	// pr($result);
+	if($result!=""){
+		foreach($result as $value){
+			$KodeSektor=$value->KodeSektor;
+		}
+    }
+	$queryFix="select NamaSatker from satker where KodeSektor='$KodeSektor' ORDER BY Satker_ID ASC";
+	// pr($queryFix);
+	$resultFix=$this->retrieve_query($queryFix);
+	// pr($resultFix);
+	if($resultFix!=""){
+		foreach($resultFix as $value){
+			// pr($value);
+			$bidang[]=$value->NamaSatker;
+		}
+    }
+	// pr($bidang);	
+		return array($bidang);*/
 	$query="select KodeSektor,KodeSatker,KodeUnit,Gudang from satker where kode='$satker' ";
 	// pr($query);
 	$result=$this->retrieve_query($query);
@@ -23186,7 +22330,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	return array($KodeSektor,$KodeSatker,$KodeUnit,$Gudang,$NamaSatker);
 }
      	 
-	public function get_konstruksi($konstruksi_tanah){
+public function get_konstruksi($konstruksi_tanah){
         if($konstruksi_tanah == 'P')
 		$konstruksi = "Permanen";
         if($konstruksi_tanah == 'SP')
@@ -23196,7 +22340,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
     return $konstruksi;
 	}
    
-	public function get_bertingkat($bertingkat){
+public function get_bertingkat($bertingkat){
 	if($bertingkat == 0){
 		$tingkat = "Tidak";}
 	else if($bertingkat == 1 ){
@@ -23206,7 +22350,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
     return $tingkat;
 		 }
      
-	public function get_beton($beton){
+public function get_beton($beton){
         if($beton == 0)
                 $ton = "Tidak";
 	else if($beton == 1)
@@ -23214,7 +22358,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
     return $ton;
 }
    
-	public function get_hak_pakai($hak_tanah){
+public function get_hak_pakai($hak_tanah){
 	if($hak_tanah == 01)
 		$hak = "Hak Pakai";
 	else if($hak_tanah == 02)
@@ -23222,9 +22366,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
     return $hak;
      }
     
-	// public function get_mutasi($noRegister,$kodeKelompok,$kodeLokasi,$kodeSatker,$tglawal,$tglakhir){
-	public function get_mutasi($Aset,$kodeSatker,$tglawal,$tglakhir){
-	/*$split = explode("-", $noRegister);
+	public function get_mutasi($noRegister,$kodeKelompok,$kodeLokasi,$kodeSatker){
+	$split = explode("-", $noRegister);
 	$awal = $split[0];
 	$akhir = end($split);
 	if (count($split) == 1){
@@ -23247,18 +22390,15 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 		}
 		$AsetIdFix = implode(',',$AsetId);
 	}
-	
-	echo "<br>";
+	/*echo "<br>";
 	echo $query;
 	echo "<br>";
-	// pr($AsetId);
+	pr($AsetId);
 	echo "<br>";
 	echo "asetidfix=".$AsetIdFix;
-	echo "<br>";
+	echo "<br>";*/
 	// echo "asetid =".$AsetId;*/
-	
-	// $queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerTujuan ='$kodeSatker'  ";
-	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and SatkerTujuan ='$kodeSatker'  ";
+	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerTujuan ='$kodeSatker'  ";
 	$resultDataTambah=$this->retrieve_query($queryDataTambah);
 	if($resultDataTambah!=""){
 		foreach($resultDataTambah as $value){
@@ -23266,75 +22406,13 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 		}
 	}
 	
-	//cek untuk skpd
-	// $queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and Awal ='$kodeSatker'";
-	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and Awal ='$kodeSatker'";
+	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerAwal ='$kodeSatker'";
 	$resultDataKurang=$this->retrieve_query($queryDataKurang);
 	if($resultDataKurang!=""){
 		foreach($resultDataKurang as $value){
 			$getDataKurang=$value->jml;
 		}
 	}
-	
-	if($getDataKurang != 0){
-		/*echo "masuk lagi";
-		echo "<br/>";
-		echo "masuk lagi lagi";*/
-		$query_tanah = "SELECT t.NilaiPerolehan FROM log_tanah as t
-						WHERE t.Aset_ID in ($AsetIdFix) 
-						and t.kodeSatker in ('$kodeSatker') 
-						and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir' 
-						and t.Kd_Riwayat = 3";	
-		
-		$query_mesin = "SELECT m.NilaiPerolehan FROM log_mesin as m 
-						WHERE m.Aset_ID in ($AsetIdFix) 
-						and m.kodeSatker in ('$kodeSatker') 
-						and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'
-						and m.Kd_Riwayat = 3";			
-		
-		$query_bangunan = "SELECT b.NilaiPerolehan FROM log_bangunan as b
-						WHERE b.Aset_ID in ($AsetIdFix) 
-						and b.kodeSatker in ('$kodeSatker') 
-						and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'
-						and b.Kd_Riwayat = 3";
-		
-		$query_jaringan = "SELECT j.NilaiPerolehan FROM log_jaringan as j
-						WHERE j.Aset_ID in ($AsetIdFix) 
-						and j.kodeSatker in ('$kodeSatker') 
-						and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'
-						and j.Kd_Riwayat = 3";	
-		
-		$query_asettetaplainnya = "SELECT at.NilaiPerolehan FROM log_asetlain as at
-						WHERE at.Aset_ID in ($AsetIdFix) 
-						and at.kodeSatker in ('$kodeSatker') 
-						and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'
-						and at.Kd_Riwayat = 3";		
-		
-		$query_kdp = "SELECT kd.NilaiPerolehan FROM log_kdp as kd
-						WHERE kd.Aset_ID in ($AsetIdFix) 
-						and kd.kodeSatker in ('$kodeSatker') 
-						and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'
-						and kd.Kd_Riwayat = 3";	
-		
-		$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
-		for ($i = 0; $i < count($queryALL); $i++)
-		{
-			/*echo "<br>";
-			echo "query_$i =".$queryALL[$i];
-			echo "<br>";
-			echo "<br>";*/
-			// exit;
-			// $result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));*/
-			$result=$this->retrieve_query($queryALL[$i]);
-			if($result){
-				foreach($result as $data){
-					
-					$NilaiSkpd[]= $data->NilaiPerolehan;
-				}
-			}
-		}				
-	}
-	
 	/*echo $queryDataTambah;
 	echo "<br>";
 	echo "hasil tambah=".$getDataTambah;
@@ -23342,162 +22420,15 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	echo $queryDataKurang;
 	echo "<br>";
 	echo "hasil kurang=".$getDataKurang;*/
-	
 	// exit;
-	// return array($getDataKurang,$getDataTambah,$NilaiSkpd);
-	return array($getDataKurang,$getDataTambah,$NilaiSkpd);
+	return array($getDataKurang,$getDataTambah);
 	}	
    
-	public function getSatkerMutasi($asetid,$skpdeh){
-		$query = "select SatkerAwal from mutasiaset where Aset_ID = '$asetid' and SatkerTujuan ='$skpdeh'";
-		$resultData=$this->retrieve_query($query);
-		if($resultData!=""){
-			foreach($resultData as $value){
-				$getData=$value->SatkerAwal;
-			}
-		}
-		return $getData;
-	}
-	
-	public function getSatkerMutasiBertambah($asetid,$skpdeh,$tglawal,$tglakhir){
-		// echo "masuk";
-		$query = "select count(Aset_ID) as jml from mutasiaset where Aset_ID = '$asetid' and SatkerAwal ='$skpdeh'";
-		// pr($query);
-		$resultData=$this->retrieve_query($query);
-		/*if($resultData!=""){
-			foreach($resultData as $value){
-				$getData=$value->jml;
-			}
-		}*/
-		if($resultData != 0){
-			// echo "masuk lagi";
-			$query_tanah = "SELECT t.NilaiPerolehan FROM log_tanah as t
-							WHERE t.Aset_ID in ($asetid) 
-							and t.kodeSatker in ('$skpdeh') 
-							and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir'";	
-			
-			$query_mesin = "SELECT m.NilaiPerolehan FROM log_mesin as m 
-							WHERE m.Aset_ID in ($asetid) 
-							and m.kodeSatker in ('$skpdeh') 
-							and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'";			
-			
-			$query_bangunan = "SELECT b.NilaiPerolehan FROM log_bangunan as b
-						    WHERE b.Aset_ID in ($asetid) 
-							and b.kodeSatker in ('$skpdeh') 
-							and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'";
-			
-			$query_jaringan = "SELECT j.NilaiPerolehan FROM log_jaringan as j
-							WHERE j.Aset_ID in ($asetid) 
-							and j.kodeSatker in ('$skpdeh') 
-							and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'";	
-			
-			$query_asettetaplainnya = "SELECT at.NilaiPerolehan FROM log_asetlain as at
-							WHERE at.Aset_ID in ($asetid) 
-							and at.kodeSatker in ('$skpdeh') 
-							and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'";		
-			
-			$query_kdp = "SELECT kd.NilaiPerolehan FROM log_kdp as kd
-							WHERE kd.Aset_ID in ($asetid) 
-							and kd.kodeSatker in ('$skpdeh') 
-							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";	
-			
-			$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
-			for ($i = 0; $i < count($queryALL); $i++)
-			{
-				/*echo "<br>";
-				echo "query_$i =".$queryALL[$i];
-				echo "<br>";
-				echo "<br>";*/
-				// exit;
-				// $result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));*/
-				$result=$this->retrieve_query($queryALL[$i]);
-				if($result){
-					foreach($result as $data){
-						
-						$Satwal[]= $data->NilaiPerolehan;
-					}
-				}
-			}
-			
-							
-		}
-		// pr($getdata);
-		// exit;
-		return $Satwal;
-	}
-	
-	public function MutasiAddvalue($asetid,$satker_id,$tglAwal,$tglAkhir){
-		$query_01 = "SELECT NilaiPerolehan
-						FROM 
-							log_tanah 
-						where 
-							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
-							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
-		$query_02 = "SELECT NilaiPerolehan
-						FROM 
-							log_mesin
-						where 
-							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
-							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
-		$query_03 = "SELECT NilaiPerolehan
-						FROM 
-							log_bangunan
-						where 
-							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
-							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
-		$query_04 = "SELECT NilaiPerolehan
-						FROM 
-							log_jaringan
-						where 
-							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
-							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
-		$query_05 = "SELECT NilaiPerolehan
-						FROM 
-							log_asetlain
-						where 
-							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
-							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
-		$query_06 = "SELECT NilaiPerolehan
-						FROM 
-							log_kdp 
-						where 
-							Kd_Riwayat in (2,21,7) and kodeSatker like '$satker_id%' and Aset_ID = '$asetid'
-							and TglPerubahan >= '$tglAwal' AND TglPerubahan <= '$tglAkhir' order by log_id desc limit 1";
-		
-		
-			// $queryALL = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
-			$queryALLAdd = array($query_01);
-			
-			
-			for ($i = 0; $i < count($queryALLAdd); $i++)
-			{
-				
-				/*echo "<br>";
-				echo "query_$i =".$queryALLAdd[$i];
-				echo "<br>";
-				echo "<br>";*/
-				$result=$this->retrieve_query($queryALLAdd[$i]);
-				if($result!=""){
-					foreach($result as $value){
-						$Nilai[]=$value->NilaiPerolehan;
-					}
-				}
-			}	
-	// pr($Nilai);
-	// echo"kocakkk";
-	// exit;
-	// pr($getAddNPA);
-	// exit;
-	return $Nilai;
-}
-	
-	public function get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
+	public function get_sumNilai($satker_id,$gol){
 		if($satker_id !=""){
-			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' 
-					  and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
+			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' ";
 		}else{
-			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeKelompok like '$gol%' 
-					and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
+			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeKelompok like '$gol%' ";
 		}
 		// echo "query".$query;
 		// echo "<br>";
@@ -23642,8 +22573,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 			and StatusValidasi =1 and kodeLokasi like '12%' ";
 		}
 		
-		// echo "query =".$query;
-		// echo "<br>";
+		echo "query =".$query;
+		echo "<br>";
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	
@@ -23829,8 +22760,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 			";
 		}
 		
-		// echo "query =".$query;
-		// echo "<br>";
+		echo "query =".$query;
+		echo "<br>";
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	

@@ -137,6 +137,20 @@ $data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($_POST);
 		      	
 		    
 			</script>
+			<script>
+				function AreAnyCheckboxesChecked () 
+				{
+					setTimeout(function() {
+				  if ($("#Form2 input:checkbox:checked").length > 0)
+					{
+					    $("#submit").removeAttr("disabled");
+					}
+					else
+					{
+					   $('#submit').attr("disabled","disabled");
+					}}, 100);
+				}
+				</script>	
 
           <section id="main">
 			<ul class="breadcrumb">
@@ -188,20 +202,18 @@ $data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($_POST);
 			
 			
 			<div id="demo">
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_eksekusi_data.php?pid=1">
+			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_usulan_eksekusi_data.php?pid=1">
 				<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="javascript:void(0)" onclick="enable_submit()" id="_pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="javascript:void(0)" onclick="disable_submit()" id="_kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-						<td align=right width="400px">
-							<input type="submit" name="submit" value="Usulan Pemanfaatan" id="submit" disabled/></p>
+						<td align=right colspan="6">
+							<input type="submit" name="submit" class="btn btn-primary" value="Usulan Pemanfaatan" id="submit" disabled/></p>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
-						<th><input type="checkbox" id="selectall"/></th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Uraian</th>
 						<th>No Kontrak</th>
 						<th>Satker</th>
@@ -224,7 +236,8 @@ $data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($_POST);
 						  
 					<tr class="gradeA">
 						<td><?php echo $no.".";?></td>
-						<td align="center"><input type="checkbox" id="checkbox1" class="checkbox1" onchange="enable_submit()" name="Pemanfaatan[]" value="<?php echo $value['Aset_ID'];?>" ></td>
+						<td align="center" class="checkbox-column">
+							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable_submit()" name="Pemanfaatan[]" value="<?php echo $value['Aset_ID'];?>" ></td>
 						<td><?php echo $value['Uraian'];?></td>
 						<td><?php echo $value['noKontrak'];?></td>
 						<td><?php echo $value['kodeSatker'];?></td>

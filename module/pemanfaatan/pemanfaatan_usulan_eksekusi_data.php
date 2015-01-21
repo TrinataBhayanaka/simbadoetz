@@ -96,7 +96,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 														<td>$no.</td>
 														<input type='hidden' name='peman_usul_nama_aset[]' value='$nilai[Aset_ID]'>
 														<td>$nilai[noRegister] - $nilai[Uraian]</td>
-														<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
+														<td align='right'><input type='button' id ='$nilai[Aset_ID]' class='btn btn-info' value='View Detail' onclick='spoiler(this);'></td>
 														</tr>
 
 														
@@ -113,7 +113,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 														$nilai[Pemilik]-$nilai[kodeSatker]-$nilai[kode]-$nilai[kodeRuangan]-$nilai[OrigSatker_ID]
 														
 														</td>
-														<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
+														<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' class='btn btn-info' onclick='spoilsub(this);'></td>
 														</tr>
 														</table>
 
@@ -227,7 +227,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
                                         <td colspan=4><u style="font-weight:bold;">Usulan Pemanfaatan Aset</u></td>
                                     </tr>
                                     <tr>
-                                        <td colspan=4 align="center"><input type="submit" name="submit" value="Usulan Pemanfaatan"/><input type="button" value="Batal" onclick="window.location='pemanfaatan_usulan_daftar.php'"/></td>
+                                        <td colspan=4 align="center"><input type="submit" name="submit" class="btn btn-primary" value="Usulan Pemanfaatan"/>&nbsp;<input type="button" value="Batal" class="btn" onclick="window.location='pemanfaatan_usulan_daftar.php'"/></td>
                                     </tr>
                                 </table>
                                 </form>

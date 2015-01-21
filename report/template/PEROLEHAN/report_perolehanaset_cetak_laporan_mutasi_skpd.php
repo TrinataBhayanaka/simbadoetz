@@ -49,7 +49,7 @@ $satker = $skpd_id;
 // pr($get_satker);
 // exit;	
 $result = $REPORT->MutasiSkpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
-pr($result);
+// pr($result);
 // exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
@@ -57,11 +57,11 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 //retrieve html
 $html=$REPORT->retrieve_html_laporan_mutasi_skpd($result,$gambar,$tglawalperolehan,$tglakhirperolehan);
 // exit;
-$count = count($html);
+/*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
 	}
-exit;
+exit;*/
 
 if($tipe!="2"){
 $REPORT->show_status_download_kib();

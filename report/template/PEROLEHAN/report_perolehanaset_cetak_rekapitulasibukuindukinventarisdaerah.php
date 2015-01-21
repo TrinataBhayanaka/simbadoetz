@@ -47,7 +47,7 @@ if($tglcetak != ''){
 
 $result_query = $REPORT->get_report_rekap_inv_daerah($tglawalperolehan,$tglakhirperolehan);
 
-$html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar,$tanggalCetak);
+$html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {

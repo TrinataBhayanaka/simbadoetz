@@ -124,6 +124,20 @@ include "../../config/config.php";
 				document.getElementById(obj.id).value="Sub Detail";}
 			}
         </script>
+        <script>
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			}}, 100);
+		}
+		</script>
 	
 	<section id="main">
 		<ul class="breadcrumb">
@@ -179,10 +193,11 @@ include "../../config/config.php";
 					<tr>
 						
 						<td  align="left">   
-							<input type="submit" name="submit" value="Validasi Barang" id="submit" />
+							<input type="submit" name="submit" value="Validasi Barang" class="btn btn-primary" id="submit" />
 						</td>
 					</tr>
 					<tr>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						
 						<th>NoSKKDH</th>
 						<th>TglSKKDH</th>
