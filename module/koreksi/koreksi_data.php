@@ -58,6 +58,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 				 	<ul>
 				 		<li>
 				 			<h2><?=$dataArr['aset']['NamaAset']?></h2>
+				 			<h4>No. Register <?=$dataArr['aset']['noRegister']?></h4>
 				 		</li>
 				 		<li>
 					 		<span class="span6">
