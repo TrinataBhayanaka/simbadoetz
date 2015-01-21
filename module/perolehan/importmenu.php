@@ -49,6 +49,10 @@ $menu_id = 10;
       $('#hrgSatuan').val($(item).autoNumeric('get'));
     }
 
+    function chgForm(){
+    	$("#myForm").attr('action','import/'+$("#jenisaset").val()+'.php');
+    }
+
   </script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -107,7 +111,7 @@ $menu_id = 10;
 			</div>
 			
 			<div>
-			<form method="POST" enctype="multipart/form-data" action="import/proses_kibe.php">
+			<form method="POST" enctype="multipart/form-data" id="myForm" action="import/mesin.php">
 				 <div class="formKontrak">
 				 		<ul>
 							<?=selectSatker('kodeSatker','255',true,false,'required');?>
@@ -118,9 +122,9 @@ $menu_id = 10;
 						<ul>
 							<li>
 								<span class="span2">Jenis Aset</span>
-								<select id="jenisaset" name="jenisaset" style="width:255px">
+								<select id="jenisaset" name="jenisaset" style="width:255px" onchange="return chgForm();">
 									<!-- <option value="a">KIB A - Tanah</option> -->
-									<!-- <option value="b">KIB B - Bangunan</option> -->
+									<option value="mesin">KIB B - Mesin</option>
 									<!-- <option value="c">KIB C - Mesin</option> -->
 									<!-- <option value="d">KIB D - Jaringan</option> -->
 									<option value="asetlain">KIB E - Aset Tetap Lain</option>

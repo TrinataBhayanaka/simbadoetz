@@ -28,11 +28,16 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 	<!-- End Sql -->
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			initKondisi();
 			});	
+
+		function getCurrency(item){
+	      $('#hrgSatuan').val($(item).autoNumeric('get'));
+	    }
 	</script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -174,11 +179,15 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3 kapitalisasi" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" onchange="return totalHrg()" required readonly/>
+								<!-- <input type="text" class="span3 kapitalisasi" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" onchange="return totalHrg()" required readonly/> -->
+								<input type="text" class="span3 kapitalisasi" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$dataArr['aset']['Satuan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required readonly/>
+								<input type="hidden" name="Satuan" class="kapitalisasi" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
-								<input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly/>
+								<!-- <input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly/> -->
+								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly/>
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly>
 							</li>
 							<li>
 								<span class="span2">Info</span>

@@ -44,12 +44,12 @@ $menu_id = 10;
 		{
 		  $xlsdata[$no]['kodeSatker'] = $_POST['kodeSatker'];
 		  $kodeSatker = explode(".",$_POST['kodeSatker']);
-		  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 13);
+		  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 8);
 		  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
 		  $xlsdata[$no]['kodeLokasi'] = "12.33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];		
-		  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 3);
+		  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 2);
 
-		  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 3)}' LIMIT 1");
+		  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 2)}' LIMIT 1");
 			while ($namaaset = mysql_fetch_assoc($sql)){
 					$uraian = $namaaset['uraian'];
 				}	
@@ -61,27 +61,28 @@ $menu_id = 10;
 				}
 		  $xlsdata[$no]['noRegister'] = $lastreg + 1;		
 		  $xlsdata[$no]['noKontrak'] = $_POST['noKontrak'];
-		  $xlsdata[$no]['Info'] = $data->val($i,16);
+		  $xlsdata[$no]['Info'] = $data->val($i,17);
 		  $xlsdata[$no]['kodeRuangan'] = $_POST['kodeRuangan'];
-		  $xlsdata[$no]['TipeAset'] = 'E';
-		  $xlsdata[$no]['NilaiPerolehan'] = $data->val($i,14);
+		  $xlsdata[$no]['TipeAset'] = 'B';
+		  $xlsdata[$no]['NilaiPerolehan'] = $data->val($i,15);
 
-		  $xlsdata[$no]['Judul'] = $data->val($i,4);
-		  $xlsdata[$no]['Pengarang'] = $data->val($i,5);
-		  $xlsdata[$no]['Penerbit'] = $data->val($i,6);
-		  $xlsdata[$no]['Spesifikasi'] = $data->val($i,7);
-		  $xlsdata[$no]['AsalDaerah'] = $data->val($i,8);
-		  $xlsdata[$no]['Material'] = $data->val($i,9);
-		  $xlsdata[$no]['Ukuran'] = $data->val($i,10);
-		  $xlsdata[$no]['Alamat'] = $data->val($i,11);
-		  $xlsdata[$no]['Jumlah'] = $data->val($i,12);
+		  $xlsdata[$no]['Merk'] = $data->val($i,4);
+		  $xlsdata[$no]['Model'] = $data->val($i,5);
+		  $xlsdata[$no]['Ukuran'] = $data->val($i,6);
+		  $xlsdata[$no]['Material'] = $data->val($i,7);
+		  $xlsdata[$no]['Pabrik'] = $data->val($i,9);
+		  $xlsdata[$no]['NoRangka'] = $data->val($i,10);
+		  $xlsdata[$no]['NoMesin'] = $data->val($i,11);
+		  $xlsdata[$no]['NoSeri'] = $data->val($i,12);
+		  $xlsdata[$no]['NoBPKB'] = $data->val($i,13);
+		  $xlsdata[$no]['Jumlah'] = $data->val($i,14);
 
 		  if($xlsdata[$no]['NilaiPerolehan'] == '' || $xlsdata[$no]['NilaiPerolehan'] == 0){
-		  	$xlsdata[$no]['disabled'] = "hidden";
+		  	$xlsdata[$no]['disabled'] = "hidden"; $xlsdata[$no]['style'] = "disabled";
 		  } else $xlsdata[$no]['disabled'] = "checkbox";
 		  $no++;
 		}
-		// pr($xlsdata);
+		// pr($xlsdata);exit;
 	?>
 	<!-- End Sql -->
 
@@ -187,7 +188,7 @@ $menu_id = 10;
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-				<form action="hasil_kibe.php" method=POST name="checks" ID="Form2">
+				<form action="hasil_kibb.php" method=POST name="checks" ID="Form2">
 					<p><button type="submit" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Pilih</button>
 							&nbsp;</p>
 
@@ -213,10 +214,11 @@ $menu_id = 10;
 									$i = 1;
 									$total = 0;
 									foreach ($xlsdata as $key => $value) {
-							?>
+										if($value['kodeKelompok']!=""){
+							?>		
 									<tr class="gradeA">
-										<td class="checkbox-column"><input type="<?=$value['disabled']?>" id="check_<?=$i?>" class="icheck-input" name="aset[]" 
-											value="<?=$value['kodeSatker']?>|<?=$value['TglPerolehan']?>|<?=$value['Tahun']?>|<?=$value['kodeLokasi']?>|<?=$value['kodeKelompok']?>|<?=$value['noRegister']?>|<?=$value['noKontrak']?>|<?=$value['Info']?>|<?=$value['kodeRuangan']?>|<?=$value['TipeAset']?>|<?=$value['Judul']?>|<?=$value['Pengarang']?>|<?=$value['Penerbit']?>|<?=$value['Spesifikasi']?>|<?=$value['AsalDaerah']?>|<?=$value['Material']?>|<?=$value['Alamat']?>|<?=$value['Ukuran']?>|<?=$value['Jumlah']?>|<?=$value['NilaiPerolehan']?>" onchange="return AreAnyCheckboxesChecked();"></td>
+										<td class="checkbox-column"><input <?=$value['style']?> type="<?=$value['disabled']?>" id="check_<?=$i?>" class="icheck-input" name="aset[]" 
+											value="<?=$value['kodeSatker']?>|<?=$value['TglPerolehan']?>|<?=$value['Tahun']?>|<?=$value['kodeLokasi']?>|<?=$value['kodeKelompok']?>|<?=$value['noRegister']?>|<?=$value['noKontrak']?>|<?=$value['Info']?>|<?=$value['kodeRuangan']?>|<?=$value['TipeAset']?>|<?=$value['Merk']?>|<?=$value['Model']?>|<?=$value['Ukuran']?>|<?=$value['Material']?>|<?=$value['Pabrik']?>|<?=$value['NoRangka']?>|<?=$value['NoMesin']?>|<?=$value['NoSeri']?>|<?=$value['NoBPKB']?>|<?=$value['Jumlah']?>|<?=$value['NilaiPerolehan']?>" onchange="return AreAnyCheckboxesChecked();"></td>
 										<td><?=$value['kodeKelompok']?></td>
 										<td><?=$value['uraian']?></td>
 										<td><?=$value['kodeLokasi']?></td>
@@ -228,6 +230,7 @@ $menu_id = 10;
 							<?php
 									$total = $total + ($value['Jumlah']*$value['NilaiPerolehan']);
 									$i++;
+									  }
 									}
 								}	
 							?>	
