@@ -164,24 +164,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					<tr class="gradeA">
 						<td><?php echo "$no";?></td>
 						<td  class="checkbox-column">
-							<?php
-						if (($_SESSION['ses_uaksesadmin'] == 1)){
-							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
-							<?php for ($j = 0; $j <= count($get_data_filter['asetuser']); $j++){
-								if ($get_data_filter['asetuser'][$j]==$hsl_data[Usulan_ID]) echo 'checked';}
-							?>/>
-							<?php
-						}else{
-							if ($get_data_filter['asetuser']){
-							if (in_array($hsl_data[Usulan_ID], $get_data_filter['asetuser'])){
-							?>
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" <?php for ($j = 0; $j <= count($data['asetList']); $j++){if ($data['asetList'][$j]==$hsl_data[Usulan_ID]) echo 'checked';}?>/>							<?php
-							}
-						}
-						}
 						
-						?>
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
+							
 						</td>
 						<td>
 							<?php echo "$hsl_data[Usulan_ID]";?>
