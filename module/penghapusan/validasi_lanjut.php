@@ -197,12 +197,9 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					<tr>
 						<th>No</th>
 						<th class="checkbox-column">
-						<?php if($_SESSION['jenis_hapus']=="PSB"){ 
-						echo "&nbsp;";
-						}else{ ?>
+						
 							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
 
-						<?php } ?>
 						</th>
 						<th>Nomor SK Penghapusan</th>
 						<th>Tanggal Penghapusan</th>
