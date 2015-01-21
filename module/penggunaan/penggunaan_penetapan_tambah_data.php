@@ -183,10 +183,10 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="javascript:void(0)" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align="left"><a href="javascript:void(0)" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-						<td align="right" >
-								<input type="submit" name="submit2" value="Penetapan Penggunaan" id="submit" disabled/>
+						<td  align="left"><a href="javascript:void(0)" onclick="enable_submit()" class="btn btn-info" id="pilihHalamanIni">Pilih halaman ini</a>
+							<a href="javascript:void(0)" onclick="disable_submit()" class="btn btn-danger"   id="kosongkanHalamanIni" >Kosongkan halaman ini</a></td>
+						<td colspan="4" align="right" >
+								<input type="submit" name="submit2" class="btn btn-primary" value="Penetapan Penggunaan" id="submit" disabled/>
 							<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
 						</td>
 					</tr>

@@ -169,11 +169,13 @@ $MUTASI = new RETRIEVE_MUTASI;
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="#" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="#" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
+						<td  colspan="5" align=left>
+							<a href="#" onclick="enable_submit()" class="btn btn-info" id="pilihHalamanIni">Pilih halaman ini</a>
+							<a href="#" onclick="disable_submit()" class="btn btn-danger" id="kosongkanHalamanIni" >Kosongkan halaman ini</a>
+						</td>
 						
-						<td  align="right">   
-							<input type="submit" name="submit" value="Pengeluaran Barang" id="submit" disabled/>
+						<td colspan="2" align="right">   
+							<input type="submit" name="submit" value="Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
 						</td>
 					</tr>
 					<tr>
@@ -183,6 +185,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>Satker</th>
 						<th>Lokasi</th>
 						<th>No Kontrak</th>
+						<th>Aksi</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -214,7 +217,8 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<td style="font-weight: bold;"> <?php echo "$value[Uraian]";?> </td>
 						<td style="font-weight: bold;"> <?php echo "$value[kodeSatker]- $value[NamaSatker]";?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[kodeLokasi]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>	
+						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>
+						<td style="font-weight: bold;"><a href="#" class="btn btn-danger">Hapus</a></td>	
 							
 						
 					</tr>
@@ -230,6 +234,10 @@ $MUTASI = new RETRIEVE_MUTASI;
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

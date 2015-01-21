@@ -178,12 +178,20 @@ include "../../config/config.php";
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
                 <input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
                             <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
+                          	 <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top:2px;">
+                               <tr>
+		                          	<td style='border: 1px solid #004933; height:50px; padding:2px;'>
+		                          	 	<?=selectAllSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+									</td>
+								</tr>
+							</table>						
                             <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top:2px;">
                                 <tbody>
                                     <tr>
                                         <td style="padding:0px;" colspan="2">
                                             <div style="margin-top:10px;">
                                                 <table width="100%">
+                                                	
 													<tr>
 														<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar Aset yang akan di transfer :</u></td>
 													</tr>
@@ -219,7 +227,11 @@ include "../../config/config.php";
 																<input type='hidden' name='lastTipeAset[]' value='$nilai[TipeAset]'>
 
 																<td>$nilai[noRegister] - $nilai[kodeSatker] - $nilai[NamaSatker]</td>
-																<td align='right'><input type='button' id ='$nilai[Aset_ID]' value='View Detail' onclick='spoiler(this);'></td>
+																<td align='right'>
+																<input type='button' id ='$nilai[Aset_ID]' class='btn btn-info' value='View Detail' onclick='spoiler(this);'>
+																<a class='btn btn-success' data-toggle='modal' href='#myModal2$no'>Daftar Aset</a>
+																<a href='#' class='btn btn-danger' data-toggle='modal'>Hapus</a>
+																</td>
 																</tr>
 
 																<tr>
@@ -238,7 +250,7 @@ include "../../config/config.php";
 																<tr>
 																<td>
 																$nilai[kodeSatker] - $nilai[kodeKelompok] - $nilai[kodeRuangan]																</td>
-																<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' onclick='spoilsub(this);'></td>
+																<td align='right'><input type='button' id ='sub$nilai[Aset_ID]' value='Sub Detail' class='btn btn-info' onclick='spoilsub(this);'></td>
 																</tr>
 																</table>
 
@@ -346,58 +358,94 @@ include "../../config/config.php";
 																</td>
 																</tr>";
 																$no++;
+															
+																
 																}
 															}		
                                                         ?>
                                                         
                                                 </table>
 												<br>
-                                                <table width="100%" style="padding:2px; margin-top:0px; border: 1px solid #004933; border-width: 1px 1px 1px 1px;">
-                                                    <tr>
-                                                       
-														<td colspan="6">
-                                                            <?=selectAllSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
-							
-                                                        </td>
-														<td>&nbsp;</td>
-                                                    </tr>  
-
-                                                    
-                                                    <tr>
-                                                        <td>No. Dokumen</td>
-                                                        <td colspan="6"><input type="text" style="width:180px;" name="mutasi_trans_eks_nodok" required="required" id="">&nbsp;<span id="errmsg"></span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td valign="top" align="left">Tgl. Proses</td>
-                                                        <td valign="top" align="left"><input type="text" style="width:180px;" name="mutasi_trans_eks_tglproses" required="required" id="tanggal12"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td valign="top" align="left">Pemakai</td>
-                                                        <td valign="top" align="left"><input type="text" style="width:180px;" name="mutasi_trans_eks_pemakai" required="required"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td valign="top" align="left">Alasan</td>
-                                                        <td valign="top" align="left" ><textarea name="mutasi_trans_eks_alasan" cols="60" rows="3" required="required"></textarea></td>
-                                                    </tr>
-													<tr>
-														<td>&nbsp;</td>
-														<td>&nbsp;</td>
-													</tr>
-															
-                                                    <tr>
-                                                        <td valign="top" align="left"></td>
-                                                        <td valign="top" align="left"><input type="submit" name="submit" value="Transfer">&nbsp;<input type="button" value="Batal" onclick="sendit_2()"></td>
-                                                    </tr>
-                                                </table>			                           
+												<div style="padding:2px; margin-top:0px; border: 1px solid #004933; border-width: 1px 1px 1px 1px;">
+													<ul>
+														<li>&nbsp;</li>
+														<li>
+															<span class="span2">No. Dokumen</span>
+															<input type="text" style="width:180px;" name="mutasi_trans_eks_nodok" required="required" id="">&nbsp;<span id="errmsg"></span>
+														</li>
+														<li>
+															<span class="span2">Tgl. Proses</span>
+															<input type="text" style="width:180px;" name="mutasi_trans_eks_tglproses" required="required" id="tanggal12">
+														</li>
+														<li>
+															<span class="span2">Pemakai</span>
+															<input type="text" style="width:180px;" name="mutasi_trans_eks_pemakai" required="required">
+														</li>
+														<li>
+															<span class="span2">Alasan</span>
+															<textarea name="mutasi_trans_eks_alasan" cols="60" rows="3" required="required"></textarea>
+														</li>
+														<li>
+															<span class="span2">&nbsp;</span>
+															<input type="submit" name="submit" class="btn btn-primary" value="Transfer">&nbsp;
+                                                        	<input type="button" value="Batal" class="btn"  onclick="sendit_2()">	
+														</li>
+														<li>&nbsp;</li>
+													</ul>
+												</div>
+                                                		                           
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             </form>
+                            
 			
 		</section>     
 	</section>
+	<?php 
+		$idmodal=1;
+														// pr($data);
+        foreach ($data as $nilai2)
+        {
+            
+			if ($nilai2['Aset_ID'] !='')
+			{
+	?>
+			<div id="myModal2<?=$idmodal?>" class="modal hide fade  login myModal2<?=$idmodal?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div id="titleForm" class="modal-header" >
+					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					  <h3 id="myModalLabel">Daftar Aset [ <?=$nilai2[NamaSatker]?> ]</h3>
+					</div>
+					<form method="POST" action="">
+					<div class="modal-body">
+					
+					 <div class="formLogin">
+							<table>
+								<tr>
+									<td><input type="checkbox" /></td>
+									<td>Tanah Sawah</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" /></td>
+									<td>Tanah Pertanian</td>
+								</tr>
+							</table>
+							
+						</div>
+						
+				</div>
+				<div class="modal-footer">
+				  <input type="submit" value="Confirm" name="login" class="btn btn-primary" id="drop_sebagai" />
+				</div>
+				</form>
+			</div>	
+	<?php
+		}
+		$idmodal++;
+	}
+	?>
 	
 <?php
 	include"$path/footer.php";

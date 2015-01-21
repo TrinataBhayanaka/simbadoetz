@@ -169,10 +169,11 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<td width="130px"><span><a href="javascript:void(0)" onclick="enable_submit()" id="pilihHalamanIni"><u>Pilih halaman ini</u></a></span></td>
-						<td  align=left><a href="javascript:void(0)" onclick="disable_submit()" id="kosongkanHalamanIni" ><u>Kosongkan halaman ini</u></a></td>
-						<td colspan="3">
-								<p style="float:right;"><input type="submit" name="submit" value="Validasi Barang" id="submit" disabled/></p>
+						<td  align=left>
+							<a href="javascript:void(0)" onclick="enable_submit()" class="btn btn-info" id="pilihHalamanIni">Pilih halaman ini</a>
+							<a href="javascript:void(0)" onclick="disable_submit()" class="btn btn-danget" id="kosongkanHalamanIni" >Kosongkan halaman ini</a></td>
+						<td colspan="4">
+								<p style="float:right;"><input type="submit" name="submit" class="btn btn-primary" value="Validasi Barang" id="submit" disabled/></p>
 						</td>
 					</tr>
 					<tr>
