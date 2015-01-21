@@ -23,6 +23,48 @@ $type = $_POST['type'];
 // print_r($_POST);
 // exit();
 
+if (isset($_POST['ubahPassword'])){
+
+	// pr($_POST);
+	$ubah = ubahPassword($_POST);
+	if ($ubah){
+		print json_encode(array('status'=>true));
+	}else{
+		print json_encode(array('status'=>false));
+	}
+	exit;
+}
+function ubahPassword($data,$debug=false)
+{
+	global $DBVAR;
+
+	$id = $data['id'];
+	$Passw = md5($data['new_password']);
+	$Old_Passw = md5($data['old_password']);
+
+	$sql = array(
+            'table'=>'Operator',
+            'field'=>"COUNT(*) AS total",
+            'condition' => "OperatorID='$id' AND Passwd='{$Old_Passw}'",
+            'limit' => '1',
+            );
+    $res = $DBVAR->lazyQuery($sql,$debug);
+    // pr($res);exit;
+    if ($res[0]['total']>0){
+
+    	$sql = array(
+	            'table'=>'Operator',
+	            'field'=>"Passwd='{$Passw}'",
+	            'condition' => "OperatorID='$id'",
+	            'limit' => '1',
+	            );
+	    $res1 = $DBVAR->lazyQuery($sql,$debug,2);
+	    if ($res1) return true;
+    }
+    
+    return false;
+}
+
  if ($parameter == 'add')
  {
      $id = $aid;

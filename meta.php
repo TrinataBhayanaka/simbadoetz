@@ -103,6 +103,9 @@
 			        });
 		}
 	}
+
+	var basedomain = "<?php echo $url_rewrite?>";
+	
     </script> 
 </head>
 <body>

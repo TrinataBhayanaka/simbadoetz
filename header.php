@@ -91,6 +91,7 @@ else
 							?>
 					  </li>
 					  <?php
+					  // pr($_SESSION);
  } 
 ?>
 <div id="containerSimda">
@@ -116,6 +117,7 @@ else
 		<!--Selamat Datang Admin | Logout-->
 	<!--	</div>
 	</div>-->
+
 	<div id="myModal3" class="modal hide fade  login myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div id="titleForm" class="modal-header" >
 				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -145,6 +147,7 @@ else
 			</form>
 		</div>  
 
+
 		<div id="chgpass" class="modal hide fade  login myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div id="titleForm" class="modal-header" >
 				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -158,18 +161,19 @@ else
 						<ul>
 							<li>
 								<span class="labellogin">Password Lama</span>
-								 <input type="text" name="oldpass" required="required"/>
+								<input type="text" name="oldpass" required="required" class="oldpassword"/>
+								<input type="hidden" name="OperatorID" class="OperatorID" value="<?php echo $_SESSION[ses_uoperatorid]?>"/>
 							</li>
 							<li>
 								<span class="labellogin">Password Baru</span>
-								<input type="password" name="newpass" required="required"/>
+								<input type="password" name="newpass" required="required" class="newpassword"/>
 							</li>
 						</ul>
 					</div>
 					
 			</div>
 			<div class="modal-footer">
-			  <input type="submit" value="Simpan" name="ubahpass" class="btn btn-default" id="drop_sebagai" />
+			  <input type="button" value="Simpan" name="ubahpass" class="btn btn-default" id="drop_sebagai" />
 			</div>
 			</form>
 		</div>  
@@ -177,3 +181,28 @@ else
 		<img src="<?php echo "$url_rewrite/"; ?>img/header2.jpg" width="100%"/>
 	</header>
 	<!--<div id="pembatasHeader">&nbsp;</div>-->
+
+	<script type="text/javascript">
+		
+		$(document).on('click', '#drop_sebagai', function(){
+
+			var old_password = $('.oldpassword').val();
+			var new_password = $('.newpassword').val();
+			var id = $('.OperatorID').val();
+
+			$.post(basedomain+'/function/phpajax/ajax.php',{ubahPassword:true, old_password:old_password, new_password:new_password, id:id}, function(data){
+
+            var html = "";
+
+            if (data.status==true){
+               alert('Password berhasil diubah'); 
+               $('.close').trigger('click');
+            } else {
+               alert('Password tidak sesuai');
+            }
+            
+            
+
+        }, "JSON")  
+		})
+	</script>
