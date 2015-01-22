@@ -278,9 +278,16 @@ section.formLegend .titleSp2dRPenunjang{
 }
 .myModal21.login{
 	width:750px;
-	height:200px;
+	max-height:400px;
 	margin:0 auto;
 	margin-left:-330px;
+}
+
+.modal-bodyeksekusi {
+  position: relative;
+  max-height: 300px;
+  padding: 15px;
+  overflow: scroll;
 }
 #myModal .formPerusahaan li .labelperusahaan{
 	width:90px;
