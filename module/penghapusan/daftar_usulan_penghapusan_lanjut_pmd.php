@@ -60,7 +60,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	include"$path/header.php";
 	include"$path/menu.php";
 	// pr($_POST);
-	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
+	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST,2);
 	// pr($data);
 
 

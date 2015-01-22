@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: url(_xyN3apAT_yRRDeqB3sPRg.woff) format('woff');
+}
 #errmsg { color:red; }
 .tabel th {
 	background-color: #eeeeee;
