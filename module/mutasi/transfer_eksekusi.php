@@ -123,6 +123,8 @@ include "../../config/config.php";
 				inner.style.display = "none";
 				document.getElementById(obj.id).value="Sub Detail";}
 			}
+
+
         </script>
 	
 	<section id="main">
@@ -212,7 +214,7 @@ include "../../config/config.php";
 															$pilih2="selected='selected'";
 															if ($nilai['Aset_ID'] !='')
 															{
-															echo "<tr>
+															echo "<tr class='data_$no' style=''>
 																<td style='border: 1px solid #004933; height:50px; padding:2px;'>
 																<table width='100%'>
 																<tr>
@@ -226,11 +228,13 @@ include "../../config/config.php";
 																<input type='hidden' name='lastNamaSatker[]' value='$nilai[NamaSatker]'>
 																<input type='hidden' name='lastTipeAset[]' value='$nilai[TipeAset]'>
 
-																<td>$nilai[noRegister] - $nilai[kodeSatker] - $nilai[NamaSatker]</td>
-																<td align='right'>
+																<td width=''>$nilai[noRegister] - $nilai[kodeSatker] - $nilai[NamaSatker] <span class='uraianTujuan'></span></td>
+																<td width='' align='center'></td>
+																<td align='right' >
 																<input type='button' id ='$nilai[Aset_ID]' class='btn btn-info' value='View Detail' onclick='spoiler(this);'>
-																<a class='btn btn-success' data-toggle='modal' href='#myModal2$no'>Daftar Aset</a>
-																<a href='#' class='btn btn-danger' data-toggle='modal'>Hapus</a>
+																<a class='btn btn-success test' prop='$nilai[Aset_ID]' data-toggle='modal' href='#myModal2$no'>Daftar Aset</a>
+																<a href='javascript:void(0)' class='btn btn-danger hapusData' data-toggle='modal' asetid='$nilai[Aset_ID]' no='$no'>Hapus</a>
+																
 																</td>
 																</tr>
 
@@ -386,9 +390,11 @@ include "../../config/config.php";
 															<textarea name="mutasi_trans_eks_alasan" cols="60" rows="3" required="required"></textarea>
 														</li>
 														<li>
-															<span class="span2">&nbsp;</span>
+															<span class='span2 hiddenData'>&nbsp;</span>
 															<input type="submit" name="submit" class="btn btn-primary" value="Transfer">&nbsp;
-                                                        	<input type="button" value="Batal" class="btn"  onclick="sendit_2()">	
+                                                        	<input type="button" value="Batal" class="btn"  onclick="sendit_2()">
+                                                        	
+                                                        		
 														</li>
 														<li>&nbsp;</li>
 													</ul>
@@ -419,34 +425,97 @@ include "../../config/config.php";
 					  <h3 id="myModalLabel">Daftar Aset [ <?=$nilai2[NamaSatker]?> ]</h3>
 					</div>
 					<form method="POST" action="">
+					<input type="hidden" value="" id="idSatkerTujuan">
 					<div class="modal-body">
 					
 					 <div class="formLogin">
-							<table>
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Tanah Sawah</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Tanah Pertanian</td>
-								</tr>
-							</table>
+					 		<span class="btn lihat" prop="<?=$nilai2[TipeAset]?>">Load data aset</span>
 							
+							<span class="formData"></span>
+							<span class="formDataParent"></span>
 						</div>
 						
 				</div>
+				<!--
 				<div class="modal-footer">
 				  <input type="submit" value="Confirm" name="login" class="btn btn-primary" id="drop_sebagai" />
-				</div>
+				</div>-->
 				</form>
 			</div>	
+			
 	<?php
 		}
 		$idmodal++;
 	}
 	?>
-	
+	<script type="text/javascript">
+		$(document).on('click','.lihat', function(){
+
+			var idsatker = $('#kodeSatker').val();
+			var type = $(this).attr('prop');
+
+			// setTimeout(function(){
+
+				$.post(basedomain+'/function/phpajax/ajax.php',{daftarAset:true, idsatker:idsatker, type:type}, function(data){
+
+		            var html = "";
+
+		            if (data.status==true){
+		                $.each(data.rec, function(i,value){
+
+		                    html += "<table>";
+		                    html += "	<tr>";
+							html += "				<td><input type='radio' class='pilihaset' value='"+value.Aset_ID+"' name='pilihaset'/></td>";
+							html += "				<td>"+value.Uraian+"</td>";
+							html += "			</tr>";
+							html += "</table>";
+		                    
+		                })
+
+		                $('.formData').html(html);
+		            } else {
+		              	$('.formData').html('Load data gagal');
+		            }
+		            
+		            
+
+		        }, "JSON")
+
+			// }, 2000);
+			 
+			
+		})
+
+		$(document).on('click','.close', function(){
+			$('.formData').html('');
+			$('.formDataParent').html('');
+		})
+
+		$(document).on('click','.hapusData', function(){
+			var no = $(this).attr('no');
+			var asetid = $(this).attr('asetid');
+			$('.data_'+no).css('display','none');
+			$('.asetKapitalisasi_'+asetid).attr('name','');
+		})
+
+		$(document).on('click','.pilihaset', function(){
+			var asetid = $(this).val();
+			var asetidAwal = $('.asetid_awal').val();
+			var html = "";
+
+			html += "<input type='hidden' name='asetKapitalisasi["+asetidAwal+"]' class='asetKapitalisasi_"+asetidAwal+"' value='"+asetid+"'/>";
+			$('.hiddenData').append(html);
+		})
+
+		$(document).on('click','.test', function(){
+
+			var html ="";
+			var asetid = $(this).attr('prop');
+			html += "<input type='hidden' name='asetid_awal' value='"+asetid+"' class='asetid_awal'/>";
+			$('.formDataParent').html(html);
+		})
+
+	</script>
 <?php
 	include"$path/footer.php";
 ?>

@@ -261,7 +261,7 @@ class DB
 		return $result;
 	}
 
-	function logIt($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false, $text= false, $debug=false)
+	function logIt($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false, $text= false, $tmpAsetID=false, $debug=false)
 	{
 
 	    if (empty($table)) return false;
@@ -277,6 +277,9 @@ class DB
 	    if ($No_Dokumen) $noDok = $No_Dokumen;
 	    else $noDok = '-';
 
+	    if ($tmpAsetID) $tmpAsetIDTujuan = $tmpAsetID;
+	    else $tmpAsetIDTujuan = '-';
+	    
 	    $actionList = array(1=>'insert',2=>'update');
 	    $addField = array(
 	    				'changeDate'=>$date,
@@ -284,6 +287,7 @@ class DB
 	    				'operator'=>$_SESSION['ses_uoperatorid'],
 	    				'TglPerubahan'=>$tglProses,
 	    				'Kd_Riwayat'=>$action,
+	    				'Tmp_Hak'=>$tmpAsetIDTujuan,
 	    				'No_Dokumen'=>$noDok);
 
 

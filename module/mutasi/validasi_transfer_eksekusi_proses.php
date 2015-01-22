@@ -26,8 +26,8 @@ $panjang=count($nmaset);
 $mutasi_id=get_auto_increment("Mutasi");
 
 
-// pr($_POST);
-$data = $MUTASI->retrieve_fixMutasi($_POST);
+// pr($_POST);exit;
+$data = $MUTASI->store_validasi_Mutasi($_POST);
 // exit;
 echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/validasi_transfer_antar_skpd.php?pid=1';</script>";
 

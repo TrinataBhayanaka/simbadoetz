@@ -182,7 +182,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 					<thead>
 					<tr>
-						<td colspan="11" align="right">   
+						<td colspan="9" align="right">   
 							<input type="submit" name="submit" value="Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
 						</td>
 					</tr>
@@ -196,8 +196,8 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
-						<th>Aksi</th>
+						<!--<th>Status</th>
+						<th>Aksi</th>-->
 					</tr>
 				</thead>
 				<tbody>		
@@ -227,16 +227,17 @@ $MUTASI = new RETRIEVE_MUTASI;
 							
 						</td>
 						
-						<td style="font-weight: bold;"> <?php echo "$value[noKontrak]";?></td>
+						<td style="font-weight: bold;"> <?php echo "$value[noRegister]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[Uraian]";?> / <?php echo "$value[Uraian]";?> </td>
-						<td style="font-weight: bold;"><?php echo "$value[kodeLokasi]";?></td>
+						<td style="font-weight: bold;"><?php echo @$value['Merk'];?></td>
 						<td style="font-weight: bold;"><?php echo "$value[kodeSatker]- $value[NamaSatker]";?></td>
-						<td style="font-weight: bold;">&nbsp;</td>
-						<td style="font-weight: bold;">&nbsp;</td>
-						<td style="font-weight: bold;">&nbsp;</td>	
+						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[NilaiPerolehan]";?></td>
+						<!--
+						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>	
 						<td style="font-weight: bold;"><a href="#" class="btn btn-danger">Hapus</a></td>	
-							
+						-->	
 						
 					</tr>
 					 <?php 
