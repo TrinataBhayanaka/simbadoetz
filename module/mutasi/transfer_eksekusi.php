@@ -426,7 +426,7 @@ include "../../config/config.php";
 					</div>
 					<form method="POST" action="">
 					<input type="hidden" value="" id="idSatkerTujuan">
-					<div class="modal-body">
+					<div class="modal-bodyeksekusi">
 					
 					 <div class="formLogin">
 					 		<span class="btn lihat" prop="<?=$nilai2[TipeAset]?>">Load data aset</span>
