@@ -8,7 +8,7 @@ $SESSION = new Session();
 $menu_id = 13;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-pr($_SESSION);
+// pr($_SESSION);
 ?>
 
 <?php

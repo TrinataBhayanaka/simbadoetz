@@ -38,7 +38,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li><a href="#biid" data-toggle="tab">Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#label" data-toggle="tab">Label Kode Barang</a></li>
-						<!--<li><a href="#kb" data-toggle="tab">Kartu Barang</a></li>-->
+						<li><a href="#kb" data-toggle="tab">Kartu Barang</a></li>
 						</ul>
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 						
