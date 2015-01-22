@@ -38,7 +38,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li><a href="#biid" data-toggle="tab">Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#label" data-toggle="tab">Label Kode Barang</a></li>
-						<!--<li><a href="#kb" data-toggle="tab">Kartu Barang</a></li>-->
+						<li><a href="#kb" data-toggle="tab">Kartu Barang</a></li>
 						</ul>
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 						
@@ -103,11 +103,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker','255',true,false,'required'); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-										selectAllSatker('kodeSatker','255',true,false); 
-									}else{
-										selectSatker('kodeSatker','255',true,false); 
-									}
+								selectAllSatker('kodeSatker','255',true,false,false,true);
 							?>
 							<br />
 							<li>
@@ -183,11 +179,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<input name="tahun" id ="tahun_rekap_kib" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
 							</li>-->
 							<?php //selectAllSatker('kodeSatker7','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-										selectAllSatker('kodeSatker7','255',true,false); 
-									}else{
-										selectSatker('kodeSatker7','255',true,false); 
-									}
+					
+									selectAllSatker('kodeSatker7','255',true,false,false,true);
 							
 							?>
 							<br />
@@ -266,11 +259,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker2','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-										selectAllSatker('kodeSatker2','255',true,false); 
-									}else{
-										selectSatker('kodeSatker2','255',true,false); 
-									}
+						
+									selectAllSatker('kodeSatker2','255',true,false,false,true);
 							
 							?>
 							<br>
@@ -364,11 +354,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker3','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-										selectAllSatker('kodeSatker3','255',true,false); 
-									}else{
-										selectSatker('kodeSatker3','255',true,false); 
-									}
+					
+									selectAllSatker('kodeSatker3','255',true,false,false,true);
 							
 							?>
 							<br>
@@ -449,11 +436,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker4','255',true,false);
-								if($_SESSION[ses_uoperatorid] == '1'){
-										selectAllSatker('kodeSatker4','255',true,false); 
-									}else{
-										selectSatker('kodeSatker4','255',true,false); 
-									}
+						
+									selectAllSatker('kodeSatker4','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -639,11 +623,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							  </select>
 							</li>
 							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-										selectAllSatker('kodeSatker8','255',true,false); 
-									}else{
-										selectSatker('kodeSatker8','255',true,false); 
-									}
+						
+									selectAllSatker('kodeSatker8','255',true,false,false,true);
 							?>
 							<br>
 							<!--<li>
@@ -737,7 +718,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 										</div>
 								</div>
 							</li>
-							<?php selectAllSatker('kodeSatker10','255',true,false); ?>
+							<?php selectAllSatker('kodeSatker10','255',true,false,false,true); ?>
 							<br />
 							<li>
 								<span class="span2">Tanggal Cetak</span>

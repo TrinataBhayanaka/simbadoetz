@@ -79,11 +79,12 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 
 }
 
-function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
+function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$sess=true){
 
 	global $url_rewrite;
 	// pr($_SESSION);
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
+	if($sess) $sess = $_SESSION['ses_satkerkode'];
 
 	if($status == "required"){
 	?>
@@ -114,7 +115,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        data: function (term) {
 				            return {
 				            	free: true,
-				                sess: '',
+				                sess: '<?=$sess?>',
 				                term: term
 				            };
 				        },

@@ -11,3 +11,4 @@ report/data/*
 report/footer/*
 db/simda_to_simbada.sql
 *.bak
+*.swp

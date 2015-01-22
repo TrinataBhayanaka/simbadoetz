@@ -28,11 +28,16 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 	<!-- End Sql -->
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			initKondisi();
 			});	
+
+		function getCurrency(item){
+	      $('#hrgSatuan').val($(item).autoNumeric('get'));
+	    }
 	</script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -129,7 +134,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Keterangan Koreksi</span>
-								<textarea name="GUID" class="span3"><?=$dataArr['aset']['GUID']?></textarea>
+								<textarea name="GUID" class="span3" id="ketkor"><?=$dataArr['aset']['GUID']?></textarea>
 							</li>
 						</ul>
 						<ul>
@@ -174,11 +179,15 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3 kapitalisasi" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" onchange="return totalHrg()" required readonly/>
+								<!-- <input type="text" class="span3 kapitalisasi" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" onchange="return totalHrg()" required readonly/> -->
+								<input type="text" class="span3 kapitalisasi" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$dataArr['aset']['Satuan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required readonly/>
+								<input type="hidden" name="Satuan" class="kapitalisasi" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
-								<input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly/>
+								<!-- <input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly/> -->
+								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly/>
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly>
 							</li>
 							<li>
 								<span class="span2">Info</span>
@@ -495,14 +504,14 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		} else if ($("#"+item).attr('id') == "kapital") {
 			$("textarea").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".kapitalisasi").removeAttr('readonly');
+			$(".kapitalisasi,#ketkor").removeAttr('readonly');
 			$(".ubahkondisi,.koreksi,.full,#rubahkondisi,#koreksinilai,#rubahdata,#pindahruang").attr('disabled','disabled');
 			$(".well h2").html("Kapitalisasi");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan penambahan nilai aset dengan kondisi tertentu.");
 		} else if ($("#"+item).attr('id') == "nilai") {
 			$("textarea").attr('readonly','readonly');
-			$(".kapitalisasi").removeAttr('readonly');
+			$(".kapitalisasi,#ketkor").removeAttr('readonly');
 			$("#koreksinilai").removeAttr('disabled');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".ubahkondisi,.koreksi,.full,#rubahkondisi,#rubahdata,#pindahruang").attr('disabled','disabled');
@@ -517,6 +526,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".koreksi,.full,#koreksinilai,#rubahdata,#pindahruang").attr('disabled','disabled');
 			$(".well h2").html("Rubah Kondisi");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
+			$("#ketkor").removeAttr('readonly');
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan kondisi aset.");
 		} else if ($("#"+item).attr('id') == "koreksi") {
 			initKondisi();
