@@ -9783,7 +9783,7 @@ $offset = @$_POST['record'];
         $setval = implode(' AND ', $tmpsetval);
 
         if($setval) $setval = $setval." AND ";
-        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang = '1' GROUP BY  kodeKelompok ,  kodeLokasi");
+        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,Tahun,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang = '1' GROUP BY  kodeKelompok ,  kodeLokasi");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
@@ -9795,6 +9795,11 @@ $offset = @$_POST['record'];
                         $tmp = $uraian;
                         $aset[$key]['uraian'] = $tmp['Uraian'];
                     }
+                $sqlnmskpd = mysql_query("SELECT NamaSatker FROM satker WHERE kode = '{$value['kodeSatker']}' LIMIT 1");
+                while ($nmsatker = mysql_fetch_array($sqlnmskpd)){
+                        $tmp2 = $nmsatker;
+                        $aset[$key]['Satker'] = $tmp2['NamaSatker'];
+                    }  
                 $aset[$key]['tabel'] = $table;
             }
         }

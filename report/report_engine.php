@@ -75,45 +75,161 @@ class report_engine extends core_api_report {
 
 		} 
 
-public function retrieve_html_kb_a($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_kb_a($dataArr,$gambar,$skpd_id,$tglawalPerbhn,$tglakhirPerbhn)
 {
-echo "masukkk";
+// echo "masukkk";
+echo "$tglakhirPerbhn";
 // pr($dataArr);
 // exit;
 foreach ($dataArr as $asetID => $value)
 {
-	echo "asetid =".$asetID ;
-	echo "<br>";
+	// echo "asetid =".$asetID ;
+	// echo "<br>";
 	//isi nilai asetID
-    foreach ($value as $keys =>$kocak)
+    foreach ($value as $keys =>$row)
     {	
-		//isi nilainya
+		// pr($value);
+		
 		//skenario log tanah
-		//===============================================
+		//begin===============================================
 		//1 - kapitalisasi
 			//cek koderiawayat  
 			//2 	Ubah Kapitalisasi,
 			//7 	Penghapusan Sebagian
 			//21 	Koreksi Nilai
 		//jika ada nilainya foreach aja dgn tampilan html
-		$ceckKapt = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
+		$AsetId = $row->Aset_ID;
+		$Satker = $row->kodeSatker;
+		$param = "01";
+		$ceckKapt = $this->Addkap($AsetId,$Satker,$param,$tglawalPerbhn,$tglakhirPerbhn);
+		// pr($ceckKapt);
+		if($ceckKapt){	
+			$htmlNk ="<h3>I. NILAI KAPITALISASI</h3>";
+			$htmlNk.="<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+					<tr>
+						  <td style=\"width: 200px; font-weight: bold; text-align: center;\">No<td>
+						  <td style=\"text-align: center; font-weight: bold; width: 500px; text-align: center;\">Tanggal</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">No Dokumen</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Uraian</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Nilai Perolehan</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Nilai Awal Perolehan</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Info Riwayat</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Masa Manfaat</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Nilai Sisa</td>
+						</tr>";
+			$no=1;
+			foreach ($ceckKapt as $dataKap){
+				/*echo "no $i=".$no;
+				echo "<br>";
+				echo "NilaiPerolehan_Awal $i=".$dataKap->NilaiPerolehan_Awal;
+				echo "<br>";
+				echo "NilaiPerolehan $i=".$dataKap->NilaiPerolehan;
+				echo "<br>";
+				echo "keterangan $i=".$dataKap->GUID;
+				echo "<br>";
+				echo "Info riwayat $i=".$dataKap->Kd_Riwayat;
+				echo "<br>";*/
+				if($dataKap->Kd_Riwayat == 2){
+					$Inforwyt = "Ubah Kapitalisasi";
+				}elseif($dataKap->Kd_Riwayat == 7){
+					$Inforwyt = "Pengahpusan Sebagian";
+				}
+				/*elseif($dataKap->Kd_Riwayat == 21){
+					$Inforwyt = "koreksi nilai";
+				}*/
+				$htmlNk.="<tr>
+						  <td style=\"width: 200px; text-align: center;\">$no<td>
+						  <td style=\"text-align: center;width: 500px;\">$dataKap->TglPerubahan&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$dataKap->No_Dokumen&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$dataKap->GUID&nbsp;</td>
+						  <td style=\"width: 873px; text-align: right;\">$dataKap->NilaiPerolehan&nbsp;</td>
+						  <td style=\"width: 873px; text-align: right;\">$dataKap->NilaiPerolehan_Awal&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$Inforwyt&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$dataKap->MasaManfaat&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$dataKap->NilaiBuku&nbsp;</td>
+						</tr>"; 
+				
+			$no++;
+			}
+			$htmlNk.="</table>";
+			// $hasil_html[]=$htmlNk;
+			echo $htmlNk;  
+		}
+		//end===============================================
 		
+		//begin=============================================
+		//2 - koreksi nilai
+			//cek koderiawayat  
+			//18 	Ubah Data
+		//jika ada nilainya foreach aja dgn tampilan html
+		// echo "masukkk";
+		$param = "01";
+		$ceckkrksNilai = $this->AddkrksNilai($AsetId,$Satker,$param,$tglawalPerbhn,$tglakhirPerbhn);
+		// pr($ceckkrksNilai);
+		if($ceckkrksNilai){	
+			$htmlKrks ="<h3>II. KOREKSI NILAI</h3>";
+			$htmlKrks.="<table style=\"text-align: left; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+					<tr>
+						  <td style=\"width: 200px; font-weight: bold; text-align: center;\">No<td>
+						  <td style=\"text-align: center; font-weight: bold; width: 500px; text-align: center;\">Tanggal</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">No Dokumen</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Uraian</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Nilai Perolehan</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Nilai Awal Perolehan</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Info Riwayat</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Masa Manfaat</td>
+						  <td style=\"width: 873px; font-weight: bold; text-align: center;\">Nilai Sisa</td>
+						</tr>";
+			$noKrks=1;
+			foreach ($ceckkrksNilai as $datakrksNilai){
+				/*echo "no $i=".$no;
+				echo "<br>";
+				echo "NilaiPerolehan_Awal $i=".$dataKap->NilaiPerolehan_Awal;
+				echo "<br>";
+				echo "NilaiPerolehan $i=".$dataKap->NilaiPerolehan;
+				echo "<br>";
+				echo "keterangan $i=".$dataKap->GUID;
+				echo "<br>";
+				echo "Info riwayat $i=".$dataKap->Kd_Riwayat;
+				echo "<br>";*/
+				if($dataKap->Kd_Riwayat == 21){
+					$Inforwyt = "Koreksi Nilai";
+				}
+				$htmlKrks.="<tr>
+						  <td style=\"width: 200px; text-align: center;\">$noKrks<td>
+						  <td style=\"text-align: center;width: 500px;\">$datakrksNilai->TglPerubahan&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$datakrksNilai->No_Dokumen&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$datakrksNilai->GUID&nbsp;</td>
+						  <td style=\"width: 873px; text-align: right;\">$datakrksNilai->NilaiPerolehan&nbsp;</td>
+						  <td style=\"width: 873px; text-align: right;\">$datakrksNilai->NilaiPerolehan_Awal&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$Inforwyt&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$datakrksNilai->MasaManfaat&nbsp;</td>
+						  <td style=\"width: 873px; text-align: ;\">$datakrksNilai->NilaiBuku&nbsp;</td>
+						</tr>"; 
+				
+			$no++;
+			}
+			$htmlKrks.="</table>";
+			// $hasil_html[]=$htmlNk;
+			echo $htmlKrks;  
+		}
+		//end===============================================
 		
+		//begin===============================================
+		//3 - perubahan dokumen
+			//cek koderiawayat  
+			//18 	Ubah Data
+		//jika ada nilainya foreach aja dgn tampilan html
+		$param = "01";
+		$ceckChangeDoc = $this->ChangeDoc($AsetId,$Satker,$param,$tglawalPerbhn,$tglakhirPerbhn);
 		
-		//===============================================
-		
-		
-		//2 - perubahan dokumen
+		//end===============================================
+		//4 - pindah skpd dan ruangan
 			//cek koderiawayat  
 			//18 	Ubah Data
 		//jika ada nilainya foreach aja dgn tampilan html
 		
-		//3 - pindah skpd dan ruangan
-			//cek koderiawayat  
-			//18 	Ubah Data
-		//jika ada nilainya foreach aja dgn tampilan html
-		
-		//3 - pindah skpd dan ruangan
+		//5- pindah skpd dan ruangan
 			//cek koderiawayat  
 			//18 	Ubah Data
 		//jika ada nilainya foreach aja dgn tampilan html
@@ -121,14 +237,17 @@ foreach ($dataArr as $asetID => $value)
 	
 		
 		
-		pr($kocak);
-		echo "kodeKelompok =".$kocak->kodeKelompok ;
-		echo "<br>";
+		// pr($row);
+		// echo "kodeKelompok =".$row->kodeKelompok ;
+		// echo "<br>";
 	}
-        
+	// echo $html;
+	// exit;
+      
 }
 		
-    // $hasil_html[]=$html;
+	// $hasil_html[]=$html;
+	// echo $html;  
 	exit;
 	return $hasil_html;
 }
@@ -23490,6 +23609,125 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	// exit;
 	return $Nilai;
 }
+	public function Addkap($asetid,$Satker,$param,$tglawalPerbhn,$tglakhirPerbhn){
+		
+		if($param == 01){
+			$query = "SELECT *
+						FROM 
+							log_tanah 
+						where 
+							Kd_Riwayat in (2,7) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		}elseif($param == 02){
+			$query = "SELECT *
+					FROM 
+						log_mesin 
+					where 
+						Kd_Riwayat in (2,7) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		}elseif($param == 03){
+			$query = "SELECT *
+					FROM 
+						log_bangunan 
+					where 
+						Kd_Riwayat in (2,7) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		
+		}elseif($param == 04){
+			$query = "SELECT *
+					FROM 
+						log_jaringan 
+					where 
+						Kd_Riwayat in (2,7) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		
+		}elseif($param == 05){
+			$query = "SELECT *
+					FROM 
+						log_asetlain 
+					where 
+						Kd_Riwayat in (2,7) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		
+		}else{
+			$query = "SELECT *
+					FROM 
+						log_kdp 
+					where 
+						Kd_Riwayat in (2,7) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		}
+		// pr($query);
+		$resKap=$this->retrieve_query($query);
+		if($resKap!=""){
+			foreach($resKap as $value){
+				$NilaiKap[]=$value;
+			}
+		}
+		// pr($NilaiKap);
+	return $NilaiKap;
+	}
+
+		
+	public function AddkrksNilai($asetid,$Satker,$param,$tglawalPerbhn,$tglakhirPerbhn){
+		if($param == 01){
+			$querykrksNilai = "SELECT *
+						FROM 
+							log_tanah 
+						where 
+							Kd_Riwayat ='21' and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+							and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		}elseif($param == 02){
+			$querykrksNilai = "SELECT *
+					FROM 
+						log_mesin 
+					where 
+						Kd_Riwayat ='21' and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		}elseif($param == 03){
+			$querykrksNilai = "SELECT *
+					FROM 
+						log_bangunan 
+					where 
+						Kd_Riwayat ='21' and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		
+		}elseif($param == 04){
+			$querykrksNilai = "SELECT *
+					FROM 
+						log_jaringan 
+					where 
+						Kd_Riwayat ='21' and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		
+		}elseif($param == 05){
+			$querykrksNilai = "SELECT *
+					FROM 
+						log_asetlain 
+					where 
+						Kd_Riwayat = '21' and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		
+		}else{
+			$querykrksNilai = "SELECT *
+					FROM 
+						log_kdp 
+					where 
+						Kd_Riwayat ='21' and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
+						and TglPerubahan >= '$tglawalPerbhn' AND TglPerubahan <= '$tglakhirPerbhn' order by log_id asc";
+		}
+		// pr($querykrksNilai);
+		$reskrksNilai=$this->retrieve_query($querykrksNilai);
+		if($reskrksNilai!=""){
+			foreach($reskrksNilai as $val){
+				$NilaikrksNilai[]=$val;
+			}
+		}
+		// pr($NilaiKap);
+	return $NilaikrksNilai;
+	
+	}
+
 	
 	public function get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
 		if($satker_id !=""){

@@ -507,7 +507,7 @@ class core_api_report extends DB {
 													and $parameter_sql
 												group by T.Aset_ID
 												order by 
-													T.Aset_ID,T.kodeKelompok,T.kodeSatker,T.TglPerubahan $limit";
+													T.Aset_ID,T.kodeKelompok,T.kodeSatker,T.TglPerubahan ";
 			
 			$kb_a_default   = "";	
 			

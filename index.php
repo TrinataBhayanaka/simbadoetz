@@ -68,8 +68,9 @@ $USERAUTH->check_sys_log();
 					  <!-- <li><a href="#">Electronics</a><span class="divider"><b>&raquo;</b></span></li>
 					  <li class="active">Flat Screens</li> -->
 					  <?php SignInOut();?>
+					  
 					</ul>
-
+					
 					<?php
 					$news = $RETRIEVE->getNews();
 					// pr($news);

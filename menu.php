@@ -35,7 +35,7 @@ $menuPath = $USERAUTH->FrontEnd_show_menu($SessionUser);
 											<?php echo $_SESSION['ses_uname'];?><br/>
 											Welcome Back
 
-											 <a data-toggle="modal" href="#chgpass" class="btn ahover"><small>Ubah Password</small></a>
+											 <a data-toggle="modal" href="#chgpass" class="btn btn-small btn-danger ahover">Ubah Password</a>
 
 										</td>
 									</tr>

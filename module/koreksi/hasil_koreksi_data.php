@@ -69,9 +69,10 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 				<thead>
 					<tr>
 						<th>No.</th>
+						<th width="20%">Satker</th>
 						<th>Kode Kelompok</th>
 						<th>Nama Barang</th>
-						<th>Kode Lokasi</th>
+						<th>Tahun</th>
 						<th>No. Registrasi</th>
 						<th>Aksi</th>
 					</tr>
@@ -85,9 +86,10 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 				?>
 						<tr class="gradeA">
 							<td><?=$i++?></td>
+							<td><small><?=$value['Satker']?></small></td>
 							<td><?=$value['kodeKelompok']?></td>
 							<td><?=$value['uraian']?></td>
-							<td><?=$value['kodeLokasi']?></td>
+							<td><?=$value['Tahun']?></td>
 							<td><input type="number" class="span1" id="min_<?=$i?>" others="<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$_POST['tipeAset']?>" value="<?=$value['min']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" onchange="getminmax(this);" onkeyup="getminmax(this);" > 
 								s/d 
 								<input type="number" class="span1" id="max_<?=$i?>" value="<?=$value['max']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" disabled>

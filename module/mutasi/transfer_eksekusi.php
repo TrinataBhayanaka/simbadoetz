@@ -183,7 +183,7 @@ include "../../config/config.php";
                           	 <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top:2px;">
                                <tr>
 		                          	<td style='border: 1px solid #004933; height:50px; padding:2px;'>
-		                          	 	<?=selectAllSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+		                          	 	<?=selectAllSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false,'required',false);?>
 									</td>
 								</tr>
 							</table>						
