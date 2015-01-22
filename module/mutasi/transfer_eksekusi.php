@@ -12,9 +12,16 @@ include "../../config/config.php";
 
 	$MUTASI = new RETRIEVE_MUTASI;
 
-	// pr($_POST);
-    $data = $MUTASI->retrieve_mutasi_eksekusi($_POST);
+	if (isset($_POST)){
+		// unset($_SESSION['ses_mutasi_eksekusi']);
 
+		$_SESSION['ses_mutasi_eksekusi'] = $_POST;
+		
+	}
+
+	$dataParam = $_SESSION['ses_mutasi_eksekusi'];
+	// pr($_SESSION);
+    $data = $MUTASI->retrieve_mutasi_eksekusi($dataParam);
 
     // pr($data);	
 ?>
@@ -228,11 +235,11 @@ include "../../config/config.php";
 																<input type='hidden' name='lastNamaSatker[]' value='$nilai[NamaSatker]'>
 																<input type='hidden' name='lastTipeAset[]' value='$nilai[TipeAset]'>
 
-																<td width=''>$nilai[noRegister] - $nilai[kodeSatker] - $nilai[NamaSatker] <span class='uraianTujuan'></span></td>
-																<td width='' align='center'></td>
+																<td width='30%'>$nilai[noRegister] - $nilai[kodeSatker] - $nilai[NamaSatker] <span class='uraianTujuan'></span></td>
+																<td width='' align='center'><span style='color:blue' class='namaSatkerTujuan_$no'></span></td>
 																<td align='right' >
 																<input type='button' id ='$nilai[Aset_ID]' class='btn btn-info' value='View Detail' onclick='spoiler(this);'>
-																<a class='btn btn-success test' prop='$nilai[Aset_ID]' data-toggle='modal' href='#myModal2$no'>Daftar Aset</a>
+																<a class='btn btn-success test' prop='$nilai[Aset_ID]' data-toggle='modal' href='#myModal2$no' no='$no'>Daftar Aset</a>
 																<a href='javascript:void(0)' class='btn btn-danger hapusData' data-toggle='modal' asetid='$nilai[Aset_ID]' no='$no'>Hapus</a>
 																
 																</td>
@@ -426,6 +433,7 @@ include "../../config/config.php";
 					</div>
 					<form method="POST" action="">
 					<input type="hidden" value="" id="idSatkerTujuan">
+					<input type="hidden" value="" class="barisData">
 					<div class="modal-bodyeksekusi">
 					
 					 <div class="formLogin">
@@ -475,7 +483,7 @@ include "../../config/config.php";
 
 		                    
 		                    html += "	<tr>";
-							html += "				<td><input type='radio' class='pilihaset' value='"+value.Aset_ID+"' name='pilihaset'/></td>";
+							html += "				<td><input type='radio' class='pilihaset' value='"+value.Aset_ID+"' name='pilihaset' prop='"+value.Uraian+"'/></td>";
 							html += "				<td>"+value.Uraian+"</td>";
 							html += "				<td>"+value.noRegister+"</td>";
 							html += "				<td>"+value.Tahun+"</td>";
@@ -510,17 +518,23 @@ include "../../config/config.php";
 		$(document).on('click','.hapusData', function(){
 			var no = $(this).attr('no');
 			var asetid = $(this).attr('asetid');
-			$('.data_'+no).css('display','none');
+			// $('.data_'+no).css('display','none');
+			$('.data_'+no).html('');
 			$('.asetKapitalisasi_'+asetid).attr('name','');
 		})
 
 		$(document).on('click','.pilihaset', function(){
 			var asetid = $(this).val();
 			var asetidAwal = $('.asetid_awal').val();
+			var namaSatkerTujuan = $(this).attr('prop');
+			var no = $('.barisData').val();
 			var html = "";
 
+			console.log(no);
 			html += "<input type='hidden' name='asetKapitalisasi["+asetidAwal+"]' class='asetKapitalisasi_"+asetidAwal+"' value='"+asetid+"'/>";
 			$('.hiddenData').append(html);
+			$('.namaSatkerTujuan_'+no).html(namaSatkerTujuan);
+			
 		})
 
 		$(document).on('click','.test', function(){
@@ -528,9 +542,13 @@ include "../../config/config.php";
 			var html ="";
 			var asetid = $(this).attr('prop');
 			var kodeSatker = $('#kodeSatker').val();
+			var no = $(this).attr('no');
+
 
 			html += "<input type='hidden' name='asetid_awal' value='"+asetid+"' class='asetid_awal'/>";
 			$('.formDataParent').html(html);
+			console.log(no);
+			$('.barisData').val(no);
 
 			$.post(basedomain+'/function/phpajax/ajax.php',{getSatker:true, idsatker:kodeSatker}, function(data){
 
@@ -543,6 +561,7 @@ include "../../config/config.php";
 
 			
 			$('.kodeSatker').html(kodeSatker);
+			
 		})
 
 	</script>

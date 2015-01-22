@@ -46,8 +46,16 @@ $MUTASI = new RETRIEVE_MUTASI;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-        
-	$data = $MUTASI->retrieve_mutasi_filter($_POST);
+    if ($_POST['submit']){
+		// unset($_SESSION['ses_mutasi_filter']);
+
+		$_SESSION['ses_mutasi_filter'] = $_POST;
+		
+	}
+
+	$dataParam = $_SESSION['ses_mutasi_filter'];
+	// pr($_SESSION);
+	$data = $MUTASI->retrieve_mutasi_filter($dataParam);
 	// pr($data);
 			?>
 		 <script type="text/javascript" charset="utf-8">
@@ -178,7 +186,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			
 			<div id="demo">
 			<form name="form" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
-			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
+			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 					<thead>
 					<tr>

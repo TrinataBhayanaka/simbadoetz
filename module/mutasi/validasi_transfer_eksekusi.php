@@ -189,7 +189,7 @@ include "../../config/config.php";
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_antar_skpd.php";?>" class="btn">
+								<a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_hasil_filter.php";?>" class="btn">
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>

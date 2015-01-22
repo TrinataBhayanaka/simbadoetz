@@ -46,8 +46,17 @@ $MUTASI = new RETRIEVE_MUTASI;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-        
-	$data = $MUTASI->retrieve_mutasiPending($_POST);
+	// pr($_POST);
+    if ($_POST['submit']){
+		// unset($_SESSION['ses_mutasi_filter']);
+
+		$_SESSION['ses_mutasi_val_filter'] = $_POST;
+		
+	}
+
+	$dataParam = $_SESSION['ses_mutasi_val_filter'];
+
+	$data = $MUTASI->retrieve_mutasiPending($dataParam);
 	// pr($data);
 			?>
 		 <script type="text/javascript" charset="utf-8">
@@ -217,7 +226,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<td style="font-weight: bold;"> <?php echo "$value[Keterangan]";?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatker]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[Pemakai]";?></td>	
-						<td style="font-weight: bold;"><a href="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_eksekusi.php?id=<?=$value[Mutasi_ID]?>">Detail<a/></td>	
+						<td style="font-weight: bold;"><a href="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_eksekusi.php?id=<?=$value[Mutasi_ID]?>" class="btn btn-info">Detail<a/></td>	
 							
 						
 					</tr>
