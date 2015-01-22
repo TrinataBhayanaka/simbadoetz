@@ -141,6 +141,55 @@ class DB
 	{
 		return $$data = '';
 	}
+
+	function autocommit($val=0,$dbuse=0)
+	{
+		$command = "SET autocommit={$val};";
+		$result = $this->query($command) or die ($this->error('autocommit failed'));
+		// if (!$this->link){
+			// $this->link = $this->open_connection(0);
+		// }
+		
+		// return mysql_autocommit($this->link, false);
+		
+	}
+	
+	function commit($dbuse=0)
+	{
+		$command = "COMMIT;";
+		$result = $this->query($command) or die ($this->error('commit failed'));
+		// mysql_commit();
+	}
+	
+	function rollback($dbuse=0)
+	{
+		$command = "ROLLBACK;";
+		$result = $this->query($command) or die ($this->error('rollback failed'));
+		// if (!$this->link){
+			// $this->link = $this->open_connection(0);
+		// }
+		
+		// pr($this->link);
+		// mysql_rollback($this->link);
+		
+	}
+	
+	function begin($dbuse=0)
+	{
+		
+		$this->autocommit();
+		$command = "START TRANSACTION;";
+		$result = $this->query($command) or die ($this->error('commit failed'));
+		// if (!$this->link){
+			// $this->link = $this->open_connection(0);
+			
+		// }
+		// mysql_
+		// $res = mysql_begin_transaction($this->link);
+		if ($result) return true;
+		return false;
+	}
+	
 	
 	public function is_table_exists($data, $status)
 	{

@@ -430,17 +430,8 @@ include "../../config/config.php";
 					
 					 <div class="formLogin">
 					 		<span class="btn lihat" prop="<?=$nilai2[TipeAset]?>">Load data aset</span>
-							<table border="1" width="100%">
-								<tr>
-									<th>No</th>
-									<th>Kode satker</th>
-									<th>cacsac scascas csacsa</th>
-									<th>cdskncs ncdsncs</th>
-									<th>cdskncs ncdsncs</th>
-									<th>cdskncs ncdsncs</th>
-								</tr>
-							</table>
-							<span class="formData"></span>
+							
+							<div class="formData"></div>
 							<span class="formDataParent"></span>
 						</div>
 						
@@ -470,16 +461,32 @@ include "../../config/config.php";
 		            var html = "";
 
 		            if (data.status==true){
+		                
+		            	html += "<table border='1'>";
+		                html += "	<tr>";
+		                html += "		<th>&nbsp;</th>";
+		                html += "		<th>Uraian</th>";
+		                html += "		<th>No Register</th>";
+		                html += "		<th>Tahun</th>";
+		                html += "		<th>Nilai Perolehan</th>";
+		                html += "		<th>Alamat</th>";
+		                html += "	</tr>";
 		                $.each(data.rec, function(i,value){
 
-		                    html += "<table>";
+		                    
 		                    html += "	<tr>";
 							html += "				<td><input type='radio' class='pilihaset' value='"+value.Aset_ID+"' name='pilihaset'/></td>";
 							html += "				<td>"+value.Uraian+"</td>";
+							html += "				<td>"+value.noRegister+"</td>";
+							html += "				<td>"+value.Tahun+"</td>";
+							html += "				<td>"+value.NilaiPerolehan+"</td>";
+							html += "				<td>"+value.Alamat+"</td>";
 							html += "			</tr>";
-							html += "</table>";
+							
 		                    
 		                })
+
+		                html += "</table>";
 
 		                $('.formData').html(html);
 		            } else {
