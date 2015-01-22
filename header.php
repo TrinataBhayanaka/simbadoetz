@@ -78,7 +78,9 @@ else
            
 							if(isset($_SESSION['ses_utoken'])){ ?>
 							   
-							   <a href="<?php echo $url_rewrite.'/logout.php?utoken='.str_shuffle('bcsabbjahj131');?>"><i class="fa fa-sign-out"></i> Logout </a>
+							 
+								 <a href="<?php echo $url_rewrite.'/logout.php?utoken='.str_shuffle('bcsabbjahj131');?>"><i class="fa fa-sign-out"></i> Logout</a>
+									
 									<?php
 							}
 							else

@@ -109,8 +109,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'field'=>"ast.Aset_ID,{$listTableAlias}.*,klm.Uraian,sat.NamaSatker",
                             'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} GROUP BY ast.Aset_ID",
                             'joinmethod' => ' LEFT JOIN ',
-                            'join' => "ast.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = klm.Kode, ast.KodeSatker = sat.Kode",
-                            'limit'=>"100"
+                            'join' => "ast.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = klm.Kode, ast.KodeSatker = sat.Kode"
                             );
             // ////////pr($sql);
                     // $res = $this->db->lazyQuery($sql,$debug);
@@ -245,8 +244,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'field'=>"ast.Aset_ID,{$listTableAlias}.*,klm.Uraian,sat.NamaSatker",
                             'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} GROUP BY ast.Aset_ID",
                             'joinmethod' => ' LEFT JOIN ',
-                            'join' => "ast.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = klm.Kode, ast.KodeSatker = sat.Kode",
-                            'limit'=>"100"
+                            'join' => "ast.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = klm.Kode, ast.KodeSatker = sat.Kode"
                             );
             // ////////pr($sql);
                     // $res = $this->db->lazyQuery($sql,$debug);
@@ -380,8 +378,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'field'=>"ast.Aset_ID,{$listTableAlias}.*,klm.Uraian,sat.NamaSatker",
                             'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} GROUP BY ast.Aset_ID",
                             'joinmethod' => ' LEFT JOIN ',
-                            'join' => "ast.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = klm.Kode, ast.KodeSatker = sat.Kode",
-                            'limit'=>"100"
+                            'join' => "ast.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = klm.Kode, ast.KodeSatker = sat.Kode"
                             );
             // ////////pr($sql);
                     // $res = $this->db->lazyQuery($sql,$debug);
@@ -596,8 +593,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		$sql = array(
                 'table'=>'Usulan',
                 'field'=>" * ",
-                'condition' => "FixUsulan=1 AND Jenis_Usulan='PMS' AND StatusPenetapan=0 {$filterkontrak}",
-				'limit'=>'100',
+                'condition' => "FixUsulan=1 AND Jenis_Usulan='PMS' AND StatusPenetapan=0 {$filterkontrak}"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -619,8 +615,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 		$sql = array(
                 'table'=>'Usulan',
                 'field'=>" * ",
-                'condition' => "FixUsulan=1 AND Jenis_Usulan='PMD' AND StatusPenetapan=0 {$filterkontrak}",
-				'limit'=>'100',
+                'condition' => "FixUsulan=1 AND Jenis_Usulan='PMD' AND StatusPenetapan=0 {$filterkontrak}"
                 );
         
         $res = $this->db->lazyQuery($sql,$debug);
@@ -642,8 +637,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Usulan',
                 'field'=>" * ",
-                'condition' => "Usulan_ID=$data",
-                'limit'=>'100',
+                'condition' => "Usulan_ID=$data"
                 );
         
         $res = $this->db->lazyQuery($sql,$debug);
@@ -792,8 +786,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Usulan',
                 'field'=>" * ",
-                'condition' => "FixUsulan=1 AND Jenis_Usulan='PSB'  AND StatusPenetapan=0 {$filterkontrak}",
-                'limit'=>'100',
+                'condition' => "FixUsulan=1 AND Jenis_Usulan='PSB'  AND StatusPenetapan=0 {$filterkontrak}"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -857,9 +850,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             		$sql = array(
                             'table'=>'penghapusan',
                             'field'=>" * ",
-                            'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-            				'limit'=>'100',
-                            );
+                            'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}"
                     ////////pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
@@ -869,8 +860,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $sql = array(
                         'table'=>'penghapusan',
                         'field'=>" * ",
-                        'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-                        'limit'=>'100',
+                        'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}"
                         );
                 ////////pr($sql);
 
@@ -976,8 +966,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $sql = array(
                             'table'=>'Usulan',
                             'field'=>" * ",
-                            'condition' => "Usulan_ID IN ($QueryHPSID) AND FixUsulan=1 AND Jenis_Usulan='$jenis_usulan'  AND StatusPenetapan=0 {$filterkontrak}",
-                            'limit'=>'100',
+                            'condition' => "Usulan_ID IN ($QueryHPSID) AND FixUsulan=1 AND Jenis_Usulan='$jenis_usulan'  AND StatusPenetapan=0 {$filterkontrak}"
                             );
                     ////////pr($sql);
 
@@ -988,9 +977,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $sql = array(
                     'table'=>'Usulan',
                     'field'=>" * ",
-                    'condition' => "FixUsulan=1 AND Jenis_Usulan='$jenis_usulan' AND StatusPenetapan=0 {$filterkontrak}",
-                    
-                    'limit'=>'100',
+                    'condition' => "FixUsulan=1 AND Jenis_Usulan='$jenis_usulan' AND StatusPenetapan=0 {$filterkontrak}"
                     );
             
                 $res = $this->db->lazyQuery($sql,$debug);
@@ -1029,8 +1016,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $sql = array(
                 'table'=>'Usulan',
                 'field'=>" * ",
-                'condition' => "Usulan_ID IN ($cols) AND FixUsulan=1 AND Jenis_Usulan='$jenis_hapus' {$filterkontrak}",
-                'limit'=>'100',
+                'condition' => "Usulan_ID IN ($cols) AND FixUsulan=1 AND Jenis_Usulan='$jenis_hapus' {$filterkontrak}"
                 );
         
             $res = $this->db->lazyQuery($sql,$debug);
@@ -1187,8 +1173,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $sql = array(
                             'table'=>'penghapusan',
                             'field'=>" * ",
-                            'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-                            'limit'=>'100',
+                            'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}"
                             );
                     ////pr($sql);
 
@@ -1200,7 +1185,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'table'=>'penghapusan',
                         'field'=>" * ",
                         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-                        'limit'=>'100',
+                        // 'limit'=>'100',
                         );
                 ////////pr($sql);
 
@@ -1296,7 +1281,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'table'=>'penghapusan',
                             'field'=>" * ",
                             'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=1 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-                            'limit'=>'100',
+                            // 'limit'=>'100',
                             );
                     ////////pr($sql);
 
@@ -1308,7 +1293,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'table'=>'penghapusan',
                         'field'=>" * ",
                         'condition' => "FixPenghapusan=1 AND Status=1 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-                        'limit'=>'100',
+                        // 'limit'=>'100',
                         );
                 ////////pr($sql);
 
@@ -1358,7 +1343,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 					'table'=>'Penghapusan',
 					'field'=>" * ",
 					'condition' => "FixPenghapusan=1 and Status=1 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-					'limit'=>'100',
+					// 'limit'=>'100',
 					);
 
 			$res = $this->db->lazyQuery($sql,$debug);
@@ -2372,7 +2357,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'table'=>'Usulan',
                 'field'=>" * ",
                 'condition' => "Penetapan_ID=$id AND FixUsulan=1 {$filterkontrak}",
-                'limit'=>'100',
+                // 'limit'=>'100',
                 );
         
             $res = $this->db->lazyQuery($sql,$debug);
