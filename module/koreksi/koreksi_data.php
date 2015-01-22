@@ -134,7 +134,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Keterangan Koreksi</span>
-								<textarea name="GUID" class="span3"><?=$dataArr['aset']['GUID']?></textarea>
+								<textarea name="GUID" class="span3" id="ketkor"><?=$dataArr['aset']['GUID']?></textarea>
 							</li>
 						</ul>
 						<ul>
@@ -504,14 +504,14 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		} else if ($("#"+item).attr('id') == "kapital") {
 			$("textarea").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".kapitalisasi").removeAttr('readonly');
+			$(".kapitalisasi,#ketkor").removeAttr('readonly');
 			$(".ubahkondisi,.koreksi,.full,#rubahkondisi,#koreksinilai,#rubahdata,#pindahruang").attr('disabled','disabled');
 			$(".well h2").html("Kapitalisasi");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan penambahan nilai aset dengan kondisi tertentu.");
 		} else if ($("#"+item).attr('id') == "nilai") {
 			$("textarea").attr('readonly','readonly');
-			$(".kapitalisasi").removeAttr('readonly');
+			$(".kapitalisasi,#ketkor").removeAttr('readonly');
 			$("#koreksinilai").removeAttr('disabled');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".ubahkondisi,.koreksi,.full,#rubahkondisi,#rubahdata,#pindahruang").attr('disabled','disabled');
@@ -526,6 +526,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".koreksi,.full,#koreksinilai,#rubahdata,#pindahruang").attr('disabled','disabled');
 			$(".well h2").html("Rubah Kondisi");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
+			$("#ketkor").removeAttr('readonly');
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan kondisi aset.");
 		} else if ($("#"+item).attr('id') == "koreksi") {
 			initKondisi();
