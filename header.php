@@ -173,7 +173,7 @@ else
 					
 			</div>
 			<div class="modal-footer">
-			  <input type="button" value="Simpan" name="ubahpass" class="btn btn-default" id="drop_sebagai" />
+			  <input type="button" value="Simpan" name="ubahpass" class="btn btn-default" id="chgpass" />
 			</div>
 			</form>
 		</div>  
@@ -184,7 +184,7 @@ else
 
 	<script type="text/javascript">
 		
-		$(document).on('click', '#drop_sebagai', function(){
+		$(document).on('click', '#chgpass', function(){
 
 			var old_password = $('.oldpassword').val();
 			var new_password = $('.newpassword').val();
