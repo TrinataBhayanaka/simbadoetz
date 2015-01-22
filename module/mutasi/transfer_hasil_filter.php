@@ -109,7 +109,20 @@ $MUTASI = new RETRIEVE_MUTASI;
 					} 
 				}
 			</script>
-	
+			<script>
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			}}, 100);
+		}
+		</script>
         
 
           <section id="main">
@@ -164,27 +177,26 @@ $MUTASI = new RETRIEVE_MUTASI;
 			
 			
 			<div id="demo">
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
+			<form name="form" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
 			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-				<thead>
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+					<thead>
 					<tr>
-						<td  colspan="5" align=left>
-							<a href="#" onclick="enable_submit()" class="btn btn-info" id="pilihHalamanIni">Pilih halaman ini</a>
-							<a href="#" onclick="disable_submit()" class="btn btn-danger" id="kosongkanHalamanIni" >Kosongkan halaman ini</a>
-						</td>
-						
-						<td colspan="2" align="right">   
+						<td colspan="11" align="right">   
 							<input type="submit" name="submit" value="Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
-						<th>&nbsp;</th>
-						<th>Uraian</th>
-						<th>Satker</th>
-						<th>Lokasi</th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>No Register</th>
 						<th>No Kontrak</th>
+						<th>Kode / Uraian</th>
+						<th>Merk / Type</th>
+						<th>Satker</th>
+						<th>Tanggal Perolehan</th>
+						<th>Nilai Perolehan</th>
+						<th>Status</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
@@ -209,15 +221,20 @@ $MUTASI = new RETRIEVE_MUTASI;
 				
 					<tr class="gradeA">
 						<td><?php echo "$no.";?></td>
-						<td>
-							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value['Aset_ID'];?>" >
-													
+						<td class="checkbox-column">
+						
+							<input type="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value[Aset_ID];?>" >
+							
 						</td>
 						
-						<td style="font-weight: bold;"> <?php echo "$value[Uraian]";?> </td>
-						<td style="font-weight: bold;"> <?php echo "$value[kodeSatker]- $value[NamaSatker]";?> </td>
-						<td style="font-weight: bold;"><?php echo "$value[kodeLokasi]";?></td>
+						<td style="font-weight: bold;"> <?php echo "$value[noKontrak]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[Uraian]";?> / <?php echo "$value[Uraian]";?> </td>
+						<td style="font-weight: bold;"><?php echo "$value[kodeLokasi]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[kodeSatker]- $value[NamaSatker]";?></td>
+						<td style="font-weight: bold;">&nbsp;</td>
+						<td style="font-weight: bold;">&nbsp;</td>
+						<td style="font-weight: bold;">&nbsp;</td>	
 						<td style="font-weight: bold;"><a href="#" class="btn btn-danger">Hapus</a></td>	
 							
 						
@@ -234,6 +251,10 @@ $MUTASI = new RETRIEVE_MUTASI;
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
