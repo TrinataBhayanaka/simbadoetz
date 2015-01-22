@@ -59,6 +59,33 @@ if (isset($_POST['hapusAset'])){
 	exit;
 }
 
+if (isset($_POST['getSatker'])){
+
+	// pr($_POST);
+	$data = getNamaSatker($_POST);
+	if ($data){
+		print json_encode(array('status'=>true, 'rec'=>$data));
+	}else{
+		print json_encode(array('status'=>false));
+	}
+	exit;
+}
+
+function getNamaSatker($data)
+{
+	global $DBVAR;
+
+	$sql = array(
+            'table'=>'satker',
+            'field'=>"NamaSatker",
+            'condition' => "Kode = '{$data[idsatker]}'",
+            'limit' => '1',
+            );
+    $res = $DBVAR->lazyQuery($sql,$debug);
+    if ($res) return $res[0];
+    return false;
+}
+
 function hapus_daftar_usulan_mutasi($data, $debug=false)
 {
 	global $DBVAR;

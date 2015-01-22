@@ -422,7 +422,7 @@ include "../../config/config.php";
 			<div id="myModal2<?=$idmodal?>" class="modal hide fade  login myModal2<?=$idmodal?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div id="titleForm" class="modal-header" >
 					  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					  <h3 id="myModalLabel">Daftar Aset [ <?=$nilai2[NamaSatker]?> ]</h3>
+					  <h3 id="myModalLabel">Daftar Aset [ <span class="kodeSatker"></span> - <span class="namaSatker"></span> ]</h3>
 					</div>
 					<form method="POST" action="">
 					<input type="hidden" value="" id="idSatkerTujuan">
@@ -430,16 +430,25 @@ include "../../config/config.php";
 					
 					 <div class="formLogin">
 					 		<span class="btn lihat" prop="<?=$nilai2[TipeAset]?>">Load data aset</span>
-							
+							<table border="1" width="100%">
+								<tr>
+									<th>No</th>
+									<th>Kode satker</th>
+									<th>cacsac scascas csacsa</th>
+									<th>cdskncs ncdsncs</th>
+									<th>cdskncs ncdsncs</th>
+									<th>cdskncs ncdsncs</th>
+								</tr>
+							</table>
 							<span class="formData"></span>
 							<span class="formDataParent"></span>
 						</div>
 						
 				</div>
-				<!--
+				
 				<div class="modal-footer">
-				  <input type="submit" value="Confirm" name="login" class="btn btn-primary" id="drop_sebagai" />
-				</div>-->
+				  <input type="button" value="Tutup" name="login" class="btn btn-primary close" id="" data-dismiss="modal"/>
+				</div>
 				</form>
 			</div>	
 			
@@ -511,8 +520,22 @@ include "../../config/config.php";
 
 			var html ="";
 			var asetid = $(this).attr('prop');
+			var kodeSatker = $('#kodeSatker').val();
+
 			html += "<input type='hidden' name='asetid_awal' value='"+asetid+"' class='asetid_awal'/>";
 			$('.formDataParent').html(html);
+
+			$.post(basedomain+'/function/phpajax/ajax.php',{getSatker:true, idsatker:kodeSatker}, function(data){
+
+	            var htmlKelompok = "";
+
+	            if (data.status==true){
+	                $('.namaSatker').html(data.rec.NamaSatker);
+	            } 
+	        }, "JSON")
+
+			
+			$('.kodeSatker').html(kodeSatker);
 		})
 
 	</script>
