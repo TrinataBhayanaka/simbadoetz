@@ -140,6 +140,7 @@ function retrieve_data_aset_by_type($data, $debug=false)
             );
 
     $res = $DBVAR->lazyQuery($sql,$debug);
+    // pr($res);
     if ($res) return $res;
     return false;
 }

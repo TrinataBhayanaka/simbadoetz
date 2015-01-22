@@ -215,7 +215,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             $mutasi_id=get_auto_increment("Mutasi");
             
-            
+            $this->db->begin();
+            logFile('Start transaksi mutasi');
             // pr($jenisaset);
 
             $listTable = array(
@@ -237,6 +238,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     );
 
             $res = $this->db->lazyQuery($sql,$debug,1);
+            if (!$res){
+                logFile('rollback 1');
+                $this->db->rollback();
+                return false;   
+            }
 
             for($i=0;$i<$panjang;$i++){
                 
@@ -262,8 +268,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                 $result = $this->db->lazyQuery($sqlSelect,$debug);
-                // pr($result);
-
+                
                 $gabung_nomor_reg_tujuan=intval(($result[0]['noRegister'])+1);
 
                 if (!in_array($asset_id[$i], $asetKapitalisasi)){
@@ -274,7 +279,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             );
 
                     $res1 = $this->db->lazyQuery($sql1,$debug,1);
-
+                    if (!$res1){
+                        logFile('rollback 3');
+                        $this->db->rollback();
+                        return false;   
+                    }   
                 }else{
 
                      $sql1 = array(
@@ -284,6 +293,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             );
 
                     $res1 = $this->db->lazyQuery($sql1,$debug,1);
+                    if (!$res1){
+                        logFile('rollback 4');
+                        $this->db->rollback();
+                        return false;   
+                    }
                 }
 
                 $sql2 = array(
@@ -293,7 +307,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                 $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-                
+                if (!$res2){
+                    logFile('rollback 5');
+                    $this->db->rollback();
+                    return false;   
+                }
                 // pr($getKIB);
                 $sqlKib = array(
                         'table'=>"{$getKIB['listTableOri']}",
@@ -302,7 +320,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                 $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
-
+                if (!$resKib){
+                    logFile('rollback 5');
+                    $this->db->rollback();
+                    return false;   
+                }
 
                 $sql3 = array(
                         'table'=>"PenggunaanAset",
@@ -311,7 +333,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                 $res3 = $this->db->lazyQuery($sql3,$debug,2);
-
+                if (!$res3){
+                    logFile('rollback 6');
+                    $this->db->rollback();
+                    return false;   
+                }
                 
                 $sql = array(
                         'table'=>'aset',
@@ -342,16 +368,20 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     
                 }
 
+                logFile('commit transaksi mutasi');
+                $this->db->commit();
                 return true;
             } 
 
+            logFile('Rollback transaksi mutasi');
+            $this->db->rollback();
             return false;
         }
 
         function store_validasi_Mutasi($data, $debug=false)
         {
 
-            
+            $this->db->begin();
             $jenisaset = $this->getJenisAset($data['aset_id']);
 
             // pr($data);
@@ -418,6 +448,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             $res2 = $this->db->lazyQuery($sql2,$debug,2); 
 
                         }else{
+
+                            $this->db->rollback();
                             logFile('Nilai Perolehan kosong ketika kapitalisasi aset mutasi');
                             return false;
                         }
@@ -465,6 +497,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             logFile('Data baru berhasil diubah kode satkernya di validasi mutasi');
                         }else{
                             logFile('Nilai Perolehan kosong ketika kapitalisasi aset mutasi');
+                            $this->db->rollback();
                             return false;
                         }
                     }
@@ -495,6 +528,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         
                          
                     }else{
+
+                        $this->db->rollback();
                         logFile('gagal log data mutasi aset '.$data['aset_id'][$key]);
                     } 
                 
@@ -518,10 +553,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $res1 = $this->db->lazyQuery($sql,$debug,2); 
                 }
                 
+                $this->db->commit();
                 return true;   
             }
             
-
+            $this->db->rollback();
             return false;
 
             
