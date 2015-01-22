@@ -852,6 +852,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'field'=>" * ",
                             'condition' => "Penghapusan_ID IN ($QueryHPSID) AND FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}"
                     ////////pr($sql);
+                            );
 
                     $res = $this->db->lazyQuery($sql,$debug);
                 }
