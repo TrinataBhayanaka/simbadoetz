@@ -219,11 +219,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php 
-								if($_SESSION[ses_uoperatorid] == '1'){
-										selectAllSatker('kodeSatker1','255',true,false); 
-									}else{
-										selectSatker('kodeSatker1','255',true,false); 
-									}
+						
+									selectAllSatker('kodeSatker1','255',true,false,false,true);
 								// selectAllSatker('kodeSatker1','255',true,false); 
 							?>
 							<br>
@@ -261,11 +258,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker2','255',true,false); 
-								}else{
-									selectSatker('kodeSatker2','255',true,false); 
-								}
+						
+								selectAllSatker('kodeSatker2','255',true,false,false,true);
 								// selectAllSatker('kodeSatker2','255',true,false); 
 							?>
 							<br>
@@ -303,11 +297,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker3','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker3','255',true,false); 
-								}else{
-									selectSatker('kodeSatker3','255',true,false); 
-								}
+					
+								selectAllSatker('kodeSatker3','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -344,11 +335,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker4','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker4','255',true,false); 
-								}else{
-									selectSatker('kodeSatker4','255',true,false); 
-								}
+					
+								selectAllSatker('kodeSatker4','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -385,11 +373,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker5','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker5','255',true,false); 
-								}else{
-									selectSatker('kodeSatker5','255',true,false); 
-								}
+			
+								selectAllSatker('kodeSatker5','255',true,false,false,true);
 								
 							?>
 							<br>
@@ -427,11 +412,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker6','255',true,false);
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker6','255',true,false); 
-								}else{
-									selectSatker('kodeSatker6','255',true,false); 
-								}
+				
+								selectAllSatker('kodeSatker6','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -468,11 +450,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker7','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker7','255',true,false); 
-								}else{
-									selectSatker('kodeSatker7','255',true,false); 
-								}
+					
+								selectAllSatker('kodeSatker7','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -509,11 +488,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker8','255',true,false); 
-								}else{
-									selectSatker('kodeSatker8','255',true,false); 
-								}
+				
+								selectAllSatker('kodeSatker8','255',true,false,false,true);
 							
 							?>
 							<br>
@@ -551,11 +527,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker13','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker13','255',true,false); 
-								}else{
-									selectSatker('kodeSatker13','255',true,false); 
-								}
+					
+								selectAllSatker('kodeSatker13','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -592,11 +565,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker14','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker14','255',true,false); 
-								}else{
-									selectSatker('kodeSatker14','255',true,false); 
-								}
+				
+								selectAllSatker('kodeSatker14','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -636,11 +606,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker9','255',true,false);
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker9','255',true,false); 
-								}else{
-									selectSatker('kodeSatker9','255',true,false); 
-								}
+					
+								selectAllSatker('kodeSatker9','255',true,false,false,true);
 
 							?>
 							<br>
@@ -691,11 +658,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectSatker('kodeSatker10','255',true,false); 
-								if($_SESSION[ses_uoperatorid] == '1'){
-									selectAllSatker('kodeSatker10','255',true,false); 
-								}else{
-									selectSatker('kodeSatker10','255',true,false); 
-								}
+					
+								selectAllSatker('kodeSatker10','255',true,false,false,true);
 							?>
 							<br>
 							<li>
