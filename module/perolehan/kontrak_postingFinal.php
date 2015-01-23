@@ -28,7 +28,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
   $sql = "SELECT * FROM aset WHERE noKontrak = '{$noKontrak[noKontrak]}'";
   $exec = mysql_query($sql);
-  while ($dataAset = mysql_fetch_assoc($sql)){
+  while ($dataAset = mysql_fetch_assoc($exec)){
               $aset[] = $dataAset;
           }
   logFile($sql);        
