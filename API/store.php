@@ -1558,7 +1558,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeSatker='{$tblAset['kodeSatker']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
             $exec = mysql_query($query_id);
             logFile($query_id);
-            while ($row = mysql_fetch_assoc($query_id)){
+            while ($row = mysql_fetch_assoc($exec)){
                 $tblKib['Aset_ID'] = $row['Aset_ID'];
             }
 
