@@ -1519,7 +1519,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         $tblAset['kodeSatker'] = $data['kodeSatker'];
-        $tblAset['kodeLokasi'] = "12.33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($data['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+        $tahun = explode("-", $data['TglPerolehan']);
+        $tblAset['Tahun'] = $tahun[0];
+        $tblAset['kodeLokasi'] = "12.33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tahun[0],-2).".".$kodeSatker[2].".".$kodeSatker[3];
         $tblAset['noKontrak'] = $data['noKontrak'];
         $tblAset['TglPerolehan'] = $data['TglPerolehan'];
         $tblAset['NilaiPerolehan'] = $data['Satuan'];
@@ -1529,10 +1531,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Info'] = $data['Info'];
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
-        $tblAset['Tahun'] = date('Y', strtotime($data['TglPerolehan']));
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
-        // pr($tblAset);exit;
+        pr($tblAset);exit;
 
         $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
             while ($row = mysql_fetch_assoc($query)){
