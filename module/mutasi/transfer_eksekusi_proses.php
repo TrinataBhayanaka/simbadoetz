@@ -20,16 +20,23 @@ $asset_id=Array();
 $no_reg=Array();
 $nm_barang=Array();
 
-$panjang=count($nmaset);
-
+$panjang=intval(count($nmaset));
 
 $mutasi_id=get_auto_increment("Mutasi");
 
+if ($panjang > 0){
 
-// pr($_POST);
-$data = $MUTASI->store_mutasi_barang($_POST);
+    $data = $MUTASI->store_usulan_mutasi_barang($_POST);
+    if ($data){
+        echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
+
+    }    
+}else{
+    echo "<script>alert('Tidak ada data yang dimutasi'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
+
+}
+
 // exit;
-echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/transfer_antar_skpd.php?pid=1';</script>";
 
 
 exit;

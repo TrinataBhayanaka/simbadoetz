@@ -46,8 +46,16 @@ $MUTASI = new RETRIEVE_MUTASI;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-        
-	$data = $MUTASI->retrieve_mutasi_filter($_POST);
+    if ($_POST['submit']){
+		// unset($_SESSION['ses_mutasi_filter']);
+
+		$_SESSION['ses_mutasi_filter'] = $_POST;
+		
+	}
+
+	$dataParam = $_SESSION['ses_mutasi_filter'];
+	// pr($_SESSION);
+	$data = $MUTASI->retrieve_mutasi_filter($dataParam);
 	// pr($data);
 			?>
 		 <script type="text/javascript" charset="utf-8">
@@ -178,11 +186,11 @@ $MUTASI = new RETRIEVE_MUTASI;
 			
 			<div id="demo">
 			<form name="form" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
-			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
+			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 					<thead>
 					<tr>
-						<td colspan="11" align="right">   
+						<td colspan="9" align="right">   
 							<input type="submit" name="submit" value="Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
 						</td>
 					</tr>
@@ -196,8 +204,8 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
-						<th>Aksi</th>
+						<!--<th>Status</th>
+						<th>Aksi</th>-->
 					</tr>
 				</thead>
 				<tbody>		
@@ -227,16 +235,17 @@ $MUTASI = new RETRIEVE_MUTASI;
 							
 						</td>
 						
-						<td style="font-weight: bold;"> <?php echo "$value[noKontrak]";?></td>
+						<td style="font-weight: bold;"> <?php echo "$value[noRegister]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[Uraian]";?> / <?php echo "$value[Uraian]";?> </td>
-						<td style="font-weight: bold;"><?php echo "$value[kodeLokasi]";?></td>
+						<td style="font-weight: bold;"><?php echo @$value['Merk'];?></td>
 						<td style="font-weight: bold;"><?php echo "$value[kodeSatker]- $value[NamaSatker]";?></td>
-						<td style="font-weight: bold;">&nbsp;</td>
-						<td style="font-weight: bold;">&nbsp;</td>
-						<td style="font-weight: bold;">&nbsp;</td>	
+						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[NilaiPerolehan]";?></td>
+						<!--
+						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>	
 						<td style="font-weight: bold;"><a href="#" class="btn btn-danger">Hapus</a></td>	
-							
+						-->	
 						
 					</tr>
 					 <?php 

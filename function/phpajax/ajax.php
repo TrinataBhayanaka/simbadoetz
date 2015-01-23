@@ -34,6 +34,146 @@ if (isset($_POST['ubahPassword'])){
 	}
 	exit;
 }
+
+if (isset($_POST['daftarAset'])){
+
+	// pr($_POST);
+	$data = retrieve_data_aset_by_type($_POST);
+	if ($data){
+		print json_encode(array('status'=>true, 'rec'=>$data));
+	}else{
+		print json_encode(array('status'=>false));
+	}
+	exit;
+}
+
+if (isset($_POST['hapusAset'])){
+
+	// pr($_POST);
+	$data = hapus_daftar_usulan_mutasi($_POST);
+	if ($data){
+		print json_encode(array('status'=>true));
+	}else{
+		print json_encode(array('status'=>false));
+	}
+	exit;
+}
+
+if (isset($_POST['getSatker'])){
+
+	// pr($_POST);
+	$data = getNamaSatker($_POST);
+	if ($data){
+		print json_encode(array('status'=>true, 'rec'=>$data));
+	}else{
+		print json_encode(array('status'=>false));
+	}
+	exit;
+}
+
+function getNamaSatker($data)
+{
+	global $DBVAR;
+
+	$sql = array(
+            'table'=>'satker',
+            'field'=>"NamaSatker",
+            'condition' => "Kode = '{$data[idsatker]}'",
+            'limit' => '1',
+            );
+    $res = $DBVAR->lazyQuery($sql,$debug);
+    if ($res) return $res[0];
+    return false;
+}
+
+function hapus_daftar_usulan_mutasi($data, $debug=false)
+{
+	global $DBVAR;
+	$query = "DELETE FROM mutasiaset WHERE Mutasi_ID = '{$data[mutasiid]}' AND Aset_ID = '{$data['idaset']}' LIMIT 1";
+    // pr($query);
+	$result = $DBVAR->query($query) or die ($DBVAR->error());
+
+	// $sql2 = array(
+ //            'table'=>"Aset",
+ //            'field'=>"kodeSatker='$satker', kodeLokasi = '{$lokasiBaru}', noRegister='$gabung_nomor_reg_tujuan', NotUse=NULL, StatusValidasi = 1, Status_Validasi_Barang = 1",
+ //            'condition'=>"Aset_ID='$asset_id[$i]'",
+ //            );
+
+ //    $res2 = $DBVAR->lazyQuery($sql2,$debug,2); 
+ //    $sqlKib = array(
+ //            'table'=>"{$getKIB['listTableOri']}",
+ //            'field'=>"kodeSatker='$satker', kodeLokasi = '{$lokasiBaru}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
+ //            'condition'=>"Aset_ID='$asset_id[$i]'",
+ //            );
+
+ //    $resKib = $DBVAR->lazyQuery($sqlKib,$debug,2);
+
+
+ //    $sql3 = array(
+ //            'table'=>"PenggunaanAset",
+ //            'field'=>"StatusMutasi=0, Mutasi_ID='$data[mutasiid]'",
+ //            'condition'=>"Aset_ID='$data[idaset]'",
+ //            );
+
+ //    $res3 = $DBVAR->lazyQuery($sql3,$debug,2);                        
+    if ($result) return $result;
+    return false;
+}
+
+function retrieve_data_aset_by_type($data, $debug=false)
+{
+	global $DBVAR;
+    // pr($data);
+    $revert = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
+
+    // echo $revert[$data['TipeAset']];
+    $tableAlias = getTableKibAlias($revert[$data['type']]);
+
+    // pr($tableAlias);
+    $sql = array(
+            'table'=>"{$tableAlias[listTable]}, kelompok AS k",
+            'field'=>"{$tableAlias[listTableAlias]}.*, k.Uraian",
+            'condition'=>"{$tableAlias[listTableAlias]}.Status_Validasi_Barang = 1 AND {$tableAlias[listTableAlias]}.StatusTampil = 1 AND {$tableAlias[listTableAlias]}.kodeSatker = '{$data['idsatker']}'",
+            'limit'=>'100',
+            'joinmethod' => 'LEFT JOIN',
+            'join' => "{$tableAlias[listTableAlias]}.kodeKelompok = k.kode"
+            );
+
+    $res = $DBVAR->lazyQuery($sql,$debug);
+    // pr($res);
+    if ($res) return $res;
+    return false;
+}
+
+function getTableKibAlias($type=1)
+{
+	$listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+	$listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+
+	$listTable = array(
+	                1=>'tanah AS t',
+	                2=>'mesin AS m',
+	                3=>'bangunan AS b',
+	                4=>'jaringan AS j',
+	                5=>'asetlain AS al',
+	                6=>'kdp AS k');
+
+	$listTableOri = array(
+	                1=>'tanah',
+	                2=>'mesin',
+	                3=>'bangunan',
+	                4=>'jaringan',
+	                5=>'asetlain',
+	                6=>'kdp');
+
+	$data['listTable'] = $listTable[$type];
+	$data['listTableAlias'] = $listTableAlias[$type];
+	$data['listTableAbjad'] = $listTableAbjad[$type];
+	$data['listTableOri'] = $listTableOri[$type];
+
+	return $data;
+}
+
 function ubahPassword($data,$debug=false)
 {
 	global $DBVAR;

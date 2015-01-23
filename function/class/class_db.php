@@ -141,6 +141,55 @@ class DB
 	{
 		return $$data = '';
 	}
+
+	function autocommit($val=0,$dbuse=0)
+	{
+		$command = "SET autocommit={$val};";
+		$result = $this->query($command) or die ($this->error('autocommit failed'));
+		// if (!$this->link){
+			// $this->link = $this->open_connection(0);
+		// }
+		
+		// return mysql_autocommit($this->link, false);
+		
+	}
+	
+	function commit($dbuse=0)
+	{
+		$command = "COMMIT;";
+		$result = $this->query($command) or die ($this->error('commit failed'));
+		// mysql_commit();
+	}
+	
+	function rollback($dbuse=0)
+	{
+		$command = "ROLLBACK;";
+		$result = $this->query($command) or die ($this->error('rollback failed'));
+		// if (!$this->link){
+			// $this->link = $this->open_connection(0);
+		// }
+		
+		// pr($this->link);
+		// mysql_rollback($this->link);
+		
+	}
+	
+	function begin($dbuse=0)
+	{
+		
+		$this->autocommit();
+		$command = "START TRANSACTION;";
+		$result = $this->query($command) or die ($this->error('commit failed'));
+		// if (!$this->link){
+			// $this->link = $this->open_connection(0);
+			
+		// }
+		// mysql_
+		// $res = mysql_begin_transaction($this->link);
+		if ($result) return true;
+		return false;
+	}
+	
 	
 	public function is_table_exists($data, $status)
 	{
@@ -261,7 +310,7 @@ class DB
 		return $result;
 	}
 
-	function logIt($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false, $text= false, $debug=false)
+	function logIt($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false, $text= false, $tmpAsetID=false, $debug=false)
 	{
 
 	    if (empty($table)) return false;
@@ -277,6 +326,9 @@ class DB
 	    if ($No_Dokumen) $noDok = $No_Dokumen;
 	    else $noDok = '-';
 
+	    if ($tmpAsetID) $tmpAsetIDTujuan = $tmpAsetID;
+	    else $tmpAsetIDTujuan = '-';
+	    
 	    $actionList = array(1=>'insert',2=>'update');
 	    $addField = array(
 	    				'changeDate'=>$date,
@@ -284,6 +336,7 @@ class DB
 	    				'operator'=>$_SESSION['ses_uoperatorid'],
 	    				'TglPerubahan'=>$tglProses,
 	    				'Kd_Riwayat'=>$action,
+	    				'Tmp_Hak'=>$tmpAsetIDTujuan,
 	    				'No_Dokumen'=>$noDok);
 
 

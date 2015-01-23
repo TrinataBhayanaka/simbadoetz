@@ -623,7 +623,7 @@ class core_api_report extends DB {
 												group by 
 													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-													M.kodeLokasi, K.Kode, K.Uraian 
+													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 												order by 
 													M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 										
@@ -639,7 +639,7 @@ class core_api_report extends DB {
 												group by 
 													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-													M.kodeLokasi, K.Kode, K.Uraian 
+													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 												order by 
 													M.kodeSatker,M.Tahun,M.kodeKelompok $limit";								
           //end update query kib b (ok)
@@ -1094,7 +1094,7 @@ class core_api_report extends DB {
 																					group by 
 																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-																						M.kodeLokasi, M.kodeRuangan,K.Kode, K.Uraian 
+																						M.kodeLokasi, M.kodeRuangan,M.kondisi,K.Kode, K.Uraian 
 																					order by 
 																						M.kodeSatker,M.kodeRuangan,M.Tahun,M.kodeKelompok $limit";
 																		
@@ -1114,7 +1114,7 @@ class core_api_report extends DB {
 																					AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,
+																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,AL.kondisi,
 																					K.Kode, K.Uraian
 																				order by AL.kodeSatker,AL.kodeRuangan,AL.Tahun,AL.kodeKelompok $limit";
 																	
@@ -1152,7 +1152,7 @@ class core_api_report extends DB {
 																						T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
 																						and $newparameter_sql
 																					group by 
-																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.kondisi,
 																						K.Kode, K.Uraian
 																					order by 
 																						T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
@@ -1176,7 +1176,7 @@ class core_api_report extends DB {
 																					group by 
 																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-																						M.kodeLokasi, K.Kode, K.Uraian 
+																						M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 																					order by 
 																						M.kodeSatker,M.Tahun,M.kodeKelompok $limit";	
 																	}
@@ -1317,7 +1317,7 @@ class core_api_report extends DB {
 																						T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
 																						and $newparameter_sql_01
 																					group by 
-																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																						T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.kondisi,
 																						K.Kode, K.Uraian
 																					order by 
 																						T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
@@ -1334,7 +1334,7 @@ class core_api_report extends DB {
 																					group by 
 																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-																						M.kodeLokasi, K.Kode, K.Uraian 
+																						M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 																					order by 
 																						M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 																		
@@ -1881,7 +1881,7 @@ class core_api_report extends DB {
 																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1  AND T.kodeLokasi like '12%'
 																			and $newparameter_sql_01
 																		group by 
-																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.kondisi,
 																			K.Kode, K.Uraian
 																		order by 
 																			T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
@@ -1893,11 +1893,11 @@ class core_api_report extends DB {
 																			Mesin as M,kelompok as K 
 																		where 
 																			M.kodeKelompok=K.Kode and 
-																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3 AND M.kodeLokasi like '12%'
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 AND M.kodeLokasi like '12%'
 																			and $newparameter_sql_02 $KodeKaCondt1_mesin
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,M.kondisi,
 																			M.kodeLokasi, K.Kode, K.Uraian 
 																		order by 
 																			M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
@@ -1911,13 +1911,13 @@ class core_api_report extends DB {
 																		Bangunan as B,kelompok as K  
 																	where
 																		B.kodeKelompok = K.Kode and 
-																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3 AND B.kodeLokasi like '12%'
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 AND B.kodeLokasi like '12%'
 																		and $newparameter_sql_03 $KodeKaCondt1_bangunan
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
-																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
 
@@ -1930,13 +1930,13 @@ class core_api_report extends DB {
 																		Jaringan as J,kelompok as K  
 																	where
 																		J.kodeKelompok = K.Kode and 
-																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3 AND J.kodeLokasi like '12%'
+																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 AND J.kodeLokasi like '12%'
 																		and $newparameter_sql_04
 																	group by 
 																		J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
-																		J.kondisi, J.kodeLokasi,
+																		J.kondisi, J.kodeLokasi,J.kondisi,
 																		K.Kode, K.Uraian
 																	order by J.kodeSatker,J.Tahun,J.kodeKelompok $limit";
 															
@@ -1949,13 +1949,13 @@ class core_api_report extends DB {
 																		AsetLain as AL,kelompok as K  
 																	where
 																		AL.kodeKelompok = K.Kode and 
-																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3 AND AL.kodeLokasi like '12%'
+																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 AND AL.kodeLokasi like '12%'
 																		and $newparameter_sql_05
 																	group by 
 																		AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-																		AL.kondisi, AL.kodeLokasi,
+																		AL.kondisi, AL.kodeLokasi,AL.kondisi,
 																		K.Kode, K.Uraian
 																	order by AL.kodeSatker,AL.Tahun,AL.kodeKelompok $limit";
 														
@@ -1974,7 +1974,7 @@ class core_api_report extends DB {
 																		KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
-																		KDPA.kondisi, KDPA.kodeLokasi,
+																		KDPA.kondisi, KDPA.kodeLokasi,KDPA.kondisi,
 																		K.Kode, K.Uraian	
 																	order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
 																	
@@ -1989,19 +1989,38 @@ class core_api_report extends DB {
 															//2007-01-01 sampe 2013-01-01
 															if($thnceck < $thnIntraDefault){
 																// echo "sini kan";
-																$extQuery_B_default = "M.TglPerolehan >= '$tglAwalDefault' AND M. TglPerolehan < '$tglIntraDefault' $satker_02";
-																$extQuery_B_cndt = "M.TglPerolehan >= '$tglIntraDefault' AND M. TglPerolehan <= '$tglAkhirDefault' $satker_02";
-																$extQuery_C_default = "B.TglPerolehan >= '$tglAwalDefault' AND B. TglPerolehan < '$tglIntraDefault' $satker_03";
-																$extQuery_C_cndt = "B.TglPerolehan >= '$tglIntraDefault' AND B. TglPerolehan <= '$tglAkhirDefault' $satker_03";
+																$extQuery_A_default = "AND T.TglPembukuan >='$tglAwalDefault' AND T.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_B_default = "M.TglPerolehan >= '$tglAwalDefault' AND M. TglPerolehan < '$tglIntraDefault' 
+																					   AND M.TglPembukuan >='$tglAwalDefault' AND M.TglPembukuan <='$tglAkhirDefault' $satker_02";
+																$extQuery_B_cndt = "M.TglPerolehan >= '$tglIntraDefault' AND M. TglPerolehan <= '$tglAkhirDefault' 
+																					 AND M.TglPembukuan >='$tglAwalDefault' AND M.TglPembukuan <='$tglAkhirDefault' $satker_02";
+																$extQuery_C_default = "B.TglPerolehan >= '$tglAwalDefault' AND B. TglPerolehan < '$tglIntraDefault' 
+																                    AND B.TglPembukuan >='$tglAwalDefault' AND B.TglPembukuan <='$tglAkhirDefault' $satker_03";
+																$extQuery_C_cndt = "B.TglPerolehan >= '$tglIntraDefault' AND B. TglPerolehan <= '$tglAkhirDefault' $satker_03
+																                    AND B.TglPembukuan >='$tglAwalDefault' AND B.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_D_default = "AND J.TglPembukuan >='$tglAwalDefault' AND J.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_E_default = "AND AL.TglPembukuan >='$tglAwalDefault' AND AL.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_F_default = "AND KDPA.TglPembukuan >='$tglAwalDefault' AND KDPA.TglPembukuan <='$tglAkhirDefault'";
+																
 																// echo $extQuery_C; 
 															}
 															//2008-01-01 sampe 2009-12-01
 															elseif($thnceck >= $thnIntraDefault || $thnceck < $thnFix){
+																$extQuery_A_default = "AND T.TglPembukuan >='$tglAwalDefault' AND T.TglPembukuan <='$tglAkhirDefault'";
 																$extQuery_B_cndt = $newparameter_sql_02;
 																$extQuery_C_cndt = $newparameter_sql_03;
+																$extQuery_D_default = "AND J.TglPembukuan >='$tglAwalDefault' AND J.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_E_default = "AND AL.TglPembukuan >='$tglAwalDefault' AND AL.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_F_default = "AND KDPA.TglPembukuan >='$tglAwalDefault' AND KDPA.TglPembukuan <='$tglAkhirDefault'";
+																
 															}else{
+																$extQuery_A_default = "AND T.TglPembukuan >='$tglAwalDefault' AND T.TglPembukuan <='$tglAkhirDefault'";
 																$extQuery_B_cndt = $newparameter_sql_02;
 																$extQuery_C_cndt = $newparameter_sql_03;
+																$extQuery_D_default = "AND J.TglPembukuan >='$tglAwalDefault' AND J.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_E_default = "AND AL.TglPembukuan >='$tglAwalDefault' AND AL.TglPembukuan <='$tglAkhirDefault'";
+																$extQuery_F_default = "AND KDPA.TglPembukuan >='$tglAwalDefault' AND KDPA.TglPembukuan <='$tglAkhirDefault'";
+																
 															}
 															
 															
@@ -2011,9 +2030,9 @@ class core_api_report extends DB {
 																			tanah as T,kelompok as K
 																		where
 																			T.kodeKelompok=K.Kode and T.StatusValidasi =1 and T.Status_Validasi_Barang =1 and T.StatusTampil =1 AND T.kodeLokasi like '12%'
-																			and $newparameter_sql_01
+																			and $newparameter_sql_01 $extQuery_A_default
 																		group by 
-																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.kondisi,
 																			K.Kode, K.Uraian
 																		order by 
 																			T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
@@ -2025,12 +2044,12 @@ class core_api_report extends DB {
 																			Mesin as M,kelompok as K 
 																		where 
 																			M.kodeKelompok=K.Kode and 
-																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and M.kondisi != 3 AND M.kodeLokasi like '12%'
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 AND M.kodeLokasi like '12%'
 																			AND $extQuery_B_default $KodeKaCondt1_mesin
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-																			M.kodeLokasi, K.Kode, K.Uraian 
+																			M.kodeLokasi,M.kondisi, K.Kode, K.Uraian 
 																		order by 
 																			M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 																			
@@ -2041,12 +2060,12 @@ class core_api_report extends DB {
 																			Mesin as M,kelompok as K 
 																		where 
 																			M.kodeKelompok=K.Kode and 
-																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and (M.NilaiPerolehan >= 300000 $KodeKa_mesin) and M.kondisi != 3 AND M.kodeLokasi like '12%'
+																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and (M.NilaiPerolehan >= 300000 $KodeKa_mesin) AND M.kodeLokasi like '12%'
 																			AND $extQuery_B_cndt 
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-																			M.kodeLokasi, K.Kode, K.Uraian 
+																			M.kodeLokasi,M.kondisi, K.Kode, K.Uraian 
 																		order by 
 																			M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 															
@@ -2059,26 +2078,26 @@ class core_api_report extends DB {
 																		Bangunan as B,kelompok as K  
 																	where
 																		B.kodeKelompok = K.Kode and 
-																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and B.kondisi != 3 AND B.kodeLokasi like '12%'
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 AND B.kodeLokasi like '12%'
 																		AND $extQuery_C_default $KodeKaCondt1_bangunan
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
-																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
 															
 															$query_03_condt = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
-																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
 																		K.Kode, K.Uraian
 																	from 
 																		Bangunan as B,kelompok as K  
 																	where
 																		B.kodeKelompok = K.Kode and 
-																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and (B.NilaiPerolehan >= 10000000 $KodeKa_bangunan) and B.kondisi != 3 AND B.kodeLokasi like '12%'
+																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and (B.NilaiPerolehan >= 10000000 $KodeKa_bangunan) AND B.kodeLokasi like '12%'
 																		AND $extQuery_C_cndt
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
@@ -2097,13 +2116,13 @@ class core_api_report extends DB {
 																		Jaringan as J,kelompok as K  
 																	where
 																		J.kodeKelompok = K.Kode and 
-																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 and J.kondisi != 3 AND J.kodeLokasi like '12%'
-																		and $newparameter_sql_04
+																		J.StatusValidasi =1 and J.Status_Validasi_Barang =1 and J.StatusTampil =1  AND J.kodeLokasi like '12%'
+																		and $newparameter_sql_04 $extQuery_D_default
 																	group by 
 																		J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
-																		J.kondisi, J.kodeLokasi,
+																		J.kondisi, J.kodeLokasi,J.kondisi,
 																		K.Kode, K.Uraian
 																	order by J.kodeSatker,J.Tahun,J.kodeKelompok $limit";
 															
@@ -2116,13 +2135,13 @@ class core_api_report extends DB {
 																		AsetLain as AL,kelompok as K  
 																	where
 																		AL.kodeKelompok = K.Kode and 
-																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and AL.kondisi != 3 AND AL.kodeLokasi like '12%'
-																		and $newparameter_sql_05
+																		AL.StatusValidasi =1 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 AND AL.kodeLokasi like '12%'
+																		and $newparameter_sql_05 $extQuery_E_default
 																	group by 
 																		AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-																		AL.kondisi, AL.kodeLokasi,
+																		AL.kondisi, AL.kodeLokasi,AL.kondisi,
 																		K.Kode, K.Uraian
 																	order by AL.kodeSatker,AL.Tahun,AL.kodeKelompok $limit";
 														
@@ -2136,12 +2155,12 @@ class core_api_report extends DB {
 																	where
 																		KDPA.kodeKelompok = K.Kode and 
 																		KDPA.StatusValidasi =1 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
-																		and $newparameter_sql_06
+																		and $newparameter_sql_06 $extQuery_F_default
 																	group by 
 																		KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
-																		KDPA.kondisi, KDPA.kodeLokasi,
+																		KDPA.kondisi, KDPA.kodeLokasi,KDPA.kondisi,
 																		K.Kode, K.Uraian	
 																	order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";	
 																	
@@ -2234,13 +2253,15 @@ class core_api_report extends DB {
 																		where 
 																			M.kodeKelompok=K.Kode and 
 																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and (M.NilaiPerolehan < 300000 $KodeKa_mesin)
-																			and M.TglPerolehan >= '$tglawalperolehan' and M.TglPerolehan <= '$tglAkhirDefault' and M.kondisi != 3 $satker_02
+																			and M.TglPerolehan >= '$tglawalperolehan' and M.TglPerolehan <= '$tglAkhirDefault' 
+																			AND M.TglPembukuan >='$tglawalperolehan' AND M.TglPembukuan <='$tglAkhirDefault'
+																			$satker_02 AND M.kodeLokasi like '12%'
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,M.kondisi,
 																			M.kodeLokasi, K.Kode, K.Uraian 
 																		order by 
-																			M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+																			M.Tahun,M.kodeSatker,M.kodeKelompok";
 															
 															$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
@@ -2252,14 +2273,16 @@ class core_api_report extends DB {
 																	where
 																		B.kodeKelompok = K.Kode and 
 																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and (B.NilaiPerolehan < 10000000 $KodeKa_bangunan)
-																		and B.TglPerolehan >= '$tglawalperolehan' and B.TglPerolehan <= '$tglAkhirDefault'  and B.kondisi != 3 $satker_03
+																		and B.TglPerolehan >= '$tglawalperolehan' and B.TglPerolehan <= '$tglAkhirDefault' 
+																		AND B.TglPembukuan >='$tglawalperolehan' AND B.TglPembukuan <='$tglAkhirDefault'
+																		$satker_03 AND B.kodeLokasi like '12%'
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
-																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
 																		K.Kode, K.Uraian
-																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+																	order by B.kodeSatker,B.Tahun,B.kodeKelompok";
 															$dataQuery = array($query_02,$query_03);
 															// pr($dataQuery);
 															// exit;
@@ -2268,6 +2291,7 @@ class core_api_report extends DB {
 														}elseif($thnceck < $thnExtraDefault){
 														
 															// echo "masukk";
+															// echo "sini aja";
 															// exit;
 															$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
@@ -2277,13 +2301,14 @@ class core_api_report extends DB {
 																		where 
 																			M.kodeKelompok=K.Kode and 
 																			M.StatusValidasi =1 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and (M.NilaiPerolehan < 300000 $KodeKa_mesin)
-																			and M.TglPerolehan >= '$tglExtraDefault' and M.TglPerolehan <= '$tglAkhirDefault' and M.kondisi != 3 $satker_02
+																			and M.TglPerolehan >= '$tglExtraDefault' and M.TglPerolehan <= '$tglAkhirDefault' 
+																			$satker_02 AND M.kodeLokasi like '12%' 
 																		group by 
 																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,M.kondisi,
 																			M.kodeLokasi, K.Kode, K.Uraian 
 																		order by 
-																			M.Tahun,M.kodeSatker,M.kodeKelompok $limit";
+																			M.Tahun,M.kodeSatker,M.kodeKelompok";
 															
 															$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
@@ -2295,14 +2320,15 @@ class core_api_report extends DB {
 																	where
 																		B.kodeKelompok = K.Kode and 
 																		B.StatusValidasi =1 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and (B.NilaiPerolehan < 10000000 $KodeKa_bangunan)
-																		and B.TglPerolehan >= '$tglExtraDefault' and B.TglPerolehan <= '$tglAkhirDefault'  and B.kondisi != 3 $satker_03
+																		and B.TglPerolehan >= '$tglExtraDefault' and B.TglPerolehan <= '$tglAkhirDefault' 
+																		$satker_03 AND B.kodeLokasi like '12%'
 																	group by 
 																		B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
-																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
 																		K.Kode, K.Uraian
-																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
+																	order by B.kodeSatker,B.Tahun,B.kodeKelompok";
 														
 															$dataQuery = array($query_02,$query_03);
 															// pr($dataQuery);
@@ -3682,12 +3708,15 @@ class core_api_report extends DB {
 		$x=0;
 		$data_reg=1;
 		$count_reg=0;
+		// $jml_register =1;
+		// $total_jml_register =1;
+		$putaran=0;
 		$iman=array();
 		// pr($data);
 		// exit;
 		if($data){
 			foreach ($data as $keys => $value){
-				
+				$putaran++;
 				$tmp = array();
 				$tmp1 = array();
 				$getField =array();
@@ -3696,6 +3725,7 @@ class core_api_report extends DB {
 				foreach ($data[$x] as $key => $val){
 					$getField[]  = $key;
 				}
+				// pr($getField);
 					foreach ($getField as $val){
 						
 						if (!in_array($val, $ignoreField)){
@@ -3730,7 +3760,7 @@ class core_api_report extends DB {
 				}
 				
 				$imp = implode(' and ', $tmp);
-				$sql = "SELECT noRegister FROM $tableName WHERE {$imp} order by noRegister desc";
+				$sql = "SELECT noRegister,NilaiPerolehan FROM $tableName WHERE {$imp} order by noRegister desc";
 				// pr($sql);
 				$res = mysql_query($sql);
 				$register=array();
@@ -3738,8 +3768,10 @@ class core_api_report extends DB {
 				while($d = @mysql_fetch_assoc($res)){
 				  
 					$register[]= $d['noRegister'];
+					// $total_jml_register+=$d['NilaiPerolehan'];
 				}
 				// pr($register);
+				$jml_register += count($register); 
 				sort($register);
 				$text_register=implode(",",$register);
 				//$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
@@ -3754,9 +3786,11 @@ class core_api_report extends DB {
 				}
 				$x++;
 				$i++;
+				// exit;
 			}
 			// pr($data);
-			//exit;
+			// echo "jmlh rgetr".$jml_register. "dan total perolehan adalah".$total_jml_register. "looping=".$putaran;
+			// exit;
 			return $iman;
 		}
 		else{

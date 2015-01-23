@@ -137,6 +137,34 @@ include "../../config/config.php";
 			   $('#submit').attr("disabled","disabled");
 			}}, 100);
 		}
+
+		$(document).on('click','.hapus_aset', function(){
+
+			var idaset = $(this).attr('asetid');
+			var mutasiid = $(this).attr('mutasiid');
+
+			// setTimeout(function(){
+
+				$.post(basedomain+'/function/phpajax/ajax.php',{hapusAset:true, idaset:idaset, mutasiid:mutasiid}, function(data){
+
+		            var html = "";
+
+		            if (data.status==true){
+		                
+		            	location.reload();
+		               
+		            } else {
+		              	$('.formData').html('Load data gagal');
+		            }
+		            
+		            
+
+		        }, "JSON")
+
+			// }, 2000);
+			 
+			
+		})
 		</script>
 	
 	<section id="main">
@@ -161,7 +189,7 @@ include "../../config/config.php";
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_antar_skpd.php";?>" class="btn">
+								<a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_hasil_filter.php";?>" class="btn">
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>
@@ -206,6 +234,7 @@ include "../../config/config.php";
 						<th>Satker Tujuan</th>
 						<th>Pemakai</th>
 						<th>Uraian</th>
+						<!--<th>Aksi</th>-->
 					</tr>
 				</thead>
 				<tbody>		
@@ -228,11 +257,11 @@ include "../../config/config.php";
 				?>
 				
 					<tr class="gradeA">
-						<!--
+						
 						<td>
-							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value['Aset_ID'];?>" >
+							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="aset_id[]" value="<?php echo $value['Aset_ID'];?>" >
 													
-						</td>-->
+						</td>
 						<td><?php echo $data[0]['NoSKKDH']?></td>
 						<td style="font-weight: bold;"> <?php echo $data[0]['TglSKKDH'];?> </td>
 						<td style="font-weight: bold;"> <?php echo $value['kodeLokasi'];?> </td>
@@ -242,14 +271,15 @@ include "../../config/config.php";
 						<td>
 							<?php echo "$value[Uraian]";?>
 							<input type="hidden" name="Mutasi_ID" value="<?php echo $data[0]['Mutasi_ID']?>">
-							<input type="hidden" name="aset_id[]" value="<?php echo $value['Aset_ID']?>">
+							<input type="hidden" name="aset_id_count[]" value="<?php echo $value['Aset_ID']?>">
 							<input type="hidden" name="noDokumen" value="<?php echo $data[0]['NoSKKDH']?>">
 							<input type="hidden" name="TglSKKDH" value="<?php echo $data[0]['TglSKKDH']?>">
 							
 
 						
 						</td>	
-						
+						<!--<td><a href="javascript:void(0)" class="btn btn-danger hapus_aset" asetid="<?php echo $value['Aset_ID']?>" mutasiid="<?php echo $value['Mutasi_ID']?>">Hapus<a/></td>
+						-->
 					</tr>
 					 <?php 
 						$no++; 
