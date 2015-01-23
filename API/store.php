@@ -1514,7 +1514,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
     {
         global $url_rewrite;
         unset($data['Aset_ID']);
-        // pr($data);exit;
+        
         $kodeSatker = explode(".",$data['kodeSatker']);
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
@@ -1529,10 +1529,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Info'] = $data['Info'];
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
-        $tblAset['Tahun'] = $data['Tahun'];
+        $tblAset['Tahun'] = date('Y', strtotime($data['TglPerolehan']));
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
-
+        // pr($tblAset);exit;
 
         $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
             while ($row = mysql_fetch_assoc($query)){
