@@ -1555,7 +1555,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);
             $result= $this->query($query) or die($this->error());
 
-            $query_id = mysql_query("SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeSatker='{$tblAset['kodeSatker']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1");
+            $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeSatker='{$tblAset['kodeSatker']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
+            $exec = mysql_query($query_id);
+            logFile($query_id);
             while ($row = mysql_fetch_assoc($query_id)){
                 $tblKib['Aset_ID'] = $row['Aset_ID'];
             }
@@ -1640,6 +1642,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield2);
             $value = implode(',', $tmpvalue2);
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
+            logFile($query);
             // pr($query);exit;
             $result= $this->query($query) or die($this->error());
         }
