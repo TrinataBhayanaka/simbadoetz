@@ -1480,7 +1480,16 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         // pr($data);exit; 
         global $url_rewrite;
         unset($data['id']);
+        $sql = mysql_query("SELECT noKontrak FROM kontrak WHERE id = '{$id}'");
+        while ($row = mysql_fetch_assoc($sql)){
+            $oldkontrak = $row['noKontrak'];
+        }
 
+        $sql = mysql_query("SELECT Aset_ID FROM aset WHERE noKontrak = '{$oldkontrak}'");
+        while ($row = mysql_fetch_assoc($sql)){
+            $asetid[] = $row;
+        }
+        // pr($asetid);exit;
         $data['n_status'] = 0; 
             foreach ($data as $key => $val) {
                 $tmpset[] = $key."='".$val."'";
@@ -1491,11 +1500,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
-        $data['kontrak_id'] = $id;
-        $data['action'] = 'update';
-        $data['changeDate'] = date('Y/m/d');
-        $data['operator'] = "{$_SESSION['ses_uoperatorid']}";
-        
+            foreach ($asetid as $key => $value) {
+                $query = "UPDATE aset SET noKontrak = '{$data['noKontrak']}' WHERE Aset_ID = '{$value['Aset_ID']}'";
+                // pr($query);    
+                $result=  $this->query($query) or die($this->error());
+
+            }
+            
             echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_simbada.php\">";
     }
 
@@ -1544,7 +1555,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);
             $result= $this->query($query) or die($this->error());
 
-            $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
+            $query_id = mysql_query("SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeSatker='{$tblAset['kodeSatker']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1");
             while ($row = mysql_fetch_assoc($query_id)){
                 $tblKib['Aset_ID'] = $row['Aset_ID'];
             }
