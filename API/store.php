@@ -1556,7 +1556,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);
             $result= $this->query($query) or die($this->error());
 
-            $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeSatker='{$tblAset['kodeSatker']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
+            $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
             $exec = mysql_query($query_id);
             logFile($query_id);
             while ($row = mysql_fetch_assoc($exec)){
