@@ -1533,7 +1533,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
-        pr($tblAset);exit;
+        // pr($tblAset);exit;
 
         $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
             while ($row = mysql_fetch_assoc($query)){
