@@ -26,10 +26,12 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     $sumsp2d = $dataSP2D;
   }
 
-  $sql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$noKontrak[noKontrak]}'");
+  $sql = "SELECT * FROM aset WHERE noKontrak = '{$noKontrak[noKontrak]}'";
+  $exec = mysql_query($sql);
   while ($dataAset = mysql_fetch_assoc($sql)){
               $aset[] = $dataAset;
           }
+  logFile($sql);        
       
   foreach($aset as $key => $data){
     $bop = $data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total'];
