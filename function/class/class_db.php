@@ -488,8 +488,9 @@ class DB
 			case '0':
 				
 				$condition = $data['condition'];
-				$limit = intval($data['limit']);
-				if ($limit>0) $limit = " LIMIT {$limit}";
+				$limit = $data['limit'];
+				
+				if ($limit) $limit = " LIMIT {$limit}";
 				else $limit = "";
 				$where = "";
 				if ($condition) $whereCondition = " {$condition} ";
@@ -628,5 +629,16 @@ class DB
 		return false;
 	}
 	
+	function countData($sql=false,$debug=false)
+	{
+
+		if (array_key_exists('limit', $sql)){
+			unset($sql['limit']);
+		}
+
+		$sql['field'] = "COUNT(1) AS total";		
+		$res = $this->lazyQuery($sql,$debug);
+		return $res;
+	}
 }
 ?>

@@ -55,6 +55,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 	}
 
 	$dataParam = $_SESSION['ses_mutasi_val_filter'];
+	$dataParam['page'] = intval($_GET['pid']);
 
 	$data = $MUTASI->retrieve_mutasiPending($dataParam);
 	// pr($data);
@@ -161,9 +162,13 @@ $MUTASI = new RETRIEVE_MUTASI;
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
 								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
+								   	<?php 
+								   		$prev = intval($_GET['pid']-1);
+								   		$next = intval($_GET['pid']+1);
+								   		?>
+										<li><a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_hasil_filter.php?pid=$prev";?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
+										<li><a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_hasil_filter.php?pid=$next";?>" class="buttonnext1">Next</a></li>
 									</ul>
 							</li>
 						</ul>
@@ -193,6 +198,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>Keterangan</th>
 						<th>Satker Tujuan</th>
 						<th>Pemakai</th>
+						<th>Status</th>
 						<th>Detail</th>
 					</tr>
 				</thead>
@@ -226,7 +232,23 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<td style="font-weight: bold;"> <?php echo "$value[Keterangan]";?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatker]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[Pemakai]";?></td>	
-						<td style="font-weight: bold;"><a href="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_eksekusi.php?id=<?=$value[Mutasi_ID]?>" class="btn btn-info">Detail<a/></td>	
+						<td style="font-weight: bold;" align="center">
+                            <?php 
+
+                            $statusMutasi = $value['FixMutasi']; 
+                            if ($statusMutasi == 0){
+                                $labelStatus = "Pending Usulan";  
+                            	$label = "label-info";
+                            }    
+                            
+                            if ($statusMutasi == 1) {$labelStatus = "Usulan sudah divalidasi"; $label = "label-success";}
+                            if ($statusMutasi == 3) {$labelStatus = "Usulan dihapus"; $label = "label-danger";}
+                            ?>
+                                
+                            
+                            <span class="label <?=$label?>"><?=$labelStatus?></span>
+                        </td>
+						<td style="font-weight: bold;"><a href="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_eksekusi.php?id=<?=$value[Mutasi_ID]?>" class="btn btn-info btn-small">Lihat Detail<a/></td>	
 							
 						
 					</tr>

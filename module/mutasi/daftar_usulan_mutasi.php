@@ -54,9 +54,8 @@ $MUTASI = new RETRIEVE_MUTASI;
 	}
 
 	$dataParam = $_SESSION['ses_mutasi_filter'];
-	$dataParam['page'] = intval($_GET['pid']);
 	// pr($_SESSION);
-	$data = $MUTASI->retrieve_mutasi_filter($dataParam);
+	$data = $MUTASI->retrieve_usulan_mutasi($dataParam);
 	// pr($data);
 			?>
 		 <script type="text/javascript" charset="utf-8">
@@ -131,6 +130,31 @@ $MUTASI = new RETRIEVE_MUTASI;
 			   $('#submit').attr("disabled","disabled");
 			}}, 100);
 		}
+
+        $(document).on('click', '.hapus_usulan', function(){
+
+            var r = confirm("Hapus Usulan Mutasi ?");
+            var mutasiid = $(this).attr('mutasiid');
+
+            if (r == true) {
+                
+                $.post(basedomain+'/function/phpajax/ajax.php',{hapususulanmutasi:true, mutasiid:mutasiid}, function(data){
+
+                    var htmlKelompok = "";
+
+                    if (data.status==true){
+                        alert('Usulan sudah dihapus');
+                        location.reload();
+                    }else{
+                        alert('Usulan gagal dihapus, dikarenakan terdapat rincian');
+
+                    } 
+                }, "JSON")
+
+            } else {
+                return false;
+            }
+        })
 		</script>
         
 
@@ -160,7 +184,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/mutasi/transfer_antar_skpd.php";?>" class="btn">
+								<a href="<?php echo"$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1";?>" class="btn">
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>
@@ -174,13 +198,9 @@ $MUTASI = new RETRIEVE_MUTASI;
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
 								   <ul class="pager">
-								   		<?php 
-								   		$prev = intval($_GET['pid']-1);
-								   		$next = intval($_GET['pid']+1);
-								   		?>
-										<li><a href="<?php echo"$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=$prev"?>" class="buttonprev" >Previous</a></li>
+										<li><a href="#" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="<?php echo"$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=$next";?>" class="buttonnext1">Next</a></li>
+										<li><a href="#" class="buttonnext">Next</a></li>
 									</ul>
 							</li>
 						</ul>
@@ -192,7 +212,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			<div id="demo">
 			<form name="form" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
 			
-			<table border="0" width="100%">
+			<!-- <table border="0" width="100%">
 				<tr>
 						<td colspan="" align="left">   
 							<input type="submit" name="submit" value="Usulkan Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
@@ -201,28 +221,25 @@ $MUTASI = new RETRIEVE_MUTASI;
 							<a class="btn btn-info " href="<?php echo "$url_rewrite/module/mutasi/"; ?>daftar_usulan_mutasi.php">
 								<i class="icon-list icon-white"></i>
 								  Daftar Usulan Mutasi / Transfer
-								</a>
+							</a>            
 
 						</td>
 					</tr>
 			</table>
 			<br>
-			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
+			 --><input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 					<thead>
 					
 					<tr>
 						<th>No</th>
-						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						<th>No Register</th>
-						<th>No Kontrak</th>
-						<th>Kode / Uraian</th>
-						<th>Merk / Type</th>
-						<th>Satker</th>
-						<th>Tanggal Perolehan</th>
-						<th>Nilai Perolehan</th>
-						<!--<th>Status</th>
-						<th>Aksi</th>-->
+						<th>NoSKKDH</th>
+						<th>TglSKKDH</th>
+						<th>Keterangan</th>
+						<th>SatkerTujuan</th>
+                        <th>Status</th>
+						<th>Aksi</th>
+						
 					</tr>
 				</thead>
 				<tbody>		
@@ -246,23 +263,37 @@ $MUTASI = new RETRIEVE_MUTASI;
 				
 					<tr class="gradeA">
 						<td><?php echo "$no.";?></td>
-						<td class="checkbox-column">
-						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value[Aset_ID];?>" >
-							
-						</td>
-						
-						<td style="font-weight: bold;"> <?php echo "$value[noRegister]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[Uraian]";?> / <?php echo "$value[Uraian]";?> </td>
-						<td style="font-weight: bold;"><?php echo @$value['Merk'];?></td>
-						<td style="font-weight: bold;"><?php echo "$value[kodeSatker]- $value[NamaSatker]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[NilaiPerolehan]";?></td>
-						<!--
-						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>	
-						<td style="font-weight: bold;"><a href="#" class="btn btn-danger">Hapus</a></td>	
-						-->	
+						<td style="font-weight: bold;"> <?php echo "$value[NoSKKDH]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[TglSKKDH]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[Keterangan]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[SatkerTujuan] - $value[NamaSatker]";?></td>
+						<td style="font-weight: bold;" align="center">
+                            <?php 
+
+                            $statusMutasi = $value['FixMutasi']; 
+                            if ($statusMutasi == 0){
+                                $labelStatus = "Hapus Usulan";  
+                                ?>
+                                <a class="btn btn-danger btn-small hapus_usulan" href="javascript:void(0)" mutasiid="<?=$value['Mutasi_ID']?>">
+                                    <span><?=$labelStatus?></span>
+                                </a> 
+                                <?php
+                            }else{
+                                if ($statusMutasi == 1) {$labelStatus = "Usulan sudah divalidasi"; $label = "label-success";}
+                                if ($statusMutasi == 3) {$labelStatus = "Usulan dihapus"; $label = "label-danger";}
+                                ?>
+                                <span class="label <?=$label?>"><?=$labelStatus?></span>    
+                            <?php
+                            }
+                            
+                            ?>
+                        </td>
+                        <td style="font-weight: bold;" align="center">
+                            <a class="btn btn-info btn-small" href="<?php echo "$url_rewrite/module/mutasi/"; ?>detail_usulan_mutasi.php?id=<?=$value[Mutasi_ID]?>">
+                                Detail Usulan
+                            </a> 
+                            
+                        </td>
 						
 					</tr>
 					 <?php 
@@ -283,9 +314,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						
 					</tr>
 				</tfoot>
 			</table>
