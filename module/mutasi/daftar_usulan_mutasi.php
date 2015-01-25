@@ -54,6 +54,8 @@ $MUTASI = new RETRIEVE_MUTASI;
 	}
 
 	$dataParam = $_SESSION['ses_mutasi_filter'];
+    $dataParam['page'] = intval($_GET['pid']);
+
 	// pr($_SESSION);
 	$data = $MUTASI->retrieve_usulan_mutasi($dataParam);
 	// pr($data);
@@ -198,9 +200,13 @@ $MUTASI = new RETRIEVE_MUTASI;
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
 								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
+                                    <?php 
+                                    $prev = intval($_GET['pid']-1);
+                                    $next = intval($_GET['pid']+1);
+                                    ?>
+										<li><a href="<?php echo"$url_rewrite/module/mutasi/daftar_usulan_mutasi.php?pid=$prev";?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
+										<li><a href="<?php echo"$url_rewrite/module/mutasi/daftar_usulan_mutasi.php?pid=$next";?>" class="buttonnext1">Next</a></li>
 									</ul>
 							</li>
 						</ul>

@@ -209,13 +209,16 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             if ($result){
 
+                $paging = paging($data['page'], 100);
+
                 foreach ($result as $key => $value) {
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
                         'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' ",
                         'joinmethod' => 'INNER JOIN',
-                        'join'=>'m.SatkerTujuan = s.kode'
+                        'join'=>'m.SatkerTujuan = s.kode',
+                        'limit'=>"{$paging}, 100"
                         );
 
                     $res[] = $this->db->lazyQuery($sqlSelect,$debug);
