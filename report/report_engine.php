@@ -11562,8 +11562,8 @@ $footer ="
 					$noReg=$row->noRegister;
 					$kuantitas=count($noReg);
 					$split = explode("-", $row->noRegister);
+					// pr($split);
 					if (count($split) == 1){
-						// $hasil = 1;
 						$nilaiPrlhn = $row->NilaiPerolehan;
 						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
 						$kuantitas = 1;
@@ -12229,7 +12229,8 @@ $footer ="
 					}else{
 						$awal = $split[0];
 						$akhir = end($split);
-						$hasil = (intval($akhir) - intval($awal)) + 1;
+						// $hasil = (intval($akhir) - intval($awal)) + 1;
+						$hasil = ($akhir - $awal) + 1;
 						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
 						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
 						$kuantitas = $hasil;
