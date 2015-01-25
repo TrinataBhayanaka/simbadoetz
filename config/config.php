@@ -15,6 +15,9 @@ require_once "$path/function/class/class_db.php";
 require_once "$path/function/class/class_auth.php";
 require_once "$path/function/class/class_session.php";
 require_once "$path/API/retrieve.php";
+
+require_once "$path/API/retrieve_report.php";
+
 require_once "$path/API/update.php";
 require_once "$path/API/store.php";
 require_once "$path/API/delete.php";
@@ -93,6 +96,9 @@ $SESSION = new Session();
 $HELPER_FILTER = new helper_filter();
 
 $RETRIEVE = new RETRIEVE();
+
+$RETRIEVE_REPORT=new RETRIEVE_REPORT();
+
 $STORE = new STORE();
 $DELETE = new DELETE();
 $UPDATE = new UPDATE();

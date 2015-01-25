@@ -78,11 +78,14 @@ $no_penghapusan=$_POST['bup_cdp_pu_noskpenghapusan'];
 								{
 									unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 									$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$_POST,'paging'=>$paging);
-									$data = $RETRIEVE->retrieve_daftar_cetak_penetapan_penghapusan($parameter);
+									//$data = $RETRIEVE->retrieve_daftar_cetak_penetapan_penghapusan($parameter);
+									$data=$RETRIEVE_REPORT->list_daftar_sk_penghapusan();
+
 								}else{
 									$sessi = $_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']];
 									$parameter = array('menuID'=>$menu_id,'type'=>'checkbox','param'=>$sessi,'paging'=>$paging);
-									$data = $RETRIEVE->retrieve_daftar_cetak_penetapan_penghapusan($parameter);
+									//$data = $RETRIEVE->retrieve_daftar_cetak_penetapan_penghapusan($parameter);
+									$data=$RETRIEVE_REPORT->list_daftar_sk_penghapusan();
 								}
 					?>
 						<ul>
@@ -103,7 +106,6 @@ $no_penghapusan=$_POST['bup_cdp_pu_noskpenghapusan'];
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			
 			
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
@@ -140,8 +142,9 @@ $no_penghapusan=$_POST['bup_cdp_pu_noskpenghapusan'];
 						<td><?php $change=$hsl_data[TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
 						<td><?php echo "$hsl_data[AlasanHapus]";?></td>
 						<td>	
-						 <a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan_validasi.php?menu_id=41&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>" target="_blank">Cetak</a>
-						</td>
+						 <a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>cetak_sk_penghapusan.php?sk=<?php echo "$hsl_data[NoSKHapus]";?>&tglHapus=<?php echo "$hsl_data[TglHapus]";?>&menu_id=41&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>" target="_blank">Cetak PDF</a>
+                                                                                 <a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>cetak_sk_penghapusan.php?sk=<?php echo "$hsl_data[NoSKHapus]";?>&tglHapus=<?php echo "$hsl_data[TglHapus]";?>&menu_id=41&mode=1&id=<?php echo "$hsl_data[Penghapusan_ID]";?>&tipe_file=2" target="_blank">Cetak Excel</a>
+                                         </td>
 					</tr>
 					<?php $no++; } }?>
 				</tbody>
