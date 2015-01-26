@@ -206,6 +206,10 @@ $menu_id = 10;
 								<input type="text" class="span3" name="NoMesin" disabled/>
 							</li>
 							<li>
+								<span class="span2">No. Polisi</span>
+								<input type="text" class="span3" name="NoSeri" disabled/>
+							</li>
+							<li>
 								<span class="span2">No. BPKB</span>
 								<input type="text" class="span3" name="NoBPKB" disabled/>
 							</li>

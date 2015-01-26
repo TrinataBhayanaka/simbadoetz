@@ -2346,7 +2346,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
  
         global $url_rewrite;
-        // pr($data);exit;
+        pr($data);exit;
         if(isset($data['kodeKelompok'])) $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
         if(isset($data['kodeLokasi'])) $tblAset['kodeLokasi'] = $data['kodeLokasi'];

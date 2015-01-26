@@ -91,7 +91,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<th>Jenis Dokumen</th>
 						<th>Tipe Aset</th>
 						<th>Nilai</th>
-						<th>Action</th>
+						<th width="18%">Action</th>
 					</tr>
 				</thead>
 				<tbody>
