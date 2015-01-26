@@ -45,7 +45,7 @@ $menu_id = 10;
 		// //pr($data);
 
 	}
-	
+	// pr($data);
 	if(isset($_GET['flegAset'])){
 		$flegAset=$_GET['flegAset'];
 	}else{
