@@ -1514,7 +1514,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
     {
         global $url_rewrite;
         unset($data['Aset_ID']);
-        
+        // pr($data);exit;
         $kodeSatker = explode(".",$data['kodeSatker']);
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
@@ -2509,6 +2509,140 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         echo "<script>alert('Data Berhasil Disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
 
         exit;    
+
+    }
+
+    public function store_upd_aset($data){
+        global $url_rewrite;
+        // pr($data);
+        $kodeSatker = explode(".",$data['kodeSatker']);
+        $tblAset['kodeRuangan'] = $data['kodeRuangan'];
+        $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+        $tblAset['kodeSatker'] = $data['kodeSatker'];
+        $tahun = explode("-", $data['TglPerolehan']);
+        $tblAset['Tahun'] = $tahun[0];
+        $tblAset['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tahun[0],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+        $tblAset['TglPerolehan'] = $data['TglPerolehan'];
+        $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        $tblAset['kondisi'] = $data['kondisi'];
+        $tblAset['Kuantitas'] = 1;
+        $tblAset['Satuan'] = $data['Satuan'];
+        $tblAset['Info'] = $data['Info'];
+        $tblAset['Alamat'] = $data['Alamat'];
+        $tblAset['UserNm'] = $data['UserNm'];
+        $tblAset['TipeAset'] = $data['TipeAset'];
+
+
+        if($data['TipeAset']=="A"){
+                $tblKib['HakTanah'] = $data['HakTanah'];
+                $tblKib['LuasTotal'] = $data['LuasTotal'];
+                $tblKib['NoSertifikat'] = $data['NoSertifikat'];
+                $tblKib['TglSertifikat'] = $data['TglSertifikat'];
+                $tblKib['Penggunaan'] = $data['Penggunaan'];
+                $tabel = "tanah";
+                $logtabel = "log_tanah";
+                $idkey = "Tanah_ID";
+            } elseif ($data['TipeAset']=="B") {
+                $tblKib['Pabrik'] = $data['Pabrik'];
+                $tblKib['Merk'] = $data['Merk'];
+                $tblKib['Model'] = $data['Model'];
+                $tblKib['Ukuran'] = $data['Ukuran'];
+                $tblKib['NoMesin'] = $data['NoMesin'];
+                $tabel = "mesin";
+                $logtabel = "log_mesin";
+                $idkey = "Mesin_ID";
+            } elseif ($data['TipeAset']=="C") {
+                $tblKib['JumlahLantai'] = $data['JumlahLantai'];
+                $tblKib['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['Beton'] = $data['Beton'];
+                $tblKib['NoSurat'] = $data['NoSurat'];
+                $tabel = "bangunan";
+                $logtabel = "log_bangunan";
+                $idkey = "Bangunan_ID";
+            } elseif ($data['TipeAset']=="D") {
+                $tblKib['Panjang'] = $data['Panjang'];
+                $tblKib['Lebar'] = $data['Lebar'];
+                $tblKib['LuasJaringan'] = $data['LuasJaringan'];
+                $tblKib['Konstruksi'] = $data['Konstruksi'];
+                $tblKib['NoDokumen'] = $data['NoDokumen'];
+                $tblKib['tglDokumen'] = $data['tglDokumen'];
+                $tabel = "jaringan";
+                $logtabel = "log_jaringan";
+                $idkey = "Jaringan_ID";
+            } elseif ($data['TipeAset']=="E") {
+                $tblKib['Judul'] = $data['Judul'];
+                $tblKib['Pengarang'] = $data['Pengarang'];
+                $tblKib['Penerbit'] = $data['Penerbit'];
+                $tblKib['Spesifikasi'] = $data['Spesifikasi'];
+                $tblKib['AsalDaerah'] = $data['AsalDaerah'];
+                $tblKib['Material'] = $data['Material'];
+                $tblKib['Ukuran'] = $data['Ukuran'];
+                $tabel = "asetlain";
+                $logtabel = "log_asetlain";
+                $idkey = "AsetLain_ID";
+            } elseif ($data['TipeAset']=="F") {
+                $tblKib['JumlahLantai'] = $data['JumlahLantai'];
+                $tblKib['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['Beton'] = $data['Beton'];
+                $tabel = "kdp";
+                $logtabel = "log_kdp";
+                $idkey = "KDP_ID";
+            } elseif ($data['TipeAset']=="G") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                exit;
+            }
+
+            $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+            $tblKib['kodeSatker'] = $data['kodeSatker'];
+            $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
+            $tblKib['TglPerolehan'] = $data['TglPerolehan'];
+            $tblKib['NilaiPerolehan'] = $data['Satuan'];
+            $tblKib['kondisi'] = $data['kondisi'];
+            $tblKib['Info'] = $data['Info'];
+            $tblKib['Alamat'] = $data['Alamat'];
+            $tblKib['Tahun'] = $tblAset['Tahun'];
+            $tblKib['kodeKA'] = 0;
+            // $tblKib['noRegister'] = $tblAset['noRegister'];
+
+            $sql = "SELECT MIN(noRegister) AS min,MAX(noRegister) AS max FROM aset WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noKontrak = '{$data['noKontrak']}'";
+            $minmax = $this->fetch($sql);
+            // pr($minmax);
+
+            if($data['old_jumlah'] == $data['Kuantitas']){
+
+                foreach ($tblAset as $key => $val) {
+                $tmpfield[] = $key."='$val'";
+                }
+                $field = implode(',', $tmpfield);
+
+                $query = "UPDATE aset SET {$field} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noKontrak = '{$data['noKontrak']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}";
+                // pr($query);
+                $result=  $this->query($query) or die($this->error());
+
+                foreach ($tblKib as $key => $val) {
+                $tmpfield2[] = $key."='$val'";
+                }
+                $field = implode(',', $tmpfield2);
+
+                $query = "UPDATE {$data['tabel']} SET {$field} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']} ";
+                // pr($query);exit;
+                $result=  $this->query($query) or die($this->error());
+
+            } else {
+                $sql = "DELETE FROM aset WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN '{$minmax['min']}' AND {$minmax['max']}";
+                // pr($sql);
+                $result=  $this->query($sql) or die($this->error());
+
+                $sql = "DELETE FROM {$data['tabel']} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}";
+                // pr($sql);
+                $result=  $this->query($sql) or die($this->error());
+
+                $this->store_aset($data);   
+            }
+
+            echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+
+            exit;
 
     }
 

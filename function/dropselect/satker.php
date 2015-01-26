@@ -207,7 +207,7 @@ function selectAset($name,$size=300,$br=false,$upd=false,$status=false){
 			var id = "<?=$upd?>";
 				if(id)
 				{
-					$.post('<?=$url_rewrite?>/function/api/asetupd.php', {sess:id,term:''}, function(data){
+					$.post('<?=$url_rewrite?>/function/api/asetupd.php', {term:id}, function(data){
 						var text = data;
 						$("#<?=$name?>").select2('data', {id: id, text: id+" "+text});	
 					})	
