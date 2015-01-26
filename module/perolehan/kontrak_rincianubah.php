@@ -5,8 +5,8 @@ $menu_id = 10;
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
-$get_data_filter = $RETRIEVE->retrieve_editkontrak($_GET);
-pr($get_data_filter);
+$dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
+// pr($dataArr);
 
 
 	include"$path/meta.php";
@@ -25,23 +25,12 @@ pr($get_data_filter);
 				}
 		// pr($kontrak);
 
-		if(isset($_POST['kodeKelompok'])){
-		    if($_POST['Aset_ID'] == "")
+		
+		    if($_POST)
 		    {
-		      	if($kontrak[0]['tipeAset'] == 1)
-		      	{
-		      		$dataArr = $STORE->store_aset($_POST);
-		      	} elseif($kontrak[0]['tipeAset'] == 2) {
-		      		$dataArr = $STORE->store_aset_kapitalisasi($_POST,$_GET);
-		      	} elseif ($kontrak[0]['tipeAset'] == 3) {
-		      		$dataArr = $STORE->store_aset_kdp($_POST,$_GET);
-		      	}	
-		      
-		    }  else
-		    {
-		      $dataArr = $STORE->store_edit_aset($_POST,$_POST['Aset_ID']);
+				$dataArr = $STORE->store_upd_aset($_POST);
 		    }
-		  }		
+		  	
 		//sum total 
 		$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
 		while ($sum = mysql_fetch_array($sqlsum)){
@@ -55,7 +44,10 @@ pr($get_data_filter);
         $('#hrgmask,#total').autoNumeric('init');
         $("select").select2({});
         $( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
-		$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('9999-99-99');    
+		$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('9999-99-99');
+		setTimeout(function() {
+		 	initKondisi();
+		}, 100);
     });
 
     function getCurrency(item){
@@ -101,7 +93,7 @@ pr($get_data_filter);
 							</li>
 							<li>
 								<span  class="labelInfo">Total Rincian Barang</span>
-								<input type="text" id="totalRB" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
+								<input type="text" id="totalRB" value="<?=isset($sumTotal) ? number_format($sumTotal['total']-$dataArr['aset']['NilaiPerolehan']) : '0'?>" disabled/>
 							</li>
 						</ul>
 							
@@ -156,176 +148,176 @@ pr($get_data_filter);
 			<form action="" method="POST">
 				 <div class="formKontrak">
 				 		<ul>
-							<?=selectSatker('kodeSatker','255',true,false,'required');?>
+							<?=selectSatker('kodeSatker','255',true,$dataArr['kib']['kodeSatker'],'required');?>
 						</ul>
 				 		<ul>
-							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
+							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['kib']['Tahun']."_".$dataArr['aset']['kodeRuangan']);?>
 						</ul>
 						<ul>
-							<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
+							<?php selectAset('kodeKelompok','255',true,$dataArr['kib']['kodeKelompok'],'required'); ?>
 						</ul>
 						<ul class="tanah" style="display:none">
 							<li>
 								<span class="span2">Hak Tanah</span>
 								<select id="hakpakai" name="HakTanah" style="width:255px" disabled>
-									<option value="Hak Pakai">Hak Pakai</option>
-									<option value="Hak Pengelolaan">Hak Pengelolaan</option>
+									<option value="Hak Pakai" <?=$dataArr['kib']['HakTanah'] == 'Hak Pakai' ? 'selected' : ''?>>Hak Pakai</option>
+									<option value="Hak Pengelolaan" <?=$dataArr['kib']['HakTanah'] == 'Hak Pengelolaan' ? 'selected' : ''?>>Hak Pengelolaan</option>
 								</select>
 							</li>
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Luas (M2)</span>
-								<input type="text" class="span3" name="LuasTotal" disabled/>
+								<input type="text" class="span3" name="LuasTotal" value="<?=(isset($dataArr['kib']['LuasTotal'])) ? $dataArr['kib']['LuasTotal'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Sertifikat</span>
-								<input type="text" class="span3" name="NoSertifikat" disabled/>
+								<input type="text" class="span3" name="NoSertifikat" value="<?=(isset($dataArr['kib']['NoSertifikat'])) ? $dataArr['kib']['NoSertifikat'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Tgl. Sertifikat</span>
-								<input type="text" class="span2" name="TglSertifikat" id="datepicker" disabled/>
+								<input type="text" class="span2" name="TglSertifikat" value="<?=(isset($dataArr['kib']['TglSertifikat'])) ? $dataArr['kib']['TglSertifikat'] : ''?>" id="datepicker" disabled/>
 							</li>
 							<li>
 								<span class="span2">Penggunaan</span>
-								<input type="text" class="span3" name="Penggunaan" disabled/>
+								<input type="text" class="span3" name="Penggunaan" value="<?=(isset($dataArr['kib']['Penggunaan'])) ? $dataArr['kib']['Penggunaan'] : ''?>" disabled/>
 							</li>
 						</ul>
 						<ul class="mesin" style="display:none">
 							<li>
 								<span class="span2">Merk</span>
-								<input type="text" class="span3" name="Merk" disabled/>
+								<input type="text" class="span3" name="Merk" value="<?=(isset($dataArr['kib']['Merk'])) ? $dataArr['kib']['Merk'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Type</span>
-								<input type="text" class="span3" name="Model" disabled/>
+								<input type="text" class="span3" name="Model" value="<?=(isset($dataArr['kib']['Model'])) ? $dataArr['kib']['Model'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Ukuran / CC</span>
-								<input type="text" class="span3" name="Ukuran" disabled/>
+								<input type="text" class="span3" name="Ukuran" value="<?=(isset($dataArr['kib']['Ukuran'])) ? $dataArr['kib']['Ukuran'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Pabrik</span>
-								<input type="text" class="span3" name="Pabrik" disabled/>
+								<input type="text" class="span3" name="Pabrik" value="<?=(isset($dataArr['kib']['Pabrik'])) ? $dataArr['kib']['Pabrik'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Mesin</span>
-								<input type="text" class="span3" name="NoMesin" disabled/>
+								<input type="text" class="span3" name="NoMesin" value="<?=(isset($dataArr['kib']['NoMesin'])) ? $dataArr['kib']['NoMesin'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Polisi</span>
-								<input type="text" class="span3" name="NoSeri" disabled/>
+								<input type="text" class="span3" name="NoSeri" value="<?=(isset($dataArr['kib']['NoSeri'])) ? $dataArr['kib']['NoSeri'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. BPKB</span>
-								<input type="text" class="span3" name="NoBPKB" disabled/>
+								<input type="text" class="span3" name="NoBPKB" value="<?=(isset($dataArr['kib']['NoBPKB'])) ? $dataArr['kib']['NoBPKB'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Bahan</span>
-								<input type="text" class="span3" name="Material" disabled/>
+								<input type="text" class="span3" name="Material" value="<?=(isset($dataArr['kib']['Material'])) ? $dataArr['kib']['Material'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Rangka</span>
-								<input type="text" class="span3" name="NoRangka" disabled/>
+								<input type="text" class="span3" name="NoRangka" value="<?=(isset($dataArr['kib']['NoRangka'])) ? $dataArr['kib']['NoRangka'] : ''?>" disabled/>
 							</li>
 						</ul>
 						<ul class="bangunan" style="display:none">
 							<li>
 								<span class="span2">Beton / Tidak</span>
 								<select id="beton_bangunan" name="Beton" style="width:155px" disabled>
-									<option value="1">Beton</option>
-									<option value="2">Tidak</option>
+									<option value="1" <?=$dataArr['kib']['Beton'] == '1' ? 'selected' : ''?>>Beton</option>
+									<option value="2" <?=$dataArr['kib']['Beton'] == '2' ? 'selected' : ''?>>Tidak</option>
 								</select>
 							</li>
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
-								<input type="text" class="span3" name="JumlahLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['JumlahLantai'] : ''?>" disabled/>
+								<input type="text" class="span3" name="JumlahLantai" value="<?=(isset($dataArr['kib']['JumlahLantai'])) ? $dataArr['kib']['JumlahLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Luas Lantai (M2)</span>
-								<input type="text" class="span3" name="LuasLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
+								<input type="text" class="span3" name="LuasLantai" value="<?=(isset($dataArr['kib']['LuasLantai'])) ? $dataArr['kib']['LuasLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Dokumen</span>
-								<input type="text" class="span3" name="NoSurat" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
+								<input type="text" class="span3" name="NoSurat" value="<?=(isset($dataArr['kib']['NoSurat'])) ? $dataArr['kib']['NoSurat'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglSurat" id="tglSurat" disabled/>
+								<input type="text" class="span2" placeholder="yyyy-mm-dd" value="<?=(isset($dataArr['kib']['tglSurat'])) ? $dataArr['kib']['tglSurat'] : ''?>" name="tglSurat" id="tglSurat" disabled/>
 							</li>
 						</ul>
 						<ul class="jaringan" style="display:none">
 							<li>
 								<span class="span2">Konstruksi</span>
-								<input type="text" class="span3" name="Konstruksi" disabled/>
+								<input type="text" class="span3" name="Konstruksi" value="<?=(isset($dataArr['kib']['Konstruksi'])) ? $dataArr['kib']['Konstruksi'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Panjang (KM)</span>
-								<input type="text" class="span2" name="Panjang" disabled/>
+								<input type="text" class="span2" name="Panjang" value="<?=(isset($dataArr['kib']['Panjang'])) ? $dataArr['kib']['Panjang'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Lebar (M)</span>
-								<input type="text" class="span2" name="Lebar" disabled/>
+								<input type="text" class="span2" name="Lebar" value="<?=(isset($dataArr['kib']['Lebar'])) ? $dataArr['kib']['Lebar'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Luas (M2)</span>
-								<input type="text" class="span2" name="LuasJaringan" disabled/>
+								<input type="text" class="span2" name="LuasJaringan" value="<?=(isset($dataArr['kib']['LuasJaringan'])) ? $dataArr['kib']['LuasJaringan'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Dokumen</span>
-								<input type="text" class="span3" name="NoDokumen" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
+								<input type="text" class="span3" name="NoDokumen" value="<?=(isset($dataArr['kib']['NoDokumen'])) ? $dataArr['kib']['NoDokumen'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" disabled/>
+								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" value="<?=(isset($dataArr['kib']['tglDokumen'])) ? $dataArr['kib']['tglDokumen'] : ''?>" disabled/>
 							</li>
 						</ul>
 						<ul class="asetlain" style="display:none">
 							<li>
 								<span class="span2">Judul</span>
-								<input type="text" class="span3" name="Judul" disabled/>
+								<input type="text" class="span3" name="Judul" value="<?=(isset($dataArr['kib']['Judul'])) ? $dataArr['kib']['Judul'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Pengarang</span>
-								<input type="text" class="span3" name="Pengarang" disabled/>
+								<input type="text" class="span3" name="Pengarang" value="<?=(isset($dataArr['kib']['Pengarang'])) ? $dataArr['kib']['Pengarang'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Penerbit</span>
-								<input type="text" class="span3" name="Penerbit" disabled/>
+								<input type="text" class="span3" name="Penerbit" value="<?=(isset($dataArr['kib']['Penerbit'])) ? $dataArr['kib']['Penerbit'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Spesifikasi</span>
-								<input type="text" class="span3" name="Spesifikasi" disabled/>
+								<input type="text" class="span3" name="Spesifikasi" value="<?=(isset($dataArr['kib']['Spesifikasi'])) ? $dataArr['kib']['Spesifikasi'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Asal Daerah</span>
-								<input type="text" class="span3" name="AsalDaerah" disabled/>
+								<input type="text" class="span3" name="AsalDaerah" value="<?=(isset($dataArr['kib']['AsalDaerah'])) ? $dataArr['kib']['AsalDaerah'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Bahan</span>
-								<input type="text" class="span3" name="Material" disabled/>
+								<input type="text" class="span3" name="Material" value="<?=(isset($dataArr['kib']['Material'])) ? $dataArr['kib']['Material'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Ukuran</span>
-								<input type="text" class="span3" name="Ukuran" disabled/>
+								<input type="text" class="span3" name="Ukuran" value="<?=(isset($dataArr['kib']['Ukuran'])) ? $dataArr['kib']['Ukuran'] : ''?>" disabled/>
 							</li>
 						</ul>
 						<ul class="kdp" style="display:none">
 							<li>
 								<span class="span2">Beton / Tidak</span>
 								<select id="beton_kdp" name="Beton" style="width:155px">
-									<option value="1">Beton</option>
-									<option value="2">Tidak</option>
+									<option value="1" <?=$dataArr['kib']['Beton'] == '1' ? 'selected' : ''?>>Beton</option>
+									<option value="2" <?=$dataArr['kib']['Beton'] == '2' ? 'selected' : ''?>>Tidak</option>
 								</select>
 							</li>
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
-								<input type="text" class="span3" name="JumlahLantai" disabled/>
+								<input type="text" class="span3" name="JumlahLantai" value="<?=(isset($dataArr['kib']['JumlahLantai'])) ? $dataArr['kib']['JumlahLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Luas Lantai</span>
-								<input type="text" class="span3" name="LuasLantai" disabled/>
+								<input type="text" class="span3" name="LuasLantai" value="<?=(isset($dataArr['kib']['LuasLantai'])) ? $dataArr['kib']['LuasLantai'] : ''?>" disabled/>
 							</li>
 						</ul>
 						<ul>
@@ -334,31 +326,31 @@ pr($get_data_filter);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="TglPerolehan" id="tglPerolehan" required/>
+										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="TglPerolehan" id="tglPerolehan" value="<?=$dataArr['kib']['TglPerolehan']?>" required/>
 									</div>
 								</div>
 							</li>
 							<li>
 								<span class="span2">Alamat</span>
-								<textarea name="Alamat" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Alamat'] : ''?></textarea>
+								<textarea name="Alamat" class="span3" ><?=$dataArr['kib']['Alamat']?></textarea>
 							</li>
 							<li>
 								<span class="span2">Jumlah</span>
-								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=($kontrak[0]['tipeAset'] == 3)? 1 : ''?>" onchange="return totalHrg()" required/>
+								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=$dataArr['aset']['Kuantitas']?>" onchange="return totalHrg()" required/>
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
-								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$dataArr['kib']['NilaiPerolehan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=$dataArr['kib']['NilaiPerolehan']?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
-								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/>
-								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
+								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=$dataArr['aset']['NilaiPerolehan']?>" readonly/>
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=$dataArr['aset']['NilaiPerolehan']?>" >
 							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Info'] : ''?></textarea>
+								<textarea name="Info" class="span3" ><?=$dataArr['kib']['Info']?></textarea>
 							</li>
 							<li>
 								<span class="span2">
@@ -369,13 +361,16 @@ pr($get_data_filter);
 							
 					</div>
 					<!-- hidden -->
-					<input type="hidden" name="Aset_ID" value="">
 					<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
-					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
+					<input type="hidden" name="kodeSatker" value="<?=$dataArr['kib']['kodeSatker']?>">
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
 					<input type="hidden" name="kondisi" value="1">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
-					<input type="hidden" name="TipeAset" id="TipeAset" value="">
+					<input type="hidden" name="TipeAset" id="TipeAset">
+					<input type="hidden" name="old_jumlah" value = "<?=$dataArr['aset']['Kuantitas']?>">
+					<input type="hidden" name="old_kelompok" value = "<?=$dataArr['aset']['kodeKelompok']?>">
+					<input type="hidden" name="old_lokasi" value = "<?=$dataArr['kib']['kodeLokasi']?>">
+					<input type="hidden" name="tabel" id="tabel" value="<?=$dataArr['tabel']?>">
 			
 		</form>
 		</div>  
@@ -389,66 +384,82 @@ pr($get_data_filter);
 ?>
 
 <script type="text/javascript">
+
+	function initKondisi(){	
+			var kode = $('#kodeKelompok').val();
+			var gol = kode.split(".");
+			
+			if(gol[0] == '01')
+			{
+				$("#TipeAset").val('A');
+				$(".mesin,.bangunan,.jaringan,.asetlain,.kdp").hide('');
+				$(".mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".mesin li > select,.bangunan li > select,.jaringan li > select,.asetlain li > select,.kdp li > select").attr('disabled','disabled');
+				$(".tanah li > select,.tanah li > input").removeAttr('disabled');
+				$(".tanah").show('');
+				$("#id").attr('name','Tanah_ID');
+				$("#id").val("<?=$dataArr['kib']['Tanah_ID']?>");
+			} else if(gol[0] == '02')
+			{
+				$("#TipeAset").val('B');
+				$(".tanah,.bangunan,.jaringan,.asetlain,.kdp").hide('');
+				$(".tanah li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > select,.bangunan li > select,.jaringan li > select,.asetlain li > select,.kdp li > select").attr('disabled','disabled');
+				$(".mesin li > input,.mesin li > select").removeAttr('disabled');
+				$(".mesin").show('');
+				$("#id").attr('name','Mesin_ID');
+				$("#id").val("<?=$dataArr['kib']['Mesin_ID']?>");
+			} else if(gol[0] == '03')
+			{
+				$("#TipeAset").val('C');
+				$(".tanah,.mesin,.jaringan,.asetlain,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > select,.mesin li > select,.jaringan li > select,.asetlain li > select,.kdp li > select").attr('disabled','disabled');
+				$(".bangunan li > input,.bangunan li > select").removeAttr('disabled');
+				$(".bangunan").show('');
+				$("#id").attr('name','Bangunan_ID');
+				$("#id").val("<?=$dataArr['kib']['Bangunan_ID']?>");
+			} else if(gol[0] == '04')
+			{
+				$("#TipeAset").val('D');
+				$(".tanah,.mesin,.bangunan,.asetlain,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.kdp li > select").attr('disabled','disabled');
+				$(".jaringan li > input,.jaringan li > select").removeAttr('disabled');
+				$(".jaringan").show('');
+				$("#id").attr('name','Jaringan_ID');
+				$("#id").val("<?=$dataArr['kib']['Jaringan_ID']?>");
+			} else if(gol[0] == '05')
+			{
+				$("#TipeAset").val('E');
+				$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > select,.mesin li > select,.bangunan li > select,.jaringan li > select,.kdp li > select").attr('disabled','disabled');
+				$(".asetlain li > input,.asetlain li > select").removeAttr('disabled');
+				$(".asetlain").show('');
+				$("#id").attr('name','AsetLain_ID');
+				$("#id").val("<?=$dataArr['kib']['AsetLain_ID']?>");
+			} else if(gol[0] == '06')
+			{
+				$("#TipeAset").val('F');
+				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input").attr('disabled','disabled');
+				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.jaringan li > select").attr('disabled','disabled');
+				$(".kdp li > input,.kdp li > select").removeAttr('disabled');
+				$(".kdp").show('');
+				$("#id").attr('name','KDP_ID');
+				$("#id").val("<?=$dataArr['kib']['KDP_ID']?>");
+			} else {
+				$("#TipeAset").val('G');
+				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.jaringan li > select,.kdp li > select").attr('disabled','disabled');
+			}
+	}
+
 	$(document).on('change','#kodeKelompok', function(){
 
-		var kode = $('#kodeKelompok').val();
-		var gol = kode.split(".");
-
-		if(gol[0] == '01')
-		{
-			$("#TipeAset").val('A');
-			$(".mesin,.bangunan,.jaringan,.asetlain,.kdp").hide('');
-			$(".mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".tanah li > input,textarea").removeAttr('disabled');
-			$("#hakpakai").removeAttr('disabled');
-			$("#beton_bangunan,#beton_kdp").attr('disabled','disabled');
-			$(".tanah").show('');
-		} else if(gol[0] == '02')
-		{
-			$("#TipeAset").val('B');
-			$(".tanah,.bangunan,.jaringan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".mesin li > input,textarea").removeAttr('disabled');
-			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
-			$(".mesin").show('');
-		} else if(gol[0] == '03')
-		{
-			$("#TipeAset").val('C');
-			$(".tanah,.mesin,.jaringan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".bangunan li > input,textarea").removeAttr('disabled');
-			$("#beton_bangunan").removeAttr('disabled');
-			$("#hakpakai,#beton_kdp").attr('disabled','disabled');
-			$(".bangunan").show('');
-		} else if(gol[0] == '04')
-		{
-			$("#TipeAset").val('D');
-			$(".tanah,.mesin,.bangunan,.asetlain,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
-			$(".jaringan li > input,textarea").removeAttr('disabled');
-			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
-			$(".jaringan").show('');
-		} else if(gol[0] == '05'){
-			$("#TipeAset").val('E');
-			$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
-			$(".asetlain li > input,textarea").removeAttr('disabled');
-			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
-			$(".asetlain").show('');
-		} else if(gol[0] == '06'){
-			$("#TipeAset").val('F');
-			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,textarea").attr('disabled','disabled');
-			$(".kdp li > input,textarea").removeAttr('disabled');
-			$("#beton_kdp").removeAttr('disabled');
-			$("#hakpakai,#beton_bangunan").attr('disabled','disabled');
-			$(".kdp").show('');
-		} else {
-			$("#TipeAset").val('G');
-			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
-			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
-			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
-		}			
+		initKondisi();		
 		
 	});
 
@@ -462,6 +473,7 @@ pr($get_data_filter);
 		var diff = parseInt(perolehan) + parseInt(rb);
 
 		if(diff > str) {
+			console.log(diff+" = "+str);
 			alert("Total rincian barang melebihi nilai SPK");
 			return false;	
 		}
