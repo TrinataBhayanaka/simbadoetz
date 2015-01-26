@@ -40,7 +40,7 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 						<span class="span2">Nomor Dokumen</span>
 						<input type="text" name="noDokumen" value="" style="width:205px;">
 					</li>
-					<?=selectAllSatker('toSatker','205',true,false);?>
+					Tujuan<?=selectAllSatker('toSatker','205',true,false);?>
 				</ul>
 				<ul>
 					<li>

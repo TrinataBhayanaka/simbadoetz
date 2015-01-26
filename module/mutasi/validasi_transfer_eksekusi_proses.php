@@ -25,11 +25,23 @@ $panjang=count($nmaset);
 
 $mutasi_id=get_auto_increment("Mutasi");
 
+// pr($_POST);
+if ($_POST['submit']){
 
-// pr($_POST);exit;
-$data = $MUTASI->store_validasi_Mutasi($_POST);
+    if (isset($_POST['aset_id'])){
+        if (count($_POST['aset_id'])>0){
+            // pr('ada');exit;
+
+            $data = $MUTASI->store_validasi_Mutasi($_POST);
+
+        }    
+    }
+    
+}
 // exit;
-echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/validasi_transfer_antar_skpd.php?pid=1';</script>";
+redirect("$url_rewrite/module/mutasi/validasi_transfer_eksekusi.php?id=$_POST[Mutasi_ID]");
+// exit;
+// echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/validasi_transfer_eksekusi.php?id=".$_POST['Mutasi_ID']."';</script>";
 
 
 exit;

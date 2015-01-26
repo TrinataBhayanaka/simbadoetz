@@ -213,6 +213,10 @@ $menu_id = 10;
 								<input type="text" class="span3" name="NoMesin" disabled/>
 							</li>
 							<li>
+								<span class="span2">No. Polisi</span>
+								<input type="text" class="span3" name="NoSeri" disabled/>
+							</li>
+							<li>
 								<span class="span2">No. BPKB</span>
 								<input type="text" class="span3" name="NoBPKB" disabled/>
 							</li>
@@ -372,7 +376,6 @@ $menu_id = 10;
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
 					<input type="hidden" name="kondisi" value="1">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
-					<input type="hidden" name="Tahun" value="<?=date('Y', strtotime($kontrak[0]['tglKontrak']));?>">
 					<input type="hidden" name="TipeAset" id="TipeAset" value="">
 			
 		</form>

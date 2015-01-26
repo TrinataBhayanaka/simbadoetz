@@ -11,15 +11,15 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 	function retrieve_mutasi_filter($data,$debug=false)
 	{
                 
-      	    $jenisaset = $data['jenisaset'];
+  	    $jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
         $tahunAset=$data['mutasi_trans_filt_thn'];
         
-	$filterkontrak = "";
+	    $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-	if ($tahunAset) $filterkontrak .= " AND a.Tahun = '{$tahunAset}' ";
+	    if ($tahunAset) $filterkontrak .= " AND a.Tahun = '{$tahunAset}' ";
 
 
          if ($jenisaset){
@@ -33,18 +33,21 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $listTableAlias = $table['listTableAlias'];
                 $listTableAbjad = $table['listTableAbjad'];
 
+                $paging = paging($data['page'], 100);
                 $merk = "";
                 // if ($value == 2) $merk = ",{$listTableAlias}.Merk";
                 $sql = array(
                         'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
                         'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker " ,
                         'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} GROUP BY a.Aset_ID",
-                        'limit'=>'100',
-                        'joinmethod' => 'LEFT JOIN',
+                        'limit'=>"{$paging}, 100",
+                        'joinmethod' => 'INNER JOIN',
                         'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
                         );
 
                 $res[] = $this->db->lazyQuery($sql,$debug);
+
+                // $total[] = $this->db->countData($sql,1);
             }
 
             foreach ($res as $value) {
@@ -59,7 +62,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             }
         }
         
-        // pr($newData);
+        // pr($total);
         if ($newData) return $newData;
         return false;
 	}
@@ -186,6 +189,60 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
         }
 
+        function retrieve_usulan_mutasi($data, $debug=false)
+        {
+
+            // pr($_SESSION);
+
+            $ses_satkerkode = $_SESSION['ses_satkerkode'];
+
+            $filter = "";
+            if ($ses_satkerkode) $filter .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
+
+            $paging = paging($data['page'], 100);
+            
+            $sqlSelect = array(
+                'table'=>"mutasiaset AS ma",
+                'field'=>"ma.Mutasi_ID",
+                'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID",
+                'limit'=>"{$paging}, 100"
+                );
+
+            $result = $this->db->lazyQuery($sqlSelect,$debug);
+
+            if ($result){
+
+                
+
+                foreach ($result as $key => $value) {
+                    $sqlSelect = array(
+                        'table'=>"mutasi AS m, satker AS s",
+                        'field'=>"m.*, s.NamaSatker",
+                        'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' ",
+                        'joinmethod' => 'INNER JOIN',
+                        'join'=>'m.SatkerTujuan = s.kode',
+                        );
+
+                    $res[] = $this->db->lazyQuery($sqlSelect,$debug);
+
+                }
+                
+                foreach ($res as $value) {
+
+                    if ($value){
+                        
+                        foreach ($value as $val) {
+                            $newData[] = $val;
+                        } 
+                    }
+                    
+                }
+                // pr($newData);
+                return $newData;  
+            } 
+            return false;
+        }
+
         function store_usulan_mutasi_barang($data, $debug=false)
         {
 
@@ -216,6 +273,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $mutasi_id=get_auto_increment("Mutasi");
             
             $this->db->begin();
+            
             logFile('Start transaksi mutasi');
             // pr($jenisaset);
 
@@ -748,7 +806,6 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
         function retrieve_mutasiPending($data, $debug=false)
         {
-
             $jenisaset = $data['jenisaset'];
             $nokontrak = $data['nokontrak'];
             $kodeSatker = $data['kodeSatker'];
@@ -766,18 +823,89 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $listTableAlias = $table['listTableAlias'];
                 $listTableAbjad = $table['listTableAbjad'];
 
+                $paging = paging($data['page'], 100);
+
                 $sql = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker, s.kode",
-                        'condition'=>"m.FixMutasi = 0",
-                        'limit'=>'100',
+                        'condition'=>"1",
                         'joinmethod' => 'LEFT JOIN',
-                        'join' => "m.SatkerTujuan = s.kode"
+                        'join' => "m.SatkerTujuan = s.kode",
+                        'limit' => "{$paging}, 100"
                         );
 
                 $res = $this->db->lazyQuery($sql,$debug);
                 // pr($res);
             if ($res) return $res;
+            return false;
+        }
+
+        function retrieve_detail_usulan_mutasi($data, $debug=false)
+        {
+            $table = $this->getTableKibAlias($value);
+
+            // pr($table);
+
+            $ses_satkerkode = $_SESSION['ses_satkerkode'];
+
+            $satkerAwal = "";
+            if ($ses_satkerkode) $satkerAwal .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
+
+            $listTable = $table['listTable'];
+            $listTableAlias = $table['listTableAlias'];
+            $listTableAbjad = $table['listTableAbjad'];
+
+            $sql = array(
+                    'table'=>"mutasi AS m, satker AS s",
+                    'field'=>"m.*, s.NamaSatker, s.kode",
+                    'condition'=>"m.Mutasi_ID = {$data[id]}",
+                    'limit'=>'100',
+                    'joinmethod' => 'LEFT JOIN',
+                    'join' => "m.SatkerTujuan = s.kode"
+                    );
+
+            $res = $this->db->lazyQuery($sql,$debug);
+            if ($res){
+
+                foreach ($res as $key => $value) {
+                    $sql = array(
+                            'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
+                            'field'=>"ma.*, s.NamaSatker, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, k.Uraian",
+                            'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal}",
+                            'limit'=>'100',
+                            'joinmethod' => 'LEFT JOIN',
+                            'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
+                            );
+
+                    $res[$key]['aset'] = $this->db->lazyQuery($sql,$debug);
+                }
+                
+                    
+            }
+            // pr($res);
+            if ($res) return $res;
+            return false;
+        }
+
+        function hapusUsulanMutasi($data, $debug=false)
+        {
+
+            $ses_satkerkode = $_SESSION['ses_satkerkode'];
+
+            $filter = "";
+            if ($ses_satkerkode) $filter .= "AND SatkerAwal = '{$ses_satkerkode}'";
+
+            $aset_id = implode(',', $data['aset_id']);
+            $sqlSelect = array(
+                    'table'=>"mutasiaset",
+                    'field'=>"Status = 3",
+                    'condition'=>"Mutasi_ID = '{$data[Mutasi_ID]}' AND Status = 0 AND Aset_ID IN ({$aset_id}) {$filter}",
+                    );
+
+            $result = $this->db->lazyQuery($sqlSelect,$debug,2);
+            if ($result){
+                return true;
+            }
             return false;
         }
 
@@ -795,7 +923,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $sql = array(
                     'table'=>"mutasi AS m, satker AS s",
                     'field'=>"m.*, s.NamaSatker, s.kode",
-                    'condition'=>"m.FixMutasi = 0 AND m.Mutasi_ID = {$data[id]}",
+                    'condition'=>"m.Mutasi_ID = {$data[id]}",
                     'limit'=>'100',
                     'joinmethod' => 'LEFT JOIN',
                     'join' => "m.SatkerTujuan = s.kode"
@@ -808,7 +936,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $sql = array(
                             'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
                             'field'=>"ma.*, s.NamaSatker, s.kode, a.kodeKelompok, a.kodeLokasi, k.Uraian",
-                            'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} AND ma.Status = 0",
+                            'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]}",
                             'limit'=>'100',
                             'joinmethod' => 'LEFT JOIN',
                             'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"

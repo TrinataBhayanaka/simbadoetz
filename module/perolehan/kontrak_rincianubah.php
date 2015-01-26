@@ -5,8 +5,8 @@ $menu_id = 10;
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
-// $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// pr($get_data_filter);
+$get_data_filter = $RETRIEVE->retrieve_editkontrak($_GET);
+pr($get_data_filter);
 ?>
 
 <?php
@@ -17,14 +17,9 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-
 		//kontrak
-		$idKontrak = $_GET['tmpthis'];
-		$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}' LIMIT 1");
-			while ($dataKontrak = mysql_fetch_assoc($sql)){
-					$kontrak[] = $dataKontrak;
-				}
-		// pr($kontrak);
+		
+		pr($kontrak);
 		$sqlrinc = mysql_query("SELECT * FROM aset WHERE Aset_ID = '{$_GET['id']}'");
 		while ($row = mysql_fetch_assoc($sqlrinc)){
 					$rkontrak = $row;

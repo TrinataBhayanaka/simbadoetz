@@ -5,6 +5,7 @@ $menu_id = 16;
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
+// pr($get_data_filter);
 ?>
 <?php
 	include"$path/meta.php";
@@ -94,8 +95,8 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 											echo "";
 										} else {
 									?>
-									<input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" value="<?=$value['id']?>" onchange="return AreAnyCheckboxesChecked();" >
-									<?php } ?>
+									<?php if($value['data'] > 0) { ?><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" value="<?=$value['id']?>" onchange="return AreAnyCheckboxesChecked();" >
+									<?php }} ?>
 								</td>
 								<td><?=$value['noDokumen']?></td>
 								<td><?=$value['toSatker']?></td>

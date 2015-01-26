@@ -54,6 +54,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 	}
 
 	$dataParam = $_SESSION['ses_mutasi_filter'];
+	$dataParam['page'] = intval($_GET['pid']);
 	// pr($_SESSION);
 	$data = $MUTASI->retrieve_mutasi_filter($dataParam);
 	// pr($data);
@@ -173,9 +174,13 @@ $MUTASI = new RETRIEVE_MUTASI;
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
 								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
+								   		<?php 
+								   		$prev = intval($_GET['pid']-1);
+								   		$next = intval($_GET['pid']+1);
+								   		?>
+										<li><a href="<?php echo"$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=$prev"?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
+										<li><a href="<?php echo"$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=$next";?>" class="buttonnext1">Next</a></li>
 									</ul>
 							</li>
 						</ul>
@@ -186,14 +191,26 @@ $MUTASI = new RETRIEVE_MUTASI;
 			
 			<div id="demo">
 			<form name="form" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi.php">
+			
+			<table border="0" width="100%">
+				<tr>
+						<td colspan="" align="left">   
+							<input type="submit" name="submit" value="Usulkan Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
+						</td>
+						<td colspan="" align="right">   
+							<a class="btn btn-info " href="<?php echo "$url_rewrite/module/mutasi/"; ?>daftar_usulan_mutasi.php?pid=1">
+								<i class="icon-list icon-white"></i>
+								  Daftar Usulan Mutasi / Transfer
+								</a>
+
+						</td>
+					</tr>
+			</table>
+			<br>
 			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 					<thead>
-					<tr>
-						<td colspan="9" align="right">   
-							<input type="submit" name="submit" value="Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
-						</td>
-					</tr>
+					
 					<tr>
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
@@ -260,8 +277,6 @@ $MUTASI = new RETRIEVE_MUTASI;
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
