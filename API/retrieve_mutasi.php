@@ -979,6 +979,15 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     );
 
             $result = $this->db->lazyQuery($sqlSelect,$debug,2);
+
+            $sql = array(
+                    'table'=>"penggunaanaset",
+                    'field'=>"StatusMutasi = 0",
+                    'condition'=>"Aset_ID IN ({$aset_id}) {$filter}",
+                    );
+
+            $result = $this->db->lazyQuery($sql,$debug,2);
+
             if ($result){
                 return true;
             }
