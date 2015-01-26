@@ -42,6 +42,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        quietMillis: 50,
 				        data: function (term) {
 				            return {
+				            	free: 1,
 				                sess: '<?=$_SESSION['ses_satkerkode']?>',
 				                term: term
 				            };
