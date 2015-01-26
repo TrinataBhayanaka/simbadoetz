@@ -215,8 +215,8 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr>
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>Kode Barang</th>
 						<th>No Register</th>
-						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
 						<th>Merk / Type</th>
 						<th>Satker</th>
@@ -252,14 +252,13 @@ $MUTASI = new RETRIEVE_MUTASI;
 							<input type="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
-						
+						<td style="font-weight: bold;"><?php echo "$value[kode]";?></td>
 						<td style="font-weight: bold;"> <?php echo "$value[noRegister]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[noKontrak]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[Uraian]";?> / <?php echo "$value[Uraian]";?> </td>
 						<td style="font-weight: bold;"><?php echo @$value['Merk'];?></td>
 						<td style="font-weight: bold;"><?php echo "$value[kodeSatker]- $value[NamaSatker]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[NilaiPerolehan]";?></td>
+						<td style="font-weight: bold;"><?php echo number_format($value['NilaiPerolehan']);?></td>
 						<!--
 						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>	
 						<td style="font-weight: bold;"><a href="#" class="btn btn-danger">Hapus</a></td>	
