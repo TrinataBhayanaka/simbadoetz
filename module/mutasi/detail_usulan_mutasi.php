@@ -284,8 +284,8 @@ include "../../config/config.php";
 						<td><?php echo $value['kode']?></td>
 						<td><?php echo $value['noRegister']?></td>
 						<td style="font-weight: bold;"> <?php echo number_format($value['NilaiPerolehan']);?> </td>
-						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwal]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatker]";?></td>	
+						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[satkerAwalAset]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatkerTujuan]";?></td>	
 						<td style="font-weight: bold;"><?php echo $value['Tahun'];?></td>	
 						<td>
 							<?php echo "$value[Uraian]";?>
