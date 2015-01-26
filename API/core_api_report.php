@@ -4018,7 +4018,7 @@ class core_api_report extends DB {
 			$imp = implode(' and ', $tmp);
 			
 			$sql = "SELECT noRegister FROM $tableName WHERE {$imp} order by noRegister desc";
-			echo $sql; 
+			// echo $sql; 
 			$res = mysql_query($sql);
 			$register=array();
 
@@ -4026,7 +4026,7 @@ class core_api_report extends DB {
 			  
 				$register[]= $d['noRegister'];
 			}
-			pr($register);
+			// pr($register);
 			sort($register);
 			$text_register=implode(",",$register);
 	        //$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
