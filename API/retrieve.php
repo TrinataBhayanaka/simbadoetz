@@ -9722,8 +9722,9 @@ $offset = @$_POST['record'];
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     $transfer[] = $dataTrs;
                 }
+
         foreach ($transfer as $key => $value) {
-                 $RKsql = mysql_query("SELECT COUNT(*) AS data FROM transferaset WHERE transfer_id = '{$transfer['transfer_id']}'");
+                 $RKsql = mysql_query("SELECT COUNT(*) AS data FROM transferaset WHERE transfer_id = '{$value['id']}'");
                     while ($dataRTrs = mysql_fetch_array($RKsql)){
                                 $transfer[$key]['data'] = $dataRTrs['data'];
                             }
@@ -9732,6 +9733,7 @@ $offset = @$_POST['record'];
 
         $dataArr['data'] = $transfer;
         $dataArr['total']= $count_transfer;
+        
 
         return $dataArr;
         exit;
