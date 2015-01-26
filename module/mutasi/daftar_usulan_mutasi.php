@@ -270,7 +270,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr class="gradeA">
 						<td><?php echo "$no.";?></td>
 						<td style="font-weight: bold;"> <?php echo "$value[NoSKKDH]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwal]";?></td>
+						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwalAset]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerTujuan] - $value[NamaSatker]";?></td>
                         <td style="font-weight: bold;"><?php echo "$value[Keterangan]";?></td>
 						<td style="font-weight: bold;" align="center">

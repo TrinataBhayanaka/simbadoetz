@@ -209,10 +209,12 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $paging = paging($data['page'], 100);
             
             $sqlSelect = array(
-                'table'=>"mutasiaset AS ma",
-                'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal",
+                'table'=>"mutasiaset AS ma, satker AS s",
+                'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, s.NamaSatker AS NamaSatkerAwalAset",
                 'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID",
-                'limit'=>"{$paging}, 100"
+                'limit'=>"{$paging}, 100",
+                'joinmethod'=>"INNER JOIN",
+                'join'=>'ma.SatkerAwal = s.kode'
                 );
 
             $result = $this->db->lazyQuery($sqlSelect,$debug);
@@ -234,6 +236,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $res[] = $this->db->lazyQuery($sqlSelect,$debug);
                     $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                     $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
+                    $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
                 }
                 
                 // pr($res);
