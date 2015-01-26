@@ -934,7 +934,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $sql = array(
                     'table'=>"mutasi AS m, satker AS s",
                     'field'=>"m.*, s.NamaSatker, s.kode",
-                    'condition'=>"m.Mutasi_ID = {$data[id]}",
+                    'condition'=>"m.Mutasi_ID = {$data[id]} GROUP BY m.Mutasi_ID",
                     'limit'=>'100',
                     'joinmethod' => 'LEFT JOIN',
                     'join' => "m.SatkerTujuan = s.kode"
@@ -947,7 +947,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $sql = array(
                             'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
                             'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
-                            'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal}",
+                            'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal} GROUP BY ma.Aset_ID",
                             'limit'=>'100',
                             'joinmethod' => 'LEFT JOIN',
                             'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
