@@ -210,7 +210,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             
             $sqlSelect = array(
                 'table'=>"mutasiaset AS ma, satker AS s",
-                'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, s.NamaSatker AS NamaSatkerAwalAset",
+                'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, s.NamaSatker AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
                 'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID",
                 'limit'=>"{$paging}, 100",
                 'joinmethod'=>"INNER JOIN",
@@ -237,6 +237,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                     $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
                     $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
+                    $res[$key][0]['Jumlah'] = $value['Jumlah'];
                 }
                 
                 // pr($res);
