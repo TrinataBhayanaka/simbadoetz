@@ -33,7 +33,7 @@ $penghapusan_id=get_auto_increment("penghapusan");
             // $penghapusan_id
     // );
 		// pr($_POST);
-		$data = $PENGHAPUSAN->store_penetapan_penghapusan($_POST);
+		$data = $PENGHAPUSAN->store_penetapan_penghapusan_pms($_POST);
         
 
 /*
@@ -76,7 +76,7 @@ $query_hapus_apl="DELETE FROM apl_userasetlist WHERE aset_action='PenetapanPengh
 $exec_hapus=  mysql_query($query_hapus_apl) or die(mysql_error());
 */
 
-echo "<script>alert('Data Berhasil Disimpan'); document.location='dftr_penetapan_pmd.php?pid=1';</script>";
+echo "<script>alert('Data Berhasil Disimpan'); document.location='dftr_penetapan_pms.php?pid=1';</script>";
 
 
 
