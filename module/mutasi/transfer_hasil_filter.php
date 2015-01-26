@@ -54,6 +54,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 	}
 
 	$dataParam = $_SESSION['ses_mutasi_filter'];
+	
 	$dataParam['page'] = intval($_GET['pid']);
 	// pr($_SESSION);
 	$data = $MUTASI->retrieve_mutasi_filter($dataParam);
