@@ -27,8 +27,16 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		// pr($_POST);
 		$data = $PENGHAPUSAN->store_usulan_penghapusan_pms($_POST);
         
-        echo "<script>
+       if(isset($_POST['usulanID'])){
+            $id=$_POST['usulanID'];
+            echo "<script>
                     alert('Data Berhasil Disimpan');
-                    document.location='$url_rewrite/module/penghapusan/daftar_usulan_penghapusan_ok_pms.php?usulan_id=$usulan_id';
+                    document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pms.php?id=$id';
                 </script>";
+        }else{
+            echo "<script>
+                    alert('Data Berhasil Disimpan');
+                    document.location='$url_rewrite/module/penghapusan/dftr_usulan_pms.php?pid=1';
+                </script>";
+        }
 ?>
