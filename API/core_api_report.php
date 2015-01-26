@@ -4640,20 +4640,21 @@ class core_api_report extends DB {
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-							$KodeKaCondt1";
+							and kondisi != 3 $KodeKaCondt1";
 							
 			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
 							WHERE kodeSatker like '$satker_id%'  
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-							and (NilaiPerolehan >= 300000 $KodeKa)";
+							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 							
 			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							and kondisi != 3
 							$KodeKaCondt1
 							union all 
 							SELECT sum(NilaiPerolehan) as Nilai FROM mesin
@@ -4662,48 +4663,52 @@ class core_api_report extends DB {
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 
 							and kodeLokasi like '12%' 
-							and (NilaiPerolehan >= 300000 $KodeKa)";
+							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 			
 			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-							$KodeKaCondt1";
+							and kondisi != 3 $KodeKaCondt1";
 							
 			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
 						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 10000000 $KodeKa)";
+						and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";
 							
 			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai  FROM bangunan
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							and kondisi != 3
 							$KodeKaCondt1
 							union all 
 							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
-							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+							and TglPembukuan >= '$tglAwalDefault' 
+							AND TglPembukuan <= '$tglAkhirDefault' 						
 							and Status_Validasi_Barang =1 and StatusTampil = 1 
 							and kodeLokasi like '12%' 
-							and (NilaiPerolehan >= 10000000 $KodeKa)";	
+							and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";	
 							
 			$query_04 = "SELECT sum(NilaiPerolehan) as nilai FROM jaringan
 				WHERE kodeSatker like '$satker_id%'  
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
-				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+				and kondisi != 3";
 				
 			$query_05 = "SELECT sum(NilaiPerolehan) as nilai FROM asetlain
 				WHERE kodeSatker like '$satker_id%'  
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
-				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";	
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+				and kondisi != 3";	
 
 			$query_06 = "SELECT sum(NilaiPerolehan) as nilai FROM kdp
 				WHERE kodeSatker like '$satker_id%' 
@@ -4715,7 +4720,7 @@ class core_api_report extends DB {
 				WHERE kodeSatker like '$satker_id%' 
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
-				and StatusValidasi =1 and kodeLokasi and kondisi = 3 like '12%' $KodeKaCondt1";	
+				and StatusValidasi =1 and kodeLokasi like '12%' and kondisi = 3 $KodeKaCondt1 ";	
 			
 			if($thnFix < $thnDefault){
 				// echo "tahun kurang dari 2008";
@@ -4822,6 +4827,7 @@ class core_api_report extends DB {
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							and kondisi != 3
 							$KodeKaCondt1";
 							
 			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
@@ -4829,13 +4835,14 @@ class core_api_report extends DB {
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-							and (NilaiPerolehan >= 300000 $KodeKa)";
+							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 							
 			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							and kondisi != 3
 							$KodeKaCondt1
 							union all 
 							SELECT sum(NilaiPerolehan) as Nilai FROM mesin
@@ -4844,27 +4851,28 @@ class core_api_report extends DB {
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 
 							and kodeLokasi like '12%' 
-							and (NilaiPerolehan >= 300000 $KodeKa)";
+							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 			
 			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-							$KodeKaCondt1";
+							$KodeKaCondt1 and kondisi != 3";
 							
 			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan
 						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 10000000 $KodeKa)";
+						and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";
 							
 			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai  FROM bangunan
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+							and kondisi != 3
 							$KodeKaCondt1
 							union all 
 							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan
@@ -4873,19 +4881,21 @@ class core_api_report extends DB {
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
 							and Status_Validasi_Barang =1 and StatusTampil = 1 
 							and kodeLokasi like '12%' 
-							and (NilaiPerolehan >= 10000000 $KodeKa)";	
+							and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";	
 							
 			$query_04 = "SELECT sum(NilaiPerolehan) as nilai FROM jaringan
 				WHERE kodeSatker like '$satker_id%'  
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
-				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+				and kondisi != 3";
 				
 			$query_05 = "SELECT sum(NilaiPerolehan) as nilai FROM asetlain
 				WHERE kodeSatker like '$satker_id%'  
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
-				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";	
+				and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+				and kondisi != 3";	
 
 			$query_06 = "SELECT sum(NilaiPerolehan) as nilai FROM kdp
 				WHERE kodeSatker like '$satker_id%' 
