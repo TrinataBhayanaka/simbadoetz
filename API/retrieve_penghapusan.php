@@ -5,6 +5,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	{
 		parent::__construct();
         $this->db = new DB;
+        // pr($_SESSION);
 	}
 	
 	   public function retrieve_usulan_penghapusan($data,$debug=false)
@@ -805,7 +806,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $filterkontrak = "";
         // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-        if($_SESSION['ses_aaksesadmin']==1){
+        if($_SESSION['ses_uaksesadmin']==1){
 
          $kodeSatker = $_SESSION['ses_satkerkode'];
          if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
@@ -871,7 +872,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $filterkontrak = "";
         // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-        if($_SESSION['ses_aaksesadmin']==1){
+        if($_SESSION['ses_uaksesadmin']==1){
 
          $kodeSatker = $_SESSION['ses_satkerkode'];
          if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
