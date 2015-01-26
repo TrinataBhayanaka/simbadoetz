@@ -226,8 +226,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
-                        'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' ",
-                        'joinmethod' => 'INNER JOIN',
+                        'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' AND s.Kd_Ruang IS NULL ",
+                        'joinmethod' => 'LEFT JOIN',
                         'join'=>'m.SatkerTujuan = s.kode',
                         );
 

@@ -155,6 +155,11 @@ foreach ($dataArr as $asetID => $value)
 					  <td style=\"text-align: center; font-weight: ; width: 10px;\">:</td>
 					  <td style=\"width: 873px; font-weight: ;\">$row->kodeLokasi</td>
 					</tr>
+					<tr>
+					  <td style=\"width: 200px; font-weight: ; text-align: left;\">Alamat</td>
+					  <td style=\"text-align: center; font-weight: ; width: 10px;\">:</td>
+					  <td style=\"width: 873px; font-weight: ;\">$row->Alamat</td>
+					</tr>
 				</table>";
 
 		// echo "asetid=".$AsetId; 
