@@ -194,6 +194,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             // pr($_SESSION);
 
+            logFile(serialize($_SESSION));
             $ses_satkerkode = $_SESSION['ses_satkerkode'];
 
             $filter = "";
