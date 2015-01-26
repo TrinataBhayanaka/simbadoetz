@@ -92,16 +92,16 @@ for ($i = 0; $i < $count; $i++) {
 }
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Kartu Inventaris F $waktu.pdf";
+$namafile="$path/report/output/Rekap Kartu Inventaris F $waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Kartu Inventaris F $waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Rekap Kartu Inventaris F $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
 else 
 {
-	$waktu=date("dymhis");
-	$filename ="Kartu_Inventaris-F_$waktu.xls";
+	$waktu=date("d-y-m_h-i-s");
+	$filename ="Rekap_Kartu_Inventaris-F_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	

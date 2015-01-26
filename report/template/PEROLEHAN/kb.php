@@ -14,6 +14,8 @@ $skpd_id = $_REQUEST['kodeSatker10'];
 $kelompok=$_REQUEST['kelompok_id3'];
 $tipe=$_REQUEST['tipe_file'];
 $kb = $_REQUEST['kb'];
+$noregAwal = $_REQUEST['noRegisterAwal'];
+$noregAkhir = $_REQUEST['noRegisterAkhir'];
 pr($_REQUEST);
 // exit;
 $data=array(
@@ -24,13 +26,15 @@ $data=array(
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     "kelompok"=>$kelompok,
+    "noregAwal"=>$noregAwal,
+    "noregAkhir"=>$noregAkhir,
     "tab"=>$tab
 );
 
 // print_r($_POST);
 // exit;
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&kelompok=$kelompok&tglawalperolehan=$tglawalperolehan&tglakhirperolehan=$tglakhirperolehan&kb=$kb&tglcetak=$tglcetak&tipe_file=$tipe";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&kelompok=$kelompok&tglawalperolehan=$tglawalperolehan&tglakhirperolehan=$tglakhirperolehan&kb=$kb&tglcetak=$tglcetak&noregAwal=$noregAwal&noregAkhir=$noregAkhir&tipe_file=$tipe";
 // echo $paramater_url;
 if(isset($kb))
 {
