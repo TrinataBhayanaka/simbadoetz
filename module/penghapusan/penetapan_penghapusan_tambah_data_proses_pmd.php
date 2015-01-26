@@ -33,7 +33,7 @@ $penghapusan_id=get_auto_increment("penghapusan");
             // $penghapusan_id
     // );
 		// pr($_POST);
-		$data = $PENGHAPUSAN->store_penetapan_penghapusan($_POST);
+		$data = $PENGHAPUSAN->store_penetapan_penghapusan_pmd($_POST);
         
 
 /*
