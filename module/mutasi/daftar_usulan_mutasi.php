@@ -246,7 +246,7 @@ $MUTASI = new RETRIEVE_MUTASI;
                         <th>Keterangan</th>
                         <th>Jumlah Barang</th>
 						<th>Status</th>
-						<th>Aksi</th>
+						<th>Detail</th>
 						
 					</tr>
 				</thead>
@@ -284,9 +284,13 @@ $MUTASI = new RETRIEVE_MUTASI;
                             if ($statusMutasi == 0){
                                 $labelStatus = "Hapus Usulan";  
                                 ?>
+                                <a class="btn btn-warning btn-small" href="<?php echo "$url_rewrite/module/mutasi/transfer_eksekusi.php?id=$value[Mutasi_ID]";?>" mutasiid="<?=$value['Mutasi_ID']?>">
+                                    <span>Edit Usulan</span>
+                                </a> 
                                 <a class="btn btn-danger btn-small hapus_usulan" href="javascript:void(0)" mutasiid="<?=$value['Mutasi_ID']?>">
                                     <span><?=$labelStatus?></span>
                                 </a> 
+
                                 <?php
                             }else{
                                 if ($statusMutasi == 1) {$labelStatus = "Usulan sudah divalidasi"; $label = "label-success";}

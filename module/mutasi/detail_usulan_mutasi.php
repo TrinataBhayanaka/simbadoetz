@@ -234,7 +234,7 @@ include "../../config/config.php";
 					<?php if (!$disableButton):?>
 					<tr>
 						
-						<td  align="left" colspan="10">   
+						<td  align="left" colspan="9">   
 							<input type="submit" name="submit" value="Hapus rincian dari usulan" class="btn btn-danger" id="submit" />
 						</td>
 					</tr>

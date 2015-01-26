@@ -19,6 +19,12 @@ include "../../config/config.php";
 		
 	}
 
+	if ($_GET['id']){
+		
+		$_SESSION['ses_mutasi_eksekusi'] = $_GET;
+		
+	}
+
 	$dataParam = $_SESSION['ses_mutasi_eksekusi'];
 	// pr($_SESSION);
     $data = $MUTASI->retrieve_mutasi_eksekusi($dataParam);
@@ -186,11 +192,12 @@ include "../../config/config.php";
                             ?>
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
                 <input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
+                <input type="hidden" name="Mutasi_ID" value="<?php echo $data[0]['Mutasi_ID']?>">
                             <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
                           	 <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top:2px;">
                                <tr>
 		                          	<td style='border: 1px solid #004933; height:50px; padding:2px;'>
-		                          	 	<?=selectAllSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false,'required',false,1);?>
+		                          	 	<?=selectAllSatker('kodeSatker',$width='205',$br=true,($data[0]['SatkerTujuan']) ? $data[0]['SatkerTujuan'] : false,'required',false,1);?>
 									</td>
 								</tr>
 							</table>						
@@ -200,10 +207,11 @@ include "../../config/config.php";
                                         <td style="padding:0px;" colspan="2">
                                             <div style="margin-top:10px;">
                                                 <table width="100%">
-                                                	
+                                                	<?php if (!$_GET['id']):?>
 													<tr>
 														<td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar Aset yang akan di transfer :</u></td>
 													</tr>
+													<?php endif;?>
                                                         <?php
                                                         $id =0;
                                                         $no = 1;
@@ -382,19 +390,19 @@ include "../../config/config.php";
 														<li>&nbsp;</li>
 														<li>
 															<span class="span2">No. Dokumen</span>
-															<input type="text" style="width:180px;" name="mutasi_trans_eks_nodok" required="required" id="">&nbsp;<span id="errmsg"></span>
+															<input type="text" style="width:180px;" name="mutasi_trans_eks_nodok" required="required" id="" value="<?=@$data[0][NoSKKDH]?>">&nbsp;<span id="errmsg"></span>
 														</li>
 														<li>
 															<span class="span2">Tgl. Proses</span>
-															<input type="text" style="width:180px;" name="mutasi_trans_eks_tglproses" required="required" id="tanggal12">
+															<input type="text" style="width:180px;" name="mutasi_trans_eks_tglproses" required="required" id="datepicker" value="<?=@$data[0][TglSKKDH]?>">
 														</li>
 														<li>
 															<span class="span2">Pemakai</span>
-															<input type="text" style="width:180px;" name="mutasi_trans_eks_pemakai" required="required">
+															<input type="text" style="width:180px;" name="mutasi_trans_eks_pemakai" required="required" value="<?=@$data[0]['Pemakai']?>">
 														</li>
 														<li>
 															<span class="span2">Alasan</span>
-															<textarea name="mutasi_trans_eks_alasan" cols="60" rows="3" required="required"></textarea>
+															<textarea name="mutasi_trans_eks_alasan" cols="60" rows="3" required="required"><?=@$data[0][Keterangan]?></textarea>
 														</li>
 														<li>
 															<span class='span2 hiddenData'>&nbsp;</span>
