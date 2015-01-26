@@ -202,7 +202,7 @@ include "../../config/config.php";
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/mutasi/daftar_usulan_mutasi.php";?>" class="btn">
+								<a href="<?php echo"$url_rewrite/module/mutasi/daftar_usulan_mutasi.php?pid=1";?>" class="btn">
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>
@@ -242,7 +242,7 @@ include "../../config/config.php";
 					<tr>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>NoSKKDH</th>
-						<th>No Kontrak</th>
+						<th>Kode Barang</th>
 						<th>No Register</th>
 						<th>Nilai Perolehan</th>
 						<th>Satker Awal</th>
@@ -281,9 +281,9 @@ include "../../config/config.php";
 													
 						</td>
 						<td><?php echo $data[0]['NoSKKDH']?></td>
-						<td><?php echo $value['noKontrak']?></td>
+						<td><?php echo $value['kode']?></td>
 						<td><?php echo $value['noRegister']?></td>
-						<td style="font-weight: bold;"> <?php echo $value['NilaiPerolehan'];?> </td>
+						<td style="font-weight: bold;"> <?php echo number_format($value['NilaiPerolehan']);?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwal]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatker]";?></td>	
 						<td style="font-weight: bold;"><?php echo $value['Tahun'];?></td>	
