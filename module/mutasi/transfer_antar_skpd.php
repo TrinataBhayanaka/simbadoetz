@@ -131,7 +131,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                             </li>
 							<li>
 								<span class="span2">Nomor Kontrak</span>
-								 <input  type="text" placeholder="" name="mutasi_trans_filt_nokontrak" id="posisiKolom" style="width: 200px;"/>&nbsp;<span id="errmsg"></span>
+								 <input  type="text" placeholder="" name="mutasi_trans_filt_nokontrak" id="posisiKolom1" style="width: 200px;"/>&nbsp;<span id="errmsg"></span>
 							</li>
 							<li>
 								<span class="span2">Tahun Perolehan</span>

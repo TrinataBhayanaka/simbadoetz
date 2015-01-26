@@ -9851,11 +9851,16 @@ $offset = @$_POST['record'];
 
         //get from aset
         $sql = "SELECT kodeLokasi,kodeRuangan, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND kodeKelompok = '{$get['kdkel']}' AND kodeLokasi = '{$get['kdlok']}' AND StatusValidasi IS NULL GROUP BY kodeKelompok, kodeLokasi";
-        $aset = $this->fetch($sql,1);
-        pr($aset);exit;
+        $aset = $this->fetch($sql);
+        
 
         //get kib
+        $sql = "SELECT * FROM {$get['table']} WHERE kodeKelompok = '{$get['kdkel']}' AND kodeLokasi = '{$get['kdlok']}' AND StatusValidasi IS NULL LIMIT 1";
+        $kib = $this->fetch($sql);
         
+        $dataArr = array('aset' => $aset, 'kib' => $kib, 'tabel' => $get['table'] );
+        
+        return $dataArr;
     }   
 }
 
