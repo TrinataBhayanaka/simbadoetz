@@ -209,12 +209,10 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $paging = paging($data['page'], 100);
             
             $sqlSelect = array(
-                'table'=>"mutasiaset AS ma, satker AS s",
-                'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, s.NamaSatker AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
+                'table'=>"mutasiaset AS ma",
+                'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, (SELECT NamaSatker FROM satker WHERE kode = ma.SatkerAwal LIMIT 1) AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
                 'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID",
                 'limit'=>"{$paging}, 100",
-                'joinmethod'=>"INNER JOIN",
-                'join'=>'ma.SatkerAwal = s.kode'
                 );
 
             $result = $this->db->lazyQuery($sqlSelect,$debug);
