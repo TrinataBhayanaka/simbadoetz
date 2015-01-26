@@ -86,9 +86,9 @@ $mpdf->hyphenate = true;$count = count($html);
 
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Kartu Inventaris Barang D $waktu.pdf";
+$namafile="$path/report/output/Rekap Kartu Inventaris Barang D $waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Kartu Inventaris Barang D $waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Rekap Kartu Inventaris Barang D $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
@@ -96,7 +96,7 @@ else
 {
 
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Kartu_Inventaris_Barang_D_$waktu.xls";
+	$filename ="Rekap_Kartu_Inventaris_Barang_D_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
