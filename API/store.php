@@ -2346,7 +2346,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
  
         global $url_rewrite;
-        pr($data);exit;
+        // pr($data);exit;
         if(isset($data['kodeKelompok'])) $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
         if(isset($data['kodeLokasi'])) $tblAset['kodeLokasi'] = $data['kodeLokasi'];
@@ -2510,7 +2510,176 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         exit;    
 
-    } 
+    }
+
+    public function ubahAset($data)
+    {
+
+ 
+        global $url_rewrite;
+        // pr($data);exit;
+        if(isset($data['kodeKelompok'])) $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+        if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
+        if(isset($data['kodeLokasi'])) $tblAset['kodeLokasi'] = $data['kodeLokasi'];
+        if(isset($data['tglPerolehan'])) {$tblAset['TglPerolehan'] = $data['tglPerolehan'];$tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));}
+        if(isset($data['tglPembukuan'])) $tblAset['TglPembukuan'] = $data['tglPembukuan'];
+        if(isset($data['NilaiPerolehan'])) $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        if(isset($data['kondisi'])) $tblAset['kondisi'] = $data['kondisi'];
+        if(isset($data['asalusul'])) $tblAset['AsalUsul'] = $data['asalusul'];
+        if(isset($data['Kuantitas'])) $tblAset['Kuantitas'] = $data['Kuantitas'];
+        if(isset($data['Satuan'])) $tblAset['Satuan'] = $data['Satuan'];
+        if(isset($data['Info'])) $tblAset['Info'] = $data['Info'];
+        if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
+        $tblAset['UserNm'] = $data['UserNm'];
+        if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
+        $tblAset['kodeKA'] = 0;
+        if(isset($data['kodeRuangan'])) $tblAset['kodeRuangan'] = $data['kodeRuangan'];
+
+            foreach ($tblAset as $key => $val) {
+                $tmpfield[] = $key."='$val'";
+            }
+            $field = implode(',', $tmpfield);
+
+            $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
+            //pr($query);exit;
+            $result=  $this->query($query) or die($this->error());
+
+
+            if($data['TipeAset']=="A"){
+                $tblKib['HakTanah'] = $data['HakTanah'];
+                $tblKib['LuasTotal'] = $data['LuasTotal'];
+                $tblKib['NoSertifikat'] = $data['NoSertifikat'];
+                $tblKib['TglSertifikat'] = $data['TglSertifikat'];
+                $tblKib['Penggunaan'] = $data['Penggunaan'];
+                $tabel = "tanah";
+                $logtabel = "log_tanah";
+                $idkey = "Tanah_ID";
+            } elseif ($data['TipeAset']=="B") {
+                $tblKib['Pabrik'] = $data['Pabrik'];
+                $tblKib['Merk'] = $data['Merk'];
+                $tblKib['Model'] = $data['Model'];
+                $tblKib['Ukuran'] = $data['Ukuran'];
+                $tblKib['NoMesin'] = $data['NoMesin'];
+                $tblKib['NoBPKB'] = $data['NoBPKB'];
+                $tblKib['Material'] = $data['Material'];
+                $tblKib['NoRangka'] = $data['NoRangka'];
+                $tabel = "mesin";
+                $logtabel = "log_mesin";
+                $idkey = "Mesin_ID";
+            } elseif ($data['TipeAset']=="C") {
+                $tblKib['JumlahLantai'] = $data['JumlahLantai'];
+                $tblKib['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['Beton'] = $data['Beton'];
+                $tblKib['NoSurat'] = $data['NoSurat'];
+                $tblKib['tglSurat'] = $data['tglSurat'];
+                $tabel = "bangunan";
+                $logtabel = "log_bangunan";
+                $idkey = "Bangunan_ID";
+            } elseif ($data['TipeAset']=="D") {
+                $tblKib['Panjang'] = $data['Panjang'];
+                $tblKib['Lebar'] = $data['Lebar'];
+                $tblKib['LuasJaringan'] = $data['LuasJaringan'];
+                $tblKib['Konstruksi'] = $data['Konstruksi'];
+                $tblKib['NoDokumen'] = $data['NoDokumen'];
+                $tblKib['tglDokumen'] = $data['tglDokumen'];
+                $tabel = "jaringan";
+                $logtabel = "log_jaringan";
+                $idkey = "Jaringan_ID";
+            } elseif ($data['TipeAset']=="E") {
+                $tblKib['Judul'] = $data['Judul'];
+                $tblKib['Pengarang'] = $data['Pengarang'];
+                $tblKib['Penerbit'] = $data['Penerbit'];
+                $tblKib['Spesifikasi'] = $data['Spesifikasi'];
+                $tblKib['AsalDaerah'] = $data['AsalDaerah'];
+                $tblKib['Material'] = $data['Material'];
+                $tblKib['Ukuran'] = $data['Ukuran'];
+                $tabel = "asetlain";
+                $logtabel = "log_asetlain";
+                $idkey = "AsetLain_ID";
+            } elseif ($data['TipeAset']=="F") {
+                $tblKib['JumlahLantai'] = $data['JumlahLantai'];
+                $tblKib['LuasLantai'] = $data['LuasLantai'];
+                $tblKib['Beton'] = $data['Beton'];
+                $tabel = "kdp";
+                $logtabel = "log_kdp";
+                $idkey = "KDP_ID";
+            } elseif ($data['TipeAset']=="G") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                exit;
+            }
+
+            if(isset($data['kodeKelompok'])) $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+            if(isset($data['kodeSatker'])) $tblKib['kodeSatker'] = $data['kodeSatker'];
+            if(isset($data['kodeLokasi'])) $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
+            if(isset($tblAset['Tglperolehan'])) $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
+            if(isset($tblAset['TglPembukuan'])) $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
+            if(isset($data['Satuan'])) $tblKib['NilaiPerolehan'] = $data['Satuan'];
+            $tblKib['StatusTampil'] = 1;
+            if(isset($data['kondisi'])) $tblKib['kondisi'] = $data['kondisi'];
+            if(isset($data['AsalUsul'])) $tblKib['AsalUsul'] = $data['AsalUsul'];
+            if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
+            if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
+            if(isset($data['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
+            $tblKib['kodeKA'] = 0;
+            if(isset($data['noRegister'])) $tblKib['noRegister'] = $data['noRegister']; 
+            if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $data['kodeRuangan'];
+
+            $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+              $sqlquery = mysql_query($sqlkib);
+              while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                      $kib_old = $dataAset;
+                  }  
+
+            foreach ($tblKib as $key => $val) {
+                $tmpfield2[] = $key."='$val'";
+            }
+
+            $field = implode(',', $tmpfield2);
+            // $value = implode(',', $tmpvalue2);
+
+            $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";
+            // pr($query);exit;
+            $result=  $this->query($query) or die($this->error());
+
+            //log
+              $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+              $sqlquery = mysql_query($sqlkib);
+              while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                      $kib = $dataAset;
+                  }      
+              $kib['changeDate'] = date("Y-m-d");
+              $kib['action'] = 3;
+              $kib['operator'] = $_SESSION['ses_uoperatorid'];
+              $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
+              $kib['GUID'] = $data['GUID'];
+              $kib['Kd_Riwayat'] = 25;
+
+
+              // pr($kib);
+              
+                    unset($tmpField);
+                    unset($tmpValue);
+                    foreach ($kib as $key => $val) {
+                      $tmpField[] = $key;
+                      $tmpValue[] = "'".$val."'";
+                    }
+                     
+                    $fileldImp = implode(',', $tmpField);
+                    $dataImp = implode(',', $tmpValue);
+
+                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                    logFile($sql);
+                    if ($debug){
+                        pr($sql); exit;
+                    }
+                    $execquery = mysql_query($sql);
+                    
+
+        echo "<script>alert('Data Berhasil Disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/ubah_data_aset.php\">";
+
+        exit;    
+
+    }  
     
 
 }

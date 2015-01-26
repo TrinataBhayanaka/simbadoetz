@@ -24,16 +24,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Koreksi</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Koreksi Data Aset</li>
+		  <li class="active">Ubah Data Aset</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Koreksi Data Aset</div>
+			<div class="title">Ubah Data Aset (Admin)</div>
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
 			
-		<form name="myform" method="post" action="hasil_koreksi_data.php">
+		<form name="myform" method="post" action="hasil_ubah_data.php">
 			<ul>
 				<li>
 					<span class="span2">Tahun Perolehan</span>
