@@ -198,7 +198,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $ses_satkerkode = $_SESSION['ses_satkerkode'];
 
             $filter = "";
-            if ($ses_satkerkode) $filter .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
+            if ($ses_satkerkode) $filter .= "AND ma.SatkerAwal LIKE '{$ses_satkerkode}%'";
 
             $paging = paging($data['page'], 100);
             
