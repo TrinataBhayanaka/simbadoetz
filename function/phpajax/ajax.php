@@ -71,6 +71,54 @@ if (isset($_POST['getSatker'])){
 	exit;
 }
 
+if (isset($_POST['hapususulanmutasi'])){
+
+	// pr($_POST);
+	$data = hapusUsulanMutasi($_POST);
+	if ($data){
+		print json_encode(array('status'=>true));
+	}else{
+		print json_encode(array('status'=>false));
+	}
+	exit;
+}
+
+function hapusUsulanMutasi($data, $debug=false)
+{
+
+	global $DBVAR;
+
+	$ses_satkerkode = $_SESSION['ses_satkerkode'];
+
+    $filter = "";
+    if ($ses_satkerkode) $filter .= "AND SatkerAwal = '{$ses_satkerkode}'";
+
+
+	$sqlSelect = array(
+            'table'=>"mutasiaset",
+            'field'=>"COUNT(1) AS total",
+            'condition'=>"Mutasi_ID = '{$data[mutasiid]}' AND Status = 1 {$filter}",
+            );
+
+    $result = $DBVAR->lazyQuery($sqlSelect,$debug);
+    if ($result[0]['total']>0){
+    	return false;
+    }else{
+
+    	$sql = array(
+	            'table'=>'mutasi',
+	            'field'=>"FixMutasi = 3",
+	            'condition' => "Mutasi_ID = '{$data[mutasiid]}' ",
+	            'limit' => '1',
+	            );
+	    $res = $DBVAR->lazyQuery($sql,$debug,2);
+	    if ($res) return true;
+	    	
+    }
+	
+    return false;
+}
+
 function getNamaSatker($data)
 {
 	global $DBVAR;

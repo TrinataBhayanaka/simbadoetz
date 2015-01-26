@@ -13,7 +13,7 @@ include "../../config/config.php";
 	$MUTASI = new RETRIEVE_MUTASI;
 
 	// pr($_GET);
-    $data = $MUTASI->retrieve_detailMutasi($_GET);
+    $data = $MUTASI->retrieve_detail_usulan_mutasi($_GET);
     if ($data){
     	$disableButton = false;
     	if ($data[0]['FixMutasi']>0) $disableButton = true;
@@ -168,6 +168,16 @@ include "../../config/config.php";
 			 
 			
 		})
+
+		function konfirmasiHapus()
+		{
+			var r = confirm("Hapus rincian mutasi ?");
+            if (r == true) {
+
+            }else{
+            	return false;
+            }
+		}
 		</script>
 	
 	<section id="main">
@@ -192,7 +202,7 @@ include "../../config/config.php";
 						
 						<ul>
 							<li>
-								<a href="<?php echo"$url_rewrite/module/mutasi/validasi_transfer_hasil_filter.php";?>" class="btn">
+								<a href="<?php echo"$url_rewrite/module/mutasi/daftar_usulan_mutasi.php";?>" class="btn">
 								Kembali ke Halaman Utama: Cari Aset</a>
 								
 							</li>
@@ -218,26 +228,26 @@ include "../../config/config.php";
 			
 			
 			<div id="demo">
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_eksekusi_proses.php">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>hapus_usulan_mutasi.php" onsubmit="return konfirmasiHapus()">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<?php if (!$disableButton):?>
 					<tr>
 						
-						<td  align="left">   
-							<input type="submit" name="submit" value="Validasi Barang" class="btn btn-primary" id="submit" />
+						<td  align="left" colspan="10">   
+							<input type="submit" name="submit" value="Hapus rincian dari usulan" class="btn btn-danger" id="submit" />
 						</td>
 					</tr>
 					<?php endif;?>
 					<tr>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						
 						<th>NoSKKDH</th>
-						<th>TglSKKDH</th>
-						<th>Kode Lokasi</th>
+						<th>No Kontrak</th>
+						<th>No Register</th>
+						<th>Nilai Perolehan</th>
 						<th>Satker Awal</th>
 						<th>Satker Tujuan</th>
-						<th>Pemakai</th>
+						<th>Tahun</th>
 						<th>Uraian</th>
 						<th>Status</th>
 					</tr>
@@ -263,17 +273,20 @@ include "../../config/config.php";
 				
 					<tr class="gradeA">
 						
+						
 						<td>
 							<?php if ($value['Status']==0): ?>
 							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="aset_id[]" value="<?php echo $value['Aset_ID'];?>" >
 							<?php endif;?>
+													
 						</td>
 						<td><?php echo $data[0]['NoSKKDH']?></td>
-						<td style="font-weight: bold;"> <?php echo $data[0]['TglSKKDH'];?> </td>
-						<td style="font-weight: bold;"> <?php echo $value['kodeLokasi'];?> </td>
+						<td><?php echo $value['noKontrak']?></td>
+						<td><?php echo $value['noRegister']?></td>
+						<td style="font-weight: bold;"> <?php echo $value['NilaiPerolehan'];?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwal]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatker]";?></td>	
-						<td style="font-weight: bold;"><?php echo $data[0]['Pemakai'];?></td>	
+						<td style="font-weight: bold;"><?php echo $value['Tahun'];?></td>	
 						<td>
 							<?php echo "$value[Uraian]";?>
 							<input type="hidden" name="Mutasi_ID" value="<?php echo $data[0]['Mutasi_ID']?>">
@@ -291,6 +304,7 @@ include "../../config/config.php";
 						if ($status == 3) {$statusMutasi = "Usulan dihapuskan"; $label = "label-danger";}
 						?>
 						<td><span class="label <?=$label?>"><?=$statusMutasi?></span></td>
+						
 					</tr>
 					 <?php 
 						$no++; 
@@ -304,6 +318,13 @@ include "../../config/config.php";
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

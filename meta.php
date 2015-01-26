@@ -1,3 +1,9 @@
+<?php
+$isLogin = false;
+$u_sess = $_SESSION['ses_uoperatorid'];
+if ($u_sess) $isLogin = true;
+?>
+
 <html>
 <head>
 	<title> SIMBADA PEKALONGAN </title>
@@ -105,6 +111,36 @@
 	}
 
 	var basedomain = "<?php echo $url_rewrite?>";
+
+	
+	
+	/* check user idle time */
+	var lifetime = "1200";
+	var isLogin = "<?php echo $isLogin;?>";	
+	var idleMax = parseInt(lifetime,10);
+	var idleTime = 0;
+	$(document).ready(function () {
+		if(isLogin) {
+			
+			var my_timer = setTimeout(trackuser, 1000);
+			$(this).mousemove(function (e) {idleTime = 0;});
+			$(this).keypress(function (e) {idleTime = 0;});
+		}
+	})
+
+	function trackuser() {
+		idleTime = idleTime + 1;
+		if (idleTime > idleMax) { 
+			location.href = basedomain+"/logout.php?utoken=1";			
+		}else {
+			$(this).mousemove(function (e) {idleTime = 0;});
+			$(this).keypress(function (e) {idleTime = 0;});
+			var my_timer = setTimeout(trackuser, 1000);
+		}
+		
+	}
+
+	
 	
     </script> 
 </head>
