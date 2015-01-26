@@ -883,12 +883,12 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                 foreach ($res as $key => $value) {
                     $sql = array(
-                            'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k, satker AS sa",
-                            'field'=>"ma.*, sa.NamaSatker AS satkerAwalAset, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, k.Uraian, k.kode",
+                            'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
+                            'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
                             'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal}",
                             'limit'=>'100',
                             'joinmethod' => 'LEFT JOIN',
-                            'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode, ma.SatkerAwal = sa.kode"
+                            'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
                             );
 
                     $res[$key]['aset'] = $this->db->lazyQuery($sql,$debug);
