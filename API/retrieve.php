@@ -9722,8 +9722,14 @@ $offset = @$_POST['record'];
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     $transfer[] = $dataTrs;
                 }
+        foreach ($transfer as $key => $value) {
+                 $RKsql = mysql_query("SELECT COUNT(*) AS data FROM transferaset WHERE transfer_id = '{$transfer['transfer_id']}'");
+                    while ($dataRTrs = mysql_fetch_array($RKsql)){
+                                $transfer[$key]['data'] = $dataRTrs['data'];
+                            }
+                }        
         $count_transfer = count($transfer);
-      
+
         $dataArr['data'] = $transfer;
         $dataArr['total']= $count_transfer;
 
@@ -9825,6 +9831,29 @@ $offset = @$_POST['record'];
 
         return $dataArr;
         exit;
+    }
+
+    function retrieve_editkontrak($get){
+
+        // pr($get);exit;
+        if($get['tbl'] == "A") $get['table'] = 'tanah';
+        elseif ($get['tbl'] == "B") $get['table'] = 'mesin';
+        elseif ($get['tbl'] == "C") $get['table'] = 'bangunan';
+        elseif ($get['tbl'] == "D") $get['table'] = 'jaringan';
+        elseif ($get['tbl'] == "E") $get['table'] = 'asetlain';
+        elseif ($get['tbl'] == "F") $get['table'] = 'kdp';
+
+        $idKontrak = $get['tmpthis'];
+        $sql = "SELECT * FROM kontrak WHERE id='{$idKontrak}' LIMIT 1";
+        $kontrak = $this->fetch($sql);
+
+        //get from aset
+        $sql = "SELECT kodeLokasi,kodeRuangan, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND kodeKelompok = '{$get['kdkel']}' AND kodeLokasi = '{$get['kdlok']}' AND StatusValidasi IS NULL GROUP BY kodeKelompok, kodeLokasi";
+        $aset = $this->fetch($sql,1);
+        pr($aset);exit;
+
+        //get kib
+        
     }   
 }
 

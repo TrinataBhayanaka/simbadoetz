@@ -66,12 +66,15 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
+// $query1=$query[0];
+// pr($query1);
 // exit;
 
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 $result_query=$REPORT->QueryBinv($query);
+// $result_query=$REPORT->QueryBinv($query1);
 // pr($result_query);
 // exit;
 $result = arrayToObject($result_query);

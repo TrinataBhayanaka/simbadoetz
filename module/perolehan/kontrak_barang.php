@@ -23,7 +23,7 @@ $menu_id = 10;
 			}
 
 	//get data
-	$RKsql = mysql_query("SELECT Aset_ID,kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
+	$RKsql = mysql_query("SELECT Aset_ID,kodeLokasi, kodeKelompok,TipeAset,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -141,12 +141,15 @@ $menu_id = 10;
 				if($kontrak[0]['n_status'] != 1){
 					if($kontrak[0]['tipeAset'] == 1){
 						$link = "kontrak_rincianedit.php";
+						$edit = 1;
 					} elseif ($kontrak[0]['tipeAset'] == 2) {
 						$link = "search_aset_filter.php";
 						$display = "display:none";
+						$edit = 2;
 					} elseif ($kontrak[0]['tipeAset'] == 3) {
 						$link = "search_kdp.php";
 						$display = "display:none";
+						$edit = 3;
 					}
 			?>	
 				<p><a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
@@ -188,8 +191,12 @@ $menu_id = 10;
 						<td class="center">
 						<?php
 							if($kontrak[0]['n_status'] != 1){
+								if($edit == 1){
 						?>
-						<!--<a href="kontrak_rincianubah.php?id=<?=$value['Aset_ID']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-warning btn-small" ><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>-->
+						<!-- <a href="kontrak_rincianubah.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>&tbl=<?=$value['TipeAset']?>" class="btn btn-warning btn-small" ><i class="icon-pencil icon-white"></i>&nbsp;Edit</a> -->
+						
+						<?php } ?>
+
 						<a href="kontrak_rincianhapus.php?idKel=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
 						</td>
 						<?php

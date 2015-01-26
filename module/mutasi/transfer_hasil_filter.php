@@ -199,7 +199,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 							<input type="submit" name="submit" value="Usulkan Pengeluaran Barang" class="btn btn-primary" id="submit" disabled/>
 						</td>
 						<td colspan="" align="right">   
-							<a class="btn btn-info " href="<?php echo "$url_rewrite/module/mutasi/"; ?>daftar_usulan_mutasi.php">
+							<a class="btn btn-info " href="<?php echo "$url_rewrite/module/mutasi/"; ?>daftar_usulan_mutasi.php?pid=1">
 								<i class="icon-list icon-white"></i>
 								  Daftar Usulan Mutasi / Transfer
 								</a>

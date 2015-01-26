@@ -16,20 +16,18 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 					return false;
 				}
 			})
-
-			function newruangan(){
+		</script>
+	<?php	
+	}
+	?>
+	<script type="text/javascript">
+	function newruangan(){
 				if($("#<?=$name?>").val() != "" && $("#tahunRuangan").val() != ""){
 					$('#addruangan').css("display","");
 				} else {
 					$('#addruangan').css("display","none");
 				}
 			}
-		</script>
-	<?php	
-	}
-
-	?>
-	<script type="text/javascript">
 	$(document).ready(function() {
 	//fungsi dropselect
 
@@ -44,6 +42,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				        quietMillis: 50,
 				        data: function (term) {
 				            return {
+				            	free: 1,
 				                sess: '<?=$_SESSION['ses_satkerkode']?>',
 				                term: term
 				            };
@@ -63,7 +62,10 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 				var id = "<?=$upd?>";
 				if(id)
 				{
-					$("#<?=$name?>").select2('data', {id: id, text: id});	
+					$.post('<?=$url_rewrite?>/function/api/satkerupd.php', {sess:id,term:''}, function(data){
+						var text = data;
+						$("#<?=$name?>").select2('data', {id: id, text: id+" "+text});	
+					})
 				}	
 				
 
@@ -79,7 +81,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 
 }
 
-function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$sess=true){
+function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$sess=true,$free=0){
 
 	global $url_rewrite;
 	// pr($_SESSION);
@@ -114,7 +116,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$ses
 				        quietMillis: 50,
 				        data: function (term) {
 				            return {
-				            	free: true,
+				            	free: '<?=$free?>',
 				                sess: '<?=$sess?>',
 				                term: term
 				            };
@@ -134,7 +136,10 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$ses
 				var id = "<?=$upd?>";
 				if(id)
 				{
-					$("#<?=$name?>").select2('data', {id: id, text: id});	
+					$.post('<?=$url_rewrite?>/function/api/satkerupd.php', {sess:id,term:''}, function(data){
+						var text = data;
+						$("#<?=$name?>").select2('data', {id: id, text: id+" "+text});	
+					})	
 				}	
 				
 
@@ -202,7 +207,10 @@ function selectAset($name,$size=300,$br=false,$upd=false,$status=false){
 			var id = "<?=$upd?>";
 				if(id)
 				{
-					$("#<?=$name?>").select2('data', {id: id, text: id});	
+					$.post('<?=$url_rewrite?>/function/api/asetupd.php', {sess:id,term:''}, function(data){
+						var text = data;
+						$("#<?=$name?>").select2('data', {id: id, text: id+" "+text});	
+					})	
 				}	
 
 	} );
@@ -417,7 +425,12 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 				var id = "<?=$upd?>";
 				if(id)
 				{
-					$("#<?=$name?>").select2('data', {id: id, text: id});	
+					setTimeout(function() {
+						$.post('<?=$url_rewrite?>/function/api/ruangupd.php', {sess:id,term:$("#<?=$satker?>").val()}, function(data){
+							var text = data;
+							$("#<?=$name?>").select2('data', {id: id, text: text});	
+						})	
+					}, 100);
 				}	
 				
 
@@ -460,8 +473,8 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 		}
 	</style>
 	<li>
-		<span class="<?=$span?>">Tahun Ruangan</span><?=$enter?>
-		<input type="text" name="tahun" class="span1" id="tahunRuangan" onchange="return newruangan();"/><br>
+		<span class="<?=$span?>">Tahun Pembelian</span><?=$enter?>
+		<input type="text" name="tahun" class="span1 full" id="tahunRuangan" onchange="return newruangan();" <?=$status?>/><br>
 		<span class="<?=$span?>">Kode Ruangan</span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return editruang();"/>&nbsp;
 		<a style="display:none" data-toggle="modal" href="#addruang" class="btn btn-success btn-circle" id="addruangan" title="Tambah"><i class="fa fa-plus simbol"></i></a>

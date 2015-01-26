@@ -9,10 +9,10 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
-
-$modul = $_GET['menuID'];
-$mode = $_GET['mode'];
-$tab = $_GET['tab'];
+//pr($_GET);
+$modul 	= $_GET['menuID'];
+$kelompok=$_GET['kelompok_id'];
+$mode 	= $_GET['mode'];
 $tglawal = $_GET['tglawalperolehan'];
 if($tglawal != ''){
 	$tglawalperolehan = $tglawal;
@@ -21,23 +21,27 @@ if($tglawal != ''){
 }
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglcetak = $_GET['tglcetak'];
+$tab 	= $_GET['tab'];
+$penanda='1';
 $skpd_id = $_GET['skpd_id'];
-$intra = $_GET['intra'];
-$tipe=$_GET['tipe_file'];
+$tipe	=$_GET['tipe_file'];
+$bukuInvGab  = $_GET['bukuInvGab'];
+$pemilik  = $_GET['pemilik'];
 // pr($_GET);
 // exit;
-$REPORT=new report_engine();
-
 $data=array(
     "modul"=>$modul,
-	"tglawalperolehan"=>$tglawalperolehan,
+    "kelompok"=>$kelompok,
+    "mode"=>$mode,
+    "penanda"=>$penanda,
+    "tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
-    "mode"=>$mode,
     "tab"=>$tab,
-    "intra"=>"intra"
+	"bukuInvGab"=>$bukuInvGab,
+	"pemilik"=>$pemilik
+	
 );
-
 function arrayToObject($result_query) {
 	if (!is_array($result_query)) {
 		return $result_query;
@@ -57,7 +61,8 @@ function arrayToObject($result_query) {
 		return FALSE;
 	}
 }
-
+// pr($data);
+// exit;
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -66,10 +71,14 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-
-// $query=$query[6];
 // pr($query);
-//exit;
+// exit;
+// mengenerate query
+$result_query=$REPORT->QueryBinv($query);
+
+$result = arrayToObject($result_query);
+// pr($result);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
@@ -79,25 +88,17 @@ if($tglcetak != ''){
 	$tglcetak = date("Y-m-d");
 	$tanggalCetak = format_tanggal($tglcetak);	
 }
-
-$result_query=$REPORT->QueryBinv($query);
-// pr($result_query);
-// exit;
-$result = arrayToObject($result_query);
-// pr($result_query);
-// exit;
-
-
-$html=$REPORT->retrieve_html_bukuinventaris_intra($result,$gambar,$tanggalCetak);
+//retrieve html
+$html=$REPORT->retrieve_html_bukuiinventariskpdGab($result, $gambar, $tanggalCetak);
 /*$count = count($html);
 
-	 for ($i = 0; $i < $count; $i++) {
+	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
- exit;*/
-if($tipe==1){
-$REPORT->show_status_download_kib();
+exit;*/
+if($tipe!="2"){
+$REPORT->show_status_download_kib();	
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
@@ -106,14 +107,11 @@ $mpdf->StartProgressBarOutput(2);
 $mpdf->useGraphs = true;
 $mpdf->list_number_suffix = ')';
 $mpdf->hyphenate = true;
-
 $count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 if($i==0)
-			{ 
-			$mpdf->WriteHTML($html[$i]);
-			}
+			  $mpdf->WriteHTML($html[$i]);
 		 else
 		 {
 			   $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
@@ -123,27 +121,25 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Buku Inventaris Aset_$waktu.pdf";
+$namafile="$path/report/output/Buku Inventaris Gabungan SKPD_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Buku Inventaris Aset_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Buku Inventaris Gabungan SKPD_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
-else
+else 
 {
-	
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Buku_Inventaris_Aset_$waktu.xls";
+	$filename ="Buku_Inventaris_Gabungan_SKPD_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
+	
 	$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
            echo "$html[$i]";
            
      }
      
-	
 }
-
 
 ?>

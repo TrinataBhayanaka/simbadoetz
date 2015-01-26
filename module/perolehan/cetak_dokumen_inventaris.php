@@ -34,6 +34,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li><a href="#rekapkib" data-toggle="tab">Rekapitulasi KIB</a></li>
 						<li><a href="#kir" data-toggle="tab">KIR</a></li>
 						<li><a href="#biskpd" data-toggle="tab">Buku Inventaris SKPD</a></li>
+						<li><a href="#biskpdgab" data-toggle="tab">Buku Inventaris Gabungan SKPD</a></li>
 						<li><a href="#rbiskpd" data-toggle="tab">Rekapitulasi Buku Inventaris SKPD</a></li>
 						<li><a href="#biid" data-toggle="tab">Buku Induk Inventaris Daerah</a></li>
 						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
@@ -49,9 +50,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kib.php"; ?>">
 						 <script>
 						$(document).ready(function() {
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb").mask('9999-99-99');
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab").mask('9999-99-99');
 							$( "#tahun_label").mask('9999');
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab" ).datepicker({ dateFormat: 'yy-mm-dd' });
 							/*$('#tahun_label').keydown(function (e) {
 								// Allow: backspace, delete, tab, escape, enter and .
 								if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -115,35 +116,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<!--<li>
-								<span class="span2">Nama Skpd </span>
-								<div class="input-append">
-										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-					
-										<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
-								   
-											<?php
-											 /*$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-											 $alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-											 js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd', 'skpd1');
-											 $style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											 radioskpd($style,"skpd_id",'skpd', 'skpd1');*/
-											 ?>  
-											
-										</div>
-										</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input type="text" input id="tanggal1"  name="cdi_kib_tglreport" value="" >
-								(format tanggal : dd/mm/yyyy)
-							</li>-->
-							
-							
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="lanjut" class="btn btn-primary" value="Lanjut" />
@@ -193,35 +165,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<!--<li>
-								<span class="span2">Nama Skpd </span>
-								<div class="input-append">
-										<input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd" id="lda_skpd" class="span5" readonly="readonly" value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-					
-										<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
-								   
-											<?php
-											 /*$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-											 $alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-											 js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd","skpd_id",'skpd', 'skpd1');
-											 $style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											 radioskpd($style,"skpd_id",'skpd', 'skpd1');*/
-											 ?>  
-											
-										</div>
-										</div>
-								</div>
-							</li>
-							<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input type="text" input id="tanggal1"  name="cdi_kib_tglreport" value="" >
-								(format tanggal : dd/mm/yyyy)
-							</li>-->
-							
-							
 							<li>
 								<span class="span2">&nbsp;</span>
 								<input type="submit" name="lanjut" class="btn btn-primary" value="Lanjut" />
@@ -273,33 +216,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<!--<li>
-								<span class="span2">Nama Skpd </span>
-								<div class="input-append">
-										   <input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-											<input type="text" name="lda_skpd2" id="lda_skpd2" class="span5"creadonly="readonly"value="<?php echo $_SESSION['ses_satkername'] ; ?>">
-											<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih"onclick = "showSpoiler(this);">
-											<div class="inner" style="display:none;">
-											
-											<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
-									   
-												<?php
-												/*$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-												$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-												js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd2","skpd_id2",'skpd_b', 'skpd2');
-												$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radioskpd($style,"skpd_id2",'skpd_b', 'skpd2');*/
-												?>  
-												
-											</div>
-											</div>
-								</div>
-							</li>-->
-							<!--<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input type="text" input id="tanggal2" name="cdi_kir_tglreport" value="" >(format tanggal : dd/mm/yyyy)
-							</li>-->
-						
 							<li>
 								<span class="span2">&nbsp;</span>
 								 <input type="submit" onClick="testsendit_5()" class="btn btn-primary" name="submit"value="Lanjut" />
@@ -312,6 +228,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="kir" value="kir">
 						</form>
 						</div>
+						
 						<div class="tab-pane" id="biskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Buku Inventaris SKPD</div>
@@ -368,31 +285,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<!--<li>
-								<span class="span2">Nama Skpd </span>
-								<div class="input-append">
-									 <input type="hidden" name="idgetkelompok" id="idgetkelompok" value="">
-										<input type="text" name="lda_skpd3" id="lda_skpd3" class="span5" readonly="readonly"value="" placeholder="<?php echo $_SESSION['ses_satkername'] ; ?>">
-										<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih"onclick = "showSpoiler(this);">
-										<div class="inner" style="display:none;">
-										<div style="width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;">
-								   
-											<?php
-											/*$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
-											$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
-											js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"lda_skpd3","skpd_id3",'skpd_c', 'skpd3');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radioskpd($style,"skpd_id3",'skpd_c', 'skpd3');*/
-											?>  
-											
-										</div>
-										</div>
-								</div>
-							</li>-->
-							<!--<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input type="text"  input id="tanggal3" name="cdi_bukuskpd_tglreport" value="" >(format tanggal : dd/mm/yyyy)
-							</li>-->
 							<li>
 								<span class="span2">&nbsp;</span>
 								 <input type="submit" onClick="sendit_5()" class="btn btn-primary" name="bi_skpd" value="Lanjut" />
@@ -405,6 +297,86 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="bukuInv" value="bukuInv">
 						</form>
 						</div>
+						
+						<div class="tab-pane" id="biskpdgab">
+						<div class="breadcrumb">
+							<div class="titleTab">Buku Inventaris Gabungan SKPD</div>
+						</div>
+						  <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/skpdGabungan.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglawalPerolehan_bisgab" id="tglawalPerolehan_bisgab" value="" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglakhirPerolehan_bisgab" id="tglakhirPerolehan_bisgab" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Kelompok</span>
+								<div class="input-append">
+									<input type="text" name="lda_kelompok3" id="lda_kelompok3" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
+									<input type="button" name="idbtnlookupkelompok" id="idbtnlookupkelompok" class="btn" value="Pilih" onclick = "showSpoiler(this);"><font size="1" color="grey"><i>&nbsp;</i></font>
+									<div class="inner" style="display:none;">
+										
+										<?php
+											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
+											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
+											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok3","kelompok_id3",'kelompok3','ldakelompokfilter3');
+											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											radiokelompok($style,"kelompok_id3",'kelompok3','ldakelompokfilter3');
+										?>
+									</div>
+								</div>
+							</li>
+							<li>
+							<?php //selectAllSatker('kodeSatker3','255',true,false); 
+					
+									// selectAllSatker(kodeSatker15);
+									selectAllSatker('kodeSatker15','255',true,false,false,true);
+							?>
+							<br>
+							</li>
+							<li>
+								<span class="span2">Kode Pemilik</span>
+								<select name = "pemilik" class="" id="sel1">
+									<option value="12" selected>12 - Pemerintah Kota</option>
+									<option value="11">11 - Pemerintah Provinsi</option>
+									<option value="00">00 - Kementrian Lembaga</option>
+							  </select>
+							</li>
+							<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakBivgab" id="tglCetakBiv" value=""/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								 <input type="submit" onClick="sendit_5()" class="btn btn-primary" name="bi_skpd" value="Lanjut" />
+								<input type="reset"name="reset" onClick="sendit_6()" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						<input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="6">
+						<input type="hidden" name="bukuInvGab" value="bukuInvGab">
+						</form>
+						</div>
+						
 						
 						<div class="tab-pane" id="rbiskpd">
 						<div class="breadcrumb">
@@ -688,7 +660,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan_awal_kb" id="tglPerolehan_awal_kb" value="" />
+										<input type="text" class="span2 full" name="tglPerolehan_awal_kb" id="tglPerolehan_awal_kb" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -721,13 +693,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<?php selectAllSatker('kodeSatker10','255',true,false,false,true); ?>
 							<br />
 							<li>
-								<span class="span2">Tanggal Cetak</span>
-								<div class="control">
-									<div class="input-prepend">
-										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakKb" id="tglCetakKb" value=""/>
-									</div>
-								</div>
+								<span class="span2">Kode Registrasi</span>
+								<input type="number" name="noRegisterAwal" class="span1" value="1"/> . 
+								<input type="number" name="noRegisterAkhir" class="span1" value="1"/>
 							</li>
 							<li>
 								<span class="span2">&nbsp;</span>

@@ -60,23 +60,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 
 			<form action="" method="POST">
 				 <div class="detailLeft">
-				 	<ul>
-				 		<li>
-				 			<h2><?=$dataArr['aset']['NamaAset']?></h2>
-				 			<h4>No. Register <?=$dataArr['aset']['noRegister']?></h4>
-				 		</li>
-				 		<li>
-					 		<span class="span6">
-					 			<ul class="nav nav-pills" role="tablist">
-								  <li role="presentation" class="active" id="data"><a href="javascript:void(0)" onclick="return option('data');">Rubah Data</a></li>
-								  <li role="presentation" id="kapital"><a href="javascript:void(0)" onclick="return option('kapital');">Kapitalisasi</a></li>
-								  <li role="presentation" id="nilai"><a href="javascript:void(0)" onclick="return option('nilai');">Koreksi Nilai</a></li>
-								  <li role="presentation" id="kondisi"><a href="javascript:void(0)" onclick="return option('kondisi');">Rubah Kondisi</a></li>
-								  <li role="presentation" id="koreksi"><a href="javascript:void(0)" onclick="return option('koreksi');">Koreksi Aset</a></li>
-								</ul>
-							</span>
-						</li>
-				</ul>
+				 	
 						<ul>
 							<li>
 								<span class="span2">Kode Pemilik</span>
@@ -94,7 +78,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							<?=selectSatker('kodeSatker','255',true,$dataArr['aset']['kodeSatker'],'disabled');?>
 						</ul>
 						<ul>
-							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan'],'disabled');?>
+							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false,'disabled');?>
 						</ul>		
 						<ul>
 							<li>

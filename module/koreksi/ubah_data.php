@@ -20,7 +20,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 
 		if(isset($_POST['kodeKelompok'])){
 
-		      	$dataArr = $STORE->koreksiAset($_POST);
+		      	$dataArr = $STORE->ubahAset($_POST);
 
 		  }		
 
@@ -43,12 +43,12 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Koreksi</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Koreksi Data Aset</li>
+			  <li class="active">Ubah Data Aset</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Koreksi</div>
-				<div class="subtitle">Koreksi Data Aset</div>
+				<div class="title">Ubah Data</div>
+				<div class="subtitle">Ubah Data Aset</div>
 			</div>		
 
 		<section class="formLegendInve">
@@ -68,11 +68,11 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 				 		<li>
 					 		<span class="span6">
 					 			<ul class="nav nav-pills" role="tablist">
-								  <li role="presentation" class="active" id="data"><a href="javascript:void(0)" onclick="return option('data');">Rubah Data</a></li>
-								  <li role="presentation" id="kapital"><a href="javascript:void(0)" onclick="return option('kapital');">Kapitalisasi</a></li>
-								  <li role="presentation" id="nilai"><a href="javascript:void(0)" onclick="return option('nilai');">Koreksi Nilai</a></li>
-								  <li role="presentation" id="kondisi"><a href="javascript:void(0)" onclick="return option('kondisi');">Rubah Kondisi</a></li>
-								  <li role="presentation" id="koreksi"><a href="javascript:void(0)" onclick="return option('koreksi');">Koreksi Aset</a></li>
+								  <!-- <li role="presentation" class="active" id="data"><a href="javascript:void(0)" onclick="return option('data');">Rubah Data</a></li> -->
+								  <!-- <li role="presentation" id="kapital"><a href="javascript:void(0)" onclick="return option('kapital');">Kapitalisasi</a></li> -->
+								  <!-- <li role="presentation" id="nilai"><a href="javascript:void(0)" onclick="return option('nilai');">Koreksi Nilai</a></li> -->
+								  <!-- <li role="presentation" id="kondisi"><a href="javascript:void(0)" onclick="return option('kondisi');">Rubah Kondisi</a></li> -->
+								  <!-- <li role="presentation" id="koreksi"><a href="javascript:void(0)" onclick="return option('koreksi');">Koreksi Aset</a></li> -->
 								</ul>
 							</span>
 						</li>
@@ -80,7 +80,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						<ul>
 							<li>
 								<span class="span2">Kode Pemilik</span>
-								<select id="kodepemilik" name="kodepemilik" style="width:255px" class="full" disabled>
+								<select id="kodepemilik" name="kodepemilik" style="width:255px" class="full">
 									<option value="0">0 Pemerintah Pusat</option>
 									<option value="11">11 Pemerintah Provinsi</option>
 									<option value="12" selected>12 Pemerintah Kabupaten/Kota</option>
@@ -91,10 +91,10 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 						</ul>
 						<ul>	
-							<?=selectSatker('kodeSatker','255',true,$dataArr['aset']['kodeSatker'],'disabled');?>
+							<?=selectSatker('kodeSatker','255',true,$dataArr['aset']['kodeSatker'],'required');?>
 						</ul>
 						<ul>
-							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan'],'disabled');?>
+							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan'],false);?>
 						</ul>		
 						<ul>
 							<li>
@@ -106,7 +106,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehan" id="tglPerolehan" value="<?=$dataArr['aset']['TglPerolehan']?>" disabled/>
+										<input type="text" class="span2 full" name="tglPerolehan" id="tglPerolehan" value="<?=$dataArr['aset']['TglPerolehan']?>" required/>
 									</div>
 								</div>
 							</li>
@@ -115,7 +115,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPembukuan" id="tglPembukuan" value="<?=$dataArr['aset']['TglPembukuan']?>" disabled/>
+										<input type="text" class="span2 full" name="tglPembukuan" id="tglPembukuan" value="<?=$dataArr['aset']['TglPembukuan']?>" required/>
 									</div>
 								</div>
 							</li>
@@ -140,7 +140,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						<ul>
 							<li>
 								<span class="span2">Kondisi</span>
-								<select name="kondisi" style="width:155px" class="ubahkondisi" disabled>
+								<select name="kondisi" style="width:155px" class="ubahkondisi">
 									<option></option>
 									<option value="1" <?=$dataArr['kib']['kondisi'] == '1' ? 'selected' : ''?>>Baik</option>
 									<option value="2" <?=$dataArr['kib']['kondisi'] == '2' ? 'selected' : ''?>>Rusak Ringan</option>
@@ -152,7 +152,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 					<div class="detailLeft">
 						<div class="well span3">
 							<h2>Rubah Data</h2>
-							<p>Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.</p>
+							<p>Koreksi data aset yang digunakan khusus untuk administrator.</p>
 						</div>
 					</div>
 
@@ -180,7 +180,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							<li>
 								<span class="span2">Harga Satuan</span>
 								<!-- <input type="text" class="span3 kapitalisasi" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" onchange="return totalHrg()" required readonly/> -->
-								<input type="text" class="span3 kapitalisasi" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$dataArr['aset']['Satuan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required readonly/>
+								<input type="text" class="span3 kapitalisasi" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$dataArr['aset']['Satuan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
 								<input type="hidden" name="Satuan" class="kapitalisasi" id="hrgSatuan" value="<?=$dataArr['aset']['Satuan']?>" >
 							</li>
 							<li>
@@ -191,7 +191,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3 kapitalisasi" readonly><?=$dataArr['aset']['Info']?></textarea>
+								<textarea name="Info" class="span3 kapitalisasi" ><?=$dataArr['aset']['Info']?></textarea>
 							</li>
 						</ul>
 							
@@ -500,7 +500,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".koreksi,#rubahdata").removeAttr('disabled');
 			$(".well h2").html("Rubah Data");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
-			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.");
+			$(".well p").html("Koreksi data aset yang digunakan khusus untuk administrator");
 		} else if ($("#"+item).attr('id') == "kapital") {
 			$("textarea").attr('readonly','readonly');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');

@@ -70,7 +70,7 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 // pr($query);
 // exit;
-//mengenerate query
+// mengenerate query
 $result_query=$REPORT->QueryBinv($query);
 
 $result = arrayToObject($result_query);
