@@ -227,7 +227,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
                         'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' ",
-                        'joinmethod' => 'INNER JOIN',
+                        'joinmethod' => 'LEFT JOIN',
                         'join'=>'m.SatkerTujuan = s.kode',
                         );
 
