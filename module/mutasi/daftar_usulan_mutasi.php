@@ -240,6 +240,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr>
 						<th>No</th>
 						<th>NoSKKDH</th>
+                        <th>Tanggal</th>
 						<th>Satker Awal</th>
 						<th>SatkerTujuan</th>
                         <th>Keterangan</th>
@@ -271,6 +272,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr class="gradeA">
 						<td><?php echo "$no.";?></td>
 						<td style="font-weight: bold;"> <?php echo "$value[NoSKKDH]";?></td>
+                        <td style="font-weight: bold;"> <?php echo "$value[TglSKKDH]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwalAset]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerTujuan] - $value[NamaSatker]";?></td>
                         <td style="font-weight: bold;"><?php echo "$value[Keterangan]";?></td>
