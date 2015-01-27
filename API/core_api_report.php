@@ -594,7 +594,7 @@ class core_api_report extends DB {
 			
 			$kb_b_condition = "select 
 													M.Aset_ID,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kodeRuangan,M.kondisi,
 													M.Silinder,M.kodeLokasi,M.noRegister,K.Kode, K.Uraian
 												from 
 													mesin as M,kelompok as K 
