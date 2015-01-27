@@ -336,7 +336,7 @@ class DB
 	    				'operator'=>$_SESSION['ses_uoperatorid'],
 	    				'TglPerubahan'=>$tglProses,
 	    				'Kd_Riwayat'=>$action,
-	    				'Tmp_Hak'=>$tmpAsetIDTujuan,
+	    				'Aset_ID_Penambahan'=>$tmpAsetIDTujuan,
 	    				'No_Dokumen'=>$noDok);
 
 
