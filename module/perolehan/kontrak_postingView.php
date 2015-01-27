@@ -131,6 +131,10 @@ $menu_id = 1;
 								<span class="labelInfo">Tgl. Kontrak</span>
 								<input type="text" value="<?=$kontrak['tglKontrak']?>" disabled/>
 							</li>
+							<li>
+								<span class="labelInfo">Nilai SPK</span>
+								<input type="text" value="<?=number_format($kontrak['nilai'])?>" disabled/>
+							</li>
 						</ul>
 							
 					</div>
@@ -138,16 +142,16 @@ $menu_id = 1;
 						
 						<ul>
 							<li>
-								<span class="labelInfo">Nilai SPK</span>
-								<input type="text" value="<?=number_format($kontrak['nilai'])?>" disabled/>
-							</li>
-							<li>
 								<span  class="labelInfo">Total Rincian Barang</span>
 								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']-$sumsp2d['total']) : '0'?>" disabled/>
 							</li>
 							<li>
 								<span  class="labelInfo">Total Penunjang</span>
 								<input type="text" value="<?=isset($sumsp2d) ? number_format($sumsp2d['total']) : '0'?>" disabled/>
+							</li>
+							<li>
+								<span class="labelInfo">Total Perolehan</span>
+								<input type="text" value="<?=number_format($sumTotal['total']-$sumsp2d['total']+$sumsp2d['total'])?>" disabled/>
 							</li>
 						</ul>
 							
