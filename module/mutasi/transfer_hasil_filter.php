@@ -122,6 +122,8 @@ $MUTASI = new RETRIEVE_MUTASI;
 			<script>
 		function AreAnyCheckboxesChecked () 
 		{
+
+
 			setTimeout(function() {
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
