@@ -4920,7 +4920,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                  $sqlUslAst = array(
                     'table'=>'Usulanaset',
                     'field'=>" Usulan_ID,Aset_ID ",
-                    'condition' => "Usulan_ID='$value' AND Aset_ID='$valueUsl' AND Jenis_Usulan='$jenis_hapus' {$filterkontrak}"
+                    'condition' => "Usulan_ID='$value' AND Aset_ID='$valueUsl' AND Jenis_Usulan='$jenis_hapus' AND StatusKonfirmasi=1 {$filterkontrak}"
                     );
                 // ////////pr($sqlUslAst);
                 $resUslAst = $this->db->lazyQuery($sqlUslAst,$debug);
