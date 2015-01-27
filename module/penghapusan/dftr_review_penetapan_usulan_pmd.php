@@ -35,6 +35,14 @@ $menu_id = 10;
             }
 	?>
 	<!-- End Sql -->
+	<script>
+        $(function()
+        {
+       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+
+        }
+		);
+	</script>
 	<script language="Javascript" type="text/javascript">  
 			function enable(){  
 			var tes=document.getElementsByTagName('*');
@@ -106,7 +114,7 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses_pmd.php">
+			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses_pmd.php">
 					
 			<div class="detailLeft">
 						
@@ -132,7 +140,7 @@ $menu_id = 10;
 					</li>
 					<li>
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
-						<input name="bup_pp_tanggal" type="text" id="tanggal12" <?php echo $disabledForm;?> required/>
+						<input name="bup_pp_tanggal" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -225,6 +233,19 @@ $menu_id = 10;
 										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
 										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
 										}
+										if($nilai[kondisi]==2){
+											$kondisi="Rusak Ringan";
+										}elseif($nilai[kondisi]==3){
+											$kondisi="Rusak Berat";
+										}elseif($nilai[kondisi]==1){
+											$kondisi="Baik";
+										}
+										// //pr($value[TglPerolehan]);
+										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
+										// //pr($TglPerolehanTmp);
+										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+
+
 					?>
 						
 					<tr class="gradeA">

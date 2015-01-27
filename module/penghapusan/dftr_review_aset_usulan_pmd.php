@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -24,17 +24,17 @@ $menu_id = 10;
 		$_SESSION['reviewAsetUsulan']=$_POST;
 		$POST=$_SESSION['reviewAsetUsulan'];
 	}else{
-		////pr($_POST);
-		////pr($_SESSION['reviewAsetUsulan']);
+		//////pr($_POST);
+		//////pr($_SESSION['reviewAsetUsulan']);
 		foreach ($_POST['penghapusanfilter'] as $key => $value) {
 			$_SESSION['reviewAsetUsulan']['penghapusanfilter'][]=$value;
 		}
 		$POST=$_SESSION['reviewAsetUsulan'];
-		////pr($POST);
+		//////pr($POST);
 	}
 
 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_pmd($POST);
-	
+	//pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -188,7 +188,7 @@ $menu_id = 10;
 					}
 					foreach ($data as $key => $value)
 					{
-					// ////pr($get_data_filter);
+					// //////pr($get_data_filter);
 					if($value[kondisi]==2){
 						$kondisi="Rusak Ringan";
 					}elseif($value[kondisi]==3){
@@ -196,9 +196,9 @@ $menu_id = 10;
 					}elseif($value[kondisi]==1){
 						$kondisi="Baik";
 					}
-					// ////pr($value[TglPerolehan]);
+					// //////pr($value[TglPerolehan]);
 					$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-					// ////pr($TglPerolehanTmp);
+					// //////pr($TglPerolehanTmp);
 					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 

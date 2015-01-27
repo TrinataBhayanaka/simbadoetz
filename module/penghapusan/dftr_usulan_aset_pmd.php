@@ -28,42 +28,40 @@ $menu_id = 10;
                 $kontrak[] = $dataKontrak;
             }
 	?>
-	<!-- End Sql -->
-	<script language="Javascript" type="text/javascript">  
-                    
-                            function enable(){  
-                            var tes=document.getElementsByTagName('*');
-                            var button=document.getElementById('submit');
-                            var boxeschecked=0;
-                            for(k=0;k<tes.length;k++)
-                            {
-                                if(tes[k].className=='checkbox')
-                                    {
-                                        //
-                                        tes[k].checked == true  ? boxeschecked++: null;
-                                    }
-                            }
-                            //alert(boxeschecked);
-                            if(boxeschecked!=0)
-                                button.disabled=false;
-                            else
-                                button.disabled=true;
-                            }
-							function enable_submit(){
-							var enable = document.getElementById('pilihHalamanIni');
-							var button = document.getElementById('submit');
-								if(enable){
-									button.disabled = false;
-								}
-							}
-							function disable_submit(){
-							var disable = document.getElementById('kosongkanHalamanIni');
-							var button = document.getElementById('submit');
-								if(disable){
-									button.disabled = true;
-								}
-							}
-                        </script>
+	<!-- End Sql --><script language="Javascript" type="text/javascript">  
+			function enable(){  
+			var tes=document.getElementsByTagName('*');
+			var button=document.getElementById('submit');
+			var boxeschecked=0;
+			for(k=0;k<tes.length;k++)
+			{
+				if(tes[k].className=='checkbox')
+					{
+						//
+						tes[k].checked == true  ? boxeschecked++: null;
+					}
+			}
+			//alert(boxeschecked);
+			if(boxeschecked!=0)
+				button.disabled=false;
+			else
+				button.disabled=true;
+			}
+	</script>
+	<script>
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			}}, 100);
+		}
+		</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -103,13 +101,16 @@ $menu_id = 10;
 		<section class="formLegend">
 		
 			<div id="demo">
-			<form name="myform" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_penetapan_usulan_pmd.php">
+			<form name="myform" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_penetapan_usulan_pmd.php">
 			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<tr>
 						
-						<td align="left" colspan="8">
+						<td align="left" colspan="6">
 								<span><button type="submit" name="submit"  class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Penetapan Penghapusan</button></span>
+						</td>
+						<td colspan="2">
+							<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>filter_usulan_pmd.php" class="btn">Kembali Ke Pencarian</a>
 						</td>
 					</tr>
 					<tr>

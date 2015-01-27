@@ -280,7 +280,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					</tr>
 					<tr>
 							<th style="margin-top:5px; font-weight:bold; border:1px solid #999; padding:5px;"> <input type="submit" name="hapus" class="btn btn-primary" value="Usulan Penghapusan"/> 
-								<input type="button" value="Batal" style="width:100px;" class="btn" onclick="window.location='daftar_usulan_penghapusan_lanjut.php?pid=1'"/></th>
+								<input type="button" value="Batal" style="width:100px;" class="btn" onclick="window.location='daftar_usulan_penghapusan_lanjut_pms.php?pid=1'"/></th>
 					</tr>
 			   
 		</table>

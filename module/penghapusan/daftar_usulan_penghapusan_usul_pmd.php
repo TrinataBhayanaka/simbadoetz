@@ -87,7 +87,55 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				inner.style.display = "none";
 				document.getElementById(obj.id).value="Sub Detail";}
 				}
-            </script>		
+            </script>	
+             <script language="Javascript" type="text/javascript">  
+			function enable(){  
+			var tes=document.getElementsByTagName('*');
+			var button=document.getElementById('submit');
+			var boxeschecked=0;
+			for(k=0;k<tes.length;k++)
+			{
+				if(tes[k].className=='checkbox')
+					{
+						//
+						tes[k].checked == true  ? boxeschecked++: null;
+					}
+			}
+			//alert(boxeschecked);
+			if(boxeschecked!=0)
+				button.disabled=false;
+			else
+				button.disabled=true;
+			}
+			function enable_submit(){
+			var enable = document.getElementById('pilihHalamanIni');
+			var button = document.getElementById('submit');
+				if(enable){
+					button.disabled = false;
+				}
+			}
+			function disable_submit(){
+			var disable = document.getElementById('kosongkanHalamanIni');
+			var button = document.getElementById('submit');
+				if(disable){
+					button.disabled = true;
+				}
+			}
+		</script>
+            <script>
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			}}, 100);
+		}
+		</script>	
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -100,7 +148,140 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
-		 <form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_usul_proses_pmd.php">
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_usul_proses_pmd.php"> 
+			<div class="detailLeft">
+						
+						<ul>
+							<li>
+								<span class="labelInfo">Keterangan usulan</span>
+								<textarea name="keterangan" required></textarea>
+							</li>
+							<li>
+								<span  class="labelInfo">Total Nilai Barang</span>
+								<input type="text" value="" disabled/>
+							</li>
+						</ul>
+							
+					</div>
+	
+			<div style="height:5px;width:100%;clear:both"></div>
+			<div id="demo">
+			
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+				<thead>
+					<tr>
+						<td colspan="10" align="right">
+								<span><input type="submit" name="submit" class="btn" value="Usulan Penghapusan" id="submit" disabled/></span>
+						</td>
+					</tr>
+					<tr>
+						<th>No</th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>No Register</th>
+						<th>No Kontrak</th>
+						<th>Kode / Uraian</th>
+						<th>Merk / Type</th>
+						<th>Satker</th>
+						<th>Tanggal Perolehan</th>
+						<th>Nilai Perolehan</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>		
+				<?php
+				if (!empty($data))
+				{
+			   
+					$page = @$_GET['pid'];
+					if ($page > 1){
+						$no = intval($page - 1 .'01');
+					}else{
+						$no = 1;
+					}
+					foreach ($data as $key => $value)
+					{
+					// pr($get_data_filter);
+					if($value[kondisi]==2){
+						$kondisi="Rusak Ringan";
+					}elseif($value[kondisi]==3){
+						$kondisi="Rusak Berat";
+					}elseif($value[kondisi]==1){
+						$kondisi="Baik";
+					}
+					// pr($value[TglPerolehan]);
+					$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
+					// pr($TglPerolehanTmp);
+					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+
+
+					?>
+						
+					<tr class="gradeA">
+						<td><?php echo $no?></td>
+						<td class="checkbox-column">
+						
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
+							
+						</td>
+						<td>
+							<?php echo $value[noRegister]?>
+						</td>
+						<td>
+							<?php echo $value[noKontrak]?>
+						</td>
+						<td>
+							 [<?php echo $value[kodeKelompok]?>]<br/> 
+							<?php echo $value[Uraian]?>
+						</td>
+						<td>
+							<?php echo $value[Merk]?> <?php if ($value[Model]) echo $value[Model];?>
+						</td>
+						<td>
+							<?php echo '['.$value[kodeSatker].'] '?><br/>
+							<?php echo $value[NamaSatker];?>
+						</td>
+						<td>
+							<?php echo $TglPerolehan;?>
+						</td>
+						<td>
+							<?php echo $value[NilaiPerolehan]?>
+						</td>
+						<td>
+							<?php echo $kondisi. ' - ' .$value[AsalUsul]?>
+						</td>
+							
+					</tr>
+					
+				   <?php
+							$no++;
+						}
+					}
+					else
+					{
+						$disabled = 'disabled';
+					}
+					?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</tfoot>
+			</table>
+			</div>
+			</form>
+			<div class="spacer"></div>
+		<!--  <form name="form" method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_usul_proses_pmd.php">
+		
+
 		<table width="100%" height="3%" border="1" style="border-collapse:collapse;">
 					<tr>
 						<td colspan="2" style="margin-top:5px; font-weight:bold; border:1px solid #999; padding:5px;text-decoration:underline;">Daftar Aset yang di usulkan untuk di hapus:</td>
@@ -282,11 +463,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					</tr>
 					<tr>
 							<th style="margin-top:5px; font-weight:bold; border:1px solid #999; padding:5px;"> <input type="submit" name="hapus" class="btn btn-primary" value="Usulan Penghapusan"/> 
-								<input type="button" value="Batal" style="width:100px;" class="btn" onclick="window.location='daftar_usulan_penghapusan_lanjut.php?pid=1'"/></th>
+								<input type="button" value="Batal" style="width:100px;" class="btn" onclick="window.location='daftar_usulan_penghapusan_lanjut_pmd.php?pid=1'"/></th>
 					</tr>
 			   
 		</table>
-		</form>
+		</form> -->
 			
 		</section>     
 	</section>
