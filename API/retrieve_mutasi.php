@@ -262,7 +262,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $sqlSelect = array(
                 'table'=>"mutasiaset AS ma",
                 'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, (SELECT NamaSatker FROM satker WHERE kode = ma.SatkerAwal LIMIT 1) AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
-                'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID",
+                'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID DESC",
                 'limit'=>"{$paging}, 100",
                 );
 
@@ -277,7 +277,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
-                        'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' AND s.Kd_Ruang IS NULL ",
+                        'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' AND s.Kd_Ruang IS NULL ORDER BY m.TglSKKDH DESC",
                         'joinmethod' => 'LEFT JOIN',
                         'join'=>'m.SatkerTujuan = s.kode',
                         );
