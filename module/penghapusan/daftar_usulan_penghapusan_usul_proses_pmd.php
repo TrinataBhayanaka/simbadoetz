@@ -25,10 +25,21 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // $ses_uid
                 // );
 		// pr($_POST);
+  //       exit;
 		$data = $PENGHAPUSAN->store_usulan_penghapusan_pmd($_POST);
         
-        echo "<script>
+        
+        if(isset($_POST['usulanID'])){
+            $id=$_POST['usulanID'];
+            echo "<script>
                     alert('Data Berhasil Disimpan');
-                    document.location='$url_rewrite/module/penghapusan/daftar_usulan_penghapusan_ok_pmd.php?usulan_id=$usulan_id';
+                    document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id=$id';
                 </script>";
+        }else{
+            echo "<script>
+                    alert('Data Berhasil Disimpan');
+                    document.location='$url_rewrite/module/penghapusan/dftr_usulan_pmd.php?pid=1';
+                </script>";
+        }
+
 ?>

@@ -84,7 +84,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                        
                     </li>  
                     <li>&nbsp;</li>
-					<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+					<?=selectSatker('kodeSatker',$width='205',$br=true,false);?>
                     <li>&nbsp;</li>
 					<li>
 						<span class="span2">&nbsp;</span>

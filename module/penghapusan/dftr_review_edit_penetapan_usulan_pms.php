@@ -136,7 +136,11 @@ $menu_id = 10;
 
 		<section class="formLegend">
 			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_edit_proses_pms.php">
-					
+					<?php
+							if($_SESSION['ses_uaksesadmin']!=1){
+								$disabledForm="disabled";
+							}
+						?>
 			<div class="detailLeft">
 						
 						<ul>
@@ -163,10 +167,16 @@ $menu_id = 10;
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
 						<input name="bup_pp_tanggal" type="text" id="tanggal12" value="<?=$data['dataRow'][0]['TglHapus']?>" <?php echo $disabledForm;?> disabled required/>
 					</li>
-					<!-- <li>
+					<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+					<li>
 						<span  class="labelInfo">Total Nilai</span>
 						<input name="bup_pp_nilaiPerolehan" type="text" id="TotalNilai" value=""required/>
-					</li> -->
+					</li>
+					<?php
+						}
+					?>
 					<!-- <li>
 						<span  class="labelInfo">Total Nilai Usulan</span>
 						<input type="text" value="" disabled/>
@@ -180,16 +190,25 @@ $menu_id = 10;
 			
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
-					<!-- <tr>
+					<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+					<tr>
 						<td colspan="10" align="Left">
 								<span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span>
 								<input type="hidden" name="id" value="<?=$idPenetapan?>"/>
 						</td>
-					</tr> -->
+					</tr>
+					<?php
+						}
+					?>
 					<tr>
 						<th>No</th>
-						<!-- <th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th> -->
-						<th>Status Konfirmasi</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<?php } ?><th>Status Konfirmasi</th>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
@@ -259,11 +278,15 @@ $menu_id = 10;
 						
 					<tr class="gradeA">
 						<td><?php echo $no?></td>
-						<!-- <td class="checkbox-column">
+							<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+						<td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
 							<input type="checkbox" class="checkbox" onchange="enable();return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>|<?php echo $nilai[NilaiPerolehan];?>" >
 							
-						</td> -->
+						</td>
+						<?php } ?>
 						<td>
 								<?php
 								if($nilai['StatusKonfirmasi']==0){
@@ -325,7 +348,11 @@ $menu_id = 10;
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<th>&nbsp;</th>
+						<?php } ?>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

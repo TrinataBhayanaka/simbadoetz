@@ -17,7 +17,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
     // $data=$DELETE->delete_update_daftar_validasi_penghapusan($id);
 	// pr($_POST);
  //    exit;
-		$data = $PENGHAPUSAN->delete_usulan_penghapusan_asetid_pmd($_POST);
+		$data = $PENGHAPUSAN->update_usulan_penghapusan_asetid_pmd($_POST);
     
     /*
     

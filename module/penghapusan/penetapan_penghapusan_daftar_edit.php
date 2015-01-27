@@ -99,7 +99,7 @@ include "../../config/config.php";
 					
 						// //pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data($_GET);
-						// //pr($data);
+						pr($data);
 						
 				}
 				foreach ($data['dataArr'] as $valueUsulan) {

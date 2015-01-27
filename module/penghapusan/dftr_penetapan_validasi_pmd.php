@@ -108,16 +108,28 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
+					<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 					<tr>
 						<td colspan="8" align="Left">
 								<span><button type="submit" name="submit" id="submit" value="tetapkan" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Barang</button></span>
 						</td>
 					</tr>
+					<?php
+						}
+					?>
 					<tr>
 						<th>No</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<th class="checkbox-column">
 							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
 						</th>
+						<?php
+							}
+						?>
 						<th>Nomor SK Penghapusan</th>
 						<!-- <th>Satker</th> -->
 						<th>Jumlah Usulan</th>
@@ -144,10 +156,16 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						  
 					<tr class="gradeA">
 						<td><?php echo "$nomor";?></td>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<td class="checkbox-column">
 							<input type="checkbox" class="checkbox" onchange="enable()" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
 							
 						</td>
+						<?php
+							}
+						?>
 						<td>
 							<?php echo "$row[NoSKHapus]";?>
 						</td>
@@ -174,7 +192,13 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<th>&nbsp;</th>
+						<?php
+							}
+						?>
 						<!-- <th>&nbsp;</th> -->
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

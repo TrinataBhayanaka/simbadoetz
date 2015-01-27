@@ -240,12 +240,13 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr>
 						<th>No</th>
 						<th>NoSKKDH</th>
+                        <th>Tanggal</th>
 						<th>Satker Awal</th>
 						<th>SatkerTujuan</th>
                         <th>Keterangan</th>
                         <th>Jumlah Barang</th>
 						<th>Status</th>
-						<th>Aksi</th>
+						<th>Detail</th>
 						
 					</tr>
 				</thead>
@@ -271,6 +272,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 					<tr class="gradeA">
 						<td><?php echo "$no.";?></td>
 						<td style="font-weight: bold;"> <?php echo "$value[NoSKKDH]";?></td>
+                        <td style="font-weight: bold;"> <?php echo "$value[TglSKKDH]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[NamaSatkerAwalAset]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerTujuan] - $value[NamaSatker]";?></td>
                         <td style="font-weight: bold;"><?php echo "$value[Keterangan]";?></td>
@@ -282,9 +284,13 @@ $MUTASI = new RETRIEVE_MUTASI;
                             if ($statusMutasi == 0){
                                 $labelStatus = "Hapus Usulan";  
                                 ?>
+                                <a class="btn btn-warning btn-small" href="<?php echo "$url_rewrite/module/mutasi/transfer_eksekusi.php?id=$value[Mutasi_ID]";?>" mutasiid="<?=$value['Mutasi_ID']?>">
+                                    <span>Edit Usulan</span>
+                                </a> 
                                 <a class="btn btn-danger btn-small hapus_usulan" href="javascript:void(0)" mutasiid="<?=$value['Mutasi_ID']?>">
                                     <span><?=$labelStatus?></span>
                                 </a> 
+
                                 <?php
                             }else{
                                 if ($statusMutasi == 1) {$labelStatus = "Usulan sudah divalidasi"; $label = "label-success";}
