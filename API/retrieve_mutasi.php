@@ -559,20 +559,36 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         if ($NilaiPerolehan > 0){
                             $sqlKib = array(
                                     'table'=>"{$table['listTableOri']}",
-                                    'field'=>"NilaiPerolehan='{$NilaiPerolehan}', Aset_ID_Penambahan = {$data[aset_id][$key]}",
+                                    'field'=>"NilaiPerolehan='{$NilaiPerolehan}'",
                                     'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
                                     );
 
                             $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+                            if (!$resKib) {$this->db->rollback(); return false;}
                             
                             $sql2 = array(
                                     'table'=>"Aset",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$getLokasiTujuan[0][kodeLokasi]}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 2, Status_Validasi_Barang = 2, NotUse = 2",
-                                    'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
+                                    'field'=>"NilaiPerolehan = '{$NilaiPerolehan}'",
+                                    'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
                                     );
 
                             $res2 = $this->db->lazyQuery($sql2,$debug,2); 
+                            if (!$res2) {$this->db->rollback(); return false;}
 
+                            $sql3 = array(
+                                    'table'=>"Aset",
+                                    'field'=>"StatusValidasi = 2, Status_Validasi_Barang = 2, NotUse = 2",
+                                    'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
+                                    );
+
+                            $res3 = $this->db->lazyQuery($sql3,$debug,2); 
+                            if (!$res3) {$this->db->rollback(); return false;}
+
+                            $nodok = $_POST['noDokumen'];
+                            $olah_tgl =  $_POST['TglSKKDH'];
+                            
+                            $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses kapitalisasi Mutasi",$res[0]['Aset_ID_Tujuan']);
+                        
                         }else{
 
                             $this->db->rollback();
