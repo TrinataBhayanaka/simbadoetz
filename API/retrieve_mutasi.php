@@ -925,7 +925,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $sqlSelect = array(
                 'table'=>"mutasiaset AS ma",
                 'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, (SELECT NamaSatker FROM satker WHERE kode = ma.SatkerAwal LIMIT 1) AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
-                'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID",
+                'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID DESC",
                 'limit'=>"{$paging}, 100",
                 );
 
@@ -940,16 +940,19 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
-                        'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' AND s.Kd_Ruang IS NULL ",
+                        'condition'=>"Mutasi_ID = '{$value[Mutasi_ID]}' AND s.Kd_Ruang IS NULL AND m.TglSKKDH > '2014-01-01' AND m.TglSKKDH IS NOT NULL ORDER BY m.TglSKKDH DESC",
                         'joinmethod' => 'LEFT JOIN',
                         'join'=>'m.SatkerTujuan = s.kode',
                         );
 
-                    $res[] = $this->db->lazyQuery($sqlSelect,$debug);
-                    $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
-                    $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
-                    $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
-                    $res[$key][0]['Jumlah'] = $value['Jumlah'];
+                    $tmpRes = $this->db->lazyQuery($sqlSelect,$debug);
+                    if ($tmpRes){
+                        $res[] = $tmpRes;
+                        $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
+                        $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
+                        $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
+                        $res[$key][0]['Jumlah'] = $value['Jumlah'];
+                    }
                 }
                 
                 // pr($res);
