@@ -24,6 +24,7 @@ include "../../config/config.php";
   <!-- buat alert-->
 
         <script type="text/javascript">
+            
             <!--
             function sendit(){
                 alert("OK");
@@ -49,135 +50,120 @@ include "../../config/config.php";
             -->
         </script>
         
-        <!--buat date-->
-        <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery-ui.min.js"></script> 
-        <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/jquery.ui.datepicker-id.js"></script>
-        <script type="text/javascript" src="<?php echo "$url_rewrite/";?>JS/ajax_radio.js"></script>
-
-        <script>
-            $(function()
-            {
-            $('#tanggal1').datepicker($.datepicker.regional['id']);
-            $('#tanggal2').datepicker($.datepicker.regional['id']);
-            $('#tanggal3').datepicker($.datepicker.regional['id']);
-            $('#tanggal4').datepicker($.datepicker.regional['id']);
-            $('#tanggal5').datepicker($.datepicker.regional['id']);
-            $('#tanggal6').datepicker($.datepicker.regional['id']);
-            $('#tanggal7').datepicker($.datepicker.regional['id']);
-            $('#tanggal8').datepicker($.datepicker.regional['id']);
-            $('#tanggal9').datepicker($.datepicker.regional['id']);
-            $('#tanggal10').datepicker($.datepicker.regional['id']);
-            $('#tanggal11').datepicker($.datepicker.regional['id']);
-            $('#tanggal12').datepicker($.datepicker.regional['id']);
-            $('#tanggal13').datepicker($.datepicker.regional['id']);
-            $('#tanggal14').datepicker($.datepicker.regional['id']);
-            $('#tanggal15').datepicker($.datepicker.regional['id']);
-
-            }
-
-            );
-        </script>   
-        <link href="<?php echo "$url_rewrite/"; ?>css/jquery-ui.css" type="text/css" rel="stylesheet">
         
-        <!--buat number only-->
-        <style>
-            #errmsg { color:red; }
-        </style>
-        <!--
-        <script src="../../JS/jquery-latest.js"></script>
-        <script src="../../JS/jquery.js"></script>
-        -->
         <script type="text/javascript">
-            $(document).ready(function(){
 
-                //called when key is pressed in textbox
-                    $("#posisiKolom").keypress(function (e)  
-                    { 
-                    //if the letter is not digit then display error and don't type anything
-                    if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
-                    {
-                            //display error message
-                            $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
-                        return false;
-                }	
-                    });
-            });
-			function spoiler(obj)
-			{
-			var inner = obj.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("tfoot")[0];
-			//alert(obj.parentNode.parentNode.parentNode.parentNode.nodeName);
-			if (inner.style.display =="none") {
-			inner.style.display = "";
-			document.getElementById(obj.id).value="Tutup Detail";}
-			else {
-			inner.style.display = "none";
-			document.getElementById(obj.id).value="View Detail";}
-			}
-						
-			function spoilsub(obj)
-			{
-				var inner = obj.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("div")[1];
-				//alert(obj.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName);
-				if (inner.style.display =="none") {
-				inner.style.display = "";
-				document.getElementById(obj.id).value="Tutup Sub Detail";}
+        	$(document).ready(function() {
+				
+				var tes=document.getElementsByTagName('*');
+				var button=document.getElementById('submit');
+				var boxeschecked=0;
+				for(k=0;k<tes.length;k++)
+				{
+					if(tes[k].className=='checkbox')
+						{
+							//
+							tes[k].checked == true  ? boxeschecked++: null;
+						}
+				}
+			//alert(boxeschecked);
+				if(boxeschecked!=0){
+					button.disabled=false;
+				}
 				else {
-				inner.style.display = "none";
-				document.getElementById(obj.id).value="Sub Detail";}
-			}
-        </script>
-        <script>
-		function AreAnyCheckboxesChecked () 
-		{
-			setTimeout(function() {
-		  if ($("#Form2 input:checkbox:checked").length > 0)
+					button.disabled=true;
+				}
+				
+			} );
+
+            
+			function AreAnyCheckboxesChecked () 
 			{
-			    $("#submit").removeAttr("disabled");
+				setTimeout(function() {
+			  if ($("#Form2 input:checkbox:checked").length > 0)
+				{
+				    $("#submit").removeAttr("disabled");
+				}
+				else
+				{
+				   $('#submit').attr("disabled","disabled");
+				}}, 100);
 			}
-			else
+
+			$(document).on('click','.hapus_aset', function(){
+
+				var idaset = $(this).attr('asetid');
+				var mutasiid = $(this).attr('mutasiid');
+
+				// setTimeout(function(){
+
+					$.post(basedomain+'/function/phpajax/ajax.php',{hapusAset:true, idaset:idaset, mutasiid:mutasiid}, function(data){
+
+			            var html = "";
+
+			            if (data.status==true){
+			                
+			            	location.reload();
+			               
+			            } else {
+			              	$('.formData').html('Load data gagal');
+			            }
+			            
+			            
+
+			        }, "JSON")
+
+				// }, 2000);
+				 
+				
+			})
+
+			function konfirmasiHapus()
 			{
-			   $('#submit').attr("disabled","disabled");
-			}}, 100);
-		}
+				var r = confirm("Hapus rincian mutasi ?");
+	            if (r == true) {
 
-		$(document).on('click','.hapus_aset', function(){
+	            }else{
+	            	return false;
+	            }
+			}
 
-			var idaset = $(this).attr('asetid');
-			var mutasiid = $(this).attr('mutasiid');
+			function enable(){
+				var tes=document.getElementsByTagName('*');
+				var button=document.getElementById('submit');
+				var boxeschecked=0;
+				for(k=0;k<tes.length;k++)
+				{
+					if(tes[k].className=='checkbox')
+						{
+							//
+							tes[k].checked == true  ? boxeschecked++: null;
+						}
+				}
+					//alert(boxeschecked);
+				if(boxeschecked!=0)
+					button.disabled=false;
+				else
+					button.disabled=true;
+			}
 
-			// setTimeout(function(){
+			function disable_submit(){
+				var enable = document.getElementById('pilihHalamanIni');
+				var disable = document.getElementById('kosongkanHalamanIni');
+				var button=document.getElementById('submit');
+				if (disable){
+					button.disabled=true;
+				} 
+			}
+			function enable_submit(){
+				var enable = document.getElementById('pilihHalamanIni');
+				var disable = document.getElementById('kosongkanHalamanIni');
+				var button=document.getElementById('submit');
+				if (enable){
+					button.disabled=false;
+				} 
+			}
 
-				$.post(basedomain+'/function/phpajax/ajax.php',{hapusAset:true, idaset:idaset, mutasiid:mutasiid}, function(data){
-
-		            var html = "";
-
-		            if (data.status==true){
-		                
-		            	location.reload();
-		               
-		            } else {
-		              	$('.formData').html('Load data gagal');
-		            }
-		            
-		            
-
-		        }, "JSON")
-
-			// }, 2000);
-			 
-			
-		})
-
-		function konfirmasiHapus()
-		{
-			var r = confirm("Hapus rincian mutasi ?");
-            if (r == true) {
-
-            }else{
-            	return false;
-            }
-		}
 		</script>
 	
 	<section id="main">
@@ -228,14 +214,14 @@ include "../../config/config.php";
 			
 			
 			<div id="demo">
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>hapus_usulan_mutasi.php" onsubmit="return konfirmasiHapus()">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<form name="form" id="Form2" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>hapus_usulan_mutasi.php" onsubmit="return konfirmasiHapus()">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<?php if (!$disableButton):?>
 					<tr>
 						
 						<td  align="left" colspan="9">   
-							<input type="submit" name="submit" value="Hapus rincian dari usulan" class="btn btn-danger" id="submit" />
+							<input type="submit" name="submit" value="Hapus rincian dari usulan" class="btn btn-danger" id="submit" disabled/>
 						</td>
 					</tr>
 					<?php endif;?>
@@ -273,10 +259,9 @@ include "../../config/config.php";
 				
 					<tr class="gradeA">
 						
-						
-						<td>
+						<td class="checkbox-column">
 							<?php if ($value['Status']==0): ?>
-							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="aset_id[]" value="<?php echo $value['Aset_ID'];?>" >
+							<input type="checkbox"  class="checkbox" onchange="enable()" name="aset_id[]" value="<?php echo $value['Aset_ID'];?>" >
 							<?php endif;?>
 													
 						</td>

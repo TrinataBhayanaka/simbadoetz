@@ -14,8 +14,11 @@ $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
-$kib = $_GET['kib'];
+$kb = $_GET['kb'];
 $tglawal = $_GET['tglawalperolehan'];
+$kelompok = $_GET['kelompok'];
+$noregAwal = $_GET['noregAwal'];
+$noregAkhir = $_GET['noregAkhir'];
 if($tglawal != ''){
 	$tglawalperolehan = $tglawal;
 }else{
@@ -29,11 +32,13 @@ $tipe=$_GET['tipe_file'];
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "kib"=>$kib,
+    "kb"=>$kb,
     "tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
-    // "kelompok"=>$kelompok,
+    "kelompok"=>$kelompok,
+    "noregAwal"=>$noregAwal,
+    "noregAkhir"=>$noregAkhir,
     "tab"=>$tab
 );
 
@@ -47,44 +52,42 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 // pr($query);
 
-// mengenerate query
-$result_query=$REPORT->retrieve_query($query);
+$resQuery=$REPORT->kartuBarang($query);
+// pr($resQuery);
+// exit;
+//mengenerate query
+// $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
 // exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
-
-if($tglcetak != ''){
-	$tanggalCetak = format_tanggal($tglcetak);	
-}else{
-	$tglcetak = date("Y-m-d");
-	$tanggalCetak = format_tanggal($tglcetak);	
-}
+// exit;
 //retrieve html
-$html=$REPORT->retrieve_html_kib_c($result_query, $gambar,$tanggalCetak);
-
+$html=$REPORT->retrieve_html_kb_c($resQuery,$gambar,$skpd_id);
+// exit;
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
-		 
 		 echo $html[$i];     
 	}
 exit;*/
-
-if($tipe!="2"){
-$REPORT->show_status_download_kib();	
+if($tipe==1){
+$REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
 $mpdf->progbar_heading = '';
-$mpdf->StartProgressBarOutput();
+$mpdf->StartProgressBarOutput(2);
 $mpdf->useGraphs = true;
 $mpdf->list_number_suffix = ')';
 $mpdf->hyphenate = true;
+
 $count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 if($i==0)
-			  $mpdf->WriteHTML($html[$i]);
+			{ 
+			$mpdf->WriteHTML($html[$i]);
+			}
 		 else
 		 {
 			   $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
@@ -94,26 +97,24 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Kartu Inventaris Barang C $waktu.pdf";
+$namafile="$path/report/output/Kartu Barang C_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Kartu Inventaris Barang C $waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Kartu Barang C_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
 else
 {
-
+	// echo $DATABARU;*/
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Kartu_Inventaris_Barang_C_$waktu.xls";
+	$filename ="Kartu_Barang_C_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
-	
 	for ($i = 0; $i < $count; $i++) {
            echo "$html[$i]";
            
      }
+	
 }
-
-
 ?>
