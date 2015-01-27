@@ -4916,7 +4916,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             ////////pr($Aset_IDUsl);
             foreach ($Aset_IDUsl as $keyUsl => $valueUsl) {
 
-                 $res[$key][$keyUsl]['Usulan_ID']=$value;
+                 
                  $sqlUslAst = array(
                     'table'=>'Usulanaset',
                     'field'=>" Usulan_ID,Aset_ID ",
@@ -4926,6 +4926,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $resUslAst = $this->db->lazyQuery($sqlUslAst,$debug);
                 // ////////pr($resUslAst);
                 // echo "==============";
+                if($resUslAst){
+                    $res[$key][$keyUsl]['Usulan_ID']=$value;
                 $Aset_IDUslAst=$resUslAst[0]['Aset_ID'];
                 // ////////pr($Aset_IDUslAst);
                 $sqlAst = array(
@@ -5003,7 +5005,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $res[$key][$keyUsl][$keySat]=$valueSat;
                 }
 
-               
+               }
             }
             // $resData[]=$res;
 
