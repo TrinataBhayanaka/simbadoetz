@@ -19467,12 +19467,13 @@ $footer ="
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
 					$perolehanTotalMutasi = $perolehanTotalMutasi + $nilaiPerolehanHasilMutasi;
 					
+					$Uraian =$this->get_NamaKelompok($row->kodeKelompok);
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
 									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok</td>
 									<td style=\"width: 64px; text-align:center;\">$noReg</td>
-									<td style=\"width: 118px;\">$row->Uraian</td>
+									<td style=\"width: 118px;\">$Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
 									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 									<td style=\"width: 56x; \">$row->Material</td>
