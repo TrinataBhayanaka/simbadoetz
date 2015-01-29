@@ -63,13 +63,13 @@ $resQuery=$REPORT->kartuBarang($query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 // exit;
 //retrieve html
-$html=$REPORT->retrieve_html_kb_a($resQuery,$gambar,$skpd_id);
+$html=$REPORT->retrieve_html_kb_e($resQuery,$gambar,$skpd_id);
 // exit;
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
-	}
-// exit;*/
+	}*/
+// exit;
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
@@ -97,9 +97,9 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Kartu Barang A_$waktu.pdf";
+$namafile="$path/report/output/Kartu Barang E_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Kartu Barang A_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Kartu Barang E_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
@@ -107,7 +107,7 @@ else
 {
 	// echo $DATABARU;*/
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Kartu_Barang_A_$waktu.xls";
+	$filename ="Kartu_Barang_E_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
