@@ -57,12 +57,14 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 //retrieve html
 if($tglcetak != ''){
 	$tanggalCetak = format_tanggal($tglcetak);	
+	$thnPejabat =substr($tglcetak,0,4);
 }else{
 	$tglcetak = date("Y-m-d");
 	$tanggalCetak = format_tanggal($tglcetak);	
+	$thnPejabat =substr($tglcetak,0,4);
 }
 
-$html=$REPORT->retrieve_html_kib_a($result_query, $gambar,$tanggalCetak);
+$html=$REPORT->retrieve_html_kib_a($result_query,$gambar,$tanggalCetak,$thnPejabat);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

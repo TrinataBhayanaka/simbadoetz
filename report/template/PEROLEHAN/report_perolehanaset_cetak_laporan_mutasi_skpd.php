@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once('../../../config/config.php');
+include ('../../../function/tanggal/tanggal.php');
 
 define("_JPGRAPH_PATH", "$path/function/mpdf/jpgraph/src/"); // must define this before including mpdf.php file
 $JpgUseSVGFormat = true;
@@ -22,6 +23,7 @@ if($tglawal != ''){
 }
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tipe=$_GET['tipe_file'];
+$tglcetak=$_GET['tglcetak'];
 // PR($_GET);
 // exit;
 $data=array(
@@ -54,8 +56,20 @@ $result = $REPORT->MutasiSkpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+if($tglawalperolehan != '' && $tglakhirperolehan){
+	$tanggalAwal = format_tanggal($tglawalperolehan);	
+	$tanggalAkhir = format_tanggal($tglakhirperolehan);	
+}
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);	
+	$thnPejabat =substr($tglcetak,0,4);
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);	
+}
 //retrieve html
-$html=$REPORT->retrieve_html_laporan_mutasi_skpd($result,$gambar,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_laporan_mutasi_skpd($result,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat);
 // exit;
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

@@ -112,7 +112,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakKib" id="tglCetakKib" value=""/>
+										<input type="text" class="span2 full" name="tglCetakKib" id="tglCetakKib" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -161,7 +161,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakRekapKib" id="tglCetakRekapKib" value=""/>
+										<input type="text" class="span2 full" name="tglCetakRekapKib" id="tglCetakRekapKib" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -212,7 +212,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakKir" id="tglCetakKir" value=""/>
+										<input type="text" class="span2 full" name="tglCetakKir" id="tglCetakKir" value="" 
+										required/>
 									</div>
 								</div>
 							</li>
@@ -281,7 +282,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakBiv" id="tglCetakBiv" value=""/>
+										<input type="text" class="span2 full" name="tglCetakBiv" id="tglCetakBiv" value=""
+										required/>
 									</div>
 								</div>
 							</li>
@@ -360,7 +362,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakBivgab" id="tglCetakBiv" value=""/>
+										<input type="text" class="span2 full" name="tglCetakBivgab" id="tglCetakBiv" value=""required/>
 									</div>
 								</div>
 							</li>
@@ -377,14 +379,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						</form>
 						</div>
 						
-						
 						<div class="tab-pane" id="rbiskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Buku Inventaris SKPD</div>
 						</div>
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapskpd.php"; ?>">
 			    
-			<ul>
+						<ul>
 							<!--<li>
 								<span class="span2">Tahun</span>
 								<input name="tahun_rekap_buku_inventaris_skpd" id="tahun_rekap_buku_inventaris_skpd" maxlength="4" type="text" value="<?php echo date('Y')?>" required>
@@ -417,7 +418,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakRekapBiv" id="tglCetakRekapBiv" value=""/>
+										<input type="text" class="span2 full" name="tglCetakRekapBiv" id="tglCetakRekapBiv" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -458,6 +459,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="tab" value="4">
 						</form>
 						</div>
+						
 						<div class="tab-pane" id="biid">
 						<div class="breadcrumb">
 							<div class="titleTab">Buku Induk Inventaris Daerah</div>
@@ -504,7 +506,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakBivIndk" id="tglCetakBivIndk" value=""/>
+										<input type="text" class="span2 full" name="tglCetakBivIndk" id="tglCetakBivIndk" value="" required>
 									</div>
 								</div>
 							</li>
@@ -525,6 +527,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="bukuIndk" value="bukuIndk">
 						</form>
 						</div>
+						
 						<div class="tab-pane" id="rbiid">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Buku Induk Inventaris Daerah</div>
@@ -554,14 +557,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakRekapBivIndk" id="tglCetakRekapBivIndk" value=""/>
+										<input type="text" class="span2 full" name="tglCetakRekapBivIndk" id="tglCetakRekapBivIndk" value="" required/>
 									</div>
 								</div>
 							</li>
-							<!--<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input  input id="tanggal5"  name="cdi_rbiid_tglreport" value="">(format tanggal dd/mm/yy)
-							</li>-->
 							<li>
 								<span class="span2">&nbsp;</span>
 								 <input type="submit" name="rekap_bi_inventaris_daerah" class="btn btn-primary" onClick="sendit_5()" name="biid"value="Lanjut" />
@@ -573,6 +572,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="tab" value="6">
 						</form>
 						</div>
+						
 						<div class="tab-pane" id="label">
 						<div class="breadcrumb">
 							<div class="titleTab">Label Kode Barang</div>
