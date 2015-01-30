@@ -9658,7 +9658,7 @@ $offset = @$_POST['record'];
         }
         $setval = implode(' AND ', $tmpsetval);
 
-        $sql = mysql_query("SELECT * FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND noRegister BETWEEN {$noreg1} AND {$noreg2}");
+        $sql = mysql_query("SELECT * FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang='1' AND noRegister BETWEEN {$noreg1} AND {$noreg2}");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
