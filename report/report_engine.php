@@ -23487,9 +23487,9 @@ foreach ($dataArr as $data)
 $html .="
     
     <tr>
-        <td colspan = \"4\" align=\"center\">Total</td>
-        <td align=\"right\">".number_format($total_jumlah,0,",",".")."</td>
-        <td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+        <td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">Total</td>
+        <td style=\"text-align: right; font-weight: bold;\">".number_format($total_jumlah,0,",",".")."</td>
+        <td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
         <td>&nbsp;</td>
     </tr>
     </table>
@@ -23778,9 +23778,9 @@ foreach ($dataArr as $satker_id => $value)
     $html .="
         
         <tr>
-            <td colspan = \"4\" align=\"center\">Total</td>
-            <td align=\"right\">".number_format($total_jumlah,0,",",".")."</td>
-            <td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+            <td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">Total</td>
+            <td style=\"text-align: right; font-weight: bold;\">".number_format($total_jumlah,0,",",".")."</td>
+            <td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
             <td>&nbsp;</td>
         </tr>
         </table>
@@ -28346,10 +28346,12 @@ return $hasil_html;
 	public function get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
 		if($satker_id !=""){
 			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' 
-					  and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
+					  and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'
+					  and StatusValidasi =1 and Status_Validasi_Barang = 1";
 		}else{
 			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeKelompok like '$gol%' 
-					and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
+					and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'
+					and StatusValidasi =1 and Status_Validasi_Barang = 1";
 		}
 		// echo "query".$query;
 		// echo "<br>";
