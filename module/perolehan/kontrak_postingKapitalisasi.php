@@ -25,9 +25,9 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           }
 
   foreach($aset as $key => $data){
-    $bop = $data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total'];
-    $NilaiPerolehan = $data['NilaiPerolehan'] + $bop;
-    $satuan = intval($data['Satuan']) + ($bop/$data['Kuantitas']);
+    $bop = ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);
+    $NilaiPerolehan = ceil($data['NilaiPerolehan'] + $bop);
+    $satuan = ceil(intval($data['Satuan']) + ($bop/$data['Kuantitas']));
 
     $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
     $updateKapital = mysql_query("UPDATE kapitalisasi SET n_status = '1', nilai = if(nilai is null,0,nilai)+{$bop}  WHERE idKontrak = '{$noKontrak['id']}' AND asetKapitalisasi = '{$data['Aset_ID']}'");
