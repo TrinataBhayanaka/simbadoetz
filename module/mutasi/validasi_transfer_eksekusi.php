@@ -89,47 +89,68 @@ include "../../config/config.php";
         <script src="../../JS/jquery.js"></script>
         -->
         <script type="text/javascript">
-            $(document).ready(function(){
-
-                //called when key is pressed in textbox
-                    $("#posisiKolom").keypress(function (e)  
-                    { 
-                    //if the letter is not digit then display error and don't type anything
-                    if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
-                    {
-                            //display error message
-                            $("#errmsg").html("Hanya Bisa Input Angka").show().fadeOut("slow"); 
-                        return false;
-                }	
-                    });
-            });
-			function spoiler(obj)
-			{
-			var inner = obj.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("tfoot")[0];
-			//alert(obj.parentNode.parentNode.parentNode.parentNode.nodeName);
-			if (inner.style.display =="none") {
-			inner.style.display = "";
-			document.getElementById(obj.id).value="Tutup Detail";}
-			else {
-			inner.style.display = "none";
-			document.getElementById(obj.id).value="View Detail";}
-			}
-						
-			function spoilsub(obj)
-			{
-				var inner = obj.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByTagName("div")[1];
-				//alert(obj.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName);
-				if (inner.style.display =="none") {
-				inner.style.display = "";
-				document.getElementById(obj.id).value="Tutup Sub Detail";}
+            $(document).ready(function() {
+				
+				var tes=document.getElementsByTagName('*');
+				var button=document.getElementById('submit');
+				var boxeschecked=0;
+				for(k=0;k<tes.length;k++)
+				{
+					if(tes[k].className=='checkbox')
+						{
+							//
+							tes[k].checked == true  ? boxeschecked++: null;
+						}
+				}
+			//alert(boxeschecked);
+				if(boxeschecked!=0){
+					button.disabled=false;
+				}
 				else {
-				inner.style.display = "none";
-				document.getElementById(obj.id).value="Sub Detail";}
+					button.disabled=true;
+				}
+				
+			} );
+			
+			function enable(){  
+			var tes=document.getElementsByTagName('*');
+			var button=document.getElementById('submit');
+			var boxeschecked=0;
+			for(k=0;k<tes.length;k++)
+			{
+				if(tes[k].className=='checkbox')
+					{
+						//
+						tes[k].checked == true  ? boxeschecked++: null;
+					}
 			}
-        </script>
-        <script>
+				//alert(boxeschecked);
+				if(boxeschecked!=0)
+					button.disabled=false;
+				else
+					button.disabled=true;
+			}
+				function disable_submit(){
+					var enable = document.getElementById('pilihHalamanIni');
+					var disable = document.getElementById('kosongkanHalamanIni');
+					var button=document.getElementById('submit');
+					if (disable){
+						button.disabled=true;
+					} 
+				}
+				function enable_submit(){
+					var enable = document.getElementById('pilihHalamanIni');
+					var disable = document.getElementById('kosongkanHalamanIni');
+					var button=document.getElementById('submit');
+					if (enable){
+						button.disabled=false;
+					} 
+				}
+
 		function AreAnyCheckboxesChecked () 
 		{
+
+
 			setTimeout(function() {
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
@@ -218,14 +239,14 @@ include "../../config/config.php";
 			
 			
 			<div id="demo">
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_eksekusi_proses.php">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<form name="form" id="Form2" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>validasi_transfer_eksekusi_proses.php">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<?php if (!$disableButton):?>
 					<tr>
 						
 						<td  align="left">   
-							<input type="submit" name="submit" value="Validasi Barang" class="btn btn-primary" id="submit" />
+							<input type="submit" name="submit" value="Validasi Barang" class="btn btn-primary" id="submit" disabled/>
 						</td>
 					</tr>
 					<?php endif;?>
@@ -263,7 +284,7 @@ include "../../config/config.php";
 				
 					<tr class="gradeA">
 						
-						<td>
+						<td class="checkbox-column">
 							<?php if ($value['Status']==0): ?>
 							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="aset_id[]" value="<?php echo $value['Aset_ID'];?>" >
 							<?php endif;?>
