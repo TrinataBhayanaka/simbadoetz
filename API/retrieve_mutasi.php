@@ -1038,7 +1038,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             $sql = array(
                     'table'=>"penggunaanaset",
-                    'field'=>"StatusMutasi = 0",
+                    'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
                     'condition'=>"Aset_ID IN ({$aset_id}) {$filter}",
                     );
 

@@ -105,14 +105,49 @@ function hapusUsulanMutasi($data, $debug=false)
     	return false;
     }else{
 
-    	$sql = array(
-	            'table'=>'mutasi',
-	            'field'=>"FixMutasi = 3",
-	            'condition' => "Mutasi_ID = '{$data[mutasiid]}' ",
-	            'limit' => '1',
-	            );
-	    $res = $DBVAR->lazyQuery($sql,$debug,2);
-	    if ($res) return true;
+    	$sqlSelect = array(
+                    'table'=>"mutasiaset",
+                    'field'=>"Aset_ID",
+                    'condition'=>"Mutasi_ID = '{$data[mutasiid]}' AND Status = 0 {$filter}",
+                    );
+
+        $result = $DBVAR->lazyQuery($sqlSelect,$debug);
+        if ($result){
+
+        	foreach ($result as $key => $value) {
+        		$Aset_ID[] = $value['Aset_ID'];
+        	}
+
+
+        	$aset_id = implode(',', $Aset_ID);
+
+        	$sqlSelect = array(
+                    'table'=>"mutasiaset",
+                    'field'=>"Status = 3",
+                    'condition'=>"Mutasi_ID = '{$data[mutasiid]}' AND Status = 0 AND Aset_ID IN ({$aset_id})",
+                    );
+
+            $result = $DBVAR->lazyQuery($sqlSelect,$debug,2);
+
+            $sql = array(
+                    'table'=>"penggunaanaset",
+                    'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
+                    'condition'=>"Aset_ID IN ({$aset_id})",
+                    );
+
+            $result = $DBVAR->lazyQuery($sql,$debug,2);
+
+            $sql = array(
+		            'table'=>'mutasi',
+		            'field'=>"FixMutasi = 3",
+		            'condition' => "Mutasi_ID = '{$data[mutasiid]}' ",
+		            'limit' => '1',
+		            );
+		    $res = $DBVAR->lazyQuery($sql,$debug,2);
+		    if ($res) return true;
+
+        }
+    	
 	    	
     }
 	
