@@ -18638,7 +18638,7 @@ if($dataArr!="")
      }
 	 
 //cetak label (ok)
-	public function  retrieve_html_cetak_label($dataArr,$gambar){
+	public function  retrieve_html_cetak_label($dataArr,$gambar,$tahun){
          
 	if($dataArr!="")
           {
@@ -18693,6 +18693,7 @@ if($dataArr!="")
 										$satker_id = $row->kodeSatker;
 										$ruangan = $row->kodeRuangan;
 										$NamaRuangan = $this->get_Ruangan($tahun,$satker_id,$ruangan);
+										// pr($NamaRuangan);
 									   // echo "ruangannya =".$NamaRuangan;
 									   if($NamaRuangan == ''){
 											$ruang = '-';
@@ -19791,7 +19792,7 @@ if($dataArr!="")
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi Barang (B,KB,RB)</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Berkurang<br/><hr>Bertambah</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Berkurang</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">SKPD</td>
             </tr>
 			
@@ -19843,7 +19844,7 @@ if($dataArr!="")
 			} 
 			$NamaKlmpk = $this->get_NamaKelompok($row->kodeKelompok);
 			$NamaSatker = $this->get_NamaSatker($row->kodeSatker);
-			$mutasi = $this->getSatkerMutasiBertambah($asetid,$getSatkerMutasiAwal,$tglawal,$tglakhir);
+			/*$mutasi = $this->getSatkerMutasiBertambah($asetid,$getSatkerMutasiAwal,$tglawal,$tglakhir);
 			// pr($mutasi);
 			if($mutasi){
 				$bertambah = $mutasi[0];
@@ -19851,7 +19852,7 @@ if($dataArr!="")
 			}else{
 				$bertambah = 0;
 				$nilaibertambahFix = number_format($bertambah,2,",",".");
-			}
+			}*/
 			// echo "mutasi =".$mutasi[0]; 		
 			$nilaiPrlhn = $row->NilaiPerolehan;
 			$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
@@ -19867,20 +19868,23 @@ if($dataArr!="")
 					<td style=\"text-align:center;  width: 120px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 					<td style=\"text-align:center;  width: 70px;\">$row->Material</td>
 					<td style=\"text-align:center;  width: 70px;\">$ketKondisi</td>
-					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix<br/><hr>$nilaibertambahFix</td>
+					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix</td>
 					<td style=\"text-align:center;  width: 72px;\">$row->kodeSatker</td>
 					<td style=\"text-align:center;  width: 200px;\">$NamaSatker</td>
                 </tr>";
                                                             
             $no++;
+			/*$old="<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix<br/><hr>$nilaibertambahFix</td>
+					<td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal<br><hr>$printperolehanTotal_2</td>";*/
+					
         }
                                             
             // $printbarang=  number_format($barangTotal);
             $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
-            $printperolehanTotal_2=  number_format($perolehanTotal_2,2,",",".");
+            // $printperolehanTotal_2=  number_format($perolehanTotal_2,2,",",".");
             $tabletotal="<tr>
                             <td colspan=\"8\" style=\"font-weight: bold; text-align: center;\">Jumlah</td>
-                            <td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal<br><hr>$printperolehanTotal_2</td>
+                            <td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal</td>
                             <td  colspan=\"2\">&nbsp;</td>
                         </tr>
                     </table>"; 
