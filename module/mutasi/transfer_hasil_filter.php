@@ -221,7 +221,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>No Register</th>
 						<th>Kode / Uraian</th>
 						<th>Merk / Type</th>
-						<th>No STNK</th>
+						<th>No Polisi</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
