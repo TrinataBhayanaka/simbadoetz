@@ -570,6 +570,13 @@ class core_api_report extends DB {
             if ($kelompok!="" && $parameter_sql==""){
 				$parameter_sql=$query_kelompok_fix;
             } 
+			
+			if($tahun!="" && $parameter_sql!=""){
+				$parameter_sql=$parameter_sql." AND ".$query_tahun;
+            }
+            if($tahun != "" && $parameter_sql==""){
+				$parameter_sql=$query_tahun;
+            }
             // $limit="limit 100";
 			
 			// echo "param =".$parameter_sql;
@@ -2844,7 +2851,7 @@ class core_api_report extends DB {
 																						T.kodeKelompok,T.noRegister";	
 																	}
 																	elseif($gol == 02){
-																		
+																		echo "parameter sql =".$parameter_sql;
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
 																			$param[]="M.".$pecah[$q];
