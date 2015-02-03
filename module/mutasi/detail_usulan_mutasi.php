@@ -230,6 +230,7 @@ include "../../config/config.php";
 						<th>NoSKKDH</th>
 						<th>Kode Barang</th>
 						<th>No Register</th>
+						<th>No Polisi</th>
 						<th>Nilai Perolehan</th>
 						<th>Satker Awal</th>
 						<th>Satker Tujuan</th>
@@ -268,6 +269,7 @@ include "../../config/config.php";
 						<td><?php echo $data[0]['NoSKKDH']?></td>
 						<td><?php echo $value['kode']?></td>
 						<td><?php echo $value['noRegister']?></td>
+						<td><?php echo @$value['detail'][0]['NoSTNK']?></td>
 						<td style="font-weight: bold;"> <?php echo number_format($value['NilaiPerolehan']);?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[satkerAwalAset]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatkerTujuan]";?></td>	
