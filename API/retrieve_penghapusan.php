@@ -7654,7 +7654,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                             foreach ($Aset_IDtmp as $key => $value) {
                                     logFile('log data penghapusan, Aset_ID ='.$key);
-                                    $this->db->logItHPS($tabel=array($value), $Aset_ID=$key, 7,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus]);
+                                    $this->db->logItHPS($tabel=array($value), $Aset_ID=$key, 26,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus]);
                                 }
                     
                     // $query2="UPDATE PenghapusanAset SET Status=1 WHERE Penghapusan_ID='$explodeID[$i]'";
@@ -7783,7 +7783,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                             foreach ($Aset_IDtmp as $key => $value) {
                                     logFile('log data penghapusan, Aset_ID ='.$key);
-                                    $this->db->logItHPS($tabel=array($value), $Aset_ID=$key, 7,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus]);
+                                    $this->db->logItHPS($tabel=array($value), $Aset_ID=$key, 27,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus]);
                                 }
                     
                     // $query2="UPDATE PenghapusanAset SET Status=1 WHERE Penghapusan_ID='$explodeID[$i]'";
