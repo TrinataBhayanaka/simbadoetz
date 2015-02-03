@@ -5,7 +5,7 @@ $menu_id = 16;
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
-// pr($get_data_filter);
+// pr($_SESSION);
 ?>
 <?php
 	include"$path/meta.php";
@@ -20,6 +20,21 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 			?>
 
 		<script>
+			function saveDataCheckbox(item){
+				var temp = new Array();
+				var data = "";
+				var checkedValues = $('input:checkbox:checked').map(function() {
+					if(this.value != 'on'){
+						temp.push(this.value);
+				    	data = temp.join();
+					}
+				}).get();
+				 $.post('<?=$url_rewrite?>/function/api/applist.php', {data:data, UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+		
+				 })
+			}
+
+		
 			function AreAnyCheckboxesChecked () 
 			{	
 				setTimeout(function() {
@@ -27,6 +42,7 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 				  if (($("#Form2 input:checkbox:checked").length - minus) > 0)
 					{
 					    $("#btn-dis").removeAttr("disabled");
+					    saveDataCheckbox('VDST');
 					}
 					else
 					{

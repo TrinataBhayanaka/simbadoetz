@@ -974,19 +974,20 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
         function retrieve_detail_usulan_mutasi($data, $debug=false)
         {
-            $table = $this->getTableKibAlias($value);
+            
+            
 
             // pr($table);
 
+            $TipeAset = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
             $ses_satkerkode = $_SESSION['ses_satkerkode'];
 
             $satkerAwal = "";
             if ($ses_satkerkode) $satkerAwal .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
 
-            $listTable = $table['listTable'];
-            $listTableAlias = $table['listTableAlias'];
-            $listTableAbjad = $table['listTableAbjad'];
+            
 
+            pr($table);
             $sql = array(
                     'table'=>"mutasi AS m, satker AS s",
                     'field'=>"m.*, s.NamaSatker, s.kode",
@@ -1002,14 +1003,35 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 foreach ($res as $key => $value) {
                     $sql = array(
                             'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
-                            'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
+                            'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, a.TipeAset, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
                             'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal} GROUP BY ma.Aset_ID",
                             'limit'=>'100',
                             'joinmethod' => 'LEFT JOIN',
                             'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
                             );
 
-                    $res[$key]['aset'] = $this->db->lazyQuery($sql,$debug);
+                    $resultAset = $this->db->lazyQuery($sql,$debug);
+                    $res[$key]['aset'] = $resultAset;
+
+                    foreach ($resultAset as $key => $value) {
+
+                        $table = $this->getTableKibAlias($TipeAset[$value['TipeAset']]);
+                        
+                        $listTable = $table['listTable'];
+                        $listTableAlias = $table['listTableAlias'];
+                        $listTableAbjad = $table['listTableAbjad'];
+
+                        $sqlkib = array(
+                                'table'=>"{$listTable}",
+                                'field'=>"*",
+                                'condition'=>"Aset_ID = {$value['Aset_ID']}",
+                                'limit'=>'100',
+                                );
+
+                        $resultKib = $this->db->lazyQuery($sqlkib,$debug);
+                        $res[$key]['aset'][$key]['detail'] = $resultKib;
+                    }
+                    
                 }
                 
                     
@@ -1038,7 +1060,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             $sql = array(
                     'table'=>"penggunaanaset",
-                    'field'=>"StatusMutasi = 0",
+                    'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
                     'condition'=>"Aset_ID IN ({$aset_id}) {$filter}",
                     );
 
@@ -1054,7 +1076,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         {
 
 
-            $table = $this->getTableKibAlias($value);
+            $TipeAset = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
 
             // pr($table);
 
@@ -1063,9 +1085,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $satkerAwal = "";
             if ($ses_satkerkode) $satkerAwal .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
 
-            $listTable = $table['listTable'];
-            $listTableAlias = $table['listTableAlias'];
-            $listTableAbjad = $table['listTableAbjad'];
+            
 
             $sql = array(
                     'table'=>"mutasi AS m, satker AS s",
@@ -1082,14 +1102,37 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 foreach ($res as $key => $value) {
                     $sql = array(
                             'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
-                            'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
+                            'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, a.TipeAset, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
                             'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal} GROUP BY ma.Aset_ID",
                             'limit'=>'100',
                             'joinmethod' => 'LEFT JOIN',
                             'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
                             );
 
-                    $res[$key]['aset'] = $this->db->lazyQuery($sql,$debug);
+                    // $res[$key]['aset'] = $this->db->lazyQuery($sql,$debug);
+
+                    $resultAset = $this->db->lazyQuery($sql,$debug);
+                    $res[$key]['aset'] = $resultAset;
+
+                    // pr($resultAset);
+                    foreach ($resultAset as $key => $value) {
+
+                        $table = $this->getTableKibAlias($TipeAset[$value['TipeAset']]);
+                        
+                        $listTable = $table['listTable'];
+                        $listTableAlias = $table['listTableAlias'];
+                        $listTableAbjad = $table['listTableAbjad'];
+
+                        $sqlkib = array(
+                                'table'=>"{$listTable}",
+                                'field'=>"*",
+                                'condition'=>"Aset_ID = {$value['Aset_ID']}",
+                                'limit'=>'100',
+                                );
+
+                        $resultKib = $this->db->lazyQuery($sqlkib,$debug);
+                        $res[$key]['aset'][$key]['detail'] = $resultKib;
+                    }
                 }
                 
                     

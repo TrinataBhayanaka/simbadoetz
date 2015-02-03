@@ -6160,7 +6160,7 @@ return $hasil_html;
 
 	
 //Rekapitulasi KIB-A
-	public function retrieve_html_kib_a_rekap($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_a_rekap($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          // echo "masukk";
           if($dataArr!="")
           {
@@ -6238,8 +6238,9 @@ return $hasil_html;
 			   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 			   //==end new==//
 			   
-                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+                list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+			    $thnPejabat);
 												
                 if($nip_pengurus!="")
                 {
@@ -6543,8 +6544,9 @@ return $hasil_html;
 			   
 			//==end new==//
 			
-			    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+			    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+                list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+			    $thnPejabat);
 				if($nip_pengurus!="")
 				{
 					$nip_pengurus_fix=$nip_pengurus;
@@ -6862,7 +6864,7 @@ return $hasil_html;
      }
    	
 //Rekapitulasi KIB-B 
-	public function retrieve_html_kib_b_rekap($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_b_rekap($dataArr,$gambar,$tanggalCetak,$thnPejabat){
       if($dataArr!="")
           {
 		 
@@ -6939,8 +6941,9 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												
 												if($nip_pengurus!="")
 												{
@@ -7231,8 +7234,9 @@ return $hasil_html;
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 											   
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -7537,7 +7541,7 @@ return $hasil_html;
      }
 
 //Rekapitulasi KIB-C (ok)
-	public function retrieve_html_kib_c_rekap($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_c_rekap($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
           if($dataArr!="")
           {
@@ -7616,8 +7620,9 @@ return $hasil_html;
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -7918,8 +7923,9 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -8249,7 +8255,7 @@ return $hasil_html;
      }
 
 //Rekapitulasi KIB-D (ok)
-    public function retrieve_html_kib_d_rekap($dataArr,$gambar,$tanggalCetak){
+    public function retrieve_html_kib_d_rekap($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
           if($dataArr!="")
           {
@@ -8327,8 +8333,10 @@ return $hasil_html;
 											   $thnLokasi= substr($row->Tahun,2,4);
 											   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -8646,8 +8654,10 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -8994,7 +9004,7 @@ return $hasil_html;
      }          
 	 
 //Rekapitulasi KIB-E (ok)	 
-	public function retrieve_html_kib_e_rekap($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_e_rekap($dataArr,$gambar,$tanggalCetak,$thnPejabat){
 			 if($dataArr!="")
           {
 			  // include ('../../../function/tanggal/tanggal.php');
@@ -9071,8 +9081,10 @@ return $hasil_html;
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 											    	
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -9385,8 +9397,10 @@ return $hasil_html;
 											   // if($row->Tahun){
 													// $tahun=substr($row->Tahun,2,2);
 												// }	
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -9724,7 +9738,7 @@ return $hasil_html;
      }        
 
 //Rekapitulasi KIB-F (ok)	 
-	public function retrieve_html_kib_f_rekap($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_f_rekap($dataArr,$gambar,$tanggalCetak,$thnPejabat){
 			 if($dataArr!="")
           {
 			  // include ('../../../function/tanggal/tanggal.php');
@@ -9803,8 +9817,10 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -10110,8 +10126,10 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -10432,7 +10450,7 @@ return $hasil_html;
      }        
 
 //KIB-A (ok)    
-	public function retrieve_html_kib_a($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_a($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          // echo "masukk";
           if($dataArr!="")
           {
@@ -10510,8 +10528,9 @@ return $hasil_html;
 			   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 			   //==end new==//
 			   
-               list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+                list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+			    $thnPejabat);
                 if($nip_pengurus!="")
                 {
                     $nip_pengurus_fix=$nip_pengurus;
@@ -10816,8 +10835,9 @@ return $hasil_html;
 			   
 			//==end new==//
 			
-			   list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+			   list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+                list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+			    $thnPejabat);
                 if($nip_pengurus!="")
                 {
                     $nip_pengurus_fix=$nip_pengurus;
@@ -11136,7 +11156,7 @@ return $hasil_html;
    
 
 //KIB-B (ok)
-	public function retrieve_html_kib_b($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_b($dataArr,$gambar,$tanggalCetak,$thnPejabat){
       if($dataArr!="")
           {
 		 
@@ -11213,8 +11233,9 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -11503,8 +11524,9 @@ return $hasil_html;
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 											   
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -11811,7 +11833,7 @@ return $hasil_html;
 
 
 //KIB-C (ok)
-	public function retrieve_html_kib_c($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_c($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
           if($dataArr!="")
           {
@@ -11889,8 +11911,9 @@ return $hasil_html;
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -12188,8 +12211,9 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -12522,7 +12546,7 @@ return $hasil_html;
 
 
 //KIB-D (ok)
-    public function retrieve_html_kib_d($dataArr,$gambar,$tanggalCetak){
+    public function retrieve_html_kib_d($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
           if($dataArr!="")
           {
@@ -12601,8 +12625,9 @@ return $hasil_html;
 											   $thnLokasi= substr($row->Tahun,2,4);
 											   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												
 												if($nip_pengurus !="")
 												{
@@ -12921,8 +12946,9 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -13274,7 +13300,7 @@ return $hasil_html;
 
 
 //KIB-E (ok)
-	public function retrieve_html_kib_e($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_e($dataArr,$gambar,$tanggalCetak,$thnPejabat){
 			 if($dataArr!="")
           {
 			  // include ('../../../function/tanggal/tanggal.php');
@@ -13351,8 +13377,9 @@ return $hasil_html;
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
 											    	
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												
 												if($nip_pengurus!="")
 												{
@@ -13666,8 +13693,9 @@ return $hasil_html;
 											   // if($row->Tahun){
 													// $tahun=substr($row->Tahun,2,2);
 												// }	
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -14005,7 +14033,7 @@ return $hasil_html;
      }        
 
 //KIB-F (ok)	 
-	public function retrieve_html_kib_f($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kib_f($dataArr,$gambar,$tanggalCetak,$thnPejabat){
 			 if($dataArr!="")
           {
 			  // include ('../../../function/tanggal/tanggal.php');
@@ -14084,8 +14112,9 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												
 											if($nip_pengurus!="")
 											{
@@ -14391,8 +14420,9 @@ return $hasil_html;
 												$thnLokasi= substr($row->Tahun,2,4);
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+												$thnPejabat);
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -14712,7 +14742,7 @@ return $hasil_html;
 
 
 //BUKU INVENTARIS INTRA (ok) 
-    public function  retrieve_html_bukuinventaris_intra($dataArr,$gambar,$tanggalCetak){
+    public function  retrieve_html_bukuinventaris_intra($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
 if($dataArr!="")
 {
@@ -14788,8 +14818,8 @@ $perolehanTotal=0;
 						$thnLokasi= substr($row->Tahun,2,4);
 						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   //==end new==//
-                        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-						list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+                        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+						list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
 												
                 if($nip_pengurus!="")
                 {
@@ -15083,8 +15113,10 @@ $footer ="
 				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   
 			   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+				
+				
 				if($nip_pengurus!="")
 				{
 					$nip_pengurus_fix=$nip_pengurus;
@@ -15409,7 +15441,7 @@ $footer ="
      }
 
 //BUKU INVENTARIS EKSTRA (ok) 
- public function  retrieve_html_bukuinventaris_ekstra($dataArr,$gambar){
+ public function  retrieve_html_bukuinventaris_ekstra($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
 if($dataArr!="")
 {
@@ -15482,10 +15514,12 @@ $perolehanTotal=0;
 					   $noReg=substr($row->NomorReg,0,17);
 					   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 						$thnLokasi= substr($row->Tahun,2,4);
-						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   //==end new==//
-                        list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-               list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+			   
+			   
                 if($nip_pengurus!="")
                 {
                     $nip_pengurus_fix=$nip_pengurus;
@@ -15685,7 +15719,7 @@ $footer ="
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+			   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
 		  </tr>
 		  
 		  <tr>
@@ -15777,10 +15811,44 @@ $footer ="
 				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   
 			   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus)=$this->get_jabatan($satker_id,"3");
-                list($nip_pengguna,$nama_jabatan_pengguna)=$this->get_jabatan($satker_id,"4");
+            list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+			list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
 				 
-					
+			if($nip_pengurus!="")
+			{
+				$nip_pengurus_fix=$nip_pengurus;
+			}
+			else
+			{
+				$nip_pengurus_fix='........................................';
+			}
+
+			if($nip_pengguna!="")
+			{
+				$nip_pengguna_fix=$nip_pengguna;
+			}
+			else
+			{
+				$nip_pengguna_fix='........................................';
+			}
+
+			if($nama_jabatan_pengguna!="")
+			{
+				$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+			}
+			else
+			{
+				$nama_jabatan_pengguna_fix='........................................';
+			}
+
+			if($nama_jabatan_pengurus!="")
+			{
+				$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+			}
+			else
+			{
+				$nama_jabatan_pengurus_fix='........................................';
+			}		
 
 
         $body="";     
@@ -16007,7 +16075,7 @@ $footer ="
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
                                                        <td>&nbsp;</td>
-                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $f_tanggal&nbsp;$f_bulan&nbsp;$f_tahun</td>
+                                                       <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
                                                   </tr>
                                                   
                                                   <tr>
@@ -16069,7 +16137,7 @@ $footer ="
 
  
 //BUKU INVENTARIS SKPD (ok) 
-    public function  retrieve_html_bukuiinventariskpd($dataArr,$gambar,$tanggalCetak){
+    public function  retrieve_html_bukuiinventariskpd($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
 if($dataArr!="")
 {
@@ -16147,8 +16215,10 @@ $kodePemilik= '';
 						$thnLokasi= substr($row->Tahun,2,4);
 						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   //==end new==//
-                        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-						list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+                        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);	
+						list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+						
+						
 						if($nip_pengurus!="")
 						{
 							$nip_pengurus_fix=$nip_pengurus;
@@ -16442,8 +16512,10 @@ $footer ="
 				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   
 			   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-					list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);	
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+				
+				
 					if($nip_pengurus!="")
 					{
 						$nip_pengurus_fix=$nip_pengurus;
@@ -16767,7 +16839,7 @@ $footer ="
      }
 
 //BUKU INVENTARIS GABUNGAN SKPD (ok) 
-	public function  retrieve_html_bukuiinventariskpdGab($dataArr,$gambar,$tanggalCetak){
+	public function  retrieve_html_bukuiinventariskpdGab($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
 if($dataArr!="")
 {
@@ -16843,10 +16915,12 @@ $kodePemilik= '';
 					   $noReg=substr($row->NomorReg,0,17);
 					   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 						$thnLokasi= substr($row->Tahun,2,4);
-						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+						/*$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;*/
+					$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;	
 					   //==end new==//
-                        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-						list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+                        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+						list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+						
 						if($nip_pengurus!="")
 						{
 							$nip_pengurus_fix=$nip_pengurus;
@@ -17137,11 +17211,13 @@ $footer ="
 			   $noReg=substr($row->NomorReg,0,17);
 			   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 				$thnLokasi= substr($row->Tahun,2,4);
-				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
-					   
+				/*$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;*/
+				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;	   
 			   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-					list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+					
+					
 					if($nip_pengurus!="")
 					{
 						$nip_pengurus_fix=$nip_pengurus;
@@ -17465,7 +17541,7 @@ $footer ="
      }
 	
 //BUKU INDUK INVENTARIS (ok)
-	public function  retrieve_html_bukuiindukskpd($dataArr,$gambar,$tanggalCetak){
+	public function  retrieve_html_bukuiindukskpd($dataArr,$gambar,$tanggalCetak,$thnPejabat){
 
 if($dataArr!="")
 {
@@ -17538,11 +17614,12 @@ if($dataArr!="")
 	   // $noReg=substr($row->NomorReg,0,17);
 	   $noKodeLokasi=substr($row->kodeLokasi,0,8);
 	   $thnLokasi= substr($row->Tahun,2,4);
-	    $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+	    // $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+	    $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 
 	   //==end new==//
-        /*list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-		list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+		list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
 																						
         if($nip_pengurus!="")
 		{
@@ -17578,7 +17655,7 @@ if($dataArr!="")
 		else
 		{
 			$nama_jabatan_pengurus_fix='........................................';
-		}*/
+		}
         
     $body="
         <body>
@@ -17806,7 +17883,7 @@ if($dataArr!="")
      }
 
 //KIR (ok) belom dirombak
-	public function retrieve_html_kir($dataArr,$gambar,$tanggalCetak){
+	public function retrieve_html_kir($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
           if($dataArr!="")
           {
@@ -17838,18 +17915,7 @@ if($dataArr!="")
 											</style>
 										</head>
 											 ";
-
-                                        
-										/*foreach ($dataArr['data_pejabat'] as $value)
-										{
-											foreach ($value as $data)
-											{
-												//echo $data->NamaJabatan.'<br>';
-												//echo $data->NamaPejabat;
-											}
-										}*/
-										
-                                        
+           
 							$no=1;
 							$skpdeh="";
 							$ruangan="";
@@ -17864,7 +17930,9 @@ if($dataArr!="")
 												$skpdeh = $row->kodeSatker;
 												$ruangan = $row->kodeRuangan;
 												$satker_id=$row->kodeSatker;
-												$tahun = $row->Tahun;
+												$kodePemilik=substr($row->kodeLokasi,0,2);
+												// $tahun = $row->Tahun;
+												$tahun = $thnPejabat;
 												//==add new==//
 											   $NamaRuangan = $this->get_Ruangan($tahun,$satker_id,$ruangan);
 											   // echo "ruangannya =".$NamaRuangan;
@@ -17902,8 +17970,10 @@ if($dataArr!="")
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   
 											   //==end new==//
-													list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+												
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -18094,7 +18164,7 @@ if($dataArr!="")
                                             }
                                                        
 												//uda dites footer disini
-                                             if ($skpdeh != $row->kodeSatker || $tahun != $row->Tahun || $ruangan != $row->kodeRuangan  && $no>1){
+                                             if ($skpdeh != $row->kodeSatker || $tahun != $row->Tahun || $ruangan != $row->kodeRuangan  || $kodePemilik != substr($row->kodeLokasi,0,2) && $no>1){
 
                                              $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
                                                $tabletotal="
@@ -18186,7 +18256,8 @@ if($dataArr!="")
                                              $skpdeh = $row->kodeSatker;
                                              $ruangan = $row->kodeRuangan;
 											  $satker_id=$row->kodeSatker;
-											  $tahun = $row->Tahun;
+											  // $tahun = $row->Tahun;
+											  $tahun = $thnPejabat;
 											  
 												//==add new==//
 											   $NamaRuangan = $this->get_Ruangan($tahun,$satker_id,$ruangan);
@@ -18222,8 +18293,10 @@ if($dataArr!="")
 												// $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 												$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 											   //==end new==//
-												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-											    list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+												list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+												list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+												
+												
 												if($nip_pengurus!="")
 												{
 													$nip_pengurus_fix=$nip_pengurus;
@@ -18565,7 +18638,7 @@ if($dataArr!="")
      }
 	 
 //cetak label (ok)
-	public function  retrieve_html_cetak_label($dataArr,$gambar){
+	public function  retrieve_html_cetak_label($dataArr,$gambar,$tahun){
          
 	if($dataArr!="")
           {
@@ -18620,6 +18693,7 @@ if($dataArr!="")
 										$satker_id = $row->kodeSatker;
 										$ruangan = $row->kodeRuangan;
 										$NamaRuangan = $this->get_Ruangan($tahun,$satker_id,$ruangan);
+										// pr($NamaRuangan);
 									   // echo "ruangannya =".$NamaRuangan;
 									   if($NamaRuangan == ''){
 											$ruang = '-';
@@ -18671,7 +18745,7 @@ if($dataArr!="")
     } 
 
 //mutasi
-    public function  retrieve_html_laporan_mutasi($dataArr,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak){
+    public function  retrieve_html_laporan_mutasi($dataArr,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak,$thnPejabat){
          
 if($dataArr!="")
 {
@@ -18751,8 +18825,8 @@ $perolehanTotalMutasi=0;
 						$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   //==end new==//
                        
-			    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");	
+				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);	
                 if($nip_pengurus!="")
                 {
                     $nip_pengurus_fix=$nip_pengurus;
@@ -19065,8 +19139,10 @@ $footer ="
 				$kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 					   
 			   //==end new==//
-                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");	
+                list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+				
+				
                 if($nip_pengurus!="")
                 {
                     $nip_pengurus_fix=$nip_pengurus;
@@ -19392,12 +19468,13 @@ $footer ="
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
 					$perolehanTotalMutasi = $perolehanTotalMutasi + $nilaiPerolehanHasilMutasi;
 					
+					$Uraian =$this->get_NamaKelompok($row->kodeKelompok);
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
 									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok</td>
 									<td style=\"width: 64px; text-align:center;\">$noReg</td>
-									<td style=\"width: 118px;\">$row->Uraian</td>
+									<td style=\"width: 118px;\">$Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
 									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 									<td style=\"width: 56x; \">$row->Material</td>
@@ -19510,7 +19587,7 @@ $footer ="
      }
 
 //mutasi skpd (ok)
-	public function  retrieve_html_laporan_mutasi_skpd($dataArr,$gambar,$tglawal,$tglakhir){
+	public function  retrieve_html_laporan_mutasi_skpd($dataArr,$gambar,$tglawal,$tglakhir,$tanggalCetak,$thnPejabat){
 
 if($dataArr!="")
 {
@@ -19582,8 +19659,44 @@ if($dataArr!="")
 	   $thnLokasi= substr($row->kodeLokasi,15,2);
 	   // $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$thnLokasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
 	   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+		list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+		list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+		
+		if($nip_pengurus!="")
+		{
+			$nip_pengurus_fix=$nip_pengurus;
+		}
+		else
+		{
+			$nip_pengurus_fix='........................................';
+		}
 
-	   
+		if($nip_pengguna!="")
+		{
+			$nip_pengguna_fix=$nip_pengguna;
+		}
+		else
+		{
+			$nip_pengguna_fix='........................................';
+		}
+
+		if($nama_jabatan_pengguna!="")
+		{
+			$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+		}
+		else
+		{
+			$nama_jabatan_pengguna_fix='........................................';
+		}
+
+		if($nama_jabatan_pengurus!="")
+		{
+			$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+		}
+		else
+		{
+			$nama_jabatan_pengurus_fix='........................................';
+		}
         
     $body="
         <body>
@@ -19593,7 +19706,7 @@ if($dataArr!="")
                      <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
                      <td style=\"width: 90%; text-align: center;\">
                         <h3>LAPORAN MUTASI BARANG ANTAR SKPD</h3>
-                        <h4>PERIODE</h4>
+                        <h4>Periode $tglawal s/d $tglakhir</h4>
                     </td>
                 </tr>
             </thead>
@@ -19679,7 +19792,7 @@ if($dataArr!="")
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi Barang (B,KB,RB)</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Berkurang<br/><hr>Bertambah</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Berkurang</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">SKPD</td>
             </tr>
 			
@@ -19729,8 +19842,9 @@ if($dataArr!="")
 			}else{
 				$ketKondisi = "";
 			} 
-			
-			$mutasi = $this->getSatkerMutasiBertambah($asetid,$getSatkerMutasiAwal,$tglawal,$tglakhir);
+			$NamaKlmpk = $this->get_NamaKelompok($row->kodeKelompok);
+			$NamaSatker = $this->get_NamaSatker($row->kodeSatker);
+			/*$mutasi = $this->getSatkerMutasiBertambah($asetid,$getSatkerMutasiAwal,$tglawal,$tglakhir);
 			// pr($mutasi);
 			if($mutasi){
 				$bertambah = $mutasi[0];
@@ -19738,7 +19852,7 @@ if($dataArr!="")
 			}else{
 				$bertambah = 0;
 				$nilaibertambahFix = number_format($bertambah,2,",",".");
-			}
+			}*/
 			// echo "mutasi =".$mutasi[0]; 		
 			$nilaiPrlhn = $row->NilaiPerolehan;
 			$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
@@ -19747,35 +19861,95 @@ if($dataArr!="")
             $body.="
                 <tr>
                     <td style=\"text-align:center;  width: 47px;\">$no</td>
-					<td style=\"text-align:center;  width: 83px;\">$row->Uraian</td>
+					<td style=\"text-align:center;  width: 83px;\">$NamaKlmpk</td>
 					<td style=\"text-align:center;  width: 64px;\">$row->kodeKelompok</td>
 					<td style=\"text-align:center;  width: 118px;\">$row->noRegister</td>
 					<td style=\"text-align:center;  width: 45px;\">$row->Merk</td>
 					<td style=\"text-align:center;  width: 120px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 					<td style=\"text-align:center;  width: 70px;\">$row->Material</td>
 					<td style=\"text-align:center;  width: 70px;\">$ketKondisi</td>
-					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix<br/><hr>$nilaibertambahFix</td>
-					<td style=\"text-align:center;  width: 72px;\">$row->kode</td>
-					<td style=\"text-align:center;  width: 200px;\">$row->NamaSatker</td>
+					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix</td>
+					<td style=\"text-align:center;  width: 72px;\">$row->kodeSatker</td>
+					<td style=\"text-align:center;  width: 200px;\">$NamaSatker</td>
                 </tr>";
                                                             
             $no++;
+			/*$old="<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix<br/><hr>$nilaibertambahFix</td>
+					<td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal<br><hr>$printperolehanTotal_2</td>";*/
+					
         }
                                             
             // $printbarang=  number_format($barangTotal);
             $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
-            $printperolehanTotal_2=  number_format($perolehanTotal_2,2,",",".");
+            // $printperolehanTotal_2=  number_format($perolehanTotal_2,2,",",".");
             $tabletotal="<tr>
                             <td colspan=\"8\" style=\"font-weight: bold; text-align: center;\">Jumlah</td>
-                            <td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal<br><hr>$printperolehanTotal_2</td>
+                            <td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal</td>
                             <td  colspan=\"2\">&nbsp;</td>
                         </tr>
                     </table>"; 
-			$akhir_footer="
+			$footer ="	     
+					 <br />
+					 <br />
+					 <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+						  <tr>
+							   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
+						  </tr>
+						  <tr>
+							   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
+						  </tr>
+						 <tr>
+							   <td colspan=\"11\" style=\"height: 80px\"></td>
+						  </tr>
+						  
+						  <tr>
+							   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+						  </tr>
+							   <tr>
+							   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+						  </tr>
+						  <tr>
+							   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td>&nbsp;</td>
+							   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+						  </tr>
+
+					 </table>";
+			$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+			$footer.="
                 </body>
             </html>";      
                                        
-            $html[]=$head.$body.$tabletotal.$akhir_footer;
+            $html[]=$head.$body.$tabletotal.$footer;
             //echo $status_print;
             // $html[]=$akhir_footer; 
 			return $html;
@@ -23171,10 +23345,47 @@ if($dataArr!="")
   
  //rekapitulasi buku induk inventaris (ok)
  //=============================================================================================
- public function retrieve_html_rekapitulasi_bukuinventarisdaerah($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan)
+ public function retrieve_html_rekapitulasi_bukuinventarisdaerah($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan,$thnPejabat)
 {
 // include ('../../../function/tanggal/tanggal.php');
+list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
+																				
+if($nip_pengurus!="")
+{
+	$nip_pengurus_fix=$nip_pengurus;
+}
+else
+{
+	$nip_pengurus_fix='........................................';
+}
 
+if($nip_pengguna!="")
+{
+	$nip_pengguna_fix=$nip_pengguna;
+}
+else
+{
+	$nip_pengguna_fix='........................................';
+}
+
+if($nama_jabatan_pengguna!="")
+{
+	$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+}
+else
+{
+	$nama_jabatan_pengguna_fix='........................................';
+}
+
+if($nama_jabatan_pengurus!="")
+{
+	$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+}
+else
+{
+	$nama_jabatan_pengurus_fix='........................................';
+}
 $html ="
 <html>
 <head>
@@ -23280,9 +23491,9 @@ foreach ($dataArr as $data)
 $html .="
     
     <tr>
-        <td colspan = \"4\" align=\"center\">Total</td>
-        <td align=\"right\">".number_format($total_jumlah,0,",",".")."</td>
-        <td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+        <td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">Total</td>
+        <td style=\"text-align: right; font-weight: bold;\">".number_format($total_jumlah,0,",",".")."</td>
+        <td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
         <td>&nbsp;</td>
     </tr>
     </table>
@@ -23308,26 +23519,26 @@ $footer ="
 		  </tr>
 		  
 		  <tr>
-			   <td style=\"text-align: center;\" colspan=\"3\"></td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\"></td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
 		  </tr>
 		  <tr>
 			   <td colspan=\"11\" style=\"height: 80px\"></td>
 		  </tr>
 		  
 		  <tr>
-			   <td style=\"text-align: center;\" colspan=\"3\"></td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\"></td>
+			   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
 		  </tr>
 			   <tr>
 			   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
@@ -23339,13 +23550,13 @@ $footer ="
 			   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
 		  </tr>
 		  <tr>
-			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
 			   <td>&nbsp;</td>
-			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;</td>
+			   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
 		  </tr>
 
 	 </table>";
@@ -23361,7 +23572,7 @@ return $hasil_html;
 
 //rekapitulasi buku inventaris skpd (ok)     
 //=============================================================================================
-public function retrieve_html_rekapitulasi_bukuinventaris_skpd($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_rekapitulasi_bukuinventaris_skpd($dataArr,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan,$thnPejabat)
 {
 // pr($dataArr);
 // exit;
@@ -23399,8 +23610,8 @@ foreach ($dataArr as $satker_id => $value)
    // $noReg=substr($row->NomorReg,0,17);
    // $noKodeLokasi=substr($row->NomorReg,0,5);
    //==end new==//
-    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3");
-	list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4");
+    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+	list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
 												
     if($nip_pengurus!="")
     {
@@ -23571,9 +23782,9 @@ foreach ($dataArr as $satker_id => $value)
     $html .="
         
         <tr>
-            <td colspan = \"4\" align=\"center\">Total</td>
-            <td align=\"right\">".number_format($total_jumlah,0,",",".")."</td>
-            <td align=\"right\">".number_format($total_perolehan,2,",",".")."</td>
+            <td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">Total</td>
+            <td style=\"text-align: right; font-weight: bold;\">".number_format($total_jumlah,0,",",".")."</td>
+            <td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
             <td>&nbsp;</td>
         </tr>
         </table>
@@ -26771,7 +26982,7 @@ return $hasil_html;
      }        
 
 //KIB-F (ok)	 
-public function retrieve_html_penyusutan_f($dataArr,$gambar){
+	public function retrieve_html_penyusutan_f($dataArr,$gambar){
 			 if($dataArr!="")
           {
 			  include ('../../../function/tanggal/tanggal.php');
@@ -27458,7 +27669,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	return $status;
 }
     
-	public function get_jabatan($satker,$jabatan){
+	public function get_jabatan($satker,$jabatan,$thnPejabat){
 	if($jabatan=="1")
 		$namajabatan="Atasan Langsung";
 	else if ($jabatan=="2")
@@ -27481,7 +27692,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 		foreach($result as $value){
 			$Satker_ID=$value->Satker_ID;
 		}
-		$queryPejabat="select NIPPejabat, NamaPejabat,Jabatan from Pejabat where Satker_ID='$Satker_ID' and NamaJabatan='$namajabatan' limit 1";
+		$queryPejabat="select NIPPejabat, NamaPejabat,GUID  from Pejabat where Satker_ID='$Satker_ID' and NamaJabatan='$namajabatan' and Tahun = '$thnPejabat' limit 1";
 		// echo $queryPejabat;
 		$result2=$this->retrieve_query($queryPejabat);
 		// pr($result2);
@@ -27489,7 +27700,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 				foreach($result2 as $val){
 					$nip=$val->NIPPejabat;
 					$nama_pejabat=$val->NamaPejabat;
-					$InfoJabatan=$val->Jabatan;
+					$InfoJabatan=$val->GUID ;
 					
 				}
 			}
@@ -27800,7 +28011,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	// echo "asetid =".$AsetId;*/
 	
 	// $queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and SatkerTujuan ='$kodeSatker'  ";
-	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and SatkerTujuan ='$kodeSatker'  ";
+	$queryDataTambah = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) 
+	and SatkerTujuan ='$kodeSatker' and Status = 1";
 	$resultDataTambah=$this->retrieve_query($queryDataTambah);
 	if($resultDataTambah!=""){
 		foreach($resultDataTambah as $value){
@@ -27810,7 +28022,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	
 	//cek untuk skpd
 	// $queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($AsetIdFix) and Awal ='$kodeSatker'";
-	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) and Awal ='$kodeSatker'";
+	$queryDataKurang = "select count(Aset_ID) as jml from mutasiaset where Aset_ID in ($Aset) 
+					    and Awal ='$kodeSatker' and Status = 1";
 	$resultDataKurang=$this->retrieve_query($queryDataKurang);
 	if($resultDataKurang!=""){
 		foreach($resultDataKurang as $value){
@@ -27891,7 +28104,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	}	
    
 	public function getSatkerMutasi($asetid,$skpdeh){
-		$query = "select SatkerAwal from mutasiaset where Aset_ID = '$asetid' and SatkerTujuan ='$skpdeh'";
+		$query = "select SatkerAwal from mutasiaset where Aset_ID = '$asetid' and SatkerTujuan ='$skpdeh'
+					and Status = 1";
 		$resultData=$this->retrieve_query($query);
 		if($resultData!=""){
 			foreach($resultData as $value){
@@ -27903,7 +28117,8 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	
 	public function getSatkerMutasiBertambah($asetid,$skpdeh,$tglawal,$tglakhir){
 		// echo "masuk";
-		$query = "select count(Aset_ID) as jml from mutasiaset where Aset_ID = '$asetid' and SatkerAwal ='$skpdeh'";
+		$query = "select count(Aset_ID) as jml from mutasiaset where Aset_ID = '$asetid' 
+				and SatkerAwal ='$skpdeh' and Status = 1";
 		// pr($query);
 		$resultData=$this->retrieve_query($query);
 		/*if($resultData!=""){
@@ -28032,6 +28247,7 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	// exit;
 	return $Nilai;
 }
+	
 	public function AddValue($asetid,$Satker,$param,$kdRwyt){
 		
 		if($param == 01){
@@ -28080,14 +28296,14 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 						Kd_Riwayat in ($kdRwyt) and kodeSatker like '$Satker%' and Aset_ID = '$asetid'
 						order by log_id asc";
 		}
-		pr($query);
+		// pr($query);
 		$resKap=$this->retrieve_query($query);
 		if($resKap!=""){
 			foreach($resKap as $value){
 				$NilaiKap[]=$value;
 			}
 		}
-		pr($NilaiKap);
+		// pr($NilaiKap);
 	return $NilaiKap;
 	}
 
@@ -28134,10 +28350,12 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 	public function get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
 		if($satker_id !=""){
 			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' 
-					  and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
+					  and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'
+					  and StatusValidasi =1 and Status_Validasi_Barang = 1";
 		}else{
 			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeKelompok like '$gol%' 
-					and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'";
+					and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'
+					and StatusValidasi =1 and Status_Validasi_Barang = 1";
 		}
 		// echo "query".$query;
 		// echo "<br>";
@@ -28160,6 +28378,19 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
 			}
 		}
 	return $NamaSatker;
+	
+	}
+	
+	public function get_NamaKelompok($kode){
+		$queryklmpk = "select Uraian from kelompok where kode ='$kode' ";
+		
+		$resulklmpkt=$this->retrieve_query($queryklmpk);
+		if($resulklmpkt!=""){
+			foreach($resulklmpkt as $valueklmpkt){
+				$NamaKlpk=$valueklmpkt->Uraian;
+			}
+		}
+	return $NamaKlpk;
 	
 	}
 	
@@ -28501,4 +28732,3 @@ public function retrieve_html_penyusutan_f($dataArr,$gambar){
      
 ?>
  
-?>

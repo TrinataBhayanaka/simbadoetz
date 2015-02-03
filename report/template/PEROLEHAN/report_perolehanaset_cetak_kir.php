@@ -73,14 +73,16 @@ $result = arrayToObject($result_query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 if($tglcetak != ''){
-	$tanggalCetak = format_tanggal($tglcetak);	
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);	
 }else{
 	$tglcetak = date("Y-m-d");
 	$tanggalCetak = format_tanggal($tglcetak);	
+	$thnPejabat =substr($tglcetak,0,4);
 }
 
 //retrieve html
-$html=$REPORT->retrieve_html_kir($result, $gambar, $tanggalCetak);
+$html=$REPORT->retrieve_html_kir($result,$gambar,$tanggalCetak,$thnPejabat);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 

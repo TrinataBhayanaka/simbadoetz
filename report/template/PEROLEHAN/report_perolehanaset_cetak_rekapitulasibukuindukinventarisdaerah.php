@@ -39,15 +39,17 @@ $REPORT->set_data($data);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 if($tglcetak != ''){
-	$tanggalCetak = format_tanggal($tglcetak);	
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);		
 }else{
 	$tglcetak = date("Y-m-d");
-	$tanggalCetak = format_tanggal($tglcetak);	
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);		
 }
 
 $result_query = $REPORT->get_report_rekap_inv_daerah($tglawalperolehan,$tglakhirperolehan);
 
-$html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan,$thnPejabat);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {

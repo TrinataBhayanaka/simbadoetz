@@ -1579,6 +1579,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['Model'] = $data['Model'];
                 $tblKib['Ukuran'] = $data['Ukuran'];
                 $tblKib['NoMesin'] = $data['NoMesin'];
+                $tblKib['NoSeri'] = $data['NoSeri'];
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
@@ -1930,6 +1931,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblAset['Model'] = $data['Model'];
                 $tblAset['Ukuran'] = $data['Ukuran'];
                 $tblAset['NoMesin'] = $data['NoMesin'];
+                $tblAset['NoBPKB'] = $data['NoBPKB'];
+                $tblAset['NoSeri'] = $data['NoSeri'];
+                $tblAset['Material'] = $data['Material'];
+                $tblAset['NoRangka'] = $data['NoRangka'];
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
@@ -1938,6 +1943,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblAset['LuasLantai'] = $data['LuasLantai'];
                 $tblAset['Beton'] = $data['Beton'];
                 $tblAset['NoSurat'] = $data['NoSurat'];
+                $tblAset['tglSurat'] = $data['tglSurat'];
                 $tabel = "bangunan";
                 $logtabel = "log_bangunan";
                 $idkey = "Bangunan_ID";
@@ -1972,7 +1978,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             } elseif ($data['TipeAset']=="G") {
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
-            } 
+            } elseif ($data['TipeAset']=="H") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                exit;
+            }
         //log
         $logAset['action'] = 'insert';
         $logAset['changeDate'] = date('Y/m/d');
@@ -2228,6 +2237,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['Ukuran'] = $data['Ukuran'];
                 $tblKib['NoMesin'] = $data['NoMesin'];
                 $tblKib['NoBPKB'] = $data['NoBPKB'];
+                $tblKib['NoSeri'] = $data['NoSeri'];
                 $tblKib['Material'] = $data['Material'];
                 $tblKib['NoRangka'] = $data['NoRangka'];
                 $tabel = "mesin";
@@ -2271,6 +2281,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                exit;
+            } elseif ($data['TipeAset']=="H") {
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
             }
@@ -2390,6 +2403,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['Ukuran'] = $data['Ukuran'];
                 $tblKib['NoMesin'] = $data['NoMesin'];
                 $tblKib['NoBPKB'] = $data['NoBPKB'];
+                $tblKib['NoSeri'] = $data['NoSeri'];
                 $tblKib['Material'] = $data['Material'];
                 $tblKib['NoRangka'] = $data['NoRangka'];
                 $tabel = "mesin";
@@ -2433,6 +2447,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                exit;
+            } elseif ($data['TipeAset']=="H") {
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
             }
@@ -2548,6 +2565,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['Model'] = $data['Model'];
                 $tblKib['Ukuran'] = $data['Ukuran'];
                 $tblKib['NoMesin'] = $data['NoMesin'];
+                $tblKib['NoBPKB'] = $data['NoBPKB'];
+                $tblKib['NoSeri'] = $data['NoSeri'];
+                $tblKib['Material'] = $data['Material'];
+                $tblKib['NoRangka'] = $data['NoRangka'];
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
@@ -2556,6 +2577,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['LuasLantai'] = $data['LuasLantai'];
                 $tblKib['Beton'] = $data['Beton'];
                 $tblKib['NoSurat'] = $data['NoSurat'];
+                $tblKib['tglSurat'] = $data['tglSurat'];
                 $tabel = "bangunan";
                 $logtabel = "log_bangunan";
                 $idkey = "Bangunan_ID";
@@ -2588,6 +2610,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                exit;
+            } elseif ($data['TipeAset']=="H") {
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
             }
@@ -2695,6 +2720,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['Ukuran'] = $data['Ukuran'];
                 $tblKib['NoMesin'] = $data['NoMesin'];
                 $tblKib['NoBPKB'] = $data['NoBPKB'];
+                $tblKib['NoSeri'] = $data['NoSeri'];
                 $tblKib['Material'] = $data['Material'];
                 $tblKib['NoRangka'] = $data['NoRangka'];
                 $tabel = "mesin";
@@ -2738,6 +2764,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                exit;
+            } elseif ($data['TipeAset']=="H") {
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
             }

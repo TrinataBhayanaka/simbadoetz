@@ -221,6 +221,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>No Register</th>
 						<th>Kode / Uraian</th>
 						<th>Merk / Type</th>
+						<th>No Polisi</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
@@ -258,6 +259,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<td style="font-weight: bold;"> <?php echo "$value[noRegister]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[Uraian]";?> / <?php echo "$value[Uraian]";?> </td>
 						<td style="font-weight: bold;"><?php echo @$value['Merk'];?></td>
+						<td style="font-weight: bold;"><?php echo @$value['NoSTNK'];?></td>
 						<td style="font-weight: bold;"><?php echo "$value[kodeSatker]- $value[NamaSatker]";?></td>
 						<td style="font-weight: bold;"><?php echo "$value[TglPerolehan]";?></td>
 						<td style="font-weight: bold;"><?php echo number_format($value['NilaiPerolehan']);?></td>

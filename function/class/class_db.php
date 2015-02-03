@@ -366,14 +366,23 @@ class DB
 	        		pr($sql); exit;
 	        	}
 	        	$res = $this->query($sql);
-	        	if ($res)return true;	
-	        	
+	        	if ($res){
+	        		
+	        		usleep(100);
+	        		if ($action==3){
+	        			$insert_id = $this->insert_id();
+	        			$sqlu = "UPDATE log_{$value} SET TglPembukuan = '{$tglProses}' WHERE log_id = {$insert_id} LIMIT 1";
+	        			logFile($sqlu);
+	        			$result = $this->query($sqlu);
+	        		}
+	        			
+	        	}
 	        }
 
 	        
 	    }
 	    logFile('class_db :: Gagal insert log');
-	    return false;
+	    return true;
 	}
 	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false, $debug=false)
 	{

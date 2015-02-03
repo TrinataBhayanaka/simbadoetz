@@ -80,8 +80,16 @@ $result_query=$REPORT->QueryBinv($query);
 $result = arrayToObject($result_query);
 // pr($result);
 // exit;
+if($tglcetak != ''){
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);	
+}else{
+	$tglcetak = date("Y-m-d");
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);	
+}
 
-$html=$REPORT->retrieve_html_bukuinventaris_ekstra($result,$gambar);
+$html=$REPORT->retrieve_html_bukuinventaris_ekstra($result,$gambar,$tanggalCetak,$thnPejabat);
 $count = count($html);
 
 /*for ($i = 0; $i < $count; $i++) {

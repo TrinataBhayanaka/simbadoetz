@@ -45,21 +45,23 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $result=$REPORT->MutasiBarang($skpd_id,$tglawalperolehan,$tglakhirperolehan);
-
+// pr($result);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 if($tglcetak != ''){
 	$tanggalCetak = format_tanggal($tglcetak);	
+	$thnPejabat =substr($tglcetak,0,4);
 }else{
 	$tglcetak = date("Y-m-d");
-	$tanggalCetak = format_tanggal($tglcetak);	
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);	
 }
 
 
 // pr($result);
 // exit;
-$html=$REPORT->retrieve_html_laporan_mutasi($result,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak);
+$html=$REPORT->retrieve_html_laporan_mutasi($result,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak,$thnPejabat);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {

@@ -570,6 +570,13 @@ class core_api_report extends DB {
             if ($kelompok!="" && $parameter_sql==""){
 				$parameter_sql=$query_kelompok_fix;
             } 
+			
+			if($tahun!="" && $parameter_sql!=""){
+				$parameter_sql=$parameter_sql." AND ".$query_tahun;
+            }
+            if($tahun != "" && $parameter_sql==""){
+				$parameter_sql=$query_tahun;
+            }
             // $limit="limit 100";
 			
 			// echo "param =".$parameter_sql;
@@ -2253,7 +2260,7 @@ class core_api_report extends DB {
 														$KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
 														if($thnFix < $thnIntraDefault){
 															// echo "tahun < 2007";
-															$query_01 = "select T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+															$query_01 = "select distinct(T.kodeSatker),T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 																			K.Kode, K.Uraian
 																		from 
 																			tanah as T,kelompok as K
@@ -2266,7 +2273,7 @@ class core_api_report extends DB {
 																		order by 
 																			T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
 																			
-															$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02 = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
 																		from 
@@ -2282,7 +2289,8 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 															
-															$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03 = "select distinct(B.kodeSatker),
+																		B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -2301,7 +2309,8 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
 
-															$query_04 = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+															$query_04 = "select distinct(J.kodeSatker),
+															J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
@@ -2320,7 +2329,8 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by J.kodeSatker,J.Tahun,J.kodeKelompok $limit";
 															
-															$query_05 = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+															$query_05 = "select distinct(AL.kodeSatker),
+															AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,
@@ -2339,7 +2349,9 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by AL.kodeSatker,AL.Tahun,AL.kodeKelompok $limit";
 														
-															$query_06 = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+															$query_06 = "select distinct(KDPA.kodeSatker),
+															            KDPA.kodeKelompok,KDPA.KodeRuangan,
+															            KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
 																		KDPA.kondisi, KDPA.kodeLokasi,
@@ -2404,7 +2416,7 @@ class core_api_report extends DB {
 															}
 															
 															
-															$query_01 = "select T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+															$query_01 = "select distinct(T.kodeSatker),T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 																			K.Kode, K.Uraian
 																		from 
 																			tanah as T,kelompok as K
@@ -2417,7 +2429,8 @@ class core_api_report extends DB {
 																		order by 
 																			T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
 															
-															$query_02_default = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02_default = "select distinct(M.kodeSatker),
+															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -2433,7 +2446,8 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 																			
-															$query_02_condt = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02_condt = "select distinct(M.kodeSatker),
+															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -2449,7 +2463,8 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 															
-															$query_03_default = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03_default = "select distinct(B.kodeSatker),
+															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -2468,7 +2483,8 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
 															
-															$query_03_condt = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03_condt = "select distinct(B.kodeSatker),
+															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
@@ -2487,7 +2503,8 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
 															
-															$query_04 = "select J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+															$query_04 = "select distinct(J.kodeSatker),
+															J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
@@ -2506,7 +2523,8 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by J.kodeSatker,J.Tahun,J.kodeKelompok $limit";
 															
-															$query_05 = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+															$query_05 = "select distinct(AL.kodeSatker),
+															AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,
@@ -2525,7 +2543,8 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by AL.kodeSatker,AL.Tahun,AL.kodeKelompok $limit";
 														
-															$query_06 = "select KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+															$query_06 = "select distinct(KDPA.kodeSatker),
+															KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
 																		KDPA.kondisi, KDPA.kodeLokasi,
@@ -2625,7 +2644,8 @@ class core_api_report extends DB {
 														// $KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
 														if($thnceck >= $thnExtraDefault){
 																
-															$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02 = "select distinct(M.kodeSatker),
+															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -2643,7 +2663,8 @@ class core_api_report extends DB {
 																		order by 
 																			M.Tahun,M.kodeSatker,M.kodeKelompok";
 															
-															$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03 = "select distinct(B.kodeSatker),
+															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -2673,7 +2694,8 @@ class core_api_report extends DB {
 															// echo "masukk";
 															// echo "sini aja";
 															// exit;
-															$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02 = "select distinct(M.kodeSatker),
+															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -2690,7 +2712,8 @@ class core_api_report extends DB {
 																		order by 
 																			M.Tahun,M.kodeSatker,M.kodeKelompok";
 															
-															$query_03 = "select B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03 = "select distinct(B.kodeSatker),
+															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -2828,7 +2851,7 @@ class core_api_report extends DB {
 																						T.kodeKelompok,T.noRegister";	
 																	}
 																	elseif($gol == 02){
-																		
+																		echo "parameter sql =".$parameter_sql;
 																		$pecah = explode("AND ",$parameter_sql);
 																		for ($q=0;$q<count($pecah);$q++){
 																			$param[]="M.".$pecah[$q];
@@ -5084,7 +5107,8 @@ class core_api_report extends DB {
 		// pr($satker);
 		// exit;
 		foreach ($satker as $key){
-			$queryBerkurang ="select Aset_ID,SatkerAwal,SatkerTujuan from mutasiaset where  SatkerAwal = '$key'";		
+			$queryBerkurang ="select Aset_ID,SatkerAwal,SatkerTujuan from mutasiaset where  SatkerAwal = '$key' 
+							  and Status = 1";		
 			// pr($queryBerkurang);
 			// exit;
 			$resultBerkurang = $this->query($queryBerkurang) or die ($this->error('error'));	
@@ -5102,6 +5126,13 @@ class core_api_report extends DB {
 		$dataBrkrngSatkerAwal = array_unique($dataBrkrngSatkerAwal);
 		$dataBrkrngSatkerTujuan = array_unique($dataBrkrngSatkerTujuan);
 		
+		/*echo "Aset_ID".$dataBrkrngAset_ID[0];
+		echo "<br>";
+		echo "SatkerAwal".$dataBrkrngSatkerAwal[0];
+		echo "<br>";
+		echo "SatkerTujuan".$dataBrkrngSatkerTujuan[0];
+		echo "<br>";*/
+		// exit;		
 		 if($dataBrkrngAset_ID != '' && $dataBrkrngSatkerTujuan != ''){
 			if(count($dataBrkrngAset_ID) > 1 || count($dataBrkrngSatkerAwal) > 1){
 				// echo "ga kessini ajaaa";
@@ -5127,7 +5158,7 @@ class core_api_report extends DB {
 				pr($param_05);
 				pr($param_06);*/
 					$newparameter_sql_01 = implode(' OR ', $param_01);
-					echo "param1".$newparameter_sql_01;
+					// echo "param1".$newparameter_sql_01;
 					$newparameter_sql_02 = implode(' OR ', $param_02);
 					$newparameter_sql_03 = implode(' OR ', $param_03);
 					$newparameter_sql_04 = implode(' OR ', $param_04);
@@ -5145,40 +5176,41 @@ class core_api_report extends DB {
 				$newparameter_sql_04  = "j.$SatkerAwalFix";
 				$newparameter_sql_05  = "at.$SatkerAwalFix";
 				$newparameter_sql_06  = "kd.$SatkerAwalFix";
+				// exit;
 			}
 			
 			// echo "newparameter_sql_01 ".$newparameter_sql_01; 
 			// exit;
-			$query_tanah = "SELECT t.*,k.Uraian,st.kode,st.NamaSatker FROM log_tanah as t, kelompok as k ,satker as st
-							WHERE t.kodeKelompok = k.Kode and t.Aset_ID in ($Aset_IDFix) 
-							and t.kodeSatker = st.kode and ($newparameter_sql_01) 
+			
+			$query_tanah = "SELECT t.* FROM log_tanah as t
+							WHERE t.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_01) 
 							and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir'";	
 			
-			$query_mesin = "SELECT m.* ,k.Uraian,st.kode,st.NamaSatker FROM log_mesin as m , kelompok as k ,satker as st
-							WHERE m.kodeKelompok = k.Kode and m.Aset_ID in ($Aset_IDFix) 
-							and m.kodeSatker = st.kode and ($newparameter_sql_02)  
+			$query_mesin = "SELECT m.* FROM log_mesin as m 
+							WHERE m.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_02)  
 							and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'";			
 			
-			$query_bangunan = "SELECT b.*,k.Uraian,st.kode,st.NamaSatker FROM log_bangunan as b, kelompok as k ,satker as st
-						    WHERE b.kodeKelompok = k.Kode and b.Aset_ID in ($Aset_IDFix) 
-							and b.kodeSatker = st.kode and ($newparameter_sql_03) 
+			$query_bangunan = "SELECT b.* FROM log_bangunan as b
+						    WHERE b.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_03) 
 							and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'";
 			
-			$query_jaringan = "SELECT j.*,k.Uraian,st.kode,st.NamaSatker FROM log_jaringan as j, kelompok as k ,satker as st
-							WHERE j.kodeKelompok = k.Kode and j.Aset_ID in ($Aset_IDFix) 
-							and j.kodeSatker = st.kode and ($newparameter_sql_04)  
+			$query_jaringan = "SELECT j.* FROM log_jaringan as j
+							WHERE j.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_04)  
 							and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'";	
 			
-			$query_asettetaplainnya = "SELECT at.*,k.Uraian,st.kode,st.NamaSatker FROM log_asetlain as at, kelompok as k ,satker as st
-							WHERE at.kodeKelompok = k.Kode and at.Aset_ID in ($Aset_IDFix) 
-							and at.kodeSatker = st.kode and ($newparameter_sql_05) 
+			$query_asettetaplainnya = "SELECT at.* FROM log_asetlain as at
+							WHERE at.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_05) 
 							and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'";		
 			
-			$query_kdp = "SELECT kd.*,k.Uraian,st.kode,st.NamaSatker FROM log_kdp as kd, kelompok as k ,satker as st
-							WHERE kd.kodeKelompok = k.Kode and kd.Aset_ID in ($Aset_IDFix) 
-							and kd.kodeSatker = st.kode and ($newparameter_sql_06) 
-							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";	
-			
+			$query_kdp = "SELECT kd.* FROM log_kdp as kd
+							WHERE kd.Aset_ID in ($Aset_IDFix) 
+							and ($newparameter_sql_06) 
+							and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'";
 							
 			$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
 			// $queryALL = array($query_mesin);

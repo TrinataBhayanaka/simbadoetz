@@ -48,13 +48,15 @@ $result_query=$REPORT->retrieve_query($query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 if($tglcetak != ''){
-	$tanggalCetak = format_tanggal($tglcetak);	
+	$tanggalCetak = format_tanggal($tglcetak);
+	$thnPejabat =substr($tglcetak,0,4);		
 }else{
 	$tglcetak = date("Y-m-d");
 	$tanggalCetak = format_tanggal($tglcetak);	
-}
+	$thnPejabat =substr($tglcetak,0,4);	
+	}
 //retrieve html
-$html=$REPORT->retrieve_html_kib_c_rekap($result_query, $gambar,$tanggalCetak);
+$html=$REPORT->retrieve_html_kib_c_rekap($result_query, $gambar,$tanggalCetak,$thnPejabat);
 
 /*$count = count($html);
 
