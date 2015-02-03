@@ -220,6 +220,18 @@ $menu_id = 10;
 										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
 										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
 										}
+					if($nilai[kondisi]==2){
+						$kondisi="Rusak Ringan";
+					}elseif($nilai[kondisi]==3){
+						$kondisi="Rusak Berat";
+					}elseif($nilai[kondisi]==1){
+						$kondisi="Baik";
+					}
+					// //pr($value[TglPerolehan]);
+					$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
+					// //pr($TglPerolehanTmp);
+					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+
 					?>
 						
 					<tr class="gradeA">

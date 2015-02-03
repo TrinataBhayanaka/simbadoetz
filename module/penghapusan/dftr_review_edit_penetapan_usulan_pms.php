@@ -31,13 +31,22 @@ $menu_id = 10;
 	//pr($idPenetapan);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_pms($_GET);
 	
-	//pr($data);
+	// pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
 	?>
 	<!-- End Sql -->
+
+	<script>
+        $(function()
+        {
+       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+
+        }
+		);
+	</script>
 	<script language="Javascript" type="text/javascript">  
 			function enable(){  
 			var tes=document.getElementsByTagName('*');
@@ -111,7 +120,7 @@ $menu_id = 10;
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
@@ -125,7 +134,7 @@ $menu_id = 10;
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -146,12 +155,12 @@ $menu_id = 10;
 						<ul>
 							<li>
 								<span  class="labelInfo">No SK Penghapusan</span>
-								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?=$data['dataRow'][0]['NoSKHapus']?>" <?php echo $disabledForm;?>disabled  required>
+								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?=$data['dataRow'][0]['NoSKHapus']?>" <?php echo $disabledForm;?> required>
 						
 							</li>
 							<li>
 								<span class="labelInfo">Keterangan Penghapusan</span>
-								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> disabled required><?=$data['dataRow'][0]['AlasanHapus']?></textarea>
+								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> required><?=$data['dataRow'][0]['AlasanHapus']?></textarea>
 							</li>
 						</ul>
 							
@@ -164,16 +173,23 @@ $menu_id = 10;
 						&nbsp;
 					</li>
 					<li>
+						<?php
+							
+							$TglSKHapusTmp=explode("-", $data['dataRow'][0]['TglHapus']);
+							// pr($TglSKHapusTmp);
+							$TglSKHapus=$TglSKHapusTmp[1]."/".$TglSKHapusTmp[2]."/".$TglSKHapusTmp[0];
+
+						?>
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
-						<input name="bup_pp_tanggal" type="text" id="tanggal12" value="<?=$data['dataRow'][0]['TglHapus']?>" <?php echo $disabledForm;?> disabled required/>
+						<input name="bup_pp_tanggal" type="text" id="tanggal1" value="<?=$TglSKHapus?>" <?php echo $disabledForm;?> required/>
 					</li>
 					<?php
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
-					<li>
+					<!-- <li>
 						<span  class="labelInfo">Total Nilai</span>
 						<input name="bup_pp_nilaiPerolehan" type="text" id="TotalNilai" value=""required/>
-					</li>
+					</li> -->
 					<?php
 						}
 					?>
@@ -195,7 +211,8 @@ $menu_id = 10;
 						?>
 					<tr>
 						<td colspan="10" align="Left">
-								<span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span>
+								<!-- <span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span> -->
+								<span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Update Informasi Penetapan</button></span>
 								<input type="hidden" name="id" value="<?=$idPenetapan?>"/>
 						</td>
 					</tr>
@@ -207,8 +224,8 @@ $menu_id = 10;
 						<?php
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
-						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						<?php } ?><th>Status Konfirmasi</th>
+						<!-- <th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th> -->
+						<?php } ?>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
@@ -274,35 +291,31 @@ $menu_id = 10;
 										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
 										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
 										}
+										if($nilai[kondisi]==2){
+											$kondisi="Rusak Ringan";
+										}elseif($nilai[kondisi]==3){
+											$kondisi="Rusak Berat";
+										}elseif($nilai[kondisi]==1){
+											$kondisi="Baik";
+										}
+										// //pr($value[TglPerolehan]);
+										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
+										// pr($TglPerolehanTmp);
+										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+
 					?>
 						
 					<tr class="gradeA">
 						<td><?php echo $no?></td>
-							<?php
+						<?php
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
-						<td class="checkbox-column">
+						<!-- <td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
 							<input type="checkbox" class="checkbox" onchange="enable();return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>|<?php echo $nilai[NilaiPerolehan];?>" >
 							
-						</td>
+						</td> -->
 						<?php } ?>
-						<td>
-								<?php
-								if($nilai['StatusKonfirmasi']==0){
-									$label="warning";
-									$text="proses";
-								}elseif($nilai['StatusKonfirmasi']==1){
-									$label="success";
-									$text="Diterima";
-								}elseif($nilai['StatusKonfirmasi']==2){
-									$label="danger";
-									$text="Ditolak";
-								}
-							?>
-							<span class="label label-<?=$label?>" ><?=$text?></span>
-						
-						</td>
 						<td>
 							<?php echo $nilai[noRegister]?>
 						</td>
@@ -351,7 +364,7 @@ $menu_id = 10;
 						<?php
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
-						<th>&nbsp;</th>
+						<!-- <th>&nbsp;</th> -->
 						<?php } ?>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

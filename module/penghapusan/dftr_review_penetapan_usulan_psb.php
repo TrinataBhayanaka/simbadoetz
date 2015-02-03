@@ -28,7 +28,7 @@ $menu_id = 10;
 	// }
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_psb($_POST);
 	
-	// ////pr($data);
+	// pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -175,7 +175,7 @@ $menu_id = 10;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>Nilai Baru</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -278,10 +278,12 @@ $menu_id = 10;
 						<td>
 							<?php echo number_format($nilai[NilaiPerolehan]);?>
 						</td>
-						<td>
+						<!-- <td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+						</td> -->
+						<td>
+							<?=number_format($nilai['NilaiPerolehanTmp']);?>
 						</td>
-							
 					</tr>
 					
 				   <?php 

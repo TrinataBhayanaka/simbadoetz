@@ -19,6 +19,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 ?>
 	<!-- SQL Sementara -->
 	<?php
+	// pr($_SESSION);
 		$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_pms($_POST);
 		////pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");

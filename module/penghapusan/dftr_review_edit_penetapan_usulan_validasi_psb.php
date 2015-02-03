@@ -162,7 +162,7 @@ $menu_id = 10;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>Nilai Baru</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -260,8 +260,11 @@ $menu_id = 10;
 						<td>
 							<?php echo number_format($nilai[NilaiPerolehan]);?>
 						</td>
-						<td>
+					<!-- 	<td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+						</td> -->
+						<td>
+							<?=number_format($nilai['NilaiPerolehanTmp'])?>
 						</td>
 							
 					</tr>

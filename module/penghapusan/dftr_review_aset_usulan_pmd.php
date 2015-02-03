@@ -41,6 +41,15 @@ $menu_id = 10;
             }
 	?>
 	<!-- End Sql -->
+	
+	<script>
+        $(function()
+        {
+       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+
+        }
+		);
+	</script>
 	<script language="Javascript" type="text/javascript">  
 			function enable(){  
 			var tes=document.getElementsByTagName('*');
@@ -136,8 +145,8 @@ $menu_id = 10;
 						&nbsp;
 					</li>
 					<li>
-						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
+						<span  class="labelInfo">Tanggal Usulan</span>
+						<input name="tanggalUsulan" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>

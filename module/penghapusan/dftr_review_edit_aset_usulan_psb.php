@@ -42,6 +42,15 @@ $menu_id = 10;
             }
 	?>
 	<!-- End Sql -->
+	
+	<script>
+        $(function()
+        {
+       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+
+        }
+		);
+	</script>
 	<script language="Javascript" type="text/javascript">  
 			function enable(){  
 			var tes=document.getElementsByTagName('*');
@@ -136,7 +145,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span  class="labelInfo">&nbsp;</span>
-								<input type="submit" value="Upadte Informasi Usulan" class="btn"/>
+								<input type="submit" <?=$disabled?> value="Upadte Informasi Usulan" class="btn"/>
 							</li>
 						</ul>
 							
@@ -148,9 +157,16 @@ $menu_id = 10;
 						<span  class="labelInfo">&nbsp;</span>
 						&nbsp;
 					</li>
+						<?php
+							
+							$TglUsulanTmp=explode("-", $row['TglUpdate']);
+							// pr($TglSKHapusTmp);
+							$TglUsulan=$TglUsulanTmp[1]."/".$TglUsulanTmp[2]."/".$TglUsulanTmp[0];
+
+						?>
 					<li>
-						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
+						<span  class="labelInfo">Tanggal Usulan</span>
+						<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -195,7 +211,7 @@ $menu_id = 10;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>Nilai Baru</th>
 						<th>Status Konfirmasi</th>
 					</tr>
 				</thead>
@@ -275,8 +291,11 @@ $menu_id = 10;
 						<td>
 							<?php echo number_format($nilai[NilaiPerolehan]);?>
 						</td>
-						<td>
+						<!-- <td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+						</td> -->
+						<td>
+							<?=number_format($nilai['NilaiPerolehanTmp'])?>
 						</td>
 						<td>
 							<?php

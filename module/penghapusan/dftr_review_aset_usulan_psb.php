@@ -41,6 +41,39 @@ $menu_id = 10;
             }
 	?>
 	<!-- End Sql -->
+
+	<script>
+        $(function()
+        {
+       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+
+        }
+		);
+		
+	</script>
+	<script>
+    jQuery(function($) {
+        $('.nilaimask').autoNumeric('init');
+   });
+    function getCurrency(item,dest,nilai,error,idcheck,idaset,kondisi){
+    	var old = $("#"+idcheck).val();
+    	var idasetID=$("#"+idaset).val();
+    	var kondisiOld=$("#"+kondisi).val();
+    	if(parseInt($(item).autoNumeric('get')) > parseInt(nilai)){
+    		$('#'+error).html('Nilai tidak Boleh Lebih');
+    		$('#'+dest).val('0');
+    		$("#submit").attr('style','display:none');
+    		$('#Form2').attr('action',"#");
+    	}else{
+
+    		$('#Form2').attr('action',"<?php echo $url_rewrite;?>/module/penghapusan/daftar_usulan_penghapusan_usul_proses_psb.php");
+    		 $("#submit").attr('style','');
+     		 $('#'+dest).val($(item).autoNumeric('get'));
+     		 $('#'+error).html('');
+     		 $("#"+idcheck).val(idasetID+"|"+kondisiOld+"|"+$(item).autoNumeric('get'));
+    	}
+    }
+    </script>
 	<script language="Javascript" type="text/javascript">  
 			function enable(){  
 			var tes=document.getElementsByTagName('*');
@@ -61,6 +94,7 @@ $menu_id = 10;
 				button.disabled=true;
 			}
 	</script>
+
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -136,8 +170,8 @@ $menu_id = 10;
 						&nbsp;
 					</li>
 					<li>
-						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
+						<span  class="labelInfo">Tanggal Usulan</span>
+						<input name="tanggalUsulan" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -172,7 +206,8 @@ $menu_id = 10;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>Ubah Nilai</th>
+						<!-- <th>Status</th> -->
 					</tr>
 				</thead>
 				<tbody>		
@@ -208,7 +243,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>|0" id="chebok<?=$no?>">
 							
 						</td>
 						<td>
@@ -233,10 +268,20 @@ $menu_id = 10;
 						</td>
 						<td>
 							<?php echo number_format($value[NilaiPerolehan]);?>
+							
 						</td>
 						<td>
-							<?php echo $kondisi. ' - ' .$value[AsalUsul]?>
+
+								<input type="text" class="span2 nilaimask" data-a-sign="Rp " data-a-dec="," data-a-sep="."  onkeyup="return getCurrency(this,'nilaiP<?=$no?>','<?=$value[NilaiPerolehan]?>','error<?=$no?>','chebok<?=$no?>','idaset<?=$no?>','kondisi<?=$no?>');"  placeholder="0" /><br/>
+								<em id="error<?=$no?>"></em>
+
+								<input type="hidden" id="nilaiP<?=$no?>"  >
+								<input type="hidden" id="idaset<?=$no?>"value="<?=$value[Aset_ID];?>"  >
+								<input type="hidden" id="kondisi<?=$no?>"value="<?=$value[kondisi];?>"  >
 						</td>
+						<!-- <td>
+							<?php echo $kondisi. ' - ' .$value[AsalUsul]?>
+						</td> -->
 							
 					</tr>
 					
@@ -261,6 +306,7 @@ $menu_id = 10;
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
+						<!-- <th>&nbsp;</th> -->
 					</tr>
 				</tfoot>
 			</table>

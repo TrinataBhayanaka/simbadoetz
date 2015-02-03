@@ -17,7 +17,7 @@ $parameter=array('submit'=>$submit, 'ses_uid'=>$ses_uid);
 
 		// pr($_POST);
   //       exit;
-		$data = $PENGHAPUSAN->update_validasi_penghapusan_PSB($_POST);
+		$data = $PENGHAPUSAN->update_validasi_penghapusan_psb($_POST);
 
 /*
 
