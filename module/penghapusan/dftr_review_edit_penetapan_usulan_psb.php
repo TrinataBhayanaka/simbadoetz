@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //pr($get_data_filter);
 ?>
 
 <?php
@@ -26,15 +26,19 @@ $menu_id = 10;
 	// $_SESSION['dataPost']=$_POST;
 	// $dataPost=$_SESSION['dataPost'];
 	// }
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pms($_POST);
+	// $data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_psb($_POST);
+	$idPenetapan=$_GET['id'];
+	//pr($idPenetapan);
+	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_psb($_GET);
 	
-	// ////pr($data);
+	// pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
 	?>
 	<!-- End Sql -->
+
 	<script>
         $(function()
         {
@@ -64,16 +68,42 @@ $menu_id = 10;
 			}
 	</script>
 	<script>
+	jQuery(function($) {
+	        $('#TotalNilai').autoNumeric('init', {mDec:0});
+	        
+	    });
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
+
+			var totalnilai = 0;	
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    var checkedValues = $('input:checkbox:checked').map(function() {
+			    	// alert('love');
+				    var data = this.value.split("|");
+				    var nilai = data[1];
+				    if(nilai){
+				    	totalnilai = parseInt(totalnilai) + parseInt(nilai);	
+				    }
+				    $("#TotalNilai").val(totalnilai);
+				     $('#TotalNilai').autoNumeric('set', totalnilai);
+				    // console.log(totalnilai);
+				}).get();
+				// var rule = totalnilai + parseInt($("#totalRBreal").val());
+				// if(rule > $("#spkreal").val()){
+				// 	$('#info').html('Nilai melebihin total SPK'); 
+    //             	$('#info').css("color","red");
+				// 	$('#btn-dis').attr("disabled","disabled");		
+				// } else {
+				// 	$('#info').html('');
+				// }
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    $("#TotalNilai").val(0);
 			}}, 100);
 		}
 		</script>
@@ -81,30 +111,30 @@ $menu_id = 10;
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Aset Usulan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Aset Usulan Penghapusan Sebagian</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemusnahan</div>
+				<div class="title">Usulan Penghapusan Sebagian</div>
 				<div class="subtitle">Review Aset yang akan dibuat Usulan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -114,19 +144,23 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses_pms.php">
-					
+			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_edit_proses_psb.php">
+					<?php
+							if($_SESSION['ses_uaksesadmin']!=1){
+								$disabledForm="disabled";
+							}
+						?>
 			<div class="detailLeft">
 						
 						<ul>
 							<li>
 								<span  class="labelInfo">No SK Penghapusan</span>
-								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" <?php echo $disabledForm;?> required>
+								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?=$data['dataRow'][0]['NoSKHapus']?>" <?php echo $disabledForm;?> required>
 						
 							</li>
 							<li>
 								<span class="labelInfo">Keterangan Penghapusan</span>
-								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> required></textarea>
+								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> required><?=$data['dataRow'][0]['AlasanHapus']?></textarea>
 							</li>
 						</ul>
 							
@@ -139,13 +173,26 @@ $menu_id = 10;
 						&nbsp;
 					</li>
 					<li>
+						<?php
+							
+							$TglSKHapusTmp=explode("-", $data['dataRow'][0]['TglHapus']);
+							// pr($TglSKHapusTmp);
+							$TglSKHapus=$TglSKHapusTmp[1]."/".$TglSKHapusTmp[2]."/".$TglSKHapusTmp[0];
+
+						?>
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
-						<input name="bup_pp_tanggal" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
+						<input name="bup_pp_tanggal" type="text" id="tanggal1" value="<?=$TglSKHapus?>" <?php echo $disabledForm;?> required/>
 					</li>
-					<li>
-						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
-					</li>
+					<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+					<!-- <li>
+						<span  class="labelInfo">Total Nilai</span>
+						<input name="bup_pp_nilaiPerolehan" type="text" id="TotalNilai" value=""required/>
+					</li> -->
+					<?php
+						}
+					?>
 					<!-- <li>
 						<span  class="labelInfo">Total Nilai Usulan</span>
 						<input type="text" value="" disabled/>
@@ -159,15 +206,26 @@ $menu_id = 10;
 			
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
+					<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 					<tr>
 						<td colspan="10" align="Left">
-								<span><button type="submit" name="submit"  class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span>
-						
+								<!-- <span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span> -->
+								<span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Update Informasi Penetapan</button></span>
+								<input type="hidden" name="id" value="<?=$idPenetapan?>"/>
 						</td>
 					</tr>
+					<?php
+						}
+					?>
 					<tr>
 						<th>No</th>
-						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+						<!-- <th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th> -->
+						<?php } ?>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
@@ -175,7 +233,7 @@ $menu_id = 10;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>Nilai Baru</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -192,18 +250,18 @@ $menu_id = 10;
 					$no = 1;
 					foreach ($data['dataArr'] as $key => $nilai)
 					{
-						// ////pr($valueUsulan);
+						// //pr($valueUsulan);
 						?>
 						<!-- <input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/> -->
 					<?php
 					
 					// $TglPerolehanTmp=explode("-", $valueUsulan[TglPerolehan]);
-					// // ////pr($TglPerolehanTmp);
+					// // //pr($TglPerolehanTmp);
 					// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
-					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_pms($valueUsulan['Usulan_ID']);
-									// ////pr($dataUsulanAset);
-									// ////pr($_SESSION);
+					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_psb($valueUsulan['Usulan_ID']);
+									// //pr($dataUsulanAset);
+									// //pr($_SESSION);
 									// StatusKonfirmasi
 									
 									// foreach ($dataUsulanAset as $keys => $nilai)
@@ -242,19 +300,22 @@ $menu_id = 10;
 										}
 										// //pr($value[TglPerolehan]);
 										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-										// //pr($TglPerolehanTmp);
+										// pr($TglPerolehanTmp);
 										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-
 
 					?>
 						
 					<tr class="gradeA">
 						<td><?php echo $no?></td>
-						<td class="checkbox-column">
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+						<!-- <td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="enable();return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>|<?php echo $nilai[NilaiPerolehan];?>" >
 							
-						</td>
+						</td> -->
+						<?php } ?>
 						<td>
 							<?php echo $nilai[noRegister]?>
 						</td>
@@ -278,8 +339,11 @@ $menu_id = 10;
 						<td>
 							<?php echo number_format($nilai[NilaiPerolehan]);?>
 						</td>
-						<td>
+						<!-- <td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+						</td> -->
+						<td>
+							<?=number_format($nilai['NilaiPerolehanTmp'])?>
 						</td>
 							
 					</tr>
@@ -300,7 +364,11 @@ $menu_id = 10;
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+						<!-- <th>&nbsp;</th> -->
+						<?php } ?>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
@@ -336,8 +404,8 @@ $menu_id = 10;
 						foreach ($data['dataRow'] as $valueUsulan) {
 							
 							$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
-									////pr($dataUsulanAset);
-									// ////pr($_SESSION);
+									//pr($dataUsulanAset);
+									// //pr($_SESSION);
 									// StatusKonfirmasi
 									$no = 1;
 									foreach ($dataUsulanAset as $keys => $nilai)

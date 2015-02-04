@@ -19,33 +19,23 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	//pr($_POST);
-
-	//pr($_SESSION['usulanIDTmp']);
-
-	if(isset($_POST['usulanID'])){
-		$id=$_POST['usulanID'];
-	}else{
-		$id="";
-		if(isset($_SESSION['usulanIDTmp'])) {
-			$id=$_SESSION['usulanIDTmp'];
-		}
-		
-	}
+	// if($_SESSION['filterAsetUsulan'])
+	// //pr($_SESSION['filterAsetUsulan']);
+	//pr($_SESSION);
 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
-		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($_POST);
-		$_SESSION['filterAsetUsulanAdd']=$data;
-		$data=$_SESSION['filterAsetUsulanAdd'];
+		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($_POST);
+		$_SESSION['filterAsetUsulan']=$data;
+		$data=$_SESSION['filterAsetUsulan'];
 		// //pr($_SESSION['reviewAsetUsulan']);
-		unset($_SESSION['reviewAsetUsulanAdd']);
+		unset($_SESSION['reviewAsetUsulan']);
 	}else{
-		$dataSESSION=$_SESSION['filterAsetUsulanAdd'];
+		$dataSESSION=$_SESSION['filterAsetUsulan'];
 
-		if($_SESSION['reviewAsetUsulanAdd']){
+		if($_SESSION['reviewAsetUsulan']){
 			// //pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
 				// //pr($valueSESSION['Aset_ID']);
-				if(!in_array($valueSESSION['Aset_ID'], $_SESSION['reviewAsetUsulanAdd']['penghapusanfilter'])){
+				if(!in_array($valueSESSION['Aset_ID'], $_SESSION['reviewAsetUsulan']['penghapusanfilter'])){
 					// echo "stringnot";
 					$data[]=$valueSESSION;
 				}
@@ -55,12 +45,13 @@ $menu_id = 10;
 		// //pr($data);
 
 	}
-	// $data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($_POST);
+	// pr($data);
 	if(isset($_GET['flegAset'])){
 		$flegAset=$_GET['flegAset'];
 	}else{
 		$flegAset=1;
 	}
+
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -105,30 +96,30 @@ $menu_id = 10;
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Aset Usulan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Aset Usulan Penghapusan Sebagian</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemusnahan</div>
+				<div class="title">Usulan Penghapusan Sebagian</div>
 				<div class="subtitle">Daftar Aset yang akan dibuat Usulan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -139,28 +130,26 @@ $menu_id = 10;
 
 		<section class="formLegend">
 			
-			
 			<div id="demo">
-			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_pms.php"> 
+			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_psb.php"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
 						<td colspan="7" align="left">
 								<span><button type="submit" name="submit" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Buat Usulan Penghapusan</button></span>
-								<input type="hidden" name="usulanID" value="<?=$id?>"/>
 								<input type="hidden" name="reviewAsetUsulan" value="<?=$flegAset?>" />
+						
 						<?php
 							if($flegAset==0){
 						?>
-							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_pms.php" class="btn">Kembali ke Aset Usulan</a>
+							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_psb.php" class="btn">Kembali ke Aset Usulan</a>
 						<?php
 
 							}
 						?>
 						</td>
-
 						<td colspan="3" align="right">
-							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/filter_tambah_aset_usulan_pms.php?usulanID=<?=$id?>" class="btn">Kembali Ke Pencarian</a>
+							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/filter_aset_usulan_psb.php" class="btn">Kembali Ke Pencarian</a>
 			
 						</td>
 					</tr>

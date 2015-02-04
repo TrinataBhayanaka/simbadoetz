@@ -41,8 +41,9 @@ $menu_id = 10;
 		$POST=$_SESSION['reviewAsetUsulanAdd'];
 		//pr($POST);
 	}
-	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_pms($POST);
-
+	$data = $PENGHAPUSAN->retrieve_tambahan_usulan_penghapusan_eksekusi_pms($POST);
+	// pr($data);
+	$row=$data['dataRow'][0];
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -120,18 +121,18 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_usul_proses_pms.php"> 
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_tambahan_usulan_penghapusan_usul_proses_pms.php"> 
 			
 			<div class="detailLeft">
 						
 						<ul>
 							<li>
 								<span  class="labelInfo">No Usulan</span>
-								<input type="text" name="noUsulan" value="" />
+								<input type="text" name="noUsulan" disabled value="<?=$row['NoUsulan']?>" />
 							</li>
 							<li>
 								<span class="labelInfo">Keterangan usulan</span>
-								<textarea name="ketUsulan" ></textarea>
+								<textarea name="ketUsulan" disabled ><?=$row['KetUsulan']?></textarea>
 							</li>
 						</ul>
 							
@@ -186,7 +187,7 @@ $menu_id = 10;
 				</thead>
 				<tbody>		
 				<?php
-				if (!empty($data))
+				if (!empty($data['dataArr']))
 				{
 			   
 					$page = @$_GET['pid'];
@@ -195,7 +196,7 @@ $menu_id = 10;
 					}else{
 						$no = 1;
 					}
-					foreach ($data as $key => $value)
+					foreach ($data['dataArr'] as $key => $value)
 					{
 					// //pr($get_data_filter);
 					if($value[kondisi]==2){

@@ -27,8 +27,16 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		
 		$data = $PENGHAPUSAN->store_usulan_penghapusan_psb($_POST);
         
-        echo "<script>
+       if(isset($_POST['usulanID'])){
+            $id=$_POST['usulanID'];
+            echo "<script>
                     alert('Data Berhasil Disimpan');
-                    document.location='$url_rewrite/module/penghapusan/daftar_usulan_penghapusan_ok_psb.php?usulan_id=$usulan_id';
+                    document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_psb.php?id=$id';
                 </script>";
+        }else{
+            echo "<script>
+                    alert('Data Berhasil Disimpan');
+                    document.location='$url_rewrite/module/penghapusan/dftr_usulan_psb.php?pid=1';
+                </script>";
+        }
 ?>

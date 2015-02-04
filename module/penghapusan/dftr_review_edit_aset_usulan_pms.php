@@ -42,6 +42,15 @@ $menu_id = 10;
             }
 	?>
 	<!-- End Sql -->
+	
+	<script>
+        $(function()
+        {
+       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+
+        }
+		);
+	</script>
 	<script language="Javascript" type="text/javascript">  
 			function enable(){  
 			var tes=document.getElementsByTagName('*');
@@ -113,7 +122,7 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_hapus_pms.php"> 
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_upd_pms.php"> 
 			
 			<div class="detailLeft">
 				<?php
@@ -134,6 +143,10 @@ $menu_id = 10;
 								<span class="labelInfo">Keterangan usulan</span>
 								<textarea name="ketUsulan" <?=$disabled?> required><?=$row['KetUsulan']?></textarea>
 							</li>
+							<li>
+								<span  class="labelInfo">&nbsp;</span>
+								<input type="submit" <?=$disabled?> value="Upadte Informasi Usulan" class="btn"/>
+							</li>
 						</ul>
 							
 					</div>
@@ -144,23 +157,28 @@ $menu_id = 10;
 						<span  class="labelInfo">&nbsp;</span>
 						&nbsp;
 					</li>
+
+						<?php
+							
+							$TglUsulanTmp=explode("-", $row['TglUpdate']);
+							// pr($TglSKHapusTmp);
+							$TglUsulan=$TglUsulanTmp[1]."/".$TglUsulanTmp[2]."/".$TglUsulanTmp[0];
+
+						?>
 					<li>
-						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
+						<span  class="labelInfo">Tanggal Usulan</span>
+						<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
+						<input type="hidden" name="usulanID" value="<?=$id?>"/><br/>
 					</li>
-					<!-- <li>
-						<span  class="labelInfo">Total Nilai Usulan</span>
-						<input type="text" value="" disabled/>
-					</li> -->
 				</ul>
 			</div>
 			
 			<div style="height:5px;width:100%;clear:both"></div>
-			
+			</form>
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_hapus_pms.php"> 
 			<div id="demo">
 			
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
@@ -170,8 +188,8 @@ $menu_id = 10;
 							<?php
 								if($row['StatusPenetapan']==0){
 							?>
-								<a href="filter_tambah_aset_usulan_pms.php?usulanID=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Usulan</a>
-								<span><button type="submit" name="submit"  class="btn btn-danger " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Delete</button></span>
+								<a href="filter_tambah_aset_usulan_pms.php?usulanID=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Aset Usulan</a>
+								<span><button type="submit" name="submit"  class="btn btn-danger " id="submit" disabled/><i class="icon-trash icon-white"></i>&nbsp;&nbsp;Delete</button></span>
 								<input type="hidden" name="usulanID" value="<?=$id?>"/>
 							<?php
 								}
@@ -224,6 +242,18 @@ $menu_id = 10;
 					$delete="<a href='$url_rewrite/module/penghapusan/usulan_asetid_proses_hapus_pms.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
 					 Delete</a>";
 					}
+					if($nilai[kondisi]==2){
+						$kondisi="Rusak Ringan";
+					}elseif($nilai[kondisi]==3){
+						$kondisi="Rusak Berat";
+					}elseif($nilai[kondisi]==1){
+						$kondisi="Baik";
+					}
+					// //pr($value[TglPerolehan]);
+					$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
+					// //pr($TglPerolehanTmp);
+					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+
 					?>
 						
 					<tr class="gradeA">

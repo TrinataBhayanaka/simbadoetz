@@ -33,7 +33,7 @@ $menu_id = 10;
 		
 	}
 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
-		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($_POST);
+		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($_POST);
 		$_SESSION['filterAsetUsulanAdd']=$data;
 		$data=$_SESSION['filterAsetUsulanAdd'];
 		// //pr($_SESSION['reviewAsetUsulan']);
@@ -55,7 +55,7 @@ $menu_id = 10;
 		// //pr($data);
 
 	}
-	// $data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($_POST);
+	// $data = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($_POST);
 	if(isset($_GET['flegAset'])){
 		$flegAset=$_GET['flegAset'];
 	}else{
@@ -105,30 +105,30 @@ $menu_id = 10;
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Aset Usulan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Aset Usulan Penghapusan Sebagian</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemusnahan</div>
+				<div class="title">Usulan Penghapusan Sebagian</div>
 				<div class="subtitle">Daftar Aset yang akan dibuat Usulan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -141,7 +141,7 @@ $menu_id = 10;
 			
 			
 			<div id="demo">
-			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_pms.php"> 
+			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_psb.php"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
@@ -152,7 +152,7 @@ $menu_id = 10;
 						<?php
 							if($flegAset==0){
 						?>
-							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_pms.php" class="btn">Kembali ke Aset Usulan</a>
+							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_psb.php" class="btn">Kembali ke Aset Usulan</a>
 						<?php
 
 							}
@@ -160,7 +160,7 @@ $menu_id = 10;
 						</td>
 
 						<td colspan="3" align="right">
-							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/filter_tambah_aset_usulan_pms.php?usulanID=<?=$id?>" class="btn">Kembali Ke Pencarian</a>
+							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/filter_tambah_aset_usulan_psb.php?usulanID=<?=$id?>" class="btn">Kembali Ke Pencarian</a>
 			
 						</td>
 					</tr>

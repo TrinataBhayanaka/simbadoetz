@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //pr($get_data_filter);
 ?>
 
 <?php
@@ -19,43 +19,77 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	// pr($_SESSION);
-		$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_pms($_POST);
-		////pr($data);
+		// $data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan($_POST);
+		$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_validasi_psb($_POST);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
 	?>
 	<!-- End Sql -->
+
+	<script language="Javascript" type="text/javascript">  
+			function enable(){  
+			var tes=document.getElementsByTagName('*');
+			var button=document.getElementById('submit');
+			var boxeschecked=0;
+			for(k=0;k<tes.length;k++)
+			{
+				if(tes[k].className=='checkbox')
+					{
+						//
+						tes[k].checked == true  ? boxeschecked++: null;
+					}
+			}
+			//alert(boxeschecked);
+			if(boxeschecked!=0)
+				button.disabled=false;
+			else
+				button.disabled=true;
+			}
+	</script>
+	<script>
+		function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			}}, 100);
+		}
+		</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Penetapan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Penetapan Penghapusan Sebagian</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Penetapan Penghapusan Pemusnahan</div>
-				<div class="subtitle">Daftar Penetapan Penghapusan Pemusnahan</div>
+				<div class="title">Penetapan Penghapusan Sebagian</div>
+				<div class="subtitle">Daftar Penetapan Penghapusan Sebagian</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -66,19 +100,41 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
 		<section class="formLegend">
 			
-			<p><a href="filter_usulan_pms.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Penetapan Penghapusan</a>
-			&nbsp;</p>	
+			<!-- <p><a href="filter_usulan_psb.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Penetapan Penghapusan</a>
+			&nbsp;</p>	 -->
+
 			<div id="demo">
+			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses_psb.php">
+			
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
+					<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+					<tr>
+						<td colspan="8" align="Left">
+								<span><button type="submit" name="submit" id="submit" value="tetapkan" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Barang</button></span>
+						</td>
+					</tr>
+					<?php
+						}
+					?>
 					<tr>
 						<th>No</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+						<th class="checkbox-column">
+							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
+						</th>
+						<?php
+							}
+						?>
 						<th>Nomor SK Penghapusan</th>
 						<!-- <th>Satker</th> -->
 						<th>Jumlah Usulan</th>
 						<th>Tgl Penetapan</th>
 						<th>Keterangan</th>
-						<th>Status</th>
 						<th>Tindakan</th>
 					</tr>
 				</thead>
@@ -100,6 +156,16 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						  
 					<tr class="gradeA">
 						<td><?php echo "$nomor";?></td>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
+						<td class="checkbox-column">
+							<input type="checkbox" class="checkbox" onchange="enable()" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
+							
+						</td>
+						<?php
+							}
+						?>
 						<td>
 							<?php echo "$row[NoSKHapus]";?>
 						</td>
@@ -114,33 +180,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						</td>
 						<td><?php $change=$row[TglHapus]; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
 						<td><?php echo "$row[AlasanHapus]";?></td>
-						<td>
-							<?php
-							if($row['Status']==0){
-								$label="warning";
-								$text="Belum Divalidasi";
-							}elseif($row['Status']==1){
-								$label="success";
-								$text="sudah Divalidasi";
-							}
-						?>
-						<span class="label label-<?=$label?>"><?=$text?></span>
-					</td>
-
 						<td align="center">	
-							<?php
-							if($row['Status']==0 && $_SESSION['ses_uaksesadmin']==1){
-							?>
 						 <!--<a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan.php?menu_id=39&mode=1&id=<?php echo "$row[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||--> 
-						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_pms.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success btn-small"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;
-						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_hapus_pms.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-danger btn-small"> <i class="fa fa-trash"></i>Hapus</a>  
-						<?php
-						}else{ ?>
-							<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_pms.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success btn-small"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;
-						
-			<?php			}
-
-						?>
+						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_validasi_psb.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;
+						<!-- <a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_hapus_psb.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-danger"> <i class="fa fa-trash"></i>
+ Hapus</a>   -->
 						</td>
 					</tr>
 					<?php $nomor++;} }?>
@@ -148,9 +192,14 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<th>&nbsp;</th>
+						<?php
+							}
+						?>
 						<!-- <th>&nbsp;</th> -->
-						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
@@ -158,6 +207,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					</tr>
 				</tfoot>
 			</table>
+			</form>
 			</div>
 			<div class="spacer"></div>
 			    

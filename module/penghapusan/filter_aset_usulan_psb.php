@@ -28,30 +28,30 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Usulan Penghapusan Sebagian</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemusnahan</div>
+				<div class="title">Usulan Penghapusan Sebagian</div>
 				<div class="subtitle">Filter Aset Data </div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -62,7 +62,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_pms.php?pid=1&flegAset=1" onsubmit="return requiredFilter(true)">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_psb.php?pid=1&flegAset=1" onsubmit="return requiredFilter(true)">
 				<ul>
 					<li>&nbsp;</li>
 					<li>

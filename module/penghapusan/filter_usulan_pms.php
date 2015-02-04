@@ -5,7 +5,7 @@ $menu_id = 10;
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
-// $get_data_filter = $RETRIEVE->retrieve_kontrak();
+$get_data_filter = $RETRIEVE->retrieve_kontrak();
 // //pr($get_data_filter);
 ?>
 

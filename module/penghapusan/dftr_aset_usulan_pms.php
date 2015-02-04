@@ -46,7 +46,6 @@ $menu_id = 10;
 
 	}
 	// pr($data);
-	
 	if(isset($_GET['flegAset'])){
 		$flegAset=$_GET['flegAset'];
 	}else{
@@ -131,15 +130,27 @@ $menu_id = 10;
 
 		<section class="formLegend">
 			
-			
 			<div id="demo">
 			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pms.php"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>
-						<td colspan="10" align="left">
+						<td colspan="7" align="left">
 								<span><button type="submit" name="submit" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Buat Usulan Penghapusan</button></span>
 								<input type="hidden" name="reviewAsetUsulan" value="<?=$flegAset?>" />
+						
+						<?php
+							if($flegAset==0){
+						?>
+							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pms.php" class="btn">Kembali ke Aset Usulan</a>
+						<?php
+
+							}
+						?>
+						</td>
+						<td colspan="3" align="right">
+							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/filter_aset_usulan_pms.php" class="btn">Kembali Ke Pencarian</a>
+			
 						</td>
 					</tr>
 					<tr>
