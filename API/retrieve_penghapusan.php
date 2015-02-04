@@ -1,4 +1,4 @@
-g<?php
+<?php
 class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
 	public function __construct()
@@ -1225,7 +1225,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $resUsl=" ";
                 }
                //  ////pr($res);
-        if ($res) return array('dataArr'=>$res, 'dataRow'=>$resUsl);;
+        if ($res) return array('dataArr'=>$res, 'dataRow'=>$resUsl);
         return false;
         
     }
