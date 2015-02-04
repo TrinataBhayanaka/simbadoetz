@@ -34,6 +34,20 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 				 })
 			}
 
+			function deleteDataCheckbox(item){
+				var temp = new Array();
+				var data = "";
+				var checkedValues = $('input:checkbox:checked').map(function() {
+					if(this.value != 'on'){
+						temp.push(this.value);
+				    	data = temp.join();
+					}
+				}).get();
+				 $.post('<?=$url_rewrite?>/function/api/appdel.php', {data:data, UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+		
+				 })
+			}
+
 		
 			function AreAnyCheckboxesChecked () 
 			{	
@@ -47,6 +61,7 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 					else
 					{
 					   $('#btn-dis').attr("disabled","disabled");
+					   deleteDataCheckbox('VDST');
 					}
 				}, 100);
 			}
