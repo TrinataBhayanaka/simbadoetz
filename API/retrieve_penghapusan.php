@@ -1799,6 +1799,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $resAst = $this->db->lazyQuery($sqlAst,$debug);
 
            
+             pr($sqlAst);
+             pr($resAst);
             $res[$key]['TotalNilaiPerolehan']=0;
             
             foreach ($resAst as $keyAst => $valueAst) {
