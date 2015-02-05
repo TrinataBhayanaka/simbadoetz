@@ -1793,7 +1793,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $sqlAst = array(
                     'table'=>'Aset',
                     'field'=>" Aset_ID,NilaiPerolehan ",
-                    'condition' => "Aset_ID IN ($Aset_ID)"
+                    'condition' => "Aset_ID IN ($Aset_ID) GROUP BY Aset_ID"
                     );
             
             $resAst = $this->db->lazyQuery($sqlAst,$debug);
