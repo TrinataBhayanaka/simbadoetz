@@ -1775,6 +1775,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 );
          pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
+        pr($res);
         // $resAset_ID=explode(",", $res[0]['Aset_ID']);
         foreach ($res as $key => $value) {
             // echo"======";
@@ -1802,7 +1803,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
              pr($sqlAst);
              pr($resAst);
             $res[$key]['TotalNilaiPerolehan']=0;
-            
+            pr($res);
             foreach ($resAst as $keyAst => $valueAst) {
                 // //////////////////////pr($valueAst);
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
