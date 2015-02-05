@@ -1792,7 +1792,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $Aset_ID=$value['Aset_ID'];
             $sqlAst = array(
                     'table'=>'Aset',
-                    'field'=>" NilaiPerolehan ",
+                    'field'=>" Aset_ID,NilaiPerolehan ",
                     'condition' => "Aset_ID IN ($Aset_ID)"
                     );
             
