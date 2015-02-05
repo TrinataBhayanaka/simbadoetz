@@ -10,7 +10,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
         $paging = $LOAD_DATA->paging($_GET['pid']);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// pr($get_data_filter);
 				
 
 ?>
@@ -35,7 +35,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				}
 
 $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
-////pr($data);
+pr($data);
 
 		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
    //      while ($dataKontrak = mysql_fetch_assoc($sql)){
