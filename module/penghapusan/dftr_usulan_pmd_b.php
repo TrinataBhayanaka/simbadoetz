@@ -34,7 +34,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 					$dataArr[] = $dataNew->Usulan_ID;
 				}
 
-$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
+$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd_b($_POST);
 pr($data);
 
 		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");

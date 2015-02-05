@@ -1746,6 +1746,74 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         return false;
     
     }
+    public function retrieve_daftar_usulan_penghapusan_pmd_b($data,$debug=false)
+    {
+       //////////////////////pr($_SESSION);
+        $jenisaset = $data['jenisaset'];
+        $nokontrak = $data['nokontrak'];
+        $kodeSatker = $data['kodeSatker'];
+        $filterkontrak = "";
+        // if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
+        // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+        if($_SESSION['ses_uaksesadmin']==1){
+
+         $kodeSatker = $_SESSION['ses_satkerkode'];
+         if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
+        }else{
+
+           // $kodeSatker = $_SESSION['ses_satkerkode'];;
+           // if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
+           $UserName=$_SESSION['ses_uoperatorid'];
+
+            if ($UserName) $filterkontrak .= " AND UserNm = '{$UserName}' ";
+        }
+
+        $sql = array(
+                'table'=>'Usulan',
+                'field'=>" * ",
+                'condition' => "FixUsulan=1 AND Jenis_Usulan='PMD'{$filterkontrak}"
+                );
+         // //////////////////////pr($sql);
+        $res = $this->db->lazyQuery($sql,$debug);
+        // $resAset_ID=explode(",", $res[0]['Aset_ID']);
+        foreach ($res as $key => $value) {
+            // echo"======";
+            ////////////////////////pr($value);
+            $SatkerKode=$value['SatkerUsul'];
+            $sqlSat = array(
+                    'table'=>'Satker',
+                    'field'=>" NamaSatker ",
+                    'condition' => "kode='$SatkerKode' GROUP BY kode"
+                    );
+            $resSat = $this->db->lazyQuery($sqlSat,$debug);
+
+            $res[$key]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
+            ////////////////////////pr($resSat);
+            $Aset_ID=$value['Aset_ID'];
+            $sqlAst = array(
+                    'table'=>'Aset',
+                    'field'=>" NilaiPerolehan ",
+                    'condition' => "Aset_ID IN ($Aset_ID)"
+                    );
+            
+            $resAst = $this->db->lazyQuery($sqlAst,$debug);
+            pr($resAst);
+            $res[$key]['TotalNilaiPerolehan']=0;
+            
+            foreach ($resAst as $keyAst => $valueAst) {
+                // //////////////////////pr($valueAst);
+                $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+           
+            }
+            
+        }
+
+        // //////////////////////pr($resAst);
+        // //////////////////////pr($res);
+        if ($res) return $res;
+        return false;
+    
+    }
     public function retrieve_daftar_usulan_penghapusan_pms($data,$debug=false)
     {
        //////////////////////pr($_SESSION);
