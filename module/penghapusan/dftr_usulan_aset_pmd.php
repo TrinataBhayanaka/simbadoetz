@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -20,34 +20,21 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-
+	//pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter_pmd($_POST);
-	//pr($data);
+	////pr($data);
+	if($_POST['kodeSatker']){
+		$_SESSION['kdSatkerFilterPMDp']=$_POST['kodeSatker'];
+		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
+	}else{
+		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
+	}
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
 	?>
-	<!-- End Sql --><script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
-	</script>
+	<!-- End Sql -->
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -102,6 +89,8 @@ $menu_id = 10;
 		
 			<div id="demo">
 			<form name="myform" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_penetapan_usulan_pmd.php">
+			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
+					
 			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
 					<tr>
@@ -117,7 +106,7 @@ $menu_id = 10;
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Nomor Usulan</th>
-						<!-- <th>Satker</th> -->
+						<th>Satker</th>
 						<th>Jumlah Aset</th>
 						<th>Tgl Usulan</th>
 						<th>Nilai</th>
@@ -128,9 +117,9 @@ $menu_id = 10;
 							 
 				 <?php
                                         
-					// //pr($dataArr);
+					// ////pr($dataArr);
 					$no=1;	
-					// //pr($data);
+					//pr($data);
 					if($data){
 					foreach($data as $key => $hsl_data){
 						
@@ -147,11 +136,17 @@ $menu_id = 10;
 						<td><?php echo "$no";?></td>
 						<td  class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
+							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" >
 							
 						</td>
 						<td><?php echo $hsl_data['NoUsulan'];?></td>
-						<!-- <td><?php echo "$no";?></td> -->
+						<td>
+							<?php
+							if($hsl_data['SatkerUsul']){ echo "[".$hsl_data['SatkerUsul']."]";}
+							?>
+							<br/>
+							<?php echo $hsl_data['NamaSatkerUsul'];?>
+						</td>
 						<td>
 							<?php echo $jumlahAset;?>
 						</td>
@@ -168,6 +163,7 @@ $menu_id = 10;
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

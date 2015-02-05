@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -19,7 +19,7 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	//pr($_POST);
+	////pr($_POST);
 	if(isset($_POST['usulanID'])){
 		$id=$_POST['usulanID'];
 	}else{
@@ -33,16 +33,16 @@ $menu_id = 10;
 		$_SESSION['reviewAsetUsulanAdd']=$_POST;
 		$POST=$_SESSION['reviewAsetUsulanAdd'];
 	}else{
-		//pr($_POST);
-		//pr($_SESSION['reviewAsetUsulanAdd']);
+		////pr($_POST);
+		////pr($_SESSION['reviewAsetUsulanAdd']);
 		foreach ($_POST['penghapusanfilter'] as $key => $value) {
 			$_SESSION['reviewAsetUsulanAdd']['penghapusanfilter'][]=$value;
 		}
 		$POST=$_SESSION['reviewAsetUsulanAdd'];
-		//pr($POST);
+		////pr($POST);
 	}
 	$data = $PENGHAPUSAN->retrieve_tambahan_usulan_penghapusan_eksekusi_pms($POST);
-	// pr($data);
+	// //pr($data);
 	$row=$data['dataRow'][0];
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
@@ -50,26 +50,7 @@ $menu_id = 10;
             }
 	?>
 	<!-- End Sql -->
-	<script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
-	</script>
+	
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -198,7 +179,7 @@ $menu_id = 10;
 					}
 					foreach ($data['dataArr'] as $key => $value)
 					{
-					// //pr($get_data_filter);
+					// ////pr($get_data_filter);
 					if($value[kondisi]==2){
 						$kondisi="Rusak Ringan";
 					}elseif($value[kondisi]==3){
@@ -206,9 +187,9 @@ $menu_id = 10;
 					}elseif($value[kondisi]==1){
 						$kondisi="Baik";
 					}
-					// //pr($value[TglPerolehan]);
+					// ////pr($value[TglPerolehan]);
 					$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-					// //pr($TglPerolehanTmp);
+					// ////pr($TglPerolehanTmp);
 					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 
@@ -218,7 +199,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
 						<td>

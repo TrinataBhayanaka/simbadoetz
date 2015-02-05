@@ -10,7 +10,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
         $paging = $LOAD_DATA->paging($_GET['pid']);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 				
 
 ?>
@@ -26,7 +26,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 				$parameter = array('menuID'=>$menu_id,'type'=>'','paging'=>$paging);
 			// $data = $RETRIEVE->retrieve_daftar_usulan_penghapusan($parameter);
-				// //pr($data);
+				// ////pr($data);
 				$query = "select distinct Usulan_ID from UsulanAset where StatusPenetapan = 1 AND Jenis_Usulan = 'HPS'";
 				$result  = mysql_query($query) or die (mysql_error());
 				while ($dataNew = mysql_fetch_object($result))
@@ -35,7 +35,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				}
 
 $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
-//pr($data);
+////pr($data);
 
 		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
    //      while ($dataKontrak = mysql_fetch_assoc($sql)){
@@ -102,9 +102,9 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
 							 
 				 <?php
                                         
-					// //pr($dataArr);
+					// ////pr($dataArr);
 					$no=1;	
-					// //pr($data);
+					// ////pr($data);
 					if($data){
 					foreach($data as $key => $hsl_data){
 						
