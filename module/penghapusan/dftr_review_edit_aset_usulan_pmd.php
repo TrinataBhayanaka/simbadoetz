@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -21,47 +21,37 @@ $menu_id = 10;
 	<?php
 
 	$id=$_GET['id'];
-				// ////pr($id);
+				// //////pr($id);
 				if (isset($id))
 				{
 					unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 					$parameter = array('id'=>$id);
 					// $data = $RETRIEVE->retrieve_penetapan_penghapusan_edit_data($parameter);
 					
-						// ////pr($_POST);
+						// //////pr($_POST);
 						$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_pmd($_GET);
-						////pr($data);
+						//////pr($data);
 						
 				}
 
 				$row=$data['dataRow'][0];		
-				////pr($row);
+				//////pr($row);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
 	?>
 	<!-- End Sql -->
-	<script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
+	
+	<script>
+        $(function()
+        {
+       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+
+        }
+		);
 	</script>
+	
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -136,7 +126,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span  class="labelInfo">&nbsp;</span>
-								<input type="submit" value="Upadte Informasi Usulan" class="btn"/>
+								<input type="submit" <?=$disabled?> value="Upadte Informasi Usulan" class="btn"/>
 							</li>
 						</ul>
 							
@@ -148,9 +138,16 @@ $menu_id = 10;
 						<span  class="labelInfo">&nbsp;</span>
 						&nbsp;
 					</li>
+						<?php
+							
+							$TglUsulanTmp=explode("-", $row['TglUpdate']);
+							// //pr($TglSKHapusTmp);
+							$TglUsulan=$TglUsulanTmp[1]."/".$TglUsulanTmp[2]."/".$TglUsulanTmp[0];
+
+						?>
 					<li>
-						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
+						<span  class="labelInfo">Tanggal Usulan</span>
+						<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -202,9 +199,9 @@ $menu_id = 10;
 				<tbody>		
 				<?php
 				$no = 1;
-				// ////pr($data);
+				// //////pr($data);
 				$coo=count($data['dataArr']);
-				// ////pr($coo);
+				// //////pr($coo);
 				foreach ($data['dataArr'] as $keys => $nilai)
 				{
 
@@ -232,9 +229,9 @@ $menu_id = 10;
 					}elseif($nilai[kondisi]==1){
 						$kondisi="Baik";
 					}
-					// //pr($value[TglPerolehan]);
+					// ////pr($value[TglPerolehan]);
 					$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-					// //pr($TglPerolehanTmp);
+					// ////pr($TglPerolehanTmp);
 					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 					?>
@@ -246,7 +243,7 @@ $menu_id = 10;
 							?>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
 							
 						</td>
 						<?php

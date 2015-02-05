@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -19,8 +19,9 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 ?>
 	<!-- SQL Sementara -->
 	<?php
+	// //pr($_SESSION);
 		$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_pms($_POST);
-		////pr($data);
+		//////pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -73,7 +74,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<tr>
 						<th>No</th>
 						<th>Nomor SK Penghapusan</th>
-						<!-- <th>Satker</th> -->
+						<th>Satker</th>
 						<th>Jumlah Usulan</th>
 						<th>Tgl Penetapan</th>
 						<th>Keterangan</th>
@@ -102,7 +103,13 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td>
 							<?php echo "$row[NoSKHapus]";?>
 						</td>
-						<!-- <td></td> -->
+						<td>
+							<?php
+							if($row['SatkerUsul']){ echo "[".$row['SatkerUsul']."]";}
+							?>
+							<br/>
+							<?php echo $row['NamaSatkerUsul'];?>
+						</td>
 						<td>
 							<?php 
 							$jmlUsul=explode(",", $row[Usulan_ID]);
@@ -148,7 +155,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<tr>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<!-- <th>&nbsp;</th> -->
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -28,26 +28,6 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 	?>
 	<!-- End Sql -->
 
-	<script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
-	</script>
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -106,20 +86,32 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<div id="demo">
 			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses_pms.php">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
 				<thead>
+					<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 					<tr>
 						<td colspan="8" align="Left">
 								<span><button type="submit" name="submit" id="submit" value="tetapkan" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Barang</button></span>
 						</td>
 					</tr>
+					<?php
+						}
+					?>
 					<tr>
 						<th>No</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<th class="checkbox-column">
 							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
 						</th>
+						<?php
+							}
+						?>
 						<th>Nomor SK Penghapusan</th>
-						<!-- <th>Satker</th> -->
+						<th>Satker</th>
 						<th>Jumlah Usulan</th>
 						<th>Tgl Penetapan</th>
 						<th>Keterangan</th>
@@ -144,14 +136,26 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						  
 					<tr class="gradeA">
 						<td><?php echo "$nomor";?></td>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<td class="checkbox-column">
-							<input type="checkbox" class="checkbox" onchange="enable()" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
 							
 						</td>
+						<?php
+							}
+						?>
 						<td>
 							<?php echo "$row[NoSKHapus]";?>
 						</td>
-						<!-- <td></td> -->
+						<td>
+							<?php
+							if($row['SatkerUsul']){ echo "[".$row['SatkerUsul']."]";}
+							?>
+							<br/>
+							<?php echo $row['NamaSatkerUsul'];?>
+						</td>
 						<td>
 							<?php 
 							$jmlUsul=explode(",", $row[Usulan_ID]);
@@ -174,8 +178,14 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
+						<?php
+							if($_SESSION['ses_uaksesadmin']==1){
+						?>
 						<th>&nbsp;</th>
-						<!-- <th>&nbsp;</th> -->
+						<?php
+							}
+						?>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

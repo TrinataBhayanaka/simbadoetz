@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// ////////pr($get_data_filter);
 ?>
 
 <?php
@@ -19,48 +19,40 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-
+if($_SESSION['kdSatkerFilterPMD']){
+		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
+	}
 	if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
 		$_SESSION['reviewAsetUsulan']=$_POST;
 		$POST=$_SESSION['reviewAsetUsulan'];
 	}else{
-		////pr($_POST);
-		////pr($_SESSION['reviewAsetUsulan']);
+		////////pr($_POST);
+		////////pr($_SESSION['reviewAsetUsulan']);
 		foreach ($_POST['penghapusanfilter'] as $key => $value) {
 			$_SESSION['reviewAsetUsulan']['penghapusanfilter'][]=$value;
 		}
 		$POST=$_SESSION['reviewAsetUsulan'];
-		////pr($POST);
+		////////pr($POST);
 	}
 
 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_pms($POST);
-	
+	////pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
 	?>
 	<!-- End Sql -->
-	<script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
+
+	<script>
+        $(function()
+        {
+       		 $('#tanggal2').datepicker($.datepicker.regional['id']);
+
+        }
+		);
 	</script>
+	
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -113,6 +105,7 @@ $menu_id = 10;
 
 		<section class="formLegend">
 			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_usulan_penghapusan_usul_proses_pms.php"> 
+			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 			
 			<div class="detailLeft">
 						
@@ -136,8 +129,8 @@ $menu_id = 10;
 						&nbsp;
 					</li>
 					<li>
-						<span  class="labelInfo">&nbsp;</span>
-						&nbsp;
+						<span  class="labelInfo">Tanggal Usulan</span>
+						<input name="tanggalUsulan" type="text" id="tanggal2" <?php echo $disabledForm;?> required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -188,7 +181,7 @@ $menu_id = 10;
 					}
 					foreach ($data as $key => $value)
 					{
-					// ////pr($get_data_filter);
+					// ////////pr($get_data_filter);
 					if($value[kondisi]==2){
 						$kondisi="Rusak Ringan";
 					}elseif($value[kondisi]==3){
@@ -196,9 +189,9 @@ $menu_id = 10;
 					}elseif($value[kondisi]==1){
 						$kondisi="Baik";
 					}
-					// ////pr($value[TglPerolehan]);
+					// ////////pr($value[TglPerolehan]);
 					$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-					// ////pr($TglPerolehanTmp);
+					// ////////pr($TglPerolehanTmp);
 					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 
@@ -208,7 +201,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
 						<td>

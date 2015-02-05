@@ -5,8 +5,8 @@ $menu_id = 10;
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
-// $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+$get_data_filter = $RETRIEVE->retrieve_kontrak();
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -84,7 +84,7 @@ $menu_id = 10;
                        
                     </li>  
                     <li>&nbsp;</li>
-					<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+					<?=selectSatker('kodeSatker',$width='205',$br=true,false);?>
                     <li>&nbsp;</li>
 					<li>
 						<span class="span2">&nbsp;</span>

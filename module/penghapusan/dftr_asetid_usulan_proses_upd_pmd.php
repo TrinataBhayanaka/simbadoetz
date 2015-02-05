@@ -15,7 +15,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
     $id=$_POST['usulanID'];
     
     // $data=$DELETE->delete_update_daftar_validasi_penghapusan($id);
-	// pr($_POST);
+	// //pr($_POST);
  //    exit;
 		$data = $PENGHAPUSAN->update_usulan_penghapusan_asetid_pmd($_POST);
     
@@ -29,5 +29,5 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
     $query2="UPDATE PenghapusanAset SET Status=0 WHERE Penghapusan_ID='$id'";
     $exec=mysql_query($query2) or die(mysql_error());
     */
-    echo "<script>alert('Data Berhasil Dihapus'); document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id=$id';</script>";
+    echo "<script>alert('Data Berhasil DiUpdate'); document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id=$id';</script>";
 ?>
