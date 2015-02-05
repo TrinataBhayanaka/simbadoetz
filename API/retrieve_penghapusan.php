@@ -1771,7 +1771,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Usulan',
                 'field'=>" * ",
-                'condition' => "FixUsulan=1 AND Jenis_Usulan='PMD'{$filterkontrak}"
+                'condition' => "Usulan_ID='47' AND FixUsulan=1 AND Jenis_Usulan='PMD'{$filterkontrak}"
                 );
          // //////////////////////pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
