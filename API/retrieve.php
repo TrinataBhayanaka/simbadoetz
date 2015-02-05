@@ -9791,7 +9791,7 @@ $offset = @$_POST['record'];
         $setval = implode(' AND ', $tmpsetval);
 
         if($setval) $setval = $setval." AND ";
-        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,Tahun,COUNT(*) as kuantitas,MIN(noRegister) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang = '1' GROUP BY  kodeKelompok ,  kodeLokasi");
+        $sql = mysql_query("SELECT kodeKelompok,kodeSatker,kodeLokasi,Tahun,COUNT(*) as kuantitas,MIN(CAST(noRegister AS SIGNED)) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND Status_Validasi_Barang = '1' GROUP BY  kodeKelompok ,  kodeLokasi");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
