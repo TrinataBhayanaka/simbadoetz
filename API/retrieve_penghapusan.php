@@ -1773,7 +1773,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'field'=>" * ",
                 'condition' => "Usulan_ID='47' AND FixUsulan=1 AND Jenis_Usulan='PMD'{$filterkontrak}"
                 );
-         // //////////////////////pr($sql);
+         pr($sql);
         $res = $this->db->lazyQuery($sql,$debug);
         // $resAset_ID=explode(",", $res[0]['Aset_ID']);
         foreach ($res as $key => $value) {
@@ -1792,7 +1792,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $Aset_ID=$value['Aset_ID'];
             $sqlAst = array(
                     'table'=>'Aset',
-                    'field'=>" Aset_ID,NilaiPerolehan ",
+                    'field'=>" Aset_ID,NilaiPerolehan",
                     'condition' => "Aset_ID=$Aset_ID GROUP BY Aset_ID"
                     );
             
