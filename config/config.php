@@ -19,7 +19,7 @@ require_once "$path/API/retrieve.php";
 require_once "$path/API/retrieve_report.php";
 
 require_once "$path/API/update.php";
-require_once "$path/API/store.php";
+require_once "$path/API/store_aset.php";
 require_once "$path/API/delete.php";
 require_once "$path/API/core.php";
 require_once "$path/function/helper_filter.php";
