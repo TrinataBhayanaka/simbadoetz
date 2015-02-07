@@ -120,7 +120,7 @@ class DB
 		
 	}
 	
-	public function insert_id($data)
+	public function insert_id($data=false)
 	{
 		return mysql_insert_id();
 	}
@@ -368,10 +368,22 @@ class DB
 	        	$res = $this->query($sql);
 	        	if ($res){
 	        		
+	        		logFile($res);
+	        		logFile('action = '.$action);
 	        		usleep(100);
+	        		
 	        		if ($action==3){
 	        			$insert_id = $this->insert_id();
+
 	        			$sqlu = "UPDATE log_{$value} SET TglPembukuan = '{$tglProses}' WHERE log_id = {$insert_id} LIMIT 1";
+	        			logFile($sqlu);
+	        			$result = $this->query($sqlu);
+	        		}
+	        		usleep(100);
+	        		if ($action==28){
+	        			$insert_id = $this->insert_id();
+
+	        			$sqlu = "UPDATE log_{$value} SET StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1 WHERE log_id = {$insert_id} LIMIT 1";
 	        			logFile($sqlu);
 	        			$result = $this->query($sqlu);
 	        		}
@@ -381,7 +393,7 @@ class DB
 
 	        
 	    }
-	    logFile('class_db :: Gagal insert log');
+	    logFile('class_db :: insert log sukses');
 	    return true;
 	}
 	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false, $debug=false)

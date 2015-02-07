@@ -30,33 +30,31 @@ if ($u_sess) $isLogin = true;
 			});
 		</script>
 		<script type="text/javascript" charset="utf-8">
-			function saveDataCheckbox(item){
+			function updDataCheckbox(item){
 				var temp = new Array();
 				var data = "";
-				var checkedValues = $('input:checkbox:checked').map(function() {
-					if(this.value != 'on'){
-						temp.push(this.value);
-				    	data = temp.join();
-					}
-				}).get();
-				 $.post('<?=$url_rewrite?>/function/api/applist.php', {data:data, UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
-		
+				var tempc = new Array();
+				var datac = "";
+				arrunchecked = $('.icheck-input').map(function() {
+						    if(!this.checked){
+						    	if(this.value != 'on'){
+						    		temp.push(this.value);
+				    		 		data = temp.join();
+						    	}
+						    } else {
+						    	if(this.value != 'on'){
+						    		tempc.push(this.value);
+				    		 		datac = tempc.join();
+						    	}
+						    }
+						}).get();
+				// console.log(datac);
+				 $.post('<?=$url_rewrite?>/function/api/applist.php', {data:datac, undata:data, UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+				
 				 })
 			}
 
-			function deleteDataCheckbox(item){
-				var temp = new Array();
-				var data = "";
-				var checkedValues = $('input:checkbox:checked').map(function() {
-					if(this.value != 'on'){
-						temp.push(this.value);
-				    	data = temp.join();
-					}
-				}).get();
-				 $.post('<?=$url_rewrite?>/function/api/appdel.php', {data:data, UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
-		
-				 })
-			}
+
 			$(document).ready(function() {
 				$('#example').dataTable( {
 					"sPaginationType": "full_numbers"

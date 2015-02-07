@@ -22,17 +22,17 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 		<script>
 			function AreAnyCheckboxesChecked () 
 			{	
-				setTimeout(function() {
-				  if($('#check_parent').is(':checked') == true){ var minus = 1; } else { var minus = 0; }	
+				setTimeout(function() {	
+				  if($('#check_parent').is(':checked') == true){ var minus = 1; } else { var minus = 0; }
 				  if (($("#Form2 input:checkbox:checked").length - minus) > 0)
-					{
+					{	
 					    $("#btn-dis").removeAttr("disabled");
-					    saveDataCheckbox('VDST');
+					    updDataCheckbox('VDST');
 					}
 					else
 					{
 					   $('#btn-dis').attr("disabled","disabled");
-					   deleteDataCheckbox('VDST');
+					   updDataCheckbox('VDST');
 					}
 				}, 100);
 			}
