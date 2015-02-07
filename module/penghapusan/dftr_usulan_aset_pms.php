@@ -152,7 +152,7 @@ $menu_id = 10;
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
 						</td>
-						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
+						<td><?=number_format($hsl_data['TotalNilaiPerolehan'])?>
 						</td>
 						<td>
 							<?=$hsl_data['KetUsulan']?>

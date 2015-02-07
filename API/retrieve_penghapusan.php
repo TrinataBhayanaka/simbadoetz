@@ -3182,9 +3182,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $res = $this->db->lazyQuery($sql,$debug);
                     
                     foreach ($res as $keySat => $valueSat) {
-                        // ////pr($valueSat);
+                        pr($valueSat);
                         // ////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
+                        $Aset_ID=$valueSat['Aset_ID'];
                         $sqlSat = array(
                             'table'=>'Satker',
                             'field'=>" NamaSatker ",
@@ -3193,6 +3194,21 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
+                        $sqlAst = array(
+                                'table'=>'Aset',
+                                'field'=>" NilaiPerolehan ",
+                                'condition' => "Aset_ID IN ($Aset_ID)"
+                                );
+                        
+                        $resAst = $this->db->lazyQuery($sqlAst,$debug);
+
+                        $res[$keySat]['TotalNilaiPerolehan']=0;
+                        
+                        foreach ($resAst as $keyAst => $valueAst) {
+                            // //////////////////////pr($valueAst);
+                            $res[$keySat]['TotalNilaiPerolehan']=$res[$keySat]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+                       
+                        }
                     }
                    
                 }
@@ -3207,9 +3223,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $res = $this->db->lazyQuery($sql,$debug);
 
                 foreach ($res as $keySat => $valueSat) {
-                        // ////pr($valueSat);
+                        // pr($valueSat);
                         // ////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
+                        $Aset_ID=$valueSat['Aset_ID'];
                         $sqlSat = array(
                             'table'=>'Satker',
                             'field'=>" NamaSatker ",
@@ -3218,6 +3235,22 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
+
+                         $sqlAst = array(
+                                'table'=>'Aset',
+                                'field'=>" NilaiPerolehan ",
+                                'condition' => "Aset_ID IN ($Aset_ID)"
+                                );
+                        
+                        $resAst = $this->db->lazyQuery($sqlAst,$debug);
+
+                        $res[$keySat]['TotalNilaiPerolehan']=0;
+                        
+                        foreach ($resAst as $keyAst => $valueAst) {
+                            // //////////////////////pr($valueAst);
+                            $res[$keySat]['TotalNilaiPerolehan']=$res[$keySat]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+                       
+                        }
                     }
                 //////////////////////////pr($res);
             }
@@ -3327,6 +3360,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         // ////pr($valueSat);
                         // ////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
+                        $Aset_ID=$valueSat['Aset_ID'];
                         $sqlSat = array(
                             'table'=>'Satker',
                             'field'=>" NamaSatker ",
@@ -3335,6 +3369,21 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
+                        $sqlAst = array(
+                                'table'=>'Aset',
+                                'field'=>" NilaiPerolehan ",
+                                'condition' => "Aset_ID IN ($Aset_ID)"
+                                );
+                        
+                        $resAst = $this->db->lazyQuery($sqlAst,$debug);
+
+                        $res[$keySat]['TotalNilaiPerolehan']=0;
+                        
+                        foreach ($resAst as $keyAst => $valueAst) {
+                            // //////////////////////pr($valueAst);
+                            $res[$keySat]['TotalNilaiPerolehan']=$res[$keySat]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+                       
+                        }
                     }
                 }
                 //////////////////////////pr($res);
@@ -3351,6 +3400,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         // ////pr($valueSat);
                         // ////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
+                        $Aset_ID=$valueSat['Aset_ID'];
                         $sqlSat = array(
                             'table'=>'Satker',
                             'field'=>" NamaSatker ",
@@ -3359,6 +3409,21 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
+                        $sqlAst = array(
+                                'table'=>'Aset',
+                                'field'=>" NilaiPerolehan ",
+                                'condition' => "Aset_ID IN ($Aset_ID)"
+                                );
+                        
+                        $resAst = $this->db->lazyQuery($sqlAst,$debug);
+
+                        $res[$keySat]['TotalNilaiPerolehan']=0;
+                        
+                        foreach ($resAst as $keyAst => $valueAst) {
+                            // //////////////////////pr($valueAst);
+                            $res[$keySat]['TotalNilaiPerolehan']=$res[$keySat]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+                       
+                        }
                     }
                 //////////////////////////pr($res);
             }
@@ -3469,6 +3534,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         // ////pr($valueSat);
                         // ////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
+                        $Aset_ID=$valueSat['Aset_ID'];
                         $sqlSat = array(
                             'table'=>'Satker',
                             'field'=>" NamaSatker ",
@@ -3477,6 +3543,21 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
+                        $sqlAst = array(
+                                'table'=>'Aset',
+                                'field'=>" NilaiPerolehan ",
+                                'condition' => "Aset_ID IN ($Aset_ID)"
+                                );
+                        
+                        $resAst = $this->db->lazyQuery($sqlAst,$debug);
+
+                        $res[$keySat]['TotalNilaiPerolehan']=0;
+                        
+                        foreach ($resAst as $keyAst => $valueAst) {
+                            // //////////////////////pr($valueAst);
+                            $res[$keySat]['TotalNilaiPerolehan']=$res[$keySat]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+                       
+                        }
                     }
                 }
                 //////////////////////////pr($res);
@@ -3493,6 +3574,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         // ////pr($valueSat);
                         // ////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
+                        $Aset_ID=$valueSat['Aset_ID'];
                         $sqlSat = array(
                             'table'=>'Satker',
                             'field'=>" NamaSatker ",
@@ -3501,6 +3583,21 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
+                        $sqlAst = array(
+                                'table'=>'Aset',
+                                'field'=>" NilaiPerolehan ",
+                                'condition' => "Aset_ID IN ($Aset_ID)"
+                                );
+                        
+                        $resAst = $this->db->lazyQuery($sqlAst,$debug);
+
+                        $res[$keySat]['TotalNilaiPerolehan']=0;
+                        
+                        foreach ($resAst as $keyAst => $valueAst) {
+                            // //////////////////////pr($valueAst);
+                            $res[$keySat]['TotalNilaiPerolehan']=$res[$keySat]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+                       
+                        }
                     }
                 //////////////////////////pr($res);
             }

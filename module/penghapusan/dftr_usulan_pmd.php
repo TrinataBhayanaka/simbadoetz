@@ -35,7 +35,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				}
 
 $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
-////pr($data);
+// pr($data);
 
 		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
    //      while ($dataKontrak = mysql_fetch_assoc($sql)){
@@ -191,6 +191,8 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
 						}elseif($hsl_data['StatusPenetapan']==1){
 							?>
 								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
+								<a target="_blank" href="<?php echo "$url_rewrite/";?>report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan=<?=$hsl_data[Usulan_ID]?>&noUsul=<?=$hsl_data[NoUsulan]?>" class="btn btn-info btn-small"><i class="fa fa-file-pdf-o"></i> Report</a>&nbsp;
+						
 							<?php
 						}
 
