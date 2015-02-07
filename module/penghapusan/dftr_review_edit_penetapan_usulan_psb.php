@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -28,10 +28,10 @@ $menu_id = 10;
 	// }
 	// $data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_psb($_POST);
 	$idPenetapan=$_GET['id'];
-	//pr($idPenetapan);
+	////pr($idPenetapan);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_psb($_GET);
 	
-	// pr($data);
+	// //pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -149,6 +149,10 @@ $menu_id = 10;
 							if($_SESSION['ses_uaksesadmin']!=1){
 								$disabledForm="disabled";
 							}
+							if($data['dataRow'][0]['status']=1){
+
+								$disabledForm="disabled";
+							}
 						?>
 			<div class="detailLeft">
 						
@@ -176,7 +180,7 @@ $menu_id = 10;
 						<?php
 							
 							$TglSKHapusTmp=explode("-", $data['dataRow'][0]['TglHapus']);
-							// pr($TglSKHapusTmp);
+							// //pr($TglSKHapusTmp);
 							$TglSKHapus=$TglSKHapusTmp[1]."/".$TglSKHapusTmp[2]."/".$TglSKHapusTmp[0];
 
 						?>
@@ -212,7 +216,7 @@ $menu_id = 10;
 					<tr>
 						<td colspan="10" align="Left">
 								<!-- <span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span> -->
-								<span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Update Informasi Penetapan</button></span>
+								<span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" <?php echo $disabledForm;?> /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Update Informasi Penetapan</button></span>
 								<input type="hidden" name="id" value="<?=$idPenetapan?>"/>
 						</td>
 					</tr>
@@ -250,59 +254,66 @@ $menu_id = 10;
 					$no = 1;
 					foreach ($data['dataArr'] as $key => $nilai)
 					{
-						// //pr($valueUsulan);
+						// ////pr($valueUsulan);
 						?>
 						<!-- <input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/> -->
 					<?php
 					
 					// $TglPerolehanTmp=explode("-", $valueUsulan[TglPerolehan]);
-					// // //pr($TglPerolehanTmp);
+					// // ////pr($TglPerolehanTmp);
 					// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_psb($valueUsulan['Usulan_ID']);
-									// //pr($dataUsulanAset);
-									// //pr($_SESSION);
-									// StatusKonfirmasi
-									
-									// foreach ($dataUsulanAset as $keys => $nilai)
-									// {
-										if ($nilai[Aset_ID] !='')
-										{
-										if ($nilai->AsetOpr == 0)
-										$select="selected='selected'";
-										if ($nilai->AsetOpr ==1)
-										$select2="selected='selected'";
+					// ////pr($dataUsulanAset);
+					// ////pr($_SESSION);
+					// StatusKonfirmasi
+					
+					// foreach ($dataUsulanAset as $keys => $nilai)
+					// {
+						if ($nilai[Aset_ID] !='')
+						{
+						if ($nilai->AsetOpr == 0)
+						$select="selected='selected'";
+						if ($nilai->AsetOpr ==1)
+						$select2="selected='selected'";
 
-										if($nilai->SumberAset =='sp2d')
-										$pilih="selected='selected'";
-										if($nilai->SumberAset =='hibah')
-										$pilih2="selected='selected'";
+						if($nilai->SumberAset =='sp2d')
+						$pilih="selected='selected'";
+						if($nilai->SumberAset =='hibah')
+						$pilih2="selected='selected'";
 
-										if($nilai[StatusKonfirmasi]==1){
-											$textLabel="Diterima";
-											$labelColor="label label-success";
-										}elseif($nilai[StatusKonfirmasi]==2){
-											$textLabel="Ditolak";
-											$labelColor="label label-danger";
-										}else{
-											$textLabel="Ditunda";
-											$labelColor="label label-warning";
-											$disabled="
-										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
-										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
-										}
-										if($nilai[kondisi]==2){
-											$kondisi="Rusak Ringan";
-										}elseif($nilai[kondisi]==3){
-											$kondisi="Rusak Berat";
-										}elseif($nilai[kondisi]==1){
-											$kondisi="Baik";
-										}
-										// //pr($value[TglPerolehan]);
-										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-										// pr($TglPerolehanTmp);
-										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+						if($nilai[StatusKonfirmasi]==1){
+							$textLabel="Diterima";
+							$labelColor="label label-success";
+						}elseif($nilai[StatusKonfirmasi]==2){
+							$textLabel="Ditolak";
+							$labelColor="label label-danger";
+						}else{
+							$textLabel="Ditunda";
+							$labelColor="label label-warning";
+							$disabled="
+						<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
+						<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
+						}
+						if($nilai[kondisi]==2){
+							$kondisi="Rusak Ringan";
+						}elseif($nilai[kondisi]==3){
+							$kondisi="Rusak Berat";
+						}elseif($nilai[kondisi]==1){
+							$kondisi="Baik";
+						}
+						// ////pr($value[TglPerolehan]);
+						$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
+						// //pr($TglPerolehanTmp);
+						$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
+						if($nilai[StatusValidasi]==1){
+							$TglPerolehanAwal=$nilai[NilaiPerolehanTmp];
+							$TglPerolehanbaru=$nilai[NilaiPerolehan];
+						}else{
+							$TglPerolehanAwal=$nilai[NilaiPerolehan];
+							$TglPerolehanbaru=$nilai[NilaiPerolehanTmp];
+						}
 					?>
 						
 					<tr class="gradeA">
@@ -337,13 +348,13 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<?php echo number_format($nilai[NilaiPerolehan]);?>
+							<?php echo number_format($TglPerolehanAwal);?>
 						</td>
 						<!-- <td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
 						</td> -->
 						<td>
-							<?=number_format($nilai['NilaiPerolehanTmp'])?>
+							<?=number_format($TglPerolehanbaru)?>
 						</td>
 							
 					</tr>
@@ -404,8 +415,8 @@ $menu_id = 10;
 						foreach ($data['dataRow'] as $valueUsulan) {
 							
 							$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
-									//pr($dataUsulanAset);
-									// //pr($_SESSION);
+									////pr($dataUsulanAset);
+									// ////pr($_SESSION);
 									// StatusKonfirmasi
 									$no = 1;
 									foreach ($dataUsulanAset as $keys => $nilai)

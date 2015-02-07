@@ -486,14 +486,14 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 }
                 
 
-                foreach ($asetid as $key => $value) {
-                    if (!in_array($key, $asetKapitalisasi)){
-                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
-                    }else{
-                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=25, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
-                    }
+                // foreach ($asetid as $key => $value) {
+                //     if (!in_array($key, $asetKapitalisasi)){
+                //         $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
+                //     }else{
+                //         $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
+                //     }
                     
-                }
+                // }
 
                 logFile('commit transaksi mutasi');
                 $this->db->commit();
@@ -541,130 +541,157 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                     // pr($resultAwal);
                     // pr($getLokasiTujuan);
-                   
-                    if ($res[0]['Aset_ID_Tujuan']>0){
-                        // kapitalisasi data
+                    
+                    logFile(serialize($res));
+                    if ($res){
+
+                        if ($res[0]['Aset_ID_Tujuan']>0){
+                            // kapitalisasi data
+                            
+                            // $this->db->logIt(
+                            //                 $tabel=array($table['listTableOri']), 
+                            //                 $Aset_ID=$data['aset_id'][$key], 
+                            //                 $kd_riwayat=28);
+                            
+                            // exit;
+                            // ambil nilai perolehan aset tujuan
+                            $sql = array(
+                                    'table'=>"{$table['listTableOri']}",
+                                    'field'=>"NilaiPerolehan",
+                                    'condition'=>"Aset_ID={$res[0]['Aset_ID_Tujuan']}",
+                                    );
+
+                            $result2 = $this->db->lazyQuery($sql,$debug);
+
+                            // echo '1';
+                            $NilaiPerolehan = ($resultAwal[0]['NilaiPerolehan'] + $result2[0]['NilaiPerolehan']);
+
+                            logFile('Nilai Perolehan awal : '.serialize($resultAwal));
+                            logFile('Nilai Perolehan tujuan : '.serialize($result2));
+                            logFile('Nilai Perolehan gabungan : '.$NilaiPerolehan);
+                            if ($NilaiPerolehan > 0){
+                                $sqlKib = array(
+                                        'table'=>"{$table['listTableOri']}",
+                                        'field'=>"NilaiPerolehan='{$NilaiPerolehan}'",
+                                        'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
+                                        );
+
+                                $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+                                if (!$resKib) {$this->db->rollback(); return false;}
+                                
+                                $sql2 = array(
+                                        'table'=>"Aset",
+                                        'field'=>"NilaiPerolehan = '{$NilaiPerolehan}'",
+                                        'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
+                                        );
+
+                                $res2 = $this->db->lazyQuery($sql2,$debug,2); 
+                                if (!$res2) {$this->db->rollback(); return false;}
+
+                                $sql3 = array(
+                                        'table'=>"Aset",
+                                        'field'=>"StatusValidasi = 2, Status_Validasi_Barang = 2, NotUse = 2",
+                                        'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
+                                        );
+
+                                $res3 = $this->db->lazyQuery($sql3,$debug,2); 
+                                if (!$res3) {$this->db->rollback(); return false;}
+
+                                $nodok = $_POST['noDokumen'];
+                                $olah_tgl =  $_POST['TglSKKDH'];
+                                
+                                $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses kapitalisasi Mutasi",$res[0]['Aset_ID_Tujuan']);
+                            
+                            }else{
+
+                                $this->db->rollback();
+                                logFile('Nilai Perolehan kosong ketika kapitalisasi aset mutasi');
+                                return false;
+                            }
+                            
+                            
+
+                        }else{
+                            // ubah data baru
+
+
+                            $tmpKodeLokasi = explode('.', $resultAwal[0]['kodeLokasi']);
+                            $tmpKodeSatker = explode('.', $getLokasiTujuan[0]['SatkerTujuan']);
+
+                            $prefix = $tmpKodeLokasi[0].'.'.$tmpKodeLokasi[1].'.'.$tmpKodeLokasi[2];
+                            $prefixkodesatker = $tmpKodeSatker[0].'.'.$tmpKodeSatker[1];
+                            $prefixTahun = substr($resultAwal[0]['Tahun'], 2,2);
+                            $postfixkodeSatker = $tmpKodeSatker[2].'.'.$tmpKodeSatker[3];
+
+                            $implLokasi = $prefix.'.'.$prefixkodesatker.'.'.$prefixTahun.'.'.$postfixkodeSatker;
+                            // pr($implLokasi);
+
+                            // $lokasiBaru = ubahLokasi("12.11.33",$getLokasiTujuan[0]['SatkerTujuan']);
                         
-                        
-                        // ambil nilai perolehan aset tujuan
-                        $sql = array(
-                                'table'=>"{$table['listTableOri']}",
-                                'field'=>"NilaiPerolehan",
-                                'condition'=>"Aset_ID={$res[0]['Aset_ID_Tujuan']}",
-                                );
+                            //buat gabung nomor registrasi akhir
+                            // $array=array($pemilik,$provinsi,$kabupaten,$row_kode_satker,$tahun,$row_kode_unit);
+                            
+                            $sql = array(
+                                    'table'=>"{$table['listTableOri']}",
+                                    'field'=>"MAX(noRegister) AS noRegister",
+                                    'condition'=>"kodeKelompok = '{$resultAwal[0][kodeKelompok]}' AND kodeSatker = '{$getLokasiTujuan[0][SatkerTujuan]}' AND kodeLokasi = '{$implLokasi}'",
+                                    );
+                            $result = $this->db->lazyQuery($sql,$debug);
 
-                        $result2 = $this->db->lazyQuery($sql,$debug);
+                            // $sqlSelect = array(
+                            //         'table'=>"Aset",
+                            //         'field'=>"MAX(noRegister) AS noRegister",
+                            //         'condition'=>"kodeKelompok = '{$resultAwal[0][kodeKelompok]}' AND kodeSatker = '{$resultAwal[0][kodeSatker]}' AND kodeLokasi = '{$resultAwal[0][kodeLokasi]}'",
+                            //         );
 
-                        // echo '1';
-                        $NilaiPerolehan = ($resultAwal[0]['NilaiPerolehan'] + $result2[0]['NilaiPerolehan']);
+                            // $result = $this->db->lazyQuery($sqlSelect,$debug);
+                            // pr($result);
 
-                        logFile('Nilai Perolehan awal : '.serialize($resultAwal));
-                        logFile('Nilai Perolehan tujuan : '.serialize($result2));
-                        logFile('Nilai Perolehan gabungan : '.$NilaiPerolehan);
-                        if ($NilaiPerolehan > 0){
+                            $gabung_nomor_reg_tujuan=intval(($result[0]['noRegister'])+1);
+
                             $sqlKib = array(
                                     'table'=>"{$table['listTableOri']}",
-                                    'field'=>"NilaiPerolehan='{$NilaiPerolehan}'",
-                                    'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
-                                    );
-
-                            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
-                            if (!$resKib) {$this->db->rollback(); return false;}
-                            
-                            $sql2 = array(
-                                    'table'=>"Aset",
-                                    'field'=>"NilaiPerolehan = '{$NilaiPerolehan}'",
-                                    'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
-                                    );
-
-                            $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-                            if (!$res2) {$this->db->rollback(); return false;}
-
-                            $sql3 = array(
-                                    'table'=>"Aset",
-                                    'field'=>"StatusValidasi = 2, Status_Validasi_Barang = 2, NotUse = 2",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 
-                            $res3 = $this->db->lazyQuery($sql3,$debug,2); 
-                            if (!$res3) {$this->db->rollback(); return false;}
+                            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
 
-                            $nodok = $_POST['noDokumen'];
-                            $olah_tgl =  $_POST['TglSKKDH'];
-                            
-                            $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses kapitalisasi Mutasi",$res[0]['Aset_ID_Tujuan']);
-                        
-                        }else{
+                            $sql2 = array(
+                                    'table'=>"Aset",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = NULL, fixPenggunaan = 0, statusPemanfaatan = 0",
+                                    'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
+                                    );
 
-                            $this->db->rollback();
-                            logFile('Nilai Perolehan kosong ketika kapitalisasi aset mutasi');
-                            return false;
-                        }
-                        
-                        
+                            $resAset = $this->db->lazyQuery($sql2,$debug,2); 
 
-                    }else{
-                        // ubah data baru
+                            if ($resKib){
+                                logFile('Data baru berhasil diubah kode satkernya di validasi mutasi');
+                            }else{
+                                logFile('Nilai Perolehan kosong ketika kapitalisasi aset mutasi');
+                                $this->db->rollback();
+                                return false;
+                            }
 
+                            if ($resAset){
 
-                        $tmpKodeLokasi = explode('.', $resultAwal[0]['kodeLokasi']);
-                        $tmpKodeSatker = explode('.', $getLokasiTujuan[0]['SatkerTujuan']);
+                                $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
 
-                        $prefix = $tmpKodeLokasi[0].'.'.$tmpKodeLokasi[1].'.'.$tmpKodeLokasi[2];
-                        $prefixkodesatker = $tmpKodeSatker[0].'.'.$tmpKodeSatker[1];
-                        $prefixTahun = substr($resultAwal[0]['Tahun'], 2,2);
-                        $postfixkodeSatker = $tmpKodeSatker[2].'.'.$tmpKodeSatker[3];
+                                $nodok = $_POST['noDokumen'];
+                                $olah_tgl =  $_POST['TglSKKDH'];
+                                
+                                $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses Mutasi");
+                                
+                                 
+                            }else{
 
-                        $implLokasi = $prefix.'.'.$prefixkodesatker.'.'.$prefixTahun.'.'.$postfixkodeSatker;
-                        // pr($implLokasi);
+                                $this->db->rollback();
+                                logFile('gagal log data mutasi aset '.$data['aset_id'][$key]);
+                            } 
 
-                        // $lokasiBaru = ubahLokasi("12.11.33",$getLokasiTujuan[0]['SatkerTujuan']);
-                    
-                        //buat gabung nomor registrasi akhir
-                        // $array=array($pemilik,$provinsi,$kabupaten,$row_kode_satker,$tahun,$row_kode_unit);
-                        
-                        $sql = array(
-                                'table'=>"{$table['listTableOri']}",
-                                'field'=>"MAX(noRegister) AS noRegister",
-                                'condition'=>"kodeKelompok = '{$resultAwal[0][kodeKelompok]}' AND kodeSatker = '{$getLokasiTujuan[0][SatkerTujuan]}' AND kodeLokasi = '{$implLokasi}'",
-                                );
-                        $result = $this->db->lazyQuery($sql,$debug);
-
-                        // $sqlSelect = array(
-                        //         'table'=>"Aset",
-                        //         'field'=>"MAX(noRegister) AS noRegister",
-                        //         'condition'=>"kodeKelompok = '{$resultAwal[0][kodeKelompok]}' AND kodeSatker = '{$resultAwal[0][kodeSatker]}' AND kodeLokasi = '{$resultAwal[0][kodeLokasi]}'",
-                        //         );
-
-                        // $result = $this->db->lazyQuery($sqlSelect,$debug);
-                        // pr($result);
-
-                        $gabung_nomor_reg_tujuan=intval(($result[0]['noRegister'])+1);
-
-                        $sqlKib = array(
-                                'table'=>"{$table['listTableOri']}",
-                                'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
-                                'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
-                                );
-
-                        $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
-
-                        $sql2 = array(
-                                'table'=>"Aset",
-                                'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = NULL, fixPenggunaan = 0, statusPemanfaatan = 0",
-                                'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
-                                );
-
-                        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-
-                        if ($resKib){
-                            logFile('Data baru berhasil diubah kode satkernya di validasi mutasi');
-                        }else{
-                            logFile('Nilai Perolehan kosong ketika kapitalisasi aset mutasi');
-                            $this->db->rollback();
-                            return false;
-                        }
+                        }  
                     }
+                    
 
                     
                     $sql = array(
@@ -675,27 +702,6 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $res1 = $this->db->lazyQuery($sql,$debug,2); 
 
                     
-
-                    // $res2 = 1;
-                    // $resKib = 1;
-                    if ($res2){
-
-                        $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
-
-                        
-                        $nodok = $_POST['noDokumen'];
-                        $olah_tgl =  $_POST['TglSKKDH'];
-                        
-
-                        
-                        $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses Mutasi");
-                        
-                         
-                    }else{
-
-                        $this->db->rollback();
-                        logFile('gagal log data mutasi aset '.$data['aset_id'][$key]);
-                    } 
                 
                 } 
                 
@@ -717,6 +723,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $res1 = $this->db->lazyQuery($sql,$debug,2); 
                 }
                 
+                logFile('Commit transaction mutasi');
                 $this->db->commit();
                 return true;   
             }

@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -20,21 +20,21 @@ $menu_id = 10;
 	<!-- SQL Sementara -->
 	<?php
 	// if($_SESSION['filterAsetUsulan'])
-	// //pr($_SESSION['filterAsetUsulan']);
-	//pr($_SESSION);
+	// ////pr($_SESSION['filterAsetUsulan']);
+	////pr($_SESSION);
 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
 		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
 		$_SESSION['filterAsetUsulan']=$data;
 		$data=$_SESSION['filterAsetUsulan'];
-		// //pr($_SESSION['reviewAsetUsulan']);
+		// ////pr($_SESSION['reviewAsetUsulan']);
 		unset($_SESSION['reviewAsetUsulan']);
 	}else{
 		$dataSESSION=$_SESSION['filterAsetUsulan'];
 
 		if($_SESSION['reviewAsetUsulan']){
-			// //pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-				// //pr($valueSESSION['Aset_ID']);
+				// ////pr($valueSESSION['Aset_ID']);
 				if(!in_array($valueSESSION['Aset_ID'], $_SESSION['reviewAsetUsulan']['penghapusanfilter'])){
 					// echo "stringnot";
 					$data[]=$valueSESSION;
@@ -42,10 +42,16 @@ $menu_id = 10;
 			}
 		
 		}
-		// //pr($data);
+		// ////pr($data);
 
 	}
-	// pr($data);
+	if($_POST['kodeSatker']){
+		$_SESSION['kdSatkerFilterPMD']=$_POST['kodeSatker'];
+		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
+	}else{
+		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
+	}
+	// //pr($kdSatkerFilter);
 	if(isset($_GET['flegAset'])){
 		$flegAset=$_GET['flegAset'];
 	}else{
@@ -57,27 +63,6 @@ $menu_id = 10;
                 $kontrak[] = $dataKontrak;
             }
 	?>
-	<!-- End Sql -->
-	 <script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
-	</script>
 	<script>
 		function AreAnyCheckboxesChecked () 
 		{
@@ -138,7 +123,7 @@ $menu_id = 10;
 						<td colspan="7" align="left">
 								<span><button type="submit" name="submit" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Buat Usulan Penghapusan</button></span>
 								<input type="hidden" name="reviewAsetUsulan" value="<?=$flegAset?>" />
-						
+								<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 						<?php
 							if($flegAset==0){
 						?>
@@ -179,7 +164,7 @@ $menu_id = 10;
 					}
 					foreach ($data as $key => $value)
 					{
-					// //pr($get_data_filter);
+					// ////pr($get_data_filter);
 					if($value[kondisi]==2){
 						$kondisi="Rusak Ringan";
 					}elseif($value[kondisi]==3){
@@ -187,9 +172,9 @@ $menu_id = 10;
 					}elseif($value[kondisi]==1){
 						$kondisi="Baik";
 					}
-					// //pr($value[TglPerolehan]);
+					// ////pr($value[TglPerolehan]);
 					$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-					// //pr($TglPerolehanTmp);
+					// ////pr($TglPerolehanTmp);
 					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 
@@ -199,7 +184,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
 						<td>

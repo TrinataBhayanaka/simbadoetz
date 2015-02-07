@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -28,10 +28,10 @@ $menu_id = 10;
 	// }
 	// $data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($_POST);
 	$idPenetapan=$_GET['id'];
-	//pr($idPenetapan);
+	////pr($idPenetapan);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_pmd($_GET);
 	
-	// pr($data);
+	// //pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -47,26 +47,7 @@ $menu_id = 10;
         }
 		);
 	</script>
-	<script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
-	</script>
+	
 	<script>
 	jQuery(function($) {
 	        $('#TotalNilai').autoNumeric('init', {mDec:0});
@@ -176,7 +157,7 @@ $menu_id = 10;
 						<?php
 							
 							$TglSKHapusTmp=explode("-", $data['dataRow'][0]['TglHapus']);
-							// pr($TglSKHapusTmp);
+							// //pr($TglSKHapusTmp);
 							$TglSKHapus=$TglSKHapusTmp[1]."/".$TglSKHapusTmp[2]."/".$TglSKHapusTmp[0];
 
 						?>
@@ -250,18 +231,18 @@ $menu_id = 10;
 					$no = 1;
 					foreach ($data['dataArr'] as $key => $nilai)
 					{
-						// //pr($valueUsulan);
+						// ////pr($valueUsulan);
 						?>
 						<!-- <input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/> -->
 					<?php
 					
 					// $TglPerolehanTmp=explode("-", $valueUsulan[TglPerolehan]);
-					// // //pr($TglPerolehanTmp);
+					// // ////pr($TglPerolehanTmp);
 					// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_pmd($valueUsulan['Usulan_ID']);
-									// //pr($dataUsulanAset);
-									// //pr($_SESSION);
+									// ////pr($dataUsulanAset);
+									// ////pr($_SESSION);
 									// StatusKonfirmasi
 									
 									// foreach ($dataUsulanAset as $keys => $nilai)
@@ -298,9 +279,9 @@ $menu_id = 10;
 										}elseif($nilai[kondisi]==1){
 											$kondisi="Baik";
 										}
-										// //pr($value[TglPerolehan]);
+										// ////pr($value[TglPerolehan]);
 										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-										// pr($TglPerolehanTmp);
+										// //pr($TglPerolehanTmp);
 										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 					?>
@@ -401,8 +382,8 @@ $menu_id = 10;
 						foreach ($data['dataRow'] as $valueUsulan) {
 							
 							$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
-									//pr($dataUsulanAset);
-									// //pr($_SESSION);
+									////pr($dataUsulanAset);
+									// ////pr($_SESSION);
 									// StatusKonfirmasi
 									$no = 1;
 									foreach ($dataUsulanAset as $keys => $nilai)

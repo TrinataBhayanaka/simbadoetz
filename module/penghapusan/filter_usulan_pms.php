@@ -6,7 +6,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// //pr($get_data_filter);
+// ////pr($get_data_filter);
 ?>
 
 <?php
@@ -73,8 +73,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<input id="tanggal13" name="bup_pp_sp_tglusul" id="bup_pp_sp_tglusul"  type="text" >
 					</li>
                     <li>&nbsp;</li>
-					<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
-                    <li>&nbsp;</li>
+					
+					<?php //selectAllSatker('kodeSatker','255',true,false,'required'); 
+						selectAllSatker('kodeSatker','255',true,false,false,true);
+					?>
+					<li>&nbsp;</li>
 					
 					<li>
 						<span class="span2">&nbsp;</span>

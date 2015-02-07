@@ -3,14 +3,14 @@ include "../../config/config.php";
 
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-////pr($_SESSION);
+//////pr($_SESSION);
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -25,10 +25,10 @@ $menu_id = 10;
 		unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 		$parameter = array('menuID'=>$menu_id,'type'=>'','paging'=>$paging);
 		// $data = $RETRIEVE->retrieve_daftar_validasi_penghapusan($parameter);
-        // ////pr($data);        
-	// ////pr($_POST);
+        // //////pr($data);        
+	// //////pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_validasi_penghapusan_psb($_POST);
-	// //pr($data);
+	// ////pr($data);
 
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
@@ -73,10 +73,14 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			
+			<?php
+				if($_SESSION['ses_uaksesadmin']==1){
+			?>
 			<p><a href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_validasi_psb.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Penetapan</a>
 			&nbsp;
-			
+			<?php
+				}
+			?>
 			<div id="demo">
 			
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
@@ -84,7 +88,7 @@ $menu_id = 10;
 					<tr>
 						<th>No</th>
 						<th>Nomor SK Penghapusan</th>
-						<!-- <th>Satker</th> -->
+						<th>Satker</th>
 						<th>Jumlah Usulan</th>
 						<th>Tgl Penetapan</th>
 						<th>Keterangan</th>
@@ -113,7 +117,13 @@ $menu_id = 10;
 						<td>
 							<?php echo "$row[NoSKHapus]";?>
 						</td>
-						<!-- <td></td> -->
+						<td>
+							<?php
+							if($row['SatkerUsul']){ echo "[".$row['SatkerUsul']."]";}
+							?>
+							<br/>
+							<?php echo $row['NamaSatkerUsul'];?>
+						</td>
 						<td>
 							<?php 
 							$jmlUsul=explode(",", $row[Usulan_ID]);
@@ -136,7 +146,7 @@ $menu_id = 10;
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
-						<!-- <th>&nbsp;</th> -->
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

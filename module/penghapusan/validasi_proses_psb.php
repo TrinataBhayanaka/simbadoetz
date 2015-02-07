@@ -56,7 +56,7 @@ $exec_hapus=  mysql_query($query_hapus_apl) or die(mysql_error());
  * 
  */
 
-echo "<script>alert('Data Telah Divalidasi'); document.location='$url_rewrite/module/penghapusan/penghapusan_validasi_daftar_valid.php?pid=1';</script>";
+echo "<script>alert('Data Telah Divalidasi'); document.location='$url_rewrite/module/penghapusan/dftr_validasi_psb.php?pid=1';</script>";
 
 
 ?>

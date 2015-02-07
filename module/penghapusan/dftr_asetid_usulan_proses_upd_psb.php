@@ -15,7 +15,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
     $id=$_POST['usulanID'];
     
     // $data=$DELETE->delete_update_daftar_validasi_penghapusan($id);
-	// pr($_POST);
+	// //pr($_POST);
  //    exit;
 		$data = $PENGHAPUSAN->update_usulan_penghapusan_asetid_psb($_POST);
     

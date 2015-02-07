@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -27,8 +27,11 @@ $menu_id = 10;
 	// $dataPost=$_SESSION['dataPost'];
 	// }
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($_POST);
-	
-	// ////pr($data);
+
+	if($_SESSION['kdSatkerFilterPMDp']){
+		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
+	}
+	// //////pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -115,6 +118,7 @@ $menu_id = 10;
 
 		<section class="formLegend">
 			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses_pmd.php">
+			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 					
 			<div class="detailLeft">
 						
@@ -192,18 +196,18 @@ $menu_id = 10;
 					$no = 1;
 					foreach ($data['dataArr'] as $key => $nilai)
 					{
-						// ////pr($valueUsulan);
+						// //////pr($valueUsulan);
 						?>
 						<!-- <input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/> -->
 					<?php
 					
 					// $TglPerolehanTmp=explode("-", $valueUsulan[TglPerolehan]);
-					// // ////pr($TglPerolehanTmp);
+					// // //////pr($TglPerolehanTmp);
 					// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_pmd($valueUsulan['Usulan_ID']);
-									// ////pr($dataUsulanAset);
-									// ////pr($_SESSION);
+									// //////pr($dataUsulanAset);
+									// //////pr($_SESSION);
 									// StatusKonfirmasi
 									
 									// foreach ($dataUsulanAset as $keys => $nilai)
@@ -240,9 +244,9 @@ $menu_id = 10;
 										}elseif($nilai[kondisi]==1){
 											$kondisi="Baik";
 										}
-										// //pr($value[TglPerolehan]);
+										// ////pr($value[TglPerolehan]);
 										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-										// //pr($TglPerolehanTmp);
+										// ////pr($TglPerolehanTmp);
 										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 
@@ -252,7 +256,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
-							<input type="checkbox" class="checkbox" onchange="enable()" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
+							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
 							
 						</td>
 						<td>
@@ -336,8 +340,8 @@ $menu_id = 10;
 						foreach ($data['dataRow'] as $valueUsulan) {
 							
 							$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
-									////pr($dataUsulanAset);
-									// ////pr($_SESSION);
+									//////pr($dataUsulanAset);
+									// //////pr($_SESSION);
 									// StatusKonfirmasi
 									$no = 1;
 									foreach ($dataUsulanAset as $keys => $nilai)
