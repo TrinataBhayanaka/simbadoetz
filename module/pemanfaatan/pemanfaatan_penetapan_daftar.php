@@ -75,7 +75,19 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	$data = $PEMANFAATAN->pemanfaatan_daftar_penetapan($_POST);
+	// pr($_POST);
+
+	if ($_POST['submit']){
+		
+		$_SESSION['ses_pemanfaatan_penetapan'] = $_POST;
+		
+	}
+
+	$dataParam = $_SESSION['ses_pemanfaatan_penetapan'];
+	$dataParam['page'] = intval($_GET['pid']);
+
+
+	$data = $PEMANFAATAN->pemanfaatan_daftar_penetapan($dataParam);
 	// pr($data);
 			?>
 
@@ -138,9 +150,13 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<<?php echo @$total_record?>">
 								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
+								   	<?php 
+								   		$prev = intval($_GET['pid']-1);
+								   		$next = intval($_GET['pid']+1);
+								   		?>
+										<li><a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_penetapan_daftar.php?pid={$prev}"; ?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
+										<li><a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_penetapan_daftar.php?pid={$next}"; ?>" class="buttonnext1">Next</a></li>
 									</ul>
 							</li>
 						</ul>
@@ -167,6 +183,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 						$exec = mysql_query($query2) or die(mysql_error());*/
 	
 						$i=1;
+						if ($data):
 						foreach($data as $row){
 					?>
 						  
@@ -181,7 +198,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 						|| <a href="<?php echo "$url_rewrite/module/pemanfaatan/"; ?>pemanfaatan_penetapan_daftar_hapus.php?id=<?php echo "$row[Pemanfaatan_ID]";?>">Hapus</a> 
 						</td>
 					</tr>
-					<?php $i++; } ?>
+					<?php $i++; } endif;?>
 				</tbody>
 				<tfoot>
 					<tr>

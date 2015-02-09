@@ -83,15 +83,15 @@ include "../../config/config.php";
 			<ul>
 							<li>
 								<span class="span2">Tanggal awal</span>
-								<input type="text" name="peman_penet_filt_tglawal" placeholder="" style="width:200px;" id="tanggal12">
+								<input type="text" name="peman_penet_filt_tglawal" placeholder="" style="width:200px;" id="datepicker">
 							</li>
 							<li>
 								<span class="span2">Tanggal akhir</span>
-								<input type="text" name="peman_penet_filt_tglakhir" placeholder="" style="width:200px;" id="tanggal13">
+								<input type="text" name="peman_penet_filt_tglakhir" placeholder="" style="width:200px;" id="datepicker-other">
 							</li>
 							<li>
 								<span class="span2">No. Penetapan Pemanfaatan</span>
-								<input type="text" name="peman_penet_filt_nopenet" placeholder="" style="width:200px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
+								<input type="text" name="peman_penet_filt_nopenet" placeholder="" style="width:200px;" id="posisiKolom1">&nbsp;<span id="errmsg"></span>
 							</li>
 							<li>
 								<span class="span2">Alasan Pemanfaatan</span>
