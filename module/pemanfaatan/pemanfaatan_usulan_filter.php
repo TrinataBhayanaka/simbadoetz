@@ -126,7 +126,7 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 							</li>
 							<li>
 								<span class="span2">Tahun&nbsp;Perolehan</span>
-								<input name="peman_usulan_filt_tahun" id="peman_usulan_filt_tahun"  type="text" required placeholder="Tahun (ex:2015)" maxlength="4">
+								<input name="peman_usulan_filt_tahun" id="peman_usulan_filt_tahun"  type="text" placeholder="Tahun (ex:2015)" maxlength="4">
 							</li>
 							<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
 							<li>&nbsp;</li>

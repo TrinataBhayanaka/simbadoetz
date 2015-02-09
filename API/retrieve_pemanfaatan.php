@@ -13,12 +13,14 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
 	{
 
 		$jenisaset = $data['jenisaset'];
-        $nokontrak = $data['nokontrak'];
+        $nokontrak = $data['peman_usulan_filt_nokontrak'];
+        $tahun = $data['peman_usulan_filt_tahun'];
         $kodeSatker = $data['kodeSatker'];
 
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+        if ($tahun) $filterkontrak .= " AND a.Tahun = '{$tahun}' ";
 
 
         if ($jenisaset){
@@ -32,11 +34,13 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
                 $listTableAlias = $table['listTableAlias'];
                 $listTableAbjad = $table['listTableAbjad'];
 
+                $paging = paging($data['page'], 100);
+
                 $sql = array(
                         'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k",
                         'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak",
                         'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND a.statusPemanfaatan = 0 {$filterkontrak}",
-                        'limit'=>'100',
+                        'limit'=>"{$paging}, 100",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
                         );

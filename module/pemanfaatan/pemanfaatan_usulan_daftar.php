@@ -47,7 +47,19 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 	include"$path/menu.php";
 
 // pr($_POST);
-$data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($_POST);
+
+if ($_POST['submit']){
+	// unset($_SESSION['ses_mutasi_filter']);
+
+	$_SESSION['ses_pemanfaatan_filter'] = $_POST;
+	
+}
+
+$dataParam = $_SESSION['ses_pemanfaatan_filter'];
+$dataParam['page'] = intval($_GET['pid']);
+
+
+$data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($dataParam);
 // pr($data);
 
 
@@ -190,9 +202,13 @@ $data = $PEMANFAATAN->retrieve_usulan_pemanfaatan($_POST);
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo $jml?>">
 								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
+								   	<?php 
+								   		$prev = intval($_GET['pid']-1);
+								   		$next = intval($_GET['pid']+1);
+								   		?>
+										<li><a href="<?php echo"$url_rewrite/module/pemanfaatan/pemanfaatan_usulan_daftar.php?pid=$prev"?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
+										<li><a href="<?php echo"$url_rewrite/module/pemanfaatan/pemanfaatan_usulan_daftar.php?pid=$next"?>" class="buttonnext1">Next</a></li>
 									</ul>
 							</li>
 						</ul>
