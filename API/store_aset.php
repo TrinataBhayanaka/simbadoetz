@@ -1532,7 +1532,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 1;
+        $tblAset['kodeKA'] = 0;
         // pr($tblAset);exit;
 
         $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
@@ -1633,7 +1633,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
-            $tblKib['kodeKA'] = 1;
+            $tblKib['kodeKA'] = 0;
             $tblKib['noRegister'] = $tblAset['noRegister'];
             
             unset($tmpfield2);
@@ -1814,7 +1814,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['Tahun'] = $data['Tahun'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 1;
+        $tblAset['kodeKA'] = 0;
 
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
@@ -1884,7 +1884,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['Tahun'] = $data['Tahun'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 1;
+        $tblAset['kodeKA'] = 0;
 
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
@@ -2187,7 +2187,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 1;
+        $tblAset['kodeKA'] = 0;
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
 
@@ -2300,7 +2300,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
-            $tblKib['kodeKA'] = 1;
+            $tblKib['kodeKA'] = 0;
             $tblKib['noRegister'] = $tblAset['noRegister'];
             $tblKib['kodeRuangan'] = $data['kodeRuangan']; 
 
@@ -2374,7 +2374,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 1;
+        $tblAset['kodeKA'] = 0;
         if(isset($data['kodeRuangan'])) $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblAset as $key => $val) {
@@ -2466,7 +2466,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
             if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
             if(isset($data['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
-            $tblKib['kodeKA'] = 1;
+            $tblKib['kodeKA'] = 0;
             if(isset($data['noRegister'])) $tblKib['noRegister'] = $data['noRegister']; 
             if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $data['kodeRuangan'];
 
@@ -2626,7 +2626,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
-            $tblKib['kodeKA'] = 1;
+            $tblKib['kodeKA'] = 0;
             // $tblKib['noRegister'] = $tblAset['noRegister'];
 
             $sql = "SELECT MIN(noRegister) AS min,MAX(noRegister) AS max FROM aset WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noKontrak = '{$data['noKontrak']}'";
@@ -2691,7 +2691,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 1;
+        $tblAset['kodeKA'] = 0;
         if(isset($data['kodeRuangan'])) $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
             foreach ($tblAset as $key => $val) {
@@ -2783,7 +2783,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
             if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
             if(isset($data['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
-            $tblKib['kodeKA'] = 1;
+            $tblKib['kodeKA'] = 0;
             if(isset($data['noRegister'])) $tblKib['noRegister'] = $data['noRegister']; 
             if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $data['kodeRuangan'];
 
