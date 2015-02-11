@@ -66,7 +66,7 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-			<form action="" method=POST name="checks" ID="Form2" onsubmit="return confirm('Data yang sudah divalidasi tidak dapat dikembalikan. Yakin validasi?');">
+			<form action="" method=POST name="checks" ID="Form2" onsubmit="return confirm('Data yang sudah divalidasi tidak dapat dirubah atau di unposting kembali. Yakin validasi?');">
 			<p><button type="submit" class="btn btn-success btn-small" id="btn-dis" disabled><i class="fa fa-check"></i>&nbsp;&nbsp;Validasi</button>
 				&nbsp;</p>
 			
