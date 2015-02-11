@@ -115,7 +115,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakIntra" id="tglCetakIntra" value=""/>
+										<input type="text" class="span2 full" name="tglCetakIntra" id="tglCetakIntra" value="" required/>
 									</div>
 								</div>
 							</li>

@@ -2572,7 +2572,7 @@ class core_api_report extends DB {
 																$dataQuery = array($query_01,$query_02_condt,$query_03_condt,$query_04,$query_05,$query_06);
 															}else{
 																// echo "tahun awal sama tahun akhir";
-																$dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+																$dataQuery = array($query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
 															}
 															// pr($dataQuery);
 															// exit;
@@ -4274,7 +4274,7 @@ class core_api_report extends DB {
 									   group by m.kodeKelompok 
 									   union all
 									   select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
-									   from mesin_Rplctn as m,kelompok as k where 
+									   from mesin as m,kelompok as k where 
 									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.TglPerolehan >= '$tgldefault' and m.TglPerolehan <='$tglAkhirDefault' and M.TglPembukuan >= '$tglAwalDefault' AND M.TglPembukuan <= '$tglAkhirDefault'  
 									   and (m.NilaiPerolehan >=300000 $KodeKa_m_2) and m.Status_Validasi_Barang =1 and m.StatusTampil = 1 and m.kodeLokasi like '12%' 
 									   group by m.kodeKelompok order by kodeKelompok";
@@ -4294,7 +4294,7 @@ class core_api_report extends DB {
 									WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.TglPerolehan >= '$tglAwalDefault' AND b. TglPerolehan <= '$tgldefault' and b.TglPembukuan >= '$tglAwalDefault' AND b.TglPembukuan <= '$tglAkhirDefault' and b.kondisi != '3' and b.Status_Validasi_Barang =1 and b.StatusTampil = 1 and b.kodeLokasi like '12%' 
 									$KodeKa_b
 									union all
-									SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan_Rplctn as b, kelompok as k 
+									SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan as b, kelompok as k 
 									WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.TglPerolehan >= '$tgldefault' and b.TglPerolehan <= '$tglAkhirDefault' and b.TglPembukuan >= '$tglAwalDefault' AND b.TglPembukuan <= '$tglAkhirDefault' 
 									and (b.NilaiPerolehan >=10000000 $KodeKa_b_2) and b.kondisi != '3' and b.Status_Validasi_Barang =1 and b.StatusTampil = 1 and b.kodeLokasi like '12%'";
 							}
@@ -4455,11 +4455,36 @@ class core_api_report extends DB {
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM aset WHERE kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and kondisi ='3' and StatusValidasi is null";
 								}
 								
-								
+								/*if($data2 == '01.01'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM tanah WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1";
+								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin WHERE kodeKelompok like '$data2%' and kodeSatker  like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
+													$KodeKaCondt1
+													UNION ALL
+													SELECT sum(NilaiPerolehan) as nilai,count(Aset_ID) as jumlah FROM mesin_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+													and (NilaiPerolehan >=300000 $KodeKa) and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";	
+								}elseif($data2 == '03.11' || $data2 == '03.12'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
+												$KodeKaCondt1
+												UNION ALL
+												SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+												and (NilaiPerolehan >=10000000 $KodeKa)  and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";	
+								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
+								}elseif($data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM asetlain WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
+								}elseif($data2 == '06.01' || $data2 == '06.20'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM kdp WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
+								}elseif($data2 == '07.21'){
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM aset WHERE kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi ='3' and StatusValidasi =1  $KodeKaCondt1";
+								}else{
+									//kondisi tidak diketahui 
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM aset WHERE kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and kondisi ='3' and StatusValidasi is null";
+								}*/
 							}
-							/*echo "<br>";
+							echo "<br>";
 							echo $queryresult;
-							echo "<br>";*/
+							echo "<br>";
 							$resultfix = $this->query($queryresult) or die ($this->error('error'));	
 							if($resultfix){
 							while ($data3 = $this->fetch_object($resultfix))
@@ -4471,7 +4496,7 @@ class core_api_report extends DB {
 									$nilai = $data3->nilai;
 								}
 								$datafix[] = $data3->jumlah."_".$nilai;
-								// pr($datafix);
+								pr($datafix);
 							}
 								$getdata[$Satker_ID][$data."_".$value][$data2."_".$value2][]= $datafix;
 								
@@ -4554,13 +4579,13 @@ class core_api_report extends DB {
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin WHERE kodeKelompok like '$data2%' and kodeSatker  like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
 													$KodeKaCondt1
 													UNION ALL
-													SELECT sum(NilaiPerolehan) as nilai,count(Aset_ID) as jumlah FROM mesin_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
-													and (NilaiPerolehan >=300000 $KodeKa) and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
+													SELECT sum(NilaiPerolehan) as nilai,count(Aset_ID) as jumlah FROM mesin WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+													and (NilaiPerolehan >=300000 $KodeKa) and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";	
 								}elseif($data2 == '03.11' || $data2 == '03.12'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
 												$KodeKaCondt1
 												UNION ALL
-												SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+												SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
 												and (NilaiPerolehan >=10000000 $KodeKa)  and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";	
 								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
@@ -4686,7 +4711,7 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM mesin_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai FROM mesin
 							WHERE kodeSatker like '$satker_id%'  
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -4716,7 +4741,7 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
 							and TglPembukuan >= '$tglAwalDefault' 
@@ -4874,7 +4899,7 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM mesin_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai FROM mesin
 							WHERE kodeSatker like '$satker_id%'  
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -4904,7 +4929,7 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan
 							WHERE kodeSatker like '$satker_id%' 
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
@@ -5023,7 +5048,7 @@ class core_api_report extends DB {
 						FROM 
 							log_tanah as T
 						where 
-							T.Kd_Riwayat in (2,21,7,3,28) and kodeSatker like '$satker_id%'  
+							T.Kd_Riwayat in (2,21,7,3) and kodeSatker like '$satker_id%'  
 							and T.TglPerubahan >= '$tglAwal' AND T.TglPerubahan <= '$tglAkhir' group by T.Aset_ID desc";
 			$query_02 = "SELECT distinct(M.Aset_ID),
 										M.kodeSatker,M.kodeKelompok,M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
@@ -5032,7 +5057,7 @@ class core_api_report extends DB {
 						FROM 
 							log_mesin as M
 						where 
-							M.Kd_Riwayat in (2,21,7,3,28) and M.kodeSatker like '$satker_id%' 
+							M.Kd_Riwayat in (2,21,7,3) and M.kodeSatker like '$satker_id%' 
 							and M.TglPerubahan >= '$tglAwal' AND M.TglPerubahan <= '$tglAkhir'
 							group by M.Aset_ID desc";
 			$query_03 = "SELECT distinct(B.Aset_ID),
@@ -5043,7 +5068,7 @@ class core_api_report extends DB {
 										B.NilaiPerolehan,B.NilaiPerolehan_Awal,B.noRegister,B.Kd_Riwayat
 						FROM log_bangunan as B
 						where 
-							B.Kd_Riwayat in (2,21,7,3,28) and B.kodeSatker like '$satker_id%' 
+							B.Kd_Riwayat in (2,21,7,3) and B.kodeSatker like '$satker_id%' 
 							and B.TglPerubahan >= '$tglAwal' AND B.TglPerubahan <= '$tglAkhir' 
 							group by B.Aset_ID desc";
 			$query_04 = "SELECT distinct(J.Aset_ID),
@@ -5053,7 +5078,7 @@ class core_api_report extends DB {
 										J.kondisi, J.kodeLokasi,J.NilaiPerolehan,J.NilaiPerolehan_Awal,J.noRegister,J.Kd_Riwayat
 						FROM log_jaringan as J
 						where 
-							J.Kd_Riwayat in (2,21,7,3,28) and J.kodeSatker like '$satker_id%' 
+							J.Kd_Riwayat in (2,21,7,3) and J.kodeSatker like '$satker_id%' 
 							and J.TglPerubahan >= '$tglAwal' AND J.TglPerubahan <= '$tglAkhir' 
 							group by J.Aset_ID desc";
 			$query_05 = "SELECT distinct(AL.Aset_ID),
@@ -5063,7 +5088,7 @@ class core_api_report extends DB {
 										AL.kondisi, AL.kodeLokasi,AL.NilaiPerolehan,AL.NilaiPerolehan_Awal,AL.noRegister,AL.Kd_Riwayat
 						FROM log_asetlain as AL
 						where 
-							AL.Kd_Riwayat in (2,21,7,3,28) and AL.kodeSatker like '$satker_id%' 
+							AL.Kd_Riwayat in (2,21,7,3) and AL.kodeSatker like '$satker_id%' 
 							and AL.TglPerubahan >= '$tglAwal' AND AL.TglPerubahan <= '$tglAkhir'
 							group by AL.Aset_ID desc";
 			$query_06 = "SELECT distinct(KDPA.Aset_ID),
@@ -5073,7 +5098,7 @@ class core_api_report extends DB {
 										KDPA.kondisi, KDPA.kodeLokasi,
 										KDPA.NilaiPerolehan,KDPA.NilaiPerolehan_Awal,KDPA.noRegister,KDPA.Kd_Riwayat
 						FROM log_kdp as KDPA
-						where KDPA.Kd_Riwayat in (2,21,7,3,28) and KDPA.kodeSatker like '$satker_id%' 
+						where KDPA.Kd_Riwayat in (2,21,7,3) and KDPA.kodeSatker like '$satker_id%' 
 							and KDPA.TglPerubahan >= '$tglAwal' AND KDPA.TglPerubahan <= '$tglAkhir' 
 						group by KDPA.Aset_ID desc";
 			
@@ -5279,7 +5304,7 @@ class core_api_report extends DB {
 			}
 		}else{
 			
-				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' ";
+				$paramKib 		= "TglPerolehan >='$tglakhirperolehan' ";
 				$paramMutasi 	= "TglSKKDH >='$tglakhirperolehan' order by TglSKKDH desc";
 				$paramPnghpsn 	= "TglHapus >='$tglakhirperolehan' order by TglHapus desc"; 
 				$paramLog 		= "TglPerubahan >='$tglakhirperolehan' order by log_id desc";
@@ -5382,55 +5407,6 @@ class core_api_report extends DB {
 									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
 								from log_mesin
 								where $paramLog";
-								
-				$queryKib_Rplctn 	= "create temporary table mesin_Rplctn as
-								select Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
-									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
-									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
-									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun  
-								from mesin 
-								where $paramKib";
-								
-				$queryMutasi_Rplctn 	= "replace into mesin_Rplctn (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
-									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
-									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
-									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
-								select Mesin_ID, Aset_ID, kodeKelompok, SatkerAwal, concat(left(kodeLokasi,9),left(SatkerAwal,6),lpad(right(Tahun,2),2,'0'),'.',right(SatkerAwal,5)), 
-									NomorRegAwal, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
-									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
-									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
-									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
-								from view_mutasi_mesin
-								where $paramMutasi";
-								
-				$queryPnghpsn_Rplctn	= "replace into mesin_Rplctn (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
-									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
-									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
-									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
-								select Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, 1, Tahun, NilaiPerolehan, Alamat, Info, 
-									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
-									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
-									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
-								from view_hapus_mesin 
-								where $paramPnghpsn";
-								
-				$queryLog_Rplctn 		= "replace into mesin_Rplctn (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
-									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
-									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
-									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
-								select Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan_Awal, Alamat, Info, 
-									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
-									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
-									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
-								from log_mesin
-								where $paramLog";				
 			}elseif($flag == 'C'){
 			//KIB C
 				$queryKib 		= "create temporary table bangunan as
@@ -5478,55 +5454,6 @@ class core_api_report extends DB {
 									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
 								from log_bangunan 
 								where $paramLog";
-				
-				$queryKib_Rplctn 		= "create temporary table bangunan_Rplctn as
-								select Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
-									CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
-									NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
-									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun  
-								from bangunan 
-								where $paramKib";
-								
-				$queryMutasi_Rplctn 	= "replace into bangunan_Rplctn (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
-									CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
-									NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
-									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
-								select Bangunan_ID, Aset_ID, kodeKelompok, SatkerAwal,concat(left(kodeLokasi,9),left(SatkerAwal,6),lpad(right(Tahun,2),2,'0'),'.',right(SatkerAwal,5)), 
-									NomorRegAwal, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
-									CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
-									NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
-									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun from 
-								view_mutasi_bangunan
-								where $paramMutasi";
-								
-				$queryPnghpsn_Rplctn	= "replace into bangunan_Rplctn (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
-									CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
-									NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
-									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
-								select Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, 1, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
-									CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
-									NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
-									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
-								from view_hapus_bangunan 
-								where $paramPnghpsn";
-								
-				$queryLog_Rplctn 		= "replace into bangunan_Rplctn (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
-									CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
-									NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
-									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
-								select Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
-									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan_Awal, Alamat, Info, AsalUsul, kondisi, 
-									CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
-									NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
-									KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
-								from log_bangunan 
-								where $paramLog";	
 			}elseif($flag == 'D'){
 			//KIB D
 				$queryKib 		= "create temporary table jaringan as
@@ -5655,27 +5582,29 @@ class core_api_report extends DB {
 								from log_kdp 
 								where $paramLog";
 			}
-			if($TypeRprtr == 'ATM' || $TypeRprtr == 'ATB'){
-				$AllTableTemp = array($queryKib,$queryMutasi,$queryPnghpsn,$queryLog,
-									$queryKib_Rplctn,$queryMutasi_Rplctn,$queryPnghpsn_Rplctn,$queryLog_Rplctn);
-			}else{
-				$AllTableTemp = array($queryKib,$queryMutasi,$queryPnghpsn,$queryLog);
-			}
+			$AllTableTemp = array($queryKib,$queryMutasi,$queryPnghpsn,$queryLog);
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
-					/*echo "query_$i =".$AllTableTemp[$i];
+					/*$time_start = microtime(true);
+					// sleep(1);
 					echo "<br>";
-					echo "<br>";*/
+					echo "query_$i =".$AllTableTemp[$i];
+					echo "<br>";
+					echo "<br>";
 					// exit;*/
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 					
-				}	
+				}
+			/*$time_end = microtime(true);
+			$time = $time_end - $time_start;
+			echo "Process Time: {$time}";*/
+			
 		}else{
 		//array query
-		// echo "array query";
+		echo "array query";
 		// echo "<br>";
-			//start kiba
+		// exit;
 			$queryKibA		= "create temporary table tanah as
 								select Tanah_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
 									kodeKA, kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, 
@@ -5723,8 +5652,8 @@ class core_api_report extends DB {
 								NoSertifikat, TglSertifikat, Penggunaan, BatasUtara, BatasSelatan, BatasBarat, BatasTimur, Tmp_Hak, GUID, MasaManfaat, 
 								AkumulasiPenyusutan, PenyusutanPerTahun 
 							from log_tanah 
-							where $paramLog";	
-			
+							where $paramLog";
+							
 			$queryKibB 		= "create temporary table mesin as
 								select Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
 									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
@@ -5774,6 +5703,7 @@ class core_api_report extends DB {
 							from log_mesin
 							where $paramLog";
 			
+			//add start replication kib b
 			$queryKibB_Rplctn 	= "create temporary table mesin_Rplctn as
 								select Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
 									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
@@ -5823,6 +5753,8 @@ class core_api_report extends DB {
 							from log_mesin
 							where $paramLog";
 
+			//end replican kib b
+			
 			$queryKibC 		= "create temporary table bangunan as
 								select Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
 									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
@@ -5871,7 +5803,7 @@ class core_api_report extends DB {
 								KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
 							from log_bangunan 
 							where $paramLog";
-			
+			//add start replication kib c
 			$queryKibC_Rplctn 		= "create temporary table bangunan_Rplctn as
 								select Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
 									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
@@ -5921,6 +5853,7 @@ class core_api_report extends DB {
 							from log_bangunan 
 							where $paramLog";
 			
+			//end replicat
 			$queryKibD 		= "create temporary table jaringan as
 								select Jaringan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
 									kodeKA, kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
@@ -6051,46 +5984,112 @@ class core_api_report extends DB {
 							from log_kdp 
 							where $paramLog";
 							
+			$createViewTableA = "create or replace view tanah_dplct as
+                                 SELECT Tanah_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
+									kodeKA, kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, 
+									Alamat, Info, AsalUsul, kondisi, CaraPerolehan, LuasTotal, LuasBangunan, LuasSekitar, LuasKosong, HakTanah,
+									NoSertifikat, TglSertifikat, Penggunaan, BatasUtara, BatasSelatan, BatasBarat, BatasTimur, Tmp_Hak, GUID, MasaManfaat, 
+									AkumulasiPenyusutan, PenyusutanPerTahun from tanah";
+
+			$createViewTableB = "create or replace view mesin_dplct as
+                                 SELECT Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun  
+								from mesin";						
+			
+			$createViewTableB_Rplt = "create or replace view mesin_dplct_2 as
+                                 SELECT Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+									kodeRuangan, StatusValidasi, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun  
+								from mesin_Rplctn";
+									
 			if($TypeRprtr == 'kir'){
-				// echo "kir";
+				echo "kir";
 				$AllTableTemp = array($queryKibB,$queryMutasiB,$queryPnghpsnB,$queryLogB,
 								$queryKibE,$queryMutasiE,$queryPnghpsnE,$queryLogE);
 			}elseif($TypeRprtr == 'ekstra'){
-				// echo "ekstra";
+				echo "ekstra";
 				$AllTableTemp = array($queryKibB,$queryMutasiB,$queryPnghpsnB,$queryLogB,
 								$queryKibC,$queryMutasiC,$queryPnghpsnC,$queryLogC);
-			}elseif($TypeRprtr == 'BIS' || $TypeRprtr == 'BISG' || $TypeRprtr == 'RBIS' || $TypeRprtr =='BISI' || $TypeRprtr =='RBISI'){
-				// echo "all ORI";
-				// echo "<br>";
-				$AllTableTemp = array($queryKibA,$queryMutasiA,$queryPnghpsnA,$queryLogA,
-									$queryKibB,$queryMutasiB,$queryPnghpsnB,$queryLogB,
-									$queryKibC,$queryMutasiC,$queryPnghpsnC,$queryLogC,
-									$queryKibD,$queryMutasiD,$queryPnghpsnD,$queryLogD,
-									$queryKibE,$queryMutasiE,$queryPnghpsnE,$queryLogE,
-									$queryKibF,$queryMutasiF,$queryPnghpsnF,$queryLogF);
+			}else{
+				echo "all";
+				/*$AllTableTemp = array($queryKibB,$queryMutasiB,$queryPnghpsnB,$queryLogB,
+							$queryKibB_Rplctn,$queryMutasiB_Rplctn,$queryPnghpsnB_Rplctn,$queryLogB_Rplctn);*/
+				/*$AllTableTemp = array($queryKibA,$queryMutasiA,$queryPnghpsnA,$queryLogA,
+								$queryKibB,$queryMutasiB,$queryPnghpsnB,$queryLogB,
+								$queryKibB_Rplctn,$queryMutasiB_Rplctn,$queryPnghpsnB_Rplctn,$queryLogB_Rplctn,
+								$queryKibC,$queryMutasiC,$queryPnghpsnC,$queryLogC,
+								$queryKibC_Rplctn,$queryMutasiC_Rplctn,$queryPnghpsnC_Rplctn,$queryLogC_Rplctn,
+								$queryKibD,$queryMutasiD,$queryPnghpsnD,$queryLogD,
+								$queryKibE,$queryMutasiE,$queryPnghpsnE,$queryLogE,
+								$queryKibF,$queryMutasiF,$queryPnghpsnF,$queryLogF);*/
+								
+				// $AllTableTemp_exe = array($queryKibA,$queryKibB,$queryKibB_Rplctn);
+				$AllTableTemp_exe = array($queryKibA);
+				// $AllView = array($createViewTableA,$createViewTableB,$createViewTableB_Rplt);		
+				$AllTableTemp = array($queryMutasiA,$queryPnghpsnA,$queryLogA
+								// $queryMutasiB,$queryPnghpsnB,$queryLogB,
+								// $queryMutasiB_Rplctn,$queryPnghpsnB_Rplctn,$queryLogB_Rplctn
+								// $queryKibC,$queryMutasiC,$queryPnghpsnC,$queryLogC,
+								// $queryKibC_Rplctn,$queryMutasiC_Rplctn,$queryPnghpsnC_Rplctn,$queryLogC_Rplctn,
+								// $queryKibD,$queryMutasiD,$queryPnghpsnD,$queryLogD,
+								// $queryKibE,$queryMutasiE,$queryPnghpsnE,$queryLogE,
+								// $queryKibF,$queryMutasiF,$queryPnghpsnF,$queryLogF
+								);			
 			}
-			else{
-				// echo "all";
-				// echo "<br>";
-				
-				$AllTableTemp = array($queryKibA,$queryMutasiA,$queryPnghpsnA,$queryLogA,
-									$queryKibB,$queryMutasiB,$queryPnghpsnB,$queryLogB,
-									$queryKibB_Rplctn,$queryMutasiB_Rplctn,$queryPnghpsnB_Rplctn,$queryLogB_Rplctn,
-									$queryKibC,$queryMutasiC,$queryPnghpsnC,$queryLogC,
-									$queryKibC_Rplctn,$queryMutasiC_Rplctn,$queryPnghpsnC_Rplctn,$queryLogC_Rplctn,
-									$queryKibD,$queryMutasiD,$queryPnghpsnD,$queryLogD,
-									$queryKibE,$queryMutasiE,$queryPnghpsnE,$queryLogE,
-									$queryKibF,$queryMutasiF,$queryPnghpsnF,$queryLogF);			
-			}
-			
+			echo "loop =".count($AllTableTemp);
+			//_Rplctn
+			// exit;
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
-					/*echo "query_$i =".$AllTableTemp[$i];
+					echo "no =".$i;
+					// $time_start = microtime(true);
+					// sleep(1);
 					echo "<br>";
-					echo "<br>";*/
+					echo "query_tmp_$i =".$AllTableTemp_exe[$i];
+					echo "<br>";
+					echo "<br>";
+					// echo "query_view_$i =".$AllView[$i];
+					echo "<br>";
+					echo "<br>";
+					echo "query_$i =".$AllTableTemp[$i];
+					echo "<br>";
+					echo "<br>";
 					// exit;
+					//create temporary table
+					$resultQuery_exe = $this->query($AllTableTemp_exe[$i]) or die ($this->error('error dataQuery'));
+					
+					//create view tabel from temporary table
+					// $resultQuery_Viewexe = $this->query($AllView[$i]) or die ($this->error('error dataQuery'));
+					
+					
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
+					
+					/*if($resultQuery_Viewexe != ''){
+						while ($dataAll = $this->fetch_object($resultQuery_Viewexe))
+						{
+							// $datafix[] = $data3->nilai;
+							// if($dataAll->NilaiPerolehan == NULL){
+								// $nilaiP = 0;
+							// }else{
+								$nilaiP = $dataAll->NilaiPerolehan;
+								// echo "nilai perolehan =".$nilaiP;
+							// }
+							$getdata[]= $nilaiP;
+							// exit;
+							pr($getdata);
+						// exit;	
+						}
+					}*/
 				}
+				// pr($getdata);
+			/*$time_end = microtime(true);
+			$time = $time_end - $time_start;
+			echo "Process Time: {$time}";*/	
 		}
 		
 	
