@@ -84,7 +84,7 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span class="span2">Tanggal Penetapan</span>
-								<input type="text" name="peman_valid_filt_tglpenet" placeholder="" style="width:200px;" id="tanggal12">
+								<input type="text" name="peman_valid_filt_tglpenet" placeholder="" style="width:200px;" id="datepicker">
 							</li>
 							<li>
 								<span class="span2">Tipe Pemanfaatan</span>

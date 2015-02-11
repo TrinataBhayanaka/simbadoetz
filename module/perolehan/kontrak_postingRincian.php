@@ -159,7 +159,7 @@ $menu_id = 1;
 					}	
 				}
 			?>
-			<p><a href="<?=$url?>" class="btn btn-info btn-small" <?=$disabled?>><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
+			<p><a href="<?=$url?>" class="btn btn-info btn-small" <?=$disabled?> onclick="return confirm('Data akan diposting. Pastikan data sudah benar. Lanjutkan?');"><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
 			&nbsp;
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">

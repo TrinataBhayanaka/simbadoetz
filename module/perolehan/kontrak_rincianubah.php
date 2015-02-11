@@ -28,6 +28,7 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 		
 		    if($_POST)
 		    {
+		    	// pr($_POST);exit;
 				$dataArr = $STORE->store_upd_aset($_POST);
 		    }
 		  	
@@ -243,7 +244,7 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" class="span2" placeholder="yyyy-mm-dd" value="<?=(isset($dataArr['kib']['tglSurat'])) ? $dataArr['kib']['tglSurat'] : ''?>" name="tglSurat" id="tglSurat" disabled/>
+								<input type="text" class="span2" placeholder="yyyy-mm-dd" value="<?=(isset($dataArr['kib']['TglSurat'])) ? $dataArr['kib']['TglSurat'] : ''?>" name="TglSurat" id="tglSurat" disabled/>
 							</li>
 						</ul>
 						<ul class="jaringan" style="display:none">
@@ -269,7 +270,7 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" value="<?=(isset($dataArr['kib']['tglDokumen'])) ? $dataArr['kib']['tglDokumen'] : ''?>" disabled/>
+								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="TglDokumen" id="tglDokumen" value="<?=(isset($dataArr['kib']['TglDokumen'])) ? $dataArr['kib']['TglDokumen'] : ''?>" disabled/>
 							</li>
 						</ul>
 						<ul class="asetlain" style="display:none">

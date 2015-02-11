@@ -26,6 +26,7 @@ if ($u_sess) $isLogin = true;
 		 <script>
 			$(function() {
 			$( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			$( "#datepicker-other" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			initTableCheckable ();
 			});
 		</script>

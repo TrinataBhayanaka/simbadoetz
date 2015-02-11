@@ -13,12 +13,14 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
 	{
 
 		$jenisaset = $data['jenisaset'];
-        $nokontrak = $data['nokontrak'];
+        $nokontrak = $data['peman_usulan_filt_nokontrak'];
+        $tahun = $data['peman_usulan_filt_tahun'];
         $kodeSatker = $data['kodeSatker'];
 
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
+        if ($tahun) $filterkontrak .= " AND a.Tahun = '{$tahun}' ";
 
 
         if ($jenisaset){
@@ -32,11 +34,13 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
                 $listTableAlias = $table['listTableAlias'];
                 $listTableAbjad = $table['listTableAbjad'];
 
+                $paging = paging($data['page'], 100);
+
                 $sql = array(
                         'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k",
                         'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak",
                         'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND a.statusPemanfaatan = 0 {$filterkontrak}",
-                        'limit'=>'100',
+                        'limit'=>"{$paging}, 100",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
                         );
@@ -211,14 +215,26 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
     {
 
         $filter = "";
-        $usulan_id = $data['usulan_id'];
+        // $usulan_id = $data['usulan_id'];
+        $tglAwal = $data['peman_penet_filt_tglawal'];
+        $tglAkhir = $data['peman_penet_filt_tglakhir'];
+        $nopenet = $data['peman_penet_filt_nopenet'];
+        $alasan = $data['peman_penet_filt_alasan'];
+
         // pr($data);
-        if ($usulan_id) $filter .= " AND ua.Usulan_ID = '{$usulan_id}'";
+        // if ($usulan_id) $filter .= " AND ua.Usulan_ID = '{$usulan_id}'";
+        if ($tglAwal) $filter .= " AND p.TanggalMulai = '{$tglAwal}'";
+        if ($tglAkhir) $filter .= " AND p.TanggalSelesai = '{$tglAkhir}'";
+        if ($nopenet) $filter .= " AND p.NoSKKDH = '{$nopenet}'";
+        if ($alasan) $filter .= " AND p.Keterangan = '{$alasan}'";
+
+        $paging = paging($data['page'], 100);
+
             $sql = array(
                     'table'=>"pemanfaatan AS p",
                     'field'=>"p.*",
                     'condition'=>"FixPemanfaatan = 0 AND Status = 1 {$filter}",
-                    'limit'=>'100',
+                    'limit'=>"{$paging}, 100",
                     );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -230,14 +246,22 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
     {
 
         $filter = "";
-        $usulan_id = $data['usulan_id'];
+        $kodeSatker = $data['kodeSatker'];
+        $nokontrak = $data['peman_penet_filt_add_nokontrak'];
+        $thn = $data['peman_penet_filt_add_thn'];
+
         // pr($data);
-        if ($usulan_id) $filter .= " AND u.Usulan_ID = '{$usulan_id}'";
+        if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}'";
+        if ($nokontrak) $filter .= " AND a.noKontrak = '{$nokontrak}'";
+        if ($thn) $filter .= " AND a.Tahun = '{$thn}'";
+
+        $paging = paging($data['page'], 100);
+
             $sql = array(
                     'table'=>"Usulan AS u, aset AS a, kelompok AS k, satker AS s",
                     'field'=>"a.*, k.Uraian, s.NamaSatker, u.*",
                     'condition'=>"u.Penetapan_ID = 0 AND u.FixUsulan = 0 AND u.Status IS NULL {$filter}",
-                    'limit'=>'100',
+                    'limit'=>"{$paging}, 100",
                     'joinmethod' => 'LEFT JOIN',
                     'join' => "u.Aset_ID = a.Aset_ID, a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
                     );
@@ -584,11 +608,12 @@ class RETRIEVE_PEMANFAATAN extends RETRIEVE{
         if ($tipe_pemanfaatan) $filter .= " AND p.TipePemanfaatan = '{$tipe_pemanfaatan}'";
         if ($alasan) $filter .= " AND p.Keterangan = '{$alasan}'";
 
+        $paging = paging($data['page'], 100);
         $sql = array(
                 'table'=>"pemanfaatan AS p",
                 'field'=>"p.*",
                 'condition'=>"p.FixPemanfaatan = 0 AND Status = 1 {$filter}",
-                'limit'=>'100',
+                'limit'=>"{$paging}, 100"
                 );
 
         $result = $this->db->lazyQuery($sql,$debug); 

@@ -51,7 +51,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           $tabel = "aset";
       }
 
-      $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = NULL WHERE Aset_ID = '{$data['Aset_ID']}'");
+      $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = NULL, StatusValidasi = NULL WHERE Aset_ID = '{$data['Aset_ID']}'");
   }
 
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";

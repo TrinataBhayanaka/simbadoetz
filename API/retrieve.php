@@ -9679,15 +9679,18 @@ $offset = @$_POST['record'];
 
     public function retrieve_distribusiBarang($data)
     {
-        // pr($_SESSION);exit;
+        // pr($data);exit;
         $clrdata = array_filter($data);
+        $toSatker = $clrdata['toSatker'];
+        unset($clrdata['toSatker']);
         foreach ($clrdata as $key => $val) {
             $tmpsetval[] = $key."='$val'";
         }
         $setval = implode(' AND ', $tmpsetval);
 
         if($setval == "") $setval = 1;
-        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND toSatker LIKE '{$toSatker}%' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
+        // pr($sql);exit;
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     $sqlsatker = "SELECT NamaSatker FROM satker WHERE kode = '{$dataTrs['fromSatker']}' LIMIT 1";
                     $NamaSatker1 = $this->fetch($sqlsatker);
@@ -9712,13 +9715,15 @@ $offset = @$_POST['record'];
     {
         // pr($data);exit;
         $clrdata = array_filter($data);
+        $toSatker = $clrdata['toSatker'];
+        unset($clrdata['toSatker']);
         foreach ($clrdata as $key => $val) {
             $tmpsetval[] = $key."='$val'";
         }
         $setval = implode(' AND ', $tmpsetval);
 
         if($setval == "") $setval = 1;
-        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND toSatker LIKE '{$toSatker}%' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     $transfer[] = $dataTrs;
                 }
