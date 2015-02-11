@@ -98,7 +98,17 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	$data = $PEMANFAATAN->pemanfaatan_validasi_daftar($_POST);
+	// pr($_POST);
+	if ($_POST['submit']){
+		
+		$_SESSION['ses_pemanfaatan_validasi'] = $_POST;
+		
+	}
+
+	$dataParam = $_SESSION['ses_pemanfaatan_validasi'];
+	$dataParam['page'] = intval($_GET['pid']);
+
+	$data = $PEMANFAATAN->pemanfaatan_validasi_daftar($dataParam);
 	// pr($data);
 
 			?>
@@ -202,9 +212,13 @@ $PEMANFAATAN = new RETRIEVE_PEMANFAATAN;
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$rows?>">
 								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
+								   	<?php 
+								   		$prev = intval($_GET['pid']-1);
+								   		$next = intval($_GET['pid']+1);
+								   		?>
+										<li><a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_validasi_daftar.php?pid={$prev}"; ?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
+										<li><a href="<?php echo "$url_rewrite/module/pemanfaatan/pemanfaatan_validasi_daftar.php?pid={$next}"; ?>" class="buttonnext1">Next</a></li>
 									</ul>
 							</li>
 						</ul>
