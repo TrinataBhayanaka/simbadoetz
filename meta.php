@@ -57,11 +57,29 @@ if ($u_sess) $isLogin = true;
 
 			$(document).ready(function() {
 				$('#example').dataTable( {
-					"sPaginationType": "full_numbers"
-					
+					"sPaginationType": "full_numbers"				
 				} );
 				$('#example2').dataTable( {
 					"sPaginationType": "full_numbers"
+				} );
+
+				$('#penghapusan').dataTable( {
+					"sPaginationType": "full_numbers",
+    				"aoColumns": [
+
+						null,
+						{ "asSorting": false},
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					],
+					
+					
 				} );
 
 				
