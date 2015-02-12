@@ -371,7 +371,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $cols = implode(",",array_values($id));
         $jenisaset = explode(',', $parameter['jenisaset']);
 
-        // pr($jenisaset);
+        // pr($jenisaset);exit;
 
         if ($jenisaset){
 
@@ -380,7 +380,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $table = $this->getTableKibAlias($value);
                 $listTable = $table['listTable'];
                 $listTableAlias = $table['listTableAlias'];
-                // pr($table);
+                // pr($listTable);
                  $sql = array(
                         'table'=>"aset AS a, {$listTable}, kelompok AS k",
                         'field'=>"{$listTableAlias}.*, k.Uraian",
