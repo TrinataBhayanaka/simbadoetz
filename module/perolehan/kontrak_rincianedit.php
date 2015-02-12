@@ -375,6 +375,7 @@ $menu_id = 10;
 					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
 					<input type="hidden" name="kondisi" value="1">
+					<input type="hidden" name="AsalUsul" value="Pembelian">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 					<input type="hidden" name="TipeAset" id="TipeAset" value="">
 			
