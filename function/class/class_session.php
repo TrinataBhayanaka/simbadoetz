@@ -167,7 +167,7 @@ class Session
 		if ($debug) pr($_SESSION[$prefix]);
 
 		$data = $_SESSION[$prefix];
-
+		
 		if ($data) return $data;
 		return false;
 	}

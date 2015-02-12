@@ -262,3 +262,32 @@ function requiredFilter(jenisaset=true, satker=true, satkerid="kodeSatker")
 	
 
 }
+
+function dTableParam(idTable=false, urlApi=false, numCol=false)
+{
+	$('#'+idTable).dataTable({
+
+        "aoColumnDefs": [
+             { "aTargets": [2] }
+        ],
+        "aoColumns":[
+            {"bSortable": false},
+            {"bSortable": false,"sClass": "checkbox-column" },
+           	{"bSortable": true},
+           	{"bSortable": true},
+           	{"bSortable": true},
+           	{"bSortable": true},
+           	{"bSortable": true},
+           	{"bSortable": true},
+           	{"bSortable": true}
+        ],
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": basedomain+"/api_list/"+urlApi
+	});
+}
+
+function log(){
+	alert('ada');
+}
