@@ -48,12 +48,26 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-
 	// pr($_POST);
-	// exit;
-	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($_POST);	
-	// pr($data);
-	// exit;
+	if ($_POST['submit']){
+		// unset($_SESSION['ses_mutasi_filter']);
+
+		$_SESSION['ses_penggunaan_tambah_filter'] = $_POST;
+		
+	}
+
+	$dataParam = $_SESSION['ses_penggunaan_tambah_filter'];
+	
+	$dataParam['page'] = intval($_GET['pid']);
+
+	///$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($dataParam);	
+          //pr($dataParam);
+          //exit;
+      $par_data_table="nokontrak={$dataParam['nokontrak']}&jenisaset={$dataParam['jenisaset'][0]}&kodeSatker={$dataParam['kodeSatker']}&page={$dataParam['page']}";
+
+//$par_data_table=  json_encode($dataParam);
+	 pr($dataPa);
+	 //exit;
 ?>	
 
 		
@@ -181,9 +195,13 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
 								   <ul class="pager">
-										<li><a href="#" class="buttonprev" >Previous</a></li>
+								   	<?php 
+								   		$prev = intval($_GET['pid']-1);
+								   		$next = intval($_GET['pid']+1);
+								   		?>
+										<li><a href="<?php echo"$url_rewrite/module/penggunaan/penggunaan_penetapan_tambah_data.php?pid=$prev";?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
-										<li><a href="#" class="buttonnext">Next</a></li>
+										<li><a href="<?php echo"$url_rewrite/module/penggunaan/penggunaan_penetapan_tambah_data.php?pid=$next";?>" class="buttonnext1">Next</a></li>
 									</ul>
 							</li>
 						</ul>
@@ -191,121 +209,60 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 			
-			
+     
+			 <script>
+    $(document).ready(function() {
+          $('#penggunaan_table').dataTable(
+                   {
+                    "aoColumnDefs": [
+                         { "aTargets": [2] }
+                    ],
+                    "aoColumns":[
+                         {"bSortable": false},
+                         {"bSortable": false,"sClass": "checkbox-column" },
+                               {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                          {"bSortable": true},
+                           {"bSortable": true},
+                             {"bSortable": true},
+                         {"bSortable": true}],
+                    "sPaginationType": "full_numbers",
+
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_penggunaan.php?<?php echo $par_data_table?>"
+               }
+                  );
+      });
+    </script>
 			<div id="demo">
 			<form name="myform" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data.php">
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
-				<thead>
-					<tr>
-						<td colspan="10" align="right" >
-								<input type="submit" name="submit2" class="btn btn-primary" value="Penetapan Penggunaan" id="submit" disabled/>
-							<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
-						</td>
-					</tr>
-					<tr><!-- 
-						<th>&nbsp;</th>
-						<th>Kode Barang</th>
-						<th>Nama Barang</th>
-						<th>Kode Lokasi</th>
-						<th>SKPD</th>
- -->
+                       <input type="submit" name="submit2" class="btn btn-primary" value="Penetapan Penggunaan" id="submit" disabled/>
+							<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
+                       <table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penggunaan_table">
+                            <thead>
+                            <tr>
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
-						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>		
-				<?php
-
-				  if (!empty($data))
-					{
+                                    	<th>Merk / Type</th>
 					
-						$no = 1;
-						$page = @$_GET['pid'];
-						if ($page > 1){
-							$no = intval($page - 1 .'01');
-						}else{
-							$no = 1;
-						}
-						// pr($data);
-
-						foreach ($data as $key => $value)
-						{
-							// pr($get_data_filter);
-							if($value[kondisi]==2){
-								$kondisi="Rusak Ringan";
-							}elseif($value[kondisi]==3){
-								$kondisi="Rusak Berat";
-							}elseif($value[kondisi]==1){
-								$kondisi="Baik";
-							}
-							// pr($value[TglPerolehan]);
-							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-							// pr($TglPerolehanTmp);
-							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-
-						?>	  
-					<tr class="gradeA">
-						<td><?php echo $no;?></td>
-						<td class="checkbox-column">
-							<input type="checkbox" id="checkbox" class="checkbox" onchange="enable()" name="Penggunaan[]" value="<?php echo $value['Aset_ID'];?>" >
-							
-							
-						</td>
-						<td><?php echo $value['noRegister']?></td>
-						<td><?php echo $value['noKontrak']?></td>
-						<td>
-							[<?php echo $value[kodeKelompok]?>]<br/> 
-							<?php echo $value[Uraian]?>
-						</td>
-						<td>
-							<?php echo $value[Merk]?> <?php if ($value[Model]) echo $value[Model];?>
-						</td>
-						<td style="font-weight:bold;">
-							<?php echo '['.$value[kodeSatker].'] '?><br/>
-							<?php echo $value[NamaSatker];?>
-						</td>
-						<td>
-							<?php echo $TglPerolehan;?>
-						</td>
-						<td style="font-weight:bold;"><?php echo number_format($value[NilaiPerolehan])?></td>
-						<td style="font-weight:bold;"><?php echo $kondisi. ' - ' .$value[AsalUsul]?></td>
-						
 					</tr>
-
-					 <?php 
-					$no++; 
-					//$pid++; 
-					} 
-				}
-				 else
-				{
-					$disabled = 'disabled';
-				}
-				?>
-				</tbody>
-				<tfoot>
-					<tr>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-					</tr>
-				</tfoot>
-			</table>
+                              </thead>
+                              <tbody>
+                                   <tr>
+                                        <td colspan="10">Data Tidak di temukkan</td>
+                                   </tr>
+                              </tbody>
+                       </table>
 			</form>
 			</div>
 			<div class="spacer"></div>

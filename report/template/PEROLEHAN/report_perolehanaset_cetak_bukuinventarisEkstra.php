@@ -73,7 +73,8 @@ $hit = count($query);
 $flag = '';
 $TypeRprtr = 'ekstra';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 // exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;

@@ -52,7 +52,10 @@ $hit = 2;
 $flag = '';
 $TypeRprtr = '';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
+// echo "masukkkk";
 // exit;
 $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan);	
 // pr($resultParamGol);

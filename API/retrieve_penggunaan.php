@@ -371,8 +371,9 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $cols = implode(",",array_values($id));
         $jenisaset = explode(',', $parameter['jenisaset']);
 
-        // pr($jenisaset);
-
+        // pr($jenisaset);exit;
+        logFile('Jenis aset :');
+        logFile($parameter['jenisaset']);
         if ($jenisaset){
 
             foreach ($jenisaset as $value) {
@@ -380,7 +381,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $table = $this->getTableKibAlias($value);
                 $listTable = $table['listTable'];
                 $listTableAlias = $table['listTableAlias'];
-                // pr($table);
+                // pr($listTable);
                  $sql = array(
                         'table'=>"aset AS a, {$listTable}, kelompok AS k",
                         'field'=>"{$listTableAlias}.*, k.Uraian",
@@ -419,7 +420,11 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $jenisaset = $parameter['jenisaset'];
         $nokontrak = $parameter['nokontrak'];
         $kodeSatker = $parameter['kodeSatker'];
-
+         
+                $kondisi= trim($parameter['condition']);
+                if($kondisi!="")$kondisi=" and $kondisi";
+                $limit= $parameter['limit'];
+                $order= $parameter['order'];
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
@@ -437,17 +442,20 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $listTable = $table['listTable'];
                 $listTableAlias = $table['listTableAlias'];
 
+                $paging = paging($parameter['page'], 100);
 
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k",
-                        'field'=>"{$listTableAlias}.*, k.Uraian",
-                        'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}",
-                        'limit'=>'100',
+                        'field'=>"SQL_CALC_FOUND_ROWS {$listTableAlias}.*, k.Uraian",
+                        'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}  $kondisi $order",
+                        'limit'=>"$limit",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
                         );
 
                 $res[$value] = $this->db->lazyQuery($sql,$debug);
+                
+                
 
             }
 

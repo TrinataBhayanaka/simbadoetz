@@ -54,7 +54,7 @@ if ($u_sess) $isLogin = true;
 				
 				 })
 			}
-
+			
 
 			$(document).ready(function() {
 				$('#example').dataTable( {

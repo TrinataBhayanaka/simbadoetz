@@ -489,7 +489,6 @@ include "../../config/config.php";
 		                html += "	</tr>";
 		                $.each(data.rec, function(i,value){
 
-		                    
 		                    html += "	<tr>";
 							html += "				<td><input type='radio' class='pilihaset' value='"+value.Aset_ID+"' name='pilihaset' prop='"+value.Uraian+"'/></td>";
 							html += "				<td>"+value.Uraian+"</td>";

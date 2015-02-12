@@ -50,8 +50,9 @@ if($tglcetak != ''){
 $hit = 2;
 $flag = '';
 $TypeRprtr = 'RBISI';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$Info = 'RBISI';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 // EXIT;
 $result_query = $REPORT->get_report_rekap_inv_daerah($tglawalperolehan,$tglakhirperolehan);
 

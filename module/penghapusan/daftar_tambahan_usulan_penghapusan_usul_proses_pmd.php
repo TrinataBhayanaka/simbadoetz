@@ -24,13 +24,27 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // $date,
                 // $ses_uid
                 // );
+        $data_post=$PENGHAPUSAN->apl_userasetlistHPS("USPMD");
+        $POST=$_POST;
+        // //pr($POST);
+        $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+        $POST['penghapusan_nama_aset']=$POST_data;
+
 		// pr($_POST);
+  //       pr($POST);
   //       exit;
-		$data = $PENGHAPUSAN->store_tambahan_usulan_penghapusan_pmd($_POST);
+		$data = $PENGHAPUSAN->store_tambahan_usulan_penghapusan_pmd($POST);
         
+        $data_postRVW=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+        if($data_postRVW){
+         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+        }
+        if($data_post){
+         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("USPMD");
+        }
         
-        if(isset($_POST['usulanID'])){
-            $id=$_POST['usulanID'];
+        if(isset($POST['usulanID'])){
+            $id=$POST['usulanID'];
             echo "<script>
                     alert('Data Berhasil Disimpan');
                     document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id=$id';
