@@ -17,7 +17,10 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 ?>
 	<!-- SQL Sementara -->
 	<?php
+		if(isset($_GET['del'])){
+			$dataArr = $DELETE->delKoreksiAset($_GET);
 
+		}
 		if(isset($_POST['old_kelompok'])){
 
 		      	$dataArr = $STORE->koreksiAset($_POST);
@@ -98,14 +101,14 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						<ul>
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan'],'disabled');?>
 						</ul>
-						<!-- <ul>
-							<?php selectAset('kodeKelompok','255',true,$dataArr['aset']['kodeKelompok'],'disabled'); ?>
-						</ul>	 -->	
 						<ul>
-							<li>
+							<?php selectAset('kodeKelompok','255',true,$dataArr['aset']['kodeKelompok'],'disabled'); ?>
+						</ul>		
+						<ul>
+							<!-- <li>
 								<span class="span2">Kode Aset</span>
 								<input type="text" class="span2" id="kodeKelompok" name="kodeKelompok" value="<?=$dataArr['aset']['kodeKelompok']?>" readonly/>
-							</li>
+							</li> -->
 							<li>
 								<span class="span2">Tgl. Pembelian</span>
 								<div class="control">
@@ -376,6 +379,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 					<input type="hidden" id="id" >
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 					<input type="hidden" name="TipeAset" id="TipeAset" value="">
+					<input type="hidden" name="old_tabel" value="<?=$dataArr['aset']['TipeAset']?>">
 					<input type="hidden" name="noRegister" value="<?=$dataArr['kib']['noRegister']?>">
 					<input type="hidden" name="kodeLokasi" value="<?=$dataArr['kib']['kodeLokasi']?>">
 					<input type="hidden" name="rubahkondisi" id="rubahkondisi" value="1" disabled>
@@ -388,8 +392,17 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>
 			<li>
-				<span class="span2">
+				<span class="span3">
 				  <button class="btn" type="reset">Reset</button>
+
+				  <?php
+				  	if($_SESSION['ses_ujabatan'] == 1){
+				  ?>
+				  	<a onclick="return konfirmasigokil()" href="koreksi_data.php?id=<?=$dataArr['aset']['Aset_ID']?>&tbl=<?=$_GET['tbl']?>&del=1"><button type="button" class="btn btn-danger">Hapus</button></a>
+				  <?php		
+				  	}
+				  ?>
+
 				  <button type="submit" id="submit" class="btn btn-primary">Simpan</button></span>
 			</li>
 		</ul>
@@ -407,6 +420,30 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 ?>
 
 <script type="text/javascript">
+	function konfirmasigokil(){
+		var r = confirm("Yakin mau di hapus? Datanya tidak bisa dikembalikan lagi lho");
+		if (r == true) {
+		    
+			r = confirm("Ciyuss nii?");
+			if (r == true) {
+			    
+				r = confirm("Enelan ^^?");
+				if (r == true) {
+				    
+					return true;
+				    
+				} else {
+				    return false;
+				}
+			    
+			} else {
+			    return false;
+			}
+
+		} else {
+		    return false;
+		}
+	}
 	$(document).on('submit', function(){
 		var perolehan = $("#total").val();
 		var total = $("#totalRB").val();
