@@ -372,6 +372,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $jenisaset = explode(',', $parameter['jenisaset']);
 
         // pr($jenisaset);exit;
+        logFile('Jenis aset :');
         logFile($parameter['jenisaset']);
         if ($jenisaset){
 
