@@ -201,11 +201,11 @@ $menu_id = 10;
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
-						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
+						<th>Merk / Type</th>
 					</tr>
 				</thead>
 				<tbody>		
