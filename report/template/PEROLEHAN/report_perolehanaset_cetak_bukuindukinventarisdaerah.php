@@ -61,8 +61,9 @@ $query=$REPORT->list_query($data);
 $hit = 2;
 $flag = '';
 $TypeRprtr = 'BISI';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$Info = 'BISI';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 // exit;
 //mengenerate query
 $result_query=$REPORT->QueryBinv($query);
