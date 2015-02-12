@@ -22,19 +22,27 @@ $menu_id = 10;
 	if($_SESSION['kdSatkerFilterPMD']){
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
 	}
-	if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
-		$_SESSION['reviewAsetUsulan']=$_POST;
-		$POST=$_SESSION['reviewAsetUsulan'];
-	}else{
-		////////pr($_POST);
-		////////pr($_SESSION['reviewAsetUsulan']);
-		foreach ($_POST['penghapusanfilter'] as $key => $value) {
-			$_SESSION['reviewAsetUsulan']['penghapusanfilter'][]=$value;
-		}
-		$POST=$_SESSION['reviewAsetUsulan'];
-		////////pr($POST);
-	}
 
+	// if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
+	// 	$_SESSION['reviewAsetUsulan']=$_POST;
+	// 	$POST=$_SESSION['reviewAsetUsulan'];
+	// 	pr($POST);
+	// 	pr("!");
+	// }else{
+	// 	pr($_POST);
+	// 	////////pr($_SESSION['reviewAsetUsulan']);
+	// 	foreach ($_POST['penghapusanfilter'] as $key => $value) {
+	// 		$_SESSION['reviewAsetUsulan']['penghapusanfilter'][]=$value;
+	// 	}
+	// 	$POST=$_SESSION['reviewAsetUsulan'];
+	// 	pr($POST);
+	// 	pr("?");
+	// }
+	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+	
+	$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+	$POST['penghapusanfilter']=$POST;
+	// exit;
 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_pmd($POST);
 	////pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
@@ -60,10 +68,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('USPMD');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('USPMD');
 			}}, 100);
 		}
 		</script>
@@ -148,7 +158,7 @@ $menu_id = 10;
 			
 			<div id="demo">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
 					<tr>
 						<td colspan="10" align="Left">
@@ -202,7 +212,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
 						<td>

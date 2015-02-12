@@ -27,15 +27,26 @@ $menu_id = 10;
 		$_SESSION['filterAsetUsulan']=$data;
 		$data=$_SESSION['filterAsetUsulan'];
 		// ////pr($_SESSION['reviewAsetUsulan']);
-		unset($_SESSION['reviewAsetUsulan']);
-	}else{
-		$dataSESSION=$_SESSION['filterAsetUsulan'];
+		// unset($_SESSION['reviewAsetUsulan']);
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMS");
 
-		if($_SESSION['reviewAsetUsulan']){
+		if($data_post){
+		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMS");
+		}
+
+	}else{
+		
+		$dataSESSION=$_SESSION['filterAsetUsulan'];
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMS");
+		
+		$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+
+		$POST['penghapusanfilter']=$POST;
+		if($POST){
 			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
 				// ////pr($valueSESSION['Aset_ID']);
-				if(!in_array($valueSESSION['Aset_ID'], $_SESSION['reviewAsetUsulan']['penghapusanfilter'])){
+				if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
 					// echo "stringnot";
 					$data[]=$valueSESSION;
 				}
@@ -71,10 +82,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('RVWUSPMS');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('RVWUSPMS');
 			}}, 100);
 		}
 		</script>
@@ -186,7 +199,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
 						<td>

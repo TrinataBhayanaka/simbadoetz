@@ -224,7 +224,14 @@ function retrieve_data_aset_by_type($data, $debug=false)
 
     $res = $DBVAR->lazyQuery($sql,$debug);
     // pr($res);
-    if ($res) return $res;
+    if ($res){
+
+    	foreach ($res as $key => $value) {
+    		
+    		if ($value['NilaiPerolehan']) $res[$key]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
+    	}
+    	return $res;
+    } 
     return false;
 }
 

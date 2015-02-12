@@ -6,7 +6,7 @@ include "../../report_engine.php";
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-// $tahun = $_REQUEST['tahun'];
+$tahun = $_REQUEST['tahun'];
 $skpd_id = $_REQUEST['kodeSatker7'];
 $tglcetak = $_REQUEST['tglCetakRekapKib'];
 // $kelompok=$_REQUEST['bidang'];
@@ -18,7 +18,7 @@ $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "rekap"=>$rekap,
-    // "tahun"=>$tahun,
+    "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
@@ -27,7 +27,7 @@ $data=array(
 // print_r($_POST);
 // exit;
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&rekap=$rekap&tglcetak=$tglcetak&tipe_file=";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&rekap=$rekap&tahun=$tahun&tglcetak=$tglcetak&tipe_file=";
 // echo $paramater_url;
 if(isset($rekap))
 {

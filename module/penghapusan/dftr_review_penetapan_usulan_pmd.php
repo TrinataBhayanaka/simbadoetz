@@ -26,7 +26,14 @@ $menu_id = 10;
 	// $_SESSION['dataPost']=$_POST;
 	// $dataPost=$_SESSION['dataPost'];
 	// }
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($_POST);
+
+	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPMD");
+	// $
+	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+	// $POST['penetapanpenghapusan']=$POST;
+	// pr($POST);
+	// pr($_POST);
+	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($POST);
 
 	if($_SESSION['kdSatkerFilterPMDp']){
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
@@ -73,10 +80,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('PTUSPMD');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('PTUSPMD');
 			}}, 100);
 		}
 		</script>
@@ -161,7 +170,7 @@ $menu_id = 10;
 		
 			<div id="demo">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
 					<tr>
 						<td colspan="10" align="Left">
@@ -256,7 +265,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
 							
 						</td>
 						<td>

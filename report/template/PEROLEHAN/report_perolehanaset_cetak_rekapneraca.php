@@ -47,8 +47,13 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 		
 	}*/
 // pr($get_satker);
-// exit;	
-// $resultParamGol = $REPORT->ceckneraca($get_satker,$tglawalperolehan,$tglakhirperolehan);	
+// exit;
+$hit = 2;
+$flag = '';
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan);	
 // pr($resultParamGol);
 // exit;	
@@ -95,7 +100,7 @@ exit;
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Rekapitulasi Barang Ke Neraca_$waktu.xls";
+	$filename ="Rekapitulasi_Barang_Ke_Neraca_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

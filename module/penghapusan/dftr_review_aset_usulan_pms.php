@@ -22,19 +22,22 @@ $menu_id = 10;
 if($_SESSION['kdSatkerFilterPMD']){
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
 	}
-	if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
-		$_SESSION['reviewAsetUsulan']=$_POST;
-		$POST=$_SESSION['reviewAsetUsulan'];
-	}else{
-		////////pr($_POST);
-		////////pr($_SESSION['reviewAsetUsulan']);
-		foreach ($_POST['penghapusanfilter'] as $key => $value) {
-			$_SESSION['reviewAsetUsulan']['penghapusanfilter'][]=$value;
-		}
-		$POST=$_SESSION['reviewAsetUsulan'];
-		////////pr($POST);
-	}
-
+	// if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
+	// 	$_SESSION['reviewAsetUsulan']=$_POST;
+	// 	$POST=$_SESSION['reviewAsetUsulan'];
+	// }else{
+	// 	////////pr($_POST);
+	// 	////////pr($_SESSION['reviewAsetUsulan']);
+	// 	foreach ($_POST['penghapusanfilter'] as $key => $value) {
+	// 		$_SESSION['reviewAsetUsulan']['penghapusanfilter'][]=$value;
+	// 	}
+	// 	$POST=$_SESSION['reviewAsetUsulan'];
+	// 	////////pr($POST);
+	// }
+	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMS");
+	
+	$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+	$POST['penghapusanfilter']=$POST;
 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_eksekusi_pms($POST);
 	////pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
@@ -60,10 +63,12 @@ if($_SESSION['kdSatkerFilterPMD']){
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('USPMS');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('USPMS');
 			}}, 100);
 		}
 		</script>
@@ -201,7 +206,7 @@ if($_SESSION['kdSatkerFilterPMD']){
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
 						<td>

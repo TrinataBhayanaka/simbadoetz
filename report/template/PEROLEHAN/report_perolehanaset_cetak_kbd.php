@@ -51,7 +51,14 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
-
+$hit = count($query);
+if($kb == 'KB-D'){
+	$flag = 'D';
+}
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 $resQuery=$REPORT->kartuBarang($query);
 // pr($resQuery);
 // exit;

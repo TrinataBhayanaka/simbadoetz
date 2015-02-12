@@ -66,8 +66,13 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-
-// $query=$query[6];
+// pr($query);
+// exit;
+$hit = count($query);
+$flag = '';
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
 // pr($query);
 //exit;
 //set gambar untuk laporan

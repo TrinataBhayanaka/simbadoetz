@@ -69,12 +69,16 @@ $query=$REPORT->list_query($data);
 // $query1=$query[0];
 // pr($query1);
 // exit;
-
+$hit = count($query);
+$flag = '';
+$TypeRprtr = 'ekstra';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 $result_query=$REPORT->QueryBinv($query);
-// $result_query=$REPORT->QueryBinv($query1);
 // pr($result_query);
 // exit;
 $result = arrayToObject($result_query);
@@ -134,7 +138,7 @@ else
 {
 	
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Buku Inventaris Non Aset_$waktu.xls";
+	$filename ="Buku_Inventaris_Non_Aset_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

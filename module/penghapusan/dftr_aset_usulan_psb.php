@@ -21,21 +21,30 @@ $menu_id = 10;
 	<?php
 	// if($_SESSION['filterAsetUsulan'])
 	// ////pr($_SESSION['filterAsetUsulan']);
-	////pr($_SESSION);
+	// pr($_SESSION);
 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
 		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($_POST);
 		$_SESSION['filterAsetUsulan']=$data;
 		$data=$_SESSION['filterAsetUsulan'];
 		// ////pr($_SESSION['reviewAsetUsulan']);
-		unset($_SESSION['reviewAsetUsulan']);
+		// unset($_SESSION['reviewAsetUsulan']);
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");
+
+		if($data_post){
+		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPSB");
+		}
 	}else{
 		$dataSESSION=$_SESSION['filterAsetUsulan'];
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");
+		
+		$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
-		if($_SESSION['reviewAsetUsulan']){
+		$POST['penghapusanfilter']=$POST;
+		if($POST){
 			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
 				// ////pr($valueSESSION['Aset_ID']);
-				if(!in_array($valueSESSION['Aset_ID'], $_SESSION['reviewAsetUsulan']['penghapusanfilter'])){
+				if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
 					// echo "stringnot";
 					$data[]=$valueSESSION;
 				}
@@ -70,10 +79,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('RVWUSPSB');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('RVWUSPSB');
 			}}, 100);
 		}
 		</script>
@@ -185,7 +196,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
 						
 						</td>
 						<td>

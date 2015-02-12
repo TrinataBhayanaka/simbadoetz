@@ -73,6 +73,12 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 // pr($query);
 // exit;
+$hit = 2;
+$flag = '';
+$TypeRprtr = 'BISG';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 // mengenerate query
 $result_query=$REPORT->QueryBinv($query);
 

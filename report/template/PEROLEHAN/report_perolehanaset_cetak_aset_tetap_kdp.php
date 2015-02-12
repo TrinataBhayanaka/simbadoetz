@@ -45,7 +45,12 @@ $satker = $skpd_id;
 		
 	}
 	
-	
+$hit = 1;
+$flag = 'F';
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;	
 $paramGol = '06';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
 
@@ -94,7 +99,7 @@ exit;
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Daftar Aset Tetap KDP_$waktu.xls";
+	$filename ="Daftar_Aset_Tetap_KDP_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

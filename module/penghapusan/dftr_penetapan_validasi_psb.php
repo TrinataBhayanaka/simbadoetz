@@ -35,10 +35,12 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('VLDUSPSB');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('VLDUSPSB');
 			}}, 100);
 		}
 		</script>
@@ -140,7 +142,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
 						<td class="checkbox-column">
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
 							
 						</td>
 						<?php

@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -20,9 +20,9 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	// //pr($_POST);
+	// ////pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter_psb($_POST);
-	// //pr($data);
+	// ////pr($data);
 	if($_POST['kodeSatker']){
 		$_SESSION['kdSatkerFilterPMDp']=$_POST['kodeSatker'];
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
@@ -42,10 +42,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('RVWPTUSPSB');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('RVWPTUSPSB');
 			}}, 100);
 		}
 		</script>
@@ -91,7 +93,7 @@ $menu_id = 10;
 			<form name="myform" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_penetapan_usulan_psb.php">
 			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="penghapusan8">
 				<thead>
 					<tr>
 						
@@ -117,9 +119,9 @@ $menu_id = 10;
 							 
 				 <?php
                                         
-					// ////pr($dataArr);
+					// //////pr($dataArr);
 					$no=1;	
-					// ////pr($data);
+					// //////pr($data);
 					if($data){
 					foreach($data as $key => $hsl_data){
 						
@@ -136,7 +138,7 @@ $menu_id = 10;
 						<td><?php echo "$no";?></td>
 						<td  class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
 							
 						</td>
 						<td><?php echo $hsl_data['NoUsulan'];?></td>
@@ -152,7 +154,7 @@ $menu_id = 10;
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
 						</td>
-						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
+						<td><?=number_format($hsl_data['TotalNilaiPerolehan'])?>
 						</td>
 						<td>
 							<?=$hsl_data['KetUsulan']?>

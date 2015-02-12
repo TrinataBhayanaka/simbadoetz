@@ -143,6 +143,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<?php
 						}else{ ?>
 							<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_pmd.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success btn-small"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;
+							<a target="_blank" href="<?php echo "$url_rewrite/";?>report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan=<?=$row[Penghapusan_ID]?>&sk=<?=$row[NoSKHapus]?>" class="btn btn-info btn-small"><i class="fa fa-file-pdf-o"></i> Report</a>&nbsp;
 						
 			<?php			}
 

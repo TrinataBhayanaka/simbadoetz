@@ -58,11 +58,64 @@ if ($u_sess) $isLogin = true;
 
 			$(document).ready(function() {
 				$('#example').dataTable( {
-					"sPaginationType": "full_numbers"
-					
+					"sPaginationType": "full_numbers"				
 				} );
 				$('#example2').dataTable( {
 					"sPaginationType": "full_numbers"
+				} );
+
+				$('#penghapusan10').dataTable( {
+					"sPaginationType": "full_numbers",
+    				"aoColumns": [
+
+						null,
+						{ "asSorting": false},
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					],
+					
+					
+				} );
+				$('#penghapusan11').dataTable( {
+					"sPaginationType": "full_numbers",
+    				"aoColumns": [
+
+						null,
+						{ "asSorting": false},
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					],
+					
+					
+				} );
+				$('#penghapusan8').dataTable( {
+					"sPaginationType": "full_numbers",
+    				"aoColumns": [
+
+						null,
+						{ "asSorting": false},
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					],
+					
+					
 				} );
 
 				

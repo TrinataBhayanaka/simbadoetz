@@ -49,6 +49,13 @@ $satker = $skpd_id;
 		
 	}
 // pr($get_satker);
+// exit;
+
+/*$hit = 2;
+$flag = '';
+$TypeRprtr = '';
+$Info = 'mutasi';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);*/
 // exit;	
 $result = $REPORT->MutasiSkpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
 // pr($result);
@@ -111,7 +118,7 @@ exit;
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Laporan Mutasi Barang antar SKPD_$waktu.xls";
+	$filename ="Laporan_Mutasi_Barang_antar_SKPD_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
