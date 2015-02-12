@@ -15,7 +15,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 		?>
 		<script>
 		alert('Tidak ada histori aset');
-		document.location="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_filter.php";
+		document.location="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php";
         
         </script>
 		<?php
@@ -46,7 +46,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						
 						<ul>
 							<li>
-								<span class="labelInfo">Kode Barang</span>
+								<span class="labelInfo">No Register</span>
 								<input type="text" value="<?=$data[0]['noRegister']?>" disabled/>
 							</li>
 							<li>
