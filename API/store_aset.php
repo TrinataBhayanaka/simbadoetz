@@ -2401,7 +2401,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
 
             $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
-            //pr($query);exit;
+            // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
         

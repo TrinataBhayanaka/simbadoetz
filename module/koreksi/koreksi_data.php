@@ -18,7 +18,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 	<!-- SQL Sementara -->
 	<?php
 
-		if(isset($_POST['kodeKelompok'])){
+		if(isset($_POST['old_kelompok'])){
 
 		      	$dataArr = $STORE->koreksiAset($_POST);
 
@@ -32,7 +32,9 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$("select").select2({});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
-			initKondisi();
+			setTimeout(function() {
+			 	initKondisi();
+			}, 100);
 			});	
 
 		function getCurrency(item){
@@ -96,14 +98,14 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						<ul>
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan'],'disabled');?>
 						</ul>
-						<ul>
+						<!-- <ul>
 							<?php selectAset('kodeKelompok','255',true,$dataArr['aset']['kodeKelompok'],'disabled'); ?>
-						</ul>		
+						</ul>	 -->	
 						<ul>
-							<!-- <li>
+							<li>
 								<span class="span2">Kode Aset</span>
 								<input type="text" class="span2" id="kodeKelompok" name="kodeKelompok" value="<?=$dataArr['aset']['kodeKelompok']?>" readonly/>
-							</li> -->
+							</li>
 							<li>
 								<span class="span2">Tgl. Pembelian</span>
 								<div class="control">
@@ -381,6 +383,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 					<input type="hidden" name="ubahkapitalisasi" id="ubahkapitalisasi" value="1" disabled>
 					<input type="hidden" name="rubahdata" id="rubahdata" value="1">
 					<input type="hidden" name="pindahruang" id="pindahruang" value="1" disabled>
+					<input type="hidden" name="old_kelompok" value = "<?=$dataArr['aset']['kodeKelompok']?>">
 					<input type="hidden" name="flagupd" id="flagupd" value="1">
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>
@@ -491,6 +494,12 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.jaringan li > select,.kdp li > select").attr('disabled','disabled');
 			}
 	}
+
+	$(document).on('change','#kodeKelompok', function(){
+
+		initKondisi();		
+		
+	});
 
 	function totalHrg(){
 		var jml = $("#jumlah").val();
