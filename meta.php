@@ -148,8 +148,7 @@ if ($u_sess) $isLogin = true;
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/show_penerimaan.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/ajax_radio_pengadaan.js"></script>
       <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/select2/select2.js"></script>
-      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
-	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/maskedinput/jquery.maskedinput.min.js"></script>
+      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/maskedinput/jquery.maskedinput.min.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tableCheckable/jquery.tableCheckable.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/autoNumeric/autoNumeric.js"></script>
 	   <script>
@@ -222,5 +221,7 @@ if ($u_sess) $isLogin = true;
 	
 	
     </script> 
+
+    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
 </head>
 <body>
