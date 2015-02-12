@@ -443,7 +443,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k",
                         'field'=>"{$listTableAlias}.*, k.Uraian",
-                        'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}",
+                        'condition'=>"a.Status_Validasi_Barang = 1 AND (a.NotUse IS NULL OR a.NotUse = 0) AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}",
                         'limit'=>"{$paging}, 100",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
