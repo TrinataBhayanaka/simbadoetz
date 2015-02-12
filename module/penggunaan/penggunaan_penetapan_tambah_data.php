@@ -212,7 +212,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 					<tr>
 						<td colspan="10" align="right" >
 								<input type="submit" name="submit2" class="btn btn-primary" value="Penetapan Penggunaan" id="submit" disabled/>
-							<input type="hidden" name="jenisaset" value="<?php echo implode(',', $_POST['jenisaset'])?>">
+							<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
 						</td>
 					</tr>
 					<tr><!-- 
