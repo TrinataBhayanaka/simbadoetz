@@ -17,7 +17,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                  );
           
         $res_apl = $this->db->lazyQuery($sql_apl,$debug);
-        // ////pr($res_apl);
+        // pr($res_apl);
         // exit;
         if ($res_apl) return $res_apl;
         return false;
@@ -26,7 +26,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         
     public function apl_userasetlistHPS_filter($data){
         $data=explode(",",$data[0]['aset_list'] );
-        // ////pr($data);
+        // pr($data);
         foreach ($data as $key => $value) {
             if($value!=""){
                 $dataku[]=$value;

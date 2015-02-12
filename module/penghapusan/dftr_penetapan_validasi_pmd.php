@@ -36,10 +36,12 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('VLDUSPMD');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('VLDUSPMD');
 			}}, 100);
 		}
 		</script>
@@ -87,7 +89,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<div id="demo">
 			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses_pmd.php">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="penghapusan8">
 				<thead>
 					<?php
 							if($_SESSION['ses_uaksesadmin']==1){
@@ -141,7 +143,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
 						<td class="checkbox-column">
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
 							
 						</td>
 						<?php

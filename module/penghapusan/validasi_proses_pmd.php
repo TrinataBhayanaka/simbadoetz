@@ -14,10 +14,20 @@ $ses_uid=$_SESSION['ses_uid'];
 $parameter=array('submit'=>$submit, 'ses_uid'=>$ses_uid);
 // $data=$UPDATE->update_validasi_penghapusan($parameter);
 
-
+        $data_post=$PENGHAPUSAN->apl_userasetlistHPS("VLDUSPMD");
+        // pr($data_post);
+        $POST=$_POST;
+        // //pr($POST);
+        $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+        $POST['ValidasiPenghapusan']=$POST_data;
 		// pr($_POST);
-		$data = $PENGHAPUSAN->update_validasi_penghapusan_pmd($_POST);
+  //       pr($POST);
+        // exit;
+		$data = $PENGHAPUSAN->update_validasi_penghapusan_pmd($POST);
 
+        if($data_post){
+         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("VLDUSPMD");
+        }
 /*
 
 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'ValidasiPenghapusan' AND UserSes = '$_SESSION[ses_uid]'";
