@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -20,9 +20,9 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	// //pr($_POST);
+	// ////pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter_psb($_POST);
-	// //pr($data);
+	// ////pr($data);
 	if($_POST['kodeSatker']){
 		$_SESSION['kdSatkerFilterPMDp']=$_POST['kodeSatker'];
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
@@ -119,9 +119,9 @@ $menu_id = 10;
 							 
 				 <?php
                                         
-					// ////pr($dataArr);
+					// //////pr($dataArr);
 					$no=1;	
-					// ////pr($data);
+					// //////pr($data);
 					if($data){
 					foreach($data as $key => $hsl_data){
 						

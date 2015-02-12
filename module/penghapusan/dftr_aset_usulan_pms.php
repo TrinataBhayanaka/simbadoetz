@@ -28,8 +28,11 @@ $menu_id = 10;
 		$data=$_SESSION['filterAsetUsulan'];
 		// ////pr($_SESSION['reviewAsetUsulan']);
 		// unset($_SESSION['reviewAsetUsulan']);
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMS");
 
+		if($data_post){
 		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMS");
+		}
 
 	}else{
 		

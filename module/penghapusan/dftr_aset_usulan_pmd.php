@@ -21,21 +21,26 @@ $menu_id = 10;
 	<?php
 	// if($_SESSION['filterAsetUsulan'])
 	// ////pr($_SESSION['filterAsetUsulan']);
-	////pr($_SESSION);
+	// pr($_POST);
 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
 		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
 		$_SESSION['filterAsetUsulan']=$data;
 		$data=$_SESSION['filterAsetUsulan'];
 		// // ////pr($_SESSION['reviewAsetUsulan']);
 		// unset($_SESSION['reviewAsetUsulan']);
+// pr($data);
 
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+
+		if($data_post){
 		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+		}
 
 	}else{
 		$dataSESSION=$_SESSION['filterAsetUsulan'];
 
 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-		
+		// pr($data_post);
 		$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
 		$POST['penghapusanfilter']=$POST;
@@ -66,10 +71,10 @@ $menu_id = 10;
 		$flegAset=1;
 	}
 
-		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
-        while ($dataKontrak = mysql_fetch_assoc($sql)){
-                $kontrak[] = $dataKontrak;
-            }
+		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
+   //      while ($dataKontrak = mysql_fetch_assoc($sql)){
+   //              $kontrak[] = $dataKontrak;
+   //          }
 	?>
 	<script>
 		function AreAnyCheckboxesChecked () 

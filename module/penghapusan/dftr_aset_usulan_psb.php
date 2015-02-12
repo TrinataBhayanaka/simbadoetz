@@ -21,21 +21,25 @@ $menu_id = 10;
 	<?php
 	// if($_SESSION['filterAsetUsulan'])
 	// ////pr($_SESSION['filterAsetUsulan']);
-	////pr($_SESSION);
+	// pr($_SESSION);
 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
 		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($_POST);
 		$_SESSION['filterAsetUsulan']=$data;
 		$data=$_SESSION['filterAsetUsulan'];
 		// ////pr($_SESSION['reviewAsetUsulan']);
 		// unset($_SESSION['reviewAsetUsulan']);
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");
+
+		if($data_post){
 		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPSB");
+		}
 	}else{
 		$dataSESSION=$_SESSION['filterAsetUsulan'];
 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");
 		
 		$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
-		$POST['penghapusanfilter']=$POST
+		$POST['penghapusanfilter']=$POST;
 		if($POST){
 			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {

@@ -26,7 +26,7 @@ $menu_id = 10;
 	// $_SESSION['dataPost']=$_POST;
 	// $dataPost=$_SESSION['dataPost'];
 	// }
-	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPMS");
+	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPSB");
 	// $
 	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 	

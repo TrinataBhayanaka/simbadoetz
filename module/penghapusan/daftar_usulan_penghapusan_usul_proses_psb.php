@@ -14,7 +14,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
         $usulan_id=get_auto_increment("Usulan");
         $date=date('Y-m-d');
         $ses_uid=$_SESSION['ses_uid'];
-		// pr($nmaset);
+		// //pr($nmaset);
 		// echo "jml=".$nmaset;
         // exit;
         // $data = $STORE->store_usulan_penghapusan(
@@ -26,17 +26,19 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // );
 		 $data_post=$PENGHAPUSAN->apl_userasetlistHPS("USPSB");
         $POST=$_POST;
-        // pr($POST);
+        // //pr($POST);
         $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
         $POST['penghapusan_nama_aset']=$POST_data;
-
+         // //pr($POST);
 		$data = $PENGHAPUSAN->store_usulan_penghapusan_psb($POST);
 
-
-        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPSB");
-
-        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("USPSB");
-        
+        $data_postRVW=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");
+        if($data_postRVW){
+         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPSB");
+        }
+        if($data_post){
+         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("USPSB");
+        }
        if(isset($POST['usulanID'])){
             $id=$POST['usulanID'];
             echo "<script>
