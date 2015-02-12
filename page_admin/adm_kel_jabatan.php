@@ -29,10 +29,14 @@ if (isset($_POST['k_j_simpan']))
 	$showMenu = implode (',', $dataArr['menu']);
 	
 	
-	$queryshowMenu = "UPDATE tbl_user_group SET groupShowMenu = '".$showMenu. "' WHERE groupID = ".$dataArr['groupID'] ;
+	$queryshowMenu = "UPDATE tbl_user_group SET groupAccessMenu= '".$showMenu. "', groupShowMenu = '".$showMenu. "' WHERE groupID = ".$dataArr['groupID'] ;
 	//print_r($queryshowMenu);
 	//exit;
 	$resultshowMenu = $DBVAR->query($queryshowMenu);
+          
+               $queryOperator="update operator set Hak_Akses= '".$showMenu. "' where JabatanOperator= ".$dataArr['groupID'] ;
+               $resultOperator= $DBVAR->query($queryOperator);
+	
 	if ($resultshowMenu)
 	{
 		$query_jabatan = "SELECT groupShowMenu FROM tbl_user_group WHERE groupID = $dataArr[groupID]";

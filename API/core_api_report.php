@@ -4040,8 +4040,8 @@ class core_api_report extends DB {
 			  
 			$imp = implode(' and ', $tmp);
 			
-			$sql = "SELECT noRegister FROM $tableName WHERE {$imp} order by noRegister desc";
-			// echo $sql; 
+			$sql = "SELECT noRegister FROM $tableName WHERE {$imp} and StatusTampil = 1 and Status_Validasi_Barang = 1 order by noRegister desc";
+			// pr ($sql); 
 			$res = mysql_query($sql);
 			$register=array();
 
@@ -4164,7 +4164,7 @@ class core_api_report extends DB {
 				}
 				
 				$imp = implode(' and ', $tmp);
-				$sql = "SELECT noRegister,NilaiPerolehan FROM $tableName WHERE {$imp} order by noRegister desc";
+				$sql = "SELECT noRegister,NilaiPerolehan FROM $tableName WHERE {$imp} and StatusTampil = 1 and Status_Validasi_Barang = 1 order by noRegister desc";
 				// pr($sql);
 				$res = mysql_query($sql);
 				$register=array();
@@ -5078,8 +5078,8 @@ class core_api_report extends DB {
 						group by KDPA.Aset_ID desc";
 			
 			
-			$queryALL = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
-			// $queryALL = array($query_01);
+			// $queryALL = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+			$queryALL = array($query_03);
 			
 			
 			for ($i = 0; $i < count($queryALL); $i++)
@@ -5262,7 +5262,7 @@ class core_api_report extends DB {
 	
 	}
 	
-	public function TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan){
+	public function TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id){
 		// ECHO "FLAG =".$flag;
 		if($Info != ''){
 			//untuk mutasi
@@ -5271,6 +5271,12 @@ class core_api_report extends DB {
 				$paramMutasi 	= "TglSKKDH >='$tglawalperolehan' AND TglSKKDH <='$tglakhirperolehan' order by TglSKKDH desc";
 				$paramPnghpsn 	= "TglHapus >='$tglawalperolehan' AND TglHapus <='$tglakhirperolehan' order by TglHapus desc"; 
 				$paramLog 		= "TglPerubahan >='$tglawalperolehan' AND TglPerubahan <='$tglakhirperolehan' order by log_id desc";
+			}elseif($Info == 'BISI' || $Info =='RBISI'){
+				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' ";
+				$paramMutasi 	= "TglSKKDH >='$tglakhirperolehan' order by TglSKKDH desc";
+				$paramPnghpsn 	= "TglHapus >='$tglakhirperolehan' order by TglHapus desc"; 
+				$paramLog 		= "TglPerubahan >='$tglakhirperolehan' order by log_id desc";
+		
 			}else{
 				$paramKib 		= "";
 				$paramMutasi 	= "order by TglSKKDH desc";
@@ -5279,10 +5285,10 @@ class core_api_report extends DB {
 			}
 		}else{
 			
-				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' ";
-				$paramMutasi 	= "TglSKKDH >='$tglakhirperolehan' order by TglSKKDH desc";
-				$paramPnghpsn 	= "TglHapus >='$tglakhirperolehan' order by TglHapus desc"; 
-				$paramLog 		= "TglPerubahan >='$tglakhirperolehan' order by log_id desc";
+				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
+				$paramMutasi 	= "TglSKKDH >='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramPnghpsn 	= "TglHapus >='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
+				$paramLog 		= "TglPerubahan >='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by log_id desc";
 		}
 		
 		if($hit == 1){
@@ -5664,9 +5670,9 @@ class core_api_report extends DB {
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
-					/*echo "query_$i =".$AllTableTemp[$i];
+					echo "query_$i =".$AllTableTemp[$i];
 					echo "<br>";
-					echo "<br>";*/
+					echo "<br>";
 					// exit;*/
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 					

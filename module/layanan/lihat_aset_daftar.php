@@ -33,8 +33,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
 
 	}
-				
-    $filterParam = $SESSION->smartFilter('layanan');
+	
+	
+	$filterParam = $SESSION->smartFilter('layanan');
+	// pr($filterParam);
 	$data = $LAYANAN->retrieve_layanan_aset_daftar($filterParam);	
 	// pr($data);
 	if ($data){
