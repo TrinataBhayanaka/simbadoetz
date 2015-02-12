@@ -4040,8 +4040,8 @@ class core_api_report extends DB {
 			  
 			$imp = implode(' and ', $tmp);
 			
-			$sql = "SELECT noRegister FROM $tableName WHERE {$imp} order by noRegister desc";
-			// echo $sql; 
+			$sql = "SELECT noRegister FROM $tableName WHERE {$imp} and StatusTampil = 1 and Status_Validasi_Barang = 1 order by noRegister desc";
+			// pr ($sql); 
 			$res = mysql_query($sql);
 			$register=array();
 
@@ -4164,7 +4164,7 @@ class core_api_report extends DB {
 				}
 				
 				$imp = implode(' and ', $tmp);
-				$sql = "SELECT noRegister,NilaiPerolehan FROM $tableName WHERE {$imp} order by noRegister desc";
+				$sql = "SELECT noRegister,NilaiPerolehan FROM $tableName WHERE {$imp} and StatusTampil = 1 and Status_Validasi_Barang = 1 order by noRegister desc";
 				// pr($sql);
 				$res = mysql_query($sql);
 				$register=array();
@@ -5670,9 +5670,9 @@ class core_api_report extends DB {
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
-					/*echo "query_$i =".$AllTableTemp[$i];
+					echo "query_$i =".$AllTableTemp[$i];
 					echo "<br>";
-					echo "<br>";*/
+					echo "<br>";
 					// exit;*/
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 					
