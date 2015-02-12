@@ -21,11 +21,28 @@ $menu_id = 10;
 	<?php
 	// if($_SESSION['filterAsetUsulan'])
 	// ////pr($_SESSION['filterAsetUsulan']);
+	
 	// pr($_POST);
+	if ($_POST['submit']){
+		// unset($_SESSION['ses_mutasi_filter']);
+		pr($_POST);
+		$_SESSION['filterAsetUsulan'] = $_POST;
+		
+	}
+	// $POST=$_SESSION['filterAsetUsulan'];
+
+	// $data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
+
 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
-		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
-		$_SESSION['filterAsetUsulan']=$data;
-		$data=$_SESSION['filterAsetUsulan'];
+		
+		
+		$POST=$_SESSION['filterAsetUsulan'];
+		// pr($POST);
+		$POST['page'] = intval($_GET['pid']);
+		// pr($POST);
+		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($POST);
+		// $_SESSION['filterAsetUsulan']=$data;
+		// $data=$_SESSION['filterAsetUsulan'];
 		// // ////pr($_SESSION['reviewAsetUsulan']);
 		// unset($_SESSION['reviewAsetUsulan']);
 // pr($data);
@@ -36,21 +53,32 @@ $menu_id = 10;
 		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
 		}
 
+		// echo"<script>alert('1');</script>";
 	}else{
-		$dataSESSION=$_SESSION['filterAsetUsulan'];
+		$POST=$_SESSION['filterAsetUsulan'];
+		// echo"<script>alert('2');</script>";
+		$POST['page'] = intval($_GET['pid']);
+
+		$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($POST);
+
+		// $dataSESSION=$_SESSION['filterAsetUsulan'];
 
 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 		// pr($data_post);
-		$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+		$DataPost['penghapusanfilter']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
-		$POST['penghapusanfilter']=$POST;
-		if($POST){
+		// $DataPost['penghapusanfilter']=$DataPost;
+		if($DataPost){
 			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
 				// ////pr($valueSESSION['Aset_ID']);
-				if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
+				if(!in_array($valueSESSION['Aset_ID'], $DataPost['penghapusanfilter'])){
 					// echo "stringnot";
 					$data[]=$valueSESSION;
+					$data[$keySESSION]['checked']="";
+				}else{
+					$data[]=$valueSESSION;
+					$data[$keySESSION]['checked']="checked";
 				}
 			}
 		
@@ -58,6 +86,8 @@ $menu_id = 10;
 		// ////pr($data);
 
 	}
+	// pr($data);
+	// pr($_SESSION);
 	if($_POST['kodeSatker']){
 		$_SESSION['kdSatkerFilterPMD']=$_POST['kodeSatker'];
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
@@ -91,6 +121,9 @@ $menu_id = 10;
 			   updDataCheckbox('RVWUSPMD');
 			}}, 100);
 		}
+		jQuery(function($) {
+      		AreAnyCheckboxesChecked();	
+      	});
 		</script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -129,7 +162,18 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			
+			<ul><li>			<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
+								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
+			<ul class="pager">
+								   		<?php 
+								   		$prev = intval($_GET['pid']-1);
+								   		$next = intval($_GET['pid']+1);
+								   		?>
+										<li><a href="<?php echo"$url_rewrite/module/penghapusan/dftr_aset_usulan_pmd.php?pid=$prev&flegAset=1"?>" class="buttonprev" >Previous</a></li>
+										<li>Page</li>
+										<li><a href="<?php echo"$url_rewrite/module/penghapusan/dftr_aset_usulan_pmd.php?pid=$next&flegAset=1";?>" class="buttonnext1">Next</a></li>
+									</ul>
+						</li></ul>
 			<div id="demo">
 			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pmd.php"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
@@ -199,7 +243,7 @@ $menu_id = 10;
 						<td><?php echo $no?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" <?=$value[checked]?>>
 							
 						</td>
 						<td>

@@ -152,7 +152,7 @@ if($_SESSION['kdSatkerFilterPMD']){
 			
 			<div id="demo">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
 					<tr>
 						<td colspan="10" align="Left">
