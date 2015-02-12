@@ -372,6 +372,7 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 					<input type="hidden" name="old_kelompok" value = "<?=$dataArr['aset']['kodeKelompok']?>">
 					<input type="hidden" name="old_lokasi" value = "<?=$dataArr['kib']['kodeLokasi']?>">
 					<input type="hidden" name="tabel" id="tabel" value="<?=$dataArr['tabel']?>">
+					<input type="hidden" name="AsalUsul" value="Pembelian">
 			
 		</form>
 		</div>  

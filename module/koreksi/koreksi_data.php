@@ -95,12 +95,15 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						</ul>
 						<ul>
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan'],'disabled');?>
+						</ul>
+						<ul>
+							<?php selectAset('kodeKelompok','255',true,$dataArr['aset']['kodeKelompok'],'disabled'); ?>
 						</ul>		
 						<ul>
-							<li>
+							<!-- <li>
 								<span class="span2">Kode Aset</span>
 								<input type="text" class="span2" id="kodeKelompok" name="kodeKelompok" value="<?=$dataArr['aset']['kodeKelompok']?>" readonly/>
-							</li>
+							</li> -->
 							<li>
 								<span class="span2">Tgl. Pembelian</span>
 								<div class="control">
