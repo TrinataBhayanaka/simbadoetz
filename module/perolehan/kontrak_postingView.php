@@ -164,7 +164,7 @@ $menu_id = 1;
 						if($kapchek['kap'] == 0){
 							if($countdist == 0){ 
 			?>		
-				<p><a href="kontrak_unpost.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
+				<p><a href="kontrak_unpost.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Anda akan melakukan unposting data. Data tidak dapat diproses jika belum di posting. Lanjutkan?');"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 				&nbsp;</p>	
 			<?php			} else {echo "* Data sudah dipergunakan di distribusi barang";}
 						}

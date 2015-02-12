@@ -46,6 +46,12 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 // pr($query);
 // exit;
+$hit = count($query);
+$flag = 'D';
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);

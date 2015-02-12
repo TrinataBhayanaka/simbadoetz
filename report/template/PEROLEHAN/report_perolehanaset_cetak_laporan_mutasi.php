@@ -43,6 +43,12 @@ $REPORT=new report_engine();
 //menggunakan api untuk query berdasarkan variable yg telah dimasukan
 $REPORT->set_data($data);
 
+/*$hit = 2;
+$flag = '';
+$TypeRprtr = '';
+$Info = 'mutasi';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);*/
+// exit;
 //mendapatkan jenis query yang digunakan
 $result=$REPORT->MutasiBarang($skpd_id,$tglawalperolehan,$tglakhirperolehan);
 // pr($result);
@@ -96,9 +102,9 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Buku Inventaris Aset_$waktu.pdf";
+$namafile="$path/report/output/Laporan Mutasi_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Buku Inventaris Aset_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Laporan Mutasi_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
@@ -106,7 +112,7 @@ else
 {
 	
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Buku Inventaris Aset_$waktu.xls";
+	$filename ="Laporan_Mutasi_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

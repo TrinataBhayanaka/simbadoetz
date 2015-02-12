@@ -38,6 +38,25 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query();
 // pr($query);
 // exit;
+$hit = count($query);
+if($gol == 01){
+	$flag = 'A';
+}elseif($gol == 02){
+	$flag = 'B';
+}elseif($gol == 03){
+	$flag = 'C';
+}elseif($gol == 04){
+	$flag = 'D';
+}elseif($gol == 05){
+	$flag = 'E';
+}elseif($gol == 06){
+	$flag = 'F';
+}
+$TypeRprtr = '';
+$Info = '';
+$tglakhirperolehan = $tahun.'-'."12".'-'."31";
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);

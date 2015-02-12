@@ -45,7 +45,12 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
-	
+$hit = 1;
+$flag = 'E';
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;	
 $paramGol = '05';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
 
@@ -94,7 +99,7 @@ exit;
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Daftar Aset Tetap Lainnya_$waktu.xls";
+	$filename ="Daftar_Aset_Tetap_Lainnya_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

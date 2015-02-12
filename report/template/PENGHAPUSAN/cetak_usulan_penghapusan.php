@@ -11,8 +11,8 @@ define('_MPDF_URI', "$url_rewrite/function/mpdf/");  // must be  a relative or a
 include ('../../../function/tanggal/tanggal.php');
 include "../../report_engine_daftar.php";
 require_once('../../../function/mpdf/mpdf.php');
-$id = $_GET['idpenetapan'];
-$sk = $_GET['sk'];
+$id = $_GET['idusulan'];
+$sk = $_GET['noUsul'];
 $tglHapus = $_GET['tglHapus'];
 $tipe=$_GET['tipe_file'];
 //mendeklarasikan report_engine. FILE utama untuk reporting
@@ -30,7 +30,7 @@ if($tglHapus != ''){
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 
-$data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_sk_penghapusan($id);
+$data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_usulan_penghapusan($id);
 // pr($data);
 $html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak);
 // pr($html);

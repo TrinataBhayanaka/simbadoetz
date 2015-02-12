@@ -49,7 +49,33 @@ class RETRIEVE_REPORT extends DB {
           $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.Kondisi,A.NilaiPerolehan,A.Info  from penghapusanaset PA left join penghapusan P on 
 				P.Penghapusan_ID=PA.Penghapusan_ID 
                                                        left join Aset A on PA.Aset_ID=A.Aset_ID
-                                                       where P.NoSKHapus='$no_sk' ";
+                                                       where P.Penghapusan_ID='$no_sk' ";
+          //   echo $query;
+          $result = $this->query($query) or die($this->error());
+          $check = $this->num_rows($result);
+          while ($data = $this->fetch_array($result)) {
+               switch ($data[Kondisi]) {
+                    case 1:
+                         $data[Kondisi] = "Baik";
+                         break;
+                    case 2:
+                         $data[Kondisi] = "Rusak Ringan";
+                         break;
+                    case 3:
+                         $data[Kondisi] = "Rusak Berat";
+                         break;
+               }
+               $data[Satker] = $this->get_skpd($data[kodeSatker]);
+               $data[Kelompok] = $this->get_kelompok($data[kodeKelompok]);
+               $dataArr[] = $data;
+          }
+          return $dataArr;
+     }
+      public function daftar_barang_berdasarkan_usulan_penghapusan($no_usulan) {
+          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.Kondisi,A.NilaiPerolehan,A.Info  from usulanaset US left join usulan U on 
+        U.Usulan_ID=US.Usulan_ID 
+                                                       left join Aset A on US.Aset_ID=A.Aset_ID
+                                                       where U.Usulan_ID='$no_usulan' ";
           //   echo $query;
           $result = $this->query($query) or die($this->error());
           $check = $this->num_rows($result);

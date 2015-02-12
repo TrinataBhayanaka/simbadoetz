@@ -47,6 +47,12 @@ if($tglcetak != ''){
 	$thnPejabat =substr($tglcetak,0,4);		
 }
 
+$hit = 2;
+$flag = '';
+$TypeRprtr = 'RBISI';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// EXIT;
 $result_query = $REPORT->get_report_rekap_inv_daerah($tglawalperolehan,$tglakhirperolehan);
 
 $html=$REPORT->retrieve_html_rekapitulasi_bukuinventarisdaerah($result_query,$gambar,$tanggalCetak,$tglawalperolehan,$tglakhirperolehan,$thnPejabat);

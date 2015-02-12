@@ -47,6 +47,12 @@ $satker = $skpd_id;
 		
 	}
 // pr($get_satker);
+// exit;
+$hit = 1;
+$flag = 'A';
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
 // exit;	
 $paramGol = '01';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);

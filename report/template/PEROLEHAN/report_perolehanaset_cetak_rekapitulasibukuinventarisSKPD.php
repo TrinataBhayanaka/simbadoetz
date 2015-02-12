@@ -22,6 +22,7 @@ if($tglawal != ''){
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglcetak = $_GET['tglcetak'];
 $skpd_id = $_GET['skpd_id'];
+$kelompok = $_GET['kelompok'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
 // exit;
@@ -34,6 +35,7 @@ $data=array(
     "tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
+    "kelompok"=>$kelompok,
 	"tab"=>$tab
 );
 
@@ -58,6 +60,12 @@ $satker = $skpd_id;
 		
 	}
 
+$hit = 2;
+$flag = '';
+$TypeRprtr = 'RBIS';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 $result_query = $REPORT->get_report_rekap_inv_skpd($get_satker,$tglawalperolehan,$tglakhirperolehan);
 
 //retrieve html

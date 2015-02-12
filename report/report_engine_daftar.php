@@ -9,7 +9,7 @@
 #Andreas Hadiyono (andre.hadiyono@gmail.com)
 #Gunadarma University
 include "$path/report/report_engine.php";
-
+pr($path);
 class report_engine_daftar extends report_engine {
 
      public function retrieve_daftar_sk($dataArr, $gambar, $sk, $tanggalCetak) {
@@ -54,7 +54,7 @@ class report_engine_daftar extends report_engine {
      <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
           <tr>
-               <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+               <td style=\"width: 10%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
                <td colspan=\"2\" style=\";width: 70%; text-align: center;\">
                     <h3>LAMPIRAN KEPUTUSAN</h3>
                     <h3>PEMERINTAH KOTA PEKALONGAN</h3>

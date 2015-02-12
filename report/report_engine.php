@@ -19358,7 +19358,7 @@ $footer ="
 					$kuantitas = 1;
 					$nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
 					
-					if($row->Kd_Riwayat != 3){
+					if($row->Kd_Riwayat != 3 || $row->Kd_Riwayat != 28){
 						// jika kondisi 
 						// 2(Ubah Kapitalisasi)
 						// 21(Koreksi Nilai)
@@ -28039,37 +28039,37 @@ return $hasil_html;
 						WHERE t.Aset_ID in ($AsetIdFix) 
 						and t.kodeSatker in ('$kodeSatker') 
 						and t.TglPerubahan >= '$tglawal' AND t.TglPerubahan <= '$tglakhir' 
-						and t.Kd_Riwayat = 3";	
+						and( t.Kd_Riwayat = 3 or t.Kd_Riwayat = 28)";	
 		
 		$query_mesin = "SELECT m.NilaiPerolehan FROM log_mesin as m 
 						WHERE m.Aset_ID in ($AsetIdFix) 
 						and m.kodeSatker in ('$kodeSatker') 
 						and m.TglPerubahan >= '$tglawal' AND m.TglPerubahan <= '$tglakhir'
-						and m.Kd_Riwayat = 3";			
+						and (m.Kd_Riwayat = 3 or m.Kd_Riwayat = 28)";			
 		
 		$query_bangunan = "SELECT b.NilaiPerolehan FROM log_bangunan as b
 						WHERE b.Aset_ID in ($AsetIdFix) 
 						and b.kodeSatker in ('$kodeSatker') 
 						and b.TglPerubahan >= '$tglawal' AND b.TglPerubahan <= '$tglakhir'
-						and b.Kd_Riwayat = 3";
+						and (b.Kd_Riwayat = 3 or b.Kd_Riwayat = 28)";
 		
 		$query_jaringan = "SELECT j.NilaiPerolehan FROM log_jaringan as j
 						WHERE j.Aset_ID in ($AsetIdFix) 
 						and j.kodeSatker in ('$kodeSatker') 
 						and j.TglPerubahan >= '$tglawal' AND j.TglPerubahan <= '$tglakhir'
-						and j.Kd_Riwayat = 3";	
+						and (j.Kd_Riwayat = 3 or j.Kd_Riwayat = 28)";	
 		
 		$query_asettetaplainnya = "SELECT at.NilaiPerolehan FROM log_asetlain as at
 						WHERE at.Aset_ID in ($AsetIdFix) 
 						and at.kodeSatker in ('$kodeSatker') 
 						and at.TglPerubahan >= '$tglawal' AND at.TglPerubahan <= '$tglakhir'
-						and at.Kd_Riwayat = 3";		
+						and (at.Kd_Riwayat = 3 or at.Kd_Riwayat = 28)";		
 		
 		$query_kdp = "SELECT kd.NilaiPerolehan FROM log_kdp as kd
 						WHERE kd.Aset_ID in ($AsetIdFix) 
 						and kd.kodeSatker in ('$kodeSatker') 
 						and kd.TglPerubahan >= '$tglawal' AND kd.TglPerubahan <= '$tglakhir'
-						and kd.Kd_Riwayat = 3";	
+						and (kd.Kd_Riwayat = 3 or kd.Kd_Riwayat = 28)";	
 		
 		$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
 		for ($i = 0; $i < count($queryALL); $i++)
@@ -28348,12 +28348,28 @@ return $hasil_html;
 	}
 	
 	public function get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
+		if($gol == '01'){
+			$tabel ="tanah";
+		}elseif($gol == '02'){
+			$tabel ="mesin";
+		}elseif($gol == '03'){
+			$tabel ="bangunan";
+		}elseif($gol == '04'){
+			$tabel ="jaringan";
+		}elseif($gol == '05'){
+			$tabel ="asetlain";
+		}elseif($gol == '06'){
+			$tabel ="kdp";
+		}else{
+			$tabel ="aset";
+		}
+		
 		if($satker_id !=""){
-			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' 
+			$query = "select sum(NilaiPerolehan) as Nilai from $tabel where kodeSatker ='$satker_id' and kodeKelompok like '$gol%' 
 					  and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'
 					  and StatusValidasi =1 and Status_Validasi_Barang = 1";
 		}else{
-			$query = "select sum(NilaiPerolehan) as Nilai from aset where kodeKelompok like '$gol%' 
+			$query = "select sum(NilaiPerolehan) as Nilai from $tabel where kodeKelompok like '$gol%' 
 					and TglPerolehan >= '$tglawalperolehan' and TglPerolehan <= '$tglakhirperolehan'
 					and StatusValidasi =1 and Status_Validasi_Barang = 1";
 		}
@@ -28400,9 +28416,11 @@ return $hasil_html;
 			$kondisi ="";
 		}elseif($gol == '02'){
 			$paramGol ="mesin";
+			$paramGol2 ="mesin_Rplctn";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '03'){
 			$paramGol ="bangunan";
+			$paramGol2 ="bangunan_Rplctn";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '04'){
 			$paramGol ="jaringan";
@@ -28461,7 +28479,7 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault'
@@ -28492,7 +28510,7 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -28510,7 +28528,7 @@ return $hasil_html;
 			WHERE kodeSatker = '$satker_id' and kondisi = '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
 			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
-			and StatusValidasi =1 and kodeLokasi like '12%' ";
+			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1";
 		}
 		
 		// echo "query =".$query;
@@ -28541,10 +28559,12 @@ return $hasil_html;
 			$kodeKelompok ="kodeKelompok like '01%' and";
 		}elseif($gol == '02'){
 			$paramGol ="mesin";
+			$paramGol2 ="mesin_Rplctn";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '02%' and";
 		}elseif($gol == '03'){
 			$paramGol ="bangunan";
+			$paramGol2 ="bangunan_Rplctn";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '03%' and";
 		}elseif($gol == '04'){
@@ -28592,12 +28612,6 @@ return $hasil_html;
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1";
-				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						";*/
 			}elseif($thnceck >= $thnDefault){
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
@@ -28613,26 +28627,13 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and kodeLokasi like '12%' 
 						and (NilaiPerolehan >= 300000 $KodeKa)";
-				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and kodeLokasi like '12%' 
-						and (NilaiPerolehan >= 300000 $KodeKa)";*/		
 			}
 		}elseif($gol == '03'){
 			if($thnFix < $thnDefault){
@@ -28642,12 +28643,6 @@ return $hasil_html;
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1";
-				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						";*/
 			}elseif($thnceck >= $thnDefault){
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 					WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
@@ -28663,26 +28658,13 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
 						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and kodeLokasi like '12%' 
 						and (NilaiPerolehan >= 10000000 $KodeKa)";
-				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
-						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
-						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
-						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
-						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and kodeLokasi like '12%' 
-						and (NilaiPerolehan >= 10000000 $KodeKa)";	*/
 			}
 		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol

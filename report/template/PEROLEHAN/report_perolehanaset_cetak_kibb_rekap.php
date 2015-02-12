@@ -15,7 +15,7 @@ $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $rekap = $_GET['rekap'];
-// $tahun = $_GET['tahun'];
+$tahun = $_GET['tahun'];
 // $kelompok=$_GET['bidang'];
 $tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
@@ -24,7 +24,7 @@ $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "rekap"=>$rekap,
-    // "tahun"=>$tahun,
+    "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
@@ -59,6 +59,15 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
+// exit;
+$tglawalperolehan = '0000-00-00';
+$tglakhirperolehan = $tahun.'-12-31';
+
+$hit = count($query);
+$flag = 'B';
+$TypeRprtr = '';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
 // exit;
 //mengenerate query
 // $result_query=$REPORT->retrieve_query($query);
