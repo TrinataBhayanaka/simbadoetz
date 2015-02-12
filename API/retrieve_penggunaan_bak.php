@@ -420,11 +420,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $jenisaset = $parameter['jenisaset'];
         $nokontrak = $parameter['nokontrak'];
         $kodeSatker = $parameter['kodeSatker'];
-         
-                $kondisi= trim($parameter['condition']);
-                if($kondisi!="")$kondisi=" and $kondisi";
-                $limit= $parameter['limit'];
-                $order= $parameter['order'];
+
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
@@ -446,16 +442,14 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k",
-                        'field'=>"SQL_CALC_FOUND_ROWS {$listTableAlias}.*, k.Uraian",
-                        'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}  $kondisi $order",
-                        'limit'=>"$limit",
+                        'field'=>"{$listTableAlias}.*, k.Uraian",
+                        'condition'=>"a.Status_Validasi_Barang = 1 AND (a.NotUse IS NULL OR a.NotUse = 0) AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}",
+                        'limit'=>"{$paging}, 100",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
                         );
 
                 $res[$value] = $this->db->lazyQuery($sql,$debug);
-                
-                
 
             }
 

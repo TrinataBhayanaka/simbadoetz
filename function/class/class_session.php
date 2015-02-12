@@ -154,6 +154,7 @@ class Session
 		$data = false;
 		$prefix = "ses_param_".$sesName;
 
+		
 		if ($_POST){ 
 			unset($_SESSION[$prefix]);
 			$_SESSION[$prefix] = $_POST;
@@ -161,9 +162,12 @@ class Session
 			// exit;
 		}
 
+		$_SESSION[$prefix]['page'] = intval($_GET['pid']);
+		// pr($_SESSION);
 		if ($debug) pr($_SESSION[$prefix]);
 
 		$data = $_SESSION[$prefix];
+
 		if ($data) return $data;
 		return false;
 	}

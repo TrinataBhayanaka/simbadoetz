@@ -451,9 +451,15 @@ class helper_filter {
           return $dataAsetUser;
      }
 
-     function back($url=false, $text=false, $paging=false)
+     function back($url=false, $text=false, $paging=false, $nextParam=false)
      {
           
+          
+          if ($nextParam) $param = "&{$nextParam}";
+
+          $prev = $_SERVER['PHP_SELF'].'?pid='.($paging-1).$nextParam;
+          $next = $_SERVER['PHP_SELF'].'?pid='.($paging+1).$nextParam;
+
           if ($text) $value = $text;
           else $value = "Kembali ke halaman sebelumnya";
           ?>
@@ -469,9 +475,9 @@ class helper_filter {
                          <input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid'] ?>">
                            <input type="hidden" class="hiddenrecord" value="<?php echo @$count ?>">
                             <ul class="pager">
-                                   <li><a href="#" class="buttonprev" >Previous</a></li>
+                                   <li><a href="<?=$prev?>" class="buttonprev" >Previous</a></li>
                                    <li>Page</li>
-                                   <li><a href="#" class="buttonnext">Next</a></li>
+                                   <li><a href="<?=$next?>" class="buttonnext1">Next</a></li>
                               </ul>
                     </li>
                     <?php endif;?>
