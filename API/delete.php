@@ -695,7 +695,55 @@ class DELETE extends DB
 
     }    
 
+    public function delKoreksiAset($data)
+    {
+        
+        global $url_rewrite;
+        $delaset = "UPDATE aset SET StatusValidasi = NULL, Status_Validasi_Barang = NULL WHERE Aset_ID = '{$data['id']}'";
+        // pr($delaset);
+        $result = $this->query($delaset) or die ($this->error());
 
+        $delkib = "UPDATE {$data['tbl']} SET StatusValidasi = NULL, Status_Validasi_Barang = NULL, StatusTampil = NULL WHERE Aset_ID = '{$data['id']}'";
+        // pr($delkib);
+        $result = $this->query($delkib) or die ($this->error());
+
+        //log
+          $sqlkib = "SELECT * FROM {$data['tbl']} WHERE Aset_ID = '{$data['id']}'";
+          $sqlquery = mysql_query($sqlkib);
+          while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                  $kib = $dataAset;
+              }      
+          $kib['changeDate'] = date("Y-m-d");
+          $kib['action'] = 3;
+          $kib['operator'] = $_SESSION['ses_uoperatorid'];
+          $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
+          $kib['GUID'] = $data['GUID'];
+          $kib['Kd_Riwayat'] = 77;
+          // pr($kib);
+          
+                unset($tmpField);
+                unset($tmpValue);
+                foreach ($kib as $key => $val) {
+                  $tmpField[] = $key;
+                  $tmpValue[] = "'".$val."'";
+                }
+                 
+                $fileldImp = implode(',', $tmpField);
+                $dataImp = implode(',', $tmpValue);
+
+                $sql = "INSERT INTO log_{$data['tbl']} ({$fileldImp}) VALUES ({$dataImp})";
+                // pr($sql);exit;
+                logFile($sql);
+                if ($debug){
+                    pr($sql); exit;
+                }
+                $execquery = mysql_query($sql);
+                
+
+    echo "<script>alert('Data Berhasil Dihapus');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
+
+    exit;  
+    }
 
 	
 }

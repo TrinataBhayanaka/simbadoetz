@@ -49,7 +49,9 @@ $hit = 1;
 $flag = 'F';
 $TypeRprtr = '';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
+
 // exit;	
 $paramGol = '06';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);

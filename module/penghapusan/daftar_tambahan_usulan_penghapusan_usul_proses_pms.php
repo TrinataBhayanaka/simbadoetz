@@ -24,23 +24,22 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // $date,
                 // $ses_uid
                 // );
-        $data_post=$PENGHAPUSAN->apl_userasetlistHPS("USPMD");
+        $data_post=$PENGHAPUSAN->apl_userasetlistHPS("USPMS");
         $POST=$_POST;
         // //pr($POST);
         $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
         $POST['penghapusan_nama_aset']=$POST_data;
 
 		// pr($_POST);
-  //       pr($POST);
   //       exit;
-		$data = $PENGHAPUSAN->store_tambahan_usulan_penghapusan_pmd($POST);
+		$data = $PENGHAPUSAN->store_tambahan_usulan_penghapusan_pms($POST);
         
-        $data_postRVW=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+        $data_postRVW=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMS");
         if($data_postRVW){
-         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMS");
         }
         if($data_post){
-         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("USPMD");
+         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("USPMS");
         }
         
         if(isset($POST['usulanID'])){

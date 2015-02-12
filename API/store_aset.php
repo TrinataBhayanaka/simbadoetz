@@ -2182,7 +2182,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         $tblAset['kodeSatker'] = $data['kodeSatker'];
         $tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));
-        $tblAset['kodeLokasi'] = $data['kodepemilik'].".33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tblAset['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+        $tblAset['kodeLokasi'] = $data['kodepemilik'].".11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tblAset['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
         $tblAset['TglPerolehan'] = $data['tglPerolehan'];
         $tblAset['TglPembukuan'] = $data['tglPembukuan'];
         $tblAset['NilaiPerolehan'] = $data['Satuan'];
@@ -2361,22 +2361,43 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     } 
 
+    public function koreksiUpdAset($data){
+
+        global $url_rewrite;
+        pr($data);exit;
+
+        $sql = "SELECT * FROM aset WHERE Aset_ID = '{$data['Aset_ID']}'";
+        $aset = $this->fetch($sql);
+
+        pr($aset);exit;
+
+    }
+
     public function koreksiAset($data)
     {
 
- 
         global $url_rewrite;
         // pr($data);exit;
-        if(isset($data['kodeKelompok'])) $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
-        if(isset($data['kodeLokasi'])) $tblAset['kodeLokasi'] = $data['kodeLokasi'];
         if(isset($data['tglPerolehan'])) {$tblAset['TglPerolehan'] = $data['tglPerolehan'];$tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));}
         if(isset($data['tglPembukuan'])) $tblAset['TglPembukuan'] = $data['tglPembukuan'];
+        if(isset($data['kodepemilik'])) $tblAset['kodeLokasi'] = $data['kodepemilik'].".11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tblAset['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
         if(isset($data['NilaiPerolehan'])) $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        if(isset($data['kodeKelompok'])) {
+            $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+            $tblAset['TipeAset'] = $data['TipeAset'];
+            $sql = "SELECT MAX(noRegister) AS lastreg FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}'";
+            $noreg = $this->fetch($sql);
+            $tblAset['noRegister'] = intval($noreg['lastreg'])+1;
+            $tblKib['Aset_ID'] = $data['Aset_ID'];
+        }    
         if(isset($data['kondisi'])) {
             $tblAset['kondisi'] = $data['kondisi'];
+            $tblKib['kondisi'] = $data['kondisi'];
+            $tblKib['kodeKA'] = 0;
             if ($data['kondisi'] == 3) {
                 $tblAset['kodeKA'] = 1;
+                $tblKib['kodeKA'] = 0;
             }
         }    
         if(isset($data['asalusul'])) $tblAset['AsalUsul'] = $data['asalusul'];
@@ -2386,7 +2407,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
-
+        
 
         
         if(isset($data['kodeRuangan'])) {
@@ -2401,7 +2422,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
 
             $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
-            // pr($query);exit;
+            // pr($query);
             $result=  $this->query($query) or die($this->error());
 
         
@@ -2484,24 +2505,31 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 exit;
             }
         
-            
 
-            if(isset($data['kodeKelompok'])) $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+            if(isset($data['kodeKelompok'])) {
+                $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+                $tblKib['StatusValidasi'] = 1;
+                $tblKib['Status_Validasi_Barang'] = 1;
+                $tblKib['StatusTampil'] = 1;               
+            }
             if(isset($data['kodeSatker'])) $tblKib['kodeSatker'] = $data['kodeSatker'];
             if(isset($data['kodeLokasi'])) $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
-            if(isset($tblAset['Tglperolehan'])) $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
+            if(isset($tblAset['TglPerolehan'])) $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
             if(isset($tblAset['TglPembukuan'])) $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
             if(isset($data['Satuan'])) $tblKib['NilaiPerolehan'] = $data['Satuan'];
             $tblKib['StatusTampil'] = 1;
             if(isset($data['kondisi'])) $tblKib['kondisi'] = $data['kondisi'];
-            if(isset($data['AsalUsul'])) $tblKib['AsalUsul'] = $data['AsalUsul'];
+            if(isset($data['asalusul'])) $tblKib['AsalUsul'] = $data['asalusul'];
             if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
             if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
-            if(isset($data['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
+            if(isset($tblAset['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
 
 
-            if(isset($data['noRegister'])) $tblKib['noRegister'] = $data['noRegister']; 
+            if(isset($tblAset['noRegister'])) $tblKib['noRegister'] = $tblAset['noRegister']; 
             if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $ruangan[1];
+
+            // pr($tblKib);exit;
+            // if($data['old_kelompok'] != $data['kodeKelompok']) $this->koreksiUpdAset($tblKib);
 
             $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
               $sqlquery = mysql_query($sqlkib);
@@ -2509,14 +2537,35 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                       $kib_old = $dataAset;
                   }  
 
-            foreach ($tblKib as $key => $val) {
-                $tmpfield2[] = $key."='$val'";
+            if($data['old_kelompok'] == $data['kodeKelompok']){
+                foreach ($tblKib as $key => $val) {
+                    $tmpfield2[] = $key."='$val'";
+                }
+
+                $field = implode(',', $tmpfield2);
+                // $value = implode(',', $tmpvalue2);
+
+                $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";  
+
+            } else {
+                $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
+                // pr($delsql);
+                $result=  $this->query($delsql) or die($this->error());
+
+                    unset($tmpField);
+                    unset($tmpValue);
+                    foreach ($tblKib as $key => $val) {
+                      $tmpField[] = $key;
+                      $tmpValue[] = "'".$val."'";
+                    }
+                     
+                    $fileldImp = implode(',', $tmpField);
+                    $dataImp = implode(',', $tmpValue);
+
+                    $query = "INSERT INTO {$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                    // pr($sql);exit;
             }
-
-            $field = implode(',', $tmpfield2);
-            // $value = implode(',', $tmpvalue2);
-
-            $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";
+            
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 

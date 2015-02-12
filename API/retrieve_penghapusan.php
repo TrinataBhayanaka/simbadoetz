@@ -6014,8 +6014,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     
                     $sql1 = array(
                         'table'=>'UsulanAset',
-                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan",
-                        'value' => "'$data[usulanID]','0','$asset_id[$i]','PSB','0'",
+                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
+                        'value' => "'$data[usulanID]','0','$asset_id[$i]','PSB','0','$NilaiPPSb[$i]','$kondisiPSb[$i]'",
                         );
                     $res1 = $this->db->lazyQuery($sql1,$debug,1);
                     
@@ -6307,25 +6307,51 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             }
             public function store_tambahan_usulan_penghapusan_psb($data,$debug=false){   
                 
-                //////////////////////////////pr($data);
+                // pr($data);
                 // exit;
+               
 
                 $asset_id=Array();
                 $no_reg=Array();
                 $nm_barang=Array();
+               // $IdasetID=array();
+               // $kondisiPSb=array();
+               // $NilaiPPSb=array();
                 $NoUsulan=$data['noUsulan'];
                 $KetUsulan=$data['ketUsulan'];
-                
-                    $nmaset=$data['penghapusan_nama_aset'];
-                    $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
-                    $SatkerUsul=$_SESSION['ses_satkerkode'];
+                 $tgl=$data['tanggalUsulan'];
+                $tglExplode =explode("/",$tgl) ;
+                // //////////////////////////////////////pr($tglExplode);
+                 $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+             
+                $dataIDAset=explode("|", $data['penghapusan_nama_aset']);
+
+                foreach ($data['penghapusan_nama_aset'] as $keyData => $valueData) {
+                    //////////////////////pr($valueData);
+                    $explode=explode("|", $valueData);
+                    //////////////////////pr($explode);
+                    $IdasetID[]=$explode[0];
+                    $kondisiPSb[]=$explode[1];
+                    $NilaiPPSb[]=$explode[2];
+                }
+
+                    $nmaset=$IdasetID;
+                    $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan 
+                    if($_SESSION['ses_satkerkode']!=""){
+                         $SatkerUsul=$_SESSION['ses_satkerkode'];
+                    }else{
+                        $SatkerUsul=$data['kdSatkerFilter'];
+                    }
                     $usulan_id=get_auto_increment("Usulan");
                     $date=date('Y-m-d');
                     $ses_uid=$_SESSION['ses_uid'];
                     
                 $panjang=count($nmaset);
                 $aset=implode(',',$nmaset);
-                
+                //////////////////////pr($IdasetID);
+                //////////////////////pr($kondisiPSb);
+                //////////////////////pr($NilaiPPSb);
+                 // exit;
                 if($data[usulanID]!=""){
                     $sql = array(
                             'table'=>'Usulan',
@@ -6361,8 +6387,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     
                     $sql1 = array(
                         'table'=>'UsulanAset',
-                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan",
-                        'value' => "'$data[usulanID]','0','$asset_id[$i]','PMD','0'",
+                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
+                        'value' => "'$data[usulanID]','0','$asset_id[$i]','PSB','0','$NilaiPPSb[$i]','$kondisiPSb[$i]'",
                         );
                     $res1 = $this->db->lazyQuery($sql1,$debug,1);
                     
@@ -6382,7 +6408,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                  $sql = array(
                             'table'=>'Usulan',
                             'field'=>'Aset_ID,SatkerUsul,NoUsulan,KetUsulan, Penetapan_ID, Jenis_Usulan, UserNm, TglUpdate, GUID, FixUsulan',
-                            'value' => "'$aset','$SatkerUsul','$NoUsulan','$KetUsulan', '0', 'PMD', '$UserNm', '$date', '$ses_uid', '1'",
+                            'value' => "'$aset','$SatkerUsul','$NoUsulan','$KetUsulan', '0', 'PSB', '$UserNm', '$olah_tgl', '$ses_uid', '1'",
                             );
                 $res = $this->db->lazyQuery($sql,$debug,1);
 
@@ -6400,9 +6426,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     
                     $sql1 = array(
                         'table'=>'UsulanAset',
-                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan",
-                        'value' => "'$usulan_id','0','$asset_id[$i]','PMD','0'",
+                        'field'=>"Usulan_ID,Penetapan_ID,Aset_ID,Jenis_Usulan,StatusPenetapan,NilaiPerolehanTmp,kondisiTmp",
+                        'value' => "'$usulan_id','0','$asset_id[$i]','PSB','0','$NilaiPPSb[$i]','$kondisiPSb[$i]'",
                         );
+                    //////////////////////pr($sql1);
+                    // exit;
                     $res1 = $this->db->lazyQuery($sql1,$debug,1);
                     
                   

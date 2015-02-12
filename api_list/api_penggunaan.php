@@ -183,24 +183,26 @@ foreach ($data as $key => $value)
 							// pr($TglPerolehanTmp);
 							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
                                           
-             $row = array();
-             
-             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"Penggunaan[]\" value=\"{$value['Aset_ID']}\">";
-             $row[]=$no;
-             $row[]=$checkbox;
-             $row[]=$value['noRegister'] ;
-             $row[]=$value['noKontrak'];
-             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
-             $row[]="[".$value[kodeSatker] ."]". $value[NamaSatker];
-             $row[]=$TglPerolehan;
-             $row[]=number_format($value[NilaiPerolehan]);
-             $row[]=$kondisi. ' - ' .$value[AsalUsul];
-            $row[]="{$value[Merk]}$value[Model] ";
-             
-             $output['aaData'][] = $row;
-              $no++;
-                                    }
-                              }
+
+                             $row = array();
+                             
+                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"Penggunaan[]\" value=\"{$value['Aset_ID']}\">";
+                             $row[]=$no;
+                             $row[]=$checkbox;
+                             $row[]=$value['noRegister'] ;
+                             $row[]=$value['noKontrak'];
+                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
+                             $row[]="[".$value[kodeSatker] ."]". $value[NamaSatker];
+                             $row[]=$TglPerolehan;
+                             $row[]=number_format($value[NilaiPerolehan]);
+                             $row[]=$kondisi. ' - ' .$value[AsalUsul];
+                             $row[]="{$value[Merk]}$value[Model] ";
+                             
+                             $output['aaData'][] = $row;
+                              $no++;
+                    }
+              }
+
 echo json_encode($output);
 
 ?>

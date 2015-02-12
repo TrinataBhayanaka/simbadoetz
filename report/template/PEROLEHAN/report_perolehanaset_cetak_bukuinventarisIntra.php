@@ -72,7 +72,8 @@ $hit = count($query);
 $flag = '';
 $TypeRprtr = '';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 // pr($query);
 //exit;
 //set gambar untuk laporan

@@ -131,7 +131,7 @@ $menu_id = 10;
 			
 			<div id="demo">
 			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pms.php"> 
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
 					<tr>
 						<td colspan="7" align="left">
