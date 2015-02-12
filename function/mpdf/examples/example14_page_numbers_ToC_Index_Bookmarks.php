@@ -7,91 +7,87 @@ $lorem = "<p>Nulla felis erat, imperdiet eu, ullamcorper non, nonummy quis, elit
 //==============================================================
 //==============================================================
 //==============================================================
-// Set Header and Footer for ToC
-$h = array (
-  'odd' => 
-  array (
-    'R' => 
-    array (
-      'content' => 'Odd Header for ToC',
-      'font-size' => 8,
-      'font-style' => 'B',
-      'font-family' => 'DejaVuSansCondensed',
-    ),
-    'line' => 1,
-  ),
-  'even' => 
-  array (
-    'L' => 
-    array (
-      'content' => 'Even Header for ToC',
-      'font-size' => 8,
-      'font-style' => 'B',
-      'font-family' => 'DejaVuSansCondensed',
-    ),
-    'line' => 1,
-  ),
-);
 
-$f = array (
-  'odd' => 
-  array (
-    'L' => 
-    array (
-      'content' => '{DATE Y-m-d}',
-      'font-size' => 8,
-      'font-style' => 'BI',
-      'font-family' => 'DejaVuSansCondensed',
-    ),
-    'C' => 
-    array (
-      'content' => 'Odd Footer for ToC',
-      'font-size' => 8,
-      'font-style' => '',
-      'font-family' => '',
-    ),
-    'R' => 
-    array (
-      'content' => 'My Handbook',
-      'font-size' => 8,
-      'font-style' => 'BI',
-      'font-family' => 'DejaVuSansCondensed',
-    ),
-    'line' => 1,
-  ),
-  'even' => 
-  array (
-    'L' => 
-    array (
-      'content' => 'My Handbook',
-      'font-size' => 8,
-      'font-style' => 'BI',
-      'font-family' => 'DejaVuSansCondensed',
-    ),
-    'C' => 
-    array (
-      'content' => 'Even Footer for ToC',
-      'font-size' => 8,
-      'font-style' => '',
-      'font-family' => '',
-    ),
-    'R' => 
-    array (
-      'content' => '{DATE Y-m-d}',
-      'font-size' => 8,
-      'font-style' => 'BI',
-      'font-family' => 'DejaVuSansCondensed',
-    ),
-    'line' => 0,
-  ),
-);
+
+$html = '
+<style>
+div.mpdf_toc_level_0 {
+	padding-right: 2em;	/* match the outdent specified for ToC */
+}
+</style>
+
+<!-- defines the headers/footers -->
+
+<!--mpdf
+
+<htmlpageheader name="myHTMLHeader">
+<div style="text-align: right; border-bottom: 1px solid #000000; font-family: serif; font-size: 8pt;">Odd Header</div>
+</htmlpageheader>
+
+<htmlpageheader name="myHTMLHeaderEven">
+<div style="text-align: left; border-bottom: 1px solid #000000; font-family: serif; font-size: 8pt;">Even Header</div>
+</htmlpageheader>
+
+<htmlpagefooter name="myHTMLFooter">
+<table width="100%" style="border-top: 1px solid #000000; vertical-align: top; font-family: sans; font-size: 8pt;"><tr>
+<td width="33%">{DATE Y-m-d}</td>
+<td width="33%" align="center"><span style="font-size:12pt">{PAGENO}</span></td>
+<td width="33%" style="text-align: right;">Odd Footer</td>
+</tr></table>
+</htmlpagefooter>
+
+<htmlpagefooter name="myHTMLFooterEven">
+<table width="100%" style="border-top: 1px solid #000000; vertical-align: top; font-family: sans; font-size: 8pt;"><tr>
+<td width="33%">Even Footer</td>
+<td width="33%" align="center"><span style="font-size:12pt;">{PAGENO}</span></td>
+<td width="33%" style="text-align: right;">{DATE Y-m-d}</td>
+</tr></table>
+</htmlpagefooter>
+
+
+<htmlpageheader name="tocHTMLHeader">
+<div style="text-align: right; border-bottom: 1px solid #000000; font-family: serif; font-size: 8pt;">ToC Odd Header</div>
+</htmlpageheader>
+
+<htmlpageheader name="tocHTMLHeaderEven">
+<div style="text-align: left; border-bottom: 1px solid #000000; font-family: serif; font-size: 8pt;">ToC Even Header</div>
+</htmlpageheader>
+
+<htmlpagefooter name="tocHTMLFooter">
+<table width="100%" style="border-top: 1px solid #000000; vertical-align: top; font-family: sans; font-size: 8pt;"><tr>
+<td width="33%">{DATE Y-m-d}</td>
+<td width="33%" align="center"><span style="font-size:12pt;">{PAGENO}</span></td>
+<td width="33%" style="text-align: right;">ToC Odd Footer</td>
+</tr></table>
+</htmlpagefooter>
+
+<htmlpagefooter name="tocHTMLFooterEven">
+<table width="100%" style="border-top: 1px solid #000000; vertical-align: top; font-family: sans; font-size: 8pt;"><tr>
+<td width="33%">ToC Even Footer</td>
+<td width="33%" align="center"><span style="font-size:12pt;">{PAGENO}</span></td>
+<td width="33%" style="text-align: right;">{DATE Y-m-d}</td>
+</tr></table>
+</htmlpagefooter>
+
+mpdf-->
+
+
+<h1>mPDF</h1>
+<h2>Table of Contents & Bookmarks</h2>
+
+<!-- set the headers/footers - they will occur from here on in the document -->
+<tocpagebreak paging="on" links="on" toc-odd-header-name="html_tocHTMLHeader" toc-even-header-name="html_tocHTMLHeaderEven" toc-odd-footer-name="html_tocHTMLFooter" toc-even-footer-name="html_tocHTMLFooterEven" toc-odd-header-value="on" toc-even-header-value="on" toc-odd-footer-value="on" toc-even-footer-value="on" toc-preHTML="&lt;h2&gt;Contents&lt;/h2&gt;" toc-bookmarkText="Content list" resetpagenum="1" pagenumstyle="A" odd-header-name="html_myHTMLHeader" odd-header-value="on" even-header-name="html_myHTMLHeaderEven" even-header-value="ON" odd-footer-name="html_myHTMLFooter" odd-footer-value="on" even-footer-name="html_myHTMLFooterEven" even-footer-value="on" outdent="2em" toc-pagenumstyle="i" />
+
+';
 
 //==============================================================
 include("../mpdf.php");
 
-$mpdf=new mPDF('en-GB-x','A4','','',32,25,27,25,16,13); 
+$mpdf=new mPDF('c','A4','','',32,25,27,25,16,13); 
 
 $mpdf->mirrorMargins = 1;
+
+$mpdf->defaultPageNumStyle = 'i';
 
 $mpdf->SetDisplayMode('fullpage','two');
 
@@ -99,87 +95,36 @@ $mpdf->SetDisplayMode('fullpage','two');
 $stylesheet = file_get_contents('mpdfstyleA4.css');
 $mpdf->WriteHTML($stylesheet,1);	// The parameter 1 tells that this is css/style only and no body/html/text
 
-$mpdf->WriteHTML('<h1>mPDF</h1><h2>Table of Contents & Bookmarks</h2>',2);
+$mpdf->WriteHTML($html);
 
 
-
-// TOC TABLE OF CONTENTS and INDEX+++++++++++++++++++++++++++++++++++++++++++++
-//$mpdf->WriteHTML('<pagebreak type="E" />');
-//$mpdf->WriteHTML('<TOC font="" font-size="" indent="5" resetpagenum="1" pagenumstyle="A", suppress="off" />');
-
-
-$mpdf->TOCpagebreakByArray(array(
-	'tocfont' => '', 
-	'tocfontsize' => '', 
-	'tocindent' => '5', 
-	'TOCusePaging' => true, 
-	'TOCuseLinking' => '', 
-	'toc_orientation' => '', 
-	'toc_mgl' => '45',
-	'toc_mgr' => '35',
-	'toc_mgt' => '',
-	'toc_mgb' => '',
-	'toc_mgh' => '',
-	'toc_mgf' => '',
-	'toc_ohname' => '',
-	'toc_ehname' => '',
-	'toc_ofname' => '',
-	'toc_efname' => '',
-	'toc_ohvalue' => 0,
-	'toc_ehvalue' => 0,
-	'toc_ofvalue' => -1,
-	'toc_efvalue' => -1, 
-	'toc_preHTML' => '<h2>Contents</h2>', 
-	'toc_postHTML' => '', 
-	'toc_bookmarkText' => 'Content list', 
-	'resetpagenum' => '1', 
-	'pagenumstyle' => 'A', 
-	'suppress' => 'off', 
-	'orientation' => '', 
-	'mgl' => '',
-	'mgr' => '',
-	'mgt' => '',
-	'mgb' => '',
-	'mgh' => '',
-	'mgf' => '',
-	'ohname' => '',
-	'ehname' => '',
-	'ofname' => '',
-	'efname' => '',
-	'ohvalue' => 0,
-	'ehvalue' => 0,
-	'ofvalue' => 0,
-	'efvalue' => 0, 
-	'toc_id' => 0, 
-	'pagesel' => '', 
-	'toc_pagesel' => '', 
-	'sheetsize' => '', 
-	'toc_sheetsize' => ''
-	));
-
-
-$mpdf->setHTMLFooter('<div align="center"><b>{PAGENO} / {nbpg}</b></div>') ;
-$mpdf->setHTMLFooter('<div align="center"><b><i>{PAGENO} / {nbpg}</i></b></div>','E') ;
-
+// Alternative ways to mark ToC entries and Bookmarks
+// This will automatically generate entries from the <h4> tag
+$mpdf->h2toc = array('H4'=>0);
+$mpdf->h2bookmarks = array('H4'=>0);
 
 //==============================================================
+// CONTENT
 for ($j = 1; $j<7; $j++) { 
-   if ($j==2)	$mpdf->WriteHTML('<pagebreak resetpagenum="0" pagenumstyle="a" />',2);
-   if ($j==3)	$mpdf->WriteHTML('<pagebreak resetpagenum="1" pagenumstyle="I" />',2);
+   if ($j==2)	$mpdf->WriteHTML('<pagebreak resetpagenum="0" pagenumstyle="A" />',2);
+   if ($j==3)	$mpdf->WriteHTML('<pagebreak resetpagenum="1" pagenumstyle="a" />',2);
    if ($j==4)	$mpdf->WriteHTML('<pagebreak resetpagenum="0" pagenumstyle="i" />',2);
    if ($j==5)	$mpdf->WriteHTML('<pagebreak resetpagenum="0" pagenumstyle="1" />',2);
-   if ($j==6)	$mpdf->WriteHTML('<pagebreak resetpagenum="1" pagenumstyle="A" type="NEXT-ODD" /><div style="color:#AA0000">ODD</div>',2);
+   if ($j==6)	$mpdf->WriteHTML('<pagebreak resetpagenum="1" pagenumstyle="I" type="NEXT-ODD" /><div style="color:#AA0000">ODD</div>',2);
    for ($x = 1; $x<7; $x++) {
-	$mpdf->WriteHTML('<h4>Section '.$j.'.'.$x.'<bookmark content="Section '.$j.'.'.$x.'" level="0" /><tocentry content="Section '.$j.'.'.$x.'" level="0" /></h4>',2);
+
+
+	$mpdf->WriteHTML('<h4>Section '.$j.'.'.$x.'</h4>',2);
+
 	$html = '';
 	// Split $lorem into words
 	$words = preg_split('/([\s,\.]+)/',$lorem,-1,PREG_SPLIT_DELIM_CAPTURE);
 	foreach($words as $i => $e) {
 	   if($i%2==0) {
 		$y =  rand(1,10); 	// every tenth word
+		// If it is just a word use it as an index entry
 		if (preg_match('/^[a-zA-Z]{4,99}$/',$e) && ($y > 8)) {
-			// If it is just a word use it as an index entry
-			$content = ucfirst(trim($e));
+			$content = trim($e);
 			$html .= '<indexentry content="'.$content.'" />';
 			$html .= '<i>'.$e . '</i>';
 		}
@@ -191,12 +136,15 @@ for ($j = 1; $j<7; $j++) {
    }
 }
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Index - This should be inserted where it is intended to appear in the document
-	$mpdf->AddPage('','E');	
-	$mpdf->AddPage();	
-	$mpdf->WriteHTML('<h2>Index</h2>',2);
-	$mpdf->CreateIndex(2, '', '', 5, 1, 15, 5, 'trebuchet','sans-serif',true);
+// INDEX
+$html = '
+<pagebreak type="next-odd" />
+<h2>Index</h2>
+<columns column-count="2" column-gap="5" />
+<indexinsert usedivletters="on" links="on" collation="en_GB.utf8" collation-group="English_United_States" />
+';
 
+$mpdf->WriteHTML($html);
 
 $mpdf->Output();
 exit;
