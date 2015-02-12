@@ -25,10 +25,22 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // $ses_uid
                 // );
 		// pr($_POST);
-		$data = $PENGHAPUSAN->store_usulan_penghapusan_pms($_POST);
+         $data_post=$PENGHAPUSAN->apl_userasetlistHPS("USPMS");
+        $POST=$_POST;
+        // pr($POST);
+        $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+        $POST['penghapusan_nama_aset']=$POST_data;
+        // pr($POST);
+
+        // pr($_POST);
+        // exit;
+		$data = $PENGHAPUSAN->store_usulan_penghapusan_pms($POST);
         
-       if(isset($_POST['usulanID'])){
-            $id=$_POST['usulanID'];
+        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMS");
+
+        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("USPMS");
+       if(isset($POST['usulanID'])){
+            $id=$POST['usulanID'];
             echo "<script>
                     alert('Data Berhasil Disimpan');
                     document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pms.php?id=$id';

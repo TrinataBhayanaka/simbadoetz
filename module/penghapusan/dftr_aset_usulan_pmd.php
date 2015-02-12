@@ -26,16 +26,24 @@ $menu_id = 10;
 		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
 		$_SESSION['filterAsetUsulan']=$data;
 		$data=$_SESSION['filterAsetUsulan'];
-		// ////pr($_SESSION['reviewAsetUsulan']);
-		unset($_SESSION['reviewAsetUsulan']);
+		// // ////pr($_SESSION['reviewAsetUsulan']);
+		// unset($_SESSION['reviewAsetUsulan']);
+
+		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+
 	}else{
 		$dataSESSION=$_SESSION['filterAsetUsulan'];
 
-		if($_SESSION['reviewAsetUsulan']){
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+		
+		$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+
+		$POST['penghapusanfilter']=$POST;
+		if($POST){
 			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
 				// ////pr($valueSESSION['Aset_ID']);
-				if(!in_array($valueSESSION['Aset_ID'], $_SESSION['reviewAsetUsulan']['penghapusanfilter'])){
+				if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
 					// echo "stringnot";
 					$data[]=$valueSESSION;
 				}
@@ -70,12 +78,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
-			    updDataCheckbox('USPMD');
+			    updDataCheckbox('RVWUSPMD');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
-			   updDataCheckbox('USPMD');
+			   updDataCheckbox('RVWUSPMD');
 			}}, 100);
 		}
 		</script>
@@ -119,7 +127,7 @@ $menu_id = 10;
 			
 			<div id="demo">
 			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pmd.php"> 
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
 					<tr>
 						<td colspan="7" align="left">

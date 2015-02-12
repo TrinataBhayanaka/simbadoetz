@@ -24,11 +24,21 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // $date,
                 // $ses_uid
                 // );
-		
-		$data = $PENGHAPUSAN->store_usulan_penghapusan_psb($_POST);
+		 $data_post=$PENGHAPUSAN->apl_userasetlistHPS("USPSB");
+        $POST=$_POST;
+        // pr($POST);
+        $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+        $POST['penghapusan_nama_aset']=$POST_data;
+
+		$data = $PENGHAPUSAN->store_usulan_penghapusan_psb($POST);
+
+
+        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPSB");
+
+        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("USPSB");
         
-       if(isset($_POST['usulanID'])){
-            $id=$_POST['usulanID'];
+       if(isset($POST['usulanID'])){
+            $id=$POST['usulanID'];
             echo "<script>
                     alert('Data Berhasil Disimpan');
                     document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_psb.php?id=$id';

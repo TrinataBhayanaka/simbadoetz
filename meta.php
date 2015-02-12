@@ -64,7 +64,7 @@ if ($u_sess) $isLogin = true;
 					"sPaginationType": "full_numbers"
 				} );
 
-				$('#penghapusan').dataTable( {
+				$('#penghapusan10').dataTable( {
 					"sPaginationType": "full_numbers",
     				"aoColumns": [
 
@@ -72,6 +72,41 @@ if ($u_sess) $isLogin = true;
 						{ "asSorting": false},
 						null,
 						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					],
+					
+					
+				} );
+				$('#penghapusan11').dataTable( {
+					"sPaginationType": "full_numbers",
+    				"aoColumns": [
+
+						null,
+						{ "asSorting": false},
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					],
+					
+					
+				} );
+				$('#penghapusan8').dataTable( {
+					"sPaginationType": "full_numbers",
+    				"aoColumns": [
+
+						null,
+						{ "asSorting": false},
 						null,
 						null,
 						null,

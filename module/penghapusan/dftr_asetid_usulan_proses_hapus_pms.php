@@ -12,13 +12,19 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
     $SessionUser = $SESSION->get_session_user();
     $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
     
-    $id=$_POST['usulanID'];
-    
+    // $id=$_POST['usulanID'];
+     $data_post=$PENGHAPUSAN->apl_userasetlistHPS("DELUSPMS");
+    $POST=$_POST;
+
+    $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+    $POST['penghapusan_nama_aset']=$POST_data;
     // $data=$DELETE->delete_update_daftar_validasi_penghapusan($id);
 	// //pr($_POST);
  //    exit;
-		$data = $PENGHAPUSAN->delete_usulan_penghapusan_asetid_pms($_POST);
-    
+		$data = $PENGHAPUSAN->delete_usulan_penghapusan_asetid_pms($POST);
+     $id=$POST['usulanID'];
+
+    $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELUSPMS");
     /*
     
     echo "$id";

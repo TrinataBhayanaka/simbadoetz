@@ -33,9 +33,21 @@ $penghapusan_id=get_auto_increment("penghapusan");
             // $penghapusan_id
     // );
 		// pr($_POST);
+        
+        $data_post=$PENGHAPUSAN->apl_userasetlistHPS("PTUSPSB");
+        $POST=$_POST;
+        // pr($POST);
+        $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+        $POST['penghapusan_nama_aset']=$POST_data;
+        // pr($POST);
+        // pr($_POST);
+  //       exit;
 		$data = $PENGHAPUSAN->store_penetapan_penghapusan_psb($_POST);
         
 
+        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWPTUSPSB");
+
+        $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("PTUSPSB");
 /*
 $asset_id=Array();
 $no_reg=Array();

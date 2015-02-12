@@ -42,10 +42,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('RVWPTUSPMS');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('RVWPTUSPMS');
 			}}, 100);
 		}
 		</script>
@@ -91,7 +93,7 @@ $menu_id = 10;
 			<form name="myform" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_penetapan_usulan_pms.php">
 			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="penghapusan8">
 				<thead>
 					<tr>
 						
@@ -136,7 +138,7 @@ $menu_id = 10;
 						<td><?php echo "$no";?></td>
 						<td  class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="return AreAnyCheckboxesChecked();" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
 							
 						</td>
 						<td><?php echo $hsl_data['NoUsulan'];?></td>
