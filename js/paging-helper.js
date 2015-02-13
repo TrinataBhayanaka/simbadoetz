@@ -230,9 +230,13 @@ $(document).ready(function(){
 
 });
 	 
-function requiredFilter(jenisaset=true, satker=true, satkerid="kodeSatker")
+function requiredFilter(jenisaset, satker, satkerid)
 {
 
+	if (jenisaset) jenisaset = true;
+	if (satker) satker = true;
+	if (typeof satkerid==undefined) satkerid="kodeSatker";
+	
 	if (jenisaset){
 		var jenisaset1 = $('.jenisaset1').is(":checked")
 	    var jenisaset2 = $('.jenisaset2').is(":checked")
@@ -263,9 +267,18 @@ function requiredFilter(jenisaset=true, satker=true, satkerid="kodeSatker")
 
 }
 
-function dTableParam(idTable=false, urlApi=false, numCol=false)
+function dTableParam(idTable, urlApi)
 {
-	$('#'+idTable).dataTable({
+
+	
+	if (idTable) idTable = idTable;
+	if (urlApi) urlApi = urlApi;
+	//if (numCol) numCol = true;
+	
+	setTimeout(function(){ 
+
+		
+		$('#'+idTable).dataTable({
 
         "aoColumnDefs": [
              { "aTargets": [2] }
@@ -286,6 +299,11 @@ function dTableParam(idTable=false, urlApi=false, numCol=false)
         "bServerSide": true,
         "sAjaxSource": basedomain+"/api_list/"+urlApi
 	});
+
+	}, 1000);
+
+	
+
 }
 
 function log(){

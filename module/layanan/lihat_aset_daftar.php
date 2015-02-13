@@ -174,7 +174,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<ul>
 							<li>
 								<a href="<?php echo "$url_rewrite/module/layanan/lihat_aset_filter.php?pid=1"; ?>">
-									   <input type="submit" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
+									   <input type="button" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
 								 </a>
 							</li><!--
 							<li>
