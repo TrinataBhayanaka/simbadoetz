@@ -36,7 +36,7 @@ $sIndexColumn = "Aset_ID";
 $sTable = "aset";
 $dataParam['nokontrak']=$_GET['nokontrak'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
-$dataParam['kodesatker']=$_GET['kodesatker'];
+$dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['page']=$_GET['page'];
 
 $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
