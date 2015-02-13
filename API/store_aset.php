@@ -2384,12 +2384,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['kodepemilik'])) $tblAset['kodeLokasi'] = $data['kodepemilik'].".11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tblAset['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
         if(isset($data['NilaiPerolehan'])) $tblAset['NilaiPerolehan'] = $data['Satuan'];
         if(isset($data['kodeKelompok'])) {
-            $tblAset['kodeKelompok'] = $data['kodeKelompok'];
-            $tblAset['TipeAset'] = $data['TipeAset'];
-            $sql = "SELECT MAX(noRegister) AS lastreg FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}'";
-            $noreg = $this->fetch($sql);
-            $tblAset['noRegister'] = intval($noreg['lastreg'])+1;
-            $tblKib['Aset_ID'] = $data['Aset_ID'];
+            if($data['old_kelompok'] != $data['kodeKelompok']){
+                $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+                $tblAset['TipeAset'] = $data['TipeAset'];
+                $sql = "SELECT MAX(noRegister) AS lastreg FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}'";
+                $noreg = $this->fetch($sql);
+                $tblAset['noRegister'] = intval($noreg['lastreg'])+1;
+                $tblKib['Aset_ID'] = $data['Aset_ID'];
+            }
         }    
         if(isset($data['kondisi'])) {
             $tblAset['kondisi'] = $data['kondisi'];
@@ -2513,7 +2515,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['StatusTampil'] = 1;               
             }
             if(isset($data['kodeSatker'])) $tblKib['kodeSatker'] = $data['kodeSatker'];
-            if(isset($data['kodeLokasi'])) $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
+            if(isset($data['kodepemilik'])) $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             if(isset($tblAset['TglPerolehan'])) $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
             if(isset($tblAset['TglPembukuan'])) $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
             if(isset($data['Satuan'])) $tblKib['NilaiPerolehan'] = $data['Satuan'];
@@ -2536,35 +2538,46 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               while ($dataAset = mysql_fetch_assoc($sqlquery)){
                       $kib_old = $dataAset;
                   }  
-
-            if($data['old_kelompok'] == $data['kodeKelompok']){
-                foreach ($tblKib as $key => $val) {
-                    $tmpfield2[] = $key."='$val'";
-                }
-
-                $field = implode(',', $tmpfield2);
-                // $value = implode(',', $tmpvalue2);
-
-                $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";  
-
-            } else {
-                $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
-                // pr($delsql);
-                $result=  $this->query($delsql) or die($this->error());
-
-                    unset($tmpField);
-                    unset($tmpValue);
+            if(isset($data['kodeKelompok'])){
+                if($data['old_kelompok'] == $data['kodeKelompok']){
                     foreach ($tblKib as $key => $val) {
-                      $tmpField[] = $key;
-                      $tmpValue[] = "'".$val."'";
+                        $tmpfield2[] = $key."='$val'";
                     }
-                     
-                    $fileldImp = implode(',', $tmpField);
-                    $dataImp = implode(',', $tmpValue);
 
-                    $query = "INSERT INTO {$tabel} ({$fileldImp}) VALUES ({$dataImp})";
-                    // pr($sql);exit;
-            }
+                    $field = implode(',', $tmpfield2);
+                    // $value = implode(',', $tmpvalue2);
+
+                    $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";  
+                    // pr($query);exit;
+                } else {
+                    $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
+                    // pr($delsql);
+                    $result=  $this->query($delsql) or die($this->error());
+
+                        unset($tmpField);
+                        unset($tmpValue);
+                        foreach ($tblKib as $key => $val) {
+                          $tmpField[] = $key;
+                          $tmpValue[] = "'".$val."'";
+                        }
+                         
+                        $fileldImp = implode(',', $tmpField);
+                        $dataImp = implode(',', $tmpValue);
+
+                        $query = "INSERT INTO {$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                        // pr($query);exit;
+                }
+            } else {
+                foreach ($tblKib as $key => $val) {
+                        $tmpfield2[] = $key."='$val'";
+                    }
+
+                    $field = implode(',', $tmpfield2);
+                    // $value = implode(',', $tmpvalue2);
+
+                    $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";  
+                    // pr($query);exit;
+            }     
             
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
