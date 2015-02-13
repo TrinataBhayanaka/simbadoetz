@@ -210,8 +210,8 @@ $menu_id = 10;
 				</thead>
 				<tbody>		
 					<tr>
-                                        <td colspan="10">Data Tidak di temukkan</td>
-                                   </tr>
+                        <td colspan="10">Data Tidak di temukkan</td>
+                   </tr>
 				</tbody>
 				<tfoot>
 					<tr>

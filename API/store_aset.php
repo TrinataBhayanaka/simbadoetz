@@ -2548,7 +2548,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     // $value = implode(',', $tmpvalue2);
 
                     $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";  
-                    // pr($query);exit;
+                    // pr($query);
                 } else {
                     $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
                     // pr($delsql);
@@ -2565,7 +2565,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                         $dataImp = implode(',', $tmpValue);
 
                         $query = "INSERT INTO {$tabel} ({$fileldImp}) VALUES ({$dataImp})";
-                        // pr($query);exit;
+                        // pr($query);
                 }
             } else {
                 foreach ($tblKib as $key => $val) {
@@ -2576,10 +2576,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     // $value = implode(',', $tmpvalue2);
 
                     $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";  
-                    // pr($query);exit;
+                    // pr($query);
             }     
             
-            // pr($query);exit;
+            // pr($query);
             $result=  $this->query($query) or die($this->error());
 
             //log
@@ -2612,6 +2612,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     $dataImp = implode(',', $tmpValue);
 
                     $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                    // pr($sql);exit;
                     logFile($sql);
                     if ($debug){
                         pr($sql); exit;
