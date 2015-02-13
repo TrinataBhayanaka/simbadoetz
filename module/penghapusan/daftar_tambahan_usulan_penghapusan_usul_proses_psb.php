@@ -25,7 +25,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                 // $ses_uid
                 // );
         // echo"nama";
-		pr($_POST);
+		// pr($_POST);
         // exit;
 		$data = $PENGHAPUSAN->store_tambahan_usulan_penghapusan_psb($_POST);
         
