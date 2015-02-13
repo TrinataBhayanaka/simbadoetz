@@ -38,7 +38,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			setTimeout(function() {
 			 	initKondisi();
-			}, 500);
+			}, 1000);
 			});	
 
 		function getCurrency(item){
