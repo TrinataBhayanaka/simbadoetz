@@ -31,14 +31,14 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 	<!-- End Sql -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-			console.log('document on load sukses');
+
 			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			setTimeout(function() {
 			 	initKondisi();
-			}, 100);
+			}, 500);
 			});	
 
 		function getCurrency(item){
