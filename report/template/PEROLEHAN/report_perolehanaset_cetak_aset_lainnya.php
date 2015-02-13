@@ -50,8 +50,8 @@ $TypeRprtr = '';
 $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);*/	
 $paramGol = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
+$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
+
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
