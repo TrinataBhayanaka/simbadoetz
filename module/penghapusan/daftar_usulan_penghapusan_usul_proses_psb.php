@@ -30,7 +30,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
         $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
         $POST['penghapusan_nama_aset']=$POST_data;
          // //pr($POST);
-        exit;
+        // exit;
 		$data = $PENGHAPUSAN->store_usulan_penghapusan_psb($POST);
 
         $data_postRVW=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");

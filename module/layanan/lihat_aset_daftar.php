@@ -35,8 +35,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	}
 	
 	
-	$filterParam = $SESSION->smartFilter('layanan');
+	$dataParam = $SESSION->smartFilter('layanan');
 	// pr($filterParam);
+
+	$par_data_table="nokontrak={$dataParam['kd_nokontrak']}&jenisaset={$dataParam['jenisaset'][0]}&kodeSatker={$dataParam['kodeSatker']}&kd_tahun={$dataParam['kd_tahun']}&statusaset={$dataParam['statusaset']}&page={$dataParam['page']}";
+
+
+	/*
 	$data = $LAYANAN->retrieve_layanan_aset_daftar($filterParam);	
 	// pr($data);
 	if ($data){
@@ -45,9 +50,103 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			else $data[$key]['statusAset'] = "Belum Terdistribusi";
 		}
 	}
+	*/
 	// exit;		
-			?>
+	?>
 
+	<script type="text/javascript">
+	$(document).ready(function() {
+			
+				
+				var tes=document.getElementsByTagName('*');
+				var button=document.getElementById('submit');
+				var boxeschecked=0;
+				for(k=0;k<tes.length;k++)
+				{
+					if(tes[k].className=='checkbox')
+						{
+							//
+							tes[k].checked == true  ? boxeschecked++: null;
+						}
+				}
+			//alert(boxeschecked);
+				if(boxeschecked!=0){
+					button.disabled=false;
+				}
+				else {
+					button.disabled=true;
+				}
+			
+			} );
+			
+			function enable(){  
+			var tes=document.getElementsByTagName('*');
+			var button=document.getElementById('submit');
+			var boxeschecked=0;
+			for(k=0;k<tes.length;k++)
+			{
+				if(tes[k].className=='checkbox')
+					{
+						//
+						tes[k].checked == true  ? boxeschecked++: null;
+					}
+			}
+			//alert(boxeschecked);
+			if(boxeschecked!=0)
+				button.disabled=false;
+			else
+				button.disabled=true;
+			}
+			function disable_submit(){
+				var enable = document.getElementById('pilihHalamanIni');
+				var disable = document.getElementById('kosongkanHalamanIni');
+				var button=document.getElementById('submit');
+				if (disable){
+					button.disabled=true;
+				} 
+			}
+			function enable_submit(){
+				var enable = document.getElementById('pilihHalamanIni');
+				var disable = document.getElementById('kosongkanHalamanIni');
+				var button=document.getElementById('submit');
+				if (enable){
+					button.disabled=false;
+				} 
+			}
+
+	function AreAnyCheckboxesChecked () 
+	{
+		setTimeout(function() {
+	  if ($("#Form2 input:checkbox:checked").length > 0)
+		{
+		    $("#submit").removeAttr("disabled");
+		}
+		else
+		{
+		   $('#submit').attr("disabled","disabled");
+		}}, 100);
+	}
+
+    $(document).ready(function() {
+
+    	// alert('ada');
+    	var param = "api_layanan.php?<?php echo $par_data_table?>";
+        dTableParam("layanan_tabel", param);
+        // log();
+    });
+
+    function checkBefore(){
+
+    	var txt;
+		var r = confirm("Hapus Data Aset?");
+		if (r == true) {
+		    
+		} else {
+		    return false;
+		}
+    }
+
+    </script>
 
           <section id="main">
 			<ul class="breadcrumb">
@@ -67,16 +166,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<span class="label label-success">Filter data : <span class="badge badge-warning"><?php echo $_SESSION['parameter_sql_total'] ?></span> Record</span>
 			</div>
 			-->
-		<?php $HELPER_FILTER->back($link=$url_rewrite.'/module/layanan/lihat_aset_filter.php',$val='Kembali ke halaman utama : Cari aset',$page=1)?>
-			<!--
+		<?php //$HELPER_FILTER->back($link=$url_rewrite.'/module/layanan/lihat_aset_filter.php',$val='Kembali ke halaman utama : Cari aset',$page=1)?>
+			<form name="myform" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/layanan/"; ?>hapus_aset.php" onsubmit="return checkBefore()">
+			<input type="submit" name="submit2" class="btn btn-danger" value="Hapus Aset" id="submit" disabled/>
 			<div class="detailRight">
 						
 						<ul>
 							<li>
 								<a href="<?php echo "$url_rewrite/module/layanan/lihat_aset_filter.php?pid=1"; ?>">
-									   <input type="submit" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
+									   <input type="button" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
 								 </a>
-							</li>
+							</li><!--
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid'] ?>">
 								  <input type="hidden" class="hiddenrecord" value="<?php echo @$count ?>">
@@ -85,96 +185,34 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 										<li>Page</li>
 										<li><a href="#" class="buttonnext">Next</a></li>
 									</ul>
-							</li>
+							</li>-->
 						</ul>
 							
-			</div>-->
+			</div>
 
 			<div style="height:5px;width:100%;clear:both"></div>
 			
 			
 			<div id="demo">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="layanan_tabel">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Informasi aset</th>
-						<th>Status aset</th>
-						
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>No Register</th>
+						<th>No Kontrak</th>
+						<th>Kode / Uraian</th>
+						<th>Satker</th>
+						<th>Tgl Perolehan</th>
+						<th>Nilai Perolehan</th>
+						<th>Detail</th>
 					</tr>
 				</thead>
 				<tbody>		
 							 
-				<?php
-				// pr($data);
-				if (!empty($data)) {
-					$nomor = 1;
-					$page = @$_GET['pid'];
-					if ($page > 1){
-						$nomor = intval($page - 1 .'01');
-					}else{
-						$nomor = 1;
-					}
-					 foreach ($data as $key => $value) {
-						  // echo"<pre>";
-						  // print_r($value);
-						  ?>
-					
-					<tr class="gradeA">
-						<td><?php echo $nomor;?></td>
-						<td>
-							 <table align="center" border="0" width="100%">
-								<tr>
-									<td width="20%">No Register</td>
-									<td><?php echo $value['noRegister'] ?></td>
-									
-								</tr>
-								<tr>
-									<td>Kode Kelompok</td>
-									<td><?php echo $value['kodeKelompok'] ?></td>
-								</tr>
-								<tr>
-									<td width="20%">Uraian</td>
-									<td><?php echo $value['Uraian'] ?></td>
-								</tr>
-								<tr>
-									<td>No Kontrak</td>
-									<td><?php echo $value['noKontrak'];?></td>
-								</tr>
-								<tr>
-									<td>Satker</td>
-									<td><?php echo $value['kodeSatker'];?> <?php echo $value['NamaSatker'];?></td>
-								</tr>
-								
-								<tr>
-									<td>Info</td>
-									<td><?php echo $value['Info'];?></td>
-								</tr>
-								<tr>
-									<td>Kondisi</td>
-									<td><?php echo $value['Kondisi_ID'] . '-' . $value['InfoKondisi'] ?></td>
-								</tr>
-							</table>
-						</td>
-						<td>
-							<?php echo $value['statusAset']?>
-							<?php if ($value['Status_Validasi_Barang']==1){?>
-
-							<a href="<?php echo "$url_rewrite/module/layanan/history_aset.php?id=$value[Aset_ID]&jenisaset=$value[TipeAset]"; ?>">
-									   <input type="submit" name="Lanjut" class="btn" value="Lihat Histori" >
-								 </a>
-							<?php } ?>
-						</td>
-						
-					</tr>
-
-					
-					
-				     <?php
-						  $nomor++;
-					 }
-				}
-				?>
+				<tr>
+                    <td colspan="9">Data Tidak di temukkan</td>
+               	</tr>
 				</tbody>
 				<tfoot>
 					<tr>
@@ -186,9 +224,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			</div>
 			<div class="spacer"></div>
 			
-			
+			</form>
 		</section> 
 	</section>
+
+
 <?php
 include "$path/footer.php";
 ?>

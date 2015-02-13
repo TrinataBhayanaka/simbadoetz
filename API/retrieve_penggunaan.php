@@ -421,10 +421,11 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $nokontrak = $parameter['nokontrak'];
         $kodeSatker = $parameter['kodeSatker'];
          
-                $kondisi= trim($parameter['condition']);
-                if($kondisi!="")$kondisi=" and $kondisi";
-                $limit= $parameter['limit'];
-                $order= $parameter['order'];
+        $kondisi= trim($parameter['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $parameter['limit'];
+        $order= $parameter['order'];
+        
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
