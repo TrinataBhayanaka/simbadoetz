@@ -25,7 +25,7 @@ $menu_id = 10;
 	// pr($_POST);
 	if ($_POST['submit']){
 		// unset($_SESSION['ses_mutasi_filter']);
-		pr($_POST);
+		// pr($_POST);
 		$_SESSION['filterAsetUsulan'] = $_POST;
 		
 	}
@@ -33,59 +33,67 @@ $menu_id = 10;
 
 	// $data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
 
-	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
+// 	if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
 		
 		
-		$POST=$_SESSION['filterAsetUsulan'];
-		// pr($POST);
-		$POST['page'] = intval($_GET['pid']);
-		// pr($POST);
-		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($POST);
-		// $_SESSION['filterAsetUsulan']=$data;
-		// $data=$_SESSION['filterAsetUsulan'];
-		// // ////pr($_SESSION['reviewAsetUsulan']);
-		// unset($_SESSION['reviewAsetUsulan']);
-// pr($data);
+// 		$POST=$_SESSION['filterAsetUsulan'];
+// 		// pr($POST);
+// 		$POST['page'] = intval($_GET['pid']);
+// 		// pr($POST);
+// 		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($POST);
+// 		// $_SESSION['filterAsetUsulan']=$data;
+// 		// $data=$_SESSION['filterAsetUsulan'];
+// 		// // ////pr($_SESSION['reviewAsetUsulan']);
+// 		// unset($_SESSION['reviewAsetUsulan']);
+// // pr($data);
 
 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 
 		if($data_post){
-		$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+			
+		}else{
+			
 		}
 
-		// echo"<script>alert('1');</script>";
-	}else{
-		$POST=$_SESSION['filterAsetUsulan'];
-		// echo"<script>alert('2');</script>";
-		$POST['page'] = intval($_GET['pid']);
+// 		// echo"<script>alert('1');</script>";
+// 	}else{
+// 		$POST=$_SESSION['filterAsetUsulan'];
+// 		// echo"<script>alert('2');</script>";
+// 		$POST['page'] = intval($_GET['pid']);
 
-		$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($POST);
+// 		$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($POST);
 
-		// $dataSESSION=$_SESSION['filterAsetUsulan'];
+// 		// $dataSESSION=$_SESSION['filterAsetUsulan'];
 
-		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-		// pr($data_post);
-		$DataPost['penghapusanfilter']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+// 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+// 		// pr($data_post);
+// 		$DataPost['penghapusanfilter']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
-		// $DataPost['penghapusanfilter']=$DataPost;
-		if($DataPost){
-			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
-			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-				// ////pr($valueSESSION['Aset_ID']);
-				if(!in_array($valueSESSION['Aset_ID'], $DataPost['penghapusanfilter'])){
-					// echo "stringnot";
-					$data[]=$valueSESSION;
-					$data[$keySESSION]['checked']="";
-				}else{
-					$data[]=$valueSESSION;
-					$data[$keySESSION]['checked']="checked";
-				}
-			}
+// 		// $DataPost['penghapusanfilter']=$DataPost;
+// 		if($DataPost){
+// 			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+// 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
+// 				// ////pr($valueSESSION['Aset_ID']);
+// 				if(!in_array($valueSESSION['Aset_ID'], $DataPost['penghapusanfilter'])){
+// 					// echo "stringnot";
+// 					$data[]=$valueSESSION;
+// 					$data[$keySESSION]['checked']="";
+// 				}else{
+// 					$data[]=$valueSESSION;
+// 					$data[$keySESSION]['checked']="checked";
+// 				}
+// 			}
 		
-		}
-		// ////pr($data);
+// 		}
+// 		// ////pr($data);
 
-	}
+// 	}
+	$POST = $_SESSION['filterAsetUsulan'];
+	
+	$POST['page'] = intval($_GET['pid']);
+	// pr($POST);
+	  $par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
+
 	// pr($data);
 	// pr($_SESSION);
 	if($_POST['kodeSatker']){
@@ -113,11 +121,13 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    // $("#btnback").css("display:block");
 			    updDataCheckbox('RVWUSPMD');
 			}
 			else
 			{
-			   $('#submit').attr("disabled","disabled");
+			   // $('#submit').attr("disabled","disabled");
+			   //  $("#btnback").css("display:none");
 			   updDataCheckbox('RVWUSPMD');
 			}}, 100);
 		}
@@ -162,21 +172,37 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<ul><li>			<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
-								<input type="hidden" class="hiddenrecord" value="<?php echo @$count?>">
-			<ul class="pager">
-								   		<?php 
-								   		$prev = intval($_GET['pid']-1);
-								   		$next = intval($_GET['pid']+1);
-								   		?>
-										<li><a href="<?php echo"$url_rewrite/module/penghapusan/dftr_aset_usulan_pmd.php?pid=$prev&flegAset=1"?>" class="buttonprev" >Previous</a></li>
-										<li>Page</li>
-										<li><a href="<?php echo"$url_rewrite/module/penghapusan/dftr_aset_usulan_pmd.php?pid=$next&flegAset=1";?>" class="buttonnext1">Next</a></li>
-									</ul>
-						</li></ul>
+			
+			<script>
+    $(document).ready(function() {
+          $('#usulan_pmd_table').dataTable(
+                   {
+                    "aoColumnDefs": [
+                         { "aTargets": [2] }
+                    ],
+                    "aoColumns":[
+                         {"bSortable": false},
+                         {"bSortable": false,"sClass": "checkbox-column" },
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true}],
+                    "sPaginationType": "full_numbers",
+
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_aset_usulan_pmd.php?<?php echo $par_data_table?>"
+               }
+                  );
+      });
+    </script>
 			<div id="demo">
 			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pmd.php"> 
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="usulan_pmd_table">
 				<thead>
 					<tr>
 						<td colspan="7" align="left">
@@ -185,10 +211,11 @@ $menu_id = 10;
 								<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 						<?php
 							if($flegAset==0){
+								if($data_post){
 						?>
-							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pmd.php" class="btn">Kembali ke Aset Usulan</a>
+							<a href="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pmd.php" class="btn" id="btnback" <?=$btndis?>>Kembali ke Aset Usulan</a>
 						<?php
-
+									}
 							}
 						?>
 						</td>
@@ -203,87 +230,17 @@ $menu_id = 10;
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
-						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
+						<th>Merk / Type</th>
 					</tr>
 				</thead>
 				<tbody>		
-				<?php
-				if (!empty($data))
-				{
-			   
-					$page = @$_GET['pid'];
-					if ($page > 1){
-						$no = intval($page - 1 .'01');
-					}else{
-						$no = 1;
-					}
-					foreach ($data as $key => $value)
-					{
-					// ////pr($get_data_filter);
-					if($value[kondisi]==2){
-						$kondisi="Rusak Ringan";
-					}elseif($value[kondisi]==3){
-						$kondisi="Rusak Berat";
-					}elseif($value[kondisi]==1){
-						$kondisi="Baik";
-					}
-					// ////pr($value[TglPerolehan]);
-					$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-					// ////pr($TglPerolehanTmp);
-					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-
-
-					?>
-						
-					<tr class="gradeA">
-						<td><?php echo $no?></td>
-						<td class="checkbox-column">
-						
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusanfilter[]" value="<?php echo $value[Aset_ID];?>" <?=$value[checked]?>>
-							
-						</td>
-						<td>
-							<?php echo $value[noRegister]?>
-						</td>
-						<td>
-							<?php echo $value[noKontrak]?>
-						</td>
-						<td>
-							 [<?php echo $value[kodeKelompok]?>]<br/> 
-							<?php echo $value[Uraian]?>
-						</td>
-						<td>
-							<?php echo $value[Merk]?> <?php if ($value[Model]) echo $value[Model];?>
-						</td>
-						<td>
-							<?php echo '['.$value[kodeSatker].'] '?><br/>
-							<?php echo $value[NamaSatker];?>
-						</td>
-						<td>
-							<?php echo $TglPerolehan;?>
-						</td>
-						<td>
-							<?php echo number_format($value[NilaiPerolehan]);?>
-						</td>
-						<td>
-							<?php echo $kondisi. ' - ' .$value[AsalUsul]?>
-						</td>
-							
-					</tr>
-					
-				   <?php
-							$no++;
-						}
-					}
-					else
-					{
-						$disabled = 'disabled';
-					}
-					?>
+					 <tr>
+                                        <td colspan="10">Data Tidak di temukkan</td>
+                                   </tr>
 				</tbody>
 				<tfoot>
 					<tr>

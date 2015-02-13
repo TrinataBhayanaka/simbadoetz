@@ -87,7 +87,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $kodeSatker = $data['kodeSatker'];
         $tahun = $data['bup_tahun'];
         ////pr($jenisaset);
-
+        $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker){ 
@@ -132,13 +135,22 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     // //////////////////////////////////////pr($sql1);
                      $paging = paging($data['page'], 100);
                      $sqlAset = array(
-                            'table'=>"Aset AS ast",
-                            'field'=>"ast.Aset_ID,ast.KodeSatker,ast.noKontrak",
-                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} GROUP BY ast.Aset_ID",
-                            'limit'=>"$paging,100",
+                            'table'=>"{$listTable},Aset AS ast,kelompok AS k,Satker AS sat",
+                            'field'=>"SQL_CALC_FOUND_ROWS {$listTableField},{$FieltableGeneral}, ast.Aset_ID,ast.KodeSatker,ast.noKontrak",
+                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} $kondisi  GROUP BY ast.Aset_ID $order",
+                            'limit'=>"$limit",
+                            'joinmethod' => ' LEFT JOIN ',
+                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode,ast.KodeSatker=sat.Kode"
                              );
                     // ////pr($sqlAset);
                     $resAset = $this->db->lazyQuery($sqlAset,$debug);
+                        $sQuery = "
+                            SELECT FOUND_ROWS() as jml
+                        ";
+                        $resQuery=$this->fetch($sQuery);
+                        $resQuery=$resQuery[jml];
+//                        pr($resQuery);
+
                     // //////////////////////////pr($resAst);
                     // echo "============================";
                     foreach ($resAset as $key => $value) {
@@ -232,7 +244,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     
                 }
 
-        if ($newData) return $newData;
+        if ($newData) return array($newData,$resQuery);
         return false;
     }
     public function retrieve_usulan_penghapusan_pms($data,$debug=false)
@@ -246,7 +258,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $kodeSatker = $data['kodeSatker'];
         $tahun = $data['bup_tahun'];
         // //////////////////////////////////////pr($jenisaset);
-
+           $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker){ 
@@ -290,12 +305,20 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     // //////////////////////////////////////pr($aset_id);
                     // //////////////////////////////////////pr($sql1);
                      $sqlAset = array(
-                            'table'=>"Aset AS ast",
-                            'field'=>"ast.Aset_ID,ast.KodeSatker,ast.noKontrak",
-                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} GROUP BY ast.Aset_ID",
+                            'table'=>"{$listTable},Aset AS ast,kelompok AS k,Satker AS sat",
+                            'field'=>"SQL_CALC_FOUND_ROWS {$listTableField},{$FieltableGeneral}, ast.Aset_ID,ast.KodeSatker,ast.noKontrak",
+                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} $kondisi  GROUP BY ast.Aset_ID $order",
+                            'limit'=>"$limit",
+                            'joinmethod' => ' LEFT JOIN ',
+                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode,ast.KodeSatker=sat.Kode"
                              );
-          
+                    // ////pr($sqlAset);
                     $resAset = $this->db->lazyQuery($sqlAset,$debug);
+                        $sQuery = "
+                            SELECT FOUND_ROWS() as jml
+                        ";
+                        $resQuery=$this->fetch($sQuery);
+                        $resQuery=$resQuery[jml];
                     // //////////////////////////pr($resAst);
                     // echo "============================";
                     foreach ($resAset as $key => $value) {
@@ -388,7 +411,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     
                 }
 
-        if ($newData) return $newData;
+        if ($newData) return array($newData,$resQuery);
         return false;
     }
     public function retrieve_usulan_penghapusan_psb($data,$debug=false)
@@ -402,7 +425,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $kodeSatker = $data['kodeSatker'];
         $tahun = $data['bup_tahun'];
         // //////////////////////////////////////pr($jenisaset);
-
+         $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
         if ($kodeSatker){ 
@@ -446,12 +472,20 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     // //////////////////////////////////////pr($aset_id);
                     // //////////////////////////////////////pr($sql1);
                      $sqlAset = array(
-                            'table'=>"Aset AS ast",
-                            'field'=>"ast.Aset_ID,ast.KodeSatker,ast.noKontrak",
-                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} GROUP BY ast.Aset_ID",
+                            'table'=>"{$listTable},Aset AS ast,kelompok AS k,Satker AS sat",
+                            'field'=>"SQL_CALC_FOUND_ROWS {$listTableField},{$FieltableGeneral}, ast.Aset_ID,ast.KodeSatker,ast.noKontrak",
+                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} $kondisi  GROUP BY ast.Aset_ID $order",
+                            'limit'=>"$limit",
+                            'joinmethod' => ' LEFT JOIN ',
+                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode,ast.KodeSatker=sat.Kode"
                              );
-          
+                    // ////pr($sqlAset);
                     $resAset = $this->db->lazyQuery($sqlAset,$debug);
+                        $sQuery = "
+                            SELECT FOUND_ROWS() as jml
+                        ";
+                        $resQuery=$this->fetch($sQuery);
+                        $resQuery=$resQuery[jml];
                     // //////////////////////////pr($resAst);
                     // echo "============================";
                     foreach ($resAset as $key => $value) {
@@ -544,7 +578,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     
                 }
 
-        if ($newData) return $newData;
+        if ($newData) return array($newData,$resQuery);
         return false;
     }
     public function retrieve_usulan_penghapusan_pmOLDs($data,$debug=false)
