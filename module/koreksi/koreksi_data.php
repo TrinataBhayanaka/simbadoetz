@@ -31,6 +31,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 	<!-- End Sql -->
 	<script type="text/javascript">
 		$(document).ready(function() {
+			console.log('document on load sukses');
 			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
