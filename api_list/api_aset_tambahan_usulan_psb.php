@@ -126,7 +126,7 @@ $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
 // pr($dataParam);
-list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($dataParam);	
+list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($dataParam);	
 // pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
