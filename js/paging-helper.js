@@ -267,14 +267,18 @@ function requiredFilter(jenisaset, satker, satkerid)
 
 }
 
-function dTableParam(idTable, urlApi, numCol)
+function dTableParam(idTable, urlApi)
 {
 
-	if (idTable) idTable = true;
-	if (urlApi) urlApi = true;
-	if (numCol) numCol = true;
+	
+	if (idTable) idTable = idTable;
+	if (urlApi) urlApi = urlApi;
+	//if (numCol) numCol = true;
+	
+	setTimeout(function(){ 
 
-	$('#'+idTable).dataTable({
+		
+		$('#'+idTable).dataTable({
 
         "aoColumnDefs": [
              { "aTargets": [2] }
@@ -295,6 +299,11 @@ function dTableParam(idTable, urlApi, numCol)
         "bServerSide": true,
         "sAjaxSource": basedomain+"/api_list/"+urlApi
 	});
+
+	}, 1000);
+
+	
+
 }
 
 function log(){
