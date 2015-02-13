@@ -1,5 +1,5 @@
 <?php
-include "../../config/config.php";
+include "../../../config/config.php";
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -23,7 +23,7 @@ $menu_id = 10;
 			}
 
 	//get data
-	$RKsql = mysql_query("SELECT Aset_ID,kodeLokasi, kodeKelompok,TipeAset,MIN(noRegister) as minreg, MAX(noRegister) as maxreg,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
+	$RKsql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' AND TipeAset = 'E'");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -153,21 +153,8 @@ $menu_id = 10;
 					}
 			?>	
 				<p>
-				<!-- <div class="dropdown">
-				  <button class="btn btn-default dropdown-toggle btn-small" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    <i class="fa fa-bars"></i> Tampilan Detail
-				    <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/tanah.php?id=<?=$kontrak[0]['id']?>">Tanah</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/mesin.php?id=<?=$kontrak[0]['id']?>">Mesin</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/bangunan.php?id=<?=$kontrak[0]['id']?>">Bangunan</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/jaringan.php?id=<?=$kontrak[0]['id']?>">Jaringan</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/asettetaplain.php?id=<?=$kontrak[0]['id']?>">Aset Tetap Lain</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/kdp.php?id=<?=$kontrak[0]['id']?>">KDP</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/asetlain.php?id=<?=$kontrak[0]['id']?>">Aset Lainnya</a></li>
-				  </ul>
-				</div><br> -->
+				<a href="../kontrak_barang.php?id=<?=$kontrak[0]['id']?>" class="btn btn-default btn-small" style="<?=$display?>"><i class="fa fa-database"></i>&nbsp;&nbsp;Tampilan Group</a>	
+				<br><br>
 				<a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
 				&nbsp;
 				<a href="importmenu.php?id=<?=$kontrak[0]['id']?>" class="btn btn-success btn-small" style="<?=$display?>"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Import xls</a>
@@ -187,7 +174,6 @@ $menu_id = 10;
 						<th>Kode Barang</th>
 						<th>Nama Barang</th>
 						<th>No. Register</th>
-						<th>Jumlah</th>
 						<th>Total</th>
 						<th>Aksi</th>
 					</tr>
@@ -204,8 +190,7 @@ $menu_id = 10;
 						<td><?=$i?></td>
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
-						<td class="center"><?=$value['minreg']?> s/d <?=$value['maxreg']?></td>
-						<td class="center"><?=$value['Kuantitas']?></td>
+						<td class="center"><?=$value['noRegister']?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan'])?></td>
 						<td class="center">
 						<?php

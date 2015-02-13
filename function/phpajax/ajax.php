@@ -116,26 +116,66 @@ function hapusUsulanMutasi($data, $debug=false)
 
         	foreach ($result as $key => $value) {
         		$Aset_ID[] = $value['Aset_ID'];
+
+        		$sqlSelect = array(
+                    'table'=>"aset",
+                    'field'=>"TipeAset",
+                    'condition'=>"Aset_ID = {$value['Aset_ID']}",
+                    );
+        		$getKib[] = $DBVAR->lazyQuery($sqlSelect,$debug);
+
         	}
 
+        	foreach ($getKib as $key => $value) {
+        		$kib[] = $value[0]['TipeAset'];
 
-        	$aset_id = implode(',', $Aset_ID);
+        	}
 
-        	$sqlSelect = array(
-                    'table'=>"mutasiaset",
-                    'field'=>"Status = 3",
-                    'condition'=>"Mutasi_ID = '{$data[mutasiid]}' AND Status = 0 AND Aset_ID IN ({$aset_id})",
-                    );
+        	$arrTabel = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+        	foreach ($Aset_ID as $key => $value) {
+        		
+        		$tabel = getTableKibAlias($arrTabel[$kib[$key]]);
+        		
+        		
+        		$kibAset = $tabel['listTableOri'];
 
-            $result = $DBVAR->lazyQuery($sqlSelect,$debug,2);
+        		$updateKib = array(
+	                    'table'=>"{$kibAset}",
+	                    'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
+	                    'condition'=>"Aset_ID = {$value}",
+	                    );
 
-            $sql = array(
-                    'table'=>"penggunaanaset",
-                    'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
-                    'condition'=>"Aset_ID IN ({$aset_id})",
-                    );
+	            $result1 = $DBVAR->lazyQuery($updateKib,$debug,2);
 
-            $result = $DBVAR->lazyQuery($sql,$debug,2);
+	            $updateAset = array(
+	                    'table'=>"aset",
+	                    'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 1",
+	                    'condition'=>"Aset_ID = {$value}",
+	                    );
+
+	            $result1 = $DBVAR->lazyQuery($updateAset,$debug,2);
+
+        		$sqlSelect = array(
+	                    'table'=>"mutasiaset",
+	                    'field'=>"Status = 3",
+	                    'condition'=>"Mutasi_ID = '{$data[mutasiid]}' AND Status = 0 AND Aset_ID IN ({$value})",
+	                    );
+
+	            $result = $DBVAR->lazyQuery($sqlSelect,$debug,2);
+
+	            $sql = array(
+	                    'table'=>"penggunaanaset",
+	                    'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
+	                    'condition'=>"Aset_ID IN ({$value})",
+	                    );
+
+	            $result = $DBVAR->lazyQuery($sql,$debug,2);
+
+        	}
+        	
+        	// $aset_id = implode(',', $Aset_ID);
+
+        	
 
             $sql = array(
 		            'table'=>'mutasi',
