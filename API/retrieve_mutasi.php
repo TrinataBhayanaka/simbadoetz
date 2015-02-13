@@ -566,6 +566,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             // echo '1';
                             $NilaiPerolehan = ($resultAwal[0]['NilaiPerolehan'] + $result2[0]['NilaiPerolehan']);
 
+                            $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$res[0]['Aset_ID_Tujuan'], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Aset Penambahan kapitalisasi Mutasi",0);
+
                             logFile('Nilai Perolehan awal : '.serialize($resultAwal));
                             logFile('Nilai Perolehan tujuan : '.serialize($result2));
                             logFile('Nilai Perolehan gabungan : '.$NilaiPerolehan);
