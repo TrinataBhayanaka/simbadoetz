@@ -174,7 +174,9 @@ $menu_id = 10;
 						<th>Kode Barang</th>
 						<th>Nama Barang</th>
 						<th>No. Register</th>
-						<th>Total</th>
+						<th>Luas Total</th>
+						<th>Luas Bangunan</th>
+						<th>Nilai</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>

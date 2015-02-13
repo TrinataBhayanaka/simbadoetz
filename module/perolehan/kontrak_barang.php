@@ -153,7 +153,7 @@ $menu_id = 10;
 					}
 			?>	
 				<p>
-				<div class="dropdown">
+				<!-- <div class="dropdown">
 				  <button class="btn btn-default dropdown-toggle btn-small" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 				    <i class="fa fa-bars"></i> Tampilan Detail
 				    <span class="caret"></span>
@@ -167,7 +167,7 @@ $menu_id = 10;
 				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/kdp.php?id=<?=$kontrak[0]['id']?>">KDP</a></li>
 				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/asetlain.php?id=<?=$kontrak[0]['id']?>">Aset Lainnya</a></li>
 				  </ul>
-				</div><br>
+				</div><br> -->
 				<a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
 				&nbsp;
 				<a href="importmenu.php?id=<?=$kontrak[0]['id']?>" class="btn btn-success btn-small" style="<?=$display?>"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Import xls</a>
