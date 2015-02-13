@@ -486,14 +486,14 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 }
                 
 
-                // foreach ($asetid as $key => $value) {
-                //     if (!in_array($key, $asetKapitalisasi)){
-                //         $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
-                //     }else{
-                //         $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
-                //     }
+                foreach ($asetid as $key => $value) {
+                    if (!in_array($key, $asetKapitalisasi)){
+                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
+                    }else{
+                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
+                    }
                     
-                // }
+                }
 
                 logFile('commit transaksi mutasi');
                 $this->db->commit();
