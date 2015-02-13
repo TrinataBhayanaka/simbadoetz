@@ -23,7 +23,7 @@ $menu_id = 10;
 			}
 
 	//get data
-	$RKsql = mysql_query("SELECT Aset_ID,kodeLokasi, kodeKelompok,TipeAset,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
+	$RKsql = mysql_query("SELECT Aset_ID,kodeLokasi, kodeKelompok,TipeAset,MIN(noRegister) as minreg, MAX(noRegister) as maxreg,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -155,6 +155,8 @@ $menu_id = 10;
 				<p><a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
 				&nbsp;
 				<a href="importmenu.php?id=<?=$kontrak[0]['id']?>" class="btn btn-success btn-small" style="<?=$display?>"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Import xls</a>
+				&nbsp;
+				<!-- <a href="importmenu.php?id=<?=$kontrak[0]['id']?>" class="btn btn-default btn-small" style="<?=$display?>"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Tampilan Detil</a> -->
 				&nbsp;</p>
 			<?php
 				} else {
@@ -169,6 +171,7 @@ $menu_id = 10;
 						<th>No</th>
 						<th>Kode Barang</th>
 						<th>Nama Barang</th>
+						<th>No. Register</th>
 						<th>Jumlah</th>
 						<th>Total</th>
 						<th>Aksi</th>
@@ -186,6 +189,7 @@ $menu_id = 10;
 						<td><?=$i?></td>
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
+						<td class="center"><?=$value['minreg']?> s/d <?=$value['maxreg']?></td>
 						<td class="center"><?=$value['Kuantitas']?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan'])?></td>
 						<td class="center">

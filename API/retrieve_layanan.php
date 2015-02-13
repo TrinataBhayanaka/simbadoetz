@@ -42,7 +42,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 //if ($kd_idaset) $filter .= " AND a.kodeSatker = '{$kd_idaset}' ";
                 //if ($kd_namaaset) $filter .= " AND a.kodeSatker = '{$kd_namaaset}' ";
                 if ($kd_nokontrak) $filter .= " AND a.noKontrak = '{$kd_nokontrak}' ";
-                if ($kd_tahun) $filter .= " AND {$listTableAlias}.Tahun = '{$kd_tahun}' ";
+                if ($kd_tahun) $filter .= " AND {$listTableAlias}.Tahun LIKE '{$kd_tahun}%' ";
                 if ($kelompok_id) $filter .= " AND {$listTableAlias}.kodeKelompok = '{$kelompok_id}' ";
                 if ($satker) $filter .= " AND {$listTableAlias}.kodeSatker = '{$satker}' ";
                 
