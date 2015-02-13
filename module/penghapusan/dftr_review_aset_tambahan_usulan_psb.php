@@ -78,11 +78,26 @@ $menu_id = 10;
      		 $('#'+error).html('');
      		 $("#"+idcheck).val(idasetID+"|"+kondisiOld+"|"+$(item).autoNumeric('get'));
     	}
+    	if(parseInt($(item).autoNumeric('get')) ==0 || $(item).autoNumeric('get')==""){
+
+			$("#"+idcheck).attr("disabled","disabled");
+    	}else{
+    		$("#"+idcheck).removeAttr("disabled");
+    	}
     }
     </script>
 	<script>
-		function AreAnyCheckboxesChecked () 
+		function AreAnyCheckboxesChecked (item,nilaimask) 
 		{
+			arrunchecked = $(item).map(function() {
+						    if(!this.checked){
+							    
+			   					 $("#"+nilaimask).removeAttr("disabled");	
+						    } else {
+						    	
+			   					 $("#"+nilaimask).attr("disabled","disabled");
+						    }
+						}).get();
 			setTimeout(function() {
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
@@ -186,7 +201,7 @@ $menu_id = 10;
 					</tr>
 					<tr>
 						<th>No</th>
-						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();" disabled></th>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
@@ -231,7 +246,7 @@ $menu_id = 10;
 						<td class="checkbox-column">
 						
 							
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>|0" id="chebok<?=$no?>">
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked(this,'idnilaimask<?=$no?>');" name="penghapusan_nama_aset[]" value="<?php echo $value[Aset_ID];?>|0" id="chebok<?=$no?>" disabled>
 							
 						</td>
 						<td>
@@ -259,7 +274,7 @@ $menu_id = 10;
 						</td>
 						<td>
 						
-								<input type="text" class="span2 nilaimask" data-a-sign="Rp " data-a-dec="," data-a-sep="."  onkeyup="return getCurrency(this,'nilaiP<?=$no?>','<?=$value[NilaiPerolehan]?>','error<?=$no?>','chebok<?=$no?>','idaset<?=$no?>','kondisi<?=$no?>');"  placeholder="0" /><br/>
+								<input type="text" class="span2 nilaimask" id="idnilaimask<?=$no?>" data-a-sign="Rp " data-a-dec="," data-a-sep="."  onkeyup="return getCurrency(this,'nilaiP<?=$no?>','<?=$value[NilaiPerolehan]?>','error<?=$no?>','chebok<?=$no?>','idaset<?=$no?>','kondisi<?=$no?>');"  placeholder="0" /><br/>
 								<em id="error<?=$no?>"></em>
 
 								<input type="hidden" id="nilaiP<?=$no?>"  >
