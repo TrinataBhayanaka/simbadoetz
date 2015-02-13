@@ -5267,15 +5267,15 @@ class core_api_report extends DB {
 		if($Info != ''){
 			//untuk mutasi
 			if($Info == 'mutasi'){
-				$paramKib 		= "TglPerolehan >='$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan'";
-				$paramMutasi 	= "TglSKKDH >='$tglawalperolehan' AND TglSKKDH <='$tglakhirperolehan' order by TglSKKDH desc";
-				$paramPnghpsn 	= "TglHapus >='$tglawalperolehan' AND TglHapus <='$tglakhirperolehan' order by TglHapus desc"; 
-				$paramLog 		= "TglPerubahan >='$tglawalperolehan' AND TglPerubahan <='$tglakhirperolehan' order by log_id desc";
+				$paramKib 		= "TglPerolehan >'$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan'";
+				$paramMutasi 	= "TglSKKDH >'$tglawalperolehan' AND TglSKKDH <='$tglakhirperolehan' order by TglSKKDH desc";
+				$paramPnghpsn 	= "TglHapus >'$tglawalperolehan' AND TglHapus <='$tglakhirperolehan' order by TglHapus desc"; 
+				$paramLog 		= "TglPerubahan >'$tglawalperolehan' AND TglPerubahan <='$tglakhirperolehan' order by log_id desc";
 			}elseif($Info == 'BISI' || $Info =='RBISI'){
 				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' ";
-				$paramMutasi 	= "TglSKKDH >='$tglakhirperolehan' order by TglSKKDH desc";
-				$paramPnghpsn 	= "TglHapus >='$tglakhirperolehan' order by TglHapus desc"; 
-				$paramLog 		= "TglPerubahan >='$tglakhirperolehan' order by log_id desc";
+				$paramMutasi 	= "TglSKKDH >'$tglakhirperolehan' order by TglSKKDH desc";
+				$paramPnghpsn 	= "TglHapus >'$tglakhirperolehan' order by TglHapus desc"; 
+				$paramLog 		= "TglPerubahan >'$tglakhirperolehan' order by log_id desc";
 		
 			}else{
 				$paramKib 		= "";
@@ -5286,9 +5286,9 @@ class core_api_report extends DB {
 		}else{
 			
 				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi 	= "TglSKKDH >='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
-				$paramPnghpsn 	= "TglHapus >='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
-				$paramLog 		= "TglPerubahan >='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by log_id desc";
+				$paramMutasi 	= "TglSKKDH >'$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramPnghpsn 	= "TglHapus >'$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
+				$paramLog 		= "TglPerubahan >'$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by log_id desc";
 		}
 		
 		if($hit == 1){
