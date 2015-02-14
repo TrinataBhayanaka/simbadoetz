@@ -9664,7 +9664,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $IDaset=explode(",", $res1[0]['Aset_ID']);
             // ////////////////////////////pr($);
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
-                    
+                    if($valueIDaset){
                     $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Satker AS e,Kelompok AS g',
                     'field'=>"a.Aset_ID,a.kodeSatker,a.noKontrak,a.TipeAset,b.StatusKonfirmasi, e.NamaSatker, e.KodeSatker, g.Kode,g.Uraian",
@@ -9718,6 +9718,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                          
 
                     }
+                }
             }
             
 
@@ -9762,8 +9763,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // ////////////////////////////pr($res1);
             $IDaset=explode(",", $res1[0]['Aset_ID']);
             // ////////////////////////////pr($);
+
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
-                    
+                    if($valueIDaset){
                     $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Satker AS e,Kelompok AS g',
                     'field'=>"a.Aset_ID,a.kodeSatker,a.noKontrak,a.TipeAset,b.StatusKonfirmasi, e.NamaSatker, e.KodeSatker, g.Kode,g.Uraian",
@@ -9817,6 +9819,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                          
 
                     }
+                }
             }
             
 
@@ -9862,7 +9865,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $IDaset=explode(",", $res1[0]['Aset_ID']);
             // ////////////////////////////pr($);
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
-                    
+                    if($valueIDaset){
                     $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Satker AS e,Kelompok AS g',
                     'field'=>"a.Aset_ID,a.kodeSatker,a.noKontrak,a.TipeAset,b.StatusValidasi,b.StatusKonfirmasi,b.NilaiPerolehanTmp,b.kondisiTmp, e.NamaSatker, e.KodeSatker, g.Kode,g.Uraian",
@@ -9916,6 +9919,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                          
 
                     }
+                }
             }
             
 
