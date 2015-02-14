@@ -36,6 +36,18 @@ function redirect($data) {
 
 }
 
+function encode($data=false)
+{
+     $hasil = base64_encode(serialize($data));
+     return $hasil;
+}
+
+function decode($data=false)
+{
+     $hasil = unserialize(base64_decode($data));
+     return $hasil;
+}
+
 function writelog($data) {
      $date = date('d-m-Y');
      $file = fopen("../log/log_sys_$date.txt", "w");

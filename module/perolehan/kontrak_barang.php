@@ -153,21 +153,8 @@ $menu_id = 10;
 					}
 			?>	
 				<p>
-				<!-- <div class="dropdown">
-				  <button class="btn btn-default dropdown-toggle btn-small" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    <i class="fa fa-bars"></i> Tampilan Detail
-				    <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/tanah.php?id=<?=$kontrak[0]['id']?>">Tanah</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/mesin.php?id=<?=$kontrak[0]['id']?>">Mesin</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/bangunan.php?id=<?=$kontrak[0]['id']?>">Bangunan</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/jaringan.php?id=<?=$kontrak[0]['id']?>">Jaringan</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/asettetaplain.php?id=<?=$kontrak[0]['id']?>">Aset Tetap Lain</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/kdp.php?id=<?=$kontrak[0]['id']?>">KDP</a></li>
-				    <li role="presentation"><a role="menuitem" tabindex="-1" href="rincian_detail/asetlain.php?id=<?=$kontrak[0]['id']?>">Aset Lainnya</a></li>
-				  </ul>
-				</div><br> -->
+				<a href="kontrak_barang_detail.php?id=<?=$kontrak[0]['id']?>" class="btn btn-default btn-small" style="<?=$display?>"><i class="fa fa-bars"></i>&nbsp;&nbsp;Tampilan Detail</a>
+				<br><br>
 				<a href="<?=$link?>?id=<?=$kontrak[0]['id']?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Rincian Barang</a>
 				&nbsp;
 				<a href="importmenu.php?id=<?=$kontrak[0]['id']?>" class="btn btn-success btn-small" style="<?=$display?>"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;Import xls</a>
