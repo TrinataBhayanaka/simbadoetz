@@ -9762,9 +9762,9 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
 
             pr($res1);
             $IDaset=explode(",", $res1[0]['Aset_ID']);
-            pr($IDaset);
+            // pr($IDaset);
             if($IDaset){
-                pr("masuk");
+                // pr("masuk");
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
                     if($valueIDaset){
                     $sqlUsulAst = array(   
@@ -9831,7 +9831,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
             // exit;
            
             
-            if ($res) return array('dataArr'=>$res, 'dataRow'=>$res1);
+            if ($res1) return array('dataArr'=>$res, 'dataRow'=>$res1);
             return false;       
 
     }
