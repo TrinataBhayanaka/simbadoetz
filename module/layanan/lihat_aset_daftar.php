@@ -38,7 +38,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	$dataParam = $SESSION->smartFilter('layanan');
 	// pr($filterParam);
 
-	$par_data_table="nokontrak={$dataParam['kd_nokontrak']}&jenisaset={$dataParam['jenisaset'][0]}&kodeSatker={$dataParam['kodeSatker']}&kd_tahun={$dataParam['kd_tahun']}&statusaset={$dataParam['statusaset']}&page={$dataParam['page']}";
+	$par_data_table= "data=".encode($dataParam);//{$dataParam['kd_nokontrak']}&jenisaset={$dataParam['jenisaset']}&kodeSatker={$dataParam['kodeSatker']}&kd_tahun={$dataParam['kd_tahun']}&statusaset={$dataParam['statusaset']}&page={$dataParam['page']}";
 
 
 	/*
@@ -131,7 +131,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
     	// alert('ada');
     	var param = "api_layanan.php?<?php echo $par_data_table?>";
-        dTableParam("layanan_tabel", param);
+        dTableParam("layanan_tabel", param, 9);
         // log();
     });
 
@@ -198,7 +198,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				<thead>
 					<tr>
 						<th>No</th>
-						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>&nbsp;</th>
+						<!--<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>-->
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
