@@ -1935,6 +1935,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
         pr($res);
         // $resAset_ID=explode(",", $res[0]['Aset_ID']);
         foreach ($res as $key => $value) {
+            if($value['Aset_ID']){
             echo"======";
             pr($value);
             ////////////////////////////////////pr($value);
@@ -1966,7 +1967,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
            
             }
-            
+            }
         }
 
         // //////////////////////////////////pr($resAst);
