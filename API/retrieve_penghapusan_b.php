@@ -9763,6 +9763,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
             pr($res1);
             $IDaset=explode(",", $res1[0]['Aset_ID']);
             pr($IDaset);
+            if($IDaset){
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
                     
                     $sqlUsulAst = array(   
@@ -9818,6 +9819,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                          
 
                     }
+                }
             }
             
 
