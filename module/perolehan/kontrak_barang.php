@@ -75,7 +75,7 @@ $menu_id = 10;
 				    </span>
 					<span class="text">Kontrak</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_rincian.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perolehan/kontrak_rincian.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>

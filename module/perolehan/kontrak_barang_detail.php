@@ -16,7 +16,12 @@ $menu_id = 10;
 	<!-- SQL Sementara -->
 	<?php
 
-		$idKontrak = $_GET['id'];
+	if(isset($_GET['del'])){
+		$data[0] = $_GET;
+		$delArr = $DELETE->delete_aset($data);
+	}
+		
+	$idKontrak = $_GET['id'];
 	$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}'");
 		while ($dataKontrak = mysql_fetch_assoc($sql)){
 				$kontrak[] = $dataKontrak;
@@ -75,7 +80,7 @@ $menu_id = 10;
 				    </span>
 					<span class="text">Kontrak</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_rincian.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perolehan/kontrak_rincian.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
@@ -173,9 +178,9 @@ $menu_id = 10;
 						<th>No</th>
 						<th>Kode Barang</th>
 						<th>Nama Barang</th>
-						<th>No. Register</th>
 						<th>Total</th>
 						<th>Info</th>
+						<th>No. Register</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
@@ -191,19 +196,19 @@ $menu_id = 10;
 						<td><?=$i?></td>
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
-						<td class="center"><?=$value['noRegister']?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan'])?></td>
 						<td><?=$value['Info']?></td>
+						<td class="center"><?=$value['noRegister']?></td>
 						<td class="center">
 						<?php
 							if($kontrak[0]['n_status'] != 1){
 								if($edit == 1){
 						?>
-						<a href="kontrak_rincianubah.php?idaset=<?=$value['Aset_ID']?>&kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>&tbl=<?=$value['TipeAset']?>" class="btn btn-warning btn-small" ><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>
+						<a href="kontrak_rincianubah_detail.php?idaset=<?=$value['Aset_ID']?>&kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>&tbl=<?=$value['TipeAset']?>" class="btn btn-warning btn-small" ><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>
 						
 						<?php } ?>
 
-						<a href="kontrak_rincianhapus.php?idaset=<?=$value['Aset_ID']?>&idKel=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						<a href="kontrak_barang_detail.php?Aset_ID=<?=$value['Aset_ID']?>&idKel=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$kontrak[0]['noKontrak']?>&TipeAset=<?=$value['TipeAset']?>&del=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
 						</td>
 						<?php
 						} else {
