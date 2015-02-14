@@ -1532,7 +1532,19 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 0;
+        if($data['TipeAset'] == 'B'){
+            if($tblAset['NilaiPerolehan'] < 300000){
+                $tblAset['kodeKA'] = 1;
+            } else {
+                $tblAset['kodeKA'] = 0;
+            }
+        } elseif ($data['TipeAset'] == 'C') {
+            if($tblAset['NilaiPerolehan'] < 10000000){
+                $tblAset['kodeKA'] = 1;
+            } else {
+                $tblAset['kodeKA'] = 0;
+            }
+        }
         $tblAset['AsalUsul'] = $data['AsalUsul'];
         // pr($tblAset);exit;
 
@@ -1639,7 +1651,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
-            $tblKib['kodeKA'] = 0;
+            $tblKib['kodeKA'] = $tblAset['kodeKA'];
             $tblKib['noRegister'] = $tblAset['noRegister'];
             $tblKib['AsalUsul'] = $data['AsalUsul'];
             
@@ -2194,7 +2206,19 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 0;
+        if($data['TipeAset'] == 'B'){
+            if($tblAset['NilaiPerolehan'] < 300000){
+                $tblAset['kodeKA'] = 1;
+            } else {
+                $tblAset['kodeKA'] = 0;
+            }
+        } elseif ($data['TipeAset'] == 'C') {
+            if($tblAset['NilaiPerolehan'] < 10000000){
+                $tblAset['kodeKA'] = 1;
+            } else {
+                $tblAset['kodeKA'] = 0;
+            }
+        }
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
 
@@ -2307,7 +2331,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
-            $tblKib['kodeKA'] = 0;
+            $tblKib['kodeKA'] = $tblAset['kodeKA'];
             $tblKib['noRegister'] = $tblAset['noRegister'];
             $tblKib['kodeRuangan'] = $data['kodeRuangan']; 
 
@@ -2360,18 +2384,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         exit;    
 
     } 
-
-    public function koreksiUpdAset($data){
-
-        global $url_rewrite;
-        pr($data);exit;
-
-        $sql = "SELECT * FROM aset WHERE Aset_ID = '{$data['Aset_ID']}'";
-        $aset = $this->fetch($sql);
-
-        pr($aset);exit;
-
-    }
 
     public function koreksiAset($data)
     {
