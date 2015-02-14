@@ -114,6 +114,12 @@ pr($data);
 							}
 					$jmlh=explode(",", $hsl_data[Aset_ID]);
 					pr($jmlh);
+					$totalJml=0;
+					foreach ($jmlh as $keyJMlaset => $valuekeyJMlaset) {
+						if($valuekeyJMlaset){
+							$totalJml=$totalJml+1;
+						}
+					}
 					$jumlahAset=count($jmlh);
 				?>
 						  
@@ -128,7 +134,7 @@ pr($data);
 							<?php echo $hsl_data['NamaSatkerUsul'];?>
 						</td>
 						<td>
-							<?php echo $jumlahAset;?>
+							<?php echo $jumlahAset."-".$totalJml;?>
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
 						</td>

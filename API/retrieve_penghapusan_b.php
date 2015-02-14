@@ -9766,7 +9766,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
             if($IDaset){
                 pr("masuk");
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
-                    
+                    if($valueIDaset){
                     $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Satker AS e,Kelompok AS g',
                     'field'=>"a.Aset_ID,a.kodeSatker,a.noKontrak,a.TipeAset,b.StatusKonfirmasi, e.NamaSatker, e.KodeSatker, g.Kode,g.Uraian",
@@ -9820,6 +9820,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                          
 
                     }
+                }
                 }
             }
             
