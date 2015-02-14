@@ -46,18 +46,24 @@ $MUTASI = new RETRIEVE_MUTASI;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-    if ($_POST['submit']){
+    // if ($_POST['submit']){
 		// unset($_SESSION['ses_mutasi_filter']);
 
-		$_SESSION['ses_mutasi_filter'] = $_POST;
+		// $_SESSION['ses_mutasi_filter'] = $_POST;
 		
-	}
+	// }
 
-	$dataParam = $_SESSION['ses_mutasi_filter'];
+	$dataParam = $SESSION->smartFilter('mutasi');
+	// pr($filterParam);
+
+	$par_data_table= "data=".encode($dataParam);//{$dataParam['kd_nokontrak']}&jenisaset={$dataParam['jenisaset']}&kodeSatker={$dataParam['kodeSatker']}&kd_tahun={$dataParam['kd_tahun']}&statusaset={$dataParam['statusaset']}&page={$dataParam['page']}";
+
+
+	// $dataParam = $_SESSION['ses_mutasi_filter'];
 	
-	$dataParam['page'] = intval($_GET['pid']);
+	// $dataParam['page'] = intval($_GET['pid']);
 	// pr($_SESSION);
-	$data = $MUTASI->retrieve_mutasi_filter($dataParam);
+	// $data = $MUTASI->retrieve_mutasi_filter($dataParam);
 	// pr($data);
 			?>
 		 <script type="text/javascript" charset="utf-8">
@@ -82,6 +88,10 @@ $MUTASI = new RETRIEVE_MUTASI;
 					button.disabled=true;
 				}
 				
+				// datatables
+				var param = "api_mutasi.php?<?php echo $par_data_table?>";
+        		dTableParam("mutasi_tabel", param, 10);
+
 			} );
 			
 			function enable(){  
@@ -211,7 +221,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 			</table>
 			<br>
 			<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="mutasi_tabel">
 					<thead>
 					
 					<tr>
@@ -219,7 +229,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Kode Barang</th>
 						<th>No Register</th>
-						<th>Kode / Uraian</th>
+						<th>Uraian</th>
 						<th>Merk / Type</th>
 						<th>No Polisi</th>
 						<th>Satker</th>
