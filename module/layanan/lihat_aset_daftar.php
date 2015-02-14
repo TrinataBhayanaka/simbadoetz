@@ -131,7 +131,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
     	// alert('ada');
     	var param = "api_layanan.php?<?php echo $par_data_table?>";
-        dTableParam("layanan_tabel", param, 9);
+        dTableParam("layanan_tabel", param, 8);
         // log();
     });
 
@@ -198,7 +198,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>&nbsp;</th>
+						
 						<!--<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>-->
 						<th>No Register</th>
 						<th>No Kontrak</th>

@@ -29,12 +29,21 @@ class ServerSide{
 		/* DB table to use */
 		$sTable = $data['primaryTable'];
 
-		$dataParam['nokontrak'] =$data['nokontrak'];
-		$dataParam['jenisaset'] =$data['jenisaset'];
-		$dataParam['kodeSatker'] =$data['kodeSatker'];
-		$dataParam['statusaset'] =$data['statusaset'];
-		$dataParam['kd_tahun'] =$data['kd_tahun'];
-		$dataParam['page'] =$data['page'];
+		if ($data['filter']){
+			foreach ($data['filter'] as $key => $value) {
+				
+				$dataParam[$key] = $value;
+			}
+		}
+
+		// pr($data);
+		// $dataParam['nokontrak'] =$data['nokontrak'];
+		// $dataParam['jenisaset'] =$data['jenisaset'];
+		// $dataParam['kodeSatker'] =$data['kodeSatker'];
+		// $dataParam['statusaset'] =$data['statusaset'];
+		// $dataParam['kd_tahun'] =$data['kd_tahun'];
+		// $dataParam['page'] =$data['page'];
+		// pr($dataParam['page']);
 
 		$sLimit = "";
 		if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
@@ -102,7 +111,7 @@ class ServerSide{
 		$dataParam['limit']="$sLimit";
 
 		$SSData = $data;
-		$data = $API->retrieve_layanan_aset_daftar($dataParam);	
+		$data = $API->$data['APIFunction']($dataParam);	
 		
 
 		/* Data set length after filtering */
@@ -140,40 +149,67 @@ class ServerSide{
 		if (!empty($data)){
 
 		  	foreach ($data as $key => $value){
-				// pr($get_data_filter);
-				if($value[kondisi]==2){
-					$kondisi="Rusak Ringan";
-				}elseif($value[kondisi]==3){
-					$kondisi="Rusak Berat";
-				}elseif($value[kondisi]==1){
-					$kondisi="Baik";
-				}
-				
-				// $TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-				// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-		                                          
+				                               
              	$row = array();
 		        
-		        $detail="<a href=$url_rewrite/module/layanan/history_aset.php?id={$value[Aset_ID]}&jenisaset={$value[TipeAset]}>
-						   <input type='button' name='Lanjut' class='btn' value='Lihat Histori' >
-						</a>";
-				$checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"Layanan[]\" value=\"{$value['Aset_ID']}_{$value['TipeAset']}\">";
-				$checkbox = "&nbsp;";
 		        foreach ($SSData['view'] as $key => $val) {
 		            
 		        	$tmp = explode('|', $val);
 		        	
 		        	if (count($tmp)>1){
 
-		        		$row[]=$value[$tmp[0]] . '-' . $value[$tmp[1]];
+		        		if ($tmp[0] == 'detail'){
+
+			            	$expl = explode('|', $val);
+
+			            	if (count($expl)>2){
+			            		$concate = array();
+			            		$getParam = explode('&', $expl[2]);
+			            		for ($i=0; $i < count($getParam); $i++) { 
+			            			$expParam = explode('=', $getParam[$i]);
+			            			$concate[] = $expParam[0] . '=' .$value[$expParam[1]];
+			            		}
+
+			            		$impl = implode('&', $concate);
+			            		$completeURi = $impl; 
+								
+								$row[] = $this->additional('detail', array('url'=>$expl[0]. "?" . $completeURi));
+			            	
+			            	}else{
+			            		$row[] = $this->additional('detail', array('url'=>$expl[0]));
+			            	}
+			            	
+			            	
+			            }else if ($tmp[0] == 'checkbox'){
+
+			            	$expl = explode('|', $val);
+
+			            	if (count($expl)>2){
+			            		$concate = array();
+			            		$getParam = explode('&', $expl[2]);
+			            		for ($i=0; $i < count($getParam); $i++) { 
+			            			
+			            			$concate[] = $value[$getParam[$i]];
+			            		}
+
+
+			            		$impl = implode('_', $concate);
+			            		$completeURi = $impl; 
+								
+								$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi));
+			            	
+			            	}else{
+			            		$row[] = $this->additional('checkbox', array('name'=>$expl[1]));
+			            	}
+			            }
+			            else $row[]=$value[$tmp[0]] . '-' . $value[$tmp[1]];
 
 		        	}else{
 
-		        		if ($val == 'no' or $val == 'checkbox'){
+		        		if ($val == 'no'){
+			            	
 			            	$row[]=$$val;
 
-			            }else if ($val == 'detail'){
-			            	$row[] = $detail;
 			            }else{
 			            	$row[] = $value[$val];
 			            } 
@@ -183,21 +219,7 @@ class ServerSide{
 
 	            }    
 
-	            /*
-             	$checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"Layanan[]\" value=\"{$value['Aset_ID']}_{$value['TipeAset']}\">";
-	            $row[]=$no;
-        	    $row[]=$checkbox;
-		        $row[]=$value['noRegister'] ;
-		        $row[]=$value['noKontrak'];
-		        $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
-		        $row[]="[".$value[kodeSatker] ."]". $value[NamaSatker];
-		        $row[]=$TglPerolehan;
-		        $row[]=number_format($value[NilaiPerolehan]);
-		        $detail="<a href=$url_rewrite/module/layanan/history_aset.php?id={$value[Aset_ID]}&jenisaset={$value[TipeAset]}>
-		                     <input type='button' name='Lanjut' class='btn' value='Lihat Histori' >
-		                 </a>";
-		        $row[]=$detail;
-		        */
+	            
 		        $output['aaData'][] = $row;
 		        $no++;
 		  	}
@@ -205,6 +227,30 @@ class ServerSide{
 
 		return ($output);
 
+	}
+
+	function additional($id=false, $data)
+	{
+
+
+		if ($id){
+			switch ($id) {
+				case 'checkbox':
+					return "<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"{$data['name']}[]\" value=\"{$data['value']}\">";
+					break;
+				
+				case 'detail':
+					return "<a href=$data[url]>
+						   <input type='button' name='Lanjut' class='btn' value='Lihat Histori' >
+						</a>";
+					break;
+				default:
+					return false;
+					break;
+			}
+		}
+
+		return false;
 	}
 }
 ?>
