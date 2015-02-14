@@ -1,11 +1,11 @@
 <?php
-class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
+class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
 
 	public function __construct()
 	{
 		parent::__construct();
         $this->db = new DB;
-        //////////////////////////////pr($_SESSION);
+        pr($_SESSION);
 	}
 	
     public function apl_userasetlistHPS($data){
@@ -1793,7 +1793,6 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         foreach ($res as $key => $value) {
             // echo"======";
             ////////////////////////////////////pr($value);
-            if($value['Aset_ID']){
             $SatkerKode=$value['SatkerUsul'];
             $sqlSat = array(
                     'table'=>'Satker',
@@ -1820,7 +1819,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
            
             }
-            }
+            
         }
 
         // //////////////////////////////////pr($resAst);
@@ -1930,13 +1929,16 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'field'=>" * ",
                 'condition' => "FixUsulan=1 AND Jenis_Usulan='PMS'{$filterkontrak} ORDER BY Usulan_ID desc"
                 );
-         // //////////////////////////////////pr($sql);
+         pr($sql);
+         pr("usulan");
         $res = $this->db->lazyQuery($sql,$debug);
+        pr($res);
         // $resAset_ID=explode(",", $res[0]['Aset_ID']);
         foreach ($res as $key => $value) {
-            // echo"======";
-            ////////////////////////////////////pr($value);
             if($value['Aset_ID']){
+            echo"======";
+            pr($value);
+            ////////////////////////////////////pr($value);
             $SatkerKode=$value['SatkerUsul'];
             $sqlSat = array(
                     'table'=>'Satker',
@@ -1944,7 +1946,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     'condition' => "kode='$SatkerKode' GROUP BY kode"
                     );
             $resSat = $this->db->lazyQuery($sqlSat,$debug);
-
+            pr($sqlSat);
+            pr("satkerUsul");
             $res[$key]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
             ////////////////////////////////////pr($resSat);
             $Aset_ID=$value['Aset_ID'];
@@ -1953,7 +1956,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     'field'=>" NilaiPerolehan ",
                     'condition' => "Aset_ID IN ($Aset_ID)"
                     );
-            
+            pr($sqlAst);
+            pr("Aset");
             $resAst = $this->db->lazyQuery($sqlAst,$debug);
 
             $res[$key]['TotalNilaiPerolehan']=0;
@@ -1962,9 +1966,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 // //////////////////////////////////pr($valueAst);
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
            
+                 }
             }
-        }
-            
         }
 
         // //////////////////////////////////pr($resAst);
@@ -2006,7 +2009,6 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         foreach ($res as $key => $value) {
             // echo"======";
             ////////////////////////////////////pr($value);
-            
             $SatkerKode=$value['SatkerUsul'];
             $Aset_ID=$value['Aset_ID'];
             if($Aset_ID){
@@ -2034,7 +2036,6 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 // //////////////////////////////////pr($valueAst);
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
             }
-            
 
         }
             
@@ -9664,7 +9665,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $IDaset=explode(",", $res1[0]['Aset_ID']);
             // ////////////////////////////pr($);
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
-                    if($valueIDaset){
+                    
                     $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Satker AS e,Kelompok AS g',
                     'field'=>"a.Aset_ID,a.kodeSatker,a.noKontrak,a.TipeAset,b.StatusKonfirmasi, e.NamaSatker, e.KodeSatker, g.Kode,g.Uraian",
@@ -9718,7 +9719,6 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                          
 
                     }
-                }
             }
             
 
@@ -9728,7 +9728,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // exit;
            
             
-            if ($res1) return array('dataArr'=>$res, 'dataRow'=>$res1);
+            if ($res) return array('dataArr'=>$res, 'dataRow'=>$res1);
             return false;       
 
     }
@@ -9760,10 +9760,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
             $res1 = $this->db->lazyQuery($sql1,$debug);
 
-            // ////////////////////////////pr($res1);
+            pr($res1);
             $IDaset=explode(",", $res1[0]['Aset_ID']);
-            // ////////////////////////////pr($);
-
+            // pr($IDaset);
+            if($IDaset){
+                // pr("masuk");
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
                     if($valueIDaset){
                     $sqlUsulAst = array(   
@@ -9819,6 +9820,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                          
 
                     }
+                }
                 }
             }
             
@@ -9861,11 +9863,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
             $res1 = $this->db->lazyQuery($sql1,$debug);
 
-            ////////////////////////pr($res1);
+            pr($res1);
             $IDaset=explode(",", $res1[0]['Aset_ID']);
-            // ////////////////////////////pr($);
+            pr($IDaset);
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
-                    if($valueIDaset){
+                    
                     $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Satker AS e,Kelompok AS g',
                     'field'=>"a.Aset_ID,a.kodeSatker,a.noKontrak,a.TipeAset,b.StatusValidasi,b.StatusKonfirmasi,b.NilaiPerolehanTmp,b.kondisiTmp, e.NamaSatker, e.KodeSatker, g.Kode,g.Uraian",
@@ -9919,7 +9921,6 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                          
 
                     }
-                }
             }
             
 
@@ -9929,7 +9930,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // exit;
            
             
-            if ($res1) return array('dataArr'=>$res, 'dataRow'=>$res1);
+            if ($res) return array('dataArr'=>$res, 'dataRow'=>$res1);
             return false;       
 
     }
