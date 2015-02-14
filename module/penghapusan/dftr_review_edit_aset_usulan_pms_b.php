@@ -33,9 +33,9 @@ $menu_id = 10;
 						//////pr($data);
 						
 				}
-
+				pr($data);
 				$row=$data['dataRow'][0];		
-				//////pr($row);
+				pr($row);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
