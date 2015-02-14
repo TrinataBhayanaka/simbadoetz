@@ -1,7 +1,7 @@
 <?php
 include "../../config/config.php";
 
-$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN_B;
 		$menu_id = 38;
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
         $SessionUser = $SESSION->get_session_user();
@@ -35,7 +35,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				}
 
 $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
-////pr($data);
+pr($data);
 
 		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
    //      while ($dataKontrak = mysql_fetch_assoc($sql)){
@@ -113,13 +113,14 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 								(in_array($hsl_data['Usulan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
 							}
 					$jmlh=explode(",", $hsl_data[Aset_ID]);
-					$jumlahAset=0;
+					pr($jmlh);
+					$totalJml=0;
 					foreach ($jmlh as $keyJMlaset => $valuekeyJMlaset) {
 						if($valuekeyJMlaset){
-							$jumlahAset=$jumlahAset+1;
+							$totalJml=$totalJml+1;
 						}
 					}
-					// $jumlahAset=count($jmlh);
+					$jumlahAset=count($jmlh);
 				?>
 						  
 					<tr class="gradeA">
@@ -133,7 +134,7 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 							<?php echo $hsl_data['NamaSatkerUsul'];?>
 						</td>
 						<td>
-							<?php echo $jumlahAset;?>
+							<?php echo $jumlahAset."-".$totalJml;?>
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
 						</td>
