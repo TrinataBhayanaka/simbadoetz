@@ -9764,7 +9764,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
             $IDaset=explode(",", $res1[0]['Aset_ID']);
             pr($IDaset);
             if($IDaset){
-                pr("masuk")
+                pr("masuk");
             foreach ($IDaset as $keyIDaset => $valueIDaset) {
                     
                     $sqlUsulAst = array(   
