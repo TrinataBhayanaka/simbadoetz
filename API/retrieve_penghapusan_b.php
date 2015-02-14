@@ -1,11 +1,11 @@
 <?php
-class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
+class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
 
 	public function __construct()
 	{
 		parent::__construct();
         $this->db = new DB;
-        //////////////////////////////pr($_SESSION);
+        pr($_SESSION);
 	}
 	
     public function apl_userasetlistHPS($data){
