@@ -18,7 +18,8 @@ $menu_id = 1;
 			}
 
 	//getdata
-	$RKsql = mysql_query("SELECT Satuan, kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
+	// $RKsql = mysql_query("SELECT Satuan, kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
+	$RKsql = mysql_query("SELECT Aset_ID, Satuan, kodeLokasi, kodeKelompok, noRegister, NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -91,7 +92,7 @@ $menu_id = 1;
 				    </span>
 					<span class="text">Penunjang</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perolehan/kontrak_posting.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perolehan/kontrak_posting.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">5</i>
@@ -168,32 +169,43 @@ $menu_id = 1;
 						<th>No</th>
 						<th>Kode Barang</th>
 						<th>Nama Barang</th>
-						<th>Jumlah</th>
+						<!-- <th>Jumlah</th> -->
+						<th>No. Register</th>
 						<th>Harga Satuan</th>
-						<th>Total</total>
+						<!-- <th>Total</total> -->
 						<th>Penunjang</th>
 						<th>Total Perolehan</th>
-						<th>Nilai Total Satuan</th>
+						<!-- <th>Nilai Total Satuan</th> -->
 					</tr>
 				</thead>
 				<tbody>
 				<?php
 					if($rKontrak){
 						$i = 1;
+						$j = 0;
+						$bopsisa = $sumsp2d['total'];
 						foreach ($rKontrak as $key => $value) {
+							$j++;
+							if(count($rKontrak) == $j){
+								$bop = $bopsisa;
+							} else{
+								$bopsisa = $bopsisa - ceil($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);	
+								$bop = ceil($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);
+							}
+
+
 							
-						
 				?>
 					<tr class="gradeA">
 						<td><?=$i?></td>
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
-						<td><?=$value['Kuantitas']?></td>
+						<!-- <td><?=$value['Kuantitas']?></td> -->
+						<td><?=$value['noRegister']?></td>
 						<td><?=number_format($value['Satuan'])?></td>
-						<td><?=number_format($value['Satuan']*$value['Kuantitas'])?></td>
-						<td><?=number_format($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'])?></td>
-						<td><?=number_format($value['NilaiPerolehan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']))?></td>
-						<td><?=number_format($value['Satuan']+($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']/$value['Kuantitas']))?></td>
+						<!-- <td><?=number_format($value['Satuan']*$value['Kuantitas'])?></td> -->
+						<td><?=number_format($bop)?></td>
+						<td><?=number_format($value['NilaiPerolehan']+$bop)?></td>
 						
 					</tr>
 				<?php

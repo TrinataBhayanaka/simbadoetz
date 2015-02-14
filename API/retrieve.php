@@ -9869,7 +9869,32 @@ $offset = @$_POST['record'];
         $dataArr = array('aset' => $aset, 'kib' => $kib, 'tabel' => $get['table'] );
         
         return $dataArr;
+    }
+
+    function get_rincianBarangDetail($get)
+    {
+        // pr($get);exit;
+        if($get['tbl'] == "A") $get['table'] = 'tanah';
+        elseif ($get['tbl'] == "B") $get['table'] = 'mesin';
+        elseif ($get['tbl'] == "C") $get['table'] = 'bangunan';
+        elseif ($get['tbl'] == "D") $get['table'] = 'jaringan';
+        elseif ($get['tbl'] == "E") $get['table'] = 'asetlain';
+        elseif ($get['tbl'] == "F") $get['table'] = 'kdp';
+
+        //get from aset
+        $sql = "SELECT * FROM aset WHERE Aset_ID = '{$get['idaset']}'";
+        $aset = $this->fetch($sql);
+        
+
+        //get kib
+        $sql = "SELECT * FROM {$get['table']} WHERE Aset_ID = '{$get['idaset']}'  LIMIT 1";
+        $kib = $this->fetch($sql);
+        // pr($sql);
+        $dataArr = array('aset' => $aset, 'kib' => $kib, 'tabel' => $get['table'] );
+        
+        return $dataArr;
     }   
 }
+
 
 ?>

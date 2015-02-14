@@ -16,9 +16,10 @@ while ($dataKontrak = mysql_fetch_assoc($sql)){
 $updateKontrak = "UPDATE kontrak SET n_status = '1' WHERE id = '{$noKontrak['id']}'";
 $execquery = mysql_query($updateKontrak);
     logFile($updateKontrak);
-if(!$updateKontrak){
+if(!$execquery){
   $DBVAR->rollback();
   echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+  exit;
 }
 
 $sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$kontrakID}' AND type = '2'");
@@ -32,18 +33,31 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
               $aset[] = $dataAset;
           }
   logFile($sql);        
-      
+  
+  $counter = 0;    
+  $bopsisa = $sumsp2d['total'];
+
   foreach($aset as $key => $data){
-    $bop = ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);
+
+    $counter++;
+    if(count($aset) == $counter){
+      $bop = $bopsisa;
+    } else{
+      $bopsisa = $bopsisa - ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);  
+      $bop = ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);
+    }
+    // pr($bop);
+    // $bop = ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);
     $NilaiPerolehan = ceil($data['NilaiPerolehan'] + $bop);
     $satuan = ceil(intval($data['Satuan']) + ($bop/$data['Kuantitas']));
 
     $updateAset = "UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
     $execquery = mysql_query($updateAset);
     logFile($updateAset);
-    if(!$updateAset){
+    if(!$execquery){
       $DBVAR->rollback();
       echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+      exit;
     }  
     if($data['TipeAset']=="A"){
           $tabel = "tanah";
@@ -64,9 +78,10 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       $sql = "UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = '1', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
       $execquery = mysql_query($sql);
       logFile($sql);
-      if(!$sql){
+      if(!$execquery){
         $DBVAR->rollback();
         echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+        exit;
       } 
       //log
       $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
@@ -92,15 +107,17 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
             $dataImp = implode(',', $tmpValue);
 
             $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
-             $execquery = mysql_query($sql);
+            $execquery = mysql_query($sql);
               logFile($sql);
-            if(!$sql){
+            if(!$execquery){
               $DBVAR->rollback();
               echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";              
+              exit;
             }   
            
            
   }
+  // exit;
   $DBVAR->commit();
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;

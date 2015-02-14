@@ -113,7 +113,13 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 								(in_array($hsl_data['Usulan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
 							}
 					$jmlh=explode(",", $hsl_data[Aset_ID]);
-					$jumlahAset=count($jmlh);
+					$jumlahAset=0;
+					foreach ($jmlh as $keyJMlaset => $valuekeyJMlaset) {
+						if($valuekeyJMlaset){
+							$jumlahAset=$jumlahAset+1;
+						}
+					}
+					// $jumlahAset=count($jmlh);
 				?>
 						  
 					<tr class="gradeA">

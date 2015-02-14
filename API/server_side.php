@@ -21,7 +21,7 @@ class ServerSide{
 		// if($data['jenisaset']=="2")$merk="m.Merk";
 		// else $merk="";
 
-		$aColumns = array('a.Aset_ID');
+		$aColumns = $data['searchField'];
 
 		/* Indexed column (used for fast and accurate table cardinality) */
 		$sIndexColumn = $data['primaryField'];
@@ -202,7 +202,7 @@ class ServerSide{
 			            		$row[] = $this->additional('checkbox', array('name'=>$expl[1]));
 			            	}
 			            }
-			            else $row[]=$value[$tmp[0]] . '-' . $value[$tmp[1]];
+			            else $row[]=$value[$tmp[0]] . ' / ' . $value[$tmp[1]];
 
 		        	}else{
 
