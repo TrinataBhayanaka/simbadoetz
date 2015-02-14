@@ -9728,7 +9728,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // exit;
            
             
-            if ($res) return array('dataArr'=>$res, 'dataRow'=>$res1);
+            if ($res1) return array('dataArr'=>$res, 'dataRow'=>$res1);
             return false;       
 
     }
@@ -9829,7 +9829,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // exit;
            
             
-            if ($res) return array('dataArr'=>$res, 'dataRow'=>$res1);
+            if ($res1) return array('dataArr'=>$res, 'dataRow'=>$res1);
             return false;       
 
     }
@@ -9929,7 +9929,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // exit;
            
             
-            if ($res) return array('dataArr'=>$res, 'dataRow'=>$res1);
+            if ($res1) return array('dataArr'=>$res, 'dataRow'=>$res1);
             return false;       
 
     }
