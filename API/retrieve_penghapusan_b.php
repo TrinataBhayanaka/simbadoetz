@@ -1932,9 +1932,11 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
          pr($sql);
          pr("usulan");
         $res = $this->db->lazyQuery($sql,$debug);
+        pr($res);
         // $resAset_ID=explode(",", $res[0]['Aset_ID']);
         foreach ($res as $key => $value) {
-            // echo"======";
+            echo"======";
+            pr($value);
             ////////////////////////////////////pr($value);
             $SatkerKode=$value['SatkerUsul'];
             $sqlSat = array(
