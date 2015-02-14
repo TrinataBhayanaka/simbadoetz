@@ -1793,6 +1793,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         foreach ($res as $key => $value) {
             // echo"======";
             ////////////////////////////////////pr($value);
+            if($value['Aset_ID']){
             $SatkerKode=$value['SatkerUsul'];
             $sqlSat = array(
                     'table'=>'Satker',
@@ -1819,7 +1820,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
            
             }
-            
+            }
         }
 
         // //////////////////////////////////pr($resAst);
@@ -1935,6 +1936,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         foreach ($res as $key => $value) {
             // echo"======";
             ////////////////////////////////////pr($value);
+            if($value['Aset_ID']){
             $SatkerKode=$value['SatkerUsul'];
             $sqlSat = array(
                     'table'=>'Satker',
@@ -1961,6 +1963,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
            
             }
+        }
             
         }
 
@@ -2003,6 +2006,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         foreach ($res as $key => $value) {
             // echo"======";
             ////////////////////////////////////pr($value);
+            
             $SatkerKode=$value['SatkerUsul'];
             $Aset_ID=$value['Aset_ID'];
             if($Aset_ID){
@@ -2030,6 +2034,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 // //////////////////////////////////pr($valueAst);
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
             }
+            
 
         }
             
