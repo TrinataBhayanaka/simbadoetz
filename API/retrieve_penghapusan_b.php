@@ -1966,7 +1966,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 // //////////////////////////////////pr($valueAst);
                 $res[$key]['TotalNilaiPerolehan']=$res[$key]['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
            
-            }
+                 }
             }
         }
 

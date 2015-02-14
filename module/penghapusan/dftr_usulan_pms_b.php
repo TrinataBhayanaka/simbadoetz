@@ -1,7 +1,7 @@
 <?php
 include "../../config/config.php";
 
-$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN_b;
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN_B;
 		$menu_id = 38;
         ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
         $SessionUser = $SESSION->get_session_user();
@@ -113,6 +113,7 @@ pr($data);
 								(in_array($hsl_data['Usulan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
 							}
 					$jmlh=explode(",", $hsl_data[Aset_ID]);
+					pr($jmlh);
 					$jumlahAset=count($jmlh);
 				?>
 						  
