@@ -233,10 +233,9 @@ $(document).ready(function(){
 function requiredFilter(jenisaset, satker, satkerid)
 {
 
+	
 	if (jenisaset) jenisaset = true;
 	if (satker) satker = true;
-	if (typeof satkerid==undefined) satkerid="kodeSatker";
-	
 	if (jenisaset){
 		var jenisaset1 = $('.jenisaset1').is(":checked")
 	    var jenisaset2 = $('.jenisaset2').is(":checked")
@@ -257,6 +256,7 @@ function requiredFilter(jenisaset, satker, satkerid)
 		var kode = $('#'+satkerid).val();
 		console.log(kode);
 		
+
 		if (kode==false || kode==""){
 			alert('Pilih Satker');
 			return false;

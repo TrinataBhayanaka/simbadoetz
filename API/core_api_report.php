@@ -5826,7 +5826,7 @@ class core_api_report extends DB {
 					echo "<br>";
 					echo "<br><br/>";*/
 					// exit;*/
-					// $resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
+					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 					
 				}	
 		}else{
