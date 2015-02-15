@@ -70,12 +70,12 @@ $query=$REPORT->list_query($data);
 // exit;
 $hit = count($query);
 $flag = '';
-$TypeRprtr = '';
+$TypeRprtr = 'intra';
 $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
 // pr($query);
-//exit;
+// exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
