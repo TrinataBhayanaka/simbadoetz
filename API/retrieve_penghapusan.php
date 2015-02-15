@@ -136,12 +136,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     // //////////////////////////////////////////////pr($sql1);
                      $paging = paging($data['page'], 100);
                      $sqlAset = array(
-                            'table'=>"{$listTable},Aset AS ast,kelompok AS k,Satker AS sat",
-                            'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian,sat.NamaSatker",
+                            'table'=>"{$listTable},Aset AS ast,kelompok AS k",
+                            'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
                             'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} $kondisi  GROUP BY ast.Aset_ID $order",
                             'limit'=>"$limit",
                             'joinmethod' => ' LEFT JOIN ',
-                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode,ast.KodeSatker=sat.Kode"
+                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                              );
                     // ////////////pr($sqlAset);
                     $resAset = $this->db->lazyQuery($sqlAset,$debug);

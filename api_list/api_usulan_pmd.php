@@ -67,7 +67,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "";
+          $sOrder = "ORDER BY Usulan_ID desc";
      }
 }
 
