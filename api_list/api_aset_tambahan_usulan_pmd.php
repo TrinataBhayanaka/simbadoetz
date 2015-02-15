@@ -27,7 +27,7 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="";
-$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.kondisi',$merk,);
+$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk,);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -125,18 +125,19 @@ $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
 // pr($dataParam);
-list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
+// list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
+$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);  
 // pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
 // /* Data set length after filtering */
-// $sQuery = "
-// 		SELECT FOUND_ROWS()
-// 	";
-// $rResultFilterTotal = $DBVAR->query($sQuery);
-// $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
-// $iFilteredTotal = $aResultFilterTotal[0];
+$sQuery = "
+		SELECT FOUND_ROWS()
+	";
+$rResultFilterTotal = $DBVAR->query($sQuery);
+$aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
+$iFilteredTotal = $aResultFilterTotal[0];
 
 //echo $iFilteredTotal ;
 
