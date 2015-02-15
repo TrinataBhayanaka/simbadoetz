@@ -28,6 +28,9 @@ if(isset($_GET['id'])){
 	<script>
 		$(document).ready(function() {
 	        $('#totalxls').autoNumeric('init', {mDec:0});
+	        setTimeout(function() {
+			    	getTotalValue('XLSIMP');
+				}, 500);
           $('#importxls').dataTable(
                    {
                     "aoColumnDefs": [
@@ -56,6 +59,36 @@ if(isset($_GET['id'])){
 	      $('#totalxls').val($(item).autoNumeric('get'));
 	    }
 
+	    function getTotalValue(item){
+	    	$.post('<?=$url_rewrite?>/function/api/getapplist.php', {UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+					var tmp;
+					var nilai = 0;
+					if(data){
+						$.each(data, function(index, element) {
+				            var raw = element.split(",");
+							for(var i=0;i<raw.length;i++){
+								tmp = raw[i].split("|");
+								nilai = parseInt(nilai) + parseInt(tmp[1]*tmp[2]);
+							}
+				        });
+					} else {
+						nilai = 0;
+					}
+					
+				    $("#totalxls").val(nilai);
+				     $('#totalxls').autoNumeric('set', nilai);
+
+				     var rule = nilai + parseInt($("#totalRBreal").val());
+						if(rule > $("#spkreal").val()){
+							$('#info').html('Nilai melebihin total SPK'); 
+		                	$('#info').css("color","red");
+							$('#btn-dis').attr("disabled","disabled");		
+						} else {
+							$('#info').html('');
+						}
+				 }, "JSON")
+	    }
+
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
@@ -64,31 +97,18 @@ if(isset($_GET['id'])){
 			{
 			    $("#btn-dis").removeAttr("disabled");
 			    updDataCheckbox('XLSIMP');
-			    var checkedValues = $('input:checkbox:checked').map(function() {
-				    var data = this.value.split("|");
-				    var nilai = data[1]*data[2];
-				    if(nilai){
-				    	totalnilai = parseInt(totalnilai) + parseInt(nilai);	
-				    }
-				    $("#totalxls").val(totalnilai);
-				     $('#totalxls').autoNumeric('set', totalnilai);
-				    // console.log(totalnilai);
-				}).get();
-				var rule = totalnilai + parseInt($("#totalRBreal").val());
-				if(rule > $("#spkreal").val()){
-					$('#info').html('Nilai melebihin total SPK'); 
-                	$('#info').css("color","red");
-					$('#btn-dis').attr("disabled","disabled");		
-				} else {
-					$('#info').html('');
-				}
-				// console.log(rule);
+
+			    setTimeout(function() {
+			    	getTotalValue('XLSIMP');
+				}, 500);
 			}
 			else
 			{
 			   $('#btn-dis').attr("disabled","disabled");
 			   updDataCheckbox('XLSIMP');
-			   $("#totalxls").val(0);
+			   setTimeout(function() {
+			    	getTotalValue('XLSIMP');
+				}, 500);
 			}}, 100);
 		}
 	</script>
