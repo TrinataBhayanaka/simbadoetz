@@ -40,8 +40,14 @@ $menu_id = 10;
 		// membaca jumlah baris dari data excel
 		$baris = $data->rowcount($sheet_index=0);
 		$no = 0;
+		$counttosleep = 0;
 		for ($i=10; $i<=$baris; $i++)
 		{
+		  $counttosleep++;
+		  if($counttosleep == 200 ){
+		  	sleep(1);
+		  	$counttosleep = 0;
+		  }	
 		  $xlsdata[$no]['kodeSatker'] = $_POST['kodeSatker'];
 		  $kodeSatker = explode(".",$_POST['kodeSatker']);
 		  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 13);
