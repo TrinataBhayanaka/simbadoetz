@@ -50,7 +50,7 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 // exit;
 $hit = 2;
 $flag = '';
-$TypeRprtr = '';
+$TypeRprtr = 'neraca';
 $Info = '';
 
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
@@ -60,6 +60,7 @@ $skpd_id);
 $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan);	
 // pr($resultParamGol);
 // exit;	
+
 //retrieve html
 $html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
 /*$count = count($html);
