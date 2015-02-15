@@ -36,22 +36,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	
 	
 	$dataParam = $SESSION->smartFilter('layanan');
-	// pr($filterParam);
 
 	$par_data_table= "data=".encode($dataParam);//{$dataParam['kd_nokontrak']}&jenisaset={$dataParam['jenisaset']}&kodeSatker={$dataParam['kodeSatker']}&kd_tahun={$dataParam['kd_tahun']}&statusaset={$dataParam['statusaset']}&page={$dataParam['page']}";
 
-
-	/*
-	$data = $LAYANAN->retrieve_layanan_aset_daftar($filterParam);	
-	// pr($data);
-	if ($data){
-		foreach ($data as $key => $value) {
-			if ($value['Status_Validasi_Barang']==1) $data[$key]['statusAset'] = "Terdistribusi";
-			else $data[$key]['statusAset'] = "Belum Terdistribusi";
-		}
-	}
-	*/
-	// exit;		
+	
 	?>
 
 	<script type="text/javascript">
