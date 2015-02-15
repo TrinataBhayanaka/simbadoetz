@@ -194,6 +194,7 @@ $no=$_GET['iDisplayStart']+1;
 foreach ($data as $key => $value)
 						{
 							// //pr($get_data_filter);
+              $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[kodeSatker]);
 							if($value[kondisi]==2){
 								$kondisi="Rusak Ringan";
 							}elseif($value[kondisi]==3){
@@ -214,7 +215,7 @@ foreach ($data as $key => $value)
                              $row[]=$value['noRegister'] ;
                              $row[]=$value['noKontrak'];
                              $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
-                             $row[]="[".$value[kodeSatker] ."]". $value[NamaSatker];
+                             $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                              $row[]=$TglPerolehan;
                              $row[]=number_format($value[NilaiPerolehan]);
                              $row[]=$kondisi. ' - ' .$value[AsalUsul];
