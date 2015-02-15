@@ -28701,13 +28701,13 @@ return $hasil_html;
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
-			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
+			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1
 			";
-		}
+		}	
 		
-		// echo "query =".$query;
-		// echo "<br>";
+		/*echo "query =".$query;
+		echo "<br>";*/
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	
