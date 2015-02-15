@@ -27,6 +27,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
 	    if ($tahunAset) $filterkontrak .= " AND a.Tahun = '{$tahunAset}' ";
 
+        $limit= $data['limit'];
+        $order= $data['order'];
 
          if ($jenisaset){
 
@@ -44,9 +46,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 // if ($value == 2) $merk = ",{$listTableAlias}.Merk";
                 $sql = array(
                         'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
-                        'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, k.kode, a.noKontrak, s.NamaSatker " ,
-                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} GROUP BY a.Aset_ID",
-                        'limit'=>"{$paging}, 100",
+                        'field'=>"SQL_CALC_FOUND_ROWS DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, k.kode, a.noKontrak, s.NamaSatker " ,
+                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} {$order} GROUP BY a.Aset_ID",
+                        'limit'=>"{$limit}",
                         'joinmethod' => 'INNER JOIN',
                         'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
                         );
@@ -486,14 +488,14 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 }
                 
 
-                // foreach ($asetid as $key => $value) {
-                //     if (!in_array($key, $asetKapitalisasi)){
-                //         $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
-                //     }else{
-                //         $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
-                //     }
+                foreach ($asetid as $key => $value) {
+                    if (!in_array($key, $asetKapitalisasi)){
+                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
+                    }else{
+                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
+                    }
                     
-                // }
+                }
 
                 logFile('commit transaksi mutasi');
                 $this->db->commit();

@@ -35,13 +35,14 @@ $sIndexColumn = "Aset_ID";
 /* DB table to use */
 $sTable = "aset";
 $dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
+$dataParam['bup_tahun']=$_GET['bup_tahun'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['page']=$_GET['page'];
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
-////pr($data);
+//pr($data);
 //exit;
 $sLimit = "";
 if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
@@ -124,11 +125,11 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-//pr($dataParam);
-// list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
+// pr($dataParam);
+// list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($dataParam);	
 
-$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam); 
-//pr($dataSESSION);
+$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($dataParam);  
+// pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
@@ -151,7 +152,7 @@ $sQuery = "
 //echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
-////pr($aResultTotal );
+//pr($aResultTotal );
 $iTotal = $aResultTotal[0];
 
 
@@ -165,17 +166,17 @@ $output = array(
     "aaData" => array()
 );
 
-/////pr($output);
+///pr($output);
 //exit;
 
-$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMS");
 
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 $POST['penghapusanfilter']=$POST;
     if($POST){
-      // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+      // ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-        // //////pr($valueSESSION['Aset_ID']);
+        // ////pr($valueSESSION['Aset_ID']);
         if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
           // echo "stringnot";
           $data[]=$valueSESSION;
@@ -193,7 +194,7 @@ $no=$_GET['iDisplayStart']+1;
 					{
 foreach ($data as $key => $value)
 						{
-							// //pr($get_data_filter);
+							// pr($get_data_filter);
 							if($value[kondisi]==2){
 								$kondisi="Rusak Ringan";
 							}elseif($value[kondisi]==3){
@@ -201,9 +202,9 @@ foreach ($data as $key => $value)
 							}elseif($value[kondisi]==1){
 								$kondisi="Baik";
 							}
-							// //pr($value[TglPerolehan]);
+							// pr($value[TglPerolehan]);
 							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-							// //pr($TglPerolehanTmp);
+							// pr($TglPerolehanTmp);
 							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
                                           
                              $row = array();

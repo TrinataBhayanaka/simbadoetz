@@ -267,7 +267,7 @@ function requiredFilter(jenisaset, satker, satkerid)
 
 }
 
-function dTableParam(idTable, urlApi)
+function dTableParam(idTable, urlApi, total)
 {
 
 	
@@ -275,9 +275,16 @@ function dTableParam(idTable, urlApi)
 	if (urlApi) urlApi = urlApi;
 	//if (numCol) numCol = true;
 	
+	// var total = 9;
+	var data ="";
+	var hasil ;
 	setTimeout(function(){ 
 
-		
+		for (i = 0; i<=total; i++){
+           	data = data+'{"bSortable": true},';
+           	//console.log(data);
+       	}
+		var i;
 		$('#'+idTable).dataTable({
 
         "aoColumnDefs": [
@@ -286,14 +293,10 @@ function dTableParam(idTable, urlApi)
         "aoColumns":[
             {"bSortable": false},
             {"bSortable": false,"sClass": "checkbox-column" },
-           	{"bSortable": true},
-           	{"bSortable": true},
-           	{"bSortable": true},
-           	{"bSortable": true},
-           	{"bSortable": true},
-           	{"bSortable": true},
-           	{"bSortable": true}
         ],
+        "aoColumnDefs": [
+	      { "bSortable": false, "aTargets": [ (total-1) ] }
+	    ], 
         "sPaginationType": "full_numbers",
         "bProcessing": true,
         "bServerSide": true,

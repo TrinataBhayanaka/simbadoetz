@@ -18,7 +18,7 @@ $menu_id = 1;
 			}
 
 	//getdata
-	$RKsql = mysql_query("SELECT Satuan, kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
+	$RKsql = mysql_query("SELECT Aset_ID, noRegister, Satuan, kodeLokasi, kodeKelompok, NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -178,34 +178,39 @@ $menu_id = 1;
 						<th>No</th>
 						<th>Kode Barang</th>
 						<th>Nama Barang</th>
-						<th>Jumlah</th>
+						<th>No. Register</th>
 						<th>Harga Satuan</th>
-						<th>Total</total>
 						<th>Penunjang</th>
 						<th>Total Perolehan</th>
-						<th>Nilai Total Satuan</th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php
 					if($rKontrak){
 						$i = 1;
+						$j = 0;
+						$bopsisa = $sumsp2d['total'];
 						foreach ($rKontrak as $key => $value) {
-						$bop = $value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'];
-						$satuan = $value['Satuan']-($bop/$value['Kuantitas']);
-						$total = ($value['Satuan']-($bop/$value['Kuantitas']))*$value['Kuantitas'];	
+							$j++;
+							if(count($rKontrak) == $j){
+								$bop = $bopsisa;
+							} else{
+								$bopsisa = $bopsisa - ceil($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);	
+								$bop = ceil($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);
+							}
+							
+							$satuan = $value['NilaiPerolehan']-$bop;
+								
 						
 				?>
 					<tr class="gradeA">
 						<td><?=$i?></td>
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
-						<td><?=$value['Kuantitas']?></td>
+						<td><?=$value['noRegister']?></td>
 						<td><?=number_format($satuan)?></td>
-						<td><?=number_format($total)?></td>
 						<td><?=number_format($bop)?></td>
-						<td><?=number_format($total+$bop)?></td>
-						<td><?=number_format($value['Satuan'])?></td>
+						<td><?=number_format($satuan+$bop)?></td>
 						
 					</tr>
 				<?php

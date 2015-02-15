@@ -65,9 +65,14 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			</div>		
 
 		<section class="formLegend">
-			
+			<?php
+				if($_SESSION['ses_uaksesadmin']==1){
+			?>
 			<p><a href="filter_usulan_pmd.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Penetapan Penghapusan</a>
 			&nbsp;</p>	
+			<?php
+				}
+			?>
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>

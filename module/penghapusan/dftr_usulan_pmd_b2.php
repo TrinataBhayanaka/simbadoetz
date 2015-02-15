@@ -33,9 +33,27 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				{
 					$dataArr[] = $dataNew->Usulan_ID;
 				}
+		if ($_POST['submit']){
+				// unset($_SESSION['ses_mutasi_filter']);
+				// pr($_POST);
+				$_SESSION['filterAsetUsulan'] = $_POST;
+				
+			}
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 
-$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
-////pr($data);
+		if($data_post){
+			
+		}else{
+			
+		}
+		// $POST = $_SESSION['filterAsetUsulan'];
+	
+		$POST['page'] = intval($_GET['pid']);
+	// pr($POST);
+	    $par_data_table="bup_tahun=&bup_nokontrak=&jenisaset=&kodeSatker=&page={$POST['page']}";
+
+// $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
+// pr($data);
 
 		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
    //      while ($dataKontrak = mysql_fetch_assoc($sql)){
@@ -47,30 +65,30 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Penghapusan Pemusnahan</li>
+			  <li class="active">Daftar Usulan Penghapusan Pemindahtanganan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemusnahan</div>
-				<div class="subtitle">Daftar Usulan Penghapusan Pemusnahan</div>
+				<div class="title">Usulan Penghapusan Pemindahtanganan</div>
+				<div class="subtitle">Daftar Usulan Penghapusan Pemindahtanganan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -80,8 +98,34 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 			</div>		
 
 		<section class="formLegend">
-			
-			<p><a href="filter_aset_usulan_pms.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Usulan</a>
+			<script>
+    $(document).ready(function() {
+          $('#usulan_pmd_table').dataTable(
+                   {
+                    "aoColumnDefs": [
+                         { "aTargets": [2] }
+                    ],
+                    "aoColumns":[
+                         {"bSortable": false},
+                         // {"bSortable": false,"sClass": "checkbox-column" },
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true}],
+                    "sPaginationType": "full_numbers",
+
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_usulan_pmd.php?<?php echo $par_data_table?>"
+               }
+                  );
+      });
+    </script>
+			<p><a href="filter_aset_usulan_pmd.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Usulan</a>
 			&nbsp;
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
@@ -113,13 +157,7 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 								(in_array($hsl_data['Usulan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
 							}
 					$jmlh=explode(",", $hsl_data[Aset_ID]);
-					$jumlahAset=0;
-					foreach ($jmlh as $keyJMlaset => $valuekeyJMlaset) {
-						if($valuekeyJMlaset){
-							$jumlahAset=$jumlahAset+1;
-						}
-					}
-					// $jumlahAset=count($jmlh);
+					$jumlahAset=count($jmlh);
 				?>
 						  
 					<tr class="gradeA">
@@ -164,7 +202,7 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 										echo "&nbsp;";
 									}else{
 									?>
-										<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+										<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 							
 									<?php
 									}
@@ -173,7 +211,7 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 										echo "&nbsp;";	
 									}else{
 									?>	
-										<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+										<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
 									<?php
 									}
 								}
@@ -181,13 +219,13 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 								if($_SESSION['ses_uaksesadmin'] == 1){
 								// echo "masukkkkkk";
 								?>
-									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
-									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
 								<?php	
 								}elseif($_SESSION['ses_uoperatorid'] == $hsl_data[UserNm]){
 								?>
-									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
-									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
 							
 								<?php
 								}else{
@@ -196,7 +234,7 @@ $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pms($_POST);
 							}	
 						}elseif($hsl_data['StatusPenetapan']==1){
 							?>
-								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pms.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
+								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
 								<a target="_blank" href="<?php echo "$url_rewrite/";?>report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan=<?=$hsl_data[Usulan_ID]?>&noUsul=<?=$hsl_data[NoUsulan]?>" class="btn btn-info btn-small"><i class="fa fa-file-pdf-o"></i> Report</a>&nbsp;
 						
 							<?php

@@ -27,13 +27,13 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="";
-$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk,);
+$aColumns = array('Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Sat.NamaSatker','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan','Usl.SatkerUsul','Usl.SatkerUsul');
 
 /* Indexed column (used for fast and accurate table cardinality) */
-$sIndexColumn = "Aset_ID";
+$sIndexColumn = "Usulan_ID";
 
 /* DB table to use */
-$sTable = "aset";
+$sTable = "usulan";
 $dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
@@ -53,6 +53,7 @@ if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
 /*
  * Ordering
  */
+
 $sOrder = "";
 if (isset($_GET['iSortCol_0'])) {
      $sOrder = "ORDER BY  ";
@@ -66,7 +67,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "";
+          $sOrder = "ORDER BY Usulan_ID desc";
      }
 }
 
@@ -124,23 +125,23 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-//pr($dataParam);
-// list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
+// pr($dataParam);
+list($data,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam);	
 
-$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam); 
+// $dataSESSION = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam); 
 //pr($dataSESSION);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
 // /* Data set length after filtering */
-$sQuery = "
-		SELECT FOUND_ROWS()
-	";
-$rResultFilterTotal = $DBVAR->query($sQuery);
-$aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
-$iFilteredTotal = $aResultFilterTotal[0];
+// $sQuery = "
+// 		SELECT FOUND_ROWS()
+// 	";
+// $rResultFilterTotal = $DBVAR->query($sQuery);
+// $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
+// $iFilteredTotal = $aResultFilterTotal[0];
 
-//echo $iFilteredTotal ;
+// echo $iFilteredTotal ;
 
 /* Total data set length */
 $sQuery = "
@@ -168,57 +169,78 @@ $output = array(
 /////pr($output);
 //exit;
 
-$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 
-$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
-$POST['penghapusanfilter']=$POST;
-    if($POST){
-      // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
-      foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-        // //////pr($valueSESSION['Aset_ID']);
-        if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
-          // echo "stringnot";
-          $data[]=$valueSESSION;
-          $data[$keySESSION]['checked']="";
-        }else{
+// $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+// $POST['penghapusanfilter']=$POST;
+//     if($POST){
+//       // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+//       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
+//         // //////pr($valueSESSION['Aset_ID']);
+//         if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
+//           // echo "stringnot";
+//           $data[]=$valueSESSION;
+//           $data[$keySESSION]['checked']="";
+//         }else{
 
-          $data[]=$valueSESSION;
-          $data[$keySESSION]['checked']="checked";
-        }
-      }
+//           $data[]=$valueSESSION;
+//           $data[$keySESSION]['checked']="checked";
+//         }
+//       }
     
-    }
+//     }
 $no=$_GET['iDisplayStart']+1;
   if (!empty($data))
 					{
 foreach ($data as $key => $value)
 						{
 							// //pr($get_data_filter);
-							if($value[kondisi]==2){
-								$kondisi="Rusak Ringan";
-							}elseif($value[kondisi]==3){
-								$kondisi="Rusak Berat";
-							}elseif($value[kondisi]==1){
-								$kondisi="Baik";
-							}
+							// if($value[kondisi]==2){
+							// 	$kondisi="Rusak Ringan";
+							// }elseif($value[kondisi]==3){
+							// 	$kondisi="Rusak Berat";
+							// }elseif($value[kondisi]==1){
+							// 	$kondisi="Baik";
+							// }
+
+              $jmlh=explode(",", $value[Aset_ID]);
+              $jumlahAset=count($jmlh);
+              $change=$value[TglUpdate]; 
+              $change2=  format_tanggal_db3($change); 
+              // echo "$change2";
+            
+              if($value['SatkerUsul']){ 
+                $SatkerUsul="[".$value['SatkerUsul']."] ".$value['NamaSatkerUsul'];
+               // echo ;
+              }else{
+                $SatkerUsul=$value['NamaSatkerUsul'];
+              }
+
+              if($value['StatusPenetapan']==0){
+                  $label="warning";
+                  $text="belum diproses";
+                }elseif($value['StatusPenetapan']==1){
+                  $label="info";
+                  $text="sudah ditetapkan";
+                }
 							// //pr($value[TglPerolehan]);
-							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-							// //pr($TglPerolehanTmp);
-							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+							// $TglPerolehanTmp=explode("-", $value[TglPerolehan]);
+							// // //pr($TglPerolehanTmp);
+							// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
                                           
                              $row = array();
                              
-                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
+                             // $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
                              $row[]=$no;
-                             $row[]=$checkbox;
-                             $row[]=$value['noRegister'] ;
-                             $row[]=$value['noKontrak'];
-                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
-                             $row[]="[".$value[kodeSatker] ."]". $value[NamaSatker];
-                             $row[]=$TglPerolehan;
-                             $row[]=number_format($value[NilaiPerolehan]);
-                             $row[]=$kondisi. ' - ' .$value[AsalUsul];
-                             $row[]="{$value[Merk]}$value[Model] ";
+                             // $row[]=$checkbox;
+                             $row[]=$value['NoUsulan'] ;
+                             $row[]=$SatkerUsul;
+                             $row[]=$jumlahAset;
+                             $row[]=$change2;
+                             $row[]=number_format($value[TotalNilaiPerolehan]);
+                             $row[]=$value[KetUsulan];
+                             $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
+                             $row[]=$value[KetUsulan];
                              
                              $output['aaData'][] = $row;
                               $no++;

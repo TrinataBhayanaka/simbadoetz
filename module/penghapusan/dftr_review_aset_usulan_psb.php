@@ -177,7 +177,10 @@ if($_SESSION['kdSatkerFilterPMD']){
 					</li>
 					<li>
 						<span  class="labelInfo">Tanggal Usulan</span>
-						<input name="tanggalUsulan" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
+							<div class="input-prepend">
+								<span class="add-on"><i class="fa fa-calendar"></i></span>
+								<input name="tanggalUsulan" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
+							</div>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -278,7 +281,7 @@ if($_SESSION['kdSatkerFilterPMD']){
 						</td>
 						<td>
 
-								<input type="text" class="span2 nilaimask" id="idnilaimask<?=$no?>" data-a-sign="Rp " data-a-dec="," data-a-sep="."  onkeyup="return getCurrency(this,'nilaiP<?=$no?>','<?=$value[NilaiPerolehan]?>','error<?=$no?>','chebok<?=$no?>','idaset<?=$no?>','kondisi<?=$no?>','inputCheck<?=$no?>');"  placeholder="0" /><br/>
+								<input type="text" class="span2 nilaimask" id="idnilaimask<?=$no?>" data-a-sign="Rp " data-a-dec="," data-a-sep="."  onkeyup="return getCurrency(this,'nilaiP<?=$no?>','<?=$value[NilaiPerolehan]?>','error<?=$no?>','chebok<?=$no?>','idaset<?=$no?>','kondisi<?=$no?>');"  placeholder="0" /><br/>
 								<em id="error<?=$no?>"></em>
 
 								<input type="hidden" id="nilaiP<?=$no?>"  >

@@ -1,7 +1,7 @@
 <?php
 include "../../config/config.php";
 
-$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN_B;
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -29,8 +29,8 @@ $menu_id = 10;
 					// $data = $RETRIEVE->retrieve_penetapan_penghapusan_edit_data($parameter);
 					
 						// //////pr($_POST);
-						$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_pmd($_GET);
-						//////pr($data);
+						$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_psb($_GET);
+						// //pr($data);
 						
 				}
 
@@ -59,12 +59,12 @@ $menu_id = 10;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
-			    updDataCheckbox('DELUSPMD');
+			    updDataCheckbox('DELUSPSB');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
-			    updDataCheckbox('DELUSPMD');
+			    updDataCheckbox('DELUSPSB');
 			}}, 100);
 		}
 		</script>
@@ -72,30 +72,30 @@ $menu_id = 10;
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Aset Usulan Penghapusan Pemindahtanganan</li>
+			  <li class="active">Daftar Aset Usulan Penghapusan Sebagian</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemindahtanganan</div>
+				<div class="title">Usulan Penghapusan Sebagian</div>
 				<div class="subtitle">Review Aset yang akan dibuat Usulan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pmd.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -105,7 +105,7 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_upd_pmd.php"> 
+			<form method="POST" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_upd_psb.php"> 
 			
 			<div class="detailLeft">
 				<?php
@@ -149,11 +149,7 @@ $menu_id = 10;
 						?>
 					<li>
 						<span  class="labelInfo">Tanggal Usulan</span>
-							<div class="input-prepend">
-								<span class="add-on"><i class="fa fa-calendar"></i></span>
-								<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
-							</div>
-						
+						<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>
@@ -164,7 +160,7 @@ $menu_id = 10;
 			
 			<div style="height:5px;width:100%;clear:both"></div>
 			</form>
-			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_hapus_pmd.php"> 
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_asetid_usulan_proses_hapus_psb.php"> 
 			<div id="demo">
 			<?php
 				if($row['StatusPenetapan']==0){
@@ -182,7 +178,7 @@ $menu_id = 10;
 							<?php
 								if($row['StatusPenetapan']==0){
 							?>
-								<a href="filter_tambah_aset_usulan_pmd.php?usulanID=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Aset Usulan</a>
+								<a href="filter_tambah_aset_usulan_psb.php?usulanID=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Aset Usulan</a>
 								<span><button type="submit" name="submit"  class="btn btn-danger " id="submit" disabled/><i class="icon-trash icon-white"></i>&nbsp;&nbsp;Delete</button></span>
 								<input type="hidden" name="usulanID" value="<?=$id?>"/>
 							<?php
@@ -206,7 +202,7 @@ $menu_id = 10;
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>Nilai Baru</th>
 						<th>Status Konfirmasi</th>
 					</tr>
 				</thead>
@@ -233,7 +229,7 @@ $menu_id = 10;
 					if($coo==1){
 					$delete="";
 					}else{
-					$delete="<a href='$url_rewrite/module/penghapusan/usulan_asetid_proses_hapus_pmd.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
+					$delete="<a href='$url_rewrite/module/penghapusan/usulan_asetid_proses_hapus_psb.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
 					 Delete</a>";
 					}
 					if($nilai[kondisi]==2){
@@ -248,6 +244,13 @@ $menu_id = 10;
 					// ////pr($TglPerolehanTmp);
 					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
+					if($nilai[StatusValidasi]==1){
+						$TglPerolehanAwal=$nilai[NilaiPerolehanTmp];
+						$TglPerolehanbaru=$nilai[NilaiPerolehan];
+					}else{
+						$TglPerolehanAwal=$nilai[NilaiPerolehan];
+						$TglPerolehanbaru=$nilai[NilaiPerolehanTmp];
+					}
 					?>
 						
 					<tr class="gradeA">
@@ -284,10 +287,13 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<?php echo number_format($nilai[NilaiPerolehan]);?>
+							<?php echo number_format($TglPerolehanAwal);?>
 						</td>
-						<td>
+						<!-- <td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+						</td> -->
+						<td>
+							<?=number_format($TglPerolehanbaru)?>
 						</td>
 						<td>
 							<?php

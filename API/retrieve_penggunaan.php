@@ -446,20 +446,39 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $paging = paging($parameter['page'], 100);
 
                 $sql = array(
-                        'table'=>"{$listTable}, aset AS a, kelompok AS k",
-                        'field'=>"SQL_CALC_FOUND_ROWS {$listTableAlias}.*, k.Uraian",
+                        'table'=>"{$listTable}, aset AS a, kelompok AS k, satker AS s",
+                        'field'=>"SQL_CALC_FOUND_ROWS {$listTableAlias}.*, k.Uraian, s.NamaSatker, a.noKontrak",
                         'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}  $kondisi $order",
                         'limit'=>"$limit",
                         'joinmethod' => 'LEFT JOIN',
-                        'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
+                        'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
                         );
 
                 $res[$value] = $this->db->lazyQuery($sql,$debug);
                 
-                
 
             }
 
+
+            
+            foreach ($res as $k => $value) {
+
+                if ($value){
+
+                    foreach ($value as $key => $val) {
+                        if ($val['NilaiPerolehan']) $res[$k][$key]['NilaiPerolehan'] = number_format($val['NilaiPerolehan']);
+                        if ($val['kondisi']){
+                            if ($val['kondisi']==1) $kondisi = "Baik";
+                            if ($val['kondisi']==2) $kondisi = "Rusak Ringan";
+                            if ($val['kondisi']==3) $kondisi = "Rusak Berat";
+                            $res[$k][$key]['kondisi'] = $kondisi;
+                        } 
+                        
+                    } 
+                }
+                
+            }
+// pr($res);exit;
             foreach ($res as $value) {
 
                 if ($value){

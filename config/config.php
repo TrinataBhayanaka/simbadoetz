@@ -29,6 +29,7 @@ require_once "$path/API/retrieve_perolehan.php";
 require_once "$path/API/retrieve_perencanaan.php";
 require_once "$path/API/retrieve_penilaian.php";
 require_once "$path/API/retrieve_penghapusan.php";
+require_once "$path/API/retrieve_penghapusan_b.php";
 require_once "$path/API/retrieve_penggunaan.php";
 require_once "$path/API/retrieve_pemusnahan.php";
 require_once "$path/API/retrieve_pemindahtanganan.php";
