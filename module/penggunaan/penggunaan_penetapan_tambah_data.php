@@ -48,26 +48,9 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	// pr($_POST);
-	if ($_POST['submit']){
-		// unset($_SESSION['ses_mutasi_filter']);
+	$dataParam = $SESSION->smartFilter('penggunaan_tambah');
+	$par_data_table= "data=".encode($dataParam);
 
-		$_SESSION['ses_penggunaan_tambah_filter'] = $_POST;
-		
-	}
-
-	$dataParam = $_SESSION['ses_penggunaan_tambah_filter'];
-	
-	$dataParam['page'] = intval($_GET['pid']);
-
-	///$data = $PENGGUNAAN->retrieve_penetapan_penggunaan($dataParam);	
-          //pr($dataParam);
-          //exit;
-      $par_data_table="nokontrak={$dataParam['nokontrak']}&jenisaset={$dataParam['jenisaset'][0]}&kodeSatker={$dataParam['kodeSatker']}&page={$dataParam['page']}";
-
-//$par_data_table=  json_encode($dataParam);
-	 // pr($dataPa);
-	 //exit;
 ?>	
 
 		
@@ -212,30 +195,11 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
      
 			 <script>
     $(document).ready(function() {
-          $('#penggunaan_table').dataTable(
-                   {
-                    "aoColumnDefs": [
-                         { "aTargets": [2] }
-                    ],
-                    "aoColumns":[
-                         {"bSortable": false},
-                         {"bSortable": false,"sClass": "checkbox-column" },
-                               {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                          {"bSortable": true},
-                           {"bSortable": true},
-                             {"bSortable": true},
-                         {"bSortable": true}],
-                    "sPaginationType": "full_numbers",
 
-                    "bProcessing": true,
-                    "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_penggunaan.php?<?php echo $par_data_table?>"
-               }
-                  );
-      });
+    	var param = "api_penggunaan.php?<?php echo $par_data_table?>";
+        dTableParam("penggunaan_table", param, 10);
+          
+    });
     </script>
 			<div id="demo">
 			<form name="myform" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data.php">

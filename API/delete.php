@@ -606,7 +606,7 @@ class DELETE extends DB
         foreach ($data as $key => $val) {
             $query = "DELETE FROM aset WHERE Aset_ID = '{$val['Aset_ID']}'";
             $result = $this->query($query) or die ($this->error());
-
+            // pr($query);
             if($val['TipeAset']=="A"){
                 $tabel = "tanah";
                 $logtabel = "log_tanah";
@@ -638,19 +638,43 @@ class DELETE extends DB
 
             $query = "DELETE FROM {$tabel} WHERE Aset_ID = '{$val['Aset_ID']}'";
             $result = $this->query($query) or die ($this->error());
-
+            // pr($query);
             //kapitalisasi and kdp
             $query = "DELETE FROM kapitalisasi WHERE asetKapitalisasi = '{$val['Aset_ID']}'";
             $result = $this->query($query) or die ($this->error());
+            // pr($query);
+            
+            if(isset($val['del'])){
+                $sql = "SELECT MAX(CAST(noRegister AS SIGNED)) AS max FROM {$tabel} WHERE kodeKelompok = '{$val['idKel']}' AND kodeLokasi = '{$val['idLok']}' AND StatusTampil = '1'";
+                $minmax = $this->fetch($sql);
+                // pr($minmax);
+
+                $sql = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$val['idKel']}' AND kodeLokasi = '{$val['idLok']}' AND noKontrak = '{$val['tmpthis']}'";
+                $asetid = $this->fetch($sql,1);
+                // pr($asetid);
+                $reg = $minmax['max'];
+                foreach ($asetid as $key => $value) {
+                    $reg = $reg+1;
+                    $sqlupd = "UPDATE aset INNER JOIN {$tabel} on aset.Aset_ID = {$tabel}.Aset_ID  SET aset.noRegister = '{$reg}', {$tabel}.noRegister = '{$reg}' WHERE aset.Aset_ID = '{$value['Aset_ID']}'";
+                    $result =  $this->query($sqlupd) or die($this->error());
+                    // pr($sqlupd);
+                }
+                
+                echo "<script>alert('Data berhasil dihapus');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang_detail.php?id={$val['del']}\">";
+
+                exit;
+            }
         }
-
-
+    
+            // exit;
             return true;
             exit;
     
     
     
     }
+
+
 
     public function delete_trs_rinc($id,$idtrs)
     {
