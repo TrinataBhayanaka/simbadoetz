@@ -46,26 +46,12 @@ $MUTASI = new RETRIEVE_MUTASI;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-    // if ($_POST['submit']){
-		// unset($_SESSION['ses_mutasi_filter']);
-
-		// $_SESSION['ses_mutasi_filter'] = $_POST;
-		
-	// }
-
+    
 	$dataParam = $SESSION->smartFilter('mutasi');
-	// pr($filterParam);
-
+	
 	$par_data_table= "data=".encode($dataParam);//{$dataParam['kd_nokontrak']}&jenisaset={$dataParam['jenisaset']}&kodeSatker={$dataParam['kodeSatker']}&kd_tahun={$dataParam['kd_tahun']}&statusaset={$dataParam['statusaset']}&page={$dataParam['page']}";
 
-
-	// $dataParam = $_SESSION['ses_mutasi_filter'];
-	
-	// $dataParam['page'] = intval($_GET['pid']);
-	// pr($_SESSION);
-	// $data = $MUTASI->retrieve_mutasi_filter($dataParam);
-	// pr($data);
-			?>
+		?>
 		 <script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
 				
