@@ -9448,7 +9448,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sProcessing": "Processing...",
+			"sProcessing": "<img src='"+urlRewrite+"/js/ajax_clock_small.gif'/>Processing...",
 		
 		
 			/**

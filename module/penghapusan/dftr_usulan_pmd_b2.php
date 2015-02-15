@@ -46,11 +46,11 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 		}else{
 			
 		}
-		$POST = $_SESSION['filterAsetUsulan'];
+		// $POST = $_SESSION['filterAsetUsulan'];
 	
 		$POST['page'] = intval($_GET['pid']);
 	// pr($POST);
-	    $par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
+	    $par_data_table="bup_tahun=&bup_nokontrak=&jenisaset=&kodeSatker=&page={$POST['page']}";
 
 // $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
 // pr($data);
@@ -110,12 +110,12 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                          // {"bSortable": false,"sClass": "checkbox-column" },
                          {"bSortable": true},
                          {"bSortable": true},
-                         {"bSortable": false},
                          {"bSortable": true},
-                         {"bSortable": false},
                          {"bSortable": true},
-                         {"bSortable": false},
-                         {"bSortable": false}],
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true}],
                     "sPaginationType": "full_numbers",
 
                     "bProcessing": true,
@@ -128,7 +128,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 			<p><a href="filter_aset_usulan_pmd.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Usulan</a>
 			&nbsp;
 			<div id="demo">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="usulan_pmd_table">
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
 						<th>No</th>
@@ -142,17 +142,112 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 						<th>Tindakan</th>
 					</tr>
 				</thead>
-				<tbody>			
-					 <tr>
-                        <td colspan="9">Data Tidak di temukkan</td>
-                     </tr>
+				<tbody>		
+							 
+				 <?php
+                                        
+					// ////pr($dataArr);
+					$no=1;	
+					// ////pr($data);
+					if($data){
+					foreach($data as $key => $hsl_data){
+						
+						if($dataArr!="")
+							{
+								(in_array($hsl_data['Usulan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
+							}
+					$jmlh=explode(",", $hsl_data[Aset_ID]);
+					$jumlahAset=count($jmlh);
+				?>
+						  
+					<tr class="gradeA">
+						<td><?php echo "$no";?></td>
+						<td><?php echo $hsl_data['NoUsulan'];?></td>
+						<td>
+							<?php
+							if($hsl_data['SatkerUsul']){ echo "[".$hsl_data['SatkerUsul']."]";}
+							?>
+							<br/>
+							<?php echo $hsl_data['NamaSatkerUsul'];?>
+						</td>
+						<td>
+							<?php echo $jumlahAset;?>
+						</td>
+						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
+						</td>
+						<td><?=number_format($hsl_data['TotalNilaiPerolehan'])?>
+						</td>
+						<td>
+							<?=$hsl_data['KetUsulan']?>
+						</td>
+						<td>
+							<?php
+								if($hsl_data['StatusPenetapan']==0){
+									$label="warning";
+									$text="belum diproses";
+								}elseif($hsl_data['StatusPenetapan']==1){
+									$label="info";
+									$text="sudah ditetapkan";
+								}
+							?>
+							<span class="label label-<?=$label?>" ><?=$text?></span>
+						</td>
+						<td>	
+						<?php
+						if($hsl_data['StatusPenetapan']==0){
+							if($dataArr){
+								if($_SESSION['ses_uaksesadmin'] == 1){
+									
+									if(in_array($hsl_data['Usulan_ID'], $dataArr)){
+										echo "&nbsp;";
+									}else{
+									?>
+										<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+							
+									<?php
+									}
+								}elseif($_SESSION['ses_uoperatorid'] == $hsl_data[UserNm]){
+									if(in_array($hsl_data['Pemanfaatan_ID'], $dataArr)){
+										echo "&nbsp;";	
+									}else{
+									?>	
+										<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" onclick="return confirm('Hapus Data');">Hapus</a>
+									<?php
+									}
+								}
+							}else{
+								if($_SESSION['ses_uaksesadmin'] == 1){
+								// echo "masukkkkkk";
+								?>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
+								<?php	
+								}elseif($_SESSION['ses_uoperatorid'] == $hsl_data[UserNm]){
+								?>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penghapusan_usulan_daftar_proses_hapus_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Data');"><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+									<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
+							
+								<?php
+								}else{
+								echo "&nbsp;";
+								}
+							}	
+						}elseif($hsl_data['StatusPenetapan']==1){
+							?>
+								<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_aset_usulan_pmd.php?id=<?php echo "$hsl_data[Usulan_ID]";?>" class="btn btn-success btn-small" onclick="return confirm('View Data');"><i class="fa fa-pencil-square-o"></i>&nbsp;View</a>
+								<a target="_blank" href="<?php echo "$url_rewrite/";?>report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan=<?=$hsl_data[Usulan_ID]?>&noUsul=<?=$hsl_data[NoUsulan]?>" class="btn btn-info btn-small"><i class="fa fa-file-pdf-o"></i> Report</a>&nbsp;
+						
+							<?php
+						}
+
+							?>
+						</td>
+					</tr>
+					
+				     <?php $no++; } }?>
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

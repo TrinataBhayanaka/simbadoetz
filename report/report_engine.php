@@ -28439,11 +28439,11 @@ return $hasil_html;
 			$paramGol ="tanah";
 			$kondisi ="";
 		}elseif($gol == '02'){
-			$paramGol ="mesin";
+			$paramGol ="mesin_ori";
 			$paramGol2 ="mesin_Rplctn";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '03'){
-			$paramGol ="bangunan";
+			$paramGol ="bangunan_ori";
 			$paramGol2 ="bangunan_Rplctn";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '04'){
@@ -28582,12 +28582,12 @@ return $hasil_html;
 			$kondisi ="";
 			$kodeKelompok ="kodeKelompok like '01%' and";
 		}elseif($gol == '02'){
-			$paramGol ="mesin";
+			$paramGol ="mesin_ori";
 			$paramGol2 ="mesin_Rplctn";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '02%' and";
 		}elseif($gol == '03'){
-			$paramGol ="bangunan";
+			$paramGol ="bangunan_ori";
 			$paramGol2 ="bangunan_Rplctn";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '03%' and";

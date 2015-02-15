@@ -150,7 +150,10 @@ $menu_id = 10;
 						?>
 					<li>
 						<span  class="labelInfo">Tanggal Usulan</span>
-						<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
+							<div class="input-prepend">
+								<span class="add-on"><i class="fa fa-calendar"></i></span>
+								<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
+							</div>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>

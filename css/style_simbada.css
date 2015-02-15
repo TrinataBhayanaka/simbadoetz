@@ -322,6 +322,285 @@ section.formLegend .titleSp2dRPenunjang{
 	border-top-left-radius:5px;
 	border-top-right-radius:60px 40px;
 }
+
+.blink_text {
+
+    -webkit-animation-name: blinker;
+
+    -webkit-animation-duration: 2s;
+
+    -webkit-animation-timing-function: linear;
+
+    -webkit-animation-iteration-count: infinite;
+
+   
+
+    -moz-animation-name: blinker;
+
+    -moz-animation-duration: 2s;
+
+    -moz-animation-timing-function: linear;
+
+    -moz-animation-iteration-count: infinite;
+
+   
+
+    animation-name: blinker;
+
+    animation-duration: 2s;
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+}
+
+.blink_text_info {
+
+    -webkit-animation-name: blinker;
+
+    -webkit-animation-duration: 2s;
+
+    -webkit-animation-timing-function: linear;
+
+    -webkit-animation-iteration-count: infinite;
+
+   
+
+    -moz-animation-name: blinker;
+
+    -moz-animation-duration: 2s;
+
+    -moz-animation-timing-function: linear;
+
+    -moz-animation-iteration-count: infinite;
+
+   
+
+    animation-name: blinker;
+
+    animation-duration: 2s;
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+ 
+
+ color: #3A87AD;
+
+}
+.blink_text_warning {
+
+    -webkit-animation-name: blinker;
+
+    -webkit-animation-duration: 2s;
+
+    -webkit-animation-timing-function: linear;
+
+    -webkit-animation-iteration-count: infinite;
+
+   
+
+    -moz-animation-name: blinker;
+
+    -moz-animation-duration: 2s;
+
+    -moz-animation-timing-function: linear;
+
+    -moz-animation-iteration-count: infinite;
+
+   
+
+    animation-name: blinker;
+
+    animation-duration: 2s;
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+ 
+
+ color: #F89406;
+
+}
+
+.blink_text_success {
+
+    -webkit-animation-name: blinker;
+
+    -webkit-animation-duration: 2s;
+
+    -webkit-animation-timing-function: linear;
+
+    -webkit-animation-iteration-count: infinite;
+
+   
+
+    -moz-animation-name: blinker;
+
+    -moz-animation-duration: 2s;
+
+    -moz-animation-timing-function: linear;
+
+    -moz-animation-iteration-count: infinite;
+
+   
+
+    animation-name: blinker;
+
+    animation-duration: 2s;
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+ 
+
+ color: #468847;
+
+}
+
+.blink_text_danger {
+
+    -webkit-animation-name: blinker;
+
+    -webkit-animation-duration: 2s;
+
+    -webkit-animation-timing-function: linear;
+
+    -webkit-animation-iteration-count: infinite;
+
+   
+
+    -moz-animation-name: blinker;
+
+    -moz-animation-duration: 2s;
+
+    -moz-animation-timing-function: linear;
+
+    -moz-animation-iteration-count: infinite;
+
+   
+
+    animation-name: blinker;
+
+    animation-duration: 2s;
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+ 
+
+ color: #999999;
+
+}
+.blink_text_red {
+
+    -webkit-animation-name: blinker;
+
+    -webkit-animation-duration: 2s;
+
+    -webkit-animation-timing-function: linear;
+
+    -webkit-animation-iteration-count: infinite;
+
+   
+
+    -moz-animation-name: blinker;
+
+    -moz-animation-duration: 2s;
+
+    -moz-animation-timing-function: linear;
+
+    -moz-animation-iteration-count: infinite;
+
+   
+
+    animation-name: blinker;
+
+    animation-duration: 2s;
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+ 
+
+ color: red;
+
+}
+.blink_text_blue {
+
+    -webkit-animation-name: blinker;
+
+    -webkit-animation-duration: 2s;
+
+    -webkit-animation-timing-function: linear;
+
+    -webkit-animation-iteration-count: infinite;
+
+   
+
+    -moz-animation-name: blinker;
+
+    -moz-animation-duration: 2s;
+
+    -moz-animation-timing-function: linear;
+
+    -moz-animation-iteration-count: infinite;
+
+   
+
+    animation-name: blinker;
+
+    animation-duration: 2s;
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+ 
+
+ color: blue;
+
+}
+@-moz-keyframes blinker { 
+
+    0% { opacity: 1.0; }
+
+    50% { opacity: 0.0; }
+
+    100% { opacity: 1.0; }
+
+}
+
+
+
+@-webkit-keyframes blinker { 
+
+    0% { opacity: 1.0; }
+
+    50% { opacity: 0.0; }
+
+    100% { opacity: 1.0; }
+
+}
+
+
+
+@keyframes blinker { 
+
+    0% { opacity: 1.0; }
+
+    50% { opacity: 0.0; }
+
+    100% { opacity: 1.0; }
+
+}
+
 nav{
 	background-color:#D5D5BB;
 	width:100%;

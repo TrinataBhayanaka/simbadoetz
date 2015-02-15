@@ -18,8 +18,14 @@ if ($u_sess) $isLogin = true;
 		<style type="text/css" title="currentStyle">
 			@import '<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css';
 		</style>
+
+		<script type="text/javascript" charset="utf-8">
+
+				var urlRewrite = "<?php echo $url_rewrite?>";
+		</script>
 		<script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery_simbada.js"></script>
 		<script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.dataTables_simbada.js"></script>
+   
 		
 		<link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/jquery-ui.css">
 		<script src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.js"></script>
@@ -221,7 +227,6 @@ if ($u_sess) $isLogin = true;
 	
 	
     </script> 
-
-    <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
+     <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
 </head>
 <body>

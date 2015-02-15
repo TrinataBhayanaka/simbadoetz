@@ -11,7 +11,14 @@ while ($dataKontrak = mysql_fetch_assoc($sql)){
             $noKontrak = $dataKontrak;
         }
 
-$updateKontrak = mysql_query("UPDATE kontrak SET n_status = '0' WHERE id = '{$noKontrak['id']}'");
+$updateKontrak = "UPDATE kontrak SET n_status = '0' WHERE id = '{$noKontrak['id']}'";
+$execquery = mysql_query($updateKontrak);
+    logFile($updateKontrak);
+if(!$execquery){
+  $DBVAR->rollback();
+  echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+  exit;
+}
 
 $sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$kontrakID}' AND type = '2'");
 while ($dataSP2D = mysql_fetch_assoc($sql)){
@@ -27,13 +34,28 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
   while ($sum = mysql_fetch_assoc($sqlsum)){
         $sumTotal = $sum;
       }
-      
+  
+  $j = 0;
+  $bopsisa = $sumsp2d['total'];    
   foreach($aset as $key => $data){
-    $bop = $data['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total'];
-    $satuan = $data['Satuan']-($bop/$data['Kuantitas']);
-    $total = ($data['Satuan']-($bop/$data['Kuantitas']))*$data['Kuantitas'];
+    $j++;
+    if(count($aset) == $j){
+      $bop = $bopsisa;
+    } else{
+      $bopsisa = $bopsisa - ceil($data['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);  
+      $bop = ceil($data['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);
+    }
+    $satuan = $data['Satuan']-$bop;
+    $total = $data['NilaiPerolehan']-$bop;
 
-    $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$total}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
+    $updateAset = "UPDATE aset SET NilaiPerolehan = '{$total}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'";
+    $execquery = mysql_query($updateAset);
+    logFile($updateAset);
+    if(!$execquery){
+      $DBVAR->rollback();
+      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+      exit;
+    }
     
     if($data['TipeAset']=="A"){
           $tabel = "tanah";
@@ -51,8 +73,51 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           $tabel = "aset";
       }
 
-      $sql = mysql_query("UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = NULL, StatusValidasi = NULL WHERE Aset_ID = '{$data['Aset_ID']}'");
+      $sql = "UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = NULL, StatusValidasi = NULL WHERE Aset_ID = '{$data['Aset_ID']}'";
+      $execquery = mysql_query($sql);
+      logFile($sql);
+      if(!$execquery){
+        $DBVAR->rollback();
+        echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+        exit;
+      }
+
+      //log
+      $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+      $sqlquery = mysql_query($sqlkib);
+      while ($dataAset = mysql_fetch_assoc($sqlquery)){
+              $kib = $dataAset;
+          }
+      $kib['changeDate'] = date("Y-m-d");
+      $kib['action'] = 'unposting';
+      $kib['operator'] = $_SESSION['ses_uoperatorid'];
+      $kib['NilaiPerolehan_Awal'] = $data['NilaiPerolehan'];
+      $kib['Kd_Riwayat'] = 77;    
+
+     
+            unset($tmpField);
+            unset($tmpValue);
+            foreach ($kib as $key => $val) {
+              $tmpField[] = $key;
+              $tmpValue[] = "'".$val."'";
+            }
+             
+            $fileldImp = implode(',', $tmpField);
+            $dataImp = implode(',', $tmpValue);
+
+            $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+            $execquery = mysql_query($sql);
+              logFile($sql);
+            if(!$execquery){
+              $DBVAR->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";              
+              exit;
+            } 
+
+  
   }
+  // exit;
+  $DBVAR->commit();
 
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;
