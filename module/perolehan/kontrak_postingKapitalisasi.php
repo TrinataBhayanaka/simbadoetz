@@ -24,8 +24,19 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
               $aset[] = $dataAset;
           }
 
+  $counter = 0;    
+  $bopsisa = $sumsp2d['total'];
+
   foreach($aset as $key => $data){
-    $bop = ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);
+
+    $counter++;
+    if(count($aset) == $counter){
+      $bop = $bopsisa;
+    } else{
+      $bopsisa = $bopsisa - ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);  
+      $bop = ceil($data['NilaiPerolehan']/$noKontrak['nilai']*$sumsp2d['total']);
+    }
+
     $NilaiPerolehan = ceil($data['NilaiPerolehan'] + $bop);
     $satuan = ceil(intval($data['Satuan']) + ($bop/$data['Kuantitas']));
 
