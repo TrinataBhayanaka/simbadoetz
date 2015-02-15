@@ -93,7 +93,7 @@ $menu_id = 10;
 	$POST['page'] = intval($_GET['pid']);
 	// pr($POST);
 	  $par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
-
+// pr($par_data_table);
 	// pr($data);
 	// pr($_SESSION);
 	if($_POST['kodeSatker']){
@@ -115,6 +115,19 @@ $menu_id = 10;
    //          }
 	?>
 	<script>
+		function confirmValidate(){	
+			var ConfH = $("#countcheckboxH").html();
+			var conf = confirm(ConfH);
+			if(conf){return true;} else {return false;}
+		}
+		function countCheckbox(item,rvwitem){
+			setTimeout(function() {
+				$.post('<?=$url_rewrite?>/function/api/countapplist.php', { UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,rvwact:rvwitem,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+						$("#countcheckbox").html("<h5>Jumlah Data yang akan dibuat usulan <div class='blink_text_blue'>"+data.countAset+" Data Aset</div></h5>");
+						$("#countcheckboxH").html("Jumlah Data yang akan dibuat usulan "+data.countAset+" Data Aset");
+					 },"JSON")
+			}, 500);
+		}
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
@@ -123,12 +136,14 @@ $menu_id = 10;
 			    $("#submit").removeAttr("disabled");
 			    // $("#btnback").css("display:block");
 			    updDataCheckbox('RVWUSPMD');
+			    countCheckbox('RVWUSPMD');
 			}
 			else
 			{
 			   // $('#submit').attr("disabled","disabled");
 			   //  $("#btnback").css("display:none");
 			   updDataCheckbox('RVWUSPMD');
+			    countCheckbox('RVWUSPMD');
 			}}, 100);
 		}
 		jQuery(function($) {
@@ -201,9 +216,16 @@ $menu_id = 10;
       });
     </script>
 			<div id="demo">
-			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pmd.php"> 
+			<form method="POST" ID="Form2" onsubmit="return confirmValidate()"  action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_usulan_pmd.php"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="usulan_pmd_table">
 				<thead>
+
+					<tr>
+						<td colspan="10" align="center">
+							<span id="countcheckbox"><h5>Jumlah Data yang akan dibuat usulan <div class="blink_text_blue">0 Data</div></h5></span>
+							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data yang akan dibuat usulan 0 Data</span>
+						</td>
+					</tr>
 					<tr>
 						<td colspan="7" align="left">
 								<span><button type="submit" name="submit" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Buat Usulan Penghapusan</button></span>

@@ -389,6 +389,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 					<input type="hidden" name="rubahdata" id="rubahdata" value="1">
 					<input type="hidden" name="pindahruang" id="pindahruang" value="1" disabled>
 					<input type="hidden" name="old_kelompok" value = "<?=$dataArr['aset']['kodeKelompok']?>">
+					<input type="hidden" name="old_kondisi" value="<?=$dataArr['kib']['kondisi']?>">
 					<input type="hidden" name="flagupd" id="flagupd" value="1">
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>

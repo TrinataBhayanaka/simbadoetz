@@ -149,7 +149,10 @@ $menu_id = 10;
 					</li>
 					<li>
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
-						<input name="bup_pp_tanggal" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
+							<div class="input-prepend">
+								<span class="add-on"><i class="fa fa-calendar"></i></span>
+								<input name="bup_pp_tanggal" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
+							</div>
 					</li>
 					<li>
 						<span  class="labelInfo">&nbsp;</span>

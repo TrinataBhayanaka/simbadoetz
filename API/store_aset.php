@@ -1513,6 +1513,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
     public function store_aset($data)
     {
         global $url_rewrite;
+        $this->begin();
         unset($data['Aset_ID']);
         // pr($data);exit;
         $kodeSatker = explode(".",$data['kodeSatker']);
@@ -1554,8 +1555,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         }
 
         $loops = $startreg+$data['Kuantitas'];
+        $counter = 0;
         for($startreg;$startreg<$loops;$startreg++)
         {
+            $counter++;
             $tblAset['noRegister'] = intval($startreg)+1;
 
             unset($tmpfield); unset($tmpvalue);
@@ -1568,7 +1571,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $value = implode(',', $tmpvalue);
             $query = "INSERT INTO aset ({$field}) VALUES ({$value})";
             // pr($query);exit;
-            $result= $this->query($query) or die($this->error());
+            // $result= $this->query($query) or die($this->error());
+            $execquery = mysql_query($query);
+            logFile($query);
+            if(!$execquery){
+              $this->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+              exit;
+            }
 
             $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
             $exec = mysql_query($query_id);
@@ -1664,12 +1674,23 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield2);
             $value = implode(',', $tmpvalue2);
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
+            
+            // $result= $this->query($query) or die($this->error());
+            $execquery = mysql_query($query);
+            if($counter == 200){
+                $counter = 0;
+                sleep(1);
+            }
             logFile($query);
-            // pr($query);exit;
-            $result= $this->query($query) or die($this->error());
+            if(!$execquery){
+              $this->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+              exit;
+            }
         }
+        $this->commit();
         if(isset($data['xls'])) return true;
-        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+        echo "<script>alert('Data berhasil disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
         exit;
     }
 
@@ -2189,6 +2210,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
  
         global $url_rewrite;
+        $this->begin();
         // pr($data);exit;
         $kodeSatker = explode(".",$data['kodeSatker']);
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
@@ -2201,6 +2223,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['AsalUsul'] = $data['AsalUsul'];
         $tblAset['Kuantitas'] = 1;
+        $tblAset['StatusValidasi'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
         $tblAset['Info'] = $data['Info'];
         $tblAset['Alamat'] = $data['Alamat'];
@@ -2228,9 +2251,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         }
         
         $loops = $startreg+$data['Kuantitas'];
-
+        $counter = 0;
         for($startreg;$startreg<$loops;$startreg++)
         {   
+            $counter++;
             $tblAset['noRegister'] = intval($startreg)+1;
 
             unset($tmpfield); unset($tmpvalue);
@@ -2244,7 +2268,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
             $query = "INSERT INTO aset ({$field}) VALUES ({$value})";
             // pr($query);
-            $result=  $this->query($query) or die($this->error());
+            // $result=  $this->query($query) or die($this->error());
+            $execquery = $this->query($query);
+            logFile($query);
+            if(!$execquery){
+              $this->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/entri/entri_hasil_inventarisasi.php\">";
+              exit;
+            }
 
             $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
                 while ($row = mysql_fetch_assoc($query_id)){
@@ -2326,6 +2357,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
             $tblKib['NilaiPerolehan'] = $data['Satuan'];
             $tblKib['StatusTampil'] = 1;
+            $tblKib['StatusValidasi'] = 1;
             $tblKib['kondisi'] = $data['kondisi'];
             $tblKib['AsalUsul'] = $data['AsalUsul'];
             $tblKib['Info'] = $data['Info'];
@@ -2348,7 +2380,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
             // pr($query);exit;
-            $result=  $this->query($query) or die($this->error());
+            // $result=  $this->query($query) or die($this->error());
+            $execquery = $this->query($query);
+            logFile($query);
+            if(!$execquery){
+              $this->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/entri/entri_hasil_inventarisasi.php\">";
+              exit;
+            }
 
             //log
               $sqlkib = "SELECT * FROM {$tabel} ORDER BY {$idkey} DESC LIMIT 1";
@@ -2373,12 +2412,23 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     $fileldImp = implode(',', $tmpField);
                     $dataImp = implode(',', $tmpValue);
 
-                    $sql = mysql_query("INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})");
+                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                    $execquery = $this->query($sql);
+                    logFile($sql);
+                    if(!$execquery){
+                      $this->rollback();
+                      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/entri/entri_hasil_inventarisasi.php\">";
+                      exit;
+                    }
+                    if($counter == 200){
+                        $counter = 0;
+                        sleep(1);
+                    }
                        
                  
 
         }
-
+        $this->commit();
         echo "<script>alert('Data Berhasil Disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/entri/entri_hasil_inventarisasi.php\">";
 
         exit;    
@@ -2603,11 +2653,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                       $kib = $dataAset;
                   }      
               $kib['changeDate'] = date("Y-m-d");
-              $kib['action'] = 3;
+              $kib['action'] = 'koreksi';
               $kib['operator'] = $_SESSION['ses_uoperatorid'];
               $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
               $kib['GUID'] = $data['GUID'];
-              if($data['rubahkondisi']) $kib['Kd_Riwayat'] = 1;
+              if($data['rubahkondisi']) {
+                $kib['Kd_Riwayat'] = 1;
+                $kib['kondisi'] = $data['old_kondisi'];
+              }
               if($data['ubahkapitalisasi']) $kib['Kd_Riwayat'] = 2;
               if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;

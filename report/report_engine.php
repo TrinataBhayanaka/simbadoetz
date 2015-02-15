@@ -28439,11 +28439,11 @@ return $hasil_html;
 			$paramGol ="tanah";
 			$kondisi ="";
 		}elseif($gol == '02'){
-			$paramGol ="mesin";
+			$paramGol ="mesin_ori";
 			$paramGol2 ="mesin_Rplctn";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '03'){
-			$paramGol ="bangunan";
+			$paramGol ="bangunan_ori";
 			$paramGol2 ="bangunan_Rplctn";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '04'){
@@ -28582,12 +28582,12 @@ return $hasil_html;
 			$kondisi ="";
 			$kodeKelompok ="kodeKelompok like '01%' and";
 		}elseif($gol == '02'){
-			$paramGol ="mesin";
+			$paramGol ="mesin_ori";
 			$paramGol2 ="mesin_Rplctn";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '02%' and";
 		}elseif($gol == '03'){
-			$paramGol ="bangunan";
+			$paramGol ="bangunan_ori";
 			$paramGol2 ="bangunan_Rplctn";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '03%' and";
@@ -28701,13 +28701,13 @@ return $hasil_html;
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
-			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
+			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1
 			";
-		}
+		}	
 		
-		// echo "query =".$query;
-		// echo "<br>";
+		/*echo "query =".$query;
+		echo "<br>";*/
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	
