@@ -2603,11 +2603,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                       $kib = $dataAset;
                   }      
               $kib['changeDate'] = date("Y-m-d");
-              $kib['action'] = 3;
+              $kib['action'] = 'koreksi';
               $kib['operator'] = $_SESSION['ses_uoperatorid'];
               $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
               $kib['GUID'] = $data['GUID'];
-              if($data['rubahkondisi']) $kib['Kd_Riwayat'] = 1;
+              if($data['rubahkondisi']) {
+                $kib['Kd_Riwayat'] = 1;
+                $kib['kondisi'] = $data['old_kondisi'];
+              }
               if($data['ubahkapitalisasi']) $kib['Kd_Riwayat'] = 2;
               if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
