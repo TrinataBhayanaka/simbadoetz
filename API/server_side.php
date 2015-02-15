@@ -173,10 +173,10 @@ class ServerSide{
 			            		$impl = implode('&', $concate);
 			            		$completeURi = $impl; 
 								
-								$row[] = $this->additional('detail', array('url'=>$expl[0]. "?" . $completeURi));
+								$row[] = $this->additional('detail', array('url'=>$expl[1]. "?" . $completeURi));
 			            	
 			            	}else{
-			            		$row[] = $this->additional('detail', array('url'=>$expl[0]));
+			            		$row[] = $this->additional('detail', array('url'=>$expl[1]));
 			            	}
 			            	
 			            	
@@ -196,7 +196,10 @@ class ServerSide{
 			            		$impl = implode('_', $concate);
 			            		$completeURi = $impl; 
 								
-								$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi));
+								$checked = false;
+								if ($value['checked']) $checked = true;
+
+								$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi, 'checked'=>$checked));
 			            	
 			            	}else{
 			            		$row[] = $this->additional('checkbox', array('name'=>$expl[1]));
@@ -236,7 +239,9 @@ class ServerSide{
 		if ($id){
 			switch ($id) {
 				case 'checkbox':
-					return "<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"{$data['name']}[]\" value=\"{$data['value']}\">";
+					$checked = "";
+					if ($data['checked']) $checked = "checked = checked";
+					return "<input type=\"checkbox\" id=\"checkbox\" class=\"checkbox\" onchange=\"enable()\" name=\"{$data['name']}[]\" value=\"{$data['value']}\" {$checked}>";
 					break;
 				
 				case 'detail':

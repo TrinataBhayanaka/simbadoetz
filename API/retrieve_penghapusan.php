@@ -50,6 +50,19 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         }
 
     }
+    public function getNamaSatker($kodeSatker){
+        $sqlSat = array(
+            'table'=>"Satker AS sat",
+            'field'=>"sat.NamaSatker",
+            'condition' => "sat.Kode='$kodeSatker' GROUP BY sat.Kode",
+             );
+        // //////////////////////////////////////pr($sqlSat);
+        $resSat = $this->db->lazyQuery($sqlSat,$debug);
+        // pr($resSat);
+        if ($resSat) return $resSat;
+        return false;
+
+    }
 	   public function retrieve_usulan_penghapusan($data,$debug=false)
     {
             
@@ -308,12 +321,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     // //////////////////////////////////////////////pr($aset_id);
                     // //////////////////////////////////////////////pr($sql1);
                      $sqlAset = array(
-                            'table'=>"{$listTable},Aset AS ast,kelompok AS k,Satker AS sat",
-                            'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian,sat.NamaSatker",
+                            'table'=>"{$listTable},Aset AS ast,kelompok AS k",
+                            'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
                             'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} $kondisi  GROUP BY ast.Aset_ID $order",
                             'limit'=>"$limit",
                             'joinmethod' => ' LEFT JOIN ',
-                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode,ast.KodeSatker=sat.Kode"
+                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                              );
                     // ////pr($sqlAset);
                     $resAset = $this->db->lazyQuery($sqlAset,$debug);
@@ -476,12 +489,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     // //////////////////////////////////////////////pr($aset_id);
                     // //////////////////////////////////////////////pr($sql1);
                       $sqlAset = array(
-                            'table'=>"{$listTable},Aset AS ast,kelompok AS k,Satker AS sat",
-                            'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian,sat.NamaSatker",
+                            'table'=>"{$listTable},Aset AS ast,kelompok AS k",
+                            'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
                             'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} $kondisi  GROUP BY ast.Aset_ID $order",
                             'limit'=>"$limit",
                             'joinmethod' => ' LEFT JOIN ',
-                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode,ast.KodeSatker=sat.Kode"
+                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                              );
                     // ////////////pr($sqlAset);
                     $resAset = $this->db->lazyQuery($sqlAset,$debug);
@@ -2027,7 +2040,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Usulan as Usl,Satker as Sat',
                 'field'=>" Usl.*, Sat.NamaSatker ",
-                'condition' => "Usl.FixUsulan=1 AND Usl.Jenis_Usulan='PSB'{$filterkontrak} ORDER BY Usl.Usulan_ID desc",
+                'condition' => "Usl.FixUsulan=1 AND Usl.Jenis_Usulan='PSB' {$filterkontrak} ORDER BY Usl.Usulan_ID desc",
                 'joinmethod' => ' LEFT JOIN ',
                 'join' => 'Usl.SatkerUsul=Sat.Kode'
 

@@ -90,7 +90,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
               $kib = $dataAset;
           }
       $kib['changeDate'] = date("Y-m-d");
-      $kib['action'] = 1;
+      $kib['action'] = 'posting';
       $kib['operator'] = $_SESSION['ses_uoperatorid'];
       $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
       if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
