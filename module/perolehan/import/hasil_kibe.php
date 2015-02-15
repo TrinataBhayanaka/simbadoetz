@@ -4,9 +4,8 @@ $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
+$RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 
-// $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// pr($get_data_filter);
 ?>
 
 <?php
@@ -17,41 +16,51 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	// pr($_SESSION);
-	foreach ($_POST['aset'] as $key => $value) {
-		$dataaset[] = explode("|", $value);
-	}
-	// pr($_POST);exit;
-	foreach ($dataaset as $key => $val) {
-		$data['kodeSatker'] = $val[0];
-		$data['kodeRuangan'] = $val[8];
-		$data['kodeKelompok'] = $val[4];
-		$data['Judul'] = $val[10];
-		$data['Pengarang'] = $val[11];
-		$data['Penerbit'] = $val[12];
-		$data['Spesifikasi'] = $val[13];
-		$data['AsalDaerah'] = $val[14];
-		$data['Material'] = $val[15];
-		$data['Ukuran'] = $val[17];
-		$data['TglPerolehan'] = $val[1];
-		$data['Alamat'] = $val[16];
-		$data['Kuantitas'] = $val[18];
-		$data['Satuan'] = $val[19];
-		$data['NilaiPerolehan'] = $val[19]*$val[18];
-		$data['Info'] = $val[7];
-		$data['id'] = $_POST['kontrakid'];
-		$data['noKontrak'] = $val[6];
+	$dataArr = $RETRIEVE_PEROLEHAN->get_aplasetlist('XLSIMP');
+	$cleardata = explode(",", $dataArr['aset_list']);
+	$counter2 = 0;
+	foreach ($cleardata as $key => $val) {
+		$counter2++;
+		if ($counter2 == 201) {
+			$counter2 = 0;
+			sleep(1);
+		}
+
+		$tmp = explode("|", $val);
+
+		$datatmp = $RETRIEVE_PEROLEHAN->get_slowtmpData($tmp[0]);
+		
+
+		$data['kodeSatker'] = $datatmp['kodeSatker'];
+		$data['kodeRuangan'] = $datatmp['kodeRuangan'];
+		$data['kodeKelompok'] = $datatmp['kodeKelompok'];
+		$data['Judul'] = $datatmp['Judul'];
+		$data['Pengarang'] = $datatmp['Pengarang'];
+		$data['Penerbit'] = $datatmp['Penerbit'];
+		$data['Spesifikasi'] = $datatmp['Spesifikasi'];
+		$data['AsalDaerah'] = $datatmp['AsalDaerah'];
+		$data['Material'] = $datatmp['Material'];
+		$data['Ukuran'] = $datatmp['Ukuran'];
+		$data['TglPerolehan'] = $datatmp['TglPerolehan'];
+		$data['Alamat'] = $datatmp['Alamat'];
+		$data['Kuantitas'] = $datatmp['Jumlah'];
+		$data['Satuan'] = $datatmp['NilaiPerolehan'];
+		$data['NilaiPerolehan'] = $datatmp['NilaiPerolehan'];
+		$data['Info'] = $datatmp['Info'];
+		$data['id'] = $_GET['id'];
+		$data['noKontrak'] = $datatmp['noKontrak'];
 		$data['kondisi'] = 1;
 		$data['UserNm'] = $_SESSION['ses_uoperatorid'];
-		$data['Tahun'] = $val[2];
-		$data['TipeAset'] = $val[9];
-
+		$data['Tahun'] = $datatmp['Tahun'];
+		$data['TipeAset'] = $datatmp['TipeAset'];
+		$data['AsalUsul'] = 'Pembelian';
 		$data['xls'] = 1;
-	
+		// pr($data);exit;
 		//insert data
 		$dataArr = $STORE->store_aset($data);	
 	}
-	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$_POST['kontrakid']}\">";
+	$datatmp = $RETRIEVE_PEROLEHAN->del_xlsOldData('XLSIMP');
+	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$_GET['id']}\">";
 	exit;
 	// pr($data);
 	// pr($dataaset);exit;

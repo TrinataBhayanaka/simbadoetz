@@ -1547,7 +1547,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             }
         }
         $tblAset['AsalUsul'] = $data['AsalUsul'];
-        // pr($tblAset);exit;
+
+        if(isset($data['xls'])) {
+            $tblAset['TglPembukuan'] = $data['TglPerolehan'];
+            $tblAset['StatusValidasi'] = 1;
+            $tblAset['Status_Validasi_Barang'] = 1;
+
+        }
 
         $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
             while ($row = mysql_fetch_assoc($query)){
@@ -1664,6 +1670,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['kodeKA'] = $tblAset['kodeKA'];
             $tblKib['noRegister'] = $tblAset['noRegister'];
             $tblKib['AsalUsul'] = $data['AsalUsul'];
+            if(isset($data['xls'])) {
+                $tblKib['TglPembukuan'] = $data['TglPerolehan'];
+                $tblKib['StatusValidasi'] = 1;
+                $tblKib['Status_Validasi_Barang'] = 1;
+                $tblKib['StatusTampil'] = 1;
+
+            }
             
             unset($tmpfield2);
             unset($tmpvalue2);

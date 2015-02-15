@@ -64,6 +64,7 @@ if(isset($_GET['id'])){
 					var tmp;
 					var nilai = 0;
 					if(data){
+						$("#btn-dis").removeAttr("disabled");
 						$.each(data, function(index, element) {
 				            var raw = element.split(",");
 							for(var i=0;i<raw.length;i++){
@@ -73,12 +74,14 @@ if(isset($_GET['id'])){
 				        });
 					} else {
 						nilai = 0;
+						$('#btn-dis').attr("disabled","disabled");
 					}
 					
 				    $("#totalxls").val(nilai);
 				     $('#totalxls').autoNumeric('set', nilai);
 
 				     var rule = nilai + parseInt($("#totalRBreal").val());
+				     console.log($("#totalRBreal").val());
 						if(rule > $("#spkreal").val()){
 							$('#info').html('Nilai melebihin total SPK'); 
 		                	$('#info').css("color","red");
@@ -95,7 +98,7 @@ if(isset($_GET['id'])){
 			var totalnilai = 0;	
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
-			    $("#btn-dis").removeAttr("disabled");
+			    
 			    updDataCheckbox('XLSIMP');
 
 			    setTimeout(function() {
@@ -104,7 +107,7 @@ if(isset($_GET['id'])){
 			}
 			else
 			{
-			   $('#btn-dis').attr("disabled","disabled");
+			   
 			   updDataCheckbox('XLSIMP');
 			   setTimeout(function() {
 			    	getTotalValue('XLSIMP');
@@ -170,8 +173,8 @@ if(isset($_GET['id'])){
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-				<form action="hasil_kibe.php" method=POST name="checks" ID="Form2">
-					<p><button type="submit" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Pilih</button>
+				<form action="" name="checks" ID="Form2">
+					<p><a href="hasil_kibe.php?id=<?=$_GET['id']?>"><button type="button" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Import</button></a>
 							&nbsp;</p>
 
 						<div id="demo">

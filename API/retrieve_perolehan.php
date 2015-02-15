@@ -23,6 +23,9 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $sql = "DELETE FROM tmp_asetlain WHERE UserNm = '{$_SESSION['ses_uoperatorid']}'";
 		  $execquery = $this->query($sql);
 
+		  $sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = 'XLSIMP'";
+		  $execquery = $this->query($sql);
+
 		$data = new Spreadsheet_Excel_Reader($files['myFile']['tmp_name']);
 
 		// membaca jumlah baris dari data excel
@@ -108,11 +111,14 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		// pr($kontrak);
 
 		//sum total 
-		$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
-		while ($sum = mysql_fetch_array($sqlsum)){
-					$sumTotal = $sum;
-		}
+		$sqlsum = "SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'";
+		
+		$sumTotal = $this->fetch($sqlsum);
 
+		if(!$sumTotal['total']){
+			$sumTotal['total'] = 0;
+		}
+		
 		$dataArr = array('kontrak' => $kontrak, 'sumTotal' => $sumTotal );
 
 		return $dataArr;
@@ -128,10 +134,34 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM {$table} WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' {$kondisi} {$order} LIMIT {$limit}";
 
 		$data = $this->fetch($sql,1);
-		
+
+		return $data;
+	}
+
+	public function get_aplasetlist($item){
+		$sql = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = '{$item}' AND UserNm = '{$_SESSION['ses_uoperatorid']}'";
+		$data = $this->fetch($sql);
+
+		return $data;
+	}
+
+	public function get_slowtmpData($id){
+		$sql = "SELECT * FROM tmp_asetlain WHERE temp_AsetLain_ID = '{$id}'";
+		$data = $this->fetch($sql);
+
 		return $data;
 	}
 	
+	public function del_xlsOldData($item){
+		$this->begin();
+		$sql = "DELETE FROM tmp_asetlain WHERE UserNm = '{$_SESSION['ses_uoperatorid']}'";
+		$execquery = $this->query($sql);
+
+		$sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = '{$item}'";
+		$execquery = $this->query($sql);
+		$this->commit();
+		return true;
+	}
 
 }
 ?>
