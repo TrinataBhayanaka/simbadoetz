@@ -16,6 +16,7 @@ $SSConfig['filter']       = $decodeData;
 
 $SSConfig['primaryTable'] = "aset";
 $SSConfig['primaryField'] = "Aset_ID";
+$SSConfig['searchField'] = array('a.Aset_ID', 'k.Uraian', 's.NamaSatker', 'a.kodeSatker', 'a.NilaiPerolehan');
 
 
 
