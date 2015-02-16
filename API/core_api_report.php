@@ -4324,9 +4324,9 @@ class core_api_report extends DB {
 										$KodeKa_lain
 										group by a.kodeKelompok";
 						}
-						echo $queryok ; 	
+						/*echo $queryok ; 	
 						echo "<br>";
-						echo "<br>";
+						echo "<br>";*/
 						// exit;
 						$result = $this->query($queryok) or die ($this->error('error'));		
 						while ($data = $this->fetch_object($result))
@@ -4993,7 +4993,8 @@ class core_api_report extends DB {
 			
 	}
 	
-	public function MutasiBarang($satker_id,$tglAwal,$tglAkhir){
+	//cara sederhana mutasi barang dari ka andreas
+	public function MutasiBarangSmpl($satker_id,$tglAwal,$tglAkhir){
 		if($satker_id){
 			$qsat = "SELECT kode FROM satker where kode like '$satker_id%' and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
 			$rsat = $this->query($qsat) or die ($this->error());
@@ -5015,100 +5016,38 @@ class core_api_report extends DB {
 				}	
 			}
 		}
+		// if(count($satker) == 1){
+			// $satker_id = $satker[0];
+		// }
+		// echo "satker =".$satker_id;
 		// pr($satker);
 		// exit;
-		//NOTE : PENAMBAHAN KODE RIWAYAT 28 (KAPITALISASI MUTASI)
-		foreach ($satker as $data=>$satker_id){
-			// pr($satker_id);
-			$query_01 = "SELECT distinct(T.Aset_ID),T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan,T.NilaiPerolehan_Awal,T.AsalUsul,T.noRegister,T.kodeLokasi,T.Kd_Riwayat
+		if($satker){
+			foreach ($satker as $data=>$satker_id){
+				$query= "SELECT * 
 						FROM 
-							log_tanah as T
+							mutasi_aset
 						where 
-							T.Kd_Riwayat in (2,21,7,3,28) and kodeSatker like '$satker_id%'  
-							and T.TglPerubahan >= '$tglAwal' AND T.TglPerubahan <= '$tglAkhir' group by T.Aset_ID desc";
-			$query_02 = "SELECT distinct(M.Aset_ID),
-										M.kodeSatker,M.kodeKelompok,M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-										M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
-										M.Silinder,M.kodeLokasi,M.NilaiPerolehan,M.NilaiPerolehan_Awal,M.noRegister,M.kondisi,M.Kd_Riwayat
-						FROM 
-							log_mesin as M
-						where 
-							M.Kd_Riwayat in (2,21,7,3,28) and M.kodeSatker like '$satker_id%' 
-							and M.TglPerubahan >= '$tglAwal' AND M.TglPerubahan <= '$tglAkhir'
-							group by M.Aset_ID desc";
-			$query_03 = "SELECT distinct(B.Aset_ID),
-										B.kodeSatker,B.kodeKelompok,B.AsalUsul,
-										B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
-										B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
-										B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
-										B.NilaiPerolehan,B.NilaiPerolehan_Awal,B.noRegister,B.Kd_Riwayat
-						FROM log_bangunan as B
-						where 
-							B.Kd_Riwayat in (2,21,7,3,28) and B.kodeSatker like '$satker_id%' 
-							and B.TglPerubahan >= '$tglAwal' AND B.TglPerubahan <= '$tglAkhir' 
-							group by B.Aset_ID desc";
-			$query_04 = "SELECT distinct(J.Aset_ID),
-										J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
-										J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
-										J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
-										J.kondisi, J.kodeLokasi,J.NilaiPerolehan,J.NilaiPerolehan_Awal,J.noRegister,J.Kd_Riwayat
-						FROM log_jaringan as J
-						where 
-							J.Kd_Riwayat in (2,21,7,3,28) and J.kodeSatker like '$satker_id%' 
-							and J.TglPerubahan >= '$tglAwal' AND J.TglPerubahan <= '$tglAkhir' 
-							group by J.Aset_ID desc";
-			$query_05 = "SELECT distinct(AL.Aset_ID),
-										AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
-										AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
-										AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-										AL.kondisi, AL.kodeLokasi,AL.NilaiPerolehan,AL.NilaiPerolehan_Awal,AL.noRegister,AL.Kd_Riwayat
-						FROM log_asetlain as AL
-						where 
-							AL.Kd_Riwayat in (2,21,7,3,28) and AL.kodeSatker like '$satker_id%' 
-							and AL.TglPerubahan >= '$tglAwal' AND AL.TglPerubahan <= '$tglAkhir'
-							group by AL.Aset_ID desc";
-			$query_06 = "SELECT distinct(KDPA.Aset_ID),
-										KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
-										KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
-										KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
-										KDPA.kondisi, KDPA.kodeLokasi,
-										KDPA.NilaiPerolehan,KDPA.NilaiPerolehan_Awal,KDPA.noRegister,KDPA.Kd_Riwayat
-						FROM log_kdp as KDPA
-						where KDPA.Kd_Riwayat in (2,21,7,3,28) and KDPA.kodeSatker like '$satker_id%' 
-							and KDPA.TglPerubahan >= '$tglAwal' AND KDPA.TglPerubahan <= '$tglAkhir' 
-						group by KDPA.Aset_ID desc";
-			
-			
-			// $queryALL = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
-			$queryALL = array($query_03);
-			
-			
-			for ($i = 0; $i < count($queryALL); $i++)
-			{
+							kodeSatker like '$satker_id%'  
+							and TglPerolehan >= '$tglAwal' AND TglPerolehan <= '$tglAkhir' 
+							and TglPembukuan >= '$tglAwal' AND TglPembukuan <= '$tglAkhir'";
 				
-				/*echo "<br>";
-				echo "query_$i =".$queryALL[$i];
-				echo "<br>";
-				echo "<br>";*/
-				// exit;
-				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
+				// pr($query);
+				$result = $this->query($query) or die ($this->error('error dataQuery'));
 				if($result){
-					// $i = 0;
 					while ($dataAll = $this->fetch_object($result))
 					{
-						// $getdata[$satker_id][]= $dataAll;
 						$getdata[]= $dataAll;
 					}
-					
-							
 				}
-				
 			}
 		}
-		// pr($getdata);
 		// exit;
-		return $getdata;
+		if($getdata){ 
+			return $getdata;
+		}		
 	}
+	
 	
 	public function MutasiSkpd ($satker,$tglawal,$tglakhir){
 		// pr($satker);
@@ -5265,13 +5204,18 @@ class core_api_report extends DB {
 	
 	public function TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id){
 		// ECHO "FLAG =".$flag;
+		// exit;
 		if($Info != ''){
 			//untuk mutasi
 			if($Info == 'mutasi'){
-				$paramKib 		= "TglPerolehan >'$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan'";
-				$paramMutasi 	= "TglSKKDH >'$tglawalperolehan' AND TglSKKDH <='$tglakhirperolehan' order by TglSKKDH desc";
-				$paramPnghpsn 	= "TglHapus >'$tglawalperolehan' AND TglHapus <='$tglakhirperolehan' order by TglHapus desc"; 
-				$paramLog 		= "TglPerubahan >'$tglawalperolehan' AND TglPerubahan <='$tglakhirperolehan' AND Kd_Riwayat != '77' order by log_id desc";
+				$paramKib 		= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan'
+								   AND a.TglPembukuan >='$tglawalperolehan' AND a.TglPembukuan <='$tglakhirperolehan' 
+								   AND a.kodeSatker LIKE '$skpd_id%' AND a.Status_Validasi_Barang = 1 AND a.StatusValidasi = 1 
+								   AND a.kondisi != 3";
+				$paramLog 		= "AND m.TglPerolehan >='$tglawalperolehan' AND m.TglPerolehan <='$tglakhirperolehan'
+								   AND m.TglPembukuan >='$tglawalperolehan' AND m.TglPembukuan <='$tglakhirperolehan' 
+								   AND m.TglPerubahan >'$tglawalperolehan' AND m.TglPerubahan <='$tglakhirperolehan' 
+								   AND (m.Kd_Riwayat != '77' or mt.satkerAwal LIKE '$skpd_id%') AND m.kodeSatker LIKE '$skpd_id%' AND m.Kd_Riwayat = 3 order by m.log_id desc";
 			}elseif($Info == 'BISI' || $Info =='RBISI'){
 				
 				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' ";
@@ -5288,35 +5232,35 @@ class core_api_report extends DB {
 		}else{
 			if($TypeRprtr == 'ATM' || $TypeRprtr == 'ATB' ){
 				$paramKib 		= "TglPerolehan <'2008-01-01' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi 	= "TglPerolehan <'2008-01-01' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramMutasi 	= "TglPerolehan <'2008-01-01' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglSKKDH desc";
 				$paramPnghpsn 	= "TglPerolehan <'2008-01-01' AND TglHapus >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan'  AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
 				$paramLog 		= "TglPerolehan <'2008-01-01' AND TglPerubahan >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' AND Kd_Riwayat != '77' order by log_id desc";
 		
 				$paramKib_2 		= "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi_2 	    = "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramMutasi_2 	    = "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglSKKDH desc";
 				$paramPnghpsn_2 	= "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglHapus >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan'  AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
 				$paramLog_2 		= "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglPerubahan >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' AND Kd_Riwayat != '77'  order by log_id desc";
 			}
 			elseif($TypeRprtr == 'neraca'){
 			
 				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi 	= "TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramMutasi 	= "TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglSKKDH desc";
 				$paramPnghpsn 	= "TglPerolehan <='$tglakhirperolehan' AND TglHapus >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan'  AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
 				$paramLog 		= "TglPerolehan <='$tglakhirperolehan' AND TglPerubahan >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' AND Kd_Riwayat != '77' order by log_id desc";
 				
 				$paramKib_bc 		= "TglPerolehan <'2008-01-01' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi_bc 	= "TglPerolehan <'2008-01-01' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramMutasi_bc 	= "TglPerolehan <'2008-01-01' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglSKKDH desc";
 				$paramPnghpsn_bc 	= "TglPerolehan <'2008-01-01' AND TglHapus >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan'  AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
 				$paramLog_bc 		= "TglPerolehan <'2008-01-01' AND TglPerubahan >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' AND Kd_Riwayat != '77'  order by log_id desc";
 		
 				$paramKib_2 		= "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi_2 	    = "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramMutasi_2 	    = "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglSKKDH desc";
 				$paramPnghpsn_2 	= "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglHapus >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan'  AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
 				$paramLog_2 		= "TglPerolehan >='2008-01-01' AND TglPerolehan <='$tglakhirperolehan' AND TglPerubahan >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' AND Kd_Riwayat != '77'  order by log_id desc";
 			
 			}else{
 				$paramKib 		= "TglPerolehan <='$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi 	= "TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND SatkerAwal LIKE '$skpd_id%' order by TglSKKDH desc";
+				$paramMutasi 	= "TglPerolehan <='$tglakhirperolehan' AND TglSKKDH >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' order by TglSKKDH desc";
 				$paramPnghpsn 	= "TglPerolehan <='$tglakhirperolehan' AND TglHapus >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan'  AND kodeSatker LIKE '$skpd_id%' order by TglHapus desc"; 
 				$paramLog 		= "TglPerolehan <='$tglakhirperolehan' AND TglPerubahan >'$tglakhirperolehan' AND TglPembukuan <='$tglakhirperolehan' AND kodeSatker LIKE '$skpd_id%' AND Kd_Riwayat != '77'  order by log_id desc";
 				
@@ -5674,7 +5618,7 @@ class core_api_report extends DB {
 									from log_bangunan 
 									where $paramLog";
 					
-					$queryAlter = "ALTER table bangunan_ori add primary key(Bangunan_ID)";
+					$queryAlter = "ALTER table bangunan add primary key(Bangunan_ID)";
 					
 				}				
 			}elseif($flag == 'D'){
@@ -5724,7 +5668,7 @@ class core_api_report extends DB {
 									AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
 								from log_jaringan 
 								where $paramLog";
-				$queryAlter = "ALTER table tanah add primary key(Jaringan_ID)";				
+				$queryAlter = "ALTER table jaringan add primary key(Jaringan_ID)";				
 			}elseif($flag == 'E'){
 			//KIB E
 				$queryKib 		= "create temporary table asetlain as
@@ -5765,7 +5709,7 @@ class core_api_report extends DB {
 									Ukuran, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun 
 								from log_asetlain 
 								where $paramLog";
-				$queryAlter = "ALTER table tanah add primary key(AsetLain_ID)";						
+				$queryAlter = "ALTER table asetlain add primary key(AsetLain_ID)";						
 			}elseif($flag == 'F'){
 			//KIB F
 				$queryKib 		= "create temporary table kdp as
@@ -5806,7 +5750,7 @@ class core_api_report extends DB {
 									TglMulai, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID 
 								from log_kdp 
 								where $paramLog";
-				$queryAlter = "ALTER table tanah add primary key(KDP_ID)";						
+				$queryAlter = "ALTER table kdp add primary key(KDP_ID)";						
 			}
 			if($TypeRprtr == 'ATM' ){
 				$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn,
@@ -6543,6 +6487,104 @@ class core_api_report extends DB {
 								where $paramLog";
 				
 				$queryAlterF = "ALTER table kdp add primary key(KDP_ID)";		
+			}elseif($Info == 'mutasi'){
+				// echo "masuk mutasi";
+				$queryMutasiAset = "create temporary table mutasi_aset as
+									select a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister,a.noKontrak,a.TglPerolehan,a.TglPembukuan, 
+									a.CaraPerolehan as Merk,a.CaraPerolehan as Sertifikat,a.CaraPerolehan as Bahan, a.CaraPerolehan as CaraPerolehan, 
+									a.Tahun,a.CaraPerolehan as Ukuran,a.Satuan,a.kondisi,a.NilaiPerolehan, a.NilaiPerolehan as NilaiPerolehan_Awal, 
+									1 as Kuantitas,a.AsalUsul,a.Info,a.kodeData as Kd_Riwayat,a.kodeSatker as satkerAwal
+									from aset as a left join kelompok k on k.kode=a.kodeKelompok
+									WHERE $paramKib";
+				
+				$queryAlterLogTanah = "ALTER table mutasi_aset add primary key(Aset_ID)";
+				//tanah
+				$queryLogTanah = "replace into mutasi_aset(Aset_ID,kodeKelompok,kodeSatker,kodeLokasi,noRegister,noKontrak,TglPerolehan,TglPembukuan, 
+									Merk,Sertifikat,Bahan, CaraPerolehan, 
+									Tahun,Ukuran,Satuan,kondisi,NilaiPerolehan,NilaiPerolehan_Awal, 
+									Kuantitas,AsalUsul,Info,Kd_Riwayat,satkerAwal) 
+
+									select a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister,a.noKontrak,a.TglPerolehan,a.TglPembukuan, 
+									NULL,NULL,NULL, m.CaraPerolehan as CaraPerolehan, 
+									a.Tahun,NULL,a.Satuan,a.kondisi,m.NilaiPerolehan, m.NilaiPerolehan_Awal, 
+									1 as Kuantitas,a.AsalUsul,a.Info,m.Kd_Riwayat,mt.SatkerAwal
+									from log_tanah as m 
+									left join kelompok k on k.kode=m.kodeKelompok 
+									left join aset a on a.Aset_ID=m.Aset_ID
+									left join view_mutasi_aset mt on mt.Aset_ID=a.Aset_ID
+									where m.Aset_ID!=0 and m.Aset_ID is not NUll $paramLog";
+									
+				// $queryAlterLogMesin = "ALTER table mutasi_aset add primary key(Aset_ID)";
+				
+				//mesin					
+				$queryLogMesin = "replace into mutasi_aset(Aset_ID,kodeKelompok,kodeSatker,kodeLokasi,noRegister,noKontrak,TglPerolehan,TglPembukuan, 
+									Merk,Sertifikat,Bahan, CaraPerolehan, 
+									Tahun,Ukuran,Satuan,kondisi,NilaiPerolehan,NilaiPerolehan_Awal, 
+									Kuantitas,AsalUsul,Info,Kd_Riwayat,satkerAwal) 
+
+									select a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister,a.noKontrak,a.TglPerolehan,a.TglPembukuan, 
+									concat(m.Merk,'/',m.Model),concat(m.NoSeri,'/',NoRangka,'/',NoMesin),a.CaraPerolehan as Bahan, a.CaraPerolehan as CaraPerolehan, 
+									a.Tahun,a.CaraPerolehan as Ukuran,a.Satuan,a.kondisi,m.NilaiPerolehan, m.NilaiPerolehan_Awal, 
+									1 as Kuantitas,a.AsalUsul,a.Info,m.Kd_Riwayat,mt.SatkerAwal
+									from log_mesin as m 
+									left join kelompok k on k.kode=m.kodeKelompok 
+									left join aset a on a.Aset_ID=m.Aset_ID
+									left join view_mutasi_aset mt on mt.Aset_ID=a.Aset_ID
+									where m.Aset_ID!=0 and m.Aset_ID is not NUll $paramLog";
+									
+				// $queryAlterLogBangunan = "ALTER table mutasi_aset add primary key(Aset_ID)";
+				
+				//bangunan
+				$queryLogBangunan = "replace into mutasi_aset(Aset_ID,kodeKelompok,kodeSatker,kodeLokasi,noRegister,noKontrak,TglPerolehan,TglPembukuan, 
+									Merk,Sertifikat,Bahan, CaraPerolehan, 
+									Tahun,Ukuran,Satuan,kondisi,NilaiPerolehan,NilaiPerolehan_Awal, 
+									Kuantitas,AsalUsul,Info,Kd_Riwayat,SatkerAwal) 
+
+									select a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister,a.noKontrak,a.TglPerolehan,a.TglPembukuan, 
+									NULL,NoSertifikat,NULL, m.CaraPerolehan as CaraPerolehan, 
+									a.Tahun,NULL,a.Satuan,a.kondisi,m.NilaiPerolehan, m.NilaiPerolehan_Awal, 
+									1 as Kuantitas,a.AsalUsul,a.Info,m.Kd_Riwayat,mt.SatkerAwal
+									from log_bangunan as m 
+									left join kelompok k on k.kode=m.kodeKelompok 
+									left join aset a on a.Aset_ID=m.Aset_ID
+									left join view_mutasi_aset mt on mt.Aset_ID=a.Aset_ID
+									where m.Aset_ID!=0 and m.Aset_ID is not NUll $paramLog";
+									
+				// $queryAlterLogJaringan = "ALTER table mutasi_aset add primary key(Aset_ID)";
+				
+				//jaringan
+				$queryLogJaringan = "replace into mutasi_aset(Aset_ID,kodeKelompok,kodeSatker,kodeLokasi,noRegister,noKontrak,TglPerolehan,TglPembukuan, 
+									Merk,Sertifikat,Bahan, CaraPerolehan, 
+									Tahun,Ukuran,Satuan,kondisi,NilaiPerolehan,NilaiPerolehan_Awal, 
+									Kuantitas,AsalUsul,Info,Kd_Riwayat,SatkerAwal) 
+
+									select a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister,a.noKontrak,a.TglPerolehan,a.TglPembukuan, 
+									NULL,NoSertifikat,NULL, m.CaraPerolehan as CaraPerolehan, 
+									a.Tahun,NULL,a.Satuan,a.kondisi,m.NilaiPerolehan, m.NilaiPerolehan_Awal, 
+									1 as Kuantitas,a.AsalUsul,a.Info,m.Kd_Riwayat,mt.SatkerAwal
+									from log_jaringan as m 
+									left join kelompok k on k.kode=m.kodeKelompok 
+									left join aset a on a.Aset_ID=m.Aset_ID
+									left join view_mutasi_aset mt on mt.Aset_ID=a.Aset_ID
+									where m.Aset_ID!=0 and m.Aset_ID is not NUll $paramLog";
+									
+				// $queryAlterLogasetlain = "ALTER table mutasi_aset add primary key(Aset_ID)";
+				
+				//asetlain
+				$queryLogasetlain = "replace into mutasi_aset(Aset_ID,kodeKelompok,kodeSatker,kodeLokasi,noRegister,noKontrak,TglPerolehan,TglPembukuan, 
+									Merk,Sertifikat,Bahan, CaraPerolehan, 
+									Tahun,Ukuran,Satuan,kondisi,NilaiPerolehan,NilaiPerolehan_Awal, 
+									Kuantitas,AsalUsul,Info,Kd_Riwayat,SatkerAwal)  
+
+									select a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister,a.noKontrak,a.TglPerolehan,a.TglPembukuan, 
+									NULL,NULL,NULL, m.CaraPerolehan as CaraPerolehan, 
+									a.Tahun,NULL,a.Satuan,a.kondisi,m.NilaiPerolehan, m.NilaiPerolehan_Awal, 
+									1 as Kuantitas,a.AsalUsul,a.Info,m.Kd_Riwayat,mt.SatkerAwal
+									from log_asetlain as m 
+									left join kelompok k on k.kode=m.kodeKelompok 
+									left join aset a on a.Aset_ID=m.Aset_ID
+									left join view_mutasi_aset mt on mt.Aset_ID=a.Aset_ID
+									where m.Aset_ID!=0 and m.Aset_ID is not NUll $paramLog";
 			}else{
 			//start kiba
 			$queryKibA		= "create temporary table tanah as
@@ -6953,8 +6995,15 @@ class core_api_report extends DB {
 									$queryKibC,$queryAlterC,$queryLogC,$queryMutasiC,$queryPnghpsnC,
 									$queryKibD,$queryAlterD,$queryLogD,$queryMutasiD,$queryPnghpsnD,
 									$queryKibE,$queryAlterE,$queryLogE,$queryMutasiE,$queryPnghpsnE);
-			}
-			else{
+			}elseif($TypeRprtr == 'mutasi' ){
+				$AllTableTemp = array($queryMutasiAset,
+									$queryAlterLogTanah,
+									$queryLogTanah,
+									$queryLogMesin,
+									$queryLogBangunan,
+									$queryLogJaringan,
+									$queryLogasetlain);
+			}else{
 				// echo "all";
 				// echo "<br>";
 				
@@ -6980,6 +7029,125 @@ class core_api_report extends DB {
 		
 	
 	}
+
+	
+	//backup mutasi barang
+	/*public function MutasiBarang($satker_id,$tglAwal,$tglAkhir){
+		if($satker_id){
+			$qsat = "SELECT kode FROM satker where kode like '$satker_id%' and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					// $satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+					$satker[] = $dtrsat->kode;
+				}	
+			}
+		}else{
+			$qsat = "  SELECT distinct(`kodeSatker`) FROM `aset` where (`NilaiPerolehan` is not null and `NilaiPerolehan` != '') order by kodeSatker asc   ";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					// $satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+					$satker[] = $dtrsat->kode;
+				}	
+			}
+		}
+		// pr($satker);
+		// exit;
+		//NOTE : PENAMBAHAN KODE RIWAYAT 28 (KAPITALISASI MUTASI)
+		foreach ($satker as $data=>$satker_id){
+			// pr($satker_id);
+			$query_01 = "SELECT distinct(T.Aset_ID),T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan,T.NilaiPerolehan_Awal,T.AsalUsul,T.noRegister,T.kodeLokasi,T.Kd_Riwayat
+						FROM 
+							log_tanah as T
+						where 
+							T.Kd_Riwayat in (2,21,7,3,28) and kodeSatker like '$satker_id%'  
+							and T.TglPerubahan >= '$tglAwal' AND T.TglPerubahan <= '$tglAkhir' group by T.Aset_ID desc";
+			$query_02 = "SELECT distinct(M.Aset_ID),
+										M.kodeSatker,M.kodeKelompok,M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+										M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+										M.Silinder,M.kodeLokasi,M.NilaiPerolehan,M.NilaiPerolehan_Awal,M.noRegister,M.kondisi,M.Kd_Riwayat
+						FROM 
+							log_mesin as M
+						where 
+							M.Kd_Riwayat in (2,21,7,3,28) and M.kodeSatker like '$satker_id%' 
+							and M.TglPerubahan >= '$tglAwal' AND M.TglPerubahan <= '$tglAkhir'
+							group by M.Aset_ID desc";
+			$query_03 = "SELECT distinct(B.Aset_ID),
+										B.kodeSatker,B.kodeKelompok,B.AsalUsul,
+										B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+										B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+										B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+										B.NilaiPerolehan,B.NilaiPerolehan_Awal,B.noRegister,B.Kd_Riwayat
+						FROM log_bangunan as B
+						where 
+							B.Kd_Riwayat in (2,21,7,3,28) and B.kodeSatker like '$satker_id%' 
+							and B.TglPerubahan >= '$tglAwal' AND B.TglPerubahan <= '$tglAkhir' 
+							group by B.Aset_ID desc";
+			$query_04 = "SELECT distinct(J.Aset_ID),
+										J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+										J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+										J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+										J.kondisi, J.kodeLokasi,J.NilaiPerolehan,J.NilaiPerolehan_Awal,J.noRegister,J.Kd_Riwayat
+						FROM log_jaringan as J
+						where 
+							J.Kd_Riwayat in (2,21,7,3,28) and J.kodeSatker like '$satker_id%' 
+							and J.TglPerubahan >= '$tglAwal' AND J.TglPerubahan <= '$tglAkhir' 
+							group by J.Aset_ID desc";
+			$query_05 = "SELECT distinct(AL.Aset_ID),
+										AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+										AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+										AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+										AL.kondisi, AL.kodeLokasi,AL.NilaiPerolehan,AL.NilaiPerolehan_Awal,AL.noRegister,AL.Kd_Riwayat
+						FROM log_asetlain as AL
+						where 
+							AL.Kd_Riwayat in (2,21,7,3,28) and AL.kodeSatker like '$satker_id%' 
+							and AL.TglPerubahan >= '$tglAwal' AND AL.TglPerubahan <= '$tglAkhir'
+							group by AL.Aset_ID desc";
+			$query_06 = "SELECT distinct(KDPA.Aset_ID),
+										KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+										KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+										KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+										KDPA.kondisi, KDPA.kodeLokasi,
+										KDPA.NilaiPerolehan,KDPA.NilaiPerolehan_Awal,KDPA.noRegister,KDPA.Kd_Riwayat
+						FROM log_kdp as KDPA
+						where KDPA.Kd_Riwayat in (2,21,7,3,28) and KDPA.kodeSatker like '$satker_id%' 
+							and KDPA.TglPerubahan >= '$tglAwal' AND KDPA.TglPerubahan <= '$tglAkhir' 
+						group by KDPA.Aset_ID desc";
+			
+			
+			// $queryALL = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+			$queryALL = array($query_03);
+			
+			
+			for ($i = 0; $i < count($queryALL); $i++)
+			{
+				
+				/*echo "<br>";
+				echo "query_$i =".$queryALL[$i];
+				echo "<br>";
+				echo "<br>";*/
+				// exit;*/
+				/*$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
+				if($result){
+					// $i = 0;
+					while ($dataAll = $this->fetch_object($result))
+					{
+						// $getdata[$satker_id][]= $dataAll;
+						$getdata[]= $dataAll;
+					}
+					
+							
+				}
+				
+			}
+		}
+		// pr($getdata);
+		// exit;
+		return $getdata;
+	}*/	
 }
 
 ?>
