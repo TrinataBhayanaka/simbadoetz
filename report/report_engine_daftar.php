@@ -12,7 +12,7 @@ include "$path/report/report_engine.php";
 pr($path);
 class report_engine_daftar extends report_engine {
 
-     public function retrieve_daftar_sk($dataArr, $gambar, $sk, $tanggalCetak) {
+     public function retrieve_daftar_sk($dataArr, $gambar, $sk, $tanggalCetak,$TitleSk) {
           if ($dataArr != "") {
                
                $no = 1;
@@ -56,19 +56,30 @@ class report_engine_daftar extends report_engine {
           <tr>
                <td style=\"width: 10%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
                <td colspan=\"2\" style=\";width: 70%; text-align: center;\">
-                    <h3>LAMPIRAN KEPUTUSAN</h3>
+                    <h3>LAMPIRAN {$TitleSk}</h3>
                     <h3>PEMERINTAH KOTA PEKALONGAN</h3>
                </td>
           </tr>
           <tr>
                     <td>&nbsp;</td>
-                    <td style=\"width: 50%;text-align:right\">Nomor</td>
-                         <td>:$sk</td>
+                    <td style=\"width: 50%;text-align:right\">&nbsp;</td>
+                         <td>&nbsp;</td>
           </tr>
           <tr>
                     <td>&nbsp;</td>
-                    <td style=\"width: 20%;text-align:right\">Tanggal</td>
-                         <td>:$tanggalCetak</td>
+                    <td style=\"width: 20%;text-align:right\">&nbsp;</td>
+                         <td align=\"right\">
+                              <table>
+                                   <tr>
+                                        <td>Nomor</td>
+                                        <td>: $sk</td>
+                                   </tr>
+                                   <tr>
+                                        <td>Tanggal</td>
+                                        <td>: $tanggalCetak</td>
+                                   </tr>
+                              </table>
+                         </td>
           </tr>
      </table>";
                $body.="<table style=\"text-align: left; width: 100%; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
