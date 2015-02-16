@@ -326,7 +326,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             // pr($_SESSION);
 
             logFile(serialize($_SESSION));
-            $ses_satkerkode = $_SESSION['ses_mutasi_filter']['kodeSatker'];
+            $ses_satkerkode = $_SESSION['ses_param_mutasi']['kodeSatker'];
 
             $filter = "";
             if ($ses_satkerkode) $filter .= "AND ma.SatkerAwal LIKE '{$ses_satkerkode}%'";
@@ -348,6 +348,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 
 
                 foreach ($result as $key => $value) {
+
+                    $sortByMutasiID[$value['Mutasi_ID']] = $value; 
+
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
@@ -359,28 +362,46 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $tmpRes = $this->db->lazyQuery($sqlSelect,$debug);
                     if ($tmpRes){
 
-                        $res[] = $tmpRes;
-                        $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
-                        $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
-                        $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
-                        $res[$key][0]['Jumlah'] = intval($value['Jumlah']);
+                        foreach ($tmpRes as $key => $val) {
+                            $mutasiNew[$val['Mutasi_ID']] = $val;
+                        }
+                        // logFile('data res before add '.serialize($tmpRes));
+                        // $res[] = $tmpRes;
+                        // $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
+                        // $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
+                        // $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
+                        // $res[$key][0]['Jumlah'] = intval($value['Jumlah']);
+
+                        // logFile('data res after add '.serialize($tmpRes));
                     }
                     
                 }
                 
-                // pr($res);
-                foreach ($res as $value) {
+                if ($mutasiNew){
 
-                    if ($value){
-                        
-                        foreach ($value as $val) {
-                            if ($val['Mutasi_ID'])$newData[] = $val;
-                        } 
+                    foreach ($mutasiNew as $key => $value) {
+                        $res[$value['Mutasi_ID']] = array_merge($value, $sortByMutasiID[$value['Mutasi_ID']]);
                     }
-                    
+
+                    // pr($res);
+                    // pr($mutasiNew);
+                    if ($res){
+                        foreach ($res as $value) {
+
+                            if ($value){
+                                
+                                
+                                    if ($value['Mutasi_ID'])$newData[] = $value;
+                                 
+                            }
+                            
+                        }
+                        // pr($newData);
+                        return $newData;  
+                    }
                 }
-                // pr($newData);
-                return $newData;  
+                
+                
             } 
             return false;
         }
@@ -1153,6 +1174,83 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             $result = $this->db->lazyQuery($sqlSelect,$debug,2);
 
+            if ($result){
+
+                foreach ($data['aset_id'] as $key => $value) {
+                    $Aset_ID[] = $value;
+
+                    $sqlSelect = array(
+                        'table'=>"aset",
+                        'field'=>"TipeAset",
+                        'condition'=>"Aset_ID = {$value}",
+                        );
+                    $getKib[] = $this->db->lazyQuery($sqlSelect,$debug);
+
+                }
+
+                foreach ($getKib as $key => $value) {
+                    $kib[] = $value[0]['TipeAset'];
+
+                }
+
+                $arrTabel = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+                foreach ($Aset_ID as $key => $value) {
+                    
+                    $tabel = $this->getTableKibAlias($arrTabel[$kib[$key]]);
+                    
+                    
+                    $kibAset = $tabel['listTableOri'];
+
+                    $updateKib = array(
+                            'table'=>"{$kibAset}",
+                            'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
+                            'condition'=>"Aset_ID = {$value}",
+                            );
+
+                    $result1 = $this->db->lazyQuery($updateKib,$debug,2);
+
+                    $updateAset = array(
+                            'table'=>"aset",
+                            'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 1",
+                            'condition'=>"Aset_ID = {$value}",
+                            );
+
+                    $result1 = $this->db->lazyQuery($updateAset,$debug,2);
+
+                    $sqlSelect = array(
+                            'table'=>"mutasiaset",
+                            'field'=>"Status = 3",
+                            'condition'=>"Mutasi_ID = '{$data[mutasiid]}' AND Status = 0 AND Aset_ID IN ({$value})",
+                            );
+
+                    $result = $this->db->lazyQuery($sqlSelect,$debug,2);
+
+                    $sql = array(
+                            'table'=>"penggunaanaset",
+                            'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
+                            'condition'=>"Aset_ID IN ({$value})",
+                            );
+
+                    $result = $this->db->lazyQuery($sql,$debug,2);
+
+                }
+                
+                // $aset_id = implode(',', $Aset_ID);
+
+                
+
+                $sql = array(
+                        'table'=>'mutasi',
+                        'field'=>"FixMutasi = 3",
+                        'condition' => "Mutasi_ID = '{$data[mutasiid]}' ",
+                        'limit' => '1',
+                        );
+                $res = $this->db->lazyQuery($sql,$debug,2);
+                if ($res) return true;
+
+            }
+
+        /*
             $sql = array(
                     'table'=>"penggunaanaset",
                     'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
@@ -1160,10 +1258,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     );
 
             $result = $this->db->lazyQuery($sql,$debug,2);
-
-            if ($result){
-                return true;
-            }
+        */
+            
             return false;
         }
 

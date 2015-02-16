@@ -142,20 +142,21 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 
 					</div><!-- /search-option -->
 	        <?php
-				}	
+				}
+					
 			?>
 
 			<div>
 			<form action="" method="POST">
 				 <div class="formKontrak">
 				 		<ul>
-							<?=selectSatker('kodeSatker','255',true,$dataArr['kib']['kodeSatker'],'required');?>
+							<?=selectSatker('kodeSatker','255',true,$dataArr['aset']['kodeSatker'],'required');?>
 						</ul>
 				 		<ul>
-							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['kib']['Tahun']."_".$dataArr['aset']['kodeRuangan']);?>
+							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan']);?>
 						</ul>
 						<ul>
-							<?php selectAset('kodeKelompok','255',true,$dataArr['kib']['kodeKelompok'],'required'); ?>
+							<?php selectAset('kodeKelompok','255',true,$dataArr['aset']['kodeKelompok'],'required'); ?>
 						</ul>
 						<ul class="tanah" style="display:none">
 							<li>
@@ -327,13 +328,13 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="TglPerolehan" id="tglPerolehan" value="<?=$dataArr['kib']['TglPerolehan']?>" required/>
+										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="TglPerolehan" id="tglPerolehan" value="<?=$dataArr['aset']['TglPerolehan']?>" required/>
 									</div>
 								</div>
 							</li>
 							<li>
 								<span class="span2">Alamat</span>
-								<textarea name="Alamat" class="span3" ><?=$dataArr['kib']['Alamat']?></textarea>
+								<textarea name="Alamat" class="span3" ><?=$dataArr['aset']['Alamat']?></textarea>
 							</li>
 							<li>
 								<span class="span2">Jumlah</span>
@@ -341,8 +342,8 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$dataArr['kib']['NilaiPerolehan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
-								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=$dataArr['kib']['NilaiPerolehan']?>" >
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$dataArr['aset']['NilaiPerolehan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=$dataArr['aset']['NilaiPerolehan']?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
@@ -351,7 +352,7 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3" ><?=$dataArr['kib']['Info']?></textarea>
+								<textarea name="Info" class="span3" ><?=$dataArr['aset']['Info']?></textarea>
 							</li>
 							<li>
 								<span class="span2">
