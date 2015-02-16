@@ -81,10 +81,18 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // $res[$key]['NamaSatkerUsul']=$value['NamaSatker'];
             //////////////////////////////////////////pr($resSat);
             // $Aset_ID=$value['Aset_ID'];
+            $data=explode(",",$Aset_ID );
+            // //////////////pr($data);
+            foreach ($data as $key => $value) {
+                if($value!=""){
+                    $dataku[]=$value;
+                }
+            }
+            $AsetID=implode(",", $dataku);
             $sqlAst = array(
                     'table'=>'Aset',
                     'field'=>" NilaiPerolehan ",
-                    'condition' => "Aset_ID IN ($Aset_ID)"
+                    'condition' => "Aset_ID IN ($AsetID)"
                     );
             
             $resAst = $this->db->lazyQuery($sqlAst,$debug);

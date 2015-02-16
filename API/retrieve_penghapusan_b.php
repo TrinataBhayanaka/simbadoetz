@@ -9104,19 +9104,24 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $TipeAsetNo=$TableAbjadlist[$AsetTipe];
 
                 $table = $this->getTableKibAlias($TipeAsetNo);
-
-                //pr($table);
+                    $listTable = $table['listTable'];
+                    $listTableAlias = $table['listTableAlias'];
+                    $listTableAbjad = $table['listTableAbjad'];
+                    $listTableOri = $table['listTableOri'];
+                    $listTableField = $table['listTableField'];
+                    $FieltableGeneral= $table['FieltableGeneral'];
+                pr($table);
 
                 $sqlUPDAset = array(
                     'table'=>'Aset',
                     'field'=>"fixPenggunaan=0, Status_Validasi_Barang=0,StatusValidasi=0  ",
                     'condition' => "Aset_ID='$Aset_ID'",
                     );
-                //pr($sqlUPDAset);
+                pr($sqlUPDAset);
                 $resUPDAset = $this->db->lazyQuery($sqlUPDAset,$debug,2);
 
                 $sqlUPDKib= array(
-                    'table'=>"$tabel",
+                    'table'=>"{$listTableOri}",
                     'field'=>"StatusTampil=0, Status_Validasi_Barang=0,StatusValidasi=0 ",
                     'condition' => "Aset_ID='$Aset_ID'",
                     );
