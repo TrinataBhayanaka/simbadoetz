@@ -374,7 +374,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     if ($value){
                         
                         foreach ($value as $val) {
-                            $newData[] = $val;
+                            if ($val['Mutasi_ID'])$newData[] = $val;
                         } 
                     }
                     
