@@ -29,10 +29,10 @@ if($tglHapus != ''){
 }
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-
+$TitleSk="PERMOHONAN USULAN";
 $data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_usulan_penghapusan($id);
 // pr($data);
-$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak);
+$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk);
 // pr($html);
 // exit;
 if($tipe!="2"){
