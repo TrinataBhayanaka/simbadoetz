@@ -1046,6 +1046,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 
 
                 foreach ($result as $key => $value) {
+
+                    $sortByMutasiID[$value['Mutasi_ID']] = $value;
+
                     $sqlSelect = array(
                         'table'=>"mutasi AS m, satker AS s",
                         'field'=>"m.*, s.NamaSatker",
@@ -1060,12 +1063,18 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     
                     if ($tmpRes){
                         // $mutasiTmp[] = $value['Mutasi_ID'];
+                        
+                        foreach ($tmpRes as $key => $val) {
+                            $mutasiNew[$val['Mutasi_ID']] = $val;
+                        }
+
+                        /*
                         $res[] = $tmpRes;
                         $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                         $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
                         $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
                         $res[$key][0]['Jumlah'] = $value['Jumlah'];
-
+                        */
                         // if (in_array($tmpRes[0]['Mutasi_ID'], haystack))
                         // $newDataTmp[] = $tmpRes;
 
@@ -1075,19 +1084,29 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
 
                 // pr($res);
-                foreach ($res as $value) {
+                if ($mutasiNew){
 
-                    if ($value){
-                        
-                        foreach ($value as $val) {
-
-                            if ($val['Mutasi_ID'])$newData[] = $val;
-                        } 
+                    foreach ($mutasiNew as $key => $value) {
+                        $res[$value['Mutasi_ID']] = array_merge($value, $sortByMutasiID[$value['Mutasi_ID']]);
                     }
-                    
-                }
-                // pr($newData);
-                return $newData;  
+
+                    // pr($res);
+                    // pr($mutasiNew);
+                    if ($res){
+                        foreach ($res as $value) {
+
+                            if ($value){
+                                
+                                
+                                    if ($value['Mutasi_ID'])$newData[] = $value;
+                                 
+                            }
+                            
+                        }
+                        // pr($newData);
+                        return $newData;  
+                    }
+                }  
             } 
             return false;
         }
@@ -1107,7 +1126,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             
 
-            pr($table);
+            // pr($table);
             $sql = array(
                     'table'=>"mutasi AS m, satker AS s",
                     'field'=>"m.*, s.NamaSatker, s.kode",
