@@ -33,8 +33,8 @@ $TitleSk="PERMOHONAN USULAN";
 $data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_usulan_penghapusan($id);
 // pr($data);
 $html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk);
-pr($html);
-exit;
+// pr($html);
+// exit;
 if($tipe!="2"){
 $REPORT_DAFTAR->show_status_download();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
