@@ -52,7 +52,23 @@ $menu_id = 10;
     function chgForm(){
     	$("#myForm").attr('action','import/'+$("#jenisaset").val()+'.php');
     }
+    function repeat(){
+    	progressBar();
+    }
+    var louded = 0;
+    function progressBar(){
+    		louded++;
+	    	NProgress.set(louded/1000);
+	    	console.log(louded);
+	    	repeat();
+    }
+   $(function(){
 
+	$('button.load-one-item').click(function(){
+		NProgress.inc();
+		
+	});
+});
   </script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -139,7 +155,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">
-								  <button type="submit" id="submit" class="btn btn-primary">Upload</button></span>
+								  <button type="submit" id="submit" class="btn btn-primary load-one-item">Upload</button></span>
 							</li>
 						</ul>
 							
@@ -151,7 +167,7 @@ $menu_id = 10;
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 		</form>
 		</div>  
-			    
+			   	 
 		</section> 
 		     
 	</section>
