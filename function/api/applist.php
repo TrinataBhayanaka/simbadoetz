@@ -25,7 +25,7 @@ open_connection();
 			if(count($result) != 0){
 				$arrlist = array_merge($dtlist, $result);
 				$list = implode(",", $arrlist);
-				
+				// $list = trim($list, ",");
 				$sql = "UPDATE apl_userasetlist SET aset_list = '{$list}' WHERE UserNm = '{$UserNm}' AND aset_action = '{$act}' AND UserSes = '{$sess}'";
 				$exec = mysql_query($sql);
 			}
@@ -37,7 +37,7 @@ open_connection();
 
 				if(count($remresult) != 0 ){
 					$list = implode(",", $remresult);
-				
+					$list = trim($list, ",");
 					$sql = "UPDATE apl_userasetlist SET aset_list = '{$list}' WHERE UserNm = '{$UserNm}' AND aset_action = '{$act}' AND UserSes = '{$sess}'";
 					$exec = mysql_query($sql);
 				}

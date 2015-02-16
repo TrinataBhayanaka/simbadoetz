@@ -62,7 +62,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_psb.php?pid=1&flegAset=1" onsubmit="return requiredFilter(true)">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_psb.php?pid=1&flegAset=1" onsubmit="return requiredFilter(1,1, 'kodeSatker')">
 				<ul>
 					<li>&nbsp;</li>
 					<li>

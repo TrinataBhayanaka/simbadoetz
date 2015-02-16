@@ -49,6 +49,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/menu.php";
 	
 	$dataParam = $SESSION->smartFilter('penggunaan_tambah');
+	
 	$par_data_table= "data=".encode($dataParam);
 
 ?>	

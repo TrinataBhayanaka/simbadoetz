@@ -61,6 +61,7 @@ foreach ($kapital as $key => $value) {
           $kib = $dataAset;
       }    
   $kib['changeDate'] = date("Y-m-d");
+  $kib['TglPerubahan'] = $kib['TglPerolehan'];
   $kib['action'] = 3;
   $kib['operator'] = $_SESSION['ses_uoperatorid'];
   $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'] - $value['nilai'];

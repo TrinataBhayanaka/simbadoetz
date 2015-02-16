@@ -27,7 +27,21 @@ $menu_id = 10;
 		// unset($_SESSION['ses_mutasi_filter']);
 		// pr($_POST);
 		$_SESSION['filterAsetUsulan'] = $_POST;
+
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+
+			if($data_post){
+				$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+			}
+		$CountData=0;
 		
+	}else{
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+		// pr($data_post);
+		$datapost=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+
+		$CountData=count($datapost);
+		// pr($CountData);
 	}
 	// $POST=$_SESSION['filterAsetUsulan'];
 
@@ -47,13 +61,13 @@ $menu_id = 10;
 // 		// unset($_SESSION['reviewAsetUsulan']);
 // // pr($data);
 
-		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+		// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 
-		if($data_post){
+		// if($data_post){
 			
-		}else{
+		// }else{
 			
-		}
+		// }
 
 // 		// echo"<script>alert('1');</script>";
 // 	}else{
@@ -222,8 +236,8 @@ $menu_id = 10;
 
 					<tr>
 						<td colspan="10" align="center">
-							<span id="countcheckbox"><h5>Jumlah Data yang akan dibuat usulan <div class="blink_text_blue">0 Data</div></h5></span>
-							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data yang akan dibuat usulan 0 Data</span>
+							<span id="countcheckbox"><h5>Jumlah Data yang akan dibuat usulan <div class="blink_text_blue"><?=$CountData?> Data</div></h5></span>
+							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data yang akan dibuat usulan <?=$CountData?> Data</span>
 						</td>
 					</tr>
 					<tr>
@@ -261,8 +275,8 @@ $menu_id = 10;
 				</thead>
 				<tbody>		
 					 <tr>
-                                        <td colspan="10">Data Tidak di temukkan</td>
-                                   </tr>
+                        <td colspan="10">Data Tidak di temukkan</td>
+                     </tr>
 				</tbody>
 				<tfoot>
 					<tr>

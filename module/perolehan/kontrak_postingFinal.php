@@ -89,6 +89,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       while ($dataAset = mysql_fetch_assoc($sqlquery)){
               $kib = $dataAset;
           }
+      $kib['TglPerubahan'] = $kib['TglPerolehan'];    
       $kib['changeDate'] = date("Y-m-d");
       $kib['action'] = 'posting';
       $kib['operator'] = $_SESSION['ses_uoperatorid'];
