@@ -116,7 +116,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 'condition' => "{$listTableAlias}.StatusTampil = 1  {$filter} ",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
-                'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.action=r.Kd_Riwayat"
+                'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.Kd_Riwayat=r.Kd_Riwayat"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
