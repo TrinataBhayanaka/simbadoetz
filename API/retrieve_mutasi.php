@@ -326,7 +326,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             // pr($_SESSION);
 
             logFile(serialize($_SESSION));
-            $ses_satkerkode = $_SESSION['ses_mutasi_filter']['kodeSatker'];
+            $ses_satkerkode = $_SESSION['ses_param_mutasi']['kodeSatker'];
 
             $filter = "";
             if ($ses_satkerkode) $filter .= "AND ma.SatkerAwal LIKE '{$ses_satkerkode}%'";
@@ -369,18 +369,21 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 }
                 
                 // pr($res);
-                foreach ($res as $value) {
+                if ($res){
+                    foreach ($res as $value) {
 
-                    if ($value){
+                        if ($value){
+                            
+                            foreach ($value as $val) {
+                                if ($val['Mutasi_ID'])$newData[] = $val;
+                            } 
+                        }
                         
-                        foreach ($value as $val) {
-                            if ($val['Mutasi_ID'])$newData[] = $val;
-                        } 
                     }
-                    
+                    // pr($newData);
+                    return $newData;  
                 }
-                // pr($newData);
-                return $newData;  
+                
             } 
             return false;
         }
