@@ -124,14 +124,14 @@ $menu_id = 10;
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
