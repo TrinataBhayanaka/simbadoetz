@@ -13,74 +13,79 @@ class PENGGUNAAN extends DB{
         $this->db = new DB;
 	}
 
-	function usulan($data)
+	function usulan($guid, $debug=false)
 	{
 
+		$getAset = $this->getAset($guid);
+		$noKontrak = array_keys($getAset['fullData']);
+		pr($getAset['asetid']);
+		// exit;
 		$UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
-        $nmaset=$data['penggu_nama_aset'];
-        $nmasetsatker=$data['penggu_satker_aset'];
+        $nmaset= explode(',', $getAset['asetid']);
+        $nmasetsatker=$guid;
         $penggunaan_id=get_auto_increment("penggunaan");
         $ses_uid=$_SESSION['ses_uid'];
 
-        $penggu_penet_eks_ket=$data['penggu_penet_eks_ket'];   
-        $penggu_penet_eks_nopenet=$data['penggu_penet_eks_nopenet'];   
+        $penggu_penet_eks_ket="migrasi penggunaan";   
+        $penggu_penet_eks_nopenet=$noKontrak[0];   
         $penggu_penet_eks_tglpenet=$data['penggu_penet_eks_tglpenet']; 
-        $olah_tgl=  format_tanggal_db2($penggu_penet_eks_tglpenet);
+        $olah_tgl=  date('Y-m-d H:i:s');
 
         $panjang=count($nmaset);
 
-        // $query="insert into Penggunaan (Penggunaan_ID, NoSKKDH , TglSKKDH, 
-        //                                     Keterangan, NotUse, TglUpdate, UserNm, FixPenggunaan, GUID) 
-        //                                 values (null,'$penggu_penet_eks_nopenet','$olah_tgl', '$penggu_penet_eks_ket','','$olah_tgl','$UserNm','1','$ses_uid')";
+        
         $sql = array(
                 'table'=>'Penggunaan',
                 'field'=>'NoSKKDH , TglSKKDH, Keterangan, NotUse, TglUpdate, UserNm, FixPenggunaan, GUID',
                 'value' => "'{$penggu_penet_eks_nopenet}','{$olah_tgl}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','0','{$ses_uid}'",
                 );
         $res = $this->db->lazyQuery($sql,$debug,1);
+        $insertid = $this->db->insertid();
 
+        $sleep = 1;
         for($i=0;$i<$panjang;$i++){
 
-            $tmp=$nmaset[$i];
-            $tmp_olah=explode("<br>",$tmp);
-            $asset_id[$i]=$tmp_olah[0];
-            $no_reg[$i]=$tmp_olah[1];
-            $nm_barang[$i]=$tmp_olah[2];
-
-            // $query1="insert into PenggunaanAset(Penggunaan_ID,Aset_ID) values('$penggunaan_id','$asset_id[$i]')  ";
             $sql1 = array(
                 'table'=>'Penggunaanaset',
                 'field'=>"Penggunaan_ID,Aset_ID, kodeSatker",
-                'value' => "'{$penggunaan_id}','{$nmaset[$i]}', '{$nmasetsatker[$i]}'",
+                'value' => "'{$penggunaan_id}','{$nmaset[$i]}', '{$nmasetsatker}'",
                 );
             $res = $this->db->lazyQuery($sql1,$debug,1);
 
-            // $query2="UPDATE Aset SET NotUse=1, LastPenggunaan_ID='$penggunaan_id' WHERE Aset_ID='$asset_id[$i]'";
             
             
             $sql2 = array(
                 'table'=>'Aset',
                 'field'=>"NotUse=1",
-                'condition' => "Aset_ID='{$asset_id[$i]}'",
+                'condition' => "Aset_ID='{$nmaset[$i]}'",
                 'limit' => '1',
                 );
             $res = $this->db->lazyQuery($sql2,$debug,2);
-           
+           	
+           	$sleep++;
+           	if ($sleep == 200){
+           		sleep(1);
+           		$sleep = 1;	
+           	} 
         }
 
         
-
-       
-        if ($res) return $res;
+        if ($res) return $insertid;
         return false;
 	}
 
-	function validasi()
+	function getSatker($kode, $debug=false)
 	{
+		$sql = array(
+                'table'=>"satker",
+                'field'=>"Aset_ID",
+                'condition' => "GUID = 1 ",
+                );
 
+        $res = $this->db->lazyQuery($sql,$debug);
 	}
 
-	function getKontrak()
+	function getKontrak($debug=false)
 	{
 		$listTable2 = array(
                         1=>'tanah',
@@ -137,7 +142,7 @@ class PENGGUNAAN extends DB{
 		return false;
 	}
 
-	function getAset($unique)
+	function getAset($unique, $debug=false)
 	{
 
 		
@@ -172,14 +177,160 @@ class PENGGUNAAN extends DB{
         	}
         }
 
-        if ($dataAset) return $dataAset;
+        if ($dataAset) return array('fullData'=>$dataAset, 'asetid'=>$dataKontrak['listaset']);
 		
 		return false;
 	}
+
+	function validasi($usulanid, $debug=false)
+	{
+
+
+		// $tabeltmp = $_SESSION['penggunaan_validasi']['jenisaset'];
+  //       $getTable = $this->getTableKibAlias($tabeltmp);
+  //       $tabel = $getTable['listTableReal'];
+
+
+        $explodeID = $usulanid;
+        
+        
+        if($explodeID!=""){
+            $sql2 = array(
+                'table'=>'Penggunaan',
+                'field'=>"Status=1, FixPenggunaan = 1",
+                'condition' => "Penggunaan_ID='{$explodeID}'",
+                );
+            $res2 = $this->db->lazyQuery($sql2,$debug,2);
+
+            $sql3 = array(
+                'table'=>'PenggunaanAset',
+                'field'=>"Status=1",
+                'condition' => "Penggunaan_ID='{$explodeID}'",
+                );
+            $res3 = $this->db->lazyQuery($sql3,$debug,2);
+        }
+    
+
+        /* Log It */
+
+        
+
+        $sql = array(
+            'table'=>'PenggunaanAset',
+            'field'=>"Aset_ID",
+            'condition' => "Penggunaan_ID='{$explodeID}'",
+            );
+        $res = $this->db->lazyQuery($sql,$debug);
+        
+        
+        // pr($res);
+
+        $listTable = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp');
+
+        if ($res){
+        	$sleep = 1;
+            foreach ($res as $key => $val) {
+
+
+                $sql = array(
+                        'table'=>'aset',
+                        'field'=>"TipeAset",
+                        'condition' => "Aset_ID={$val['Aset_ID']}",
+                        );
+                $result = $this->db->lazyQuery($sql,$debug);
+                $asetid[$val['Aset_ID']] = $listTable[implode(',', $result[0])];
+
+                $sql3 = array(
+                    'table'=>'aset',
+                    'field'=>"fixPenggunaan=1",
+                    'condition' => "Aset_ID='{$val['Aset_ID']}'",
+                    );
+                $res3 = $this->db->lazyQuery($sql3,$debug,2);
+
+                $sleep++;
+	           	if ($sleep == 200){
+	           		sleep(1);
+	           		$sleep = 1;	
+	           	} 
+            }
+
+            $sleep = 1;
+            
+            foreach ($asetid as $key => $value) {
+                logFile('log data penggunaan, Aset_ID ='.$key);
+                $this->db->logIt($tabel=array($value), $Aset_ID=$key, 22);
+
+                $sleep++;
+	           	if ($sleep == 200){
+	           		sleep(1);
+	           		$sleep = 1;	
+	           	} 
+            }
+        }else{
+            logFile('gagal log penggunaan');
+        }
+
+        if ($res2 && $res3) return true;
+        return false;
+	}
+
+	function getGUID()
+	{	
+		$listTable = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp');
+
+		foreach ($listTable as $key => $value) {
+
+			$sql = array(
+	            'table'=>"{$value}",
+	            'field'=>"GUID",
+	            'condition' => "GUID !=''",
+	            );
+	        $res = $this->db->lazyQuery($sql,$debug);
+	        if ($res){
+	        	foreach ($res as $key => $value) {
+	        		$newData[] = $value['GUID'];
+	        	}
+
+	        	
+	        }
+
+	        
+		}
+		return $newData;
+	}
 }
 
+
 $run = new PENGGUNAAN;
-$exec = $run->getAset(1);
-pr($exec);
+$getGUID = $run->getGUID();
+if ($getGUID){
+	
+	$unique = array_unique($getGUID);
+	// pr($unique);
+	
+	foreach ($unique as $key => $value) {
+		echo $value;
+		// $usulan = $run->usulan($value);
+		$usulan = 4;
+		logFile('==================== Usulan Penggunaan DONE =====================');
+		if ($usulan){
+			$validasi = $run->validasi($usulan);
+			logFile('==================== Validasi Penggunaan DONE =====================');
+		}
+	}
+}
+
 
 ?>

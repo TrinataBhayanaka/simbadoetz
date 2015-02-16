@@ -70,7 +70,7 @@ $resetDataView = $DBVAR->is_table_exists('filter2_penggunaan_'.$SessionUser['ses
 							
 							<li>
 								<span class="span2">Nomor Kontrak</span>
-								<input placeholder="" type="text" name="nokontrak" style="width:450px;" id="posisiKolom">&nbsp;<span id="errmsg"></span>
+								<input placeholder="" type="text" name="nokontrak" style="width:450px;" id="">&nbsp;<span id="errmsg"></span>
 							</li>
                             <li>
                                 <span class="span2">Jenis Aset</span>

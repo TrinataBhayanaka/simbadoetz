@@ -208,7 +208,7 @@ $menu_id = 10;
 						
 						<?php } ?>
 
-						<a href="kontrak_barang_detail.php?Aset_ID=<?=$value['Aset_ID']?>&idKel=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$kontrak[0]['noKontrak']?>&TipeAset=<?=$value['TipeAset']?>&del=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Hapus Aset?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
+						<a href="kontrak_barang_detail.php?Aset_ID=<?=$value['Aset_ID']?>&idKel=<?=$value['kodeKelompok']?>&idLok=<?=$value['kodeLokasi']?>&tmpthis=<?=$kontrak[0]['noKontrak']?>&TipeAset=<?=$value['TipeAset']?>&del=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Anda akan menghapus Aset. No Register barang sejenis lainnya akan menyesuaikan. Lanjutkan?')"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
 						</td>
 						<?php
 						} else {

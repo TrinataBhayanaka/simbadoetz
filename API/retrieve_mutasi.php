@@ -8,15 +8,29 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $this->db = new DB;
 	}
 	
+    function getAsetList($action)
+    {
+
+        $sql = array(
+                'table'=>"apl_userasetlist",
+                'field'=>"aset_list",
+                'condition'=>"aset_action = '{$action}'",
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res){
+            $newData = explode(',', $res[0]['aset_list']);
+
+            return $newData;
+        }
+
+        return false;
+    }
+
 	function retrieve_mutasi_filter($data,$debug=false)
 	{
         
-        // $ses_satkerkode = $_SESSION['ses_satkerkode'];
-
-        // $filter = "";
-        // if ($ses_satkerkode) $filter .= "AND ma.SatkerAwal LIKE '{$ses_satkerkode}%'";
-
-        // pr($data);
+        
   	    $jenisaset = $data['jenisaset'];
         $nokontrak = $data['mutasi_trans_filt_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -24,54 +38,112 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         
 	    $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
-        if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-	    if ($tahunAset) $filterkontrak .= " AND a.Tahun = '{$tahunAset}' ";
+        
 
+        $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
         $limit= $data['limit'];
         $order= $data['order'];
 
-         if ($jenisaset){
+        $getAsetList = $this->getAsetList('MUTASI');
 
+        
+        if ($jenisaset){
+            // get data kib
+            $satker = "";
             foreach ($jenisaset as $value) {
 
+                $filterKib = "";
+                
                 $table = $this->getTableKibAlias($value);
-
-                // pr($jenisaset);
                 $listTable = $table['listTable'];
                 $listTableAlias = $table['listTableAlias'];
                 $listTableAbjad = $table['listTableAbjad'];
+                $alias[] = "'".strtoupper($listTableAbjad)."'";
 
+                if ($tahunAset) $filterKib .= " AND {$listTableAlias}.Tahun = '{$tahunAset}' ";
+                if ($kodeSatker) $filterKib .= " AND {$listTableAlias}.kodeSatker = '{$kodeSatker}' ";
+
+
+                $sql = array(
+                        'table'=>"{$listTable}, penggunaanaset AS pa",
+                        'field'=>"{$listTableAlias}.*" ,
+                        'condition'=>"{$listTableAlias}.StatusTampil = 1 AND {$listTableAlias}.Status_Validasi_Barang = 1 AND pa.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterKib} ",
+                        'joinmethod' => 'INNER JOIN',
+                        'join' => "{$listTableAlias}.Aset_ID = pa.Aset_ID"
+                        );
+
+                $res[$value] = $this->db->lazyQuery($sql,$debug);
+            }
+
+            foreach ($res as $key => $value) {
+                foreach ($value as $val) {
+                    $listKibAset[$val['Aset_ID']] = $val;
+                }
+            }
+            
+            $asetIDKib = implode(',', array_keys($listKibAset));
+            $implodeJenis = implode(',', $alias);
+            
+                
+
+                
                 $paging = paging($data['page'], 100);
                 $merk = "";
-                // if ($value == 2) $merk = ",{$listTableAlias}.Merk";
+                
+                /*
                 $sql = array(
                         'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
                         'field'=>"SQL_CALC_FOUND_ROWS DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, k.kode, a.noKontrak, s.NamaSatker " ,
-                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} {$order} GROUP BY a.Aset_ID",
+                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} {$order} ",
                         'limit'=>"{$limit}",
                         'joinmethod' => 'INNER JOIN',
                         'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
                         );
+                */
+                $sql = array(
+                        'table'=>"aset AS a, kelompok AS k, satker AS s",
+                        'field'=>"SQL_CALC_FOUND_ROWS k.Uraian, k.kode, a.*, s.NamaSatker " ,
+                        'condition'=>"a.Aset_ID IN ({$asetIDKib}) AND a.TipeAset IN ({$implodeJenis}) {$filterkontrak} $kondisi GROUP BY a.Aset_ID {$order} ",
+                        'limit'=>"{$limit}",
+                        'joinmethod' => 'INNER JOIN',
+                        'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                        );
 
-                $res[] = $this->db->lazyQuery($sql,$debug);
+                $res = $this->db->lazyQuery($sql,$debug);
 
                 // $total[] = $this->db->countData($sql,1);
-            }
+            
+            $listAsetID = array_keys($listKibAset);
 
-            foreach ($res as $value) {
+
+            foreach ($res as $k => $value) {
+
+                if ($value){
+
+                    
+                    if (in_array($value['Aset_ID'], $listAsetID)) $res[$k] = $listKibAset[$value['Aset_ID']];
+                    $res[$k]['Uraian'] = $value['Uraian'];    
+                    $res[$k]['kode'] = $value['kode'];
+                    $res[$k]['noKontrak'] = $value['noKontrak'];
+                    $res[$k]['NamaSatker'] = $value['NamaSatker'];
+                }
+                
+            }
+            
+            foreach ($res as $k => $value) {
 
                 if ($value){
                     
-                    foreach ($value as $val) {
-                        $newData[] = $val;
-                    } 
+                    if ($value['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
+                    
                 }
                 
             }
         }
         
-        // pr($total);
-        if ($newData) return $newData;
+        // pr($res);exit;
+        if ($res) return $res;
         return false;
 	}
 

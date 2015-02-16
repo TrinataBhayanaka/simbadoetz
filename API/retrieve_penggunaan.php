@@ -382,7 +382,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $listTable = $table['listTable'];
                 $listTableAlias = $table['listTableAlias'];
                 // pr($listTable);
-                 $sql = array(
+                $sql = array(
                         'table'=>"aset AS a, {$listTable}, kelompok AS k",
                         'field'=>"{$listTableAlias}.*, k.Uraian",
                         'condition'=>"a.Aset_ID IN ({$cols})",
@@ -414,6 +414,25 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
     }
     
+    function getAsetList($action)
+    {
+
+        $sql = array(
+                'table'=>"apl_userasetlist",
+                'field'=>"aset_list",
+                'condition'=>"aset_action = '{$action}'",
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res){
+            $newData = explode(',', $res[0]['aset_list']);
+
+            return $newData;
+        }
+
+        return false;
+    }
+
 	public function retrieve_penetapan_penggunaan($parameter,$debug=false)
     {
 
@@ -433,68 +452,116 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if (count($jenisaset)>0) $jenisaset = $jenisaset;
         else $jenisaset = array(1,2,3,4,5,6);
         
+        $getAsetList = $this->getAsetList('PNGGU');
+
         if ($jenisaset){
 
             foreach ($jenisaset as $value) {
                 
                 $table = $this->getTableKibAlias($value);
-
-                // pr($table);
                 $listTable = $table['listTable'];
                 $listTableAlias = $table['listTableAlias'];
 
-                $paging = paging($parameter['page'], 100);
+                $satker = "";
+                if ($kodeSatker) $satker = " AND {$listTableAlias}.kodeSatker = '{$kodeSatker}' ";
+                // pr($table);
+                $tipeAset[] = "'". $table['listTableAbjad'] . "'";
 
+                $sql = array(
+                        'table'=>"{$listTable}",
+                        'field'=>"{$listTableAlias}.*",
+                        'condition'=>"{$listTableAlias}.Status_Validasi_Barang = 1 AND {$listTableAlias}.StatusTampil =1 {$satker}",
+                        );
+
+                $res[] = $this->db->lazyQuery($sql,$debug);
+            }    
+
+            if ($res){
+                foreach ($res as $key => $value) {
+                    
+                    foreach ($value as $keys => $val) {
+                        
+                        $asetidKib[$val['Aset_ID']] = $val;
+                    }
+                }
+            }
+
+            $tmpAsetid = array_keys($asetidKib);
+
+            $implode = implode(',', $tipeAset);
+
+                $sql = array(
+                        'table'=>"aset AS a, kelompok AS k, satker AS s",
+                        'field'=>"SQL_CALC_FOUND_ROWS a.Aset_ID, a.TipeAset, k.Uraian, s.NamaSatker, a.noKontrak",
+                        'condition'=>"a.TipeAset IN ({$implode}) AND a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL  {$filterkontrak}  $kondisi GROUP BY a.Aset_ID $order",
+                        'limit'=>"$limit",
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                        );
+
+                $resAset = $this->db->lazyQuery($sql,$debug);
+                if ($resAset){
+                    foreach ($resAset as $key => $value) {
+                        
+                        if (in_array($value['Aset_ID'], $tmpAsetid)){
+
+                            $newRec[$value['Aset_ID']] = array_merge($value, $asetidKib[$value['Aset_ID']]);
+
+                        }
+                        
+                    }
+
+                }
+
+                
+                /*
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k, satker AS s",
                         'field'=>"SQL_CALC_FOUND_ROWS {$listTableAlias}.*, k.Uraian, s.NamaSatker, a.noKontrak",
-                        'condition'=>"a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}  $kondisi $order",
+                        'condition'=>"{$listTableAlias}.Status_Validasi_Barang = 1 AND a.NotUse IS NULL AND {$listTableAlias}.StatusTampil =1 AND {$listTableAlias}.Status_Validasi_Barang = 1 {$filterkontrak}  $kondisi GROUP BY {$listTableAlias}.Aset_ID $order",
                         'limit'=>"$limit",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
                         );
-
+                
+                
                 $res[$value] = $this->db->lazyQuery($sql,$debug);
                 
-
-            }
+                */
+            
 
 
             
-            foreach ($res as $k => $value) {
+            if ($newRec){
 
-                if ($value){
+                foreach ($newRec as $k => $val) {
 
-                    foreach ($value as $key => $val) {
-                        if ($val['NilaiPerolehan']) $res[$k][$key]['NilaiPerolehan'] = number_format($val['NilaiPerolehan']);
+                    if ($val){
+
+                        
+                        if ($val['NilaiPerolehan']) $newRec[$k]['NilaiPerolehan'] = number_format($val['NilaiPerolehan']);
                         if ($val['kondisi']){
                             if ($val['kondisi']==1) $kondisi = "Baik";
                             if ($val['kondisi']==2) $kondisi = "Rusak Ringan";
                             if ($val['kondisi']==3) $kondisi = "Rusak Berat";
-                            $res[$k][$key]['kondisi'] = $kondisi;
+                            $newRec[$k]['kondisi'] = $kondisi;
                         } 
-                        
-                    } 
+
+                        if (in_array($val['Aset_ID'], $getAsetList)) $newRec[$k]['checked'] = true;
+                            
+                         
+                    }
+                    
                 }
                 
             }
-// pr($res);exit;
-            foreach ($res as $value) {
-
-                if ($value){
-
-                    foreach ($value as $val) {
-                        $newData[] = $val;
-                    } 
-                }
-                
-            }
+            
         }
         
 
         // pr($newData);
         
-        if ($newData) return $newData;
+        if ($newRec) return $newRec;
         return false;
 
     }
