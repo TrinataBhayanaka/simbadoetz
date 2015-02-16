@@ -30,9 +30,10 @@ if($tglHapus != ''){
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 
+$TitleSk="KEPUTUSAN PENGHAPUSAN";
 $data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_sk_penghapusan($id);
 // pr($data);
-$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak);
+$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk);
 // pr($html);
 // exit;
 if($tipe!="2"){
