@@ -22,27 +22,23 @@ $id=$_SESSION['user_id'];//Nanti diganti
  * you want to insert a non-database field (for example a counter or static image)
  */
 
-$dataParam['jenisaset'][0]=$_GET['jenisaset'];
-if($_GET['jenisaset']=="2")
-     $merk="m.Merk";
-else
-     $merk="ast.Aset_ID";
-$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+
+$aColumns = array('temp_AsetLain_ID','temp_AsetLain_ID','kodeKelompok','uraian','kodeLokasi','Jumlah','NilaiPerolehan','temp_AsetLain_ID');
 
 /* Indexed column (used for fast and accurate table cardinality) */
-$sIndexColumn = "Aset_ID";
+$sIndexColumn = "temp_AsetLain_ID";
 
 /* DB table to use */
-$sTable = "aset";
+$sTable = "tmp_asetlain";
 $dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
-$dataParam['bup_tahun']=$_GET['bup_tahun'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['page']=$_GET['page'];
 
+$RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
-//pr($data);
+////pr($data);
 //exit;
 $sLimit = "";
 if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
@@ -125,11 +121,11 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-// pr($dataParam);
-// list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($dataParam);	
+//pr($dataParam);
+// list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
 
-$dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_psb($dataParam);
-// pr($data);
+$dataSESSION = $RETRIEVE_PEROLEHAN->get_tmpData($dataParam,'tmp_asetlain'); 
+//pr($dataSESSION);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
@@ -152,7 +148,7 @@ $sQuery = "
 //echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
-//pr($aResultTotal );
+////pr($aResultTotal );
 $iTotal = $aResultTotal[0];
 
 
@@ -166,18 +162,22 @@ $output = array(
     "aaData" => array()
 );
 
-///pr($output);
+/////pr($output);
 //exit;
 
-$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPSB");
+$data_post=$PENGHAPUSAN->apl_userasetlistHPS("XLSIMP");
 
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
-$POST['penghapusanfilter']=$POST;
-    if($POST){
-      // ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+
+foreach ($POST as $key => $value) {
+  $tmp = explode("|", $value);
+  $newlist[$key] = $tmp[0];
+}
+    
+      // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-        // ////pr($valueSESSION['Aset_ID']);
-        if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
+        // //////pr($valueSESSION['Aset_ID']);
+        if(!in_array($valueSESSION['temp_AsetLain_ID'], $newlist)){
           // echo "stringnot";
           $data[]=$valueSESSION;
           $data[$keySESSION]['checked']="";
@@ -188,43 +188,31 @@ $POST['penghapusanfilter']=$POST;
         }
       }
     
-    }
+    
+    // pr($data);
 $no=$_GET['iDisplayStart']+1;
   if (!empty($data))
 					{
 foreach ($data as $key => $value)
 						{
-							// pr($get_data_filter);
-              $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[kodeSatker]);
-							if($value[kondisi]==2){
-								$kondisi="Rusak Ringan";
-							}elseif($value[kondisi]==3){
-								$kondisi="Rusak Berat";
-							}elseif($value[kondisi]==1){
-								$kondisi="Baik";
-							}
-							// pr($value[TglPerolehan]);
-							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-							// pr($TglPerolehanTmp);
-							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+							
                                           
-                             $row = array();
-                             
-                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
-                             $row[]=$no;
-                             $row[]=$checkbox;
-                             $row[]=$value['noRegister'] ;
-                             $row[]=$value['noKontrak'];
-                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
-                             $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
-                             $row[]=$TglPerolehan;
-                             $row[]=number_format($value[NilaiPerolehan]);
-                             $row[]=$kondisi. ' - ' .$value[AsalUsul];
-                             $row[]="{$value[Merk]}$value[Model] ";
-                             
-                             $output['aaData'][] = $row;
-                              $no++;
-                    }
+               $row = array();
+               
+               $checkbox="<input {$value['style']} type=\"{$value['other']}\" {$value['checked']} id=\"check_{$no}\" class=\"icheck-input\" name=\"aset[]\" 
+                      value=\"{$value['temp_AsetLain_ID']}|{$value['Jumlah']}|{$value['NilaiPerolehan']}\" onchange=\"return AreAnyCheckboxesChecked();\">";
+               $row[]=$no;
+               $row[]=$checkbox;
+               $row[]=$value['kodeKelompok'] ;
+               $row[]=$value['uraian'];
+               $row[]=$value['kodeLokasi'];
+               $row[]=$value['Jumlah'];
+               $row[]=number_format($value['NilaiPerolehan']);
+               $row[]=number_format($value['Jumlah']*$value['NilaiPerolehan']);
+               
+               $output['aaData'][] = $row;
+                $no++;
+            }
               }
 echo json_encode($output);
 

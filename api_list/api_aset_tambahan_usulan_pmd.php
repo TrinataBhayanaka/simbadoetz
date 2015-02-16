@@ -26,8 +26,8 @@ $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
-     $merk="";
-$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk,);
+     $merk="ast.Aset_ID";
+$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
