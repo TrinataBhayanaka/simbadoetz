@@ -19340,10 +19340,11 @@ $footer ="
 					// $perolehan = number_format($row->NilaiPerolehan);
 					
 					$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
-                                        
-                    ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
-                    ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
-                    ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;
+                    $Ex =explode('/',$row->Sertifikat);
+                    
+                    ($Ex[0] == '') ? $dataRangka = "-" : $dataRangka = $Ex[0];
+                    ($Ex[1] == '') ? $dataMesin = "-" : $dataMesin = $Ex[1];
+                    ($Ex[2] == '') ? $dataBPKB = "-" : $dataBPKB = $Ex[2];
 					$kondisi= $row->kondisi;
 					if ($kondisi == '1') {
 						$ketKondisi = "Baik";
@@ -19360,136 +19361,73 @@ $footer ="
 					$nilaiPrlhn = $row->NilaiPerolehan_Awal;
 					$kuantitas = 1;
 					$nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
-					$kdRwyt = $row->Kd_Riwayat;
-					// if($row->Kd_Riwayat != '3' || $row->Kd_Riwayat != '28'){
-					if($kdRwyt == '2' || $kdRwyt == '21' || $kdRwyt == '7'){
-						// jika kondisi 
-						// 2(Ubah Kapitalisasi)
-						// 21(Koreksi Nilai)
-						// 7(penghapusan sebagian)
+					// $kdRwyt = $row->Kd_Riwayat;
+					// jika kondisi 
+					// 2(Ubah Kapitalisasi)
+					// 21(Koreksi Nilai)
+					// 7(penghapusan sebagian)
+					if($row->Kd_Riwayat == '3' || $row->Kd_Riwayat == '28'){
+						$LastSatker = $row->kodeSatker;
+						$FirstSatker = $row->satkerAwal;
 						
-						//proses mutasi
-						$mutasi= $this->get_mutasi($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
-						// pr($mutasi);
-						$berkurang = $mutasi[0];
-						$bertambah = $mutasi[1];
-						
-						if($kdRwyt == '7'){
-							$valSubst = $row->NilaiPerolehan;
-						}else{
-						//bertambah
-							$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
-							// echo "selisih".$cekSelisih;
-							if($cekSelisih >= 0){
-								$valAdd = $cekSelisih;
-								$valSubst = 0;
-							}else{
-								$valAdd = 0;
-								$valSubst = $cekSelisih;
-							}
-						}
-						
-						
-						//berkurang
-						if($berkurang != 0){
-							$jmlKurang = $berkurang;
-							$nilaiPrlhnMutasiKurang = ($jmlKurang * $row->NilaiPerolehan) + $valSubst;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-						}else{
-							// echo "sini";
-							// echo"<br>";
-							if($kdRwyt == '7'){
-								$jmlKurang = 1;
-								$nilaiPrlhnMutasiKurang = $valSubst;
-							}else{
-								$jmlKurang = 0;
-								$nilaiPrlhnMutasiKurang = $valSubst;
-							}
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							
-						}
-						
-						//bertambah
-						if($bertambah !=0){
-							$jmlTambah = $bertambah;
-							$nilaiPrlhnMutasiTambah = $valAdd;
+						if($LastSatker != $FirstSatker){
+							$jmlTambah = 1;
+							$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan;
 							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+							//kurang
+							$jmlKurang = 0;
+							$nilaiPrlhnMutasiKurang = 0;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
 						}else{
 							$jmlTambah = 0;
-							$nilaiPrlhnMutasiTambah = $valAdd;
+							$nilaiPrlhnMutasiTambah = 0;
 							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+							//kurang
+							$jmlKurang = 1;
+							$nilaiPrlhnMutasiKurang = $row->NilaiPerolehan;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
 						}
 						
-						
-						// $jmlTambah = 1;
-						// $nilaiPrlhnMutasiTambah = $valAdd;
-						// $nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						/*echo "nilai kurang = ".$nilaiPrlhnMutasiKurang;
-						echo "<br>";
-						echo "nilai tambah =".$nilaiPrlhnMutasiTambah;*/
-						$jmlHasilMutasi = 1;
-						if($kdRwyt == '7'){
-							$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
-						}else{
-							$nilaiPerolehanHasilMutasi = $row->NilaiPerolehan_Awal +$nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
-						}
+						$jmlHasilMutasi = 1;	
+						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
 						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
-						
+								
 					}else{
-						// echo " == 3 ";
-						// jika kondisi 3(pindah skpd)
-						//cek mutasi tujuan untuk nilai yang bertambah
-						$mutasi= $this->get_mutasi($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
-						// pr($mutasi);
-						// $berkurang = $mutasi[0];
-						$bertambah = $mutasi[1];
-						
-						//cek nilai lainya bertambah dengan kondisi riwayat 2,21,7
-						$OtherAddvalue= $this->MutasiAddvalue($row->Aset_ID,$row->kodeSatker,$tglawalperolehan,$tglakhirperolehan);
-						if($OtherAddvalue != '' ){
-							
-							$nilaiPerolehanAdd = $OtherAddvalue[0];
-							$cekSelisih =($nilaiPerolehanAdd - $row->NilaiPerolehan_Awal);
-							
+						$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
+							// echo "selisih".$cekSelisih;
 							if($cekSelisih >= 0){
+								//tambah
 								$valAdd = $cekSelisih;
+								$jmlTambah = 1;
+								$nilaiPrlhnMutasiTambah = $valAdd;
+								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+								//kurang
 								$valSubst = 0;
-
+								$jmlKurang = 0;
+								$nilaiPrlhnMutasiKurang = $valSubst;
+								$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
 							}else{
+									//tambah
 								$valAdd = 0;
+								$jmlTambah = 0;
+								$nilaiPrlhnMutasiTambah = $valAdd;
+								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+								//kurang
 								$valSubst = $cekSelisih;
 								$jmlKurang = 1;
 								$nilaiPrlhnMutasiKurang = $valSubst;
 								$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							}							
-						}else{
-							$jmlKurang = 0;
-							$nilaiPrlhnMutasiKurang = 0;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							$nilaiPerolehanAdd = 0;
-						}
+							}
 						
-						//bertambah
-						if($bertambah !=0){
-							$jmlTambah = $bertambah;
-							$nilaiPrlhnMutasiTambah = ($jmlTambah * $row->NilaiPerolehan) + $valAdd;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						}else{
-							$jmlTambah = 1;
-							$nilaiPrlhnMutasiTambah = $jmlTambah + $valAdd;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-						}
-						
-						$jmlHasilMutasi = 1;
+						$jmlHasilMutasi = 1;	
 						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
 						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
-						
 					}
-					
+						
 					$perolehanTotalKurang = $perolehanTotalKurang + $nilaiPrlhnMutasiKurang;
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
 					$perolehanTotalMutasi = $perolehanTotalMutasi + $nilaiPerolehanHasilMutasi;
-					
 					$Uraian =$this->get_NamaKelompok($row->kodeKelompok);
 					$body.="
                                 <tr>
@@ -28097,10 +28035,10 @@ return $hasil_html;
 		$queryALL = array($query_tanah,$query_mesin,$query_bangunan,$query_jaringan,$query_asettetaplainnya,$query_kdp);
 		for ($i = 0; $i < count($queryALL); $i++)
 		{
-			echo "<br>";
+			/*echo "<br>";
 			echo "query_$i =".$queryALL[$i];
 			echo "<br>";
-			echo "<br>";
+			echo "<br>";*/
 			// exit;
 			// $result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));*/
 			$result=$this->retrieve_query($queryALL[$i]);
@@ -28111,7 +28049,7 @@ return $hasil_html;
 				}
 			}
 		}
-		exit;	
+		// exit;	
 	}
 	
 	/*echo $queryDataTambah;
