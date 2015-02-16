@@ -9104,7 +9104,12 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $TipeAsetNo=$TableAbjadlist[$AsetTipe];
 
                 $table = $this->getTableKibAlias($TipeAsetNo);
-
+                    $listTable = $table['listTable'];
+                    $listTableAlias = $table['listTableAlias'];
+                    $listTableAbjad = $table['listTableAbjad'];
+                    $listTableOri = $table['listTableOri'];
+                    $listTableField = $table['listTableField'];
+                    $FieltableGeneral= $table['FieltableGeneral'];
                 pr($table);
 
                 $sqlUPDAset = array(
@@ -9116,7 +9121,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $resUPDAset = $this->db->lazyQuery($sqlUPDAset,$debug,2);
 
                 $sqlUPDKib= array(
-                    'table'=>"$tabel",
+                    'table'=>"{$listTableOri}",
                     'field'=>"StatusTampil=0, Status_Validasi_Barang=0,StatusValidasi=0 ",
                     'condition' => "Aset_ID='$Aset_ID'",
                     );
