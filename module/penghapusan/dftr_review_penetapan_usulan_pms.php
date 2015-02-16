@@ -31,6 +31,11 @@ $menu_id = 10;
 	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 	
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pms($POST);
+	if($data['dataArr']){
+		$CountData=count($data['dataArr']);
+	}else{
+		$CountData=0;
+	}
 	if($_SESSION['kdSatkerFilterPMDp']){
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
 	}
@@ -70,6 +75,22 @@ $menu_id = 10;
 			}
 	</script>
 	<script>
+		function confirmValidate(){	
+			var ConfH = $("#countcheckboxH").html();
+			var conf = confirm(ConfH);
+			if(conf){return true;} else {return false;}
+		}
+		function countCheckbox(item,rvwitem){
+			var CountDataVal=$("#CountData").val();
+			// console.log(CountDataVal);
+			// alert(CountDataVal);
+			setTimeout(function() {
+				$.post('<?=$url_rewrite?>/function/api/countapplist.php', { UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,rvwact:rvwitem,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+						$("#countcheckbox").html("<h5>Jumlah Data Usulan yang akan diterima untuk penetapan <div class='blink_text_blue'>"+data.countAset+" Dari "+CountDataVal+" Data Aset</div></h5>");
+						$("#countcheckboxH").html("Jumlah Data yang diterima untuk ditetapkan "+data.countAset+" Dari "+CountDataVal+" Data Aset");
+					 },"JSON")
+			}, 500);
+		}
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
@@ -77,11 +98,13 @@ $menu_id = 10;
 			{
 			    $("#submit").removeAttr("disabled");
 			    updDataCheckbox('PTUSPMS');
+			    countCheckbox('PTUSPMS');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
 			    updDataCheckbox('PTUSPMS');
+			    countCheckbox('PTUSPMS');
 			}}, 100);
 		}
 		</script>
@@ -122,8 +145,9 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses_pms.php">
+			<form name="form" method="POST" ID="Form2" onsubmit="return confirmValidate()" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses_pms.php">
 			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
+			<input type="hidden" id="CountData" value="<?=$CountData?>" />		
 					
 			<div class="detailLeft">
 						
@@ -171,6 +195,13 @@ $menu_id = 10;
 			
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
+
+					<tr>
+						<td colspan="10" align="center">
+							<span id="countcheckbox"><h5>Jumlah Data Usulan yang akan diterima untuk penetapan <div class='blink_text_blue'> 0 Dari <?=$CountData?> Data Aset</div></h5></span>
+							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data Usulan yang akan diterima untuk penetapan <?=$CountData?> Data</span>
+						</td>
+					</tr>
 					<tr>
 						<td colspan="10" align="Left">
 								<span><button type="submit" name="submit"  class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span>
