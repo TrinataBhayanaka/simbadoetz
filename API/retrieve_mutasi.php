@@ -1029,6 +1029,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                     $tmpRes = $this->db->lazyQuery($sqlSelect,$debug);
+                    logFile(serialize($tmpRes));
                     if ($tmpRes){
                         $res[] = $tmpRes;
                         $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
