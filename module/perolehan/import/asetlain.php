@@ -1,6 +1,11 @@
 <?php
 include "../../../config/config.php";
 include "excel_reader.php";
+
+include"$path/meta.php";
+include"$path/header.php";
+include"$path/menu.php";
+
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -19,12 +24,6 @@ if(isset($_GET['id'])){
 
 ?>
 
-<?php
-	include"$path/meta.php";
-	include"$path/header.php";
-	include"$path/menu.php";
-	
-?>
 	<script>
 		$(document).ready(function() {
 	        $('#totalxls').autoNumeric('init', {mDec:0});
