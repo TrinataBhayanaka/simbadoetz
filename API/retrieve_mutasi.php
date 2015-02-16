@@ -359,11 +359,14 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     $tmpRes = $this->db->lazyQuery($sqlSelect,$debug);
                     if ($tmpRes){
 
+                        logFile('data res before add '.serialize($tmpRes));
                         $res[] = $tmpRes;
                         $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                         $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
                         $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
                         $res[$key][0]['Jumlah'] = intval($value['Jumlah']);
+
+                        logFile('data res after add '.serialize($tmpRes));
                     }
                     
                 }
