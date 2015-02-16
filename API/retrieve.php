@@ -9849,6 +9849,7 @@ $offset = @$_POST['record'];
         elseif ($get['tbl'] == "D") $get['table'] = 'jaringan';
         elseif ($get['tbl'] == "E") $get['table'] = 'asetlain';
         elseif ($get['tbl'] == "F") $get['table'] = 'kdp';
+        elseif ($get['tbl'] == "G") $get['table'] = 'persediaan';
 
         $idKontrak = $get['tmpthis'];
         $sql = "SELECT * FROM kontrak WHERE id='{$idKontrak}' LIMIT 1";
@@ -9858,14 +9859,15 @@ $offset = @$_POST['record'];
          $minmax = $this->fetch($sql);
 
         //get from aset
-        $sql = "SELECT kodeLokasi,kodeRuangan, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND kodeKelompok = '{$get['kdkel']}' AND kodeLokasi = '{$get['kdlok']}' GROUP BY kodeKelompok, kodeLokasi";
+        $sql = "SELECT kodeSatker, TglPerolehan, Satuan, Info, Alamat, kodeLokasi,kodeRuangan, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND kodeKelompok = '{$get['kdkel']}' AND kodeLokasi = '{$get['kdlok']}' GROUP BY kodeKelompok, kodeLokasi";
         $aset = $this->fetch($sql);
         
-
-        //get kib
-        $sql = "SELECT * FROM {$get['table']} WHERE kodeKelompok = '{$get['kdkel']}' AND kodeLokasi = '{$get['kdlok']}' AND StatusTampil IS NULL AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}  LIMIT 1";
-        $kib = $this->fetch($sql);
-        // pr($sql);
+        if($get['table'] != 'persediaan'){
+            //get kib
+            $sql = "SELECT * FROM {$get['table']} WHERE kodeKelompok = '{$get['kdkel']}' AND kodeLokasi = '{$get['kdlok']}' AND StatusTampil IS NULL AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}  LIMIT 1";
+            $kib = $this->fetch($sql);
+            // pr($sql);
+        }
         $dataArr = array('aset' => $aset, 'kib' => $kib, 'tabel' => $get['table'] );
         
         return $dataArr;
