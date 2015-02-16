@@ -71,12 +71,14 @@ class report_engine_daftar extends report_engine {
                          <td align=\"right\">
                               <table>
                                    <tr>
-                                        <td>Nomor</td>
-                                        <td>: $sk</td>
+                                        <td align=\"left\">Nomor</td>
+                                        <td> : </td>
+                                        <td align=\"left\">$sk</td>
                                    </tr>
                                    <tr>
-                                        <td>Tanggal</td>
-                                        <td>: $tanggalCetak</td>
+                                        <td align=\"left\">Tanggal</td>
+                                        <td> : </td>
+                                        <td align=\"left\">$tanggalCetak</td>
                                    </tr>
                               </table>
                          </td>
