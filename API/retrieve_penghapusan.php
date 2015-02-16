@@ -1996,7 +1996,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $sql = array(
                 'table'=>'Usulan as Usl',
                 'field'=>"SQL_CALC_FOUND_ROWS Usl.*",
-                'condition' => "Usl.FixUsulan=1 AND Usl.Jenis_Usulan='PMD'{$filterkontrak} $kondisi  GROUP BY Usl.Usulan_ID $order ",
+                'condition' => "Usl.FixUsulan=1 AND Usl.Jenis_Usulan='PMS'{$filterkontrak} $kondisi  GROUP BY Usl.Usulan_ID $order ",
                 'limit'=>"$limit"
 
                 );
@@ -2087,7 +2087,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
          $sql = array(
                 'table'=>'Usulan as Usl',
                 'field'=>"SQL_CALC_FOUND_ROWS Usl.*",
-                'condition' => "Usl.FixUsulan=1 AND Usl.Jenis_Usulan='PMD'{$filterkontrak} $kondisi  GROUP BY Usl.Usulan_ID $order ",
+                'condition' => "Usl.FixUsulan=1 AND Usl.Jenis_Usulan='PSB'{$filterkontrak} $kondisi  GROUP BY Usl.Usulan_ID $order ",
                 'limit'=>"$limit"
 
                 );
