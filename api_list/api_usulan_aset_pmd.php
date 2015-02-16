@@ -27,7 +27,7 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="";
-$aColumns = array('Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Usl.SatkerUsul','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan','Usl.SatkerUsul','Usl.SatkerUsul');
+$aColumns = array('Usl.Usulan_ID','Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Sat.NamaSatker','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan');
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Usulan_ID";
@@ -128,7 +128,7 @@ $dataParam['limit']="$sLimit";
 // pr($dataParam);
 // list($data,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam);	
 
-$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam); 
+$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter_pmd($dataParam); 
 //pr($dataSESSION);
 //exit;
 //$rResult = $DBVAR->query($sQuery);

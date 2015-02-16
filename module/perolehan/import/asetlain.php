@@ -28,6 +28,9 @@ if(isset($_GET['id'])){
 	<script>
 		$(document).ready(function() {
 	        $('#totalxls').autoNumeric('init', {mDec:0});
+	        setTimeout(function() {
+			    	getTotalValue('XLSIMP');
+				}, 500);
           $('#importxls').dataTable(
                    {
                     "aoColumnDefs": [
@@ -56,39 +59,59 @@ if(isset($_GET['id'])){
 	      $('#totalxls').val($(item).autoNumeric('get'));
 	    }
 
+	    function getTotalValue(item){
+	    	$.post('<?=$url_rewrite?>/function/api/getapplist.php', {UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+					var tmp;
+					var nilai = 0;
+					if(data){
+						$("#btn-dis").removeAttr("disabled");
+						$.each(data, function(index, element) {
+				            var raw = element.split(",");
+							for(var i=0;i<raw.length;i++){
+								tmp = raw[i].split("|");
+								nilai = parseInt(nilai) + parseInt(tmp[1]*tmp[2]);
+							}
+				        });
+					} else {
+						nilai = 0;
+						$('#btn-dis').attr("disabled","disabled");
+					}
+					
+				    $("#totalxls").val(nilai);
+				     $('#totalxls').autoNumeric('set', nilai);
+
+				     var rule = nilai + parseInt($("#totalRBreal").val());
+				     console.log($("#totalRBreal").val());
+						if(rule > $("#spkreal").val()){
+							$('#info').html('Nilai melebihin total SPK'); 
+		                	$('#info').css("color","red");
+							$('#btn-dis').attr("disabled","disabled");		
+						} else {
+							$('#info').html('');
+						}
+				 }, "JSON")
+	    }
+
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
 			var totalnilai = 0;	
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
-			    $("#btn-dis").removeAttr("disabled");
+			    
 			    updDataCheckbox('XLSIMP');
-			    var checkedValues = $('input:checkbox:checked').map(function() {
-				    var data = this.value.split("|");
-				    var nilai = data[1]*data[2];
-				    if(nilai){
-				    	totalnilai = parseInt(totalnilai) + parseInt(nilai);	
-				    }
-				    $("#totalxls").val(totalnilai);
-				     $('#totalxls').autoNumeric('set', totalnilai);
-				    // console.log(totalnilai);
-				}).get();
-				var rule = totalnilai + parseInt($("#totalRBreal").val());
-				if(rule > $("#spkreal").val()){
-					$('#info').html('Nilai melebihin total SPK'); 
-                	$('#info').css("color","red");
-					$('#btn-dis').attr("disabled","disabled");		
-				} else {
-					$('#info').html('');
-				}
-				// console.log(rule);
+
+			    setTimeout(function() {
+			    	getTotalValue('XLSIMP');
+				}, 500);
 			}
 			else
 			{
-			   $('#btn-dis').attr("disabled","disabled");
+			   
 			   updDataCheckbox('XLSIMP');
-			   $("#totalxls").val(0);
+			   setTimeout(function() {
+			    	getTotalValue('XLSIMP');
+				}, 500);
 			}}, 100);
 		}
 	</script>
@@ -150,8 +173,8 @@ if(isset($_GET['id'])){
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-				<form action="hasil_kibe.php" method=POST name="checks" ID="Form2">
-					<p><button type="submit" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Pilih</button>
+				<form action="" name="checks" ID="Form2">
+					<p><a href="hasil_kibe.php?id=<?=$_GET['id']?>"><button type="button" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Import</button></a>
 							&nbsp;</p>
 
 						<div id="demo">
