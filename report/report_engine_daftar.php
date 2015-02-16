@@ -9,10 +9,10 @@
 #Andreas Hadiyono (andre.hadiyono@gmail.com)
 #Gunadarma University
 include "$path/report/report_engine.php";
-pr($path);
+// pr($path);
 class report_engine_daftar extends report_engine {
 
-     public function retrieve_daftar_sk($dataArr, $gambar, $sk, $tanggalCetak) {
+     public function retrieve_daftar_sk($dataArr, $gambar, $sk, $tanggalCetak,$TitleSk) {
           if ($dataArr != "") {
                
                $no = 1;
@@ -56,19 +56,32 @@ class report_engine_daftar extends report_engine {
           <tr>
                <td style=\"width: 10%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
                <td colspan=\"2\" style=\";width: 70%; text-align: center;\">
-                    <h3>LAMPIRAN KEPUTUSAN</h3>
+                    <h3>LAMPIRAN {$TitleSk}</h3>
                     <h3>PEMERINTAH KOTA PEKALONGAN</h3>
                </td>
           </tr>
           <tr>
                     <td>&nbsp;</td>
-                    <td style=\"width: 50%;text-align:right\">Nomor</td>
-                         <td>:$sk</td>
+                    <td style=\"width: 50%;text-align:right\">&nbsp;</td>
+                         <td>&nbsp;</td>
           </tr>
           <tr>
                     <td>&nbsp;</td>
-                    <td style=\"width: 20%;text-align:right\">Tanggal</td>
-                         <td>:$tanggalCetak</td>
+                    <td style=\"width: 20%;text-align:right\">&nbsp;</td>
+                         <td align=\"right\">
+                              <table>
+                                   <tr>
+                                        <td align=\"left\">Nomor</td>
+                                        <td> : </td>
+                                        <td align=\"left\">$sk</td>
+                                   </tr>
+                                   <tr>
+                                        <td align=\"left\">Tanggal</td>
+                                        <td> : </td>
+                                        <td align=\"left\">$tanggalCetak</td>
+                                   </tr>
+                              </table>
+                         </td>
           </tr>
      </table>";
                $body.="<table style=\"text-align: left; width: 100%; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
@@ -89,12 +102,16 @@ class report_engine_daftar extends report_engine {
 
                foreach ($dataArr as $key => $value) {
                     $perolehan = number_format($value[NilaiPerolehan], 2, ",", ".");
+                    // pr($value['kodeSatker']);
+                    $Satker=$this->getNamaSatker($value['kodeSatker']);
+                    $NamaSatker=$Satker[0]->NamaSatker;
+                    // pr();
                     $body.="<tbody>
                <tr>
                          <td style=\"width:5%\">$no</td>
                          <td style=\"width:20%\">{$value[Kelompok]}</td>
                          <td style=\"width:15%;text-align:center\">{$value[kodeLokasi]}<br/>{$value[kodeKelompok]}</td>
-                         <td style=\"width:20%;text-align:center\">{$value[Satker]}</td>
+                         <td style=\"width:20%;text-align:center\">{$NamaSatker}</td>
                          <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
                          <td style=\"width:15%;text-align:right\">{$perolehan}</td>
                          <td style=\"width:15%\">{$value[Info]}</td>
@@ -419,6 +436,26 @@ public function get_jabatan($satker,$jabatan){
 			
 		
 	}
+
+  public function getNamaSatker($kodeSatker){
+
+        $sqlSat="select sat.NamaSatker from Satker AS sat where sat.Kode='$kodeSatker' GROUP BY sat.Kode Limit 1";
+        //   // echo $queryPejabat;
+        // // pr($sqlSat);
+          $resSat=$this->retrieve_query($sqlSat);
+          // pr($resSat);
+        // $sqlSat = array(
+        //     'table'=>"Satker AS sat",
+        //     'field'=>"sat.NamaSatker",
+        //     'condition' => "sat.Kode='08' GROUP BY sat.Kode",
+        //      );
+        // // // //////////////////////////////////////pr($sqlSat);
+        // $resSat = $this->db->lazyQuery($sqlSat,$debug);
+        // pr($resSat);
+        if ($resSat) return $resSat;
+        return false;
+
+    }
 }
 
 ?>

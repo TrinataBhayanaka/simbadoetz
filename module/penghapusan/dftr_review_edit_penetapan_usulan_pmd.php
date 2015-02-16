@@ -31,7 +31,8 @@ $menu_id = 10;
 	////pr($idPenetapan);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_pmd($_GET);
 	
-	// //pr($data);
+	// pr($_GET);
+	// pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;

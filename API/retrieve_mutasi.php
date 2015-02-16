@@ -363,7 +363,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                         $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
                         $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
-                        $res[$key][0]['Jumlah'] = $value['Jumlah'];
+                        $res[$key][0]['Jumlah'] = intval($value['Jumlah']);
                     }
                     
                 }
@@ -374,7 +374,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     if ($value){
                         
                         foreach ($value as $val) {
-                            $newData[] = $val;
+                            if ($val['Mutasi_ID'])$newData[] = $val;
                         } 
                     }
                     
@@ -1014,6 +1014,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             $result = $this->db->lazyQuery($sqlSelect,$debug);
 
+            // $MutasiID = 
             // pr($result);
             if ($result){
 
@@ -1029,22 +1030,33 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                     $tmpRes = $this->db->lazyQuery($sqlSelect,$debug);
+                    logFile(serialize($tmpRes));
+
+                    
                     if ($tmpRes){
+                        // $mutasiTmp[] = $value['Mutasi_ID'];
                         $res[] = $tmpRes;
                         $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                         $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
                         $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
                         $res[$key][0]['Jumlah'] = $value['Jumlah'];
+
+                        // if (in_array($tmpRes[0]['Mutasi_ID'], haystack))
+                        // $newDataTmp[] = $tmpRes;
+
                     }
                 }
-                
+
+
+
                 // pr($res);
                 foreach ($res as $value) {
 
                     if ($value){
                         
                         foreach ($value as $val) {
-                            $newData[] = $val;
+
+                            if ($val['Mutasi_ID'])$newData[] = $val;
                         } 
                     }
                     

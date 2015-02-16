@@ -43,14 +43,14 @@ $REPORT=new report_engine();
 //menggunakan api untuk query berdasarkan variable yg telah dimasukan
 $REPORT->set_data($data);
 
-/*$hit = 2;
+$hit = 2;
 $flag = '';
-$TypeRprtr = '';
+$TypeRprtr = 'mutasi';
 $Info = 'mutasi';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);*/
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id);
 // exit;
 //mendapatkan jenis query yang digunakan
-$result=$REPORT->MutasiBarang($skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$result=$REPORT->MutasiBarangSmpl($skpd_id,$tglawalperolehan,$tglakhirperolehan);
 // pr($result);
 // exit;
 //set gambar untuk laporan

@@ -128,7 +128,7 @@ $dataParam['limit']="$sLimit";
 // pr($dataParam);
 // list($data,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam);	
 
-$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam); 
+$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_psb($dataParam); 
 //pr($dataSESSION);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
@@ -252,7 +252,7 @@ foreach ($data as $key => $value)
                 
                
                 }  
-                
+
                              $row = array();
                              
                              // $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";

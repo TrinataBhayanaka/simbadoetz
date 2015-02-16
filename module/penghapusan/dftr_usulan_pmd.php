@@ -33,24 +33,26 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 				{
 					$dataArr[] = $dataNew->Usulan_ID;
 				}
+
+
 		if ($_POST['submit']){
 				// unset($_SESSION['ses_mutasi_filter']);
 				// pr($_POST);
 				$_SESSION['filterAsetUsulan'] = $_POST;
 				
 			}
-		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+		// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 
-		if($data_post){
+		// if($data_post){
 			
-		}else{
+		// }else{
 			
-		}
-		$POST = $_SESSION['filterAsetUsulan'];
+		// }
+		// $POST = $_SESSION['filterAsetUsulan'];
 	
 		$POST['page'] = intval($_GET['pid']);
 	// pr($POST);
-	    $par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
+	    $par_data_table="bup_tahun=&bup_nokontrak=&jenisaset=&kodeSatker=&page={$POST['page']}";
 
 // $data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($_POST);
 // pr($data);
@@ -109,7 +111,7 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
                          {"bSortable": false},
                          // {"bSortable": false,"sClass": "checkbox-column" },
                          {"bSortable": true},
-                         {"bSortable": true},
+                         {"bSortable": false},
                          {"bSortable": false},
                          {"bSortable": true},
                          {"bSortable": false},
