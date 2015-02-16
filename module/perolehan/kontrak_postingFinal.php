@@ -72,7 +72,9 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       } elseif ($data['TipeAset']=="F") {
           $tabel = "kdp";
       } elseif ($data['TipeAset']=="G") {
-          $tabel = "aset";
+          $DBVAR->commit();
+          echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+          exit;
       }
 
       $sql = "UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = '1', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
