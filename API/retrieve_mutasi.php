@@ -430,8 +430,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $asset_id=Array();
             $no_reg=Array();
             $nm_barang=Array();
-            $asetKapitalisasi = array_keys($_POST['asetKapitalisasi']);
-            $asetKapitalisasiOri = $_POST['asetKapitalisasi'];
+            $asetKapitalisasi = @array_keys($_POST['asetKapitalisasi']);
+            $asetKapitalisasiOri = @$_POST['asetKapitalisasi'];
 
             $mutasi_id=get_auto_increment("Mutasi");
             
@@ -492,6 +492,25 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $result = $this->db->lazyQuery($sqlSelect,$debug);
                 
                 $gabung_nomor_reg_tujuan=intval(($result[0]['noRegister'])+1);
+
+
+                // log start
+                $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
+
+                foreach ($_POST as $key => $value) {
+                    if(in_array($value, $noDok)) $noDokumen = $_POST[$value];
+                    else $noDokumen = '-';
+                }
+                
+                logFile('start log');
+                if (!in_array($asset_id[$i], $asetKapitalisasi)){
+                    $this->db->logIt($tabel=array($getKIB['listTableOri']), $Aset_ID=$asset_id[$i], $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
+                }else{
+                    $this->db->logIt($tabel=array($getKIB['listTableOri']), $Aset_ID=$asset_id[$i], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
+                }
+                logFile('finish log');
+                
+                // end log
 
                 if (!in_array($asset_id[$i], $asetKapitalisasi)){
                     $sql1 = array(
@@ -573,22 +592,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             if ($result){
                 
-                $noDok = array('penggu_penet_eks_nopenet','mutasi_trans_eks_nodok');
-
-                foreach ($_POST as $key => $value) {
-                    if(in_array($value, $noDok)) $noDokumen = $_POST[$value];
-                    else $noDokumen = '-';
-                }
                 
-
-                foreach ($asetid as $key => $value) {
-                    if (!in_array($key, $asetKapitalisasi)){
-                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
-                    }else{
-                        $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
-                    }
-                    
-                }
 
                 logFile('commit transaksi mutasi');
                 $this->db->commit();
