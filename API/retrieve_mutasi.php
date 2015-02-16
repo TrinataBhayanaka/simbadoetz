@@ -363,7 +363,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         $res[$key][0]['SatkerAwal'] = $value['SatkerAwal'];
                         $res[$key][0]['NamaSatkerAwal'] = $value['NamaSatkerAwal'];
                         $res[$key][0]['NamaSatkerAwalAset'] = $value['NamaSatkerAwalAset'];
-                        $res[$key][0]['Jumlah'] = $value['Jumlah'];
+                        $res[$key][0]['Jumlah'] = intval($value['Jumlah']);
                     }
                     
                 }
@@ -374,7 +374,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     if ($value){
                         
                         foreach ($value as $val) {
-                            $newData[] = $val;
+                            if ($val['Mutasi_ID'])$newData[] = $val;
                         } 
                     }
                     
