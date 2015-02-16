@@ -85,9 +85,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             $asetIDKib = implode(',', array_keys($listKibAset));
             $implodeJenis = implode(',', $alias);
             
-                
+            if ($asetIDKib){
 
-                
                 $paging = paging($data['page'], 100);
                 $merk = "";
                 
@@ -114,36 +113,42 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                 // $total[] = $this->db->countData($sql,1);
             
-            $listAsetID = array_keys($listKibAset);
+                $listAsetID = array_keys($listKibAset);
 
 
-            foreach ($res as $k => $value) {
+                foreach ($res as $k => $value) {
 
-                if ($value){
+                    if ($value){
 
-                    
-                    if (in_array($value['Aset_ID'], $listAsetID)) $res[$k] = $listKibAset[$value['Aset_ID']];
-                    $res[$k]['Uraian'] = $value['Uraian'];    
-                    $res[$k]['kode'] = $value['kode'];
-                    $res[$k]['noKontrak'] = $value['noKontrak'];
-                    $res[$k]['NamaSatker'] = $value['NamaSatker'];
-                }
-                
-            }
-            
-            foreach ($res as $k => $value) {
-
-                if ($value){
-                    
-                    if ($value['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
+                        
+                        if (in_array($value['Aset_ID'], $listAsetID)) $res[$k] = $listKibAset[$value['Aset_ID']];
+                        $res[$k]['Uraian'] = $value['Uraian'];    
+                        $res[$k]['kode'] = $value['kode'];
+                        $res[$k]['noKontrak'] = $value['noKontrak'];
+                        $res[$k]['NamaSatker'] = $value['NamaSatker'];
+                    }
                     
                 }
                 
-            }
+                foreach ($res as $k => $value) {
+
+                    if ($value){
+                        
+                        if ($value['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
+                        
+                    }
+                    
+                }
+
+                if ($res) return $res;
+            }    
+
+                
+                
         }
         
         // pr($res);exit;
-        if ($res) return $res;
+        
         return false;
 	}
 
