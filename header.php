@@ -188,23 +188,26 @@ else
 		
 		$(document).on('click', '#chgpass', function(){
 
+			
+
 			var old_password = $('.oldpassword').val();
 			var new_password = $('.newpassword').val();
 			var id = $('.OperatorID').val();
 
-			$.post(basedomain+'/function/phpajax/ajax.php',{ubahPassword:true, old_password:old_password, new_password:new_password, id:id}, function(data){
+			if (old_password && new_password){
+				$.post(basedomain+'/function/phpajax/ajax.php',{ubahPassword:true, old_password:old_password, new_password:new_password, id:id}, function(data){
 
-            var html = "";
+		            var html = "";
 
-            if (data.status==true){
-               alert('Password berhasil diubah'); 
-               $('.close').trigger('click');
-            } else {
-               alert('Password tidak sesuai');
-            }
-            
-            
-
-        }, "JSON")  
+		            if (data.status==true){
+		               alert('Password berhasil diubah'); 
+		               $('.close').trigger('click');
+		            } else {
+		               alert('Password tidak sesuai');
+		            }
+	            
+	            }, "JSON")  
+			}
+			
 		})
 	</script>
