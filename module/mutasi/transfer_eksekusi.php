@@ -15,6 +15,7 @@ include "../../config/config.php";
 	if (isset($_POST)){
 		// unset($_SESSION['ses_mutasi_eksekusi']);
 
+		$_POST['Mutasi'] = $MUTASI->getAsetList('MUTASI');
 		$_SESSION['ses_mutasi_eksekusi'] = $_POST;
 		
 	}

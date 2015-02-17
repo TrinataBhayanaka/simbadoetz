@@ -124,10 +124,12 @@ $MUTASI = new RETRIEVE_MUTASI;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('MUTASI');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
+			   updDataCheckbox('MUTASI');
 			}}, 100);
 		}
 		</script>
@@ -248,7 +250,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<td><?php echo "$no.";?></td>
 						<td class="checkbox-column">
 						
-							<input type="checkbox" class="checkbox" onchange="enable()" name="Mutasi[]" value="<?php echo $value[Aset_ID];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="Mutasi[]" value="<?php echo $value[Aset_ID];?>" >
 							
 						</td>
 						<td style="font-weight: bold;"><?php echo "$value[kode]";?></td>
