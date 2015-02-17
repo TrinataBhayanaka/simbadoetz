@@ -9800,9 +9800,9 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                                     'field'=>"{$FieltableGeneral},{$listTableField}",
                                     'condition' => "{$listTableAlias}.Aset_ID='{$Aset_ID}'",
                                     );
-                        // //////////////////////////////pr($sqlKIb);
+                        pr($sqlKIb);
                         $resKIb = $this->db->lazyQuery($sqlKIb,$debug);
-                         // //////////////////////////////pr($resKIb);
+                         // pr($resKIb);
                          foreach ($resKIb as $keyKIb => $valueKIb) {
                                 // //////////////////////////////pr($valueKIb);
                                 // //////////////////////////////pr($valueAset);
