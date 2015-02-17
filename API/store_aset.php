@@ -1680,6 +1680,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['StatusValidasi'] = 1;
                 $tblKib['Status_Validasi_Barang'] = 1;
                 $tblKib['StatusTampil'] = 1;
+                $tblKib['GUID'] = $data['GUID'];
 
             }
             
@@ -1855,6 +1856,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
     public function store_aset_kapitalisasi($data,$aset)
     {
         global $url_rewrite;
+        $this->begin();
         unset($data['Aset_ID']);
         // pr($aset);exit;
         $kodeSatker = explode(".",$data['kodeSatker']);
@@ -1873,7 +1875,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Tahun'] = $data['Tahun'];
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['kodeKA'] = 0;
-
+        
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
                 $tmpvalue[] = "'$val'";
@@ -1881,7 +1883,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
             $value = implode(',', $tmpvalue);
 
-        $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
+        $query = mysql_query("SELECT MAX(noRegister) AS noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}'");
         while ($row = mysql_fetch_assoc($query)){
              $i = $row['noRegister'];
         }
@@ -1890,10 +1892,15 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         $tblAset['noRegister'] = $loop;
         $query = "INSERT INTO aset ({$field},noRegister) VALUES ({$value},'{$tblAset['noRegister']}')";
+        $execquery = $this->query($query);
+        logFile($query);
+        if(!$execquery){
+          $DBVAR->rollback();
+          echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$aset['id']}\">";
+          exit;
+        }
 
-        $result=  $this->query($query) or die($this->error());
-
-        $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
+        $query_id = mysql_query("SELECT Aset_ID FROM aset WHERE noKontrak = '{$data['noKontrak']}' AND kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}'");
             while ($row = mysql_fetch_assoc($query_id)){
                  $tblAset['Aset_ID'] = $row['Aset_ID'];
             }
@@ -1914,12 +1921,17 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $fieldkap = implode(',', $tmpkapitalfield);
             $valuekap = implode(',', $tmpkapitalvalue);
 
-            $query_log = "INSERT INTO kapitalisasi ({$fieldkap}) VALUES ({$valuekap})";
-            // pr($query_log);exit;
-            $result=  $this->query($query_log) or die($this->error());  
-
+            $query = "INSERT INTO kapitalisasi ({$fieldkap}) VALUES ({$valuekap})";
+           $execquery = $this->query($query);
+            logFile($query);
+            if(!$execquery){
+              $DBVAR->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$aset['id']}\">";
+              exit;
+            }
+            $this->commit();
             echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$aset['id']}\">";  
-
+            exit;
     }
 
     public function store_aset_kdp($data,$aset)
@@ -2294,8 +2306,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/entri/entri_hasil_inventarisasi.php\">";
               exit;
             }
+            $query_id = mysql_query("SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1");
 
-            $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
+            // $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
                 while ($row = mysql_fetch_assoc($query_id)){
                      $tblKib['Aset_ID'] = $row['Aset_ID'];
                 }
@@ -2413,6 +2426,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               while ($dataAset = mysql_fetch_assoc($sqlquery)){
                       $kib = $dataAset;
                   }
+              $kib['TglPerubahan'] = $kib['TglPerolehan'];    
               $kib['changeDate'] = date("Y-m-d");
               $kib['action'] = 1;
               $kib['operator'] = $_SESSION['ses_uoperatorid'];
