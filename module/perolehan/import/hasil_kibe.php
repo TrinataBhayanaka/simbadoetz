@@ -54,6 +54,7 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		$data['Tahun'] = $datatmp['Tahun'];
 		$data['TipeAset'] = $datatmp['TipeAset'];
 		$data['AsalUsul'] = 'Pembelian';
+		$data['GUID'] = $datatmp['GUID'];
 		$data['xls'] = 1;
 		// pr($data);exit;
 		//insert data
