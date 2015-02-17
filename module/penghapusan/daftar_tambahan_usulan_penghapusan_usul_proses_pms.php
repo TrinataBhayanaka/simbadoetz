@@ -46,12 +46,12 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
             $id=$POST['usulanID'];
             echo "<script>
                     alert('Data Berhasil Disimpan');
-                    document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id=$id';
+                    document.location='$url_rewrite/module/penghapusan/dftr_review_edit_aset_usulan_pms.php?id=$id';
                 </script>";
         }else{
             echo "<script>
                     alert('Data Berhasil Disimpan');
-                    document.location='$url_rewrite/module/penghapusan/dftr_usulan_pmd.php?pid=1';
+                    document.location='$url_rewrite/module/penghapusan/dftr_usulan_pms.php?pid=1';
                 </script>";
         }
 
