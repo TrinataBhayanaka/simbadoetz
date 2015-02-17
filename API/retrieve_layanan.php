@@ -71,22 +71,37 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 
             }
 
-            
-            foreach ($res as $value) {
+            if ($res){
 
-                if ($value){
+                foreach ($res as $k => $value) {
+
+                    if ($value){
+                        
+                        foreach ($value as $key => $val) {
+                            if ($val['NilaiPerolehan']) $res[$k][$key]['NilaiPerolehan'] = number_format($val['NilaiPerolehan']);
+                        } 
+                    }
                     
-                    foreach ($value as $val) {
-                        $newData[] = $val;
-                    } 
                 }
-                
+
+                foreach ($res as $value) {
+
+                    if ($value){
+                        
+                        foreach ($value as $val) {
+                            $newData[] = $val;
+                        } 
+                    }
+                    
+                }
+
+                if ($newData) return $newData;
             }
+            
 
         }
-
        	
-        if ($newData) return $newData;
+        
         return false;
 
 

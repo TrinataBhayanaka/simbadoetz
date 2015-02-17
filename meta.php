@@ -16,6 +16,7 @@ if ($u_sess) $isLogin = true;
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap-responsive_simbada.css" rel="stylesheet">
          <link href="<?php echo "$url_rewrite/"; ?>js/select2/select2.css" rel="stylesheet"/>
          <link href="<?php echo "$url_rewrite/"; ?>js/nprogress/nprogress.css" rel="stylesheet"/>
+         <!-- <link href="<?php echo "$url_rewrite/"; ?>js/pace/style-flash.css" rel="stylesheet"/> -->
 		<style type="text/css" title="currentStyle">
 			@import '<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css';
 		</style>
@@ -159,6 +160,8 @@ if ($u_sess) $isLogin = true;
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/tableCheckable/jquery.tableCheckable.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/autoNumeric/autoNumeric.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/nprogress/nprogress.js"></script>
+	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.form.js"></script>
+	  <!--<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/pace/pace.min.js"></script>-->
 	   <script>
 	function change_pemilik() 
 	{
