@@ -254,12 +254,16 @@ foreach ($data as $key => $value)
                
                 }  
 
+                $NoUsulan=explode("/", $value['NoUsulan']);
+
+                $hasilNoUsulan=implode("/ ", $NoUsulan);
+
                              $row = array();
                              
                              // $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
                              $row[]=$no;
                              // $row[]=$checkbox;
-                             $row[]=$value['NoUsulan'] ;
+                             $row[]=$hasilNoUsulan ;
                              $row[]=$SatkerUsul;
                              $row[]=$jumlahAset;
                              $row[]=$change2;
