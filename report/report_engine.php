@@ -19398,7 +19398,12 @@ $footer ="
 							// echo "selisih".$cekSelisih;
 							if($cekSelisih >= 0){
 								//tambah
-								$valAdd = $cekSelisih;
+								if($cekSelisih == 0){
+									$valAdd = $row->NilaiPerolehan;
+								}else{
+									$valAdd = $cekSelisih;
+								
+								}
 								$jmlTambah = 1;
 								$nilaiPrlhnMutasiTambah = $valAdd;
 								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
@@ -28311,17 +28316,17 @@ return $hasil_html;
 	
 	public function get_sumNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
 		if($gol == '01'){
-			$tabel ="tanah";
+			$tabel ="tanahView";
 		}elseif($gol == '02'){
-			$tabel ="mesin";
+			$tabel ="mesin_ori";
 		}elseif($gol == '03'){
-			$tabel ="bangunan";
+			$tabel ="bangunan_ori";
 		}elseif($gol == '04'){
-			$tabel ="jaringan";
+			$tabel ="jaringan_ori";
 		}elseif($gol == '05'){
-			$tabel ="asetlain";
+			$tabel ="asetlain_ori";
 		}elseif($gol == '06'){
-			$tabel ="kdp";
+			$tabel ="kdp_ori";
 		}else{
 			$tabel ="aset";
 		}
@@ -28374,7 +28379,7 @@ return $hasil_html;
 	
 	public function get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
 		if($gol == '01'){
-			$paramGol ="tanah";
+			$paramGol ="tanahView";
 			$kondisi ="";
 		}elseif($gol == '02'){
 			$paramGol ="mesin_ori";
@@ -28385,13 +28390,13 @@ return $hasil_html;
 			$paramGol2 ="bangunan_Rplctn";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '04'){
-			$paramGol ="jaringan";
+			$paramGol ="jaringan_ori";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '05'){
-			$paramGol ="asetlain";
+			$paramGol ="asetlain_ori";
 			$kondisi ="and kondisi != 3";
 		}elseif($gol == '06'){
-			$paramGol ="kdp";
+			$paramGol ="kdp_ori";
 			$kondisi ="and kondisi != 3";
 		}else{
 			$paramGol ="aset";
@@ -28490,7 +28495,7 @@ return $hasil_html;
 			WHERE kodeSatker = '$satker_id' and kondisi = '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
 			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
-			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1";
+			and Status_Validasi_Barang =1 and kodeLokasi like '12%' $KodeKaCondt1";
 		}
 		
 		// echo "query =".$query;
@@ -28516,7 +28521,7 @@ return $hasil_html;
 
     public function get_TotalNilaiNeraca($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
 		if($gol == '01'){
-			$paramGol ="tanah";
+			$paramGol ="tanahView";
 			$kondisi ="";
 			$kodeKelompok ="kodeKelompok like '01%' and";
 		}elseif($gol == '02'){
@@ -28530,15 +28535,15 @@ return $hasil_html;
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '03%' and";
 		}elseif($gol == '04'){
-			$paramGol ="jaringan";
+			$paramGol ="jaringan_ori";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '04%' and";
 		}elseif($gol == '05'){
-			$paramGol ="asetlain";
+			$paramGol ="asetlain_ori";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '05%' and";
 		}elseif($gol == '06'){
-			$paramGol ="kdp";
+			$paramGol ="kdp_ori";
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '06%' and";
 		}else{
@@ -28640,7 +28645,7 @@ return $hasil_html;
 			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
-			and StatusValidasi =1 and kodeLokasi like '12%' $KodeKaCondt1
+			and Status_Validasi_Barang =1 and kodeLokasi like '12%' $KodeKaCondt1
 			";
 		}	
 		

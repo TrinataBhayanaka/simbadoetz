@@ -141,7 +141,7 @@ function hapusUsulanMutasi($data, $debug=false)
 
         		$updateKib = array(
 	                    'table'=>"{$kibAset}",
-	                    'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
+	                    'field'=>"StatusValidasi = 1",
 	                    'condition'=>"Aset_ID = {$value}",
 	                    );
 
@@ -149,7 +149,7 @@ function hapusUsulanMutasi($data, $debug=false)
 
 	            $updateAset = array(
 	                    'table'=>"aset",
-	                    'field'=>"StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 1",
+	                    'field'=>"StatusValidasi = 1, NotUse = 1",
 	                    'condition'=>"Aset_ID = {$value}",
 	                    );
 
