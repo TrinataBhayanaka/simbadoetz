@@ -265,7 +265,7 @@ $menu_id = 10;
 								}
 							?>
 						<td>
-							<?php echo $nilai[noRegister]?>
+							<?php echo "ASET_ID [ ".$nilai[Aset_ID]." ]".$nilai[noRegister]?>
 						</td>
 						<td>
 							<?php echo $nilai[noKontrak]?>
