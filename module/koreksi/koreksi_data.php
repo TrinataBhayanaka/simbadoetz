@@ -35,7 +35,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
-			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ format: 'yyyy-mm-dd' });
 			setTimeout(function() {
 			 	initKondisi();
 			}, 1000);
