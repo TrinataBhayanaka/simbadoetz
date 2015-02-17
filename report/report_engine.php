@@ -5508,7 +5508,7 @@ foreach ($dataArr as $satker_id => $value)
 						<td style=\"text-align: ;\">&nbsp;</td>
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
                         <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
-                        <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->LuasJaringan,0,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
                       </tr>";
                 $total_perolehan += ($value->NilaiPerolehan);
@@ -8857,7 +8857,7 @@ return $hasil_html;
 													
 													$perolehan = number_format($row->NilaiPerolehan,2,",",".");
 													$panjang = number_format($row->Panjang,0,",",".");
-													$luas = number_format($row->LuasTotal,0,",",".");
+													$luas = number_format($row->LuasJaringan,0,",",".");
 													$lebar = number_format($row->Lebar,0,",",".");
 													// ($row->Lebar == '') ? $dataLebar = 0 : $dataLebar = $row->Lebar;
 													// $lebar = number_format($dataLebar);
@@ -13151,7 +13151,7 @@ return $hasil_html;
 													
 													$perolehan = number_format($row->NilaiPerolehan,2,",",".");
 													$panjang = number_format($row->Panjang,0,",",".");
-													$luas = number_format($row->LuasTotal,0,",",".");
+													$luas = number_format($row->LuasJaringan,0,",",".");
 													$lebar = number_format($row->Lebar,0,",",".");
 													// ($row->Lebar == '') ? $dataLebar = 0 : $dataLebar = $row->Lebar;
 													// $lebar = number_format($dataLebar);
