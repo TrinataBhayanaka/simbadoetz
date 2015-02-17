@@ -4838,6 +4838,17 @@ class core_api_report extends DB {
 	public function TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id){
 		// ECHO "FLAG =".$flag;
 		// exit;
+		$tgldefault = "2008-01-01";
+		$thnDefault ="2008";
+
+		$tglAwalDefault = $tglawalperolehan;
+		$ceckTglAw = explode ('-',$tglAwalDefault);
+		$thnceck = $ceckTglAw[0];
+
+		$tglAkhirDefault = $tglakhirperolehan;
+		$ceckTgl = explode ('-',$tglAkhirDefault);
+		$thnFix = $ceckTgl[0];
+		
 		if($Info != ''){
 			//untuk mutasi
 			if($Info == 'mutasi'){
@@ -4864,15 +4875,34 @@ class core_api_report extends DB {
 			}
 		}else{
 			if($TypeRprtr == 'ATM' || $TypeRprtr == 'ATB' ){
-				$paramKib 		= "a.TglPerolehan <'2008-01-01' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi 	= "a.TglPerolehan <'2008-01-01' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
-				$paramPnghpsn 	= "a.TglPerolehan <'2008-01-01' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
-				$paramLog 		= "a.TglPerolehan <'2008-01-01' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND a.Kd_Riwayat != '77' order by a.log_id desc";
-		
-				$paramKib_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
-				$paramMutasi_2 	    = "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
-				$paramPnghpsn_2 	= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
-				$paramLog_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND a.Kd_Riwayat != '77'  order by a.log_id desc";
+				//siap edit
+					if($thnFix < $thnDefault){
+						// echo "tahun <2008";
+						$paramKib 		= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
+						$paramMutasi 	= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+						$paramPnghpsn 	= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
+						$paramLog 		= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND a.Kd_Riwayat != '77' order by a.log_id desc";
+					}elseif($thnceck >= $thnDefault){
+						// echo "tahun > 2008";
+						$paramKib 		= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
+						$paramMutasi 	= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+						$paramPnghpsn 	= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
+						$paramLog 		= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND a.Kd_Riwayat != '77' order by a.log_id desc";
+					
+					}else{
+						// echo "tahun <2008 >2008";
+						$paramKib 		= "a.TglPerolehan <'2008-01-01' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
+						$paramMutasi 	= "a.TglPerolehan <'2008-01-01' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+						$paramPnghpsn 	= "a.TglPerolehan <'2008-01-01' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
+						$paramLog 		= "a.TglPerolehan <'2008-01-01' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND a.Kd_Riwayat != '77' order by a.log_id desc";
+			
+						$paramKib_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
+						$paramMutasi_2 	    = "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+						$paramPnghpsn_2 	= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
+						$paramLog_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND a.Kd_Riwayat != '77'  order by a.log_id desc";
+				
+					}
+					
 			}
 			elseif($TypeRprtr == 'neraca'){
 			
@@ -5457,14 +5487,27 @@ class core_api_report extends DB {
 								where $paramLog";
 				$queryAlter = "ALTER table kdp_ori add primary key(KDP_ID)";						
 			}
+			
+			
 			if($TypeRprtr == 'ATM' ){
-				$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn,
+				if($thnFix < $thnDefault){
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
+				}elseif($thnceck >= $thnDefault){
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
+				}else{
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn,
 									$queryKib_Rplctn,$queryAlter_Rplctn,$queryLog_Rplctn,$queryMutasi_Rplctn,$queryPnghpsn_Rplctn);
+				}
 				
 			}elseif($TypeRprtr == 'ATB'){
-				$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn,
+				if($thnFix < $thnDefault){
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
+				}elseif($thnceck >= $thnDefault){
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
+				}else{
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn,
 									$queryKib_Rplctn,$queryAlter_Rplctn,$queryLog_Rplctn,$queryMutasi_Rplctn,$queryPnghpsn_Rplctn);
-				
+				}
 			}else{
 				$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
 			}
