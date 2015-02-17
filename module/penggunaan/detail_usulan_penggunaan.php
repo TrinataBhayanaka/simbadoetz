@@ -169,12 +169,12 @@ include "../../config/config.php";
 	<section id="main">
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-		  <li><a href="#">Mutasi</a><span class="divider"><b>&raquo;</b></span></li>
+		  <li><a href="#">Penggunaan</a><span class="divider"><b>&raquo;</b></span></li>
 		  <li class="active">Penggunaan Barang</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
-			<div class="title">Transfer Antar SKPD</div>
+			<div class="title">Penggunaan Barang</div>
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
