@@ -598,14 +598,14 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
         $kodeSatker = $_SESSION['ses_param_penggunaan_validasi']['kodeSatker'];
         $filter = "";
-        if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}'";
+        if ($kodeSatker) $filter .= " AND pa.kodeSatker = '{$kodeSatker}'";
 
         $paging = paging($data['page'], 100);
     
         $sql = array(
                 'table'=>"penggunaanaset AS pa, Aset AS a, kelompok AS k",
                 'field'=>"pa.*, a.kodeKelompok, a.noKontrak, a.NilaiPerolehan, a.Tahun, a.noRegister, a.TipeAset, k.Uraian",
-                'condition'=>"pa.Penggunaan_ID = {$data['id']} AND pa.Status = 1 AND a.StatusValidasi = 1 {$filter}",
+                'condition'=>"pa.Penggunaan_ID = {$data['id']} AND pa.Status = 1 AND a.NotUse = 1 {$filter}",
                 'limit'=>"{$paging}, 100",
                 'joinmethod' => 'LEFT JOIN',
                 'join' => "pa.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
