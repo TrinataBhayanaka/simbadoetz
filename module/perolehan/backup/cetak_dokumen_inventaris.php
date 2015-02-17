@@ -75,7 +75,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						$(document).ready(function() {
 							$("select").select2({});
 							$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).mask('9999-99-99');
-							$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ format: 'yyyy-mm-dd' });
 							initKondisi();
 							});	
 						</script>
