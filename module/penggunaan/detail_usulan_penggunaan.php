@@ -285,10 +285,10 @@ include "../../config/config.php";
 						
 						</td>	
 						<?php 
-						$status = $value['Status'];
-						if ($status == 0) {$statusMutasi = "Pending Validasi"; $label = "label-warning";}
-						if ($status == 1) {$statusMutasi = "Sudah di Validasi"; $label = "label-success";}
-						if ($status == 3) {$statusMutasi = "Usulan dihapuskan"; $label = "label-danger";}
+						$status = $value['StatusMutasi'];
+						if ($status == 0) {$statusMutasi = "Sudah divalidasi"; $label = "label-success";}
+						if ($status > 0) {$statusMutasi = "Sudah di Mutasi"; $label = "label-info";}
+						//if ($status == 3) {$statusMutasi = "Usulan dihapuskan"; $label = "label-danger";}
 						?>
 						<td><span class="label <?=$label?>"><?=$statusMutasi?></span></td>
 						
