@@ -13,3 +13,5 @@ db/simda_to_simbada.sql
 *.bak
 *.swp
 config/config.php
+db/*
+htacess-ovan

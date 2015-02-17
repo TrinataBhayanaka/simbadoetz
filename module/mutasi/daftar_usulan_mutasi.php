@@ -46,6 +46,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	/*
     if ($_POST['submit']){
 		// unset($_SESSION['ses_mutasi_filter']);
 
@@ -55,6 +56,10 @@ $MUTASI = new RETRIEVE_MUTASI;
 
 	$dataParam = $_SESSION['ses_mutasi_filter'];
     $dataParam['page'] = intval($_GET['pid']);
+	*/
+
+    // pr($_POST);
+    $dataParam = $SESSION->smartFilter('mutasi_usulan');
 
 	// pr($_SESSION);
 	$data = $MUTASI->retrieve_usulan_mutasi($dataParam);

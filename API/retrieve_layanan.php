@@ -61,7 +61,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k, satker AS s",
                         'field'=>'SQL_CALC_FOUND_ROWS a.*, k.Uraian, s.NamaSatker',
-                        'condition' => "{$listTableAlias}.StatusTampil = 1 AND {$listTableAlias}.Aset_ID !='' {$filter} GROUP BY {$listTableAlias}.Aset_ID {$kondisi} {$order}",
+                        'condition' => "{$listTableAlias}.StatusTampil = {$statusaset} AND {$listTableAlias}.Aset_ID !='' {$filter} GROUP BY {$listTableAlias}.Aset_ID {$kondisi} {$order}",
                         'limit' => "{$limit}",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.kodeSatker = s.Kode"
@@ -116,7 +116,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 'condition' => "{$listTableAlias}.StatusTampil = 1  {$filter} ",
                 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
-                'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.action=r.Kd_Riwayat"
+                'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.Kd_Riwayat=r.Kd_Riwayat"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);

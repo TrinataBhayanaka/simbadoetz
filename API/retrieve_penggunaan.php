@@ -565,7 +565,116 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         return false;
 
     }
+
+
+    function daftarPenggunaanValid($data=false,$debug=false)
+    {   
+
+        $kodeSatker = $_SESSION['ses_param_penggunaan_validasi']['kodeSatker'];
+        $filter = "";
+        if ($kodeSatker) $filter .= " AND kodeSatker = '{$kodeSatker}'";
+
+
+        $sql = array(
+                'table'=>"penggunaanaset",
+                'field'=>"Penggunaan_ID",
+                'condition'=>"Status = 1 AND StatusMenganggur = 0 {$filter} GROUP BY Penggunaan_ID",
+                );
+
+        $resAset = $this->db->lazyQuery($sql,$debug);
+        // pr($resAset);
+        if ($resAset){
+            foreach ($resAset as $key => $value) {
+
+                $sql = array(
+                        'table'=>"penggunaan",
+                        'field'=>"*",
+                        'condition'=>"Status = 1 AND FixPenggunaan = 1 AND Penggunaan_ID = {$value['Penggunaan_ID']}",
+                        );
+
+                $res = $this->db->lazyQuery($sql,$debug);
+                if ($res){
+
+                    $newData[] = $res;
+                    
+                    
+                }
+                
+            }
+
+
+            if ($newData){
+                foreach ($newData as $key => $value) {
+                    
+                    foreach ($value as $key => $val) {
+                        $returnData[] = $val;
+                    }
+                }
+            }
+
+            return $returnData;
+            
+        }
+        
+        return false;
+    }
     
+    function daftarPenggunaanValid_detail($data=false,$debug=false)
+    {   
+
+        $data['page'] = $_GET['pid'];
+
+        $kodeSatker = $_SESSION['ses_param_penggunaan_validasi']['kodeSatker'];
+        $filter = "";
+        if ($kodeSatker) $filter .= " AND pa.kodeSatker = '{$kodeSatker}'";
+
+        $paging = paging($data['page'], 100);
+    
+        $sql = array(
+                'table'=>"penggunaanaset AS pa, Aset AS a, kelompok AS k",
+                'field'=>"pa.*, a.kodeKelompok, a.noKontrak, a.NilaiPerolehan, a.Tahun, a.noRegister, a.TipeAset, k.Uraian",
+                'condition'=>"pa.Penggunaan_ID = {$data['id']} AND pa.Status = 1 {$filter}",
+                'limit'=>"{$paging}, 100",
+                'joinmethod' => 'LEFT JOIN',
+                'join' => "pa.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+
+        
+        if ($res){
+
+            $listTable2 = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp');
+
+            foreach ($res as $key => $value) {
+                
+                
+                $newData[$value['Aset_ID']] = $value;
+                
+            }
+
+            foreach ($newData as $key => $value) {
+                $sql = array(
+                    'table'=>$listTable2[$value['TipeAset']],
+                    'field'=>"*",
+                    'condition'=>"Aset_ID = {$value['Aset_ID']}",
+                    );
+
+                $newData[$key]['aset'] = $this->db->lazyQuery($sql,$debug);
+            }
+
+            // pr($newData);
+            return $newData;
+        } 
+        return false;
+    }
+
     function getTableKibAlias($type=1)
     {
         $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kd');

@@ -2,11 +2,11 @@
 include "../../config/config.php";
 
      $menu_id = 31;
-    ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
+    // ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
     $SessionUser = $SESSION->get_session_user();
     $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
-
+    $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
         
 ?>
 <?php
@@ -14,6 +14,9 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	// pr($_SESSION);
+	$data = $PENGGUNAAN->daftarPenggunaanValid();
+	// pr($data);	
 			?>
 
 
@@ -68,7 +71,7 @@ include "../../config/config.php";
 						<th>No</th>
 						<th>Nomor SKKDH</th>
 						<th>Tgl SKKDH</th>
-						<!--<th>Tindakan</th>-->
+						<th>Detail</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -91,22 +94,15 @@ include "../../config/config.php";
 						$paging = $LOAD_DATA->paging($_GET['pid']);
 					   unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
 						$parameter = array('menuID'=>$menu_id,'type'=>'','paging'=>$paging);
-						$data = $RETRIEVE->retrieve_daftar_validasi_penggunaan($parameter);
+						// $data = $RETRIEVE->retrieve_daftar_validasi_penggunaan($parameter);
 						
-						//if ($_GET['pid'] == 1) $no = 1; else $no = $paging;
-								if (!empty($data['dataArr']))
-								{
-									$disabled = '';
-									$pid = 0;
+						
 						$no=1;
 						
 						
-						
-						foreach($data['dataArr'] as $key => $hsl_data){
-							if($dataArr!="")
-							{
-								(in_array($hsl_data['Penggunaan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
-							}
+					if ($data){
+
+						foreach($data as $key => $hsl_data){
 							
 					?>
 						  
@@ -114,11 +110,18 @@ include "../../config/config.php";
 						<td><?php echo "$no.";?></td>
 						<td><?php echo "$hsl_data[NoSKKDH]";?>	</td>
 						<td><?php $change=$hsl_data['TglUpdate']; $change2=  format_tanggal_db3($change); echo "$change2";?></td>
-						<!--<td><a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>" onclick="<?=$disable?> " >Hapus</a></td>-->
+						<td><a class="btn btn-info btn-small" href="<?php echo "$url_rewrite/module/penggunaan/"; ?>detail_usulan_penggunaan.php?pid=1&id=<?php echo "$hsl_data[Penggunaan_ID]";?>" onclick="<?=$disable?> " >Lihat Detail</a></td>
+						<!--<td><a class="btn" href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_validasi_daftar_proses_hapus.php?id=<?php echo "$hsl_data[Penggunaan_ID]";?>" onclick="<?=$disable?> " >Lihat Detail</a></td>-->
 					</tr>
-					 <?php $no++; 
-					//$pid++; 
-					} }?>
+					 <?php 
+
+					 $no++; 
+					
+						} 
+					}
+				
+
+					?>
 				</tbody>
 				<tfoot>
 					<tr>
