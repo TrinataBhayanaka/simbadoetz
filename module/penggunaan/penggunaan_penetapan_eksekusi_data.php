@@ -31,6 +31,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	
 	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan_eksekusi($_POST);
 
 ?>
@@ -301,7 +302,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 							</li>
 							<li>
 								<span class="span2">Tanggal Penetapan</span>
-								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" style="width:180px;">
+								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" style="width:180px;" readonly="readonly">
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>
