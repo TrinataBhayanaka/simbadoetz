@@ -36,15 +36,30 @@ $menu_id = 10;
 		// unset($_SESSION['ses_mutasi_filter']);
 		// pr($_POST);
 		$_SESSION['filterAsetUsulan'] = $_POST;
-		
-	}
-	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 
-		if($data_post){
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+
+			if($data_post){
+				$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+			}
+		$CountData=0;
+		
+	}else{
+		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+		// pr($data_post);
+		$datapost=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+
+		$CountData=count($datapost);
+		// pr($CountData);
+	}
+
+	// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+
+	// 	if($data_post){
 			
-		}else{
+	// 	}else{
 			
-		}
+	// 	}
 	// if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
 	// 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
 	// 	$_SESSION['filterAsetUsulanAdd']=$data;
@@ -95,6 +110,19 @@ $menu_id = 10;
 	<!-- End Sql -->
 
 	<script>
+		function confirmValidate(){	
+			var ConfH = $("#countcheckboxH").html();
+			var conf = confirm(ConfH);
+			if(conf){return true;} else {return false;}
+		}
+		function countCheckbox(item,rvwitem){
+			setTimeout(function() {
+				$.post('<?=$url_rewrite?>/function/api/countapplist.php', { UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,rvwact:rvwitem,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+						$("#countcheckbox").html("<h5>Jumlah Data yang akan dibuat usulan <div class='blink_text_blue'>"+data.countAset+" Data Aset</div></h5>");
+						$("#countcheckboxH").html("Jumlah Data yang akan dibuat usulan "+data.countAset+" Data Aset");
+					 },"JSON")
+			}, 500);
+		}
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
@@ -102,11 +130,13 @@ $menu_id = 10;
 			{
 			    $("#submit").removeAttr("disabled");
 			    updDataCheckbox('RVWUSPMD');
+			    countCheckbox('RVWUSPMD');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
 			    updDataCheckbox('RVWUSPMD');
+			    countCheckbox('RVWUSPMD');
 			}}, 100);
 		}
 		jQuery(function($) {
@@ -179,9 +209,16 @@ $menu_id = 10;
     </script>
 			
 			<div id="demo">
-			<form method="POST" ID="Form2" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_pmd.php"> 
+			<form method="POST" ID="Form2" onsubmit="return confirmValidate()" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_review_aset_tambahan_usulan_pmd.php"> 
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="usulan_pmd_table">
 				<thead>
+
+					<tr>
+						<td colspan="10" align="center">
+							<span id="countcheckbox"><h5>Jumlah Data yang akan dibuat usulan <div class="blink_text_blue"><?=$CountData?> Data</div></h5></span>
+							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data yang akan dibuat usulan <?=$CountData?> Data</span>
+						</td>
+					</tr> 
 					<tr>
 						<td colspan="7" align="left">
 								<span><button type="submit" name="submit" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Buat Usulan Penghapusan</button></span>

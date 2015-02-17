@@ -56,6 +56,19 @@ $menu_id = 10;
 	<!-- End Sql -->
 	
 	<script>
+		function confirmValidate(){	
+			var ConfH = $("#countcheckboxH").html();
+			var conf = confirm(ConfH);
+			if(conf){return true;} else {return false;}
+		}
+		function countCheckbox(item,rvwitem){
+			setTimeout(function() {
+				$.post('<?=$url_rewrite?>/function/api/countapplist.php', { UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,rvwact:rvwitem,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+						$("#countcheckbox").html("<h5>Jumlah Data FIX yang akan diusulkan <div class='blink_text_blue'>"+data.countAset+" Data Dari "+data.totalAset+" Data Aset</div></h5>");
+						$("#countcheckboxH").html("Jumlah Data FIX yang akan diusulkan "+data.countAset+" Data Dari "+data.totalAset+" Data Aset");
+					 },"JSON")
+			}, 500);
+		}
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
@@ -63,11 +76,13 @@ $menu_id = 10;
 			{
 			    $("#submit").removeAttr("disabled");
 			    updDataCheckbox('USPMS');
+			    countCheckbox('USPMS','RVWUSPMS');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
 			    updDataCheckbox('USPMS');
+			    countCheckbox('USPMS','RVWUSPMS');
 			}}, 100);
 		}
 		</script>
@@ -108,7 +123,7 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_tambahan_usulan_penghapusan_usul_proses_pms.php"> 
+			<form method="POST" ID="Form2"  onsubmit="return confirmValidate()"  action="<?php echo "$url_rewrite/module/penghapusan/"; ?>daftar_tambahan_usulan_penghapusan_usul_proses_pms.php"> 
 			
 			<div class="detailLeft">
 						
@@ -152,6 +167,12 @@ $menu_id = 10;
 			
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
+					<tr>
+						<td colspan="10" align="center">
+							<span id="countcheckbox"><h5>Jumlah Data FIX yang akan diusulkan <div class="blink_text_blue">0 Data</div></h5></span>
+							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data FIX yang akan diusulkan 0 Data</span>
+						</td>
+					</tr>
 					<tr>
 						<td colspan="10" align="Left">
 								<span><button type="submit" name="submit" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span>
