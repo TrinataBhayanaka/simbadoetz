@@ -2306,8 +2306,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/entri/entri_hasil_inventarisasi.php\">";
               exit;
             }
+            $query_id = mysql_query("SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1");
 
-            $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
+            // $query_id = mysql_query("SELECT Aset_ID FROM aset ORDER BY Aset_ID DESC LIMIT 1");
                 while ($row = mysql_fetch_assoc($query_id)){
                      $tblKib['Aset_ID'] = $row['Aset_ID'];
                 }
