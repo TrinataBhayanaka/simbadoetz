@@ -170,7 +170,7 @@ include "../../config/config.php";
 		<ul class="breadcrumb">
 		  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 		  <li><a href="#">Mutasi</a><span class="divider"><b>&raquo;</b></span></li>
-		  <li class="active">Transfer Antar SKPD</li>
+		  <li class="active">Penggunaan Barang</li>
 		  <?php SignInOut();?>
 		</ul>
 		<div class="breadcrumb">
