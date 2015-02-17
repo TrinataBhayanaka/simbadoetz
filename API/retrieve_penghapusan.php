@@ -9958,7 +9958,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $sqlKIb = array(
                                     'table'=>"{$listTable}",
                                     'field'=>"{$FieltableGeneral},{$listTableField}",
-                                    'condition' => "{$listTableAlias}.Aset_ID='{$Aset_ID}'",
+                                    'condition' => "{$listTableAlias}.Aset_ID='{$Aset_ID}' GROUP BY {$listTableAlias}.Aset_ID",
                                     );
                         // //////////////////////////////////pr($sqlKIb);
                         $resKIb = $this->db->lazyQuery($sqlKIb,$debug);

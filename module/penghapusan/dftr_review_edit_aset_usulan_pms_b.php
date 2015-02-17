@@ -33,13 +33,13 @@ $menu_id = 10;
 						//////pr($data);
 						
 				}
-				pr($data);
-				pr("dataFull");
-				pr($data['dataRow'][0]);
-				pr("data row");
-				$row=$data['dataRow'][0];		
-				pr($row);
-				pr("row");
+				// pr($data);
+				// pr("dataFull");
+				// pr($data['dataRow'][0]);
+				// pr("data row");
+				// $row=$data['dataRow'][0];		
+				// pr($row);
+				// pr("row");
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
