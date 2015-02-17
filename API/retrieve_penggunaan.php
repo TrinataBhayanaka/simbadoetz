@@ -572,19 +572,47 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
         $kodeSatker = $_SESSION['ses_param_penggunaan_validasi']['kodeSatker'];
         $filter = "";
-        if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}'";
+        if ($kodeSatker) $filter .= " AND kodeSatker = '{$kodeSatker}'";
 
 
         $sql = array(
-                'table'=>"penggunaan",
-                'field'=>"*",
-                'condition'=>"Status = 1 AND FixPenggunaan = 1",
+                'table'=>"penggunaanaset",
+                'field'=>"Penggunaan_ID",
+                'condition'=>"Status = 1 AND StatusMenganggur = 0 {$filter} GROUP BY Penggunaan_ID",
                 );
 
         $resAset = $this->db->lazyQuery($sql,$debug);
+        // pr($resAset);
         if ($resAset){
+            foreach ($resAset as $key => $value) {
 
-            return $resAset;
+                $sql = array(
+                        'table'=>"penggunaan",
+                        'field'=>"*",
+                        'condition'=>"Status = 1 AND FixPenggunaan = 1 AND Penggunaan_ID = {$value['Penggunaan_ID']}",
+                        );
+
+                $res = $this->db->lazyQuery($sql,$debug);
+                if ($res){
+
+                    $newData[] = $res;
+                    
+                    
+                }
+                
+            }
+
+            
+            if ($newData){
+                foreach ($newData as $key => $value) {
+                    
+                    foreach ($value as $key => $val) {
+                        $returnData[] = $val;
+                    }
+                }
+            }
+
+            return $returnData;
             
         }
         
