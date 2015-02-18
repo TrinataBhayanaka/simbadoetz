@@ -24,40 +24,34 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
             }
 	?>
 	<!-- End Sql -->
-	
-	<script>
-	jQuery(function($){
-	   $("select").select2();
-	});
-	</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Penghapusan Sebagian</li>
+			  <li class="active">Daftar Penetapan Penghapusan Pemindahtanganan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Sebagian</div>
-				<div class="subtitle">Filter Aset Data </div>
+				<div class="title">Penetapan Penghapusan Pemindahtanganan</div>
+				<div class="subtitle">Filter Data Usulan </div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -67,42 +61,25 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			</div>		
 
 		<section class="formLegend">
-			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_psb.php?pid=1&flegAset=1" onsubmit="return requiredFilterHPS(1,1, 'kodeSatker')">
+			<form method="POST" action="<?php echo"$url_rewrite";?>/module/penghapusan/dftr_usulan_aset_pmd.php?pid=1" onsubmit="return requiredFilter(0,1, 'kodeSatker')">
 				<ul>
 					<li>&nbsp;</li>
 					<li>
-						<span class="span2">Nomor Kontrak</span>
-						<input type='text' style="width: 200px;" name="bup_nokontrak" placeholder=""/>
+						<span class="span2">Nomor&nbsp;Usulan</span>
+						<input isdatepicker="true" style="width: 200px;" id="bup_pp_sp_nousulan" name="bup_pp_sp_nousulan"  type="text">
 					</li>
 					<li>
-						<span class="span2">Tahun Perolehan</span>
-						<input type='text' id="#lda_tp" maxlength="4" name="bup_tahun" placeholder="" />
+						<span class="span2">Tanggal&nbsp;Usulan</span>
+						<input id="tanggal13" name="bup_pp_sp_tglusul" id="bup_pp_sp_tglusul"  type="text" >
 					</li>
-					<li>
-						<span class="span2">Jenis Aset</span>
-						<select name="jenisaset[]" style="width:170px" id="jenisaset">
-
-							<option value="">Pilih Aset</option>
-							<option value="1">Tanah</option>
-							<option value="2">Mesin</option>
-							<option value="3">Bangunan</option>
-							<option value="4">Jaringan</option>
-							<option value="5">Aset Tetap Lain</option>
-							<option value="6">KDP</option>
-						</select><!-- 
-                        <span class="span2">Jenis Aset</span>
-                        <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
-                        <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
-                        <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
-                        <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
-                        <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
-                        <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
-                        -->
-                    </li>  
                     <li>&nbsp;</li>
-					<?=selectSatker('kodeSatker',$width='205',$br=true,false);?>
-                    <li>&nbsp;</li>
+					
+					<?php //selectAllSatker('kodeSatker','255',true,false,'required'); 
+						selectAllSatker('kodeSatker','255',true,false,false,true);
+					?>
+					
+					<li>&nbsp;</li>
+					
 					<li>
 						<span class="span2">&nbsp;</span>
 						<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
@@ -110,6 +87,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<input type="reset" name="reset" class="btn" value="Bersihkan Data">
 					</li>
 				</ul>
+				
 			</form>
 			    
 		</section> 

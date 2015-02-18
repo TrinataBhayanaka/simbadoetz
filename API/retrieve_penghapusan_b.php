@@ -3246,9 +3246,10 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 //         'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
                 //         'limit'=>'100',
                 //         );
-                ////////////////////////////////////////pr($sqlHPSaset);
+                pr(1);
+                pr($sqlHPSaset);
                 $resHPSaset = $this->db->lazyQuery($sqlHPSaset,$debug);
-                ////////////////////////////////////////pr($resHPSaset);
+                pr($resHPSaset);
                 $arrayHPSaset=array();
                 ////////////////////////////////////////////pr($arrayHPSaset);
                 foreach ($resHPSaset as $valueHPSaset) {
@@ -3271,10 +3272,11 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                             'field'=>" * ",
                             'condition' => "Usulan_ID IN ($QueryHPSID) AND FixUsulan=1 AND Jenis_Usulan='$jenis_usulan'  AND StatusPenetapan=0 {$filterkontrak} ORDER BY Usulan_ID desc"
                             );
-                    ////////////////////////////////////////////pr($sql);
+                     pr(2);
+                    pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
-                    
+                    pr($res);
                     foreach ($res as $keySat => $valueSat) {
                         //////////////pr($valueSat);
                         // //////////////////pr($keySat);
@@ -3286,7 +3288,8 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                             'condition' => "kode='$SatkerKodenama' GROUP BY kode"
                             );
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
-
+                         pr(3);
+                        pr($sqlSat);
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
                         $sqlAst = array(
                                 'table'=>'Aset',
@@ -3313,7 +3316,8 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                     'field'=>" * ",
                     'condition' => "FixUsulan=1 AND Jenis_Usulan='$jenis_usulan' AND StatusPenetapan=0 {$filterkontrak} ORDER BY Usulan_ID desc"
                     );
-            
+                 pr(4);
+                pr($sql);
                 $res = $this->db->lazyQuery($sql,$debug);
 
                 foreach ($res as $keySat => $valueSat) {
@@ -3327,7 +3331,8 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                             'condition' => "kode='$SatkerKodenama' GROUP BY kode"
                             );
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
-
+                         pr(5);
+                        pr($sqlSat);
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
 
                          $sqlAst = array(
@@ -3335,7 +3340,8 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                                 'field'=>" NilaiPerolehan ",
                                 'condition' => "Aset_ID IN ($Aset_ID)"
                                 );
-                        
+                          pr(6);
+                        pr($sqlAst);
                         $resAst = $this->db->lazyQuery($sqlAst,$debug);
 
                         $res[$keySat]['TotalNilaiPerolehan']=0;
