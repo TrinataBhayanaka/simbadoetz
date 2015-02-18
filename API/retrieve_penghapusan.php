@@ -4040,6 +4040,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 // ////////////////////////////////////////pr($resUslAst);
                 // echo "==============";
                 $Aset_IDUslAst=$resUslAst[0]['Aset_ID'];
+                 if($Aset_IDUslAst){
                 // ////////////////////////////////////////pr($Aset_IDUslAst);
                 $sqlAst = array(
                 'table'=>'Aset',
@@ -4114,7 +4115,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                     $res[$key][$keyUsl][$keySat]=$valueSat;
                 }
-
+            }
                
             }
             // $resData[]=$res;
@@ -4203,6 +4204,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 // ////////////////////////////////////////pr($resUslAst);
                 // echo "==============";
                 $Aset_IDUslAst=$resUslAst[0]['Aset_ID'];
+                if($Aset_IDUslAst){
                 // ////////////////////////////////////////pr($Aset_IDUslAst);
                 $sqlAst = array(
                 'table'=>'Aset',
@@ -4277,6 +4279,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                     $res[$key][$keyUsl][$keySat]=$valueSat;
                 }
+            }
 
                
             }
@@ -4366,6 +4369,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 ////////////////////////////////pr($resUslAst);
                 // echo "==============";
                 $Aset_IDUslAst=$resUslAst[0]['Aset_ID'];
+                 if($Aset_IDUslAst){
                 $res[$key][$keyUsl]['NilaiPerolehanTmp']=$resUslAst[0]['NilaiPerolehanTmp'];
                 $res[$key][$keyUsl]['kondisiTmp']=$resUslAst[0]['kondisiTmp'];
                 // ////////////////////////////////////////pr($Aset_IDUslAst);
@@ -4442,6 +4446,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                     $res[$key][$keyUsl][$keySat]=$valueSat;
                 }
+            }
 
                
             }
