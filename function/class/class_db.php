@@ -31,7 +31,7 @@ class DB
 	{
 		
 		$this->query = mysql_query($data);// or die (mysql_error());
-		
+		logFile($data);
 		return $this->query;
 	}
 	
