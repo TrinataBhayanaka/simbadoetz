@@ -24,7 +24,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
             }
 	?>
 	<!-- End Sql -->
-	
+
 	<script>
 	jQuery(function($){
 	   $("select").select2();
@@ -34,30 +34,30 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Penghapusan Sebagian</li>
+			  <li class="active">Daftar Usulan Penghapusan Pemindahtanganan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Sebagian</div>
+				<div class="title">Usulan Penghapusan Pemindahtanganan</div>
 				<div class="subtitle">Filter Aset Data </div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_psb.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_psb.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_psb.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -68,7 +68,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_psb.php?pid=1&flegAset=1" onsubmit="return requiredFilterHPS(1,1, 'kodeSatker')">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_pmd_b.php?pid=1&flegAset=1" onsubmit="return requiredFilterHPS(1,1, 'kodeSatker')">
 				<ul>
 					<li>&nbsp;</li>
 					<li>
@@ -80,6 +80,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<input type='text' id="#lda_tp" maxlength="4" name="bup_tahun" placeholder="" />
 					</li>
 					<li>
+
 						<span class="span2">Jenis Aset</span>
 						<select name="jenisaset[]" style="width:170px" id="jenisaset">
 
@@ -90,15 +91,17 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							<option value="4">Jaringan</option>
 							<option value="5">Aset Tetap Lain</option>
 							<option value="6">KDP</option>
-						</select><!-- 
+						</select>
+
+						<!-- 
                         <span class="span2">Jenis Aset</span>
                         <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
                         <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
                         <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
                         <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
                         <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
-                        <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
-                        -->
+                        <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP -->
+                       
                     </li>  
                     <li>&nbsp;</li>
 					<?=selectSatker('kodeSatker',$width='205',$br=true,false);?>

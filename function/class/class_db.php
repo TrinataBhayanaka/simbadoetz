@@ -31,7 +31,7 @@ class DB
 	{
 		
 		$this->query = mysql_query($data);// or die (mysql_error());
-		logFile($data);
+		//logFile($data,'Log-query '.date('Y-m-d'));
 		return $this->query;
 	}
 	
@@ -540,7 +540,7 @@ class DB
 					$sql = "SELECT {$field} FROM {$table} WHERE {$whereCondition} {$limit}";
 				}
 
-				logFile($sql);
+				logFile($sql,'Log-lazyquery '.date('Y-m-d'));
 				
 
 				if ($debug){
@@ -577,7 +577,7 @@ class DB
 					} 
 					
 				}
-				logFile($sql);
+				logFile($sql,'Log-lazyquery '.date('Y-m-d'));
 				if (!$debug) $res = $this->query($sql);
 				if ($res) return true;
 
@@ -606,7 +606,7 @@ class DB
 					} 
 					
 				}
-				logFile($sql);
+				logFile($sql,'Log-lazyquery '.date('Y-m-d'));
 				if (!$debug)$res = $this->query($sql);
 				if ($res) return true;
 

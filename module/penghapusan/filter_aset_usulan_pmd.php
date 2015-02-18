@@ -24,6 +24,12 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
             }
 	?>
 	<!-- End Sql -->
+
+	<script>
+	jQuery(function($){
+	   $("select").select2();
+	});
+	</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -62,7 +68,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_pmd.php?pid=1&flegAset=1" onsubmit="return requiredFilter(1,1, 'kodeSatker')">
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_usulan_pmd.php?pid=1&flegAset=1" onsubmit="return requiredFilterHPS(1,1, 'kodeSatker')">
 				<ul>
 					<li>&nbsp;</li>
 					<li>
@@ -74,13 +80,27 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<input type='text' id="#lda_tp" maxlength="4" name="bup_tahun" placeholder="" />
 					</li>
 					<li>
+
+						<span class="span2">Jenis Aset</span>
+						<select name="jenisaset[]" style="width:170px" id="jenisaset">
+
+							<option value="">Pilih Aset</option>
+							<option value="1">Tanah</option>
+							<option value="2">Mesin</option>
+							<option value="3">Bangunan</option>
+							<option value="4">Jaringan</option>
+							<option value="5">Aset Tetap Lain</option>
+							<option value="6">KDP</option>
+						</select>
+
+						<!-- 
                         <span class="span2">Jenis Aset</span>
                         <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
                         <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
                         <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
                         <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
                         <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
-                        <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
+                        <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP -->
                        
                     </li>  
                     <li>&nbsp;</li>
