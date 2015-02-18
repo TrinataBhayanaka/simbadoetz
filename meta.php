@@ -34,7 +34,9 @@ if ($u_sess) $isLogin = true;
 		<script src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.js"></script>
 		 <script>
 			$(function() {
-			$( "#datepicker" ).datepicker({ format: 'yyyy-mm-dd' });
+			$( "#datepicker" ).datepicker({ 
+				format: 'yyyy-mm-dd' 
+			});
 			$( "#datepicker-other" ).datepicker({ format: 'yyyy-mm-dd' });
 			initTableCheckable ();
 			});

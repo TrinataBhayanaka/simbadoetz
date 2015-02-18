@@ -37,7 +37,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
                         $('#tanggal9').datepicker($.datepicker.regional['id']);
                         $('#tanggal10').datepicker($.datepicker.regional['id']);
                         $('#tanggal11').datepicker($.datepicker.regional['id']);
-                        $('#tanggal12').datepicker($.datepicker.regional['id']);
+                        $('#tanggal12').datepicker({format:'yyyy-mm-dd'});
                         $('#tanggal13').datepicker($.datepicker.regional['id']);
                         $('#tanggal14').datepicker($.datepicker.regional['id']);
                         $('#tanggal15').datepicker($.datepicker.regional['id']);

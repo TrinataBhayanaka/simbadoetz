@@ -5896,7 +5896,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                  $tgl=$data['tanggalUsulan'];
                 $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-                 $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                 // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                $olah_tgl=$data['tanggalUsulan'];
              
                     $nmaset=$data['penghapusan_nama_aset'];
                     $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
@@ -6020,7 +6021,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                  $tgl=$data['tanggalUsulan'];
                 $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-                 $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                 // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+
+                $olah_tgl=$data['tanggalUsulan'];
              
                     $nmaset=$data['penghapusan_nama_aset'];
                     $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
@@ -6147,7 +6150,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                  $tgl=$data['tanggalUsulan'];
                 $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-                 $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                 // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                
+                $olah_tgl=$data['tanggalUsulan'];
              
                 $dataIDAset=explode("|", $data['penghapusan_nama_aset']);
 
