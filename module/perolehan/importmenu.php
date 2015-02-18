@@ -212,7 +212,7 @@ $menu_id = 10;
 	    height:     100%;
 	    width:      100%;
 	    background: rgba( 255, 255, 255, .8 ) 
-	                url('<?=$url_rewrite?>/js/load.GIF') 
+	                url('<?=$url_rewrite?>/js/load2.gif') 
 	                50% 50% 
 	                no-repeat;
 	}

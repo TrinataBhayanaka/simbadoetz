@@ -364,14 +364,14 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 					</div>
 					<!-- hidden -->
 					<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
-					<input type="hidden" name="kodeSatker" value="<?=$dataArr['kib']['kodeSatker']?>">
+					<input type="hidden" name="kodeSatker" value="<?=$dataArr['aset']['kodeSatker']?>">
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
 					<input type="hidden" name="kondisi" value="1">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 					<input type="hidden" name="TipeAset" id="TipeAset">
 					<input type="hidden" name="old_jumlah" value = "<?=$dataArr['aset']['Kuantitas']?>">
 					<input type="hidden" name="old_kelompok" value = "<?=$dataArr['aset']['kodeKelompok']?>">
-					<input type="hidden" name="old_lokasi" value = "<?=$dataArr['kib']['kodeLokasi']?>">
+					<input type="hidden" name="old_lokasi" value = "<?=$dataArr['aset']['kodeLokasi']?>">
 					<input type="hidden" name="tabel" id="tabel" value="<?=$dataArr['tabel']?>">
 					<input type="hidden" name="AsalUsul" value="Pembelian">
 			
