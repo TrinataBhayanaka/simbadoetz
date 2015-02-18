@@ -10,12 +10,13 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 	
     function getAsetList($action)
     {
-
+        // pr($_SESSION);
         $userid = $_SESSION['ses_uoperatorid'];
+        $token = $_SESSION['ses_utoken'];
         $sql = array(
                 'table'=>"apl_userasetlist",
                 'field'=>"aset_list",
-                'condition'=>"aset_action = '{$action}' AND UserNm = {$userid}",
+                'condition'=>"aset_action = '{$action}' AND UserNm = {$userid} AND UserSes = '{$token}' LIMIT 1",
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);

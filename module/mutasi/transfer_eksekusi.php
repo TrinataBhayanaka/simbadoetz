@@ -138,7 +138,17 @@ include "../../config/config.php";
 				document.getElementById(obj.id).value="Sub Detail";}
 			}
 
+			function validasiTanggal()
+			{
+				var tanggal = $('#datepicker').val();
+				//console.log(tanggal);
 
+				if (tanggal == ''){
+					alert('Tanggal proses tidak boleh kosong');
+					return false;
+				}
+				
+			}
         </script>
 	
 	<section id="main">
@@ -191,7 +201,7 @@ include "../../config/config.php";
                                                 $id++;
                                         }*/
                             ?>
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/mutasi/"; ?>transfer_eksekusi_proses.php" onsubmit="return validasiTanggal()">
                 <input type="hidden" name="jenisaset" value="<?php echo $_POST['jenisaset']?>">
                 <input type="hidden" name="Mutasi_ID" value="<?php echo $data[0]['Mutasi_ID']?>">
                             <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>JS/tabel.js"></script>
