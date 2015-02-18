@@ -272,7 +272,7 @@ include "../../config/config.php";
 						<td><?php echo @$value['detail'][0]['NoSTNK']?></td>
 						<td style="font-weight: bold;"> <?php echo number_format($value['NilaiPerolehan']);?> </td>
 						<td style="font-weight: bold;"><?php echo "$value[SatkerAwal] - $value[satkerAwalAset]";?></td>
-						<td style="font-weight: bold;"><?php echo "$value[kode] - $value[NamaSatkerTujuan]";?></td>	
+						<td style="font-weight: bold;"><?php echo "$value[SatkerTujuan] - $value[NamaSatkerTujuan]";?></td>	
 						<td style="font-weight: bold;"><?php echo $value['Tahun'];?></td>	
 						<td>
 							<?php echo "$value[Uraian]";?>
