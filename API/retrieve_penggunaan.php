@@ -15,7 +15,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         
         $id=$data['Penggunaan_ID'];
         $tgl_aset=$data['penggu_penet_eks_tglpenet'];
-        $change_tgl=  format_tanggal_db2($tgl_aset);
+        $change_tgl=  $tgl_aset;
         $noaset=$data['penggu_penet_eks_nopenet'];
         $ket=$data['penggu_penet_eks_ket'];
 
@@ -99,8 +99,8 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $penggu_penet_eks_ket=$data['penggu_penet_eks_ket'];   
         $penggu_penet_eks_nopenet=$data['penggu_penet_eks_nopenet'];   
         $penggu_penet_eks_tglpenet=$data['penggu_penet_eks_tglpenet']; 
-        $olah_tgl=  format_tanggal_db2($penggu_penet_eks_tglpenet);
-
+        // $olah_tgl=  format_tanggal_db2($penggu_penet_eks_tglpenet);
+        $olah_tgl=  $penggu_penet_eks_tglpenet;
         $panjang=count($nmaset);
 
         // $query="insert into Penggunaan (Penggunaan_ID, NoSKKDH , TglSKKDH, 

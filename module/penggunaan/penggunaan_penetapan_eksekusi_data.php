@@ -110,6 +110,18 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 						inner.style.display = "none";
 						document.getElementById(obj.id).value="Sub Detail";}
 						}
+
+				function validasiTanggal()
+				{
+					var tanggal = $('#datepicker').val();
+					//console.log(tanggal);
+
+					if (tanggal == ''){
+						alert('Tanggal penetapan tidak boleh kosong');
+						return false;
+					}
+					
+				}
 				</script>
                  
 	<section id="main">
@@ -125,7 +137,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 		</div>
 		<section class="formLegend">
 			
-			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data_proses.php">
+			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data_proses.php" onsubmit="return validasiTanggal()">
 			<table width="100%">
                                     <tr>
                                         <td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar aset yang akan dibuatkan penetapan penggunaan :</u></td>
@@ -302,7 +314,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 							</li>
 							<li>
 								<span class="span2">Tanggal Penetapan</span>
-								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="tanggal12" style="width:180px;" readonly="readonly">
+								<input type="text" name="penggu_penet_eks_tglpenet" required="required" id="datepicker" style="width:180px;" readonly="readonly">
 							</li>
 							<li>
 								<span class="span2">Keterangan</span>
