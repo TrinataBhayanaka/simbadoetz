@@ -177,10 +177,10 @@ $menu_id = 10;
 					<?php
 						}
 					?>
-					<li>
+					<!-- <li>
 						<span  class="labelInfo">Total Nilai Usulan</span>
 						<input type="text" value="" disabled/>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 	
@@ -208,7 +208,7 @@ $menu_id = 10;
 						<?php
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
-						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<!-- <th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th> -->
 						<?php } ?>
 						<th>No Register</th>
 						<th>No Kontrak</th>
@@ -294,11 +294,11 @@ $menu_id = 10;
 						<?php
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
-						<td class="checkbox-column">
+						<!-- <td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
 							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[NilaiPerolehan];?>" >
 							
-						</td>
+						</td> -->
 						<?php } ?>
 						<td>
 							<?php echo $nilai[noRegister]?>
@@ -348,7 +348,7 @@ $menu_id = 10;
 						<?php
 							if($_SESSION['ses_uaksesadmin']==1){
 						?>
-						<th>&nbsp;</th>
+						<!-- <th>&nbsp;</th> -->
 						<?php } ?>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

@@ -4065,6 +4065,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 // ////////////////////////////////////pr($resUslAst);
                 // echo "==============";
                 $Aset_IDUslAst=$resUslAst[0]['Aset_ID'];
+            if($Aset_IDUslAst){
                 // ////////////////////////////////////pr($Aset_IDUslAst);
                 $sqlAst = array(
                 'table'=>'Aset',
@@ -4139,9 +4140,11 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
 
                     $res[$key][$keyUsl][$keySat]=$valueSat;
                 }
-
+              }
                
-            }
+            }//
+
+
             // $resData[]=$res;
 
 
