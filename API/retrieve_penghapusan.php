@@ -6997,8 +6997,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
          $tgl=$data['tanggalUsulan'];
         $tglExplode =explode("/",$tgl) ;
             // ////////////////////////////////////////////////pr($tglExplode);
-        $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
-             
+        // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+        $olah_tgl=$data['tanggalUsulan'];    
         ////////////////////////////////////////pr($_POST['penghapusan_nama_aset']);
         // foreach ($IDaset as $key => $value) {
         //     // ////////////////////////////////////////pr($value);
@@ -7061,7 +7061,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $tgl=$data['tanggalUsulan'];
         $tglExplode =explode("/",$tgl) ;
             // ////////////////////////////////////////////////pr($tglExplode);
-        $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+        // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+        $olah_tgl=$data['tanggalUsulan'];    
              
         ////////////////////////////////////////pr($_POST['penghapusan_nama_aset']);
         // foreach ($IDaset as $key => $value) {
@@ -7125,7 +7126,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $tgl=$data['tanggalUsulan'];
         $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-        $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+        // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+        $olah_tgl=$data['tanggalUsulan'];    
              
         ////////////////////////////////////////pr($_POST['penghapusan_nama_aset']);
         // foreach ($IDaset as $key => $value) {
@@ -10203,8 +10205,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $tgl=$data['bup_pp_tanggal'];
             $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-            $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
-             
+            // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+             $olah_tgl=$data['bup_pp_tanggal'];
             // $olah_tgl=  format_tanggal_db2($tgl);
             $keterangan=$data['bup_pp_get_keterangan'];
             $submit=$data['submit'];
@@ -10234,7 +10236,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $tgl=$data['bup_pp_tanggal'];
             $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-            $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+            // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+             $olah_tgl=$data['bup_pp_tanggal'];
              
             // $olah_tgl=  format_tanggal_db2($tgl);
             $keterangan=$data['bup_pp_get_keterangan'];
@@ -10265,7 +10268,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $tgl=$data['bup_pp_tanggal'];
             $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-            $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+            // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+             $olah_tgl=$data['bup_pp_tanggal'];
              
             // $olah_tgl=  format_tanggal_db2($tgl);
             $keterangan=$data['bup_pp_get_keterangan'];
