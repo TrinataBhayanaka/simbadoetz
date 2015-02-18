@@ -2259,17 +2259,21 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        if($data['TipeAset'] == 'B'){
-            if($tblAset['NilaiPerolehan'] < 300000){
-                $tblAset['kodeKA'] = 1;
-            } else {
-                $tblAset['kodeKA'] = 0;
-            }
-        } elseif ($data['TipeAset'] == 'C') {
-            if($tblAset['NilaiPerolehan'] < 10000000){
-                $tblAset['kodeKA'] = 1;
-            } else {
-                $tblAset['kodeKA'] = 0;
+        if(intval($tblAset['Tahun']) <= 2008){
+            $tblAset['kodeKA'] = 1;
+        }else {
+            if($data['TipeAset'] == 'B'){
+                if($tblAset['NilaiPerolehan'] < 300000){
+                    $tblAset['kodeKA'] = 1;
+                } else {
+                    $tblAset['kodeKA'] = 0;
+                }
+            } elseif ($data['TipeAset'] == 'C') {
+                if($tblAset['NilaiPerolehan'] < 10000000){
+                    $tblAset['kodeKA'] = 1;
+                } else {
+                    $tblAset['kodeKA'] = 0;
+                }
             }
         }
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
