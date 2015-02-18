@@ -24,6 +24,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
             }
 	?>
 	<!-- End Sql -->
+	<script>
+	jQuery(function($){
+	   $("select").select2();
+	});
+	</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>

@@ -267,6 +267,40 @@ function requiredFilter(jenisaset, satker, satkerid)
 
 }
 
+function requiredFilterHPS(jenisaset, satker, satkerid)
+{
+
+	// alert("ada");
+	if (jenisaset) jenisaset = true;
+	if (satker) satker = true;
+
+	if (jenisaset){
+		var tipejenisaset = $('#jenisaset').val();
+
+		// console.log(tipejenisaset);
+	    if (tipejenisaset==false || tipejenisaset==""){
+			alert('Pilih Jenis Aset');
+			return false;
+		}
+	}
+
+
+	if (satker){
+
+		var kode = $('#'+satkerid).val();
+		console.log(kode);
+		
+
+		if (kode==false || kode==""){
+			alert('Pilih Satker');
+			return false;
+		}
+
+	}
+	
+
+}
+
 function dTableParam(idTable, urlApi, total)
 {
 

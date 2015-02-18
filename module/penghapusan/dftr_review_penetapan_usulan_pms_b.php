@@ -1,7 +1,7 @@
 <?php
 include "../../config/config.php";
 
-$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN_B;
 
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
@@ -9,7 +9,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -26,20 +26,28 @@ $menu_id = 10;
 	// $_SESSION['dataPost']=$_POST;
 	// $dataPost=$_SESSION['dataPost'];
 	// }
-	// $data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($_POST);
-	$idPenetapan=$_GET['id'];
-	////pr($idPenetapan);
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_pmd($_GET);
+	pr($_POST);
+	pr("data Post");
+	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPMS");
+	// $
+	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 	
-	// pr($_GET);
-	// pr($data);
+	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pms($POST);
+	if($data['dataArr']){
+		$CountData=count($data['dataArr']);
+	}else{
+		$CountData=0;
+	}
+	if($_SESSION['kdSatkerFilterPMDp']){
+		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
+	}
+	// //////pr($data);
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }
 	?>
 	<!-- End Sql -->
-
 	<script>
         $(function()
         {
@@ -48,46 +56,57 @@ $menu_id = 10;
         }
 		);
 	</script>
-	
+	<script language="Javascript" type="text/javascript">  
+			function enable(){  
+			var tes=document.getElementsByTagName('*');
+			var button=document.getElementById('submit');
+			var boxeschecked=0;
+			for(k=0;k<tes.length;k++)
+			{
+				if(tes[k].className=='checkbox')
+					{
+						//
+						tes[k].checked == true  ? boxeschecked++: null;
+					}
+			}
+			//alert(boxeschecked);
+			if(boxeschecked!=0)
+				button.disabled=false;
+			else
+				button.disabled=true;
+			}
+	</script>
 	<script>
-	jQuery(function($) {
-	        $('#TotalNilai').autoNumeric('init', {mDec:0});
-	        
-	    });
+		function confirmValidate(){	
+			var ConfH = $("#countcheckboxH").html();
+			var conf = confirm(ConfH);
+			if(conf){return true;} else {return false;}
+		}
+		function countCheckbox(item,rvwitem){
+			var CountDataVal=$("#CountData").val();
+			// console.log(CountDataVal);
+			// alert(CountDataVal);
+			setTimeout(function() {
+				$.post('<?=$url_rewrite?>/function/api/countapplist.php', { UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,rvwact:rvwitem,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+						$("#countcheckbox").html("<h5>Jumlah Data Usulan yang akan diterima untuk penetapan <div class='blink_text_blue'>"+data.countAset+" Dari "+CountDataVal+" Data Aset</div></h5>");
+						$("#countcheckboxH").html("Jumlah Data yang diterima untuk ditetapkan "+data.countAset+" Dari "+CountDataVal+" Data Aset");
+					 },"JSON")
+			}, 500);
+		}
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
-
-			var totalnilai = 0;	
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
-			    val nilaiP=$("").val();
-			    var checkedValues = $('input:checkbox:checked').map(function() {
-			    	alert('love');
-			    	console.log(checkedValues);
-				    var data = this.val();
-				    var nilai = data;
-				    if(nilai){
-				    	totalnilai = parseInt(totalnilai) + parseInt(nilai);	
-				    }
-				    $("#TotalNilai").val(totalnilai);
-				     $('#TotalNilai').autoNumeric('set', totalnilai);
-				    // console.log(totalnilai);
-				}).get();
-				// var rule = totalnilai + parseInt($("#totalRBreal").val());
-				// if(rule > $("#spkreal").val()){
-				// 	$('#info').html('Nilai melebihin total SPK'); 
-    //             	$('#info').css("color","red");
-				// 	$('#btn-dis').attr("disabled","disabled");		
-				// } else {
-				// 	$('#info').html('');
-				// }
+			    updDataCheckbox('PTUSPMS');
+			    countCheckbox('PTUSPMS');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
-			    $("#TotalNilai").val(0);
+			    updDataCheckbox('PTUSPMS');
+			    countCheckbox('PTUSPMS');
 			}}, 100);
 		}
 		</script>
@@ -95,30 +114,30 @@ $menu_id = 10;
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Aset Usulan Penghapusan Pemindahtanganan</li>
+			  <li class="active">Daftar Aset Usulan Penghapusan Pemusnahan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemindahtanganan</div>
+				<div class="title">Usulan Penghapusan Pemusnahan</div>
 				<div class="subtitle">Review Aset yang akan dibuat Usulan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pmd.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_usulan_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pmd.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pmd.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusan/dftr_validasi_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -128,23 +147,21 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			<form name="form" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_edit_proses_pmd.php">
-					<?php
-							if($_SESSION['ses_uaksesadmin']!=1){
-								$disabledForm="disabled";
-							}
-						?>
+			<form name="form" method="POST" ID="Form2" onsubmit="return confirmValidate()" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_tambah_data_proses_pms.php">
+			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
+			<input type="hidden" id="CountData" value="<?=$CountData?>" />		
+					
 			<div class="detailLeft">
 						
 						<ul>
 							<li>
 								<span  class="labelInfo">No SK Penghapusan</span>
-								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?=$data['dataRow'][0]['NoSKHapus']?>" <?php echo $disabledForm;?> required>
+								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" <?php echo $disabledForm;?> required>
 						
 							</li>
 							<li>
 								<span class="labelInfo">Keterangan Penghapusan</span>
-								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> required><?=$data['dataRow'][0]['AlasanHapus']?></textarea>
+								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> required></textarea>
 							</li>
 						</ul>
 							
@@ -157,30 +174,20 @@ $menu_id = 10;
 						&nbsp;
 					</li>
 					<li>
-						<?php
-							
-							$TglSKHapusTmp=explode("-", $data['dataRow'][0]['TglHapus']);
-							// //pr($TglSKHapusTmp);
-							$TglSKHapus=$TglSKHapusTmp[1]."/".$TglSKHapusTmp[2]."/".$TglSKHapusTmp[0];
-
-						?>
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
-						<input name="bup_pp_tanggal" type="text" id="tanggal1" value="<?=$TglSKHapus?>" <?php echo $disabledForm;?> required/>
+							<div class="input-prepend">
+								<span class="add-on"><i class="fa fa-calendar"></i></span>
+								<input name="bup_pp_tanggal" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
+							</div>
 					</li>
-					<?php
-							if($_SESSION['ses_uaksesadmin']==1){
-						?>
-					<!-- <li>
-						<span  class="labelInfo">Total Nilai</span>
-						<input name="bup_pp_nilaiPerolehan" type="text" id="TotalNilai" value=""required/>
-					</li> -->
-					<?php
-						}
-					?>
 					<li>
+						<span  class="labelInfo">&nbsp;</span>
+						&nbsp;
+					</li>
+					<!-- <li>
 						<span  class="labelInfo">Total Nilai Usulan</span>
 						<input type="text" value="" disabled/>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 	
@@ -188,28 +195,24 @@ $menu_id = 10;
 		
 			<div id="demo">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penghapusan10">
 				<thead>
-					<?php
-							if($_SESSION['ses_uaksesadmin']==1){
-						?>
+
 					<tr>
-						<td colspan="10" align="Left">
-								<!-- <span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span> -->
-								<span><button type="submit" name="submit"  value="tetapkan" class="btn btn-info " id="submit" /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Update Informasi Penetapan</button></span>
-								<input type="hidden" name="id" value="<?=$idPenetapan?>"/>
+						<td colspan="10" align="center">
+							<span id="countcheckbox"><h5>Jumlah Data Usulan yang akan diterima untuk penetapan <div class='blink_text_blue'> 0 Dari <?=$CountData?> Data Aset</div></h5></span>
+							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data Usulan yang akan diterima untuk penetapan <?=$CountData?> Data</span>
 						</td>
 					</tr>
-					<?php
-						}
-					?>
+					<tr>
+						<td colspan="10" align="Left">
+								<span><button type="submit" name="submit"  class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Usulkan Untuk Penghapusan</button></span>
+						
+						</td>
+					</tr>
 					<tr>
 						<th>No</th>
-						<?php
-							if($_SESSION['ses_uaksesadmin']==1){
-						?>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
-						<?php } ?>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
@@ -234,18 +237,18 @@ $menu_id = 10;
 					$no = 1;
 					foreach ($data['dataArr'] as $key => $nilai)
 					{
-						// ////pr($valueUsulan);
+						// //////pr($valueUsulan);
 						?>
 						<!-- <input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/> -->
 					<?php
 					
 					// $TglPerolehanTmp=explode("-", $valueUsulan[TglPerolehan]);
-					// // ////pr($TglPerolehanTmp);
+					// // //////pr($TglPerolehanTmp);
 					// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
-					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_pmd($valueUsulan['Usulan_ID']);
-									// ////pr($dataUsulanAset);
-									// ////pr($_SESSION);
+					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_pms($valueUsulan['Usulan_ID']);
+									// //////pr($dataUsulanAset);
+									// //////pr($_SESSION);
 									// StatusKonfirmasi
 									
 									// foreach ($dataUsulanAset as $keys => $nilai)
@@ -284,22 +287,19 @@ $menu_id = 10;
 										}
 										// ////pr($value[TglPerolehan]);
 										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-										// //pr($TglPerolehanTmp);
+										// ////pr($TglPerolehanTmp);
 										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+
 
 					?>
 						
 					<tr class="gradeA">
 						<td><?php echo $no?></td>
-						<?php
-							if($_SESSION['ses_uaksesadmin']==1){
-						?>
 						<td class="checkbox-column">
 							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[NilaiPerolehan];?>" >
+							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
 							
 						</td>
-						<?php } ?>
 						<td>
 							<?php echo $nilai[noRegister]?>
 						</td>
@@ -321,7 +321,7 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<span id="NiLaiP<?=$no?>"><?php echo number_format($nilai[NilaiPerolehan]);?></span>
+							<?php echo number_format($nilai[NilaiPerolehan]);?>
 						</td>
 						<td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
@@ -345,11 +345,7 @@ $menu_id = 10;
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
-						<?php
-							if($_SESSION['ses_uaksesadmin']==1){
-						?>
 						<th>&nbsp;</th>
-						<?php } ?>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
@@ -385,8 +381,8 @@ $menu_id = 10;
 						foreach ($data['dataRow'] as $valueUsulan) {
 							
 							$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
-									////pr($dataUsulanAset);
-									// ////pr($_SESSION);
+									//////pr($dataUsulanAset);
+									// //////pr($_SESSION);
 									// StatusKonfirmasi
 									$no = 1;
 									foreach ($dataUsulanAset as $keys => $nilai)
