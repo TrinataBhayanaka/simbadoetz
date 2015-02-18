@@ -6151,7 +6151,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
                  // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
-                
+
                 $olah_tgl=$data['tanggalUsulan'];
              
                 $dataIDAset=explode("|", $data['penghapusan_nama_aset']);
@@ -7416,7 +7416,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $tgl=$data['bup_pp_tanggal'];
                 $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-                 $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                 // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                 $olah_tgl=$data['bup_pp_tanggal'];
              
                 // $olah_tgl=  format_tanggal_db2($tgl);
                 $keterangan=$data['bup_pp_get_keterangan']; 
@@ -7604,8 +7605,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $tgl=$data['bup_pp_tanggal'];
                 $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-                 $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
-             
+                 // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                
+                 $olah_tgl=$data['bup_pp_tanggal'];
                 // $olah_tgl=  format_tanggal_db2($tgl);
                 $keterangan=$data['bup_pp_get_keterangan']; 
                 $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
@@ -7792,8 +7794,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $tgl=$data['bup_pp_tanggal'];
                 $tglExplode =explode("/",$tgl) ;
                 // ////////////////////////////////////////////////pr($tglExplode);
-                 $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
-             
+                 // $olah_tgl=$tglExplode[2]."-".$tglExplode[0]."-".$tglExplode[1];
+                
+                 $olah_tgl=$data['bup_pp_tanggal'];
                 // $olah_tgl=  format_tanggal_db2($tgl);
                 $keterangan=$data['bup_pp_get_keterangan']; 
                 $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
