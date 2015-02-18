@@ -2730,7 +2730,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         global $url_rewrite;
         $newkelompok = explode(".", $data['kodeKelompok']);
         $oldkelompok = explode(".", $data['old_kelompok']);
-        // pr($oldkelompok);exit;
+        // pr($data);
         if ($newkelompok[0] != $oldkelompok[0]){
             $sql = "SELECT MIN(noRegister) AS min,MAX(noRegister) AS max FROM aset WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noKontrak = '{$data['noKontrak']}'";
             $minmax = $this->fetch($sql);
@@ -2738,11 +2738,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $sql = "DELETE FROM aset WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN '{$minmax['min']}' AND {$minmax['max']}";
             // pr($sql);exit;
             $result=  $this->query($sql) or die($this->error());
-
-            $sql = "DELETE FROM {$data['tabel']} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}";
-            // pr($sql);
-            $result=  $this->query($sql) or die($this->error());
-
+            if($data['tabel'] != 'persediaan'){
+                $sql = "DELETE FROM {$data['tabel']} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}";
+                // pr($sql);
+                $result=  $this->query($sql) or die($this->error());
+    
+            }
+            
             if(isset($data['kodeRuangan'])) {
                 $ruangan = explode("_", $data['kodeRuangan']);
                 $data['kodeRuangan'] = $ruangan[1];
