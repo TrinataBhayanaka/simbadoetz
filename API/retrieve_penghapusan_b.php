@@ -3418,10 +3418,11 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $sqlHPSaset = array(
                             'table'=>'usulanaset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
                             'field'=>"a.kodeSatker,b.Usulan_ID, b.Aset_ID,b.Jenis_Usulan, e.NamaSatker, f.NamaLokasi, g.Kode",
-                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND a.kodeSatker LIKE '%{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
+                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND b.StatusPenetapan=0 AND StatusKonfirmasi=0 AND a.kodeSatker LIKE '%{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
                             );
+
                 // $sqlHPSaset = array(
                 //         'table'=>'penghapusan',
                 //         'field'=>" * ",
@@ -4042,7 +4043,9 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 'field'=>" Usulan_ID,Aset_ID ",
                 'condition' => "Usulan_ID='$value' AND FixUsulan=1 AND Jenis_Usulan='$jenis_hapus' {$filterkontrak} ORDER BY Usulan_ID desc"
                 );
-        
+            pr($sqlUsl);
+            pr($key);
+            pr("--------------------------");
             $resUsl = $this->db->lazyQuery($sqlUsl,$debug);
             ////////////////////////////////////pr($resUsl);
 
@@ -4057,7 +4060,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                     'field'=>" Usulan_ID,Aset_ID ",
                     'condition' => "Usulan_ID='$value' AND Aset_ID='$valueUsl' AND Jenis_Usulan='$jenis_hapus' {$filterkontrak}"
                     );
-                // ////////////////////////////////////pr($sqlUslAst);
+                pr($sqlUslAst);
                 $resUslAst = $this->db->lazyQuery($sqlUslAst,$debug);
                 // ////////////////////////////////////pr($resUslAst);
                 // echo "==============";
@@ -4068,7 +4071,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 'field'=>"Aset_ID,TipeAset,KodeSatker ",
                 'condition' => "Aset_ID='$Aset_IDUslAst' {$filterkontrak}"
                 );
-                // ////////////////////////////////////pr($sqlAst);
+                pr($sqlAst);
                 $resAst = $this->db->lazyQuery($sqlAst,$debug);
 
                 foreach ($resAst[0] as $keyAst => $valueAst) {
@@ -4097,7 +4100,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                     'field'=>"{$listTableField},{$FieltableGeneral} ",
                     'condition' => "{$listTableAlias}.Aset_ID=$Aset_IDUslAst",
                      );
-                // ////////////////////////////////////pr($sqlListTable);
+                pr($sqlListTable);
                 $resListTable = $this->db->lazyQuery($sqlListTable,$debug);
                 // ////////////////////////////////////pr($resListTable);
                 foreach ($resListTable[0] as $keyListTable => $valueListTable) {
