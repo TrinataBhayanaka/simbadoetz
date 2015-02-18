@@ -61,7 +61,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			</div>		
 
 		<section class="formLegend">
-			<form method="POST" action="<?php echo"$url_rewrite";?>/module/penghapusan/dftr_usulan_aset_pmd.php?pid=1" onsubmit="return requiredFilter(0,1, 'kodeSatker')">
+			<form method="POST" action="<?php echo"$url_rewrite";?>/module/penghapusan/dftr_usulan_aset_pmd_b.php?pid=1" onsubmit="return requiredFilter(0,1, 'kodeSatker')">
 				<ul>
 					<li>&nbsp;</li>
 					<li>
