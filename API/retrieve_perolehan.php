@@ -43,7 +43,9 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  }	
 		  $xlsdata[$no]['kodeSatker'] = $post['kodeSatker'];
 		  $kodeSatker = explode(".",$post['kodeSatker']);
-		  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 13);
+		  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 12);
+		  // $myDateTime = DateTime::createFromFormat('Y-m-d', $tgl);
+		  // $xlsdata[$no]['TglPerolehan'] = $myDateTime->format('Y-m-d');
 		  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
 		  $xlsdata[$no]['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];		
 		  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 3);
@@ -69,7 +71,7 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['Material'] = $data->val($i,9);
 		  $xlsdata[$no]['Ukuran'] = $data->val($i,10);
 		  $xlsdata[$no]['Alamat'] = $data->val($i,11);
-		  $xlsdata[$no]['Jumlah'] = $data->val($i,12);
+		  $xlsdata[$no]['Jumlah'] = $data->val($i,13);
 		  $xlsdata[$no]['UserNm'] = $_SESSION['ses_uoperatorid'];
 		  $xlsdata[$no]['Sess'] = $baris-9;
 
@@ -87,7 +89,7 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
             $value = implode(',', $tmpvalue);
 
             $query = "INSERT INTO tmp_asetlain ({$field}) VALUES ({$value})";
-            
+           
             $execquery = $this->query($query);
             logFile($query);
             if(!$execquery){
@@ -97,10 +99,6 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
             }
 
 		  $no++;
-		  	$myfile = fopen("count.txt", "w") or die("Unable to open file!");
-			$txt = $no;
-			fwrite($myfile, $txt);
-			fclose($myfile);
 		}
 		$this->commit();
 		echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/import/asetlain.php?id={$kontrak['id']}\">";

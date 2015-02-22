@@ -17,7 +17,6 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-
 		//kontrak
 		$idKontrak = $_GET['id'];
 		$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}' LIMIT 1");
@@ -39,11 +38,6 @@ $menu_id = 10;
 	<script>
 	// $(document).ajaxStart(function() { Pace.restart(); });
 	$body = $("body");
-
-	$(document).on({
-	     ajaxStart: function() { $body.addClass("loading");    },
-	     // ajaxStop: function() { $body.removeClass("loading"); }    
-	});
 	$(document).ready(function() { 
 		var bar = $('.bar');
 		var percent = $('.percent');
@@ -53,16 +47,19 @@ $menu_id = 10;
 	        beforeSend: function() {
 		        status.empty();
 		        var percentVal = 0;
-		        NProgress.set(percentVal);
+		        $body.addClass("loading");
+		        // NProgress.set(percentVal);
+		        NProgress.inc();
 		        // Pace.restart();
 		    },
 		    uploadProgress: function(event, position, total, percentComplete) {
-		        testing();
+		        // NProgress.inc();
 		        // Pace.start();
 		    },
 		    success: function() {
 		        var percentVal = 1;
 		        // console.log('ada');
+		        $body.removeClass("loading");
 		        NProgress.set(percentVal);
 		    },
 			complete: function(xhr) {
@@ -211,8 +208,8 @@ $menu_id = 10;
 	    left:       21.5%;
 	    height:     100%;
 	    width:      100%;
-	    background: rgba( 255, 255, 255, .8 ) 
-	                url('<?=$url_rewrite?>/js/load2.gif') 
+	    background: rgba( 0, 0, 0, .8 ) 
+	                url('<?=$url_rewrite?>/js/url2.gif') 
 	                50% 50% 
 	                no-repeat;
 	}
