@@ -175,7 +175,7 @@ if($POST){
     $newlist[$key] = $tmp[0];
   }
 } else {
-  $newlist = "";
+  $newlist = array();
 }
     
       // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
