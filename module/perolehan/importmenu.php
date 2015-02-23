@@ -63,7 +63,8 @@ $menu_id = 10;
 		        NProgress.set(percentVal);
 		    },
 			complete: function(xhr) {
-				window.location.replace("<?=$url_rewrite?>/module/perolehan/import/asetlain.php?id=<?=$_GET['id']?>");
+				var chgform = $("#jenisaset").val();
+				window.location.replace("<?=$url_rewrite?>/module/perolehan/import/"+chgform+".php?id=<?=$_GET['id']?>");
 			}
 	    }); 
 	});

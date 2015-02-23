@@ -14,79 +14,52 @@ $menu_id = 10;
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
+
+	$RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
+	if(isset($_GET['id'])){
+		$dataArr = $RETRIEVE_PEROLEHAN->get_kontrak($_GET['id']);
+		// $xlsData = $RETRIEVE_PEROLEHAN->get_tmpData('tmp_asetlain');
+
+		$POST['page'] = intval($_GET['pid']);
+		$par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
+
+	} else{
+		$dataArr = $RETRIEVE_PEROLEHAN->importing_xls2html_kibb($_FILES,$_POST);
+	}
 	
 ?>
-	<!-- SQL Sementara -->
-	<?php
-	// pr($_POST);
-	// pr($_FILES);
-		//kontrak
-		
-		$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$_POST['kontrakid']}' LIMIT 1");
-			while ($dataKontrak = mysql_fetch_assoc($sql)){
-					$kontrak[] = $dataKontrak;
-				}
-		// pr($kontrak);
-
-		//sum total 
-		$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
-		while ($sum = mysql_fetch_array($sqlsum)){
-					$sumTotal = $sum;
-				}
-		// pr($sumTotal);
-
-		$data = new Spreadsheet_Excel_Reader($_FILES['myFile']['tmp_name']);
-
-		// membaca jumlah baris dari data excel
-		$baris = $data->rowcount($sheet_index=0);
-		$no = 0;
-		for ($i=10; $i<=$baris; $i++)
-		{
-		  $xlsdata[$no]['kodeSatker'] = $_POST['kodeSatker'];
-		  $kodeSatker = explode(".",$_POST['kodeSatker']);
-		  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 8);
-		  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
-		  $xlsdata[$no]['kodeLokasi'] = "12.33.75.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];		
-		  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 2);
-
-		  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 2)}' LIMIT 1");
-			while ($namaaset = mysql_fetch_assoc($sql)){
-					$uraian = $namaaset['uraian'];
-				}	
-		  $xlsdata[$no]['uraian'] = $uraian;
-
-		  $sql = mysql_query("SELECT MAX(noRegister) AS lastreg FROM {$_POST['jenisaset']} WHERE kodeKelompok = '{$xlsdata[$no]['kodeKelompok']}' AND kodeLokasi = '{$xlsdata[$no]['kodeLokasi']}'");
-		  while ($reg = mysql_fetch_assoc($sql)){
-					$lastreg = $reg['lastreg'];
-				}
-		  $xlsdata[$no]['noRegister'] = $lastreg + 1;		
-		  $xlsdata[$no]['noKontrak'] = $_POST['noKontrak'];
-		  $xlsdata[$no]['Info'] = $data->val($i,17);
-		  $xlsdata[$no]['kodeRuangan'] = $_POST['kodeRuangan'];
-		  $xlsdata[$no]['TipeAset'] = 'B';
-		  $xlsdata[$no]['NilaiPerolehan'] = $data->val($i,15);
-
-		  $xlsdata[$no]['Merk'] = $data->val($i,4);
-		  $xlsdata[$no]['Model'] = $data->val($i,5);
-		  $xlsdata[$no]['Ukuran'] = $data->val($i,6);
-		  $xlsdata[$no]['Material'] = $data->val($i,7);
-		  $xlsdata[$no]['Pabrik'] = $data->val($i,9);
-		  $xlsdata[$no]['NoRangka'] = $data->val($i,10);
-		  $xlsdata[$no]['NoMesin'] = $data->val($i,11);
-		  $xlsdata[$no]['NoSeri'] = $data->val($i,12);
-		  $xlsdata[$no]['NoBPKB'] = $data->val($i,13);
-		  $xlsdata[$no]['Jumlah'] = $data->val($i,14);
-
-		  if($xlsdata[$no]['NilaiPerolehan'] == '' || $xlsdata[$no]['NilaiPerolehan'] == 0){
-		  	$xlsdata[$no]['disabled'] = "hidden"; $xlsdata[$no]['style'] = "disabled";
-		  } else $xlsdata[$no]['disabled'] = "checkbox";
-		  $no++;
-		}
-		// pr($xlsdata);exit;
-	?>
-	<!-- End Sql -->
 
 	<script>
+
+		$(document).ready(function() {
+	        $('#totalxls').autoNumeric('init', {mDec:0});
+	        setTimeout(function() {
+			    	getTotalValue('XLSIMPB');
+				}, 500);
+          $('#importxls').dataTable(
+                   {
+                    "aoColumnDefs": [
+                         { "aTargets": [2] }
+                    ],
+                    "aoColumns":[
+                         {"bSortable": false},
+                         {"bSortable": false,"sClass": "checkbox-column" },
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true},
+                         {"bSortable": true}],
+                    "sPaginationType": "full_numbers",
+
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_import_xls_kibb.php?<?php echo $par_data_table?>"
+               }
+                  );
+	        
+	    });
+
 		jQuery(function($) {
 	        $('#totalxls').autoNumeric('init', {mDec:0});
 	        
@@ -96,37 +69,59 @@ $menu_id = 10;
 	      $('#totalxls').val($(item).autoNumeric('get'));
 	    }
 
+	    function getTotalValue(item){
+	    	$.post('<?=$url_rewrite?>/function/api/getapplist.php', {UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
+					var tmp;
+					var nilai = 0;
+					if(data){
+						$("#btn-dis").removeAttr("disabled");
+						$.each(data, function(index, element) {
+				            var raw = element.split(",");
+							for(var i=0;i<raw.length;i++){
+								tmp = raw[i].split("|");
+								nilai = parseInt(nilai) + parseInt(tmp[1]*tmp[2]);
+							}
+				        });
+					} else {
+						nilai = 0;
+						$('#btn-dis').attr("disabled","disabled");
+					}
+					
+				    $("#totalxls").val(nilai);
+				     $('#totalxls').autoNumeric('set', nilai);
+
+				     var rule = nilai + parseInt($("#totalRBreal").val());
+				     console.log($("#totalRBreal").val());
+						if(rule > $("#spkreal").val()){
+							$('#info').html('Nilai melebihin total SPK'); 
+		                	$('#info').css("color","red");
+							$('#btn-dis').attr("disabled","disabled");		
+						} else {
+							$('#info').html('');
+						}
+				 }, "JSON")
+	    }
+
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
 			var totalnilai = 0;	
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
-			    $("#btn-dis").removeAttr("disabled");
-			    var checkedValues = $('input:checkbox:checked').map(function() {
-				    var data = this.value.split("|");
-				    var nilai = data[18]*data[19];
-				    if(nilai){
-				    	totalnilai = parseInt(totalnilai) + parseInt(nilai);	
-				    }
-				    $("#totalxls").val(totalnilai);
-				     $('#totalxls').autoNumeric('set', totalnilai);
-				    // console.log(totalnilai);
-				}).get();
-				var rule = totalnilai + parseInt($("#totalRBreal").val());
-				if(rule > $("#spkreal").val()){
-					$('#info').html('Nilai melebihin total SPK'); 
-                	$('#info').css("color","red");
-					$('#btn-dis').attr("disabled","disabled");		
-				} else {
-					$('#info').html('');
-				}
-				// console.log(rule);
+			    
+			    updDataCheckbox('XLSIMPB');
+
+			    setTimeout(function() {
+			    	getTotalValue('XLSIMPB');
+				}, 500);
 			}
 			else
 			{
-			   $('#btn-dis').attr("disabled","disabled");
-			   $("#totalxls").val(0);
+			   
+			   updDataCheckbox('XLSIMPB');
+			   setTimeout(function() {
+			    	getTotalValue('XLSIMPB');
+				}, 500);
 			}}, 100);
 		}
 	</script>
@@ -151,11 +146,11 @@ $menu_id = 10;
 						<ul>
 							<li>
 								<span class="labelInfo">No. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['noKontrak']?>" disabled/>
+								<input type="text" value="<?=$dataArr['kontrak']['noKontrak']?>" disabled/>
 							</li>
 							<li>
 								<span class="labelInfo">Tgl. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
+								<input type="text" value="<?=$dataArr['kontrak']['tglKontrak']?>" disabled/>
 							</li>
 						</ul>
 							
@@ -165,13 +160,13 @@ $menu_id = 10;
 						<ul>
 							<li>
 								<span class="labelInfo">Nilai SPK</span>
-								<input type="text" id="spk" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
-								<input type="hidden" id="spkreal" value="<?=$kontrak[0]['nilai']?>" disabled/>
+								<input type="text" id="spk" value="<?=number_format($dataArr['kontrak']['nilai'])?>" disabled/>
+								<input type="hidden" id="spkreal" value="<?=$dataArr['kontrak']['nilai']?>" disabled/>
 							</li>
 							<li>
 								<span  class="labelInfo">Total Rincian Barang</span>
-								<input type="text" id="totalRB" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
-								<input type="hidden" id="totalRBreal" value="<?=isset($sumTotal) ? $sumTotal['total'] : '0'?>" disabled/>
+								<input type="text" id="totalRB" value="<?=isset($dataArr) ? number_format($dataArr['sumTotal']['total']) : '0'?>" disabled/>
+								<input type="hidden" id="totalRBreal" value="<?=isset($dataArr) ? $dataArr['sumTotal']['total'] : '0'?>" disabled/>
 							</li>
 							<li>
 								<span  class="labelInfo">Total Nilai Data yang dipilih</span>
@@ -189,56 +184,32 @@ $menu_id = 10;
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
 				<form action="hasil_kibb.php" method=POST name="checks" ID="Form2">
-					<p><button type="submit" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Pilih</button>
+					<p><a href="hasil_kibb.php?id=<?=$_GET['id']?>"><button type="button" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Import</button></a>
 							&nbsp;</p>
 
 						<div id="demo">
 							
-						<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="example">
+						<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="importxls">
 							<thead>
 								<tr>
+									<th>No</th>
 									<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 									<th>Kode Kelompok</th>
 									<th>Nama Barang</th>
 									<th>Kode Lokasi</th>
-									<th>No.Reg</th>
 									<th>Jumlah</th>
 									<th>Nilai</th>
 									<th>Total</th>
 								</tr>
 							</thead>
 							<tbody>
-							<?php
-								if($xlsdata)
-								{
-									$i = 1;
-									$total = 0;
-									foreach ($xlsdata as $key => $value) {
-										if($value['kodeKelompok']!=""){
-							?>		
-									<tr class="gradeA">
-										<td class="checkbox-column"><input <?=$value['style']?> type="<?=$value['disabled']?>" id="check_<?=$i?>" class="icheck-input" name="aset[]" 
-											value="<?=$value['kodeSatker']?>|<?=$value['TglPerolehan']?>|<?=$value['Tahun']?>|<?=$value['kodeLokasi']?>|<?=$value['kodeKelompok']?>|<?=$value['noRegister']?>|<?=$value['noKontrak']?>|<?=$value['Info']?>|<?=$value['kodeRuangan']?>|<?=$value['TipeAset']?>|<?=$value['Merk']?>|<?=$value['Model']?>|<?=$value['Ukuran']?>|<?=$value['Material']?>|<?=$value['Pabrik']?>|<?=$value['NoRangka']?>|<?=$value['NoMesin']?>|<?=$value['NoSeri']?>|<?=$value['NoBPKB']?>|<?=$value['Jumlah']?>|<?=$value['NilaiPerolehan']?>" onchange="return AreAnyCheckboxesChecked();"></td>
-										<td><?=$value['kodeKelompok']?></td>
-										<td><?=$value['uraian']?></td>
-										<td><?=$value['kodeLokasi']?></td>
-										<td><?=$value['noRegister']?></td>
-										<td><?=$value['Jumlah']?></td>
-										<td><?=number_format($value['NilaiPerolehan'])?></td>
-										<td><?=number_format($value['Jumlah']*$value['NilaiPerolehan'])?></td>
-									</tr>
-							<?php
-									$total = $total + ($value['Jumlah']*$value['NilaiPerolehan']);
-									$i++;
-									  }
-									}
-								}	
-							?>	
-							
+								<tr>
+                                    <td colspan="8">Data Tidak di temukkan</td>
+                               </tr>
 							</tbody>
 							<tfoot>
 								<tr>
-									<th colspan="7">&nbsp;</th>
+									<th colspan="8">&nbsp;</th>
 									<!-- <th><label id=""><?=number_format($total)?></label></th> -->
 								</tr>
 							</tfoot>
