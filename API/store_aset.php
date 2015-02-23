@@ -1566,7 +1566,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         {
             $counter++;
             $tblAset['noRegister'] = intval($startreg)+1;
-
+            
             unset($tmpfield); unset($tmpvalue);
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
