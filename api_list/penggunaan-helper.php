@@ -18,8 +18,8 @@ class PENGGUNAAN extends DB{
 
 		$getAset = $this->getAset($guid);
 		$noKontrak = array_keys($getAset['fullData']);
-		pr($getAset['asetid']);
-		// exit;
+		pr($getAset);
+		exit;
 		$UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
         $nmaset= explode(',', $getAset['asetid']);
         $nmasetsatker=$guid;
@@ -40,7 +40,7 @@ class PENGGUNAAN extends DB{
                 'value' => "'{$penggu_penet_eks_nopenet}','{$olah_tgl}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','0','{$ses_uid}'",
                 );
         $res = $this->db->lazyQuery($sql,$debug,1);
-        $insertid = $this->db->insertid();
+        $insertid = $this->db->insert_id();
 
         $sleep = 1;
         for($i=0;$i<$panjang;$i++){
@@ -98,7 +98,7 @@ class PENGGUNAAN extends DB{
 			$sql = array(
 	                'table'=>"{$value}",
 	                'field'=>"Aset_ID",
-	                'condition' => "GUID = 1 ",
+	                'condition' => "GUID != '' ",
 	                );
 
 	        $res = $this->db->lazyQuery($sql,$debug);
@@ -155,7 +155,8 @@ class PENGGUNAAN extends DB{
                         6=>'kdp');
 
 		$dataKontrak = $this->getKontrak();
-
+        pr($dataKontrak);
+        exit;
 		$dataAset = array();
         $tipeAset = array('A','B','C','D','E','F');
         if ($dataKontrak['kontrak']){
@@ -318,12 +319,11 @@ $getGUID = $run->getGUID();
 if ($getGUID){
 	
 	$unique = array_unique($getGUID);
-	// pr($unique);
-	
+	pr($unique);
 	foreach ($unique as $key => $value) {
-		echo $value;
-		// $usulan = $run->usulan($value);
-		$usulan = 4;
+		// echo $value;
+		$usulan = $run->usulan($value);
+		// $usulan = 4;
 		logFile('==================== Usulan Penggunaan DONE =====================');
 		if ($usulan){
 			$validasi = $run->validasi($usulan);

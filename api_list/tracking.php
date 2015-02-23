@@ -12,8 +12,8 @@ class Tracking{
 
 	function run($id)
 	{
-		$data['penggunaan'] = $this->getAset($id);
-		$data['aset'] = $this->getPenggunaan($id);
+		$data['aset'] = $this->getAset($id);
+		$data['penggunaan'] = $this->getPenggunaan($id);
 		$data['mutasi'] = $this->getUsulanMutasi($id);
 
 		return $data;
