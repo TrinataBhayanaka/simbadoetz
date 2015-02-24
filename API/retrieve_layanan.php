@@ -61,7 +61,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k, satker AS s",
                         'field'=>'SQL_CALC_FOUND_ROWS a.*, k.Uraian, s.NamaSatker',
-                        'condition' => "{$listTableAlias}.StatusTampil = {$statusaset} AND {$listTableAlias}.Aset_ID !='' {$filter} GROUP BY {$listTableAlias}.Aset_ID {$kondisi} {$order}",
+                        'condition' => "{$listTableAlias}.StatusTampil = 1 AND {$listTableAlias}.Aset_ID !='' {$filter} GROUP BY {$listTableAlias}.Aset_ID {$kondisi} {$order}",
                         'limit' => "{$limit}",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "{$listTableAlias}.Aset_ID = a.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.kodeSatker = s.Kode"
@@ -190,7 +190,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 
 	function getTableKibAlias($type=1)
     {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kd');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
@@ -199,7 +199,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS kd');
         $listTable2 = array(
                         1=>'tanah',
                         2=>'mesin',

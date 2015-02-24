@@ -9781,10 +9781,10 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                     );
 
                     $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
-                    // //////////////////////////////pr($resUsulAst);
+                    pr($resUsulAst);
                     
                     foreach ($resUsulAst as $keyUsulAst => $valueUsulAst) {
-                        // //////////////////////////////pr($valueUsulAst);
+                        pr($valueUsulAst);
                         
                         $Aset_ID=$valueUsulAst['Aset_ID'];
 

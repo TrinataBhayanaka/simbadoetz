@@ -47,8 +47,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							e.preventDefault();
 						}
 					});*/
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd").mask('9999-99-99');
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd" ).datepicker({ format: 'yyyy-mm-dd' });
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi").mask('9999-99-99');
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi" ).datepicker({ dateFormat: 'yy-mm-dd' });
+
 					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd").mask('9999-01-01');	
 					$("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-31');	
 					
@@ -71,7 +72,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#rekapupb" data-toggle="tab">Rekapitulasi Barang Per UPB</a></li>
 						<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>
 						<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>
-                                                                                 <li><a href="#lapdaftarpengadaan" data-toggle="tab">Laporan Daftar Pengadaan</a></li>    
+						<li><a href="#laprekapmutasiskpd" data-toggle="tab">Rekap Mutasi Barang</a></li>
+						<li><a href="#lapdaftarpengadaan" data-toggle="tab">Laporan Daftar Pengadaan</a></li>    
 					  </ul>
 					  
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
@@ -679,15 +681,53 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 						</ul>
 						</form>
-                                         
-                                         
+                        </div>
+                        
+						<div class="tab-pane" id="laprekapmutasiskpd">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekap Mutasi Barang</div>
 						</div>
-                                     
-                                     <div class="tab-pane" id="lapdaftarpengadaan">
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/LapRekapMutasiSkpd.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAwalRekapLapMutasi" id="tglPerolehanAwalRekapLapMutasi" value="" readonly/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapLapMutasi" id="tglPerolehanAkhirRekapLapMutasi" value="" required/>
+									</div>
+								</div>
+							</li>
+							<?php 
+					
+								selectAllSatker('kodeSatker15','255',true,false,false,true);
+							?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+                        </div>
+
+
+						
+						<div class="tab-pane" id="lapdaftarpengadaan">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Daftar Pengadaan</div>
 						</div>
- <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/LapDaftarPengadaan.php"; ?>">
+						<form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/LapDaftarPengadaan.php"; ?>">
 						<ul>
 							<li>
 								<span class="span2">Tanggal Awal</span>

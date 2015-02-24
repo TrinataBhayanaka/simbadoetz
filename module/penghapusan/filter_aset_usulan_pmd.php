@@ -79,12 +79,17 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<span class="span2">Tahun Perolehan</span>
 						<input type='text' id="#lda_tp" maxlength="4" name="bup_tahun" placeholder="" />
 					</li>
+                    <li>&nbsp;</li>
+
+					<?php selectAset('kodeKelompok','235',true,false); ?>
+
+                    <li>&nbsp;</li>
 					<li>
 
-						<span class="span2">Jenis Aset</span>
+						<span class="span2">Tipe Aset</span>
 						<select name="jenisaset[]" style="width:170px" id="jenisaset">
 
-							<option value="">Pilih Aset</option>
+							<option value="">Pilih Tipe Aset</option>
 							<option value="1">Tanah</option>
 							<option value="2">Mesin</option>
 							<option value="3">Bangunan</option>

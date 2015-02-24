@@ -37,6 +37,7 @@ $sTable = "aset";
 $dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
+$dataParam['kodeKelompok']=$_GET['kodeKelompok'];
 $dataParam['page']=$_GET['page'];
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
