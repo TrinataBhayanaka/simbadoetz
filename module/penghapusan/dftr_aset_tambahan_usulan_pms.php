@@ -94,7 +94,7 @@ $menu_id = 10;
 	
 	$POST['page'] = intval($_GET['pid']);
 	// pr($POST);
-	  $par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
+	  $par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&kodeKelompok={$POST['kodeKelompok']}&page={$POST['page']}";
 
 	// $data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pms($_POST);
 	if(isset($_GET['flegAset'])){
