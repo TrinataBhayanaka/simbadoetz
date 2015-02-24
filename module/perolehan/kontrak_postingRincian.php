@@ -139,6 +139,59 @@ $menu_id = 1;
 						</ul>
 							
 					</div>
+
+			<div style="height:5px;width:100%;clear:both"></div>
+			
+			<?php
+				if($kontrak['tipeAset'] != 1)
+				{
+
+					$sql = "SELECT * FROM kapitalisasi WHERE idKontrak = '{$_GET['id']}'";
+					$kap = $DBVAR->fetch($sql);
+
+					$sql = mysql_query("SELECT * FROM {$kap['tipeAset']} WHERE Aset_ID = '{$kap['Aset_ID']}' AND noRegister = '{$kap['noRegister']}' LIMIT 1");
+					while ($dataAset = mysql_fetch_assoc($sql)){
+	                    $aset[] = $dataAset;
+	                }
+	                if($aset){
+				        foreach ($aset as $key => $value) {
+				            $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+				            while ($uraian = mysql_fetch_array($sqlnmBrg)){
+				                    $tmp = $uraian;
+				                    $aset[$key]['uraian'] = $tmp['Uraian'];
+				                }
+				        }
+				    }
+	        ?>
+	        		<div class="search-options clearfix">
+	        			<strong style="margin-right:20px;"><?=($kontrak['tipeAset'] == 2)? 'Kapitalisasi Aset' : 'Rubah Status'?></strong>
+	        			<hr style="padding:0px;margin:0px">
+						<table border='0' width="100%" style="font-size:12">
+							<tr>
+								<th>Kode Kelompok</th>
+								<th>Nama Barang</th>
+								<th>Kode Satker</th>
+								<th>Kode Lokasi</th>
+								<th>NoReg</th>
+								<th>Nilai</th>
+								<th>Nilai Setelah Kapitalisasi</th>
+							</tr>
+							<tr>
+								<td align="center"><?=$aset[0]['kodeKelompok']?></td>
+								<td align="center"><?=$aset[0]['uraian']?></td>
+								<td align="center"><?=$aset[0]['kodeSatker']?></td>
+								<td align="center"><?=$aset[0]['kodeLokasi']?></td>
+								<td align="center"><?=$aset[0]['noRegister']?></td>
+								<td align="center"><?=number_format($aset[0]['NilaiPerolehan'])?></td>
+								<td align="center"><?=number_format($aset[0]['NilaiPerolehan']+$sumsp2d['total']+$sumTotal['total'])?></td>
+							</tr>	
+						</table>	
+
+					</div><!-- /search-option -->
+	        <?php
+				}	
+			?>
+
 			<div style="height:5px;width:100%;clear:both"></div>
 			<?php
 				if($kontrak['nilai'] != $sumTotal['total']){
