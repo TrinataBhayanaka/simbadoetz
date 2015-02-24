@@ -1885,6 +1885,12 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
+            $sql = "SELECT SUM(jumlah) as total FROM sp2d_rinc WHERE idsp2d = '{$data['idsp2d']}'";
+            $res = $this->fetch($sql);
+
+            $sql ="UPDATE sp2d SET nilai = '{$res['total']}' WHERE id = '{$data['idsp2d']}'";
+            $exec = $this->query($sql);
+
         return true;
         exit;
     }
