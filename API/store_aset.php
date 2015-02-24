@@ -2553,8 +2553,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         
         if(isset($data['kodeRuangan'])) {
-            $ruangan = explode("_", $data['kodeRuangan']);
-            $tblAset['kodeRuangan'] = $ruangan[1];
+            // $ruangan = explode("_", $data['kodeRuangan']);
+            // $tblAset['kodeRuangan'] = $ruangan[1];
+            $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         }    
 
 
@@ -2564,7 +2565,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
 
             $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
-            // pr($query);
+            // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
         
