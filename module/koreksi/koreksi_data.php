@@ -526,8 +526,13 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 				$(".kdp").show('');
 				$("#id").attr('name','KDP_ID');
 				$("#id").val("<?=$dataArr['kib']['KDP_ID']?>");
-			} else {
+			} else if(gol[0] == '07') {
 				$("#TipeAset").val('G');
+				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.jaringan li > select,.kdp li > select").attr('disabled','disabled');
+			} else if(gol[0] == '08') {
+				$("#TipeAset").val('H');
 				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
 				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
 				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.jaringan li > select,.kdp li > select").attr('disabled','disabled');
