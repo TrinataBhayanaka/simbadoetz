@@ -178,7 +178,7 @@ $menu_id = 10;
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="<?=$idtable?>">
 				<thead>
 					<tr>
-						<td colspan="10" align="Left">
+						<td colspan="7" align="Left">
 							<?php
 								if($row['StatusPenetapan']==0){
 							?>
@@ -188,6 +188,21 @@ $menu_id = 10;
 							<?php
 								}
 							?>
+						</td>
+						<?php
+								if($row['StatusPenetapan']==0){
+							?>
+						<td colspan="4" align="right">
+							<?php
+								}else{
+							?>
+
+						<td colspan="10" align="right">
+							<?php
+								}
+							?>
+							<a href="dftr_usulan_pms.php" class="btn btn-success " /><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali Ke Daftar Usulan</a>
+								
 						</td>
 					</tr>
 					<tr>
