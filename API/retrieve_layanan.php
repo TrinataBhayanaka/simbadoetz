@@ -190,7 +190,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 
 	function getTableKibAlias($type=1)
     {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kd');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
@@ -199,7 +199,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS kd');
         $listTable2 = array(
                         1=>'tanah',
                         2=>'mesin',
