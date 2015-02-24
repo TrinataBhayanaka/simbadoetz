@@ -93,74 +93,88 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $res[$value] = $this->db->lazyQuery($sql,$debug);
             }
 
-            foreach ($res as $key => $value) {
-                foreach ($value as $val) {
-                    $listKibAset[$val['Aset_ID']] = $val;
+            if ($res){
+
+                foreach ($res as $key => $value) {
+                    if ($value){
+                        foreach ($value as $val) {
+                            $listKibAset[$val['Aset_ID']] = $val;
+                        }
+                    }
+                    
+                }
+                
+                if (!$listKibAset) return false;
+
+                $asetIDKib = implode(',', array_keys($listKibAset));
+                $implodeJenis = implode(',', $alias);
+                
+                if ($asetIDKib){
+
+                    $paging = paging($data['page'], 100);
+                    $merk = "";
+                    
+                    /*
+                    $sql = array(
+                            'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
+                            'field'=>"SQL_CALC_FOUND_ROWS DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, k.kode, a.noKontrak, s.NamaSatker " ,
+                            'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} {$order} ",
+                            'limit'=>"{$limit}",
+                            'joinmethod' => 'INNER JOIN',
+                            'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                            );
+                    */
+                    $sql = array(
+                            'table'=>"aset AS a, kelompok AS k, satker AS s",
+                            'field'=>"SQL_CALC_FOUND_ROWS k.Uraian, k.kode, a.*, s.NamaSatker " ,
+                            'condition'=>"a.Aset_ID IN ({$asetIDKib}) AND a.TipeAset IN ({$implodeJenis}) {$filterkontrak} $kondisi GROUP BY a.Aset_ID {$order} ",
+                            'limit'=>"{$limit}",
+                            'joinmethod' => 'INNER JOIN',
+                            'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
+                            );
+
+                    $res = $this->db->lazyQuery($sql,$debug);
+
+                    // $total[] = $this->db->countData($sql,1);
+                
+                    $listAsetID = array_keys($listKibAset);
+
+                    if ($res){
+
+                        foreach ($res as $k => $value) {
+
+                            if ($value){
+
+                                
+                                if (in_array($value['Aset_ID'], $getAsetList)) $res[$k]['checked'] = true;
+                                else $res[$k]['checked'] = false;
+                                // $res[$k]['Uraian'] = $value['Uraian'];    
+                                // $res[$k]['kode'] = $value['kode'];
+                                // $res[$k]['noKontrak'] = $value['noKontrak'];
+                                // $res[$k]['NamaSatker'] = $value['NamaSatker'];
+                            }
+                            
+                        }
+                        
+                        // pr($res);exit;
+                        foreach ($res as $k => $value) {
+
+                            if ($value){
+                                
+                                if ($value['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
+                                
+                            }
+                            
+                        }
+
+                        if ($res) return $res;
+                    }
+
+                    
                 }
             }
-            
-            $asetIDKib = implode(',', array_keys($listKibAset));
-            $implodeJenis = implode(',', $alias);
-            
-            if ($asetIDKib){
-
-                $paging = paging($data['page'], 100);
-                $merk = "";
-                
-                /*
-                $sql = array(
-                        'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
-                        'field'=>"SQL_CALC_FOUND_ROWS DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, k.kode, a.noKontrak, s.NamaSatker " ,
-                        'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak} {$order} ",
-                        'limit'=>"{$limit}",
-                        'joinmethod' => 'INNER JOIN',
-                        'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
-                        );
-                */
-                $sql = array(
-                        'table'=>"aset AS a, kelompok AS k, satker AS s",
-                        'field'=>"SQL_CALC_FOUND_ROWS k.Uraian, k.kode, a.*, s.NamaSatker " ,
-                        'condition'=>"a.Aset_ID IN ({$asetIDKib}) AND a.TipeAset IN ({$implodeJenis}) {$filterkontrak} $kondisi GROUP BY a.Aset_ID {$order} ",
-                        'limit'=>"{$limit}",
-                        'joinmethod' => 'INNER JOIN',
-                        'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
-                        );
-
-                $res = $this->db->lazyQuery($sql,$debug);
-
-                // $total[] = $this->db->countData($sql,1);
-            
-                $listAsetID = array_keys($listKibAset);
 
                 
-                foreach ($res as $k => $value) {
-
-                    if ($value){
-
-                        
-                        if (in_array($value['Aset_ID'], $getAsetList)) $res[$k]['checked'] = true;
-                        else $res[$k]['checked'] = false;
-                        // $res[$k]['Uraian'] = $value['Uraian'];    
-                        // $res[$k]['kode'] = $value['kode'];
-                        // $res[$k]['noKontrak'] = $value['noKontrak'];
-                        // $res[$k]['NamaSatker'] = $value['NamaSatker'];
-                    }
-                    
-                }
-                
-                // pr($res);exit;
-                foreach ($res as $k => $value) {
-
-                    if ($value){
-                        
-                        if ($value['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($value['NilaiPerolehan']);
-                        
-                    }
-                    
-                }
-
-                if ($res) return $res;
-            }    
 
                 
                 
@@ -792,7 +806,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sqlKib = array(
                                     'table'=>"{$table['listTableOri']}",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0]['SatkerTujuan']}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1, TglPembukuan = '{$olah_tgl}'",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 
@@ -800,7 +814,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sql2 = array(
                                     'table'=>"Aset",
-                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0",
+                                    'field'=>"kodeSatker='{$getLokasiTujuan[0][SatkerTujuan]}', kodeLokasi = '{$implLokasi}', noRegister='$gabung_nomor_reg_tujuan',StatusValidasi = 1, Status_Validasi_Barang = 1, NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0, TglPembukuan = '{$olah_tgl}'",
                                     'condition'=>"Aset_ID='{$data[aset_id][$key]}'",
                                     );
 
