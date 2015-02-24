@@ -196,13 +196,16 @@ $menu_id = 1;
 			<?php
 				if($kontrak['nilai'] != $sumTotal['total']){
 					echo "<p style='color:red'>* Total Rincian Barang tidak sama dengan total SPK</p>";
-					$disabled = "disabled";
+					$disabled = "style='display:none'";
 					$url = "#";
+					$text = "* Data belum dapat diposting";
 				} elseif ($sumtermin['total'] != $kontrak['nilai']) {
 					echo "<p style='color:red'>* Total SP2D Termin tidak sama dengan total SPK</p>";
-					$disabled = "disabled";
+					$disabled = "style='display:none'";
 					$url = "#";
+					$text = "* Data belum dapat diposting";
 				}else {
+					$text= "";
 					if($kontrak['tipeAset'] == 1)
 					{
 						$url = "kontrak_postingFinal.php?id={$idKontrak}";
@@ -213,8 +216,8 @@ $menu_id = 1;
 					}	
 				}
 			?>
-			<p><a href="<?=$url?>" class="btn btn-info btn-small" <?=$disabled?> onclick="return confirm('Data akan diposting. Pastikan data sudah benar. Lanjutkan?');"><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
-			&nbsp;
+			<p style='color:red'><a href="<?=$url?>" class="btn btn-info btn-small" <?=$disabled?> onclick="return confirm('Data akan diposting. Pastikan data sudah benar. Lanjutkan?');"><i class="icon-upload icon-white"></i>&nbsp;&nbsp;Posting KIB</a>
+			<?=$text?></p>
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
