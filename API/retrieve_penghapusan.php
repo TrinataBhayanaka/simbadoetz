@@ -9855,7 +9855,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         // //////////////////////////////////pr($valueUsulAst);
                         
                         $Aset_ID=$valueUsulAst['Aset_ID'];
-
+                        if($Aset_ID){
                          $TipeAset=$valueUsulAst[TipeAset];
                         // $sqlAst = array(
                         //     'table'=>'Aset',
@@ -9890,7 +9890,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 // //////////////////////////////////pr($result);
                                 $res[]=$result;
                             }
-                         
+                         }
 
                     }
                 }
@@ -9956,7 +9956,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         // //////////////////////////////////pr($valueUsulAst);
                         
                         $Aset_ID=$valueUsulAst['Aset_ID'];
-
+                        if($Aset_ID){
                          $TipeAset=$valueUsulAst[TipeAset];
                         // $sqlAst = array(
                         //     'table'=>'Aset',
@@ -9991,7 +9991,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 // //////////////////////////////////pr($result);
                                 $res[]=$result;
                             }
-                         
+                         }
 
                     }
                 }
@@ -10056,7 +10056,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         // //////////////////////////////////pr($valueUsulAst);
                         
                         $Aset_ID=$valueUsulAst['Aset_ID'];
-
+                        if($Aset_ID){
                          $TipeAset=$valueUsulAst[TipeAset];
                         // $sqlAst = array(
                         //     'table'=>'Aset',
@@ -10091,7 +10091,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 // //////////////////////////////////pr($result);
                                 $res[]=$result;
                             }
-                         
+                        }
 
                     }
                 }
