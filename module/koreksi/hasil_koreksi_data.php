@@ -95,7 +95,7 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 								<input type="number" class="span1" id="max_<?=$i?>" value="<?=$value['max']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" disabled>
 							</td>
 							<td class="text-center">
-								<a href="koreksi_data.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&reg=<?=$value['min']?>&tbl=<?=$_POST['tipeAset']?>" id="url_<?=$i?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Koreksi</a>
+								<a target="_blank" href="koreksi_data.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&reg=<?=$value['min']?>&tbl=<?=$_POST['tipeAset']?>" id="url_<?=$i?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Koreksi</a>
 							</td>
 						</tr>
 				<?php

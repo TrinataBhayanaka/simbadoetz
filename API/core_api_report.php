@@ -3771,7 +3771,7 @@ class core_api_report extends DB {
 								$tmp1[] = "(".$val ." IS NULL or $val= )";
 					   
 							}else{
-								$tmp[] = $val ." = '$value[$val]'";
+								$tmp[] = $val ." = '".addslashes($value[$val])."'";
 								$tmp1[] = $val ." = $value[$val]";
 							}
 						  

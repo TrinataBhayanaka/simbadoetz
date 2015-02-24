@@ -1706,6 +1706,42 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
               exit;
             }
+
+            if(isset($data['xls'])){
+                //log
+                  $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$tblKib['Aset_ID']}'";
+                  $sqlquery = mysql_query($sqlkib);
+                  while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                          $kib = $dataAset;
+                      }
+                  $kib['TglPerubahan'] = $kib['TglPerolehan'];    
+                  $kib['changeDate'] = date("Y-m-d");
+                  $kib['action'] = 'posting';
+                  $kib['operator'] = $_SESSION['ses_uoperatorid'];
+                  $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
+                  if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
+
+                 
+                        unset($tmpField);
+                        unset($tmpValue);
+                        foreach ($kib as $key => $val) {
+                          $tmpField[] = $key;
+                          $tmpValue[] = "'".$val."'";
+                        }
+                         
+                        $fileldImp = implode(',', $tmpField);
+                        $dataImp = implode(',', $tmpValue);
+
+                        $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                        $execquery = mysql_query($sql);
+                          logFile($sql);
+                        if(!$execquery){
+                          $this->rollback();
+                          echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";              
+                          exit;
+                        }
+            }
+
         }
         $this->commit();
         if(isset($data['xls'])) return true;
@@ -1848,6 +1884,12 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $query = "UPDATE sp2d_rinc SET {$set} WHERE id='{$data['id']}'";
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
+
+            $sql = "SELECT SUM(jumlah) as total FROM sp2d_rinc WHERE idsp2d = '{$data['idsp2d']}'";
+            $res = $this->fetch($sql);
+
+            $sql ="UPDATE sp2d SET nilai = '{$res['total']}' WHERE id = '{$data['idsp2d']}'";
+            $exec = $this->query($sql);
 
         return true;
         exit;
@@ -2511,8 +2553,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         
         if(isset($data['kodeRuangan'])) {
-            $ruangan = explode("_", $data['kodeRuangan']);
-            $tblAset['kodeRuangan'] = $ruangan[1];
+            // $ruangan = explode("_", $data['kodeRuangan']);
+            // $tblAset['kodeRuangan'] = $ruangan[1];
+            $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         }    
 
 
@@ -2522,7 +2565,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
 
             $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
-            // pr($query);
+            // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
         
