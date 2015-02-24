@@ -139,12 +139,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	public function retrieve_usulan_penghapusan_pmd($data,$debug=false)
     {
             
-        ////////pr($data);
+        // pr($data);
         $jenisaset = $data['jenisaset'];
         // $jenisaset = explode(',', $data['jenisaset']);
         //////////////////////////////////////////pr($jenisaset);
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
+        $kodeKelompok = $data['kodeKelompok'];
         $tahun = $data['bup_tahun'];
         //////////////pr($jenisaset);
         $kondisi= trim($data['condition']);
@@ -154,6 +155,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
+        if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
         if ($kodeSatker){ 
             $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
         }else{
@@ -319,6 +321,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //////////////////////////////////////////pr($jenisaset);
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
+        $kodeKelompok = $data['kodeKelompok'];
         $tahun = $data['bup_tahun'];
         // ////////////////////////////////////////////////pr($jenisaset);
            $kondisi= trim($data['condition']);
@@ -327,6 +330,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $order= $data['order'];
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
+        if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
         if ($kodeSatker){ 
             $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
         }else{
@@ -487,6 +491,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //////////////////////////////////////////pr($jenisaset);
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
+        $kodeKelompok = $data['kodeKelompok'];
         $tahun = $data['bup_tahun'];
         // ////////////////////////////////////////////////pr($jenisaset);
          $kondisi= trim($data['condition']);
@@ -495,6 +500,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $order= $data['order'];
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
+        if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
         if ($kodeSatker){ 
             $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
         }else{
