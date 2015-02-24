@@ -4712,6 +4712,410 @@ foreach ($dataArr as $satker_id => $value)
 }
 return $hasil_html;
 }		
+
+//rekap mutasi pasti bisa
+public function retrieve_html_rekap_mutasi($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglAkhirMutasiAwal,$tglakhirperolehan)
+{
+//$tglawalperolehan,$tglAkhirMutasiAwal,$tglakhirperolehan
+// pr($dataArr);
+// exit;
+$index_id = 0;
+$detailSatker=$this->get_satker($skpd_id);
+$NoBidang = $detailSatker[0];
+$NoUnitOrganisasi = $detailSatker[1];
+$NoSubUnitOrganisasi = $detailSatker[2];
+$NoUPB = $detailSatker[3];
+
+if($NoBidang !=""){
+	$paramKodeLokasi = $NoBidang;
+}
+if($NoBidang !="" && $NoUnitOrganisasi != ""){
+	$paramKodeLokasi = $NoUnitOrganisasi;
+}
+if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+}
+if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+	$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+}
+$Bidang = $detailSatker[4][0];
+$UnitOrganisasi = $detailSatker[4][1];
+$SubUnitOrganisasi = $detailSatker[4][2];
+$UPB = $detailSatker[4][3];
+   
+$ex = explode('.',$skpd_id);
+$hit = count($ex);
+
+if($hit == 1){
+	$head = "<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		";
+}elseif($hit == 2){
+	$head = "<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>";
+}elseif($hit == 3){
+	$head = "<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>";
+}elseif($hit == 4){
+	$head = "<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
+        </tr>
+		<tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
+        </tr>";
+}
+
+foreach ($dataArr as $satker_id => $value)
+{
+	$KeadaanAwal = format_tanggal_db3($tglAkhirMutasiAwal);
+	$KeadaanAkhir = format_tanggal_db3($tglakhirperolehan);
+    $html = "<html>
+        <head>
+      <meta content=\"text/html; charset=UTF-8\"
+     http-equiv=\"content-type\">
+      <title></title>
+    </head>
+    <body>
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 150px; text-align: LEFT;\"><img
+     style=\"width: 80px; height: 85px;\" alt=\"\"
+     src=\"$gambar\"></td>
+          <td style=\"width: 902px; text-align: center;\">
+          <h3>REKAPITULASI MUTASI</h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>";
+    
+    $html .="
+    
+    <table style=\"text-align: left; width: 100%;\" border=\"0\"
+     cellpadding=\"2\" cellspacing=\"2\">
+      <tbody>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">KABUPATEN / KOTA</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_KABUPATEN</td>
+        </tr>
+        <tr>
+          <td style=\"width: 200px; font-weight: bold; text-align: left;\">PROVINSI</td>
+          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+          <td style=\"width: 873px; font-weight: bold;\">$this->NAMA_PROVINSI</td>
+        </tr>
+		$head
+      </tbody>
+    </table>
+    <br>
+    <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
+      <thead>
+        <tr>
+          <td rowspan = \"3\" style=\" text-align: center; font-weight: bold; width: \">KODE</td>
+          <td rowspan = \"3\" style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
+          <td colspan =\"2\" style=\"text-align: center; font-weight: bold; width: \">KEADAAN PER $KeadaanAwal</td>
+          <td colspan =\"4\" style=\"text-align: center; font-weight: bold; width: \">MUTASI / PERUBAHAN</td>
+          <td colspan =\"2\" style=\"text-align: center; font-weight: bold; width: \">KEADAAN PER $KeadaanAkhir</td>
+        </tr>
+		<tr>
+			<td rowspan = \"2\" style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+			<td rowspan = \"2\"  style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+			<td colspan =\"2\" style=\"text-align: center; font-weight: bold; width: \">BERKURANG</td>
+			<td colspan =\"2\" style=\"text-align: center; font-weight: bold; width: \">BERTAMBAH</td>
+			<td rowspan = \"2\" style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+			<td rowspan = \"2\" style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+        </tr>
+		<tr>
+			<td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+			<td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+			<td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
+			<td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+		</tr>
+        </thead>
+        <tbody>
+		<tr>
+			<td>&nbsp;</td>
+			<td style=\"text-align: left; font-weight: bold;\">ASET TETAP</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>";
+    
+    // $no =1;
+    // echo "total all".$totALL;
+    foreach ($value as $keys => $data)
+    {	
+		// pr($keys);
+		$exp = explode('_',$keys);
+		$kode_1_parent = $exp[0];
+		$kode_2_parent = end($exp);
+		//tahun aktif - 1
+		$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglAkhirMutasiAwal);
+		$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+		$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+		
+		//tahun aktif
+		$exeTempTable_getTotal = $this->tempTableMutasi($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
+		$TotalNilai_Mutasi = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
+		$TotalNilaiFix_Mutasi =number_format($TotalNilai_Mutasi[0],2,",",".");
+		$TotalJmlFix_Mutasi=number_format($TotalNilai_Mutasi[1],0,",",".");
+		
+		if($keys != '07_Aset Lainnya'){
+			$totalALL = $totalALL + $TotalNilai[0];
+			$jmlALL = $jmlALL + $TotalNilai[1];
+			$header = "";
+		}else{
+			
+			$header="
+			<tr>
+				<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET TETAP</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
+				<td align=\"right\" style=\"font-weight: bold;\">-</td>
+				<td align=\"right\" style=\"font-weight: bold;\">-</td>
+				<td align=\"right\" style=\"font-weight: bold;\">-</td>
+				<td align=\"right\" style=\"font-weight: bold;\">-</td>
+				<td align=\"right\" style=\"font-weight: bold;\">-</td>
+				<td align=\"right\" style=\"font-weight: bold;\">-</td>
+			</tr>";
+			  $totalALL = $TotalNilai[0];
+			  $jmlALL = $TotalNilai[1];
+			  $header.="<tr>
+				<td>&nbsp;</td>
+				<td style=\"text-align: left; font-weight: bold;\">ASET LAINNYA</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+		}
+		$html .= "$header
+				<tr>
+					<td style=\"text-align: center; font-weight: bold;\">$kode_1_parent</td>
+					<td style=\"text-align: left; font-weight: bold;\">$kode_2_parent</td>
+					<td style=\"text-align: center;\">$TotalJmlFix</td>
+					<td style=\"text-align: center;\">$TotalNilaiFix</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">$TotalJmlFix_Mutasi</td>
+					<td style=\"text-align: center;\">$TotalNilaiFix_Mutasi</td>
+				  </tr>";
+        
+        foreach ($data as $index => $value)
+        {
+		// pr($value);
+		$exp2 = explode('_',$index);
+		$kode_1_child = $exp2[0];
+		$kode_2_child = end($exp2);
+		// pr($value[0]);
+		$val =count($value[0]);
+		 
+		if($val == 2){
+			$hit = 2;
+				
+			$nilai_1 =$value[0][0];
+			$nilai_2 =$value[0][1];
+			$ex_1 = explode("_",$nilai_1);
+			// pr($ex_1);
+				$jumlah_1 = $ex_1[0];
+				$nilai_1= $ex_1[1];	
+			$ex_2 = explode("_",$nilai_2);
+			// pr($ex_2);
+				$jumlah_2 = $ex_2[0];
+				$nilai_2 = $ex_2[1];	
+			$jmlFix = ($jumlah_1) + ($jumlah_2);
+			$nilaiFix = ($nilai_1) + ($nilai_2);
+		}else{
+			$hit = 1;
+			// echo "hit =".$hit; 
+			$nilai_1 =$value[0][0];
+			$ex_1 = explode("_",$nilai_1);
+				$jumlah_1 = $ex_1[0];
+				$nilai_1= $ex_1[1];
+			$jmlFix = $jumlah_1;
+			$nilaiFix = $nilai_1;	
+		}
+		// echo $jmlFix;
+		// echo "<br>";
+		// echo $nilaiFix;
+		// echo "<br>";
+		
+				/*
+				skenario cek mutasi u/berkurang atau bertambah neraca
+				1.panggil tempTablemutasi
+				2.panggil fungsi berdasarkan $kode_1_child (contoh : 01.01)
+				*/
+				//start
+				/*$tmp[] = $kode_1_child;
+				$lastKode = end($tmp);
+				if(count($tmp) == 1){*/
+					//gol tanah pertama kali
+					// echo "gol =".$lastKode;
+					// echo "<br>";
+					$exeTempTable = $this->tempTableMutasi($skpd_id,$kode_1_child,$tglawalperolehan,$tglakhirperolehan);
+				/*}else{
+					$getKodeFirst = explode('.',$kode_1_child);
+					$getKodeLast = explode('.',$lastKode);
+					$last = end($getKodeLast);
+					if($getKodeFirst[0] != $getKodeLast[0]){
+						//exe temp table
+						echo "jika beda golongan aja".$last;
+						echo "<br>";
+						$exeTempTable = $this->tempTableMutasi($skpd_id,$kode_1_child,$tglawalperolehan,$tglakhirperolehan);
+					}
+				
+				}*/
+				$TotalNilaiMutasi = $this->get_TotalNilaiNeracaMutasi($skpd_id,$kode_1_child,$tglawalperolehan,$tglakhirperolehan);
+				$nilaiFixMutasi = $TotalNilaiMutasi[0];
+				$jmlFixMutasi = $TotalNilaiMutasi[1];
+				
+				$jmlFix_final=number_format($jmlFixMutasi,0,",",".");
+				$nilaiFix_final=number_format($nilaiFixMutasi,2,",",".");
+				
+				if($nilaiFixMutasi > $nilaiFix){
+					//bertambah
+					$jmlFix_bertambah = $jmlFixMutasi - $jmlFix;
+					$nilaiFix_bertambah = $nilaiFixMutasi - $nilaiFix;
+					
+					//berkurang
+					$jmlFix_berkurang = 0;
+					$nilaiFix_berkurang = 0;
+				}elseif($nilaiFixMutasi < $nilaiFix){
+					//bertambah
+					$jmlFix_bertambah = 0;
+					$nilaiFix_bertambah = 0;
+					
+					//berkurang
+					$jmlFix_berkurang = abs($jmlFixMutasi - $jmlFix);
+					$nilaiFix_berkurang = abs($nilaiFixMutasi - $nilaiFix);
+				
+				}else{
+					//bertambah
+					$jmlFix_bertambah = 0;
+					$nilaiFix_bertambah = 0;
+					
+					//berkurang
+					$jmlFix_berkurang = 0;
+					$nilaiFix_berkurang = 0;
+				}
+				//jml Bertambah
+					$jmlFix_bertambah_Total +=$jmlFix_bertambah;
+					$nilaiFix_bertambah_Total +=$nilaiFix_bertambah;
+				//jml Berkurang
+					$jmlFix_berkurang_Total +=$jmlFix_berkurang;
+					$nilaiFix_berkurang_Total +=$nilaiFix_berkurang;
+				
+				//end
+				
+				 $html .= "<tr>
+						<td style=\"text-align: right;\">$kode_1_child</td>
+                        <td style=\"text-align: ;\">$kode_2_child</td>
+						
+                        <td style=\"text-align: center;\">".number_format($jmlFix,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($nilaiFix,2,",",".")."</td>
+						
+						<td style=\"text-align: center;\">".number_format($jmlFix_berkurang,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($nilaiFix_berkurang,2,",",".")."</td>
+						
+						<td style=\"text-align: center;\">".number_format($jmlFix_bertambah,0,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($nilaiFix_bertambah,2,",",".")."</td>
+						
+						<td style=\"text-align: center;\">$jmlFix_final</td>
+                        <td style=\"text-align: right;\">$nilaiFix_final</td>
+                      </tr>";
+				 if($kode_1_child == '07.24'){
+					$html .="<tr>
+								<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET LAINNYA</td>
+								<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
+								<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
+								<td align=\"right\" style=\"font-weight: bold;\">-</td>
+								<td align=\"right\" style=\"font-weight: bold;\">-</td>
+								<td align=\"right\" style=\"font-weight: bold;\">-</td>
+								<td align=\"right\" style=\"font-weight: bold;\">-</td>
+								<td align=\"right\" style=\"font-weight: bold;\">-</td>
+								<td align=\"right\" style=\"font-weight: bold;\">-</td>
+							</tr>
+							</table>
+							</tbody>
+						</body>
+					</html>";
+				 }	  
+					  
+                // $total_perolehan += ($nilaiFix);
+				
+        }
+        // $no++;
+        $jmlFix = 0;
+		$nilaiFix = 0;
+    }
+		/*$html .="
+			
+			<tr>
+				<td colspan = \"3\" align=\"center\" style=\"font-weight: bold;\">TOTAL</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
+			</tr>
+			</table>
+			</tbody>
+		</body>
+	</html>"; */ 
+	$total_perolehan = 0;
+	// $totALL = $totalALL;	
+    $hasil_html[]=$html;
+}
+return $hasil_html;
+}		
+
 		
 //end		
 		
@@ -16838,6 +17242,348 @@ $footer ="
          
      }
 
+//LAPORAN INVENTARIS
+public function  retrieve_html_laporan_inventaris($dataArr,$gambar){
+
+if($dataArr!="")
+{
+    $head = "
+        <html>
+            <head>
+                <style>
+                        table
+                        {
+                            font-size:10pt;
+                            font-family:Arial;
+                            border-collapse: collapse;											
+                            border-spacing:0;
+                        }
+                        h3
+                        {
+                            font-family:Arial;	
+                            font-size:13pt;
+                            color:#000;
+
+                        }
+                        p
+                        {
+                            font-size:10pt;
+                            font-family:Arial;
+                            font-weight:bold;
+                        }
+                </style>
+            </head>";
+
+    $no=1;
+    $skpdeh="";
+    $barangTotal=0;
+    $perolehanTotal=0;
+    
+    foreach ($dataArr as $row)
+        
+    {
+        //echo $no;
+    if ($skpdeh == "" && $no==1){
+        $body="";
+        // $skpdeh = $row->KodeSatker;
+        // $satker_id = $satker;
+        // echo $satker_id;
+		// echo $row->kodeSatker;
+        // echo 'test';
+		// exit;
+		//==add new==//
+	   $detailSatker=$this->get_satker($row->kodeSatker);
+	   $NoBidang = $detailSatker[0];
+	   $NoUnitOrganisasi = $detailSatker[1];
+	   $NoSubUnitOrganisasi = $detailSatker[2];
+	   $NoUPB = $detailSatker[3];
+	   
+	   if($NoBidang !=""){
+			$paramKodeLokasi = $NoBidang;
+	   }
+	   if($NoBidang !="" && $NoUnitOrganisasi != ""){
+			$paramKodeLokasi = $NoUnitOrganisasi;
+	   }
+	   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+			$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+	   }
+	   if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+			$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+	   }
+	   $Bidang = $detailSatker[4][0];
+	   $UnitOrganisasi = $detailSatker[4][1];
+	   $SubUnitOrganisasi = $detailSatker[4][2];
+	   $UPB = $detailSatker[4][3];
+	   $noKodeLokasi=substr($row->kodeLokasi,0,8);
+	   $thnLokasi= substr($row->Tahun,2,4);
+	   $kodeLokasi = $noKodeLokasi.".".$NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+
+    $body="
+        <body>
+          <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+            <thead>
+                <tr>
+                     <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                     <td style=\"width: 90%; text-align: center;\">
+                        <h3>LAPORAN INVENTARIS </h3>
+                    </td>
+                </tr>
+            </thead>
+            </table>
+            <br />
+            <br />
+            <table border=\"0\" width=\"100%\">
+            <tr align=\"left\" >
+			   <td >
+					<p>PROVINSI</p>
+			   </td>
+			   <td width=\"65%\">
+					<p>:&nbsp;$this->NAMA_PROVINSI</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>KABUPATEN/KOTA</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>BIDANG</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$Bidang</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		   <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>SUB UNIT ORGANISASI</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$SubUnitOrganisasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr>
+			   <td style=\"font-weight: bold; width=20%\">
+					<p>UPB</p>
+			   </td>
+			   <td width=\"60%\">
+
+				   <p>:&nbsp;$UPB</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+		  <tr align=\"left\">
+			   <td width=\"20%\">
+					<p>NO. KODE LOKASI</p> 
+			   </td>
+			   <td width=\"60%\">
+					<p>:&nbsp;$kodeLokasi</p>
+			   </td>
+			   <td width=\"20%\">&nbsp;</td>
+		  </tr>
+            
+        </table>
+            <br />
+            <br />
+            <table  style=\"width: 100%; height: 330px; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+            <thead>
+                <tr>
+                    <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
+                    <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 450px;\">Spesifikasi Barang</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/Cara<br>Perolehan Barang</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Tahun Perolehan</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Tanggal<br/>Perolehan</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Tanggal<br/>TglPembukuan</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
+                    <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Kode Riwayat</td>
+                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
+                </tr>
+                <tr align=\"center\"></tr>
+                <tr>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 47px;\">No Urut</td>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 83px;\">Kode Barang</td>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 64px;\">Register</td>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 118px;\">Nama/Jenis Barang</td>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 45px;\">Merk / Type</td>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 120px;\">No.Sertifikat<br>No. pabrik<br>No.Chasis Mesin</td>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Barang</td>
+                    <td colspan=\"1\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Harga<br>(Rp)</td>
+                </tr>
+                <tr>
+                    <td style=\"text-align:center; font-weight: bold; width: 47px;\">1</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 83px;\">2</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 64px;\">3</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 200px;\">4</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 100px;\">5</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 150px;\">6</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 100px;\">7</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 70px;\">8</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 60px;\">11</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
+                    <td style=\"text-align:center; font-weight: bold;\">13</td>
+                    <td style=\"text-align:center; font-weight: bold;\">14</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
+                    <td style=\"text-align:center; font-weight: bold; width: 60px;\">16</td>
+                </tr>
+            </thead>";
+    }
+	
+            $barangTotal = $barangTotal + $row->Kuantitas;
+            $konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
+			$KodeRiwayat = $this->get_NamaKodeRiwayat($row->Kd_Riwayat);
+			$tglPerolehan = $this->format_tanggal_db3($row->TglPerolehan);
+			$tglPembukuan = $this->format_tanggal_db3($row->TglPembukuan);
+			
+            ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
+            ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
+            ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->NoBPKB;	           
+			$kondisi= $row->kondisi;
+			if ($kondisi == '1') {
+				$ketKondisi = "Baik";
+			}
+			elseif ($kondisi == '2') {
+				$ketKondisi = "Kurang Baik";
+			}
+			elseif ($kondisi == '3') {
+				$ketKondisi = "Rusak Berat";
+			}else{
+				$ketKondisi = "";
+			} 
+			$noReg=$row->noRegister;
+			$nilaiPrlhn = $row->NilaiPerolehan;
+			$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+			$kuantitas = 1;
+			$perolehanTotal = $perolehanTotal + $nilaiPrlhn;			
+            $body.="
+                <tr>
+                    <td style=\"width: 47px; text-align:center;\">$no</td>
+                    <td style=\"width: 83px; text-align:center;\">$row->Kode</td>
+                    <td style=\"width: 64px; text-align:center;\">$noReg</td>
+                    <td style=\"width: 200px;\">$row->Uraian</td>
+                    <td style=\"width: 100px; \">$row->Merk</td>
+                    <td style=\"width: 150px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
+                    <td style=\"width: 100x; \">$row->Material</td>
+                    <td style=\"width: 70px; \">$row->SumberAset</td>
+                    <td style=\"width: 71px; text-align:center;\">$row->Tahun</td>
+                    <td style=\"width: 71px;\">$tglPerolehan</td>
+                    <td style=\"width: 60px; text-align:center;\">$tglPembukuan</td>
+                    <td style=\"width: 81px;\">$ketKondisi</td>
+                    <td style=\"width: 71px; text-align:center;\">$kuantitas</td>
+                    <td style=\"width: 73px; text-align:right;\">$nilaiPrlhnFix</td>
+                    <td style=\"width: 60px;\">$row->Kd_Riwayat($KodeRiwayat)</td>
+                    <td style=\"width: 60px;\">$row->Info</td>
+                </tr>";
+                                                            
+            $no++;
+        }
+                                            
+            // $printbarang=  number_format($barangTotal);
+            $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+            $tabletotal="<tr>
+                            <td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
+                            <td style=\"text-align: right;\">$printperolehanTotal</td>
+                            <td colspan=\"2\">&nbsp;</td>
+                        </tr>
+                    </table>"; 
+						
+						
+            /*$foot="<table border=\"0\">
+                    <tr>
+                        <td colspan=\"14\">&nbsp;</td>
+                    </tr>
+                </table>"; 
+									
+            $footer ="
+                <table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+                    <tr>
+                        <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tanggalCetak</td>
+                    </tr>
+                    <tr>
+                        <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
+                    </tr>
+                    <tr>
+                         <td colspan=\"11\" style=\"height: 80px\"></td>
+                    </tr>
+                    <tr>
+                        <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix </td>
+                    </tr>
+                    <tr>
+                        <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+                    </tr>
+                    <tr>
+                        <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+                    </tr>
+                </table>";
+            
+            $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);*/
+            $akhir_footer="
+                </body>
+            </html>";      
+                                       
+            // $html[]=$head.$body.$tabletotal.$foot.$footer;;
+            $html[]=$head.$body.$tabletotal.$akhir_footer;;
+            //echo $status_print;
+            // $html[]=$akhir_footer; 
+			return $html;
+          }
+         
+     }
+ 
+	 
 //BUKU INVENTARIS GABUNGAN SKPD (ok) 
 	public function  retrieve_html_bukuiinventariskpdGab($dataArr,$gambar,$tanggalCetak,$thnPejabat){
          
@@ -17401,7 +18147,7 @@ $footer ="
                                         
                     ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
                     ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
-                    ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;
+                    ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->NoBPKB;
 					$kondisi= $row->kondisi;
 					if ($kondisi == '1') {
 						$ketKondisi = "Baik";
@@ -17750,7 +18496,7 @@ if($dataArr!="")
 
             ($row->NoRangka == '') ? $dataRangka = "-" : $dataRangka = $row->NoRangka;
             ($row->NoMesin == '') ? $dataMesin = "-" : $dataMesin = $row->NoMesin;
-            ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->BPKB;	           
+            ($row->NoBPKB == '') ? $dataBPKB = "-" : $dataBPKB = $row->NoBPKB;	           
 			$kondisi= $row->kondisi;
 			if ($kondisi == '1') {
 				$ketKondisi = "Baik";
@@ -28676,7 +29422,700 @@ return $hasil_html;
 	return array($NilaiFix,$jmlFix);
 	
 	} 
+	
+	public function get_TotalNilaiNeracaMutasi($satker_id,$golChild,$tglawalperolehan,$tglakhirperolehan){
+		// echo "masuk function get_TotalNilaiNeracaMutasi";
+		// echo "<br>";
+		// exit;
+		$gol = explode('.',$golChild);
+		
+		if($gol[0] == '01'){
+			$paramGol ="tanahMutasi_ori";
+			$kondisi ="";
+			$kodeKelompok ="kodeKelompok like '$golChild%' and";
+		}elseif($gol[0] == '02'){
+			$paramGol ="mesinMutasi_ori";
+			$paramGol2 ="mesinMutasi_Rplctn";
+			$kondisi ="and kondisi != 3";
+			$kodeKelompok ="kodeKelompok like '$golChild%' and";
+		}elseif($gol[0] == '03'){
+			$paramGol ="bangunanMutasi_ori";
+			$paramGol2 ="bangunanMutasi_Rplctn";
+			$kondisi ="and kondisi != 3";
+			$kodeKelompok ="kodeKelompok like '$golChild%' and";
+		}elseif($gol[0] == '04'){
+			$paramGol ="jaringanMutasi_ori";
+			$kondisi ="and kondisi != 3";
+			$kodeKelompok ="kodeKelompok like '$golChild%' and";
+		}elseif($gol[0] == '05'){
+			$paramGol ="asetlainMutasi_ori";
+			$kondisi ="and kondisi != 3";
+			$kodeKelompok ="kodeKelompok like '$golChild%' and";
+		}elseif($gol[0] == '06'){
+			$paramGol ="kdp_ori";
+			$kondisi ="and kondisi != 3";
+			$kodeKelompok ="kodeKelompok like '$golChild%' and";
+		}else{
+			if($golChild == '07.21'){
+				$paramGol ="aset";
+				$kondisi ="and kondisi = 3";
+				$kodeKelompok ="kodeKelompok like '07.21%' and";
+			}
+		}
+		$tglDefault = '2008-01-01';
+		$thnDefault ="2008";
+			
+		$tglAwalDefault = $tglawalperolehan;
+		$ceckTglAw = explode ('-',$tglAwalDefault);
+		$thnceck = $ceckTglAw[0];
+		
+		$tglAkhirDefault = $tglakhirperolehan;
+		$ceckTgl = explode ('-',$tglAkhirDefault);
+		$thnFix = $ceckTgl[0];
+		// kodeKelompok like '03.11%'
+		$KodeKa = "OR kodeKA = 1";
+		$KodeKaCondt1 = "AND kodeKA = 1";
+		if($gol[0] == '01'){
+			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%'  
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						";
+		}elseif($gol[0] == '02'){
+			if($thnFix < $thnDefault){
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";
+			}elseif($thnceck >= $thnDefault){
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 300000 $KodeKa)";
+			}else{
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1
+						union all 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and kodeLokasi like '12%' 
+						and (NilaiPerolehan >= 300000 $KodeKa)";
+			}
+		}elseif($gol[0] == '03'){
+			if($thnFix < $thnDefault){
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";
+			}elseif($thnceck >= $thnDefault){
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+					WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+					and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+					and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+					and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+					and (NilaiPerolehan >= 10000000 $KodeKa)";
+			}else{
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1
+						union all 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
+						WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and kodeLokasi like '12%' 
+						and (NilaiPerolehan >= 10000000 $KodeKa)";
+			}
+		}elseif($gol[0] == '04' || $gol[0] == '05' || $gol[0] == '06' ){
+			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+			WHERE $kodeKelompok kodeSatker like '$satker_id%' and kondisi != '3' 
+			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+			";
+		}else{
+			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+			WHERE kodeSatker like '$satker_id%' and kondisi = '3' 
+			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+			and Status_Validasi_Barang =1 and kodeLokasi like '12%' $KodeKaCondt1
+			";
+		}	
+		
+		echo "query =".$query;
+		echo "<br>";
+		$result=$this->retrieve_query($query);
+		// pr($result);
+		// exit;	
+		if($result!=""){
+			foreach($result as $value){
+				$Nilai=$value->nilai;
+				$jml=$value->jml;
+				
+				$NilaiFix += $Nilai;
+				$jmlFix += $jml;
+				
+				$tempAllNilaiFix [] = $NilaiFix;
+				$tempAlljmlFix [] = $jmlFix;
+				
+			}
+		}
+		
+		// pr($tempAllNilaiFix);
+		// pr($tempAlljmlFix);
+		// echo "NilaiFix =".$NilaiFix;
+		// echo "<br>";
+		// echo "jmlFix =".$jmlFix;
+	return array($NilaiFix,$jmlFix);
+	
+	}
+	
+	public function get_NamaKodeRiwayat($kode){
+		$query = "SELECT Nm_Riwayat FROM ref_riwayat where Kd_Riwayat = '$kode' ";
+		$result=$this->retrieve_query($query);
+		if($result!=""){
+			foreach($result as $value){
+				$NamaRwyt=$value->Nm_Riwayat;
+			}
+		}
+		return $NamaRwyt;
+	}
      
+	public function format_tanggal_db3($tgl){
+	//30/06/2012
+		$temp=explode("-",$tgl);
+		$hasil=$temp[2]."/".$temp[1]."/".$temp[0];
+	return $hasil;
+	 
+	} 
+	
+	public function tempTableMutasi($skpd_id,$kode_1_child,$tglawalperolehan,$tglakhirperolehan){
+	// echo "masuk function tempTableMutasi";
+	// echo "<br>";
+	$tgldefault = "2008-01-01";
+	$thnDefault ="2008";
+
+	$tglAwalDefault = $tglawalperolehan;
+	$ceckTglAw = explode ('-',$tglAwalDefault);
+	$thnceck = $ceckTglAw[0];
+
+	$tglAkhirDefault = $tglakhirperolehan;
+	$ceckTgl = explode ('-',$tglAkhirDefault);
+	$thnFix = $ceckTgl[0];
+	
+	$paramKib 		= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
+	$paramMutasi 	= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+	$paramPnghpsn 	= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
+	$paramLog 		= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0') order by a.log_id desc";
+	
+	$paramKib_bc 		= "a.TglPerolehan <'2008-01-01' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
+	$paramMutasi_bc 	= "a.TglPerolehan <'2008-01-01' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+	$paramPnghpsn_bc 	= "a.TglPerolehan <'2008-01-01' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
+	$paramLog_bc 		= "a.TglPerolehan <'2008-01-01' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  order by a.log_id desc";
+
+	$paramKib_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
+	$paramMutasi_2 	    = "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+	$paramPnghpsn_2 	= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
+	$paramLog_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  order by a.log_id desc";
+			
+	if($kode_1_child){
+		$klmpk = explode('.',$kode_1_child);
+		if($klmpk[0] == 01){
+			$flag = 'A';
+		}elseif($klmpk[0] == 02){
+			$flag = 'B';
+		}elseif($klmpk[0] == 03){
+			$flag = 'C';
+		}elseif($klmpk[0] == 04){
+			$flag = 'D';
+		}elseif($klmpk[0] == 05){
+			$flag = 'E';
+		}elseif($klmpk[0] == 06){
+			$flag = 'F';
+		}
+	}
+	if($flag){
+		//single query
+			if($flag == 'A'){
+			//KIB A
+				$queryKib 		= "create temporary table tanahMutasi_ori as
+								select a.Tanah_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, 
+									a.Alamat, a.Info,a. AsalUsul, a.kondisi, a.CaraPerolehan, a.LuasTotal, a.LuasBangunan, a.LuasSekitar, a.LuasKosong, a.HakTanah,
+									a.NoSertifikat, a.TglSertifikat, a.Penggunaan, a.BatasUtara, a.BatasSelatan, a.BatasBarat, a.BatasTimur, a.Tmp_Hak, a.GUID, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.PenyusutanPerTahun  
+								from tanah a
+								
+								where $paramKib";
+				$queryMutasi 	= "replace into tanahMutasi_ori (Tanah_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
+									kodeKA, kodeRuangan,Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, 
+									Alamat, Info, AsalUsul, kondisi, CaraPerolehan, LuasTotal, LuasBangunan, LuasSekitar, LuasKosong, HakTanah,
+									NoSertifikat, TglSertifikat, Penggunaan, BatasUtara, BatasSelatan, BatasBarat, BatasTimur, Tmp_Hak, GUID, MasaManfaat, 
+									AkumulasiPenyusutan, PenyusutanPerTahun)
+								select a.Tanah_ID, a.Aset_ID, a.kodeKelompok, a.SatkerAwal, concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+									a.NomorRegAwal, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, 
+									a.Alamat, a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.LuasTotal, a.LuasBangunan, a.LuasSekitar, a.LuasKosong, a.HakTanah,
+									a.NoSertifikat, a.TglSertifikat, a.Penggunaan, a.BatasUtara, a.BatasSelatan, a.BatasBarat, a.BatasTimur, a.Tmp_Hak, a.GUID, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.PenyusutanPerTahun 
+								from view_mutasi_tanah a
+								inner join tanah t on t.Aset_ID=a.Aset_ID 
+								inner join tanah t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramMutasi";
+				$queryPnghpsn	= "replace into tanahMutasi_ori (Tanah_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
+									kodeKA, kodeRuangan,Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, 
+									Alamat, Info, AsalUsul, kondisi, CaraPerolehan, LuasTotal, LuasBangunan, LuasSekitar, LuasKosong, HakTanah,
+									NoSertifikat, TglSertifikat, Penggunaan, BatasUtara, BatasSelatan, BatasBarat, BatasTimur, Tmp_Hak, GUID, MasaManfaat, 
+									AkumulasiPenyusutan, PenyusutanPerTahun)
+								select a.Tanah_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan, 1, 1, a.Tahun, a.NilaiPerolehan, 
+									a.Alamat, a.Info,a. AsalUsul, a.kondisi, a.CaraPerolehan, a.LuasTotal, a.LuasBangunan, a.LuasSekitar, a.LuasKosong, a.HakTanah,
+									a.NoSertifikat, a.TglSertifikat, a.Penggunaan, a.BatasUtara, a.BatasSelatan, a.BatasBarat, a.BatasTimur, a.Tmp_Hak, a.GUID, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.PenyusutanPerTahun 
+								from view_hapus_tanah a 
+								inner join tanah t on t.Aset_ID=a.Aset_ID
+								inner join tanah t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramPnghpsn";
+				$queryLog 		= "replace into tanahMutasi_ori (Tanah_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
+									kodeKA, kodeRuangan,Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, 
+									Alamat, Info, AsalUsul, kondisi, CaraPerolehan, LuasTotal, LuasBangunan, LuasSekitar, LuasKosong, HakTanah,
+									NoSertifikat, TglSertifikat, Penggunaan, BatasUtara, BatasSelatan, BatasBarat, BatasTimur, Tmp_Hak, GUID, MasaManfaat, 
+									AkumulasiPenyusutan, PenyusutanPerTahun)
+								select a.Tanah_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, 
+									a.Alamat, a.Info,a. AsalUsul, a.kondisi, a.CaraPerolehan, a.LuasTotal, a.LuasBangunan, a.LuasSekitar, a.LuasKosong, a.HakTanah,
+									a.NoSertifikat, a.TglSertifikat, a.Penggunaan, a.BatasUtara, a.BatasSelatan, a.BatasBarat, a.BatasTimur, a.Tmp_Hak, a.GUID, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.PenyusutanPerTahun  
+								from log_tanah  a
+								inner join tanah t on t.Aset_ID=a.Aset_ID
+								inner join tanah t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramLog";
+								
+				$queryAlter = "ALTER table tanahMutasi_ori add primary key(Tanah_ID)";	
+			}elseif($flag == 'B'){
+			//KIB B
+					// exit;
+					$queryKib 		= "create temporary table mesinMutasi_ori as
+								select a.Mesin_ID,a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, Status_Validasi_Barang, StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from mesin a
+								where $paramKib_bc";
+					$queryMutasi 	= "replace into mesinMutasi_ori (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+									kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.SatkerAwal, concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+										a.NomorRegAwal, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin, a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from view_mutasi_mesin a
+									inner join mesin t on t.Aset_ID=a.Aset_ID
+									inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramMutasi_bc";
+					$queryPnghpsn	= "replace into mesinMutasi_ori (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+									kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, 1, 1, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from view_hapus_mesin a
+									inner join mesin t on t.Aset_ID=a.Aset_ID
+									inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramPnghpsn_bc";
+					$queryLog 		= "replace into mesinMutasi_ori (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+									kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from log_mesin a
+									inner join mesin t on t.Aset_ID=a.Aset_ID
+									inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramLog_bc";
+					
+					$queryAlter = "ALTER table mesinMutasi_ori add primary key(Mesin_ID)";	
+									
+					$queryKib_Rplctn 	= "create temporary table mesinMutasi_Rplctn
+										select a.Mesin_ID,a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, Status_Validasi_Barang, StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from mesin a
+									where $paramKib_2";
+									
+					$queryMutasi_Rplctn 	= "replace into mesinMutasi_Rplctn (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+									kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									
+									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.SatkerAwal, concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+										a.NomorRegAwal, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin, a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from view_mutasi_mesin a
+									inner join mesin t on t.Aset_ID=a.Aset_ID 
+									inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramMutasi_2";
+									
+					$queryPnghpsn_Rplctn	= "replace into mesinMutasi_Rplctn (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+									kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									
+									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, 1, 1, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran,a. Silinder, a.MerkMesin, a.JumlahMesin, a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from view_hapus_mesin a
+									inner join mesin t on t.Aset_ID=a.Aset_ID
+									inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramPnghpsn_2";
+									
+					$queryLog_Rplctn 		= "replace into mesinMutasi_Rplctn (Mesin_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+											kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+											AsalUsul, kondisi, CaraPerolehan, Merk, Model, Ukuran, Silinder, MerkMesin, JumlahMesin, Material, NoSeri,
+											NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
+											NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran,a. Silinder, a.MerkMesin, a.JumlahMesin, a.Material, a.NoSeri,
+										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
+										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+									from log_mesin a
+									inner join mesin t on t.Aset_ID=a.Aset_ID 
+									inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramLog_2";
+					$queryAlter_Rplctn= "ALTER table mesinMutasi_Rplctn add primary key(Mesin_ID)";	
+				
+							
+			}elseif($flag == 'C'){
+			//KIB C
+					// echo "atb";
+					$queryKib 		= "create temporary table bangunanMutasi_ori as
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+									from bangunan a
+									where $paramKib_bc";
+					$queryMutasi 	= "replace into bangunanMutasi_ori (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+										kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
+										CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
+										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
+										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.SatkerAwal,concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+										a.NomorRegAwal, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun from 
+									view_mutasi_bangunan a
+									inner join bangunan t on t.Aset_ID=a.Aset_ID
+									inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramMutasi_bc";
+					$queryPnghpsn	= "replace into bangunanMutasi_ori (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+										kodeRuangan,Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
+										CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
+										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
+										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, 1, 1, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+									from view_hapus_bangunan a
+									inner join bangunan t on t.Aset_ID=a.Aset_ID
+									inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramPnghpsn_bc";
+					$queryLog 		= "replace into bangunanMutasi_ori (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+										kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
+										CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
+										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
+										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+									from log_bangunan a
+									inner join bangunan t on t.Aset_ID=a.Aset_ID
+									inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramLog_bc";
+					
+					$queryAlter = "ALTER table bangunanMutasi_ori add primary key(Bangunan_ID)";	
+					
+					$queryKib_Rplctn 		= "create temporary table bangunanMutasi_Rplctn as
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+									from bangunan a
+									where $paramKib_2";
+									
+					$queryMutasi_Rplctn 	= "replace into bangunanMutasi_Rplctn (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+										kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
+										CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
+										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
+										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.SatkerAwal,concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+										a.NomorRegAwal, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun from 
+									view_mutasi_bangunan a
+									inner join bangunan t on t.Aset_ID=a.Aset_ID
+									inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramMutasi_2";
+									
+					$queryPnghpsn_Rplctn	= "replace into bangunanMutasi_Rplctn (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+										kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
+										CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
+										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
+										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan, 1, 1, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+									from view_hapus_bangunan a
+									inner join bangunan t on t.Aset_ID=a.Aset_ID
+									inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramPnghpsn_2";
+									
+					$queryLog_Rplctn 		= "replace into bangunanMutasi_Rplctn (Bangunan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, kodeKA, 
+										kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, 
+										CaraPerolehan, TglPakai, Konstruksi, Beton, JumlahLantai, LuasLantai, Dinding, Lantai, LangitLangit, Atap, 
+										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
+										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
+										a.kodeRuangan,a.Status_Validasi_Barang,a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
+										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
+										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+									from log_bangunan a
+									inner join bangunan t on t.Aset_ID=a.Aset_ID
+									inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+									where $paramLog_2";	
+									
+					$queryAlter_Rplctn = "ALTER table bangunanMutasi_Rplctn add primary key(Bangunan_ID)";					
+				
+					
+								
+			}elseif($flag == 'D'){
+			//KIB D
+				$queryKib 		= "create temporary table jaringanMutasi_ori as
+								select a.Jaringan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+									a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Panjang, a.Lebar, a.NoDokumen, a.TglDokumen, a.StatusTanah, 
+									a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+								from jaringan a
+								where $paramKib";
+				$queryMutasi 	= "replace into jaringanMutasi_ori (Jaringan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
+									kodeKA, kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Konstruksi, Panjang, Lebar, NoDokumen, TglDokumen, StatusTanah, 
+									NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID, TanggalPemakaian, LuasJaringan, MasaManfaat, 
+									AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+								select a.Jaringan_ID, a.Aset_ID, a.kodeKelompok, a.SatkerAwal,concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+									a.NomorRegAwal, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+									a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Panjang, a.Lebar, a.NoDokumen, a.TglDokumen, a.StatusTanah, 
+									a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+								from view_mutasi_jaringan a
+								inner join jaringan t on t.Aset_ID=a.Aset_ID
+								inner join jaringan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramMutasi";
+				$queryPnghpsn	= "replace into jaringanMutasi_ori (Jaringan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
+									kodeKA, kodeRuangan,Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Konstruksi, Panjang, Lebar, NoDokumen, TglDokumen, StatusTanah, 
+									NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID, TanggalPemakaian, LuasJaringan, MasaManfaat, 
+									AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+								select a.Jaringan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan, 1, 1, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+									a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Panjang, a.Lebar, a.NoDokumen, a.TglDokumen, a.StatusTanah, 
+									a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+								from view_hapus_jaringan a
+								inner join jaringan t on t.Aset_ID=a.Aset_ID
+								inner join jaringan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramPnghpsn";
+				$queryLog 		= "replace into jaringanMutasi_ori (Jaringan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, 
+									kodeKA, kodeRuangan,Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
+									AsalUsul, kondisi, CaraPerolehan, Konstruksi, Panjang, Lebar, NoDokumen, TglDokumen, StatusTanah, 
+									NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID, TanggalPemakaian, LuasJaringan, MasaManfaat, 
+									AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+								select a.Jaringan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+									a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Panjang, a.Lebar, a.NoDokumen, a.TglDokumen, a.StatusTanah, 
+									a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
+									a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+								from log_jaringan a
+								inner join jaringan t on t.Aset_ID=a.Aset_ID
+								inner join jaringan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramLog";
+				$queryAlter = "ALTER table jaringanMutasi_ori add primary key(Jaringan_ID)";				
+			}elseif($flag == 'E'){
+			//KIB E
+				$queryKib 		= "create temporary table asetlainMutasi_ori as
+								select a.AsetLain_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, 
+									a.kodeData, a.kodeKA, a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil,a.Tahun, a.NilaiPerolehan, a.Alamat, 
+									a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Judul, a.AsalDaerah, a.Pengarang, a.Penerbit, a.Spesifikasi, a.TahunTerbit, a.ISBN, a.Material, 
+									a.Ukuran, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+								from asetlain a
+								where $paramKib";
+				$queryMutasi 	= "replace into asetlainMutasi_ori (AsetLain_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, 
+									kodeData, kodeKA, kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, 
+									Info, AsalUsul, kondisi, CaraPerolehan, Judul, AsalDaerah, Pengarang, Penerbit, Spesifikasi, TahunTerbit, ISBN, Material, 
+									Ukuran, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+								select  a.AsetLain_ID, a.Aset_ID, a.kodeKelompok, SatkerAwal,concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+									a.NomorRegAwal, a.TglPerolehan, a.TglPembukuan, 
+									a.kodeData, a.kodeKA, a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil,a.Tahun, a.NilaiPerolehan, a.Alamat, 
+									a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Judul, a.AsalDaerah, a.Pengarang, a.Penerbit, a.Spesifikasi, a.TahunTerbit, a.ISBN, a.Material, 
+									a.Ukuran, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
+								from view_mutasi_asetlain a
+								inner join asetlain t on t.Aset_ID=a.Aset_ID
+								inner join asetlain t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramMutasi";
+				$queryPnghpsn	= "replace into asetlainMutasi_ori (AsetLain_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, 
+									kodeData, kodeKA, kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, 
+									Info, AsalUsul, kondisi, CaraPerolehan, Judul, AsalDaerah, Pengarang, Penerbit, Spesifikasi, TahunTerbit, ISBN, Material, 
+									Ukuran, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+								select a.AsetLain_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, 
+									a.kodeData, a.kodeKA, a.kodeRuangan,1, 1,a.Tahun, a.NilaiPerolehan, a.Alamat, 
+									a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Judul, a.AsalDaerah, a.Pengarang, a.Penerbit, a.Spesifikasi, a.TahunTerbit, a.ISBN, a.Material, 
+									a.Ukuran, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+								from view_hapus_asetlain a
+								inner join asetlain t on t.Aset_ID=a.Aset_ID
+								inner join asetlain t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramPnghpsn";
+				$queryLog 		= "replace into asetlainMutasi_ori (AsetLain_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, 
+									kodeData, kodeKA, kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, 
+									Info, AsalUsul, kondisi, CaraPerolehan, Judul, AsalDaerah, Pengarang, Penerbit, Spesifikasi, TahunTerbit, ISBN, Material, 
+									Ukuran, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
+								select a.AsetLain_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, 
+									a.kodeData, a.kodeKA, a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil,a.Tahun, a.NilaiPerolehan, a.Alamat, 
+									a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Judul, a.AsalDaerah, a.Pengarang, a.Penerbit, a.Spesifikasi, a.TahunTerbit, a.ISBN, a.Material, 
+									a.Ukuran, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
+								from log_asetlain a
+								inner join asetlain t on t.Aset_ID=a.Aset_ID
+								inner join asetlain t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramLog";
+				$queryAlter = "ALTER table asetlainMutasi_ori add primary key(AsetLain_ID)";						
+			}elseif($flag == 'F'){
+				$queryKib 		= "create temporary table kdpMutasi_ori as
+								select a.KDP_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, 
+									a.TglPembukuan, a.kodeData, a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, 
+									a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, 
+									a.TglMulai, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID  
+								from kdp a
+								where $paramKib";
+				$queryMutasi 	= "replace into kdpMutasi_ori (KDP_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, 
+									TglPembukuan, kodeData, kodeKA, kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, 
+									NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, CaraPerolehan, Konstruksi, Beton, JumlahLantai, LuasLantai, 
+									TglMulai, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID)
+								select a.KDP_ID, a.Aset_ID, a.kodeKelompok,a.SatkerAwal,concat(left(a.kodeLokasi,9),left(a.SatkerAwal,6),lpad(right(a.Tahun,2),2,'0'),'.',right(a.SatkerAwal,5)), 
+									a.NomorRegAwal, a.TglPerolehan, 
+									a.TglPembukuan, a.kodeData, a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, 
+									a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, 
+									a.TglMulai, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID  
+								from view_mutasi_kdp a
+								inner join kdp t on t.Aset_ID=a.Aset_ID
+								inner join kdp t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramMutasi";
+				$queryPnghpsn	= "replace into kdpMutasi_ori (KDP_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, 
+									TglPembukuan, kodeData, kodeKA, kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, 
+									NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, CaraPerolehan, Konstruksi, Beton, JumlahLantai, LuasLantai, 
+									TglMulai, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID)
+								select a.KDP_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, 
+									a.TglPembukuan, a.kodeData, a.kodeKA, a.kodeRuangan, 1, 1, a.Tahun, 
+									a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, 
+									a.TglMulai, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID  
+								from view_hapus_kdp a
+								inner join kdp t on t.Aset_ID=a.Aset_ID
+								inner join kdp t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramPnghpsn";
+				$queryLog 		= "replace into kdpMutasi_ori (KDP_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, 
+									TglPembukuan, kodeData, kodeKA, kodeRuangan, Status_Validasi_Barang, StatusTampil, Tahun, 
+									NilaiPerolehan, Alamat, Info, AsalUsul, kondisi, CaraPerolehan, Konstruksi, Beton, JumlahLantai, LuasLantai, 
+									TglMulai, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID)
+								select a.KDP_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, 
+									a.TglPembukuan, a.kodeData, a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, 
+									a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, 
+									a.TglMulai, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID  
+								from log_kdp a
+								inner join kdp t on t.Aset_ID=a.Aset_ID
+								inner join kdp t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
+								where $paramLog";
+				$queryAlter = "ALTER table kdpMutasi_ori add primary key(KDP_ID)";				
+			}
+			
+				if($flag == 'A' || $flag == 'D' || $flag == 'E' || $flag == 'F'){
+					//gol 1,4,5,6
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
+				}else{
+					//gol 2 atau gol 3
+					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn,
+								$queryKib_Rplctn,$queryAlter_Rplctn,$queryLog_Rplctn,$queryMutasi_Rplctn,$queryPnghpsn_Rplctn);
+				}
+				
+				
+				
+				for ($i = 0; $i < count($AllTableTemp); $i++)
+				{
+					/*echo "query_$i =".$AllTableTemp[$i];
+					echo "<br>";
+					echo "<br><br/>";*/
+					// exit;
+					$resultQuery = $this->retrieve_query($AllTableTemp[$i]);
+					// $resultQuery = $this->retrieve_query($AllTableTemp[$i]);
+					// $result=$this->retrieve_query($queryALL[$i]);
+				}	
+		}
+	}
+
+	
  }
      
 ?>
