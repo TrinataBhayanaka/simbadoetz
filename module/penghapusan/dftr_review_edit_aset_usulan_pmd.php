@@ -29,13 +29,17 @@ $menu_id = 10;
 					// $data = $RETRIEVE->retrieve_penetapan_penghapusan_edit_data($parameter);
 					
 						// //////pr($_POST);
-						$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_pmd($_GET);
-						//////pr($data);
+						$data = $PENGHAPUSAN->DataUsulan($id);
+						// pr($data);
 						
 				}
 
-				$row=$data['dataRow'][0];		
-				//////pr($row);
+				$row=$data[0];		
+				// pr($row);
+		$POST['page'] = intval($_GET['pid']);
+	// pr($POST);
+	    $par_data_table="id={$_GET['id']}&page={$POST['page']}";
+
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -46,7 +50,7 @@ $menu_id = 10;
 	<script>
         $(function()
         {
-       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+       		 $('#tanggal1').datepicker();
 
         }
 		);
@@ -68,6 +72,34 @@ $menu_id = 10;
 			}}, 100);
 		}
 		</script>
+		<script>
+    $(document).ready(function() {
+          $('#rvw_aset_usulan_pmd_table').dataTable(
+                   {
+                    "aoColumnDefs": [
+                         { "aTargets": [2] }
+                    ],
+                    "aoColumns":[
+                         {"bSortable": false},
+                         {"bSortable": false,"sClass": "checkbox-column" },
+                         {"bSortable": true},
+                         {"bSortable": false},
+                         {"bSortable": false},
+                         {"bSortable": true},
+                         {"bSortable": false},
+                         {"bSortable": true},
+                         {"bSortable": false},
+                         {"bSortable": false},
+                         {"bSortable": false}],
+                    "sPaginationType": "full_numbers",
+
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_review_edit_aset_usulan_pmd.php?<?php echo $par_data_table?>"
+               }
+                  );
+      });
+    </script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -151,7 +183,7 @@ $menu_id = 10;
 						<span  class="labelInfo">Tanggal Usulan</span>
 							<div class="input-prepend">
 								<span class="add-on"><i class="fa fa-calendar"></i></span>
-								<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$TglUsulan?>" required/>
+								<input name="tanggalUsulan" type="text" id="tanggal1" <?=$disabled?>  value="<?=$row['TglUpdate']?>" required/>
 							</div>
 						
 					</li>
@@ -175,7 +207,7 @@ $menu_id = 10;
 
 			// pr($idtable);
 			?>
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="<?=$idtable?>">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="rvw_aset_usulan_pmd_table">
 				<thead>
 					<tr>
 						<td colspan="7" align="Left">
@@ -212,131 +244,31 @@ $menu_id = 10;
 							?>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 							<?php
+								}else{
+									echo"<th>&nbsp;</th>";
 								}
 							?>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
-						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
 						<th>Status Konfirmasi</th>
+						<th>Merk / Type</th>
 					</tr>
 				</thead>
 				<tbody>		
-				<?php
-				$no = 1;
-				// //////pr($data);
-				$coo=count($data['dataArr']);
-				// //////pr($coo);
-				foreach ($data['dataArr'] as $keys => $nilai)
-				{
-
-					if ($nilai[Aset_ID] !='')
-					{
-					if ($nilai->AsetOpr == 0)
-					$select="selected='selected'";
-					if ($nilai->AsetOpr ==1)
-					$select2="selected='selected'";
-
-					if($nilai->SumberAset =='sp2d')
-					$pilih="selected='selected'";
-					if($nilai->SumberAset =='hibah')
-					$pilih2="selected='selected'";
-					if($coo==1){
-					$delete="";
-					}else{
-					$delete="<a href='$url_rewrite/module/penghapusan/usulan_asetid_proses_hapus_pmd.php?id=$id&asetid=$nilai[Aset_ID]' class='btn btn-danger'><i class='fa fa-trash'></i>
-					 Delete</a>";
-					}
-					if($nilai[kondisi]==2){
-						$kondisi="Rusak Ringan";
-					}elseif($nilai[kondisi]==3){
-						$kondisi="Rusak Berat";
-					}elseif($nilai[kondisi]==1){
-						$kondisi="Baik";
-					}
-					// ////pr($value[TglPerolehan]);
-					$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-					// ////pr($TglPerolehanTmp);
-					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-
-					?>
-						
-					<tr class="gradeA">
-						<td><?php echo $no?></td>
-						<?php
-								if($row['StatusPenetapan']==0){
-							?>
-						<td class="checkbox-column">
-						
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[Aset_ID];?>" >
-							
-						</td>
-						<?php
-								}
-							?>
-						<td>
-							<?php echo $nilai[noRegister]?>
-						</td>
-						<td>
-							<?php echo $nilai[noKontrak]?>
-						</td>
-						<td>
-							 [<?php echo $nilai[kodeKelompok]?>]<br/> 
-							<?php echo $nilai[Uraian]?>
-						</td>
-						<td>
-							<?php echo $nilai[Merk]?> <?php if ($value[Model]) echo $nilai[Model];?>
-						</td>
-						<td>
-							<?php echo '['.$nilai[kodeSatker].'] '?><br/>
-							<?php echo $nilai[NamaSatker];?>
-						</td>
-						<td>
-							<?php echo $TglPerolehan;?>
-						</td>
-						<td>
-							<?php echo number_format($nilai[NilaiPerolehan]);?>
-						</td>
-						<td>
-							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
-						</td>
-						<td>
-							<?php
-								if($nilai['StatusKonfirmasi']==0){
-									$label="warning";
-									$text="proses";
-								}elseif($nilai['StatusKonfirmasi']==1){
-									$label="success";
-									$text="Diterima";
-								}elseif($nilai['StatusKonfirmasi']==2){
-									$label="danger";
-									$text="Ditolak";
-								}
-							?>
-							<span class="label label-<?=$label?>" ><?=$text?></span>
-						</td>
-							
-					</tr>
-					<?php
-				  $no++;
-								}
-							}
-			?>
+					 <tr>
+                        <td colspan="11">Data Tidak di temukkan</td>
+                     </tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<th>&nbsp;</th>
-						<?php
-								if($row['StatusPenetapan']==0){
-							?>
 						<th>&nbsp;</th>
-						<?php
-								}
-							?>
+					
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

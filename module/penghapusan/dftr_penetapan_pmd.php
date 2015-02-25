@@ -46,6 +46,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                          {"bSortable": true},
                          {"bSortable": true},
                          {"bSortable": false},
+                         {"bSortable": false},
                          {"bSortable": true},
                          {"bSortable": true},
                          {"bSortable": false},
@@ -112,6 +113,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<th>Nomor SK Penghapusan</th>
 						<th>Satker</th>
 						<th>Jumlah Usulan</th>
+						<th>Jumlah Aset</th>
 						<th>Tgl Penetapan</th>
 						<th>Keterangan</th>
 						<th>Status</th>
@@ -120,11 +122,12 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				</thead>
 				<tbody>		
 					 <tr>
-                        <td colspan="8">Data Tidak di temukkan</td>
+                        <td colspan="9">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
