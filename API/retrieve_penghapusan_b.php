@@ -3468,7 +3468,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                         foreach ($expoAsetID as $keyexpoAsetID => $valueexpoAsetID) {
                             $Aset_ID[]=$valueexpoAsetID;
                         }
-                        $Aset_ID=implode(",", $Aset_ID)
+                        $Aset_ID=implode(",", $Aset_ID);
                         pr($Aset_ID);
                         $sqlSat = array(
                             'table'=>'Satker',
