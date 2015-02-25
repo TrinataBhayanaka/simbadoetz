@@ -2457,9 +2457,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                // $kodeSatker = $_SESSION['ses_satkerkode'];;
                // if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
-               $UserName=$_SESSION['ses_uoperatorid'];
+               // $UserName=$_SESSION['ses_uoperatorid'];
 
-                if ($UserName) $filterkontrak .= " AND P.UserNm = '{$UserName}' ";
+               //  if ($UserName) $filterkontrak .= " AND P.UserNm = '{$UserName}' ";
+
+             $kodeSatker = $_SESSION['ses_satkerkode'];
+             if ($kodeSatker) $filterkontrak .= " AND P.SatkerUsul LIKE '{$kodeSatker}%' ";
             }
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
         // if($kodeSatker){
@@ -2587,9 +2590,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                // $kodeSatker = $_SESSION['ses_satkerkode'];;
                // if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
-               $UserName=$_SESSION['ses_uoperatorid'];
+               // $UserName=$_SESSION['ses_uoperatorid'];
 
-                if ($UserName) $filterkontrak .= " AND P.UserNm = '{$UserName}' ";
+               //  if ($UserName) $filterkontrak .= " AND P.UserNm = '{$UserName}' ";
+
+             $kodeSatker = $_SESSION['ses_satkerkode'];
+             if ($kodeSatker) $filterkontrak .= " AND P.SatkerUsul LIKE '{$kodeSatker}%' ";
             }
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
         // if($kodeSatker){
@@ -2700,9 +2706,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                // $kodeSatker = $_SESSION['ses_satkerkode'];;
                // if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
-               $UserName=$_SESSION['ses_uoperatorid'];
+               // $UserName=$_SESSION['ses_uoperatorid'];
 
-                if ($UserName) $filterkontrak .= " AND P.UserNm = '{$UserName}' ";
+               //  if ($UserName) $filterkontrak .= " AND P.UserNm = '{$UserName}' ";
+                
+             $kodeSatker = $_SESSION['ses_satkerkode'];
+             if ($kodeSatker) $filterkontrak .= " AND P.SatkerUsul LIKE '{$kodeSatker}%' ";
             }
         // if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
         // if($kodeSatker){
