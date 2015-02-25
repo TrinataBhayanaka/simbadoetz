@@ -3467,6 +3467,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                             'field'=>" NamaSatker ",
                             'condition' => "kode='$SatkerKodenama' GROUP BY kode"
                             );
+                        pr($sqlSat);
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
@@ -3476,6 +3477,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                                 'condition' => "Aset_ID IN ($Aset_ID)"
                                 );
                         
+                        pr($sqlAst);
                         $resAst = $this->db->lazyQuery($sqlAst,$debug);
 
                         $res[$keySat]['TotalNilaiPerolehan']=0;
