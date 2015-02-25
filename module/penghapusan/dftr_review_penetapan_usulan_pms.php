@@ -26,11 +26,13 @@ $menu_id = 10;
 	// $_SESSION['dataPost']=$_POST;
 	// $dataPost=$_SESSION['dataPost'];
 	// }
+	// pr($_POST);
 	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPMS");
 	// $
 	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 	
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pms($POST);
+	// pr($data);
 	if($data['dataArr']){
 		$CountData=count($data['dataArr']);
 	}else{
