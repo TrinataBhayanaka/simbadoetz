@@ -30,7 +30,14 @@ $menu_id = 10;
 ?>
 
 	<script>
+		$(function(){
 
+			$('#btn-dis').click(function(){
+				$body.addClass("loading");
+				NProgress.inc();
+			});
+
+		});
 		$(document).ready(function() {
 	        $('#totalxls').autoNumeric('init', {mDec:0});
 	        setTimeout(function() {
@@ -220,7 +227,39 @@ $menu_id = 10;
 						<input type="hidden" name="jenisaset" value="<?=$_POST['jenisaset']?>">
 						</form>
 			<div class="spacer"></div>
-			    
+			<style type="text/css">
+				/* Start by setting display:none to make this hidden.
+			   Then we position it in relation to the viewport window
+			   with position:fixed. Width, height, top and left speak
+			   speak for themselves. Background we set to 80% white with
+			   our animation centered, and no-repeating */
+				.modal {
+				    display:    none;
+				    position:   fixed;
+				    z-index:    1000;
+				    top:        0;
+				    left:       21.5%;
+				    height:     100%;
+				    width:      100%;
+				    background: rgba( 0, 0, 0, .8 ) 
+				                url('<?=$url_rewrite?>/js/url2.gif') 
+				                50% 50% 
+				                no-repeat;
+				}
+
+				/* When the body has the loading class, we turn
+				   the scrollbar off with overflow:hidden */
+				body.loading {
+				    overflow: hidden;   
+				}
+
+				/* Anytime the body has the loading class, our
+				   modal element will be visible */
+				body.loading .modal {
+				    display: block;
+				}
+				</style>
+				<div class="modal"></div>
 		</section> 
 		     
 	</section>
