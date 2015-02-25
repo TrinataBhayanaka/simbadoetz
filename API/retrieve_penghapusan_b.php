@@ -3178,7 +3178,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
     }
      public function retrieve_penetapan_penghapusan_filter_pmd($data,$debug=false)
     {
-            //////pr($data);
+            pr($data);
             $jenisaset = $data['jenisaset'];
             $nousulan = $data['bup_pp_sp_nousulan'];
             $kodeSatker = $data['kodeSatker'];
@@ -3236,7 +3236,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $sqlHPSaset = array(
                             'table'=>'usulanaset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
                             'field'=>"a.kodeSatker,b.Usulan_ID, b.Aset_ID,b.Jenis_Usulan, e.NamaSatker, f.NamaLokasi, g.Kode",
-                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND a.kodeSatker LIKE '%{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
+                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND a.kodeSatker LIKE '{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
                             );
@@ -3422,7 +3422,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
                             );
-
+                pr($sqlHPSaset);
                 // $sqlHPSaset = array(
                 //         'table'=>'penghapusan',
                 //         'field'=>" * ",
@@ -3454,7 +3454,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                             'field'=>" * ",
                             'condition' => "Usulan_ID IN ($QueryHPSID) AND FixUsulan=1 AND Jenis_Usulan='$jenis_usulan'  AND StatusPenetapan=0 {$filterkontrak} ORDER BY Usulan_ID desc"
                             );
-                    ////////////////////////////////////////////pr($sql);
+                    pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
                     foreach ($res as $keySat => $valueSat) {
