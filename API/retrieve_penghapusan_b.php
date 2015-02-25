@@ -3466,7 +3466,9 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                         $expoAsetID=explode(",", $Aset_IDb);
                         $Aset_ID = array();
                         foreach ($expoAsetID as $keyexpoAsetID => $valueexpoAsetID) {
+                            if($valueexpoAsetID){
                             $Aset_ID[]=$valueexpoAsetID;
+                            }
                         }
                         $Aset_ID=implode(",", $Aset_ID);
                         pr($Aset_ID);
