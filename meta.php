@@ -216,7 +216,8 @@ if ($u_sess) $isLogin = true;
 	
 	
 	/* check user idle time */
-	var lifetime = "1200";
+	// var lifetime = "1200";
+	var lifetime = "9999999999";
 	var isLogin = "<?php echo $isLogin;?>";	
 	var idleMax = parseInt(lifetime,10);
 	var idleTime = 0;

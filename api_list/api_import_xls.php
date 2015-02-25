@@ -204,7 +204,7 @@ foreach ($data as $key => $value)
                $row = array();
                
                $checkbox="<input {$value['style']} type=\"{$value['other']}\" {$value['checked']} id=\"check_{$no}\" class=\"icheck-input\" name=\"aset[]\" 
-                      value=\"{$value['temp_AsetLain_ID']}|{$value['Jumlah']}|{$value['NilaiPerolehan']}\" onchange=\"return AreAnyCheckboxesChecked();\">";
+                      value=\"{$value['temp_AsetLain_ID']}|{$value['NilaiTotal']}\" onchange=\"return AreAnyCheckboxesChecked();\">";
                $row[]=$no;
                $row[]=$checkbox;
                $row[]=$value['kodeKelompok'] ;
@@ -212,7 +212,7 @@ foreach ($data as $key => $value)
                $row[]=$value['kodeLokasi'];
                $row[]=$value['Jumlah'];
                $row[]=number_format($value['NilaiPerolehan']);
-               $row[]=number_format($value['Jumlah']*$value['NilaiPerolehan']);
+               $row[]=number_format($value['NilaiTotal']);
                
                $output['aaData'][] = $row;
                 $no++;
