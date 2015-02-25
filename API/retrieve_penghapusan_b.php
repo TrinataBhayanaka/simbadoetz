@@ -3461,7 +3461,14 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                         // //////////////////pr($valueSat);
                         // //////////////////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
-                        $Aset_ID=$valueSat['Aset_ID'];
+                        $Aset_IDb=$valueSat['Aset_ID'];
+                        pr($Aset_IDb);
+                        $expoAsetID=explode(",", $Aset_IDb);
+                        $Aset_ID = array();
+                        foreach ($expoAsetID as $keyexpoAsetID => $valueexpoAsetID) {
+                            $Aset_ID[]=$valueexpoAsetID;
+                        }
+                        $Aset_ID=implode(",", $Aset_ID)
                         pr($Aset_ID);
                         $sqlSat = array(
                             'table'=>'Satker',
