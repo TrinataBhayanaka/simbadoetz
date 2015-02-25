@@ -35,11 +35,11 @@ $penghapusan_id=get_auto_increment("penghapusan");
 		// pr($_POST);
         
         $data_post=$PENGHAPUSAN->apl_userasetlistHPS("PTUSPMS");
-        $POST=$_POST;
+        // $POST=$_POST;
         // pr($POST);
         $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
         $POST['penghapusan_nama_aset']=$POST_data;
-        pr($POST);
+        // pr($POST);
         // pr($_POST);
         // exit;
 		$data = $PENGHAPUSAN->store_penetapan_penghapusan_pms($POST);
