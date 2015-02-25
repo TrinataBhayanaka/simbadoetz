@@ -29560,8 +29560,8 @@ return $hasil_html;
 			";
 		}	
 		
-		echo "query =".$query;
-		echo "<br>";
+		// echo "query =".$query;
+		// echo "<br>";
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	

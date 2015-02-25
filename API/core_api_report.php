@@ -4855,8 +4855,7 @@ class core_api_report extends DB {
 		if($Info != ''){
 			//untuk mutasi
 			if($Info == 'mutasi'){
-				$paramKib 		= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan'
-								   AND a.TglPembukuan >='$tglawalperolehan' AND a.TglPembukuan <='$tglakhirperolehan' 
+				$paramKib 		= "a.TglPembukuan >='$tglawalperolehan' AND a.TglPembukuan <='$tglakhirperolehan' 
 								   AND a.kodeSatker LIKE '$skpd_id%' AND a.Status_Validasi_Barang = 1  
 								   AND a.kondisi != 3";
 				$paramLog 		= "AND m.TglPerolehan >='$tglawalperolehan' AND m.TglPerolehan <='$tglakhirperolehan'
