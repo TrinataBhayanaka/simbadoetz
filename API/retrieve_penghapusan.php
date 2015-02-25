@@ -63,6 +63,19 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         return false;
 
     }
+    public function getNamaKelompok($kodeKelompok){
+        $sqlKlm = array(
+            'table'=>"kelompok AS k",
+            'field'=>"k.Uraian",
+            'condition' => "k.Kode= '$kodeKelompok' GROUP BY k.Kode",
+             );
+        // ////////////////////////////////////////pr($sqlSat);
+        $resKlm = $this->db->lazyQuery($sqlKlm,$debug);
+        // //pr($resSat);
+        if ($resKlm) return $resKlm;
+        return false;
+
+    }
     public function TotalNilaiPerolehan($Aset_ID){
 
 // //pr($value);
@@ -1857,7 +1870,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
            // if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
            $UserName=$_SESSION['ses_uoperatorid'];
 
-            if ($UserName) $filterkontrak .= " AND Usl.UserNm = '{$UserName}' ";
+           $kodeSatker = $_SESSION['ses_satkerkode'];
+            // if ($UserName) $filterkontrak .= " AND Usl.UserNm = '{$UserName}' ";
+
+         if ($kodeSatker) $filterkontrak .= " AND Usl.SatkerUsul LIKE '{$kodeSatker}%' ";
         }
 
 		// $sql = array(
@@ -1994,8 +2010,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
            // $kodeSatker = $_SESSION['ses_satkerkode'];;
            // if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
            $UserName=$_SESSION['ses_uoperatorid'];
+        $kodeSatker = $_SESSION['ses_satkerkode'];
+            // if ($UserName) $filterkontrak .= " AND Usl.UserNm = '{$UserName}' ";
 
-            if ($UserName) $filterkontrak .= " AND Usl.UserNm = '{$UserName}' ";
+         if ($kodeSatker) $filterkontrak .= " AND Usl.SatkerUsul LIKE '{$kodeSatker}%' ";
         }
 
        // $sql = array(
@@ -2085,8 +2103,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
            // $kodeSatker = $_SESSION['ses_satkerkode'];;
            // if ($kodeSatker) $filterkontrak .= " AND SatkerUsul = '{$kodeSatker}' ";
            $UserName=$_SESSION['ses_uoperatorid'];
+        $kodeSatker = $_SESSION['ses_satkerkode'];
+            // if ($UserName) $filterkontrak .= " AND Usl.UserNm = '{$UserName}' ";
 
-            if ($UserName) $filterkontrak .= " AND Usl.UserNm = '{$UserName}' ";
+         if ($kodeSatker) $filterkontrak .= " AND Usl.SatkerUsul LIKE '{$kodeSatker}%' ";
         }
 
         // $sql = array(
@@ -10325,6 +10345,54 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     return false;
         }
 	  function getTableKibAlias($type=1)
+        {
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+
+        $listTable = array(
+                        1=>'tanah AS t',
+                        2=>'mesin AS m',
+                        3=>'bangunan AS b',
+                        4=>'jaringan AS j',
+                        5=>'asetlain AS al',
+                        6=>'kdp AS k');
+
+        $listTableField = array(
+                        1=>'t.NoSertifikat',
+                        2=>'m.Merk',
+                        3=>'b.TglPakai',
+                        4=>'j.Konstruksi,j.NoDokumen',
+                        5=>'al.Pengarang,al.Penerbit,al.TahunTerbit,al.ISBN',
+                        6=>'k.NoSertifikat,k.TglSertifikat');
+        $listTable = array(
+                        1=>'tanah AS t',
+                        2=>'mesin AS m',
+                        3=>'bangunan AS b',
+                        4=>'jaringan AS j',
+                        5=>'asetlain AS al',
+                        6=>'kdp AS k');
+
+
+        $FieltableGeneral="{$listTableAlias[$type]}.Aset_ID,{$listTableAlias[$type]}.kodeKelompok,{$listTableAlias[$type]}.kodeSatker,{$listTableAlias[$type]}.kodeLokasi,{$listTableAlias[$type]}.noRegister,{$listTableAlias[$type]}.TglPerolehan,{$listTableAlias[$type]}.TglPembukuan,{$listTableAlias[$type]}.Status_Validasi_Barang,{$listTableAlias[$type]}.StatusTampil,{$listTableAlias[$type]}.Tahun,{$listTableAlias[$type]}.NilaiPerolehan,{$listTableAlias[$type]}.Alamat,{$listTableAlias[$type]}.Info,{$listTableAlias[$type]}.AsalUsul,{$listTableAlias[$type]}.kondisi,{$listTableAlias[$type]}.CaraPerolehan";
+        $listTableOri = array(
+                        1=>'tanah',
+                        2=>'mesin',
+                        3=>'bangunan',
+                        4=>'jaringan',
+                        5=>'asetlain',
+                        6=>'kdp');
+
+        $data['listTable'] = $listTable[$type];
+        $data['listTableAlias'] = $listTableAlias[$type];
+        $data['listTableAbjad'] = $listTableAbjad[$type];
+        $data['listTableOri'] = $listTableOri[$type];
+        $data['listTableField'] = $listTableField[$type];
+        $data['FieltableGeneral'] = $FieltableGeneral;
+
+        return $data;
+        }
+
+        function getTableKibAliasFull($type=1)
         {
         $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
