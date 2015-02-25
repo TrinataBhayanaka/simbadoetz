@@ -7742,9 +7742,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             public function store_penetapan_penghapusan_pms($data,$debug=false)
         
             {
-                //pr($data);
+                pr($data);
 
-                // exit;
+                exit;
                 // //////////////////////////////////////////pr($data['UsulanID']);
 
                 // $sql2 = array(
