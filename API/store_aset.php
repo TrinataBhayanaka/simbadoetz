@@ -2553,9 +2553,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         
         if(isset($data['kodeRuangan'])) {
-            // $ruangan = explode("_", $data['kodeRuangan']);
-            // $tblAset['kodeRuangan'] = $ruangan[1];
-            $tblAset['kodeRuangan'] = $data['kodeRuangan'];
+            $pos = strpos($data['kodeRuangan'], "_");
+            if ($pos === false) {
+                $tblAset['kodeRuangan'] = $data['kodeRuangan'];  
+            } else {
+                $ruangan = explode("_", $data['kodeRuangan']);
+                $tblAset['kodeRuangan'] = $ruangan[1];   
+            }
         }    
 
 
@@ -2565,7 +2569,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
 
             $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
-            // pr($query);exit;
+            // pr($query);
             $result=  $this->query($query) or die($this->error());
 
         
@@ -2641,10 +2645,29 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
-                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                if(isset($data['kodeKelompok'])){
+                    $newkelompok = explode(".", $data['kodeKelompok']);
+                    $oldkelompok = explode(".", $data['old_kelompok']);
+                    if($newkelompok[0] != $oldkelompok[0]){
+                        $this->logMe($data,$_GET['tbl']);
+                        $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
+                        $result=  $this->query($delsql) or die($this->error());
+                    }
+                }
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
                 exit;
             } elseif ($data['TipeAset']=="H") {
-                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                if(isset($data['kodeKelompok'])){
+                    $newkelompok = explode(".", $data['kodeKelompok']);
+                    $oldkelompok = explode(".", $data['old_kelompok']);
+                    if($newkelompok[0] != $oldkelompok[0]){
+                        $this->logMe($data,$_GET['tbl']);
+                        $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
+                        // pr($delsql);
+                        $result=  $this->query($delsql) or die($this->error());
+                    }
+                }
+                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
                 exit;
             }
         
@@ -2694,7 +2717,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     // pr($query);
                 } else {
                     $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
-                    // pr($delsql);
+                    // pr($delsql);exit;
                     $result=  $this->query($delsql) or die($this->error());
 
                         unset($tmpField);
@@ -2722,7 +2745,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     // pr($query);
             }     
             
-            // pr($query);
+            // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
             //log
@@ -2771,6 +2794,49 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         exit;    
 
+    }
+
+    public function logMe($data,$tabel){
+            //log
+              $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+              $sqlquery = mysql_query($sqlkib);
+              while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                      $kib = $dataAset;
+                  }
+              $kib['tglPerubahan'] = $data['tglPerubahan'];          
+              $kib['changeDate'] = date("Y-m-d");
+              $kib['action'] = 'reklas';
+              $kib['operator'] = $_SESSION['ses_uoperatorid'];
+              $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
+              $kib['GUID'] = $data['GUID'];
+              if($data['rubahkondisi']) {
+                $kib['Kd_Riwayat'] = 1;
+                $kib['kondisi'] = $data['old_kondisi'];
+              }
+              if($data['ubahkapitalisasi']) $kib['Kd_Riwayat'] = 2;
+              if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
+              if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
+              if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
+
+              // pr($kib);
+              
+                    unset($tmpField);
+                    unset($tmpValue);
+                    foreach ($kib as $key => $val) {
+                      $tmpField[] = $key;
+                      $tmpValue[] = "'".$val."'";
+                    }
+                     
+                    $fileldImp = implode(',', $tmpField);
+                    $dataImp = implode(',', $tmpValue);
+
+                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                    // pr($sql);exit;
+                    logFile($sql);
+                    if ($debug){
+                        pr($sql); exit;
+                    }
+                    $execquery = mysql_query($sql);
     }
 
     public function store_upd_aset($data){

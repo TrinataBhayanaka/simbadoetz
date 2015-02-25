@@ -25,11 +25,24 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 		var max = parseInt($(item).attr('max'));
 		if(parseInt($(item).val()) > max || $(item).val() == 0 )
 		{
+			$("#url_"+idnumber[1]).hide("fast");
 			$("#url_"+idnumber[1]).attr('disabled','disabled');
 			$("#url_"+idnumber[1]).attr('href','#');
+			$("#info").html('Data tidak ditemukan');
 		} else {
-			$("#url_"+idnumber[1]).removeAttr('disabled');
-			$("#url_"+idnumber[1]).attr('href','koreksi_data.php?kdkel='+others[0]+'&kdlok='+others[1]+'&reg='+$(item).val()+'&tbl='+others[2]);
+			$.post('<?=$url_rewrite?>/function/api/asetExistCheck.php', {data:others, noreg:$(item).val()}, function(data){
+				if(data == 1){
+					$("#url_"+idnumber[1]).show("fast");
+					$("#url_"+idnumber[1]).removeAttr('disabled');
+					$("#url_"+idnumber[1]).attr('href','koreksi_data.php?kdkel='+others[0]+'&kdlok='+others[1]+'&reg='+$(item).val()+'&tbl='+others[2]);
+					$("#info").html('');
+				} else {
+					$("#url_"+idnumber[1]).hide("fast");
+					$("#url_"+idnumber[1]).attr('disabled','disabled');
+					$("#url_"+idnumber[1]).attr('href','#');
+					$("#info").html('Data tidak ditemukan');
+				}
+			})
 		}	
 	}
 </script>
@@ -95,7 +108,8 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 								<input type="number" class="span1" id="max_<?=$i?>" value="<?=$value['max']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" disabled>
 							</td>
 							<td class="text-center">
-								<a target="_blank" href="koreksi_data.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&reg=<?=$value['min']?>&tbl=<?=$_POST['tipeAset']?>" id="url_<?=$i?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Koreksi</a>
+								<a href="koreksi_data.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&reg=<?=$value['min']?>&tbl=<?=$_POST['tipeAset']?>" id="url_<?=$i?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Koreksi</a>
+								<small><label id="info" class="label label-danger"></label></small>
 							</td>
 						</tr>
 				<?php

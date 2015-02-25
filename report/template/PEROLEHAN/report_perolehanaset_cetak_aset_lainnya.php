@@ -44,11 +44,20 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
-/*$hit = 1;
-$flag = '';
-$TypeRprtr = '';
+$satker = $skpd_id;
+
+	if ($tglawalperolehan !='' && $tglakhirperolehan)
+	{
+		$get_satker = $REPORT->validasi_data_satker_id($satker);
+		
+	}
+
+$hit = 1;
+$flag = 'Lain';
+$TypeRprtr = 'Lain';
 $Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan);*/	
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 $paramGol = '';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
 
@@ -96,8 +105,6 @@ exit;
 }
 else
 {
-	echo "excel";
-	exit;
 	$waktu=date("d-m-y_h:i:s");
 	$filename ="Daftar_Aset_Lainnya_$waktu.xls";
 	header('Content-type: application/ms-excel');
