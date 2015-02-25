@@ -2706,7 +2706,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
 
             if(isset($tblAset['noRegister'])) $tblKib['noRegister'] = $tblAset['noRegister']; 
-            if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $tblAset['kodeRuangan']
+            if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $tblAset['kodeRuangan'];
 
             // pr($tblKib);exit;
             // if($data['old_kelompok'] != $data['kodeKelompok']) $this->koreksiUpdAset($tblKib);
