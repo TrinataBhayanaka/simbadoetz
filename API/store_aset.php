@@ -1533,17 +1533,21 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        if($data['TipeAset'] == 'B'){
-            if($tblAset['NilaiPerolehan'] < 300000){
-                $tblAset['kodeKA'] = 0;
-            } else {
-                $tblAset['kodeKA'] = 1;
-            }
-        } elseif ($data['TipeAset'] == 'C') {
-            if($tblAset['NilaiPerolehan'] < 10000000){
-                $tblAset['kodeKA'] = 0;
-            } else {
-                $tblAset['kodeKA'] = 1;
+        if(intval($tblAset['Tahun']) < 2008){
+            $tblAset['kodeKA'] = 1;
+        }else {
+            if($data['TipeAset'] == 'B'){
+                if($tblAset['NilaiPerolehan'] < 300000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
+            } elseif ($data['TipeAset'] == 'C') {
+                if($tblAset['NilaiPerolehan'] < 10000000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
             }
         }
         $tblAset['AsalUsul'] = $data['AsalUsul'];
@@ -1681,7 +1685,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['kodeSatker'] = $data['kodeSatker'];
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
-            $tblKib['NilaiPerolehan'] = $data['Satuan'];
+            $tblKib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
             $tblKib['kondisi'] = $data['kondisi'];
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
@@ -2315,7 +2319,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        if(intval($tblAset['Tahun']) <= 2008){
+        if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
         }else {
             if($data['TipeAset'] == 'B'){

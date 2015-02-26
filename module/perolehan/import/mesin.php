@@ -86,7 +86,7 @@ $menu_id = 10;
 				            var raw = element.split(",");
 							for(var i=0;i<raw.length;i++){
 								tmp = raw[i].split("|");
-								nilai = parseInt(nilai) + parseInt(tmp[1]*tmp[2]);
+								nilai = parseInt(nilai) + parseInt(tmp[1]);
 							}
 				        });
 					} else {
