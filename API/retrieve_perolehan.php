@@ -164,7 +164,7 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['Info'] = $data->val($i,17);
 		  $xlsdata[$no]['kodeRuangan'] = $_POST['kodeRuangan'];
 		  $xlsdata[$no]['NilaiPerolehan'] = $data->val($i,15);
-
+		  $xlsdata[$no]['NilaiTotal'] = $data->val($i,16);
 		  $xlsdata[$no]['Merk'] = $data->val($i,4);
 		  $xlsdata[$no]['Model'] = $data->val($i,5);
 		  $xlsdata[$no]['Ukuran'] = $data->val($i,6);
