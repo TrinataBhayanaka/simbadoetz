@@ -33,7 +33,7 @@ $penghapusan_id=get_auto_increment("penghapusan");
             // $penghapusan_id
     // );
         $data_post=$PENGHAPUSAN->apl_userasetlistHPS("PTUSPMD");
-        // $POST=$_POST;
+        $POST=$_POST;
         // pr($POST);
         $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
         $POST['penghapusan_nama_aset']=$POST_data;
