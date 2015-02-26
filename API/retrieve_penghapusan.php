@@ -4165,7 +4165,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // //pr($Aset_ID);
             $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Kelompok AS k',
-                    'field'=>"a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.TipeAset,a.kondisi,a.AsalUsul,b.StatusKonfirmasi,b.StatusPenetapan,,b.Usulan_ID, k.Kode,k.Uraian",
+                    'field'=>"a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.TipeAset,a.kondisi,a.AsalUsul,b.StatusKonfirmasi,b.StatusPenetapan,b.Usulan_ID, k.Kode,k.Uraian",
                     'condition' => "b.Usulan_ID='$value' AND b.Aset_ID IN ({$Aset_ID}) {$filterkontrak} GROUP BY b.Aset_ID",
                     'joinmethod' => ' LEFT JOIN ',
                     'join' => 'b.Aset_ID=a.Aset_ID , a.kodeKelompok=k.Kode' 
