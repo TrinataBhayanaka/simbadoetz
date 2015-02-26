@@ -248,8 +248,8 @@ foreach ($data as $key => $value)
                              $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
                              $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                              $row[]=$TglPerolehan;
-                             $row[]=$NilaiPerolehanAwal;
-                             $row[]=$NilaiPerolehanbaru;
+                             $row[]=number_format($NilaiPerolehanAwal);
+                             $row[]=number_format($NilaiPerolehanbaru);
                              $row[]="{$StatusKonfirmasi}";
                              $row[]="{$SelectKIB[0][Merk]}-{$SelectKIB[0][Model]}";
                              
