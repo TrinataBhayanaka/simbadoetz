@@ -22,20 +22,25 @@ $id=$_SESSION['user_id'];//Nanti diganti
  * you want to insert a non-database field (for example a counter or static image)
  */
 
-
-$aColumns = array('temp_AsetLain_ID','temp_AsetLain_ID','kodeKelompok','uraian','kodeLokasi','Jumlah','NilaiPerolehan','temp_AsetLain_ID');
+$dataParam['jenisaset'][0]=$_GET['jenisaset'];
+if($_GET['jenisaset']=="2")
+     $merk="m.Merk";
+else
+     $merk="ast.Aset_ID";
+$aColumns = array('a.Aset_ID','a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kodeKelompok','a.AsalUsul','a.AsalUsul');
 
 /* Indexed column (used for fast and accurate table cardinality) */
-$sIndexColumn = "temp_AsetLain_ID";
+$sIndexColumn = "Aset_ID";
 
 /* DB table to use */
-$sTable = "tmp_asetlain";
+$sTable = "aset";
 $dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
+$dataParam['kodeKelompok']=$_GET['kodeKelompok'];
+$dataParam['id']=$_GET['id'];
 $dataParam['page']=$_GET['page'];
 
-$RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
 ////pr($data);
@@ -124,8 +129,8 @@ $dataParam['limit']="$sLimit";
 //pr($dataParam);
 // list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
 
-$dataSESSION = $RETRIEVE_PEROLEHAN->get_tmpData($dataParam,'tmp_asetlain'); 
-//pr($dataSESSION);
+$dataSESSION = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_pms($dataParam); 
+// pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
@@ -162,26 +167,18 @@ $output = array(
     "aaData" => array()
 );
 
-/////pr($output);
+// pr($output);
 //exit;
 
-$data_post=$PENGHAPUSAN->apl_userasetlistHPS("XLSIMP");
+$data_post=$PENGHAPUSAN->apl_userasetlistHPS("DELUSPMS");
 
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
-
-if($POST){
-  foreach ($POST as $key => $value) {
-    $tmp = explode("|", $value);
-    $newlist[$key] = $tmp[0];
-  }
-} else {
-  $newlist = array();
-}
-    
+$POST['penghapusanfilter']=$POST;
+    if($POST){
       // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
         // //////pr($valueSESSION['Aset_ID']);
-        if(!in_array($valueSESSION['temp_AsetLain_ID'], $newlist)){
+        if(!in_array($valueSESSION['Aset_ID'], $POST)){
           // echo "stringnot";
           $data[]=$valueSESSION;
           $data[$keySESSION]['checked']="";
@@ -192,31 +189,66 @@ if($POST){
         }
       }
     
-    
-    // pr($data);
+    }
 $no=$_GET['iDisplayStart']+1;
   if (!empty($data))
 					{
 foreach ($data as $key => $value)
 						{
-							
-                                          
-               $row = array();
-               
-               $checkbox="<input {$value['style']} type=\"{$value['other']}\" {$value['checked']} id=\"check_{$no}\" class=\"icheck-input\" name=\"aset[]\" 
-                      value=\"{$value['temp_AsetLain_ID']}|{$value['NilaiTotal']}\" onchange=\"return AreAnyCheckboxesChecked();\">";
-               $row[]=$no;
-               $row[]=$checkbox;
-               $row[]=$value['kodeKelompok'] ;
-               $row[]=$value['uraian'];
-               $row[]=$value['kodeLokasi'];
-               $row[]=$value['Jumlah'];
-               $row[]=number_format($value['NilaiPerolehan']);
-               $row[]=number_format($value['NilaiTotal']);
-               
-               $output['aaData'][] = $row;
-                $no++;
-            }
+							// //pr($get_data_filter);
+              $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[kodeSatker]);
+
+
+              $SelectKIB=$PENGHAPUSAN->SelectKIB($value[Aset_ID],$value[TipeAset]);
+              // pr($SelectKIB);
+							if($value[kondisi]==2){
+								$kondisi="Rusak Ringan";
+							}elseif($value[kondisi]==3){
+								$kondisi="Rusak Berat";
+							}elseif($value[kondisi]==1){
+								$kondisi="Baik";
+							}
+							// //pr($value[TglPerolehan]);
+							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
+							// //pr($TglPerolehanTmp);
+							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+       
+                if($value['StatusKonfirmasi']==0){
+                  $label="warning";
+                  $text="proses";
+                }elseif($value['StatusKonfirmasi']==1){
+                  $label="success";
+                  $text="Diterima";
+                }elseif($value['StatusKonfirmasi']==2){
+                  $label="danger";
+                  $text="Ditolak";
+                }
+              
+              $StatusKonfirmasi="<span class=\"label label-{$label}\" >{$text}</span>";    
+              if($value['StatusPenetapan']==0){              
+                 $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusan_nama_aset[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
+                }else{
+                  $checkbox="&nbsp;";
+                }
+         
+                             $row = array();
+                            
+
+                             $row[]=$no;
+                             $row[]=$checkbox;
+                             $row[]=$value['noRegister'] ;
+                             $row[]=$value['noKontrak'];
+                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
+                             $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
+                             $row[]=$TglPerolehan;
+                             $row[]=number_format($value[NilaiPerolehan]);
+                             $row[]=$kondisi. ' - ' .$value[AsalUsul];
+                             $row[]="{$StatusKonfirmasi}";
+                             $row[]="{$SelectKIB[0][Merk]}-{$SelectKIB[0][Model]}";
+                             
+                             $output['aaData'][] = $row;
+                              $no++;
+                    }
               }
 echo json_encode($output);
 

@@ -269,7 +269,10 @@ foreach ($data as $key => $value)
                 
                
                 }  
-
+                
+              
+              $Asetditerima=$PENGHAPUSAN->totalDataPenghapusanAset($value['Penghapusan_ID']);
+              $TotalAset=count($Asetditerima);
               
               
                 
@@ -281,6 +284,7 @@ foreach ($data as $key => $value)
                              $row[]=$value['NoSKHapus'] ;
                              $row[]=$SatkerUsul;
                              $row[]=$jmlUsul;
+                             $row[]=$TotalAset;
                              $row[]=$change2;
                              // $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
                              $row[]=$value[AlasanHapus];

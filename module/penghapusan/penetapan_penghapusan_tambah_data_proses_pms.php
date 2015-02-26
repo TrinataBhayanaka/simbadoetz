@@ -41,8 +41,8 @@ $penghapusan_id=get_auto_increment("penghapusan");
         $POST['penghapusan_nama_aset']=$POST_data;
         // pr($POST);
         // pr($_POST);
-  //       exit;
-		$data = $PENGHAPUSAN->store_penetapan_penghapusan_pms($_POST);
+        // exit;
+		$data = $PENGHAPUSAN->store_penetapan_penghapusan_pms($POST);
 
         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWPTUSPMS");
 

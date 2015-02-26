@@ -192,6 +192,8 @@ $menu_id = 10;
 				<thead>
 					<?php
 							if($_SESSION['ses_uaksesadmin']==1){
+
+								if($data['dataRow'][0]['Status']=0){
 						?>
 					<tr>
 						<td colspan="10" align="Left">
@@ -201,6 +203,7 @@ $menu_id = 10;
 						</td>
 					</tr>
 					<?php
+							}
 						}
 					?>
 					<tr>

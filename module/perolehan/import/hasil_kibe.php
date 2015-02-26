@@ -46,6 +46,7 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		$data['Kuantitas'] = $datatmp['Jumlah'];
 		$data['Satuan'] = $datatmp['NilaiPerolehan'];
 		$data['NilaiPerolehan'] = $datatmp['NilaiPerolehan'];
+		$data['NilaiTotal'] = $datatmp['NilaiTotal'];
 		$data['Info'] = $datatmp['Info'];
 		$data['id'] = $_GET['id'];
 		$data['noKontrak'] = $datatmp['noKontrak'];

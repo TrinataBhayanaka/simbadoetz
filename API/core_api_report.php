@@ -3951,7 +3951,7 @@ class core_api_report extends DB {
 						}
 						else{
 							$queryok="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian 
-										FROM aset as a, kelompok as k 
+										FROM aset_lain_3 as a, kelompok as k 
 										WHERE a.kodeKelompok = k.Kode and a.kodeSatker LIKE '$Satker_ID' 
 										AND a.kondisi = 3 AND a.kodeKelompok like '$data%' and a.TglPerolehan >= '$tglAwalDefault' and a.TglPerolehan <= '$tglAkhirDefault' and a.TglPembukuan >= '$tglAwalDefault' and a.TglPembukuan <= '$tglAkhirDefault' and a.	Status_Validasi_Barang = 1 and a.kodeLokasi like '12%' 
 										$KodeKa_lain
@@ -4088,7 +4088,7 @@ class core_api_report extends DB {
 									//	Status_Validasi_Barang = 1
 								}else{
 									//kondisi tidak diketahui 
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM aset WHERE kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and kondisi ='3' and Status_Validasi_Barang is null";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM aset_lain_3 WHERE kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and kondisi ='3' and Status_Validasi_Barang is null";
 								}
 								
 							}
@@ -4855,8 +4855,7 @@ class core_api_report extends DB {
 		if($Info != ''){
 			//untuk mutasi
 			if($Info == 'mutasi'){
-				$paramKib 		= "a.TglPerolehan >='$tglawalperolehan' AND a.TglPerolehan <='$tglakhirperolehan'
-								   AND a.TglPembukuan >='$tglawalperolehan' AND a.TglPembukuan <='$tglakhirperolehan' 
+				$paramKib 		= "a.TglPembukuan >='$tglawalperolehan' AND a.TglPembukuan <='$tglakhirperolehan' 
 								   AND a.kodeSatker LIKE '$skpd_id%' AND a.Status_Validasi_Barang = 1  
 								   AND a.kondisi != 3";
 				$paramLog 		= "AND m.TglPerolehan >='$tglawalperolehan' AND m.TglPerolehan <='$tglakhirperolehan'
@@ -5489,6 +5488,67 @@ class core_api_report extends DB {
 								inner join kdp t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
 								where $paramLog";
 				$queryAlter = "ALTER table kdp_ori add primary key(KDP_ID)";						
+			}elseif($flag=="Lain"){
+				$query_asetlain_3="create temporary table aset_lain_3 as
+						  SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						  FROM aset as a, kelompok as k 
+						  WHERE a.kodeKelompok = k.Kode  AND a.kondisi = 3 and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
+						  and $paramKib
+						  ; 
+						  ";
+			      
+				$query_alter_asetlain_3="alter table aset_lain_3 add primary key(Aset_ID);";
+				$query_asetlain_3_tanah="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_tanah as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_mesin="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_mesin as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_bangunan="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_bangunan as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_jaringan="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_jaringan as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_asettetaplain="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_asetlain as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_kdp="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_kdp as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+
+				$query_mutasi_asetlain_3="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+							  SELECT a.kodeKA,a.kodeKelompok,a.SatkerAwal,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+							  FROM view_mutasi_aset_full as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+							  WHERE a.Aset_ID is not null And a.Aset_ID!=0
+							  and $paramMutasi;";
+			        $query_hapus_asetlain_3="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan  )
+							SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,1,a.TglPerolehan,a.TglPembukuan
+							FROM view_hapus_aset as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+							inner join aset ast on ast.Aset_ID= a.Aset_ID
+							WHERE a.Aset_ID is not null And a.Aset_ID!=0 
+							and $paramPnghpsn
+
+							;";
+			
 			}
 			
 			
@@ -5511,7 +5571,12 @@ class core_api_report extends DB {
 					$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn,
 									$queryKib_Rplctn,$queryAlter_Rplctn,$queryLog_Rplctn,$queryMutasi_Rplctn,$queryPnghpsn_Rplctn);
 				}
-			}else{
+			}
+			elseif($TypeRprtr == 'Lain'){
+				$AllTableTemp = array($query_asetlain_3,$query_alter_asetlain_3,$query_asetlain_3_tanah,$query_asetlain_3_mesin,$query_asetlain_3_bangunan,
+						      $query_asetlain_3_jaringan,$query_asetlain_3_asettetaplain,$query_asetlain_3_kdp,$query_mutasi_asetlain_3,$query_hapus_asetlain_3);
+			}
+			else{
 				$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
 			}
 			
@@ -6949,6 +7014,67 @@ class core_api_report extends DB {
 								where $paramLog";
 				$queryAlterF = "ALTER table kdp_ori add primary key(KDP_ID)";
 				
+
+$query_asetlain_3="create temporary table aset_lain_3 as
+						  SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						  FROM aset as a, kelompok as k 
+						  WHERE a.kodeKelompok = k.Kode  AND a.kondisi = 3 and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
+						  and $paramKib
+						  ; 
+						  ";
+			      
+				$query_alter_asetlain_3="alter table aset_lain_3 add primary key(Aset_ID);";
+				$query_asetlain_3_tanah="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_tanah as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_mesin="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_mesin as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_bangunan="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_bangunan as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_jaringan="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_jaringan as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_asettetaplain="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_asetlain as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+				$query_asetlain_3_kdp="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+						      FROM log_kdp as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+						      inner join aset ast on ast.Aset_ID= a.Aset_ID
+						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
+						      and (a.Kd_Riwayat=1 or a.Kd_Riwayat=18 or a.Kd_Riwayat=25) and $paramLog;";
+
+				$query_mutasi_asetlain_3="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan )
+							  SELECT a.kodeKA,a.kodeKelompok,a.SatkerAwal,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan
+							  FROM view_mutasi_aset_full as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+							  WHERE a.Aset_ID is not null And a.Aset_ID!=0
+							  and $paramMutasi;";
+			        $query_hapus_asetlain_3="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan  )
+							SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,1,a.TglPerolehan,a.TglPembukuan
+							FROM view_hapus_aset as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
+							inner join aset ast on ast.Aset_ID= a.Aset_ID
+							WHERE a.Aset_ID is not null And a.Aset_ID!=0 
+							and $paramPnghpsn
+
+							;";
+
 					
 			}
 			if($TypeRprtr == 'kir'){
@@ -6995,7 +7121,9 @@ class core_api_report extends DB {
 									$queryKibC_Rplctn,$queryAlterC_Rplctn,$queryLogC_Rplctn,$queryMutasiC_Rplctn,$queryPnghpsnC_Rplctn,
 									$queryKibD,$queryAlterD,$queryLogD,$queryMutasiD,$queryPnghpsnD,
 									$queryKibE,$queryAlterE,$queryLogE,$queryMutasiE,$queryPnghpsnE,
-									$queryKibF,$queryAlterF,$queryLogF,$queryMutasiF,$queryPnghpsnF);			
+									$queryKibF,$queryAlterF,$queryLogF,$queryMutasiF,$queryPnghpsnF,
+						      $query_asetlain_3,$query_alter_asetlain_3,$query_asetlain_3_tanah,$query_asetlain_3_mesin,$query_asetlain_3_bangunan,
+						      $query_asetlain_3_jaringan,$query_asetlain_3_asettetaplain,$query_asetlain_3_kdp,$query_mutasi_asetlain_3,$query_hapus_asetlain_3);						
 			}
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)

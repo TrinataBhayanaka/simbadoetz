@@ -35,7 +35,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$('#hrgmask,#total').autoNumeric('init');
 			$("select").select2({});
 			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#tglPerubahan" ).mask('9999-99-99');
-			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan" ).datepicker({ format: 'yyyy-mm-dd' });
+			$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker,#tglPerubahan,#dp-ex-3" ).datepicker({ format: 'yyyy-mm-dd',autoclose:true,clearBtn:true,forceParse:true });
 			setTimeout(function() {
 			 	initKondisi();
 			}, 1000);
@@ -526,8 +526,13 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 				$(".kdp").show('');
 				$("#id").attr('name','KDP_ID');
 				$("#id").val("<?=$dataArr['kib']['KDP_ID']?>");
-			} else {
+			} else if(gol[0] == '07') {
 				$("#TipeAset").val('G');
+				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
+				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.jaringan li > select,.kdp li > select").attr('disabled','disabled');
+			} else if(gol[0] == '08') {
+				$("#TipeAset").val('H');
 				$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
 				$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
 				$(".tanah li > select,.mesin li > select,.bangunan li > select,.asetlain li > select,.jaringan li > select,.kdp li > select").attr('disabled','disabled');

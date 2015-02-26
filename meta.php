@@ -35,9 +35,17 @@ if ($u_sess) $isLogin = true;
 		 <script>
 			$(function() {
 			$( "#datepicker" ).datepicker({ 
-				format: 'yyyy-mm-dd' 
+				format: 'yyyy-mm-dd',
+				autoclose:true,
+				clearBtn:true,
+				forceParse:true 
 			});
-			$( "#datepicker-other" ).datepicker({ format: 'yyyy-mm-dd' });
+			$( "#datepicker-other" ).datepicker({ 
+				format: 'yyyy-mm-dd',
+				autoclose:true,
+				clearBtn:true,
+				forceParse:true
+			});
 			initTableCheckable ();
 			});
 		</script>
@@ -208,7 +216,8 @@ if ($u_sess) $isLogin = true;
 	
 	
 	/* check user idle time */
-	var lifetime = "1200";
+	// var lifetime = "1200";
+	var lifetime = "9999999999";
 	var isLogin = "<?php echo $isLogin;?>";	
 	var idleMax = parseInt(lifetime,10);
 	var idleTime = 0;
