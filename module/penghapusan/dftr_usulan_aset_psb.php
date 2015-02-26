@@ -23,6 +23,11 @@ $menu_id = 10;
 	// ////pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter_psb($_POST);
 	// ////pr($data);
+
+		$POST['page'] = intval($_GET['pid']);
+	// pr($POST);
+	    $par_data_table="bup_pp_sp_tglusul={$_POST['bup_pp_sp_tglusul']}&bup_pp_sp_nousulan={$_POST['bup_pp_sp_nousulan']}&kodeSatker={$_POST['kodeSatker']}&page={$POST['page']}";
+
 	if($_POST['kodeSatker']){
 		$_SESSION['kdSatkerFilterPMDp']=$_POST['kodeSatker'];
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
@@ -51,6 +56,34 @@ $menu_id = 10;
 			}}, 100);
 		}
 		</script>
+
+		<script>
+    $(document).ready(function() {
+          $('#usulan_aset_psb_table').dataTable(
+                   {
+                    "aoColumnDefs": [
+                         { "aTargets": [2] }
+                    ],
+                    "aoColumns":[
+                         {"bSortable": false},
+                         {"bSortable": false,"sClass": "checkbox-column" },
+                         {"bSortable": true},
+                         {"bSortable": false},
+                         // {"bSortable": false},
+                         {"bSortable": false},
+                         {"bSortable": false},
+                         {"bSortable": false},
+                         // {"bSortable": false},
+                         {"bSortable": false}],
+                    "sPaginationType": "full_numbers",
+
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_usulan_aset_psb.php?<?php echo $par_data_table?>"
+               }
+                  );
+      });
+    </script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -93,7 +126,7 @@ $menu_id = 10;
 			<form name="myform" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_penetapan_usulan_psb.php">
 			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="penghapusan8">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="usulan_aset_psb_table">
 				<thead>
 					<tr>
 						
@@ -116,52 +149,9 @@ $menu_id = 10;
 					</tr>
 				</thead>
 				<tbody>		
-							 
-				 <?php
-                                        
-					// //////pr($dataArr);
-					$no=1;	
-					// //////pr($data);
-					if($data){
-					foreach($data as $key => $hsl_data){
-						
-						if($dataArr!="")
-							{
-								(in_array($hsl_data['Usulan_ID'], $dataArr))   ? $disable = "return false" : $disable = "return true";
-							}
-
-					$jmlh=explode(",", $hsl_data[Aset_ID]);
-					$jumlahAset=count($jmlh);
-				?>
-						  
-					<tr class="gradeA">
-						<td><?php echo "$no";?></td>
-						<td  class="checkbox-column">
-						
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penetapanpenghapusan[]" value="<?php echo $hsl_data[Usulan_ID];?>" 
-							
-						</td>
-						<td><?php echo $hsl_data['NoUsulan'];?></td>
-						<td>
-							<?php
-							if($hsl_data['SatkerUsul']){ echo "[".$hsl_data['SatkerUsul']."]";}
-							?>
-							<br/>
-							<?php echo $hsl_data['NamaSatkerUsul'];?>
-						</td>
-						<td>
-							<?php echo $jumlahAset;?>
-						</td>
-						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
-						</td>
-						<td><?=number_format($hsl_data['TotalNilaiPerolehan'])?>
-						</td>
-						<td>
-							<?=$hsl_data['KetUsulan']?>
-						</td>
-					</tr>
-					
-				     <?php $no++; } }?>
+					 <tr>
+                        <td colspan="8">Data Tidak di temukkan</td>
+                     </tr>
 				</tbody>
 				<tfoot>
 					<tr>

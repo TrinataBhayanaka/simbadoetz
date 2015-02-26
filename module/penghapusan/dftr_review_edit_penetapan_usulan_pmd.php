@@ -29,10 +29,15 @@ $menu_id = 10;
 	// $data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($_POST);
 	$idPenetapan=$_GET['id'];
 	////pr($idPenetapan);
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_pmd($_GET);
+	// $data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_pmd($_GET);
+	$data = $PENGHAPUSAN->DataPenetapan($idPenetapan);
 	
 	// pr($_GET);
 	// pr($data);
+
+		$POST['page'] = intval($_GET['pid']);
+	// pr($POST);
+	    $par_data_table="id={$_GET['id']}&page={$POST['page']}";
 		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
@@ -43,7 +48,7 @@ $menu_id = 10;
 	<script>
         $(function()
         {
-       		 $('#tanggal1').datepicker($.datepicker.regional['id']);
+       		 $('#tanggal1').datepicker();
 
         }
 		);
@@ -91,6 +96,35 @@ $menu_id = 10;
 			}}, 100);
 		}
 		</script>
+
+		<script>
+    $(document).ready(function() {
+          $('#rvw_penetapan_usulan_pmd_table').dataTable(
+                   {
+                    "aoColumnDefs": [
+                         { "aTargets": [2] }
+                    ],
+                    "aoColumns":[
+                         {"bSortable": false},
+                         // {"bSortable": false,"sClass": "checkbox-column" },
+                         {"bSortable": true},
+                         {"bSortable": false},
+                         {"bSortable": false},
+                         {"bSortable": true},
+                         {"bSortable": false},
+                         {"bSortable": true},
+                         {"bSortable": false},
+                         // {"bSortable": false},
+                         {"bSortable": false}],
+                    "sPaginationType": "full_numbers",
+
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_review_edit_penetapan_usulan_pmd.php?<?php echo $par_data_table?>"
+               }
+                  );
+      });
+    </script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -139,12 +173,12 @@ $menu_id = 10;
 						<ul>
 							<li>
 								<span  class="labelInfo">No SK Penghapusan</span>
-								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?=$data['dataRow'][0]['NoSKHapus']?>" <?php echo $disabledForm;?> required>
+								<input type="text" id="idnoskhapus" name="bup_pp_noskpenghapusan" value="<?=$data[0]['NoSKHapus']?>" <?php echo $disabledForm;?> required>
 						
 							</li>
 							<li>
 								<span class="labelInfo">Keterangan Penghapusan</span>
-								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> required><?=$data['dataRow'][0]['AlasanHapus']?></textarea>
+								<textarea  id="idinfohapus" name="bup_pp_get_keterangan" <?php echo $disabledForm;?> required><?=$data[0]['AlasanHapus']?></textarea>
 							</li>
 						</ul>
 							
@@ -165,7 +199,7 @@ $menu_id = 10;
 
 						?>
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
-						<input name="bup_pp_tanggal" type="text" id="tanggal1" value="<?=$TglSKHapus?>" <?php echo $disabledForm;?> required/>
+						<input name="bup_pp_tanggal" type="text" id="tanggal1" value="<?=$data[0]['TglHapus']?>" <?php echo $disabledForm;?> required/>
 					</li>
 					<?php
 							if($_SESSION['ses_uaksesadmin']==1){
@@ -188,7 +222,7 @@ $menu_id = 10;
 		
 			<div id="demo">
 			
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="rvw_penetapan_usulan_pmd_table">
 				<thead>
 					<?php
 							if($_SESSION['ses_uaksesadmin']==1){
@@ -216,134 +250,17 @@ $menu_id = 10;
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
-						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
+						<th>Merk / Type</th>
 					</tr>
 				</thead>
 				<tbody>		
-				<?php
-				if (!empty($data['dataRow']))
-				{
-			   
-					$page = @$_GET['pid'];
-					if ($page > 1){
-						$no = intval($page - 1 .'01');
-					}else{
-						$no = 1;
-					}
-					$no = 1;
-					foreach ($data['dataArr'] as $key => $nilai)
-					{
-						// ////pr($valueUsulan);
-						?>
-						<!-- <input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/> -->
-					<?php
-					
-					// $TglPerolehanTmp=explode("-", $valueUsulan[TglPerolehan]);
-					// // ////pr($TglPerolehanTmp);
-					// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-
-					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_pmd($valueUsulan['Usulan_ID']);
-									// ////pr($dataUsulanAset);
-									// ////pr($_SESSION);
-									// StatusKonfirmasi
-									
-									// foreach ($dataUsulanAset as $keys => $nilai)
-									// {
-										if ($nilai[Aset_ID] !='')
-										{
-										if ($nilai->AsetOpr == 0)
-										$select="selected='selected'";
-										if ($nilai->AsetOpr ==1)
-										$select2="selected='selected'";
-
-										if($nilai->SumberAset =='sp2d')
-										$pilih="selected='selected'";
-										if($nilai->SumberAset =='hibah')
-										$pilih2="selected='selected'";
-
-										if($nilai[StatusKonfirmasi]==1){
-											$textLabel="Diterima";
-											$labelColor="label label-success";
-										}elseif($nilai[StatusKonfirmasi]==2){
-											$textLabel="Ditolak";
-											$labelColor="label label-danger";
-										}else{
-											$textLabel="Ditunda";
-											$labelColor="label label-warning";
-											$disabled="
-										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
-										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
-										}
-										if($nilai[kondisi]==2){
-											$kondisi="Rusak Ringan";
-										}elseif($nilai[kondisi]==3){
-											$kondisi="Rusak Berat";
-										}elseif($nilai[kondisi]==1){
-											$kondisi="Baik";
-										}
-										// ////pr($value[TglPerolehan]);
-										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-										// //pr($TglPerolehanTmp);
-										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-
-					?>
-						
-					<tr class="gradeA">
-						<td><?php echo $no?></td>
-						<?php
-							if($_SESSION['ses_uaksesadmin']==1){
-						?>
-						<!-- <td class="checkbox-column">
-							<input type="hidden" name="UsulanID[]" value="<?php echo $nilai['Usulan_ID'];?>" />
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="penghapusan_nama_aset[]" value="<?php echo $nilai[NilaiPerolehan];?>" >
-							
-						</td> -->
-						<?php } ?>
-						<td>
-							<?php echo $nilai[noRegister]?>
-						</td>
-						<td>
-							<?php echo $nilai[noKontrak]?>
-						</td>
-						<td>
-							 [<?php echo $nilai[kodeKelompok]?>]<br/> 
-							<?php echo $nilai[Uraian]?>
-						</td>
-						<td>
-							<?php echo $nilai[Merk]?> <?php if ($nilai[Model]) echo $nilai[Model];?>
-						</td>
-						<td>
-							<?php echo '['.$nilai[kodeSatker].'] '?><br/>
-							<?php echo $nilai[NamaSatker];?>
-						</td>
-						<td>
-							<?php echo $TglPerolehan;?>
-						</td>
-						<td>
-							<span id="NiLaiP<?=$no?>"><?php echo number_format($nilai[NilaiPerolehan]);?></span>
-						</td>
-						<td>
-							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
-						</td>
-							
-					</tr>
-					
-				   <?php 
-				   				}
-							$no++;
-						// }
-							
-						}
-					}
-					else
-					{
-						$disabled = 'disabled';
-					}
-					?>
+					 <tr>
+                        <td colspan="9">Data Tidak di temukkan</td>
+                     </tr>
 				</tbody>
 				<tfoot>
 					<tr>

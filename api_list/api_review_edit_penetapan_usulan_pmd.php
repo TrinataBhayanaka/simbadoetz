@@ -26,17 +26,19 @@ $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
-     $merk="";
-$aColumns = array('Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Usl.SatkerUsul','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan','Usl.SatkerUsul');
+     $merk="ast.Aset_ID";
+$aColumns = array('a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kodeKelompok','a.AsalUsul');
 
 /* Indexed column (used for fast and accurate table cardinality) */
-$sIndexColumn = "Usulan_ID";
+$sIndexColumn = "Aset_ID";
 
 /* DB table to use */
-$sTable = "usulan";
-$dataParam['bup_pp_sp_nousulan']=$_GET['bup_pp_sp_nousulan'];
-// $dataParam['jenisaset'][0]=$_GET['jenisaset'];
+$sTable = "aset";
+$dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
+$dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
+$dataParam['kodeKelompok']=$_GET['kodeKelompok'];
+$dataParam['id']=$_GET['id'];
 $dataParam['page']=$_GET['page'];
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
@@ -53,7 +55,6 @@ if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
 /*
  * Ordering
  */
-
 $sOrder = "";
 if (isset($_GET['iSortCol_0'])) {
      $sOrder = "ORDER BY  ";
@@ -67,7 +68,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY Usl.Usulan_ID desc";
+          $sOrder = "";
      }
 }
 
@@ -125,11 +126,11 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-// pr($dataParam);
-// list($data,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam);	
+//pr($dataParam);
+// list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
 
-$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter_pmd($dataParam); 
-//pr($dataSESSION);
+$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_edit_data_pmd($dataParam); 
+// pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
@@ -141,7 +142,7 @@ $rResultFilterTotal = $DBVAR->query($sQuery);
 $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
 
-// echo $iFilteredTotal ;
+//echo $iFilteredTotal ;
 
 /* Total data set length */
 $sQuery = "
@@ -166,10 +167,10 @@ $output = array(
     "aaData" => array()
 );
 
-/////pr($output);
+// pr($output);
 //exit;
 
-// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
+// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("DELUSPMD");
 
 // $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 // $POST['penghapusanfilter']=$POST;
@@ -177,7 +178,7 @@ $output = array(
 //       // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 //       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
 //         // //////pr($valueSESSION['Aset_ID']);
-//         if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
+//         if(!in_array($valueSESSION['Aset_ID'], $POST)){
 //           // echo "stringnot";
 //           $data[]=$valueSESSION;
 //           $data[$keySESSION]['checked']="";
@@ -195,83 +196,55 @@ $no=$_GET['iDisplayStart']+1;
 foreach ($data as $key => $value)
 						{
 							// //pr($get_data_filter);
-							// if($value[kondisi]==2){
-							// 	$kondisi="Rusak Ringan";
-							// }elseif($value[kondisi]==3){
-							// 	$kondisi="Rusak Berat";
-							// }elseif($value[kondisi]==1){
-							// 	$kondisi="Baik";
-							// }
+              $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[kodeSatker]);
 
-              $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[SatkerUsul]);
-              $totalNilaiPerolehan=$PENGHAPUSAN->TotalNilaiPerolehan($value[Aset_ID]); 
-              // pr($totalNilaiPerolehan);
-              $jmlh=explode(",", $value[Aset_ID]);
-              $jumlahAset=0;
-              foreach ($jmlh as $keyJMlaset => $valuekeyJMlaset) {
-                if($valuekeyJMlaset){
-                  $jumlahAset=$jumlahAset+1;
-                }
-              }
-              // $jumlahAset=count($jmlh);
-              $change=$value[TglUpdate]; 
-              $change2=  format_tanggal_db3($change); 
-              // echo "$change2";
-            
-              if($value['SatkerUsul']){ 
-                $SatkerUsul="[".$value['SatkerUsul']."] ".$NamaSatker[0]['NamaSatker'];
-               // echo ;
-              }else{
-                $SatkerUsul=$NamaSatker[0]['NamaSatker'];
-              }
 
-              if($value['StatusPenetapan']==0){
-                  $label="warning";
-                  $text="belum diproses";
-                }elseif($value['StatusPenetapan']==1){
-                  $label="info";
-                  $text="sudah ditetapkan";
-                }
+              $SelectKIB=$PENGHAPUSAN->SelectKIB($value[Aset_ID],$value[TipeAset]);
+              // pr($SelectKIB);
+							if($value[kondisi]==2){
+								$kondisi="Rusak Ringan";
+							}elseif($value[kondisi]==3){
+								$kondisi="Rusak Berat";
+							}elseif($value[kondisi]==1){
+								$kondisi="Baik";
+							}
 							// //pr($value[TglPerolehan]);
-							// $TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-							// // //pr($TglPerolehanTmp);
-							// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-              if($value['StatusPenetapan']==0){
+							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
+							// //pr($TglPerolehanTmp);
+							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+       
+                if($value['StatusKonfirmasi']==0){
+                  $label="warning";
+                  $text="proses";
+                }elseif($value['StatusKonfirmasi']==1){
+                  $label="success";
+                  $text="Diterima";
+                }elseif($value['StatusKonfirmasi']==2){
+                  $label="danger";
+                  $text="Ditolak";
+                }
               
-                  
-                      $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/penghapusan_usulan_daftar_proses_hapus_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
-                      <a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
-
-                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp";
-                  
-                 
-                    
-                    
-                }elseif($value['StatusPenetapan']==1){
-                 
-                   $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
-                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp";
-                
-               
-                }  
-                
-                $NoUsulan=explode("/", $value['NoUsulan']);
-
-                $hasilNoUsulan=implode("/ ", $NoUsulan);
-                
+              $StatusKonfirmasi="<span class=\"label label-{$label}\" >{$text}</span>";    
+              if($value['StatusPenetapan']==0){              
+                 $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusan_nama_aset[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
+                }else{
+                  $checkbox="&nbsp;";
+                }
+         
                              $row = array();
-                             
-                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penetapanpenghapusan[]\" value=\"{$value['Usulan_ID']}\" {$value['checked']}>";
+                            
+
                              $row[]=$no;
-                             $row[]=$checkbox;
-                             $row[]=$hasilNoUsulan ;
-                             $row[]=$SatkerUsul;
-                             $row[]=$jumlahAset;
-                             $row[]=$change2;
-                             $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
-                             $row[]=$value[KetUsulan];
-                             // $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
-                             // $row[]=$tindakan;
+                             // $row[]=$checkbox;
+                             $row[]=$value['noRegister'] ;
+                             $row[]=$value['noKontrak'];
+                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
+                             $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
+                             $row[]=$TglPerolehan;
+                             $row[]=number_format($value[NilaiPerolehan]);
+                             $row[]=$kondisi. ' - ' .$value[AsalUsul];
+                             // $row[]="{$StatusKonfirmasi}";
+                             $row[]="{$SelectKIB[0][Merk]}-{$SelectKIB[0][Model]}";
                              
                              $output['aaData'][] = $row;
                               $no++;

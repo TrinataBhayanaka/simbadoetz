@@ -268,10 +268,11 @@ foreach ($data as $key => $value)
                 }  
 
               }
-
+              $NilaiASet=$PENGHAPUSAN->totalNilaiPenghapusanAset($value['Penghapusan_ID']);
+              // pr($NilaiASet);
               
-              
-                
+              $Asetditerima=$PENGHAPUSAN->totalDataPenghapusanAset($value['Penghapusan_ID']);
+              $TotalAset=count($Asetditerima);
                              $row = array();
                              
                              // $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
@@ -280,7 +281,9 @@ foreach ($data as $key => $value)
                              $row[]=$value['NoSKHapus'] ;
                              $row[]=$SatkerUsul;
                              $row[]=$jmlUsul;
+                             $row[]= $TotalAset;
                              $row[]=$change2;
+                             $row[]=number_format($NilaiASet['TotalNilaiPerolehan']);
                              // $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
                              $row[]=$value[AlasanHapus];
                              $row[]="<span class=\"label label-{$label}\" >{$text}</span>";

@@ -42,7 +42,7 @@ $penghapusan_id=get_auto_increment("penghapusan");
         // pr($POST);
         // pr($_POST);
   //       exit;
-		$data = $PENGHAPUSAN->store_penetapan_penghapusan_psb($_POST);
+		$data = $PENGHAPUSAN->store_penetapan_penghapusan_psb($POST);
         
 
         $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWPTUSPSB");
