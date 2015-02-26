@@ -50,6 +50,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                          {"bSortable": true},
                          {"bSortable": true},
                          {"bSortable": false},
+                         {"bSortable": false},
                          {"bSortable": false}],
                     "sPaginationType": "full_numbers",
 
@@ -115,6 +116,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<th>Jumlah Usulan</th>
 						<th>Jumlah Aset</th>
 						<th>Tgl Penetapan</th>
+						<th>Total Nilai</th>
 						<th>Keterangan</th>
 						<th>Status</th>
 						<th>Tindakan</th>
@@ -122,11 +124,12 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 				</thead>
 				<tbody>		
 					 <tr>
-                        <td colspan="9">Data Tidak di temukkan</td>
+                        <td colspan="10">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

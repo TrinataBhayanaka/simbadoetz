@@ -96,17 +96,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // echo"======";
             ////////////////////////////////////////////pr($value);
             if($Aset_ID){
-            // $SatkerKode=$value['SatkerUsul'];
-            // $sqlSat = array(
-            //         'table'=>'Satker',
-            //         'field'=>" NamaSatker ",
-            //         'condition' => "kode='$SatkerKode' GROUP BY kode"
-            //         );
-            // $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
-            // $res[$key]['NamaSatkerUsul']=$value['NamaSatker'];
-            ////////////////////////////////////////////pr($resSat);
-            // $Aset_ID=$value['Aset_ID'];
             $data=explode(",",$Aset_ID );
             // ////////////////pr($data);
             foreach ($data as $key => $value) {
@@ -131,6 +121,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
            
             }
             }
+
         if ($resAst) return $res;
         return false;
 
@@ -150,6 +141,20 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($res) return $res;
         return false;
     }
+    public function DataPenetapan($id){
+
+             
+            $sql = array(
+                    'table'=>'Penghapusan',
+                    'field'=>" * ",
+                    'condition' => "Penghapusan_ID='$id' ORDER BY Penghapusan_ID desc",
+                    );
+
+            $res = $this->db->lazyQuery($sql,$debug);
+
+        if ($res) return $res;
+        return false;
+    }
     public function totalDataPenghapusanAset($id){
 
              $sql = array(
@@ -162,6 +167,39 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             // //pr($sql);
 
         if ($res) return $res;
+        return false;
+    }
+    public function totalNilaiPenghapusanAset($id){
+             // $sql = array(
+             //    'table'=>'aset AS a,kelompok AS c,satker AS e',
+             //    'field'=>"a.*, c.Kelompok, c.Kode, e.*",
+             //    'condition' => "a.StatusValidasi = 1 AND a.Status_Validasi_Barang=1 AND a.NotUse=1 AND a.Dihapus=0 {$filterkontrak} GROUP BY a.Aset_ID",
+             //    'joinmethod' => ' LEFT JOIN ',
+             //    'join' => 'a.kodeKelompok = c.Kode, a.KodeSatker = e.Kode'
+             //    );
+            if($id){
+             $sql = array(
+                    'table'=>'penghapusanaset as pa,aset as ast',
+                    'field'=>" pa.Penghapusan_ID,pa.Aset_ID,ast.NilaiPerolehan ",
+                    'condition' => "pa.Penghapusan_ID='{$id}' GROUP BY ast.Aset_ID ",
+                'joinmethod' => ' LEFT JOIN ',
+                'join' => 'pa.Aset_ID = ast.Aset_ID'
+                    );
+
+            $res = $this->db->lazyQuery($sql,$debug);
+            // pr($sql);
+            // pr($res);
+
+            $res1['TotalNilaiPerolehan']=0;
+            
+            foreach ($res as $keyAst => $valueAst) {
+                // //////////////////////////////////////////pr($valueAst);
+                $res1['TotalNilaiPerolehan']=$res1['TotalNilaiPerolehan']+$valueAst['NilaiPerolehan'];
+           
+            }
+            }
+            // pr($res1);
+        if ($res) return $res1;
         return false;
     }
     public function SelectKIB($asetid,$TipeAset){
@@ -9229,173 +9267,30 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $kodeSatker = $data['kodeSatker'];
             $id=$_GET['id'];
             $jenis_hapus="PMD";
+
+        $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
+
             $filterkontrak = "";
             if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
             if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-      
-
-            // $sql = array(
-            //      'table'=>'penghapusanaset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
-            //      'field'=>"a.*, e.NamaSatker, e.KodeSatker, f.NamaLokasi, g.Kode,g.Uraian",
-            //      'condition' => "b.Penghapusan_ID='$id' {$filterkontrak} GROUP BY a.Aset_ID",
-            //      'joinmethod' => ' LEFT JOIN ',
-            //      'join' => 'b.Aset_ID=a.Aset_ID , a.kodeLokasi=f.Lokasi_ID, a.kodeSatker=e.Satker_ID, a.kodeKelompok=g.Kelompok_ID' 
-            //      );
-
-            // $res = $this->db->lazyQuery($sql,$debug);
-             $sqlGetUslID = array(
-                'table'=>'Usulan',
-                'field'=>" Usulan_ID ",
-                'condition' => "Penetapan_ID=$id AND FixUsulan=1 {$filterkontrak} ORDER BY Usulan_ID desc",
-                // 'limit'=>'100',
-                );
             
-            $resGetUslID = $this->db->lazyQuery($sqlGetUslID,$debug);
-            
-            //////////////////////////////////////////pr($resGetUslID);
-            foreach ($resGetUslID as $keyGetUslID => $valueGetUslID) {
-                //////////////////////////////////////////pr($valueGetUslID);
-                $idUsulan[]=$valueGetUslID['Usulan_ID'];
 
-            }
-            //////////////////////////////////////////pr($idUsulan);
-            // exit;
-            foreach ($idUsulan as $key => $value) {
-            //////////////////////////////////////////pr($value);
-            // exit;
-            $sqlUsl = array(
-                'table'=>'Usulan',
-                'field'=>" Usulan_ID,Aset_ID ",
-                'condition' => "Usulan_ID='$value' AND FixUsulan=1 AND Jenis_Usulan='$jenis_hapus' {$filterkontrak} ORDER BY Usulan_ID desc"
-                );
-            //////////////////////////////////////////pr($sqlUsl);
-            $resUsl = $this->db->lazyQuery($sqlUsl,$debug);
-            //////////////////////////////////////////pr($resUsl);
-            // exit;
-            //////////////////////////////////////////pr($resUsl[0]['Aset_ID']);
-            $Aset_IDUsl=explode(",", $resUsl[0]['Aset_ID']);
-            //////////////////////////////////////////pr($Aset_IDUsl);
-            foreach ($Aset_IDUsl as $keyUsl => $valueUsl) {
+            $sql = array(
+                 'table'=>'penghapusanaset AS b,Aset AS a,Kelompok AS k',
+                 'field'=>"SQL_CALC_FOUND_ROWS a.Aset_ID,a.TipeAset,a.kodeSatker,a.kodeKelompok,a.TglPerolehan,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.AsalUsul,a.kondisi, k.Kode,k.Uraian",
+                 'condition' => "b.Penghapusan_ID='$id' {$filterkontrak} {$kondisi} GROUP BY a.Aset_ID {$order}",
+                'limit'=>"$limit",
+                 'joinmethod' => ' LEFT JOIN ',
+                 'join' => 'b.Aset_ID=a.Aset_ID, a.kodeKelompok=k.kode' 
+                 );
 
-                 
-                 $sqlUslAst = array(
-                    'table'=>'Usulanaset',
-                    'field'=>" Usulan_ID,Aset_ID ",
-                    'condition' => "Usulan_ID='$value' AND Aset_ID='$valueUsl' AND Jenis_Usulan='$jenis_hapus' AND StatusKonfirmasi=1 {$filterkontrak}"
-                    );
-                // //////////////////////////////////////////pr($sqlUslAst);
-                $resUslAst = $this->db->lazyQuery($sqlUslAst,$debug);
-                // //////////////////////////////////////////pr($resUslAst);
-                // echo "==============";
-                if($resUslAst){
-                    $res[$key][$keyUsl]['Usulan_ID']=$value;
-                $Aset_IDUslAst=$resUslAst[0]['Aset_ID'];
-                // //////////////////////////////////////////pr($Aset_IDUslAst);
-                $sqlAst = array(
-                'table'=>'Aset',
-                'field'=>"Aset_ID,TipeAset,KodeSatker ",
-                'condition' => "Aset_ID='$Aset_IDUslAst' {$filterkontrak}"
-                );
-                // //////////////////////////////////////////pr($sqlAst);
-                $resAst = $this->db->lazyQuery($sqlAst,$debug);
+            $res = $this->db->lazyQuery($sql,$debug);
 
-                foreach ($resAst[0] as $keyAst => $valueAst) {
-                    // //////////////////////////////////////////pr($valueListTable[$keyListTable]);
-                    $res[$key][$keyUsl][$keyAst]=$valueAst;
-
-                }
-                // //////////////////////////////////////////pr($resAst);
-                $AsetTipe=$resAst[0]['TipeAset'];
-                $kodeSatker=$resAst[0]['KodeSatker'];
-
-                $TableAbjadlist = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
-                //////////////////////////////////////////pr($TableAbjadlist[$AsetTipe]);
-                $TipeAsetNo=$TableAbjadlist[$AsetTipe];
-                $table = $this->getTableKibAlias($TipeAsetNo);
-
-                // //////////////////////////////////////////pr($table);
-                $listTable = $table['listTable'];
-                $listTableAlias = $table['listTableAlias'];
-                $listTableAbjad = $table['listTableAbjad'];
-                $listTableField = $table['listTableField'];
-                $FieltableGeneral= $table['FieltableGeneral'];
-                
-
-                $sqlListTable = array(
-                    'table'=>"{$listTable}",
-                    'field'=>"{$listTableField},{$FieltableGeneral} ",
-                    'condition' => "{$listTableAlias}.Aset_ID=$Aset_IDUslAst",
-                     );
-                // //////////////////////////////////////////pr($sqlListTable);
-                $resListTable = $this->db->lazyQuery($sqlListTable,$debug);
-                //////////////////////////////////////////pr($resListTable);
-                foreach ($resListTable[0] as $keyListTable => $valueListTable) {
-                    // //////////////////////////////////////////pr($valueListTable[$keyListTable]);
-                    $res[$key][$keyUsl][$keyListTable]=$valueListTable;
-                }
-                $kodeKelompok=$resListTable[0]['kodeKelompok'];
-                $sqlKlm = array(
-                    'table'=>"Kelompok AS klm",
-                    'field'=>"klm.Uraian",
-                    'condition' => "klm.Kode='$kodeKelompok'",
-                     );
-                // //////////////////////////////////////////pr($sqlKlm);
-                $resKlm = $this->db->lazyQuery($sqlKlm,$debug);
-                // //////////////////////////////////////////pr($resKlm);
-                foreach ($resKlm[0] as $keyKlm => $valueKlm) {
-
-                    $res[$key][$keyUsl][$keyKlm]=$valueKlm;
-                }
-
-                // $asetID=$value[Aset_ID];
-                // 'table'=>"Aset AS ast,Satker AS sat",
-                //     'field'=>"sat.NamaSatker",
-                //     'condition' => "ast.Aset_ID ='$asetID' AND sat.Kode='$kodeSatker' GROUP BY ast.Aset_ID",
-                //     'joinmethod' => ' LEFT JOIN ',
-                //     'join' => "ast.KodeSatker = sat.Kode"
-                $sqlSat = array(
-                    'table'=>"Satker AS sat",
-                    'field'=>"sat.NamaSatker",
-                    'condition' => "sat.Kode='$kodeSatker' GROUP BY sat.Kode",
-                     );
-                // //////////////////////////////////////////pr($sqlSat);
-                $resSat = $this->db->lazyQuery($sqlSat,$debug);
-                // //////////////////////////////////////////pr($resSat);
-                foreach ($resSat[0] as $keySat => $valueSat) {
-
-                    $res[$key][$keyUsl][$keySat]=$valueSat;
-                }
-
-               }
-            }
-            // $resData[]=$res;
-
-
-        }
-         // //////////////////////////////////////////pr($resData);
-         // exit;
-         foreach ($res as $value) {
-
-                    if ($value){
-                        
-                        foreach ($value as $val) {
-                            $newData[] = $val;
-                        } 
-                    }
-                    
-                }
-            //////////////////////////////////////////pr($newData);
-            // exit;
-            $sql1 = array(
-                    'table'=>'Penghapusan',
-                    'field'=>" * ",
-                    'condition' => "Penghapusan_ID='$id' {$filterkontrak} ORDER BY Penghapusan_ID desc",
-                    );
-
-            $res1 = $this->db->lazyQuery($sql1,$debug);
-            //////////////////////////////////////////pr($res1);
-            // exit;
-            if ($newData) return array('dataArr'=>$newData, 'dataRow'=>$res1);
+            // if ($newData) return array('dataArr'=>$newData, 'dataRow'=>$res1);
+            if ($res) return $res;
             return false;       
 
     }
@@ -9407,173 +9302,31 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $kodeSatker = $data['kodeSatker'];
             $id=$_GET['id'];
             $jenis_hapus="PMS";
+
+
+        $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
+
             $filterkontrak = "";
             if ($nokontrak) $filterkontrak .= " AND a.noKontrak = '{$nokontrak}' ";
             if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
-      
-
-            // $sql = array(
-            //      'table'=>'penghapusanaset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
-            //      'field'=>"a.*, e.NamaSatker, e.KodeSatker, f.NamaLokasi, g.Kode,g.Uraian",
-            //      'condition' => "b.Penghapusan_ID='$id' {$filterkontrak} GROUP BY a.Aset_ID",
-            //      'joinmethod' => ' LEFT JOIN ',
-            //      'join' => 'b.Aset_ID=a.Aset_ID , a.kodeLokasi=f.Lokasi_ID, a.kodeSatker=e.Satker_ID, a.kodeKelompok=g.Kelompok_ID' 
-            //      );
-
-            // $res = $this->db->lazyQuery($sql,$debug);
-             $sqlGetUslID = array(
-                'table'=>'Usulan',
-                'field'=>" Usulan_ID ",
-                'condition' => "Penetapan_ID=$id AND FixUsulan=1 {$filterkontrak} ORDER BY Usulan_ID desc",
-                // 'limit'=>'100',
-                );
-            ////pr($sqlGetUslID);
-            $resGetUslID = $this->db->lazyQuery($sqlGetUslID,$debug);
             
-            ////pr($resGetUslID);
-            foreach ($resGetUslID as $keyGetUslID => $valueGetUslID) {
-                //////////////////////////////////////////pr($valueGetUslID);
-                $idUsulan[]=$valueGetUslID['Usulan_ID'];
 
-            }
-            //////////////////////////////////////////pr($idUsulan);
-            // exit;
-            foreach ($idUsulan as $key => $value) {
-            //////////////////////////////////////////pr($value);
-            // exit;
-            $sqlUsl = array(
-                'table'=>'Usulan',
-                'field'=>" Usulan_ID,Aset_ID ",
-                'condition' => "Usulan_ID='$value' AND FixUsulan=1 AND Jenis_Usulan='$jenis_hapus' {$filterkontrak} ORDER BY Usulan_ID desc"
-                );
-            //////////////////////////////////////////pr($sqlUsl);
-            $resUsl = $this->db->lazyQuery($sqlUsl,$debug);
-            //////////////////////////////////////////pr($resUsl);
-            // exit;
-            //////////////////////////////////////////pr($resUsl[0]['Aset_ID']);
-            $Aset_IDUsl=explode(",", $resUsl[0]['Aset_ID']);
-            //////////////////////////////////////////pr($Aset_IDUsl);
-            foreach ($Aset_IDUsl as $keyUsl => $valueUsl) {
+            $sql = array(
+                 'table'=>'penghapusanaset AS b,Aset AS a,Kelompok AS k',
+                 'field'=>"SQL_CALC_FOUND_ROWS a.Aset_ID,a.TipeAset,a.kodeSatker,a.kodeKelompok,a.TglPerolehan,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.AsalUsul,a.kondisi, k.Kode,k.Uraian",
+                 'condition' => "b.Penghapusan_ID='$id' {$filterkontrak} {$kondisi} GROUP BY a.Aset_ID {$order}",
+                'limit'=>"$limit",
+                 'joinmethod' => ' LEFT JOIN ',
+                 'join' => 'b.Aset_ID=a.Aset_ID, a.kodeKelompok=k.kode' 
+                 );
 
-                 
-                 $sqlUslAst = array(
-                    'table'=>'Usulanaset',
-                    'field'=>" Usulan_ID,Aset_ID ",
-                    'condition' => "Usulan_ID='$value' AND Aset_ID='$valueUsl' AND Jenis_Usulan='$jenis_hapus' AND StatusKonfirmasi=1 {$filterkontrak}"
-                    );
-                // //////////////////////////////////////////pr($sqlUslAst);
-                $resUslAst = $this->db->lazyQuery($sqlUslAst,$debug);
-                // //////////////////////////////////////////pr($resUslAst);
-                // echo "==============";
-                if($resUslAst){
-                    $res[$key][$keyUsl]['Usulan_ID']=$value;
-                $Aset_IDUslAst=$resUslAst[0]['Aset_ID'];
-                // //////////////////////////////////////////pr($Aset_IDUslAst);
-                $sqlAst = array(
-                'table'=>'Aset',
-                'field'=>"Aset_ID,TipeAset,KodeSatker ",
-                'condition' => "Aset_ID='$Aset_IDUslAst' {$filterkontrak}"
-                );
-                // //////////////////////////////////////////pr($sqlAst);
-                $resAst = $this->db->lazyQuery($sqlAst,$debug);
-
-                foreach ($resAst[0] as $keyAst => $valueAst) {
-                    // //////////////////////////////////////////pr($valueListTable[$keyListTable]);
-                    $res[$key][$keyUsl][$keyAst]=$valueAst;
-
-                }
-                // //////////////////////////////////////////pr($resAst);
-                $AsetTipe=$resAst[0]['TipeAset'];
-                $kodeSatker=$resAst[0]['KodeSatker'];
-
-                $TableAbjadlist = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
-                //////////////////////////////////////////pr($TableAbjadlist[$AsetTipe]);
-                $TipeAsetNo=$TableAbjadlist[$AsetTipe];
-                $table = $this->getTableKibAlias($TipeAsetNo);
-
-                // //////////////////////////////////////////pr($table);
-                $listTable = $table['listTable'];
-                $listTableAlias = $table['listTableAlias'];
-                $listTableAbjad = $table['listTableAbjad'];
-                $listTableField = $table['listTableField'];
-                $FieltableGeneral= $table['FieltableGeneral'];
-                
-
-                $sqlListTable = array(
-                    'table'=>"{$listTable}",
-                    'field'=>"{$listTableField},{$FieltableGeneral} ",
-                    'condition' => "{$listTableAlias}.Aset_ID=$Aset_IDUslAst",
-                     );
-                // //////////////////////////////////////////pr($sqlListTable);
-                $resListTable = $this->db->lazyQuery($sqlListTable,$debug);
-                //////////////////////////////////////////pr($resListTable);
-                foreach ($resListTable[0] as $keyListTable => $valueListTable) {
-                    // //////////////////////////////////////////pr($valueListTable[$keyListTable]);
-                    $res[$key][$keyUsl][$keyListTable]=$valueListTable;
-                }
-                $kodeKelompok=$resListTable[0]['kodeKelompok'];
-                $sqlKlm = array(
-                    'table'=>"Kelompok AS klm",
-                    'field'=>"klm.Uraian",
-                    'condition' => "klm.Kode='$kodeKelompok'",
-                     );
-                // //////////////////////////////////////////pr($sqlKlm);
-                $resKlm = $this->db->lazyQuery($sqlKlm,$debug);
-                // //////////////////////////////////////////pr($resKlm);
-                foreach ($resKlm[0] as $keyKlm => $valueKlm) {
-
-                    $res[$key][$keyUsl][$keyKlm]=$valueKlm;
-                }
-
-                // $asetID=$value[Aset_ID];
-                // 'table'=>"Aset AS ast,Satker AS sat",
-                //     'field'=>"sat.NamaSatker",
-                //     'condition' => "ast.Aset_ID ='$asetID' AND sat.Kode='$kodeSatker' GROUP BY ast.Aset_ID",
-                //     'joinmethod' => ' LEFT JOIN ',
-                //     'join' => "ast.KodeSatker = sat.Kode"
-                $sqlSat = array(
-                    'table'=>"Satker AS sat",
-                    'field'=>"sat.NamaSatker",
-                    'condition' => "sat.Kode='$kodeSatker' GROUP BY sat.Kode",
-                     );
-                // //////////////////////////////////////////pr($sqlSat);
-                $resSat = $this->db->lazyQuery($sqlSat,$debug);
-                // //////////////////////////////////////////pr($resSat);
-                foreach ($resSat[0] as $keySat => $valueSat) {
-
-                    $res[$key][$keyUsl][$keySat]=$valueSat;
-                }
-
-               }
-            }
-            // $resData[]=$res;
-
-
-        }
-         // //////////////////////////////////////////pr($resData);
-         // exit;
-         foreach ($res as $value) {
-
-                    if ($value){
-                        
-                        foreach ($value as $val) {
-                            $newData[] = $val;
-                        } 
-                    }
-                    
-                }
-            //////////////////////////////////////////pr($newData);
-            // exit;
-            $sql1 = array(
-                    'table'=>'Penghapusan',
-                    'field'=>" * ",
-                    'condition' => "Penghapusan_ID='$id' {$filterkontrak} ORDER BY Penghapusan_ID desc",
-                    );
-
-            $res1 = $this->db->lazyQuery($sql1,$debug);
-            ////pr($res1);
-            // exit;
-            if ($newData) return array('dataArr'=>$newData, 'dataRow'=>$res1);
+            $res = $this->db->lazyQuery($sql,$debug);
+            
+            // if ($res) return array('dataArr'=>$res, 'dataRow'=>$res1);
+            if ($res) return $res;
             return false;       
 
     }

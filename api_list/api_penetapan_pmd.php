@@ -268,7 +268,8 @@ foreach ($data as $key => $value)
                 }  
 
               }
-
+              $NilaiASet=$PENGHAPUSAN->totalNilaiPenghapusanAset($value['Penghapusan_ID']);
+              // pr($NilaiASet);
               
               $Asetditerima=$PENGHAPUSAN->totalDataPenghapusanAset($value['Penghapusan_ID']);
               $TotalAset=count($Asetditerima);
@@ -282,6 +283,7 @@ foreach ($data as $key => $value)
                              $row[]=$jmlUsul;
                              $row[]= $TotalAset;
                              $row[]=$change2;
+                             $row[]=number_format($NilaiASet['TotalNilaiPerolehan']);
                              // $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
                              $row[]=$value[AlasanHapus];
                              $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
