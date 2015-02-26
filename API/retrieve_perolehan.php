@@ -49,7 +49,12 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
 		  $xlsdata[$no]['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];		
 		  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 3);
-
+		  $kib = explode(".", $xlsdata[$no]['kodeKelompok']);
+		  if($kib[0] == "05"){
+		  	$xlsdata[$no]['TipeAset'] = 'E';
+		  } elseif ($kib[0] == "08") {
+		  	$xlsdata[$no]['TipeAset'] = 'H';
+		  }
 		  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 3)}' LIMIT 1");
 			while ($namaaset = mysql_fetch_assoc($sql)){
 					$uraian = $namaaset['uraian'];
@@ -60,9 +65,8 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['GUID'] = $data->val($i,17);
 		  $xlsdata[$no]['Info'] = $data->val($i,16);
 		  $xlsdata[$no]['kodeRuangan'] = $post['kodeRuangan'];
-		  $xlsdata[$no]['TipeAset'] = 'E';
 		  $xlsdata[$no]['NilaiPerolehan'] = $data->val($i,14);
-
+		  $xlsdata[$no]['NilaiTotal'] = $data->val($i,15);
 		  $xlsdata[$no]['Judul'] = $data->val($i,4);
 		  $xlsdata[$no]['Pengarang'] = $data->val($i,5);
 		  $xlsdata[$no]['Penerbit'] = $data->val($i,6);
@@ -144,6 +148,11 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
 		  $xlsdata[$no]['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];		
 		  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 2);
+		  if($kib[0] == "05"){
+		  	$xlsdata[$no]['TipeAset'] = 'B';
+		  } elseif ($kib[0] == "08") {
+		  	$xlsdata[$no]['TipeAset'] = 'H';
+		  }
 
 		  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 2)}' LIMIT 1");
 			while ($namaaset = mysql_fetch_assoc($sql)){
@@ -154,9 +163,8 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['noKontrak'] = $_POST['noKontrak'];
 		  $xlsdata[$no]['Info'] = $data->val($i,17);
 		  $xlsdata[$no]['kodeRuangan'] = $_POST['kodeRuangan'];
-		  $xlsdata[$no]['TipeAset'] = 'B';
 		  $xlsdata[$no]['NilaiPerolehan'] = $data->val($i,15);
-
+		  $xlsdata[$no]['NilaiTotal'] = $data->val($i,16);
 		  $xlsdata[$no]['Merk'] = $data->val($i,4);
 		  $xlsdata[$no]['Model'] = $data->val($i,5);
 		  $xlsdata[$no]['Ukuran'] = $data->val($i,6);

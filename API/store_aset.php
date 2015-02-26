@@ -1533,17 +1533,21 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        if($data['TipeAset'] == 'B'){
-            if($tblAset['NilaiPerolehan'] < 300000){
-                $tblAset['kodeKA'] = 0;
-            } else {
-                $tblAset['kodeKA'] = 1;
-            }
-        } elseif ($data['TipeAset'] == 'C') {
-            if($tblAset['NilaiPerolehan'] < 10000000){
-                $tblAset['kodeKA'] = 0;
-            } else {
-                $tblAset['kodeKA'] = 1;
+        if(intval($tblAset['Tahun']) < 2008){
+            $tblAset['kodeKA'] = 1;
+        }else {
+            if($data['TipeAset'] == 'B'){
+                if($tblAset['NilaiPerolehan'] < 300000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
+            } elseif ($data['TipeAset'] == 'C') {
+                if($tblAset['NilaiPerolehan'] < 10000000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
             }
         }
         $tblAset['AsalUsul'] = $data['AsalUsul'];
@@ -1562,9 +1566,21 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         $loops = $startreg+$data['Kuantitas'];
         $counter = 0;
+        $xlsxount = 0;
+        if(isset($data['xls'])) $nilaisisa = $data['NilaiTotal'];
         for($startreg;$startreg<$loops;$startreg++)
         {
             $counter++;
+            $xlsxount++;
+            if(isset($data['xls'])){
+                if($xlsxount == $data['Kuantitas']){
+                    $tblAset['NilaiPerolehan'] = $nilaisisa;
+                    $tblAset['Satuan'] = $nilaisisa;
+                } else {
+                    $nilaisisa = $nilaisisa - $tblAset['NilaiPerolehan'];
+                }
+            }
+
             $tblAset['noRegister'] = intval($startreg)+1;
             
             unset($tmpfield); unset($tmpvalue);
@@ -1654,10 +1670,12 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
                 $this->commit();
+                if(isset($data['xls'])) return true;
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
             } elseif ($data['TipeAset']=="H") {
                 $this->commit();
+                if(isset($data['xls'])) return true;
                 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                 exit;
             }
@@ -1667,7 +1685,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['kodeSatker'] = $data['kodeSatker'];
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
-            $tblKib['NilaiPerolehan'] = $data['Satuan'];
+            $tblKib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
             $tblKib['kondisi'] = $data['kondisi'];
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
@@ -2301,7 +2319,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        if(intval($tblAset['Tahun']) <= 2008){
+        if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
         }else {
             if($data['TipeAset'] == 'B'){
@@ -2692,7 +2710,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
 
             if(isset($tblAset['noRegister'])) $tblKib['noRegister'] = $tblAset['noRegister']; 
-            if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $ruangan[1];
+            if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $tblAset['kodeRuangan'];
 
             // pr($tblKib);exit;
             // if($data['old_kelompok'] != $data['kodeKelompok']) $this->koreksiUpdAset($tblKib);

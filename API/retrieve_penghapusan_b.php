@@ -3178,7 +3178,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
     }
      public function retrieve_penetapan_penghapusan_filter_pmd($data,$debug=false)
     {
-            //////pr($data);
+            pr($data);
             $jenisaset = $data['jenisaset'];
             $nousulan = $data['bup_pp_sp_nousulan'];
             $kodeSatker = $data['kodeSatker'];
@@ -3236,7 +3236,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $sqlHPSaset = array(
                             'table'=>'usulanaset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
                             'field'=>"a.kodeSatker,b.Usulan_ID, b.Aset_ID,b.Jenis_Usulan, e.NamaSatker, f.NamaLokasi, g.Kode",
-                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND a.kodeSatker LIKE '%{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
+                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND a.kodeSatker LIKE '{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
                             );
@@ -3418,11 +3418,11 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                 $sqlHPSaset = array(
                             'table'=>'usulanaset AS b,Aset AS a,Lokasi AS f,Satker AS e,Kelompok AS g',
                             'field'=>"a.kodeSatker,b.Usulan_ID, b.Aset_ID,b.Jenis_Usulan, e.NamaSatker, f.NamaLokasi, g.Kode",
-                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND b.StatusPenetapan=0 AND StatusKonfirmasi=0 AND a.kodeSatker LIKE '%{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
+                            'condition' => "b.Jenis_Usulan='{$jenis_usulan}' AND b.StatusPenetapan=0 AND StatusKonfirmasi=0 AND a.kodeSatker LIKE '{$kodeSatker}%' {$filterkontrak2} GROUP BY a.Aset_ID",
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => 'b.Aset_ID=a.Aset_ID,a.kodeLokasi=f.Lokasi_ID,a.kodeSatker=e.kode,a.kodeKelompok=g.kode'
                             );
-
+                pr($sqlHPSaset);
                 // $sqlHPSaset = array(
                 //         'table'=>'penghapusan',
                 //         'field'=>" * ",
@@ -3454,19 +3454,30 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                             'field'=>" * ",
                             'condition' => "Usulan_ID IN ($QueryHPSID) AND FixUsulan=1 AND Jenis_Usulan='$jenis_usulan'  AND StatusPenetapan=0 {$filterkontrak} ORDER BY Usulan_ID desc"
                             );
-                    ////////////////////////////////////////////pr($sql);
+                    pr($sql);
 
                     $res = $this->db->lazyQuery($sql,$debug);
                     foreach ($res as $keySat => $valueSat) {
                         // //////////////////pr($valueSat);
                         // //////////////////pr($keySat);
                         $SatkerKodenama=$valueSat['SatkerUsul'];
-                        $Aset_ID=$valueSat['Aset_ID'];
+                        $Aset_IDb=$valueSat['Aset_ID'];
+                        pr($Aset_IDb);
+                        $expoAsetID=explode(",", $Aset_IDb);
+                        $Aset_ID = array();
+                        foreach ($expoAsetID as $keyexpoAsetID => $valueexpoAsetID) {
+                            if($valueexpoAsetID){
+                            $Aset_ID[]=$valueexpoAsetID;
+                            }
+                        }
+                        $Aset_ID=implode(",", $Aset_ID);
+                        pr($Aset_ID);
                         $sqlSat = array(
                             'table'=>'Satker',
                             'field'=>" NamaSatker ",
                             'condition' => "kode='$SatkerKodenama' GROUP BY kode"
                             );
+                        pr($sqlSat);
                         $resSat = $this->db->lazyQuery($sqlSat,$debug);
 
                         $res[$keySat]['NamaSatkerUsul']=$resSat[0]['NamaSatker'];
@@ -3476,6 +3487,7 @@ class RETRIEVE_PENGHAPUSAN_B extends RETRIEVE{
                                 'condition' => "Aset_ID IN ($Aset_ID)"
                                 );
                         
+                        pr($sqlAst);
                         $resAst = $this->db->lazyQuery($sqlAst,$debug);
 
                         $res[$keySat]['TotalNilaiPerolehan']=0;

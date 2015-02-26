@@ -34,6 +34,7 @@ $menu_id = 10;
 	// pr($POST);
 	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($POST);
+	// pr($data);
 	if($data['dataArr']){
 		$CountData=count($data['dataArr']);
 	}else{
@@ -291,6 +292,11 @@ $menu_id = 10;
 										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
 
 
+              $NamaSatker=$PENGHAPUSAN->getNamaSatker($nilai[kodeSatker]);
+              // pr($NamaSatker);
+
+              $SelectKIB=$PENGHAPUSAN->SelectKIB($nilai[Aset_ID],$nilai[TipeAset]);
+
 					?>
 						
 					<tr class="gradeA">
@@ -311,11 +317,11 @@ $menu_id = 10;
 							<?php echo $nilai[Uraian]?>
 						</td>
 						<td>
-							<?php echo $nilai[Merk]?> <?php if ($nilai[Model]) echo $nilai[Model];?>
+							<?php echo $SelectKIB[0][Merk]?> <?php if ($SelectKIB[0][Model]) echo $SelectKIB[0][Model];?>
 						</td>
 						<td>
 							<?php echo '['.$nilai[kodeSatker].'] '?><br/>
-							<?php echo $nilai[NamaSatker];?>
+							<?php echo $NamaSatker[0][NamaSatker];?>
 						</td>
 						<td>
 							<?php echo $TglPerolehan;?>
