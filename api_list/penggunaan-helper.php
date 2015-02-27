@@ -242,6 +242,7 @@ class PENGGUNAAN extends DB{
 
         if ($res){
         	$sleep = 1;
+            $count = 1;
             foreach ($res as $key => $val) {
 
 
@@ -260,7 +261,12 @@ class PENGGUNAAN extends DB{
                     );
                 $res3 = $this->db->lazyQuery($sql3,$debug,2);
 
+                logFile('Data count : '.$count);
+                $count++;
+                
                 $sleep++;
+
+
 	           	if ($sleep == 200){
 	           		sleep(1);
 	           		$sleep = 1;	
