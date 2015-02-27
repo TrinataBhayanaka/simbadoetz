@@ -67,14 +67,14 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['kodeRuangan'] = $post['kodeRuangan'];
 		  $xlsdata[$no]['NilaiPerolehan'] = $data->val($i,14);
 		  $xlsdata[$no]['NilaiTotal'] = $data->val($i,15);
-		  $xlsdata[$no]['Judul'] = $data->val($i,4);
-		  $xlsdata[$no]['Pengarang'] = $data->val($i,5);
-		  $xlsdata[$no]['Penerbit'] = $data->val($i,6);
+		  $xlsdata[$no]['Judul'] = str_replace("'","",$data->val($i,4));
+		  $xlsdata[$no]['Pengarang'] = str_replace("'","",$data->val($i,5));
+		  $xlsdata[$no]['Penerbit'] = str_replace("'","",$data->val($i,6));
 		  $xlsdata[$no]['Spesifikasi'] = $data->val($i,7);
 		  $xlsdata[$no]['AsalDaerah'] = $data->val($i,8);
 		  $xlsdata[$no]['Material'] = $data->val($i,9);
 		  $xlsdata[$no]['Ukuran'] = $data->val($i,10);
-		  $xlsdata[$no]['Alamat'] = $data->val($i,11);
+		  $xlsdata[$no]['Alamat'] = str_replace("'","",$data->val($i,11));
 		  $xlsdata[$no]['Jumlah'] = $data->val($i,13);
 		  $xlsdata[$no]['UserNm'] = $_SESSION['ses_uoperatorid'];
 		  $xlsdata[$no]['Sess'] = $baris-9;
@@ -269,13 +269,20 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		return $data;
 	}
 	
-	public function del_xlsOldData($table,$item){
+	public function del_xlsOldData($table,$item,$id){
 		$this->begin();
-		$sql = "DELETE FROM {$table} WHERE UserNm = '{$_SESSION['ses_uoperatorid']}'";
-		$execquery = $this->query($sql);
+		$apl = $this->get_aplasetlist($item);
 
-		$sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = '{$item}'";
-		$execquery = $this->query($sql);
+		$data = explode(",", $apl['aset_list']);
+		foreach ($data as $key => $value) {
+			$tmp = explode("|", $value);
+			$sql = "DELETE FROM {$table} WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND {$id} = '{$tmp[0]}'";
+			$execquery = $this->query($sql);
+
+			$sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = '{$item}'";
+			$execquery = $this->query($sql);
+		}
+
 		$this->commit();
 		return true;
 	}
