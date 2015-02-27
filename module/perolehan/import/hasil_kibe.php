@@ -60,7 +60,8 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		// pr($data);exit;
 		//insert data
 		$kontrak = $RETRIEVE_PEROLEHAN->upd_kontrak($_GET['id']);
-		$dataArr = $STORE->store_aset($data);	
+		$dataArr = $STORE->store_aset($data);
+		logFile($counter2);	
 	}
 	$datatmp = $RETRIEVE_PEROLEHAN->del_xlsOldData('tmp_asetlain','XLSIMP','temp_AsetLain_ID');
 	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/import/asetlain.php?id={$_GET['id']}\">";

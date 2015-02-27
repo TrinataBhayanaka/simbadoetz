@@ -1748,7 +1748,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
                         $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
                         $execquery = mysql_query($sql);
-                          logFile($counter);
+                          // logFile($counter);
                         if(!$execquery){
                           $this->rollback();
                           echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";              
