@@ -11430,11 +11430,7 @@ return $hasil_html;
                                                        $luas = number_format($row->LuasTotal,2,",",".");
                                                        $luasTotal = $luasTotal + $row->LuasTotal;
                                                        $perolehanTotal = $perolehanTotal + $row->NilaiPerolehan;
-                                                       $length = strlen($row->noRegister);
-													   if($length == 1) $noReg = sprintf("%04s", $row->noRegister);
-													   if($length == 2) $noReg = sprintf("%03s", $row->noRegister);
-													   if($length == 3) $noReg = sprintf("%02s", $row->noRegister);
-													   if($length == 4) $noReg = $row->noRegister;
+													   $noReg = sprintf("%04s", $row->noRegister);
 													    
 														// $noReg=$this->sortirNoReg($row->noRegister);
 														if($row->TglSertifikat == ''){
@@ -19707,11 +19703,11 @@ $body="
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Tahun Perolehan</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran Barang / Konstruksi (P,S,D)</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran / Konstruksi (P,S,D)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Keterangan</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Awal</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Mutasi</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Akhir</td>
@@ -20026,11 +20022,11 @@ $footer ="
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 194px;\">Nomor</td>
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan Barang</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Asal/<br>Cara<br>Perolehan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Tahun Perolehan</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran Barang / Konstruksi (P,S,D)</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran / Konstruksi (P,S,D)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Keterangan</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Awal</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Mutasi</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Akhir</td>
@@ -20085,7 +20081,7 @@ $footer ="
 					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan_Awal;
 					// $perolehan = number_format($row->NilaiPerolehan);
 					
-					$konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
+					// $konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
                     $Ex =explode('/',$row->Sertifikat);
                     
                     ($Ex[0] == '') ? $dataRangka = "-" : $dataRangka = $Ex[0];
@@ -20103,7 +20099,7 @@ $footer ="
 					}else{
 						$ketKondisi = "";
 					} 
-					$noReg=$row->noRegister;
+					$noReg = sprintf("%04s", $row->noRegister);
 					$nilaiPrlhn = $row->NilaiPerolehan_Awal;
 					$kuantitas = 1;
 					$nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
@@ -20180,20 +20176,24 @@ $footer ="
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
 					$perolehanTotalMutasi = $perolehanTotalMutasi + $nilaiPerolehanHasilMutasi;
 					$Uraian =$this->get_NamaKelompok($row->kodeKelompok);
+					$Ket_Riwayat = $this->get_NamaRiwayat($row->Kd_Riwayat);
+					if($row->Konstruksi != 0 && $row->Konstruksi != ''){
+						$konstruksi = $row->Konstruksi;
+					}
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
-									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok - $row->Kd_Riwayat</td>
+									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok</td>
 									<td style=\"width: 64px; text-align:center;\">$noReg</td>
 									<td style=\"width: 118px;\">$Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
 									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 									<td style=\"width: 56x; \">$row->Material</td>
-									<td style=\"width: 70px; \">$row->SumberAset </td>
+									<td style=\"width: 70px; \">$row->AsalUsul </td>
 									<td style=\"width: 71px; text-align:center;\">$row->Tahun</td>
-									<td style=\"width: 71px;\">$konstruksi_tanah</td>
-									<td style=\"width: 60px; text-align:center;\">$row->Satuan</td>
+									<td style=\"width: 71px;\">$konstruksi</td>
 									<td style=\"width: 81px;\">$ketKondisi</td>
+									<td style=\"width: 60px; text-align:center;\">$Ket_Riwayat</td>
 									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
 									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnFix</td>
 									<td style=\"width: 71px; text-align:center;\">$jmlKurang<br/><hr>$jmlTambah</td>
@@ -29121,6 +29121,18 @@ return $hasil_html;
 		}
 	return $NamaKlpk;
 	
+	}
+	//fungsi baru
+	public function get_NamaRiwayat($kode){
+		$queryRwyt = "select Nm_Riwayat from ref_riwayat where Kd_Riwayat ='$kode' ";
+		
+		$resulRwyt=$this->retrieve_query($queryRwyt);
+		if($resulRwyt!=""){
+			foreach($resulRwyt as $valueRwyt){
+				$NamaRwyt=$valueRwyt->Nm_Riwayat;
+			}
+		}
+	return $NamaRwyt;
 	}
 	
 	public function get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
