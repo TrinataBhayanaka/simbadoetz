@@ -1595,7 +1595,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             // $result= $this->query($query) or die($this->error());
             $execquery = mysql_query($query);
-            logFile($query);
+            // logFile($query);
             if(!$execquery){
               $this->rollback();
               echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
@@ -1604,7 +1604,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
             $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
             $exec = mysql_query($query_id);
-            logFile($query_id);
+            // logFile($query_id);
             while ($row = mysql_fetch_assoc($exec)){
                 $tblKib['Aset_ID'] = $row['Aset_ID'];
             }
@@ -1713,7 +1713,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // $result= $this->query($query) or die($this->error());
             if($tabel!="aset"){
                 $execquery = mysql_query($query);
-                logFile($query);
+                // logFile($query);
                 if(!$execquery){
                   $this->rollback();
                   echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
@@ -1748,7 +1748,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
                         $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
                         $execquery = mysql_query($sql);
-                          logFile($sql);
+                          // logFile($counter);
                         if(!$execquery){
                           $this->rollback();
                           echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";              
