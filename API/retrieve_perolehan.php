@@ -269,13 +269,20 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		return $data;
 	}
 	
-	public function del_xlsOldData($table,$item){
+	public function del_xlsOldData($table,$item,$id){
 		$this->begin();
-		$sql = "DELETE FROM {$table} WHERE UserNm = '{$_SESSION['ses_uoperatorid']}'";
-		$execquery = $this->query($sql);
+		$apl = $this->get_aplasetlist($item);
 
-		$sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = '{$item}'";
-		$execquery = $this->query($sql);
+		$data = explode(",", $apl['aset_list']);
+		foreach ($data as $key => $value) {
+			$tmp = explode("|", $value);
+			$sql = "DELETE FROM {$table} WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND {$id} = '{$tmp[0]}'";
+			$execquery = $this->query($sql);
+
+			$sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = '{$item}'";
+			$execquery = $this->query($sql);
+		}
+
 		$this->commit();
 		return true;
 	}

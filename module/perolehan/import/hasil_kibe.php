@@ -62,8 +62,8 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		$kontrak = $RETRIEVE_PEROLEHAN->upd_kontrak($_GET['id']);
 		$dataArr = $STORE->store_aset($data);	
 	}
-	$datatmp = $RETRIEVE_PEROLEHAN->del_xlsOldData('tmp_asetlain','XLSIMP');
-	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$_GET['id']}\">";
+	$datatmp = $RETRIEVE_PEROLEHAN->del_xlsOldData('tmp_asetlain','XLSIMP','temp_AsetLain_ID');
+	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/import/asetlain.php?id={$_GET['id']}\">";
 	exit;
 	// pr($data);
 	// pr($dataaset);exit;
