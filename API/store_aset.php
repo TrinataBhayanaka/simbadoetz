@@ -1567,7 +1567,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $loops = $startreg+$data['Kuantitas'];
         $counter = 0;
         $xlsxount = 0;
-        if(isset($data['xls'])) $nilaisisa = $data['NilaiTotal'];
+        if(isset($data['xls'])) {$nilaisisa = $data['NilaiTotal'];}
         for($startreg;$startreg<$loops;$startreg++)
         {
             $counter++;
@@ -1669,15 +1669,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
-                $this->commit();
-                if(isset($data['xls'])) return true;
-                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
-                exit;
+                $tabel = "aset";
+                $logtabel = "log_aset";
+                $idkey = "Aset_ID";
             } elseif ($data['TipeAset']=="H") {
-                $this->commit();
-                if(isset($data['xls'])) return true;
-                echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
-                exit;
+                $tabel = "aset";
+                $logtabel = "log_aset";
+                $idkey = "Aset_ID";
             }
 
             $tblKib['kodeRuangan'] = $data['kodeRuangan'];
@@ -1713,16 +1711,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
             
             // $result= $this->query($query) or die($this->error());
-            $execquery = mysql_query($query);
-            if($counter == 200){
-                $counter = 0;
-                sleep(1);
-            }
-            logFile($query);
-            if(!$execquery){
-              $this->rollback();
-              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
-              exit;
+            if($tabel!="aset"){
+                $execquery = mysql_query($query);
+                logFile($query);
+                if(!$execquery){
+                  $this->rollback();
+                  echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                  exit;
+                }
             }
 
             if(isset($data['xls'])){
@@ -1758,6 +1754,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                           echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";              
                           exit;
                         }
+            }
+
+            if($counter == 200){
+                $counter = 0;
+                sleep(1);
             }
 
         }

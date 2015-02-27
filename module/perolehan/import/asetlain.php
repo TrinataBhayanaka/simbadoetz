@@ -26,7 +26,7 @@ if(isset($_GET['id'])){
 
 	<script>
 	$(function(){
-
+		$body = $("body");
 		$('#btn-dis').click(function(){
 			$body.addClass("loading");
 			NProgress.inc();
