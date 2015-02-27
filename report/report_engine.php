@@ -20147,7 +20147,7 @@ $footer ="
 								
 								}
 								$jmlTambah = 1;
-								$nilaiPrlhnMutasiTambah = $valAdd;
+								$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan_Awal + $valAdd;
 								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
 								//kurang
 								$valSubst = 0;
@@ -20161,9 +20161,9 @@ $footer ="
 								$nilaiPrlhnMutasiTambah = $valAdd;
 								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
 								//kurang
-								$valSubst = $cekSelisih;
+								$valSubst = abs($cekSelisih);
 								$jmlKurang = 1;
-								$nilaiPrlhnMutasiKurang = $valSubst;
+								$nilaiPrlhnMutasiKurang = $row->NilaiPerolehan_Awal - $valSubst;
 								$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
 							}
 						
