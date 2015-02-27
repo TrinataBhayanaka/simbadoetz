@@ -31,8 +31,17 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	if (isset($_POST['submit2'])){
+		$_POST['Penggunaan'] = $PENGGUNAAN->getAsetList('PNGGU');
+		$_SESSION['ses_penggunaan_eksekusi'] = $_POST;
+	}
 	
-	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan_eksekusi($_POST);
+		
+
+	$dataPost = $_SESSION['ses_penggunaan_eksekusi'];
+
+	// pr($dataPost);exit;
+	$data = $PENGGUNAAN->retrieve_penetapan_penggunaan_eksekusi($dataPost);
 
 ?>
 

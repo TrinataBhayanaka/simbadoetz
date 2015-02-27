@@ -215,7 +215,7 @@ foreach ($data as $key => $value)
        
                 if($value['StatusKonfirmasi']==0){
                   $label="warning";
-                  $text="proses";
+                  $text="Belum Diproses";
                 }elseif($value['StatusKonfirmasi']==1){
                   $label="success";
                   $text="Diterima";
