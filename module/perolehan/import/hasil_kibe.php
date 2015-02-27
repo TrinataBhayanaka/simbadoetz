@@ -29,14 +29,14 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		$tmp = explode("|", $val);
 
 		$datatmp = $RETRIEVE_PEROLEHAN->get_slowtmpData($tmp[0]);
-		
+		// pr($datatmp);exit;
 
 		$data['kodeSatker'] = $datatmp['kodeSatker'];
 		$data['kodeRuangan'] = $datatmp['kodeRuangan'];
 		$data['kodeKelompok'] = $datatmp['kodeKelompok'];
-		$data['Judul'] = $datatmp['Judul'];
-		$data['Pengarang'] = $datatmp['Pengarang'];
-		$data['Penerbit'] = $datatmp['Penerbit'];
+		$data['Judul'] = addslashes($datatmp['Judul']);
+		$data['Pengarang'] = addslashes($datatmp['Pengarang']);
+		$data['Penerbit'] = addslashes($datatmp['Penerbit']);
 		$data['Spesifikasi'] = $datatmp['Spesifikasi'];
 		$data['AsalDaerah'] = $datatmp['AsalDaerah'];
 		$data['Material'] = $datatmp['Material'];

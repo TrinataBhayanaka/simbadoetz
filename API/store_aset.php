@@ -2995,7 +2995,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $field = implode(',', $tmpfield);
 
                 $query = "UPDATE aset SET {$field} WHERE kodeKelompok = '{$data['old_kelompok']}' AND kodeLokasi = '{$data['old_lokasi']}' AND noKontrak = '{$data['noKontrak']}' AND noRegister BETWEEN {$minmax['min']} AND {$minmax['max']}";
-                // pr($query);
+                // pr($query);exit;
                 $result=  $this->query($query) or die($this->error());
 
                 foreach ($tblKib as $key => $val) {
