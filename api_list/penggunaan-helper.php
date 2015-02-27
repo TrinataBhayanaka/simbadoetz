@@ -323,7 +323,7 @@ class PENGGUNAAN extends DB{
 
 $run = new PENGGUNAAN;
 $getGUID = $run->getGUID();
-$kontrak = "importing-ug/2";
+$kontrak = "050/374/XI/2014";
 
 if ($getGUID){
 	
