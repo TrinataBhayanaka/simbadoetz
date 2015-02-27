@@ -4855,7 +4855,7 @@ class core_api_report extends DB {
 								   AND a.kondisi != 3";
 				$paramLog 		= "m.TglPembukuan >='$tglawalperolehan' AND m.TglPembukuan <='$tglakhirperolehan' 
 								   AND m.TglPerubahan >'$tglawalperolehan' AND m.TglPerubahan <='$tglakhirperolehan' 
-								   AND m.Kd_Riwayat in (0,2,7,21,3) and  (mt.satkerAwal LIKE '$skpd_id%' OR m.kodeSatker LIKE '$skpd_id%') AND m.kondisi != 3  order by m.log_id ASC";
+								   AND m.Kd_Riwayat in (0,2,7,21,3,28) and  (mt.satkerAwal LIKE '$skpd_id%' OR m.kodeSatker LIKE '$skpd_id%') AND m.kondisi != 3  order by m.log_id ASC";
 				
 					
 			}elseif($Info == 'BISI' || $Info =='RBISI'){
