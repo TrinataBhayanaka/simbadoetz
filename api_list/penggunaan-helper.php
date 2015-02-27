@@ -273,6 +273,7 @@ class PENGGUNAAN extends DB{
 	           	} 
             }
 
+            /*
             $sleep = 1;
             
             foreach ($asetid as $key => $value) {
@@ -285,6 +286,7 @@ class PENGGUNAAN extends DB{
 	           		$sleep = 1;	
 	           	} 
             }
+            */
         }else{
             logFile('gagal log penggunaan');
         }
@@ -329,7 +331,8 @@ class PENGGUNAAN extends DB{
 
 $run = new PENGGUNAAN;
 $getGUID = $run->getGUID();
-$kontrak = "spk001";
+$kontrak = "importing-ug/2";
+
 
 if ($getGUID){
 	
