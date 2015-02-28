@@ -16,7 +16,7 @@ $SSConfig['filter']       = $decodeData;
 
 $SSConfig['primaryTable'] = "aset";
 $SSConfig['primaryField'] = "Aset_ID";
-$SSConfig['searchField'] = array('a.Aset_ID', 'k.Uraian', 's.NamaSatker', 'a.kodeSatker', 'a.NilaiPerolehan');
+$SSConfig['searchField'] = array('a.Aset_ID', 'k.Uraian', 'a.info', 's.NamaSatker', 'a.kodeSatker', 'a.NilaiPerolehan');
 
 
 
@@ -25,11 +25,12 @@ $SSConfig['view'][2] = "checkbox|Mutasi|Aset_ID"; // checkbox|name input | value
 $SSConfig['view'][3] = "kode";
 $SSConfig['view'][4] = "noRegister";
 $SSConfig['view'][5] = "Uraian";
-$SSConfig['view'][6] = "Merk|Model";
-$SSConfig['view'][7] = "NoSTNK";
-$SSConfig['view'][8] = "kodeSatker|NamaSatker";
-$SSConfig['view'][9] = "TglPerolehan";
-$SSConfig['view'][10] = "NilaiPerolehan";
+$SSConfig['view'][6] = "Info";
+$SSConfig['view'][7] = "Merk|Model";
+$SSConfig['view'][8] = "NoSTNK";
+$SSConfig['view'][9] = "kodeSatker|NamaSatker";
+$SSConfig['view'][10] = "TglPerolehan";
+$SSConfig['view'][11] = "NilaiPerolehan";
 // $SSConfig['view'][11] = "detail|$url_rewrite/module/layanan/history_aset.php|id=Aset_ID&jenisaset=TipeAset";
 
 
