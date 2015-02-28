@@ -122,10 +122,12 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('PNGGU');
 			}
 			else
 			{
-			   $('#submit').attr("disabled","disabled");
+			    $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('PNGGU');
 			}}, 100);
 		}
 		</script>

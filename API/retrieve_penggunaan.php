@@ -313,7 +313,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
         $filter = "";
         if ($Penggunaan_ID) $filter .= " AND p.Penggunaan_ID = {$Penggunaan_ID} ";
-
+        
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p, kelompok AS k',
                 'field'=>'p.*, a.*, k.Uraian',
@@ -417,10 +417,12 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
     function getAsetList($action)
     {
 
+        $userid = $_SESSION['ses_uoperatorid'];
+        $token = $_SESSION['ses_utoken'];
         $sql = array(
                 'table'=>"apl_userasetlist",
                 'field'=>"aset_list",
-                'condition'=>"aset_action = '{$action}'",
+                'condition'=>"aset_action = '{$action}' AND UserNm = {$userid} AND UserSes = '{$token}' LIMIT 1",
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -453,7 +455,8 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         else $jenisaset = array(1,2,3,4,5,6);
         
         $getAsetList = $this->getAsetList('PNGGU');
-
+        if (!$getAsetList) $getAsetList = array();
+        
         if ($jenisaset){
 
             foreach ($jenisaset as $value) {
