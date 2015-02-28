@@ -11,6 +11,7 @@
   left: 0;
   width: 100%;
 
+  z-index: 99999999;
   -webkit-transform: translate3d(0, -50px, 0);
   -ms-transform: translate3d(0, -50px, 0);
   transform: translate3d(0, -50px, 0);
@@ -29,7 +30,7 @@
 .pace .pace-progress {
   display: block;
   position: fixed;
-  z-index: 2000;
+  z-index: 99999999;
   top: 0;
   right: 100%;
   width: 100%;
