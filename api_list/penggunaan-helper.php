@@ -85,7 +85,7 @@ class PENGGUNAAN extends DB{
         $res = $this->db->lazyQuery($sql,$debug);
 	}
 
-	function getKontrak($kontrak=false, $debug=false)
+	function getKontrak($kontrak=false, $info=false, $debug=false)
 	{
 		$listTable2 = array(
                         // 1=>'tanah',
@@ -93,14 +93,26 @@ class PENGGUNAAN extends DB{
                         // 3=>'bangunan',
                         // 4=>'jaringan',
                         5=>'asetlain',
-                        // 6=>'kdp'
+                        // 6=>'kdp',
+                        // 7=>'aset',
+                        8=>'aset'
                         );
 		foreach ($listTable2 as $key => $value) {
-			$sql = array(
-	                'table'=>"{$value}",
-	                'field'=>"Aset_ID",
-	                'condition' => "GUID = '212' ",
-	                );
+
+            if ($value == 'aset'){
+                $sql = array(
+                    'table'=>"{$value}",
+                    'field'=>"Aset_ID",
+                    'condition' => "info = '{$info}'",
+                    );
+            }else{
+                $sql = array(
+                    'table'=>"{$value}",
+                    'field'=>"Aset_ID",
+                    'condition' => "GUID != '212' AND GUID !=''",
+                    );
+            }
+			
 
 	        $res = $this->db->lazyQuery($sql,$debug);
 	        if ($res) $data[$key] = $res;
@@ -150,7 +162,7 @@ class PENGGUNAAN extends DB{
 	function getAset($unique, $namaKontrak=false)
 	{
 
-		
+		$info = "Import-287263660";
 		$listTable2 = array(
                         // 1=>'tanah',
                         // 2=>'mesin',
@@ -160,11 +172,12 @@ class PENGGUNAAN extends DB{
                         // 6=>'kdp'
                         );
 
-		$dataKontrak = $this->getKontrak($namaKontrak);
+
+		$dataKontrak = $this->getKontrak($namaKontrak, $info);
         // pr($dataKontrak);
         // exit;
 		$dataAset = array();
-        $tipeAset = array('A','B','C','D','E','F');
+        $tipeAset = array('A','B','C','D','E','F','G','H');
         if ($dataKontrak['kontrak']){
         	foreach ($dataKontrak['kontrak'] as $key => $value) {
         		
@@ -311,7 +324,7 @@ class PENGGUNAAN extends DB{
 			$sql = array(
 	            'table'=>"{$value}",
 	            'field'=>"kodeSatker",
-	            'condition' => "GUID ='212'",
+	            'condition' => "GUID !='' AND GUID !='212'",
 	            );
 	        $res = $this->db->lazyQuery($sql,$debug);
 	        if ($res){
@@ -328,7 +341,10 @@ class PENGGUNAAN extends DB{
 	}
 }
 
-
+/*
+    jika hanya sampai di penggunaan aktifkan GUID = '212'
+    jika sampai mutasi gunakan operator GUID !='' and GUID !='212'
+*/
 $run = new PENGGUNAAN;
 $getGUID = $run->getGUID();
 
