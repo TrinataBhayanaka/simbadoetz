@@ -74,7 +74,7 @@ $menu_id = 10;
 
 		<section class="formLegend">
 			<?php
-				if($_SESSION['ses_uaksesadmin']==1){
+				if($_SESSION['ses_uoperatorid']==1){
 			?>
 			<p><a href="<?=$url_rewrite?>/module/penghapusan/dftr_penetapan_validasi_psb.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Penetapan</a>
 			&nbsp;

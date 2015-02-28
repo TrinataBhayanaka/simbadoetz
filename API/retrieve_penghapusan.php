@@ -5,7 +5,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	{
 		parent::__construct();
         $this->db = new DB;
-        //////////////////////////////////////pr($_SESSION);
+        // pr($_SESSION);
 	}
 	
     public function apl_userasetlistHPS($data){
