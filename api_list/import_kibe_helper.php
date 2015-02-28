@@ -71,6 +71,10 @@ foreach ($cleardata as $key => $val) {
 	$totaldata = store_aset($data,$link,$totaldata);
 	echo "=================== Row Finish:".$counter." ===================\n\n";
 
+    echo "Commit data\n";
+    $command = "COMMIT;";
+    $exec = $link->query($command);
+
 }
 
 echo "Updating table kontrak\n";
@@ -80,6 +84,8 @@ $exec = $link->query($sql);
 echo "Commit data\n";
 $command = "COMMIT;";
 $exec = $link->query($command);
+
+
 
 echo "=================== Process Complete. Thank you ===================\n\n";
 
