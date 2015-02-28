@@ -27,15 +27,15 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="";
-$aColumns = array('Usl.Usulan_ID','Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Sat.NamaSatker','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan');
+$aColumns = array('Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Usl.SatkerUsul','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan','Usl.SatkerUsul');
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Usulan_ID";
 
 /* DB table to use */
 $sTable = "usulan";
-$dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
-$dataParam['jenisaset'][0]=$_GET['jenisaset'];
+$dataParam['bup_pp_sp_nousulan']=$_GET['bup_pp_sp_nousulan'];
+// $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['page']=$_GET['page'];
 
@@ -67,7 +67,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY Usulan_ID desc";
+          $sOrder = "ORDER BY Usl.Usulan_ID desc";
      }
 }
 
@@ -239,33 +239,39 @@ foreach ($data as $key => $value)
               if($value['StatusPenetapan']==0){
               
                   
-                      $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/penghapusan_usulan_daftar_proses_hapus_pms.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
-                      <a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pms.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>";
+                      $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/penghapusan_usulan_daftar_proses_hapus_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
+                      <a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
+
+                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp";
                   
                  
                     
                     
                 }elseif($value['StatusPenetapan']==1){
                  
-                   $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pms.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
+                   $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
                     <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp";
                 
                
                 }  
                 
+                $NoUsulan=explode("/", $value['NoUsulan']);
+
+                $hasilNoUsulan=implode("/ ", $NoUsulan);
+                
                              $row = array();
                              
-                             // $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
+                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penetapanpenghapusan[]\" value=\"{$value['Usulan_ID']}\" {$value['checked']}>";
                              $row[]=$no;
-                             // $row[]=$checkbox;
-                             $row[]=$value['NoUsulan'] ;
+                             $row[]=$checkbox;
+                             $row[]=$hasilNoUsulan ;
                              $row[]=$SatkerUsul;
                              $row[]=$jumlahAset;
                              $row[]=$change2;
                              $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
                              $row[]=$value[KetUsulan];
-                             $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
-                             $row[]=$tindakan;
+                             // $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
+                             // $row[]=$tindakan;
                              
                              $output['aaData'][] = $row;
                               $no++;

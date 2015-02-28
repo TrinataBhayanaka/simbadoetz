@@ -27,15 +27,15 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="";
-$aColumns = array('Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Usl.SatkerUsul','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan','Usl.SatkerUsul','Usl.SatkerUsul');
+$aColumns = array('Usl.Usulan_ID','Usl.NoUsulan','Usl.SatkerUsul','Usl.SatkerUsul','Usl.TglUpdate','Usl.SatkerUsul','Usl.KetUsulan','Usl.SatkerUsul');
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Usulan_ID";
 
 /* DB table to use */
 $sTable = "usulan";
-$dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
-$dataParam['jenisaset'][0]=$_GET['jenisaset'];
+$dataParam['bup_pp_sp_nousulan']=$_GET['bup_pp_sp_nousulan'];
+// $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['page']=$_GET['page'];
 
@@ -67,7 +67,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY Usulan_ID desc";
+          $sOrder = "ORDER BY Usl.Usulan_ID desc";
      }
 }
 
@@ -128,7 +128,7 @@ $dataParam['limit']="$sLimit";
 // pr($dataParam);
 // list($data,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam);	
 
-$data = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam); 
+$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_filter_pms($dataParam); 
 //pr($dataSESSION);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
@@ -242,8 +242,7 @@ foreach ($data as $key => $value)
                       $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/penghapusan_usulan_daftar_proses_hapus_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
                       <a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
 
-                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
-                     <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tipe_file=2\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
+                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp";
                   
                  
                     
@@ -251,8 +250,7 @@ foreach ($data as $key => $value)
                 }elseif($value['StatusPenetapan']==1){
                  
                    $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
-                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
-                     <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tipe_file=2\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
+                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp";
                 
                
                 }  
@@ -263,17 +261,17 @@ foreach ($data as $key => $value)
                 
                              $row = array();
                              
-                             // $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
+                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penetapanpenghapusan[]\" value=\"{$value['Usulan_ID']}\" {$value['checked']}>";
                              $row[]=$no;
-                             // $row[]=$checkbox;
+                             $row[]=$checkbox;
                              $row[]=$hasilNoUsulan ;
                              $row[]=$SatkerUsul;
                              $row[]=$jumlahAset;
                              $row[]=$change2;
                              $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
                              $row[]=$value[KetUsulan];
-                             $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
-                             $row[]=$tindakan;
+                             // $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
+                             // $row[]=$tindakan;
                              
                              $output['aaData'][] = $row;
                               $no++;

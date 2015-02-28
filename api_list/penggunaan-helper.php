@@ -13,13 +13,13 @@ class PENGGUNAAN extends DB{
         $this->db = new DB;
 	}
 
-	function usulan($guid, $debug=false)
+	function usulan($guid, $kontrak, $debug=false)
 	{
 
-		$getAset = $this->getAset($guid);
+		$getAset = $this->getAset($guid, $kontrak);
 		$noKontrak = array_keys($getAset['fullData']);
-		pr($getAset);
-		exit;
+		// pr($getAset);
+		// exit;
 		$UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
         $nmaset= explode(',', $getAset['asetid']);
         $nmasetsatker=$guid;
@@ -30,14 +30,14 @@ class PENGGUNAAN extends DB{
         $penggu_penet_eks_nopenet=$noKontrak[0];   
         $penggu_penet_eks_tglpenet=$data['penggu_penet_eks_tglpenet']; 
         $olah_tgl=  date('Y-m-d H:i:s');
-
+        $TglSKKDH = "2014-12-31";
         $panjang=count($nmaset);
 
         
         $sql = array(
                 'table'=>'Penggunaan',
                 'field'=>'NoSKKDH , TglSKKDH, Keterangan, NotUse, TglUpdate, UserNm, FixPenggunaan, GUID',
-                'value' => "'{$penggu_penet_eks_nopenet}','{$olah_tgl}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','0','{$ses_uid}'",
+                'value' => "'{$penggu_penet_eks_nopenet}','{$TglSKKDH}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','0','{$ses_uid}'",
                 );
         $res = $this->db->lazyQuery($sql,$debug,1);
         $insertid = $this->db->insert_id();
@@ -85,20 +85,21 @@ class PENGGUNAAN extends DB{
         $res = $this->db->lazyQuery($sql,$debug);
 	}
 
-	function getKontrak($debug=false)
+	function getKontrak($kontrak=false, $debug=false)
 	{
 		$listTable2 = array(
-                        1=>'tanah',
-                        2=>'mesin',
-                        3=>'bangunan',
-                        4=>'jaringan',
+                        // 1=>'tanah',
+                        // 2=>'mesin',
+                        // 3=>'bangunan',
+                        // 4=>'jaringan',
                         5=>'asetlain',
-                        6=>'kdp');
+                        // 6=>'kdp'
+                        );
 		foreach ($listTable2 as $key => $value) {
 			$sql = array(
 	                'table'=>"{$value}",
 	                'field'=>"Aset_ID",
-	                'condition' => "GUID != '' ",
+	                'condition' => "GUID = '212' ",
 	                );
 
 	        $res = $this->db->lazyQuery($sql,$debug);
@@ -128,7 +129,11 @@ class PENGGUNAAN extends DB{
 	        if ($res){
 
 	        	foreach ($res as $key => $value) {
-	        		$dataKontrak[] = $value['noKontrak'];
+
+                    if ($value['noKontrak'] == $kontrak){
+                        $dataKontrak[] = $value['noKontrak'];    
+                    }
+	        		
 	        	}
 	        	
 	        	if ($dataKontrak) return array('kontrak'=>$dataKontrak, 'listaset'=>$implode);
@@ -142,21 +147,22 @@ class PENGGUNAAN extends DB{
 		return false;
 	}
 
-	function getAset($unique, $debug=false)
+	function getAset($unique, $namaKontrak=false)
 	{
 
 		
 		$listTable2 = array(
-                        1=>'tanah',
-                        2=>'mesin',
-                        3=>'bangunan',
-                        4=>'jaringan',
+                        // 1=>'tanah',
+                        // 2=>'mesin',
+                        // 3=>'bangunan',
+                        // 4=>'jaringan',
                         5=>'asetlain',
-                        6=>'kdp');
+                        // 6=>'kdp'
+                        );
 
-		$dataKontrak = $this->getKontrak();
-        pr($dataKontrak);
-        exit;
+		$dataKontrak = $this->getKontrak($namaKontrak);
+        // pr($dataKontrak);
+        // exit;
 		$dataAset = array();
         $tipeAset = array('A','B','C','D','E','F');
         if ($dataKontrak['kontrak']){
@@ -236,6 +242,7 @@ class PENGGUNAAN extends DB{
 
         if ($res){
         	$sleep = 1;
+            $count = 1;
             foreach ($res as $key => $val) {
 
 
@@ -254,13 +261,19 @@ class PENGGUNAAN extends DB{
                     );
                 $res3 = $this->db->lazyQuery($sql3,$debug,2);
 
+                logFile('Data count : '.$count);
+                $count++;
+                
                 $sleep++;
+
+
 	           	if ($sleep == 200){
 	           		sleep(1);
 	           		$sleep = 1;	
 	           	} 
             }
 
+            /*
             $sleep = 1;
             
             foreach ($asetid as $key => $value) {
@@ -273,6 +286,7 @@ class PENGGUNAAN extends DB{
 	           		$sleep = 1;	
 	           	} 
             }
+            */
         }else{
             logFile('gagal log penggunaan');
         }
@@ -284,24 +298,25 @@ class PENGGUNAAN extends DB{
 	function getGUID()
 	{	
 		$listTable = array(
-                        'A'=>'tanah',
-                        'B'=>'mesin',
-                        'C'=>'bangunan',
-                        'D'=>'jaringan',
+                        // 'A'=>'tanah',
+                        // 'B'=>'mesin',
+                        // 'C'=>'bangunan',
+                        // 'D'=>'jaringan',
                         'E'=>'asetlain',
-                        'F'=>'kdp');
+                        // 'F'=>'kdp'
+                        );
 
 		foreach ($listTable as $key => $value) {
 
 			$sql = array(
 	            'table'=>"{$value}",
-	            'field'=>"GUID",
-	            'condition' => "GUID !=''",
+	            'field'=>"kodeSatker",
+	            'condition' => "GUID ='212'",
 	            );
 	        $res = $this->db->lazyQuery($sql,$debug);
 	        if ($res){
 	        	foreach ($res as $key => $value) {
-	        		$newData[] = $value['GUID'];
+	        		$newData[] = $value['kodeSatker'];
 	        	}
 
 	        	
@@ -316,19 +331,30 @@ class PENGGUNAAN extends DB{
 
 $run = new PENGGUNAAN;
 $getGUID = $run->getGUID();
+
+$kontrakArr = array("050/D/2716/DIKPORA/2014");
+// pr($getGUID);
+
 if ($getGUID){
 	
 	$unique = array_unique($getGUID);
-	pr($unique);
+	// pr($unique);exit;
 	foreach ($unique as $key => $value) {
-		// echo $value;
-		$usulan = $run->usulan($value);
-		// $usulan = 4;
-		logFile('==================== Usulan Penggunaan DONE =====================');
-		if ($usulan){
-			$validasi = $run->validasi($usulan);
-			logFile('==================== Validasi Penggunaan DONE =====================');
-		}
+		
+        foreach ($kontrakArr as $kontrak) {
+            logFile('NoKontrak : '.$kontrak);
+            $usulan = $run->usulan($value, $kontrak);
+            
+            // echo 'sukses usulan';
+            logFile('==================== Usulan Penggunaan DONE =====================');
+            if ($usulan){
+                $validasi = $run->validasi($usulan);
+                // echo 'sukses validasi';
+                logFile('==================== Validasi Penggunaan DONE =====================');
+            }
+
+        }
+		
 	}
 }
 

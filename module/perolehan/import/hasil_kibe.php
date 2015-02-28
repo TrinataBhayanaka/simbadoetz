@@ -29,14 +29,14 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		$tmp = explode("|", $val);
 
 		$datatmp = $RETRIEVE_PEROLEHAN->get_slowtmpData($tmp[0]);
-		
+		// pr($datatmp);exit;
 
 		$data['kodeSatker'] = $datatmp['kodeSatker'];
 		$data['kodeRuangan'] = $datatmp['kodeRuangan'];
 		$data['kodeKelompok'] = $datatmp['kodeKelompok'];
-		$data['Judul'] = $datatmp['Judul'];
-		$data['Pengarang'] = $datatmp['Pengarang'];
-		$data['Penerbit'] = $datatmp['Penerbit'];
+		$data['Judul'] = addslashes($datatmp['Judul']);
+		$data['Pengarang'] = addslashes($datatmp['Pengarang']);
+		$data['Penerbit'] = addslashes($datatmp['Penerbit']);
 		$data['Spesifikasi'] = $datatmp['Spesifikasi'];
 		$data['AsalDaerah'] = $datatmp['AsalDaerah'];
 		$data['Material'] = $datatmp['Material'];
@@ -46,6 +46,7 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		$data['Kuantitas'] = $datatmp['Jumlah'];
 		$data['Satuan'] = $datatmp['NilaiPerolehan'];
 		$data['NilaiPerolehan'] = $datatmp['NilaiPerolehan'];
+		$data['NilaiTotal'] = $datatmp['NilaiTotal'];
 		$data['Info'] = $datatmp['Info'];
 		$data['id'] = $_GET['id'];
 		$data['noKontrak'] = $datatmp['noKontrak'];
@@ -59,10 +60,11 @@ $RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
 		// pr($data);exit;
 		//insert data
 		$kontrak = $RETRIEVE_PEROLEHAN->upd_kontrak($_GET['id']);
-		$dataArr = $STORE->store_aset($data);	
+		$dataArr = $STORE->store_aset($data);
+		logFile($counter2);	
 	}
-	$datatmp = $RETRIEVE_PEROLEHAN->del_xlsOldData('tmp_asetlain','XLSIMP');
-	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$_GET['id']}\">";
+	$datatmp = $RETRIEVE_PEROLEHAN->del_xlsOldData('tmp_asetlain','XLSIMP','temp_AsetLain_ID');
+	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/import/asetlain.php?id={$_GET['id']}\">";
 	exit;
 	// pr($data);
 	// pr($dataaset);exit;

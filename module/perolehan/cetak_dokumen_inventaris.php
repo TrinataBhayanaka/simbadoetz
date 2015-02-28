@@ -14,7 +14,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 	include"$path/menu.php";
 	
 ?>
-	
+	<script>
+		function newruangan(){
+				if($("#kodeSatker2").val() != "" && $("#tglCetakKir").val() != ""){
+					var tgl = $("#tglCetakKir").val();
+					var tmp = tgl.split("-");
+					$('#hiddenthn').val(tmp[0]);
+				} 
+			}
+	</script>
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -109,6 +117,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								selectAllSatker('kodeSatker','255',true,false,false,true);
 							?>
 							<br />
+
 							<li>
 								<span class="span2">Tanggal Cetak</span>
 								<div class="control">
@@ -208,17 +217,20 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									selectAllSatker('kodeSatker2','255',true,false,false,true);
 							
 							?>
+							
 							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakKir" id="tglCetakKir" value="" 
+										<input type="text" class="span2 full" name="tglCetakKir" id="tglCetakKir" value="" onchange="return newruangan();"
 										required/>
 									</div>
 								</div>
 							</li>
+							<?=selectRuangKir('kodeRuangan','kodeSatker2','255',true,false,false,'hiddenthn');?>
+							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
 								 <input type="submit" onClick="testsendit_5()" class="btn btn-primary" name="submit"value="Lanjut" />
@@ -229,6 +241,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="mode" value="1">
 						<input type="hidden" name="tab" value="2">
 						<input type="hidden" name="kir" value="kir">
+						<input type="hidden" id="hiddenthn" value="">
+
 						</form>
 						</div>
 						

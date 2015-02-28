@@ -104,10 +104,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							<li>
 								<?php 
 									if($_SESSION[ses_uoperatorid] == '1'){
-										// selectAllSatker('kodeSatker11','255',true,false); 
-										selectSatker('kodeSatker11','255',true,false); 
+										// selectSatker('kodeSatker11','255',true,false); 
+										selectAllSatker('kodeSatker11','255',true,false,false,true);
 									}else{
 										selectSatker('kodeSatker11','255',true,false); 
+										// selectAllSatker('kodeSatker11','255',true,false,false,true);
 									}
 								?>
 								<br>
@@ -121,10 +122,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<!--<li>
-								<span class="span2">Tanggal Cetak Report</span>
-								<input  input id="tanggal5"  name="cdi_rbiid_tglreport" value="">(format tanggal dd/mm/yy)
-							</li>-->
 							<li>
 								<span class="span2">&nbsp;</span>
 								 <input type="submit" name="bkintra" class="btn btn-primary" onClick="sendit_5()" value="Lanjut" />
@@ -164,10 +161,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							<li>
 								<?php 
 								if($_SESSION[ses_uoperatorid] == '1'){
-										// selectAllSatker('kodeSatker12','255',true,false); 
-										selectSatker('kodeSatker12','255',true,false); 
+										selectAllSatker('kodeSatker12','255',true,false); 
+										// selectSatker('kodeSatker12','255',true,false); 
 									}else{
 										selectSatker('kodeSatker12','255',true,false); 
+										// selectAllSatker('kodeSatker12','255',true,false); 
 									}
 								?>
 								<br>
@@ -177,7 +175,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakEkstra" id="tglCetakEkstra" value=""/>
+										<input type="text" class="span2 full" name="tglCetakEkstra" id="tglCetakEkstra" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -619,7 +617,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakMutasi" id="tglCetakMutasi" value=""/>
+										<input type="text" class="span2 full" name="tglCetakMutasi" id="tglCetakMutasi" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -670,7 +668,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakMutasiskpd" id="tglCetakMutasiskpd" value=""/>
+										<input type="text" class="span2 full" name="tglCetakMutasiskpd" id="tglCetakMutasiskpd" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -757,7 +755,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglCetakPengadaan" id="tglCetakPengadaan" value="" />
+										<input type="text" class="span2 full" name="tglCetakPengadaan" id="tglCetakPengadaan" value="" required/>
 									</div>
 								</div>
 							</li>
