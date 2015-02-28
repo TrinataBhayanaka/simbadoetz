@@ -313,7 +313,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
         $filter = "";
         if ($Penggunaan_ID) $filter .= " AND p.Penggunaan_ID = {$Penggunaan_ID} ";
-        
+
         $sql = array(
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p, kelompok AS k',
                 'field'=>'p.*, a.*, k.Uraian',
@@ -456,7 +456,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         
         $getAsetList = $this->getAsetList('PNGGU');
         if (!$getAsetList) $getAsetList = array();
-        
+
         if ($jenisaset){
 
             foreach ($jenisaset as $value) {
@@ -638,13 +638,13 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 'field'=>"pa.*, a.kodeKelompok, a.noKontrak, a.NilaiPerolehan, a.Tahun, a.noRegister, a.TipeAset, k.Uraian",
                 'condition'=>"pa.Penggunaan_ID = {$data['id']} AND pa.Status = 1 {$filter}",
                 'limit'=>"{$paging}, 100",
-                'joinmethod' => 'LEFT JOIN',
+                'joinmethod' => 'INNER JOIN',
                 'join' => "pa.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
 
-        
+        // pr($res);exit;
         if ($res){
 
             $listTable2 = array(
@@ -661,6 +661,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $newData[$value['Aset_ID']] = $value;
                 
             }
+
 
             foreach ($newData as $key => $value) {
                 $sql = array(
