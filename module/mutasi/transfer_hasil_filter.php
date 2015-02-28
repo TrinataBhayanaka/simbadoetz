@@ -76,7 +76,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 				
 				// datatables
 				var param = "api_mutasi.php?<?php echo $par_data_table?>";
-        		dTableParam("mutasi_tabel", param, 10);
+        		dTableParam("mutasi_tabel", param, 11);
 
 			} );
 			
@@ -218,6 +218,7 @@ $MUTASI = new RETRIEVE_MUTASI;
 						<th>Kode Barang</th>
 						<th>No Register</th>
 						<th>Uraian</th>
+						<th>Info</th>
 						<th>Merk / Type</th>
 						<th>No Polisi</th>
 						<th>Satker</th>
