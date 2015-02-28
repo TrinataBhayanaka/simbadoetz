@@ -250,7 +250,7 @@ foreach ($data as $key => $value)
 
                   if($value['Status']==0){
               
-                      if($_SESSION['ses_uoperatorid']==1){
+                      if($_SESSION['ses_ujabatan']==1){
                            $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_penetapan_usulan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;<a href=\"$url_rewrite/module/penghapusan/penetapan_penghapusan_daftar_hapus_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-danger btn-small\"> <i class=\"fa fa-trash\"></i>Hapus</a>";
                       }else{
                           $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_penetapan_usulan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\"><i class=\"fa fa-pencil-square-o\"></i> View</a>";

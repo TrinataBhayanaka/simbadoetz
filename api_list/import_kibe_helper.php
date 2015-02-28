@@ -7,7 +7,7 @@ $CONFIG['default']['db_name'] = 'simbada_2014_full_v1';
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
-$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1";
+$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
 
 while($row = mysqli_fetch_assoc($result)) {
@@ -19,11 +19,11 @@ $cleardata = explode(",", $asetlist['aset_list']);
 echo "Total Data Row : ".count($cleardata)."\n\n";
 
 //start transaction
-echo "Start Transaction\n\n";
-$command = "SET autocommit=0;";
-$exec = $link->query($command);
-$command = "START TRANSACTION;";
-$exec = $link->query($command);
+// echo "Start Transaction\n\n";
+// $command = "SET autocommit=0;";
+// $exec = $link->query($command);
+// $command = "START TRANSACTION;";
+// $exec = $link->query($command);
 
 $counter = 0;
 $totaldata = 0;
@@ -31,7 +31,7 @@ foreach ($cleardata as $key => $val) {
 	$counter++;
 	$tmp = explode("|", $val);
 
-	$sql = "SELECT * FROM tmp_asetlain WHERE temp_AsetLain_ID = '{$tmp[0]}'";
+	$sql = "SELECT * FROM tmp_asetlain WHERE temp_AsetLain_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
 	$result = $link->query($sql); 
 
 	while($row = mysqli_fetch_assoc($result)) {
@@ -71,19 +71,19 @@ foreach ($cleardata as $key => $val) {
 	$totaldata = store_aset($data,$link,$totaldata);
 	echo "=================== Row Finish:".$counter." ===================\n\n";
 
-    echo "Commit data\n";
-    $command = "COMMIT;";
-    $exec = $link->query($command);
+    // echo "Commit data\n";
+    // $command = "COMMIT;";
+    // $exec = $link->query($command);
 
 }
 
 echo "Updating table kontrak\n";
-$sql = "UPDATE kontrak SET n_status = '1' WHERE id = '{$argv[2]}'";
+$sql = "UPDATE kontrak SET n_status = '1' WHERE id = '{$argv[2]}'" or die("Error in the consult.." . mysqli_error($link));
 $exec = $link->query($sql);
 
-echo "Commit data\n";
-$command = "COMMIT;";
-$exec = $link->query($command);
+// echo "Commit data\n";
+// $command = "COMMIT;";
+// $exec = $link->query($command);
 
 
 
@@ -136,7 +136,7 @@ function store_aset($data,$link,$totaldata)
 
         }
 
-        $query = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1";
+        $query = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
         $result = $link->query($query);
         while($row = mysqli_fetch_assoc($result)) {
 		  $startreg = $row['noRegister'];
@@ -170,18 +170,18 @@ function store_aset($data,$link,$totaldata)
 
             $field = implode(',', $tmpfield);
             $value = implode(',', $tmpvalue);
-            $query = "INSERT INTO aset ({$field}) VALUES ({$value})";
+            $query = "INSERT INTO aset ({$field}) VALUES ({$value})" or die("Error in the consult.." . mysqli_error($link));
             
             $exec = $link->query($query);
 
-            if(!$exec){
-              $command = "ROLLBACK;";
-              $roll = $link->query($command);
-              echo "Query error. Data di rollback!!\n";
-              exit;
-            }
+            // if(!$exec){
+            //   $command = "ROLLBACK;";
+            //   $roll = $link->query($command);
+            //   echo "Query error. Data di rollback!!\n";
+            //   exit;
+            // }
 
-            $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
+            $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 
             $result = $link->query($query_id);
 
@@ -290,21 +290,21 @@ function store_aset($data,$link,$totaldata)
             }
             $field = implode(',', $tmpfield2);
             $value = implode(',', $tmpvalue2);
-            $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
+            $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})" or die("Error in the consult.." . mysqli_error($link));
             
             if($tabel!="aset"){
                 $exec = $link->query($query);
-                if(!$exec){
-	              $command = "ROLLBACK;";
-	              $roll = $link->query($command);
-	              echo "Query error. Data di rollback!!\n";
-              	  exit;
-	            }
+             //    if(!$exec){
+	            //   $command = "ROLLBACK;";
+	            //   $roll = $link->query($command);
+	            //   echo "Query error. Data di rollback!!\n";
+             //  	  exit;
+	            // }
             }
 
             if(isset($data['xls'])){
                 //log
-                  $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$tblKib['Aset_ID']}'";
+                  $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$tblKib['Aset_ID']}'" or die("Error in the consult.." . mysqli_error($link));
 
                   $result = $link->query($sqlkib);
 
@@ -331,18 +331,18 @@ function store_aset($data,$link,$totaldata)
                         $fileldImp = implode(',', $tmpField);
                         $dataImp = implode(',', $tmpValue);
 
-                        $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+                        $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})" or die("Error in the consult.." . mysqli_error($link));
                        	$exec = $link->query($sql);
 
                        	echo "Baris selesai : ".$xlsxount."\n";
                        	echo "Jumlah data yang masuk : ".$totaldata."\n";
 
-		                if(!$exec){
-			              $command = "ROLLBACK;";
-			              $roll = $link->query($command);
-			              echo "Query error. Data di rollback!!\n";
-              			  exit;
-			            }
+		             //    if(!$exec){
+			            //   $command = "ROLLBACK;";
+			            //   $roll = $link->query($command);
+			            //   echo "Query error. Data di rollback!!\n";
+              	// 		  exit;
+			            // }
             }
 
         }
