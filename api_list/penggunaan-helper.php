@@ -332,7 +332,7 @@ class PENGGUNAAN extends DB{
 $run = new PENGGUNAAN;
 $getGUID = $run->getGUID();
 
-$kontrakArr = array("050/219.1");
+$kontrakArr = array("050/D/2716/DIKPORA/2014");
 // pr($getGUID);
 
 if ($getGUID){
