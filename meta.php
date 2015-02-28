@@ -14,6 +14,7 @@ if ($u_sess) $isLogin = true;
 	<link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/style_simbada.css">    
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap.min_simbada.css" rel="stylesheet">
         <link href="<?php echo "$url_rewrite/"; ?>css/bootstrap-responsive_simbada.css" rel="stylesheet">
+        <link href="<?php echo "$url_rewrite/"; ?>css/pace-flat_top.css" rel="stylesheet">
          <link href="<?php echo "$url_rewrite/"; ?>js/select2/select2.css" rel="stylesheet"/>
          <link href="<?php echo "$url_rewrite/"; ?>js/nprogress/nprogress.css" rel="stylesheet"/>
          <link href="<?php echo "$url_rewrite/"; ?>js/datepicker/css/datepicker.css" rel="stylesheet"/>
@@ -32,6 +33,7 @@ if ($u_sess) $isLogin = true;
 		
 		<link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/jquery-ui.css">
 		<script src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.js"></script>
+		<script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite/"; ?>js/pace.min.js"></script>
 		 <script>
 			$(function() {
 			$( "#datepicker" ).datepicker({ 
