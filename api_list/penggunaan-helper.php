@@ -310,13 +310,13 @@ class PENGGUNAAN extends DB{
 
 			$sql = array(
 	            'table'=>"{$value}",
-	            'field'=>"GUID",
-	            'condition' => "GUID !=''",
+	            'field'=>"kodeSatker",
+	            'condition' => "GUID ='212'",
 	            );
 	        $res = $this->db->lazyQuery($sql,$debug);
 	        if ($res){
 	        	foreach ($res as $key => $value) {
-	        		$newData[] = $value['GUID'];
+	        		$newData[] = $value['kodeSatker'];
 	        	}
 
 	        	
@@ -331,24 +331,30 @@ class PENGGUNAAN extends DB{
 
 $run = new PENGGUNAAN;
 $getGUID = $run->getGUID();
-$kontrak = "importing-ug/2";
 
+$kontrakArr = array("050/D/2716/DIKPORA/2014");
+// pr($getGUID);
 
 if ($getGUID){
 	
 	$unique = array_unique($getGUID);
-	// pr($unique);
+	// pr($unique);exit;
 	foreach ($unique as $key => $value) {
-		// echo $value;
-		$usulan = $run->usulan($value, $kontrak);
-		// $usulan = 4;
-		echo 'sukses usulan';
-        logFile('==================== Usulan Penggunaan DONE =====================');
-		if ($usulan){
-			$validasi = $run->validasi($usulan);
-            echo 'sukses validasi';
-			logFile('==================== Validasi Penggunaan DONE =====================');
-		}
+		
+        foreach ($kontrakArr as $kontrak) {
+            logFile('NoKontrak : '.$kontrak);
+            $usulan = $run->usulan($value, $kontrak);
+            
+            // echo 'sukses usulan';
+            logFile('==================== Usulan Penggunaan DONE =====================');
+            if ($usulan){
+                $validasi = $run->validasi($usulan);
+                // echo 'sukses validasi';
+                logFile('==================== Validasi Penggunaan DONE =====================');
+            }
+
+        }
+		
 	}
 }
 
