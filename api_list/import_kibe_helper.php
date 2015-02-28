@@ -1,9 +1,9 @@
 <?php
 
 $CONFIG['default']['db_host'] = 'localhost';
-$CONFIG['default']['db_user'] = 'root';
-$CONFIG['default']['db_pass'] = 'root123root';
-$CONFIG['default']['db_name'] = 'simbada_2014';
+$CONFIG['default']['db_user'] = 'simbada';
+$CONFIG['default']['db_pass'] = 'margonda100';
+$CONFIG['default']['db_name'] = 'simbada_2014_full_v1';
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
@@ -328,8 +328,8 @@ function store_aset($data,$link,$totaldata)
                         $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
                        	$exec = $link->query($sql);
 
-                       	// echo "Baris selesai : ".$xlsxount."\n";
-                       	// echo "Jumlah data yang masuk : ".$totaldata."\n";
+                       	echo "Baris selesai : ".$xlsxount."\n";
+                       	echo "Jumlah data yang masuk : ".$totaldata."\n";
 
 		                if(!$exec){
 			              $command = "ROLLBACK;";
