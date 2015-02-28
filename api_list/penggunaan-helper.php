@@ -331,8 +331,10 @@ class PENGGUNAAN extends DB{
 
 $run = new PENGGUNAAN;
 $getGUID = $run->getGUID();
+
 $kontrakArr = array("050/219.1");
 // pr($getGUID);
+
 if ($getGUID){
 	
 	$unique = array_unique($getGUID);

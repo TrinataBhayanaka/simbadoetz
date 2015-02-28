@@ -1548,6 +1548,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 } else {
                     $tblAset['kodeKA'] = 1;
                 }
+            } else {
+                $tblAset['kodeKA'] = 0;
             }
         }
         $tblAset['AsalUsul'] = $data['AsalUsul'];
@@ -2335,6 +2337,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 } else {
                     $tblAset['kodeKA'] = 1;
                 }
+            } else {
+                $tblAset['kodeKA'] = 0;
             }
         }
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
