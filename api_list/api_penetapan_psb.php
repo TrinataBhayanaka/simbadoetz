@@ -252,7 +252,7 @@ foreach ($data as $key => $value)
 
                   if($value['Status']==0){
               
-                      if($_SESSION['ses_uaksesadmin']==1){
+                      if($_SESSION['ses_ujabatan']==1){
                            $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_penetapan_usulan_psb.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;<a href=\"$url_rewrite/module/penghapusan/penetapan_penghapusan_daftar_hapus_psb.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-danger btn-small\"> <i class=\"fa fa-trash\"></i>Hapus</a>";
                       }else{
                           $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_penetapan_usulan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\"><i class=\"fa fa-pencil-square-o\"></i> View</a>";
@@ -263,9 +263,11 @@ foreach ($data as $key => $value)
                 }elseif($value['Status']==1){
                  if($value['Usulan_ID']!=""){
                    $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_penetapan_usulan_psb.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;
-              <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp;";
+              <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp;
+              <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}&tipe_file=2\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp;";
                 }else{
-                 $tindakan=" <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Report</a>&nbsp;";
+                 $tindakan=" <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp;
+                 <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}&tipe_file=2\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp;";
                
                 }  
               }
