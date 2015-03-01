@@ -2572,7 +2572,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
-        
+
         if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
         }else {
@@ -2591,7 +2591,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             } else {
                 $tblAset['kodeKA'] = 0;
             }
-
+         }   
         
         if(isset($data['kodeRuangan'])) {
             $pos = strpos($data['kodeRuangan'], "_");
