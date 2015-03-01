@@ -92,7 +92,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="penghapusan8">
 				<thead>
 					<?php
-							if($_SESSION['ses_uaksesadmin']==1){
+							if($_SESSION['ses_ujabatan']==1){
 						?>
 					<tr>
 						<td colspan="8" align="Left">
@@ -105,7 +105,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<tr>
 						<th>No</th>
 						<?php
-							if($_SESSION['ses_uaksesadmin']==1){
+							if($_SESSION['ses_ujabatan']==1){
 						?>
 						<th class="checkbox-column">
 							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
@@ -140,7 +140,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<tr class="gradeA">
 						<td><?php echo "$nomor";?></td>
 						<?php
-							if($_SESSION['ses_uaksesadmin']==1){
+							if($_SESSION['ses_ujabatan']==1){
 						?>
 						<td class="checkbox-column">
 							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
@@ -182,7 +182,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<tr>
 						<th>&nbsp;</th>
 						<?php
-							if($_SESSION['ses_uaksesadmin']==1){
+							if($_SESSION['ses_ujabatan']==1){
 						?>
 						<th>&nbsp;</th>
 						<?php
