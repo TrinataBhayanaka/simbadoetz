@@ -17,8 +17,7 @@ class PENGGUNAAN extends DB{
 	{
 
 		// $getAset = $this->getAset($guid, $kontrak);
-		$noKontrak = $kontrak;
-
+		
 		// pr($getAset);
 		// exit;
 		$UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
@@ -28,7 +27,7 @@ class PENGGUNAAN extends DB{
         $ses_uid=$_SESSION['ses_uid'];
 
         $penggu_penet_eks_ket="migrasi penggunaan";   
-        $penggu_penet_eks_nopenet=$noKontrak[0];   
+        $penggu_penet_eks_nopenet=$kontrak;   
         $penggu_penet_eks_tglpenet=$data['penggu_penet_eks_tglpenet']; 
         $olah_tgl=  date('Y-m-d H:i:s');
         $TglSKKDH = "2014-12-31";
@@ -44,58 +43,76 @@ class PENGGUNAAN extends DB{
 
         $sleep = 1;
         $count = 1;
-        foreach ($getAset['asetlain'] as $key => $value) {
+
+        if ($getAset['asetlain']){
+            foreach ($getAset['asetlain'] as $key => $val) {
             
-            echo "<br>data aset lain :".$count;
-            $nmasetsatker = $key;
-            $sql1 = array(
-                    'table'=>'Penggunaanaset',
-                    'field'=>"Penggunaan_ID,Aset_ID, kodeSatker, Status",
-                    'value' => "'{$insertid}','{$value}', '{$nmasetsatker}',1",
-                    );
-            $res = $this->db->lazyQuery($sql1,$debug,1);
+                foreach ($val as $value) {
 
-            $sql2 = array(
-                'table'=>'Aset',
-                'field'=>"NotUse=1, fixPenggunaan = 1",
-                'condition' => "Aset_ID='{$value}'",
-                'limit' => '1',
-                );
-            $res = $this->db->lazyQuery($sql2,$debug,2);
+                    echo "data aset lain :".$count."\n\n";
+                    $nmasetsatker = $key;
+                    $sql1 = array(
+                            'table'=>'Penggunaanaset',
+                            'field'=>"Penggunaan_ID,Aset_ID, kodeSatker, Status",
+                            'value' => "'{$insertid}','{$value}', '{$nmasetsatker}',1",
+                            );
+                    $res = $this->db->lazyQuery($sql1,$debug,1);
 
-            $sleep++;
-            if ($sleep == 200){
-                sleep(1);
-                $sleep = 1; 
-            } 
+                    $sql2 = array(
+                        'table'=>'Aset',
+                        'field'=>"NotUse=1, fixPenggunaan = 1",
+                        'condition' => "Aset_ID='{$value}'",
+                        'limit' => '1',
+                        );
+                    $res = $this->db->lazyQuery($sql2,$debug,2);
+
+                    $sleep++;
+                    if ($sleep == 200){
+                        sleep(1);
+                        $sleep = 1; 
+                    }
+
+                    $count++; 
+                }
+                
+            }
         }
-
-        foreach ($getAset['persediaan'] as $key => $value) {
+        
+        if ($getAset['persediaan']){
+            foreach ($getAset['persediaan'] as $key => $val) {
             
-            echo "<br>data aset persediaan :".$count;
-            $nmasetsatker = $key;
-            $sql1 = array(
-                    'table'=>'Penggunaanaset',
-                    'field'=>"Penggunaan_ID,Aset_ID, kodeSatker, Status",
-                    'value' => "'{$insertid}','{$value}', '{$nmasetsatker}', 1",
-                    );
-            $res = $this->db->lazyQuery($sql1,$debug,1);
+                foreach ($val as $value) {
 
-            $sql2 = array(
-                'table'=>'Aset',
-                'field'=>"NotUse=1, fixPenggunaan = 1",
-                'condition' => "Aset_ID='{$value}'",
-                'limit' => '1',
-                );
-            $res = $this->db->lazyQuery($sql2,$debug,2);
+                    echo "data aset persediaan :".$count."\n\n";
+                    $nmasetsatker = $key;
+                    $sql1 = array(
+                            'table'=>'Penggunaanaset',
+                            'field'=>"Penggunaan_ID,Aset_ID, kodeSatker, Status",
+                            'value' => "'{$insertid}','{$value}', '{$nmasetsatker}', 1",
+                            );
+                    $res = $this->db->lazyQuery($sql1,$debug,1);
 
-            $sleep++;
-            if ($sleep == 200){
-                sleep(1);
-                $sleep = 1; 
-            } 
+                    $sql2 = array(
+                        'table'=>'Aset',
+                        'field'=>"NotUse=1, fixPenggunaan = 1",
+                        'condition' => "Aset_ID='{$value}'",
+                        'limit' => '1',
+                        );
+                    $res = $this->db->lazyQuery($sql2,$debug,2);
 
+                    $sleep++;
+                    if ($sleep == 200){
+                        sleep(1);
+                        $sleep = 1; 
+                    } 
+
+                    $count++;
+                }
+                
+
+            }  
         }
+        
 
         
         if ($res) return true;
@@ -119,7 +136,7 @@ class PENGGUNAAN extends DB{
                         'table'=>"{$tabel[$value]}",
                         'field'=>"Aset_ID, GUID",
                         'condition' => "GUID != '' {$ignoreGUID}",
-                        // 'limit' => 5,
+                        'limit' => 100,
                         );
                 $res = $this->db->lazyQuery($sql,$debug);
                 if ($res){
@@ -154,7 +171,7 @@ class PENGGUNAAN extends DB{
                 'table'=>"aset",
                 'field'=>"Aset_ID, TipeAset, kodeSatker",
                 'condition' => "noKontrak = '{$noKontrak}' {$filter}",
-                // 'limit' => 5,
+                'limit' => 100,
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
@@ -214,6 +231,7 @@ pr($argv);
 $nokontrak = $argv[2];
 $debug = $argv[3];
 
+// $nokontrak = "050/D/2716/DIKPORA/2014";
 $aset = $run->getAset($nokontrak);
 $kib = $run->getKib($aset['tipe']);
 $inter = $run->intersectAset($aset, $kib);
@@ -228,7 +246,7 @@ pr($inter['countpersediaan']);
 // pr($aset);
 // pr($kib
 // pr($inter);
-
+// pr($argv);exit;
 if ($debug)exit;
 // exit;
 $usulan = $run->usulan($inter, $nokontrak);
