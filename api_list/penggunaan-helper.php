@@ -136,7 +136,7 @@ class PENGGUNAAN extends DB{
                         'table'=>"{$tabel[$value]}",
                         'field'=>"Aset_ID, GUID",
                         'condition' => "GUID != '' {$ignoreGUID}",
-                        'limit' => 100,
+                        // 'limit' => 100,
                         );
                 $res = $this->db->lazyQuery($sql,$debug);
                 if ($res){
@@ -171,7 +171,7 @@ class PENGGUNAAN extends DB{
                 'table'=>"aset",
                 'field'=>"Aset_ID, TipeAset, kodeSatker",
                 'condition' => "noKontrak = '{$noKontrak}' {$filter}",
-                'limit' => 100,
+                // 'limit' => 100,
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
