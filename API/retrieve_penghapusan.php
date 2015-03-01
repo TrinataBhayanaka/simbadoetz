@@ -4529,9 +4529,9 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
     {
         $id = $data[penetapanpenghapusan];
         $cols = implode(', ',array_values($id));
-        // //////////////////////////////////////////////////pr($cols);
+        // pr($cols);
         $uname = $_SESSION['ses_uname'];
-        //////////////////////////////////////////pr($data[penetapanpenghapusan]);
+        // pr($data[penetapanpenghapusan]);
         $jenisaset = $data['jenisaset'];
         $nokontrak = $data['nokontrak'];
         $kodeSatker = $data['kodeSatker'];
@@ -4541,7 +4541,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($kodeSatker) $filterkontrak .= " AND a.kodeSatker = '{$kodeSatker}' ";
   
         foreach ($id as $key => $value) {
-            //////////////////////////////////////////pr($value);
+            // pr($value);
             $sqlUsl = array(
                 'table'=>'Usulan',
                 'field'=>" Usulan_ID,Aset_ID ",
@@ -4549,22 +4549,22 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 );
         
             $resUsl = $this->db->lazyQuery($sqlUsl,$debug);
-            //////////////////////////////////////////pr($resUsl);
+            // pr($sqlUsl);
 
             //////////////////////////////////////////pr($resUsl[0]['Aset_ID']);
             // $Aset_IDUsl=explode(",", $resUsl[0]['Aset_ID']);
             $Aset_ID=$this->FilterDatakoma($resUsl[0]['Aset_ID']);
-            // //pr($Aset_ID);
+            // pr($Aset_ID);
             $sqlUsulAst = array(   
                     'table'=>'usulanaset AS b,Aset AS a,Kelompok AS k',
-                    'field'=>"a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.TipeAset,a.kondisi,a.AsalUsul,b.StatusKonfirmasi,b.StatusPenetapan,b.NilaiPerolehanTmp, b.kondisiTmp, ,b.Usulan_ID,k.Kode,k.Uraian",
+                    'field'=>"a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.TipeAset,a.kondisi,a.AsalUsul,b.StatusKonfirmasi,b.StatusPenetapan,b.NilaiPerolehanTmp, b.kondisiTmp,b.Usulan_ID,k.Kode,k.Uraian",
                     'condition' => "b.Usulan_ID='$value' AND b.Aset_ID IN ({$Aset_ID}) {$filterkontrak} GROUP BY b.Aset_ID",
                     'joinmethod' => ' LEFT JOIN ',
                     'join' => 'b.Aset_ID=a.Aset_ID , a.kodeKelompok=k.Kode' 
                     );
-
+            // pr($sqlUsulAst);
                     $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
-            //////////////////////////////////////////pr($Aset_IDUsl);
+            // pr($resUsulAst);
             // foreach ($Aset_IDUsl as $keyUsl => $valueUsl) {
 
             //      $res[$key][$keyUsl]['Usulan_ID']=$value;
