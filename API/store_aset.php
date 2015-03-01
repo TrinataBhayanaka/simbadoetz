@@ -2775,7 +2775,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     // pr($query);
             }     
             
-            pr($query);exit;
+            // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
             //log
