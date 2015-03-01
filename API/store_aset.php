@@ -2735,10 +2735,16 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
                     $field = implode(',', $tmpfield2);
                     // $value = implode(',', $tmpvalue2);
-
+                    $this->logMe($kib_old,$_GET['tbl']);
                     $query = "UPDATE {$tabel} SET {$field} WHERE {$idkey} = '{$data[$idkey]}'";  
                     // pr($query);
                 } else {
+                    $sqlkib = "SELECT * FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
+                      $sqlquery = mysql_query($sqlkib);
+                      while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                              $kib_old = $dataAset;
+                          } 
+                    $this->logMe($kib_old,$_GET['tbl']);
                     $delsql = "DELETE FROM {$_GET['tbl']} WHERE Aset_ID = '{$data['Aset_ID']}'";
                     // pr($delsql);exit;
                     $result=  $this->query($delsql) or die($this->error());
@@ -2756,6 +2762,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                         $query = "INSERT INTO {$tabel} ({$fileldImp}) VALUES ({$dataImp})";
                         // pr($query);
                 }
+                $reklas = 30;
             } else {
                 foreach ($tblKib as $key => $val) {
                         $tmpfield2[] = $key."='$val'";
@@ -2791,6 +2798,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
               if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
+              if(isset($reklas)) {$kib['Kd_Riwayat'] = 30;$kib['action'] = 'reklas';}
 
               // pr($kib);
               
@@ -2832,6 +2840,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               $kib['operator'] = $_SESSION['ses_uoperatorid'];
               $kib['NilaiPerolehan_Awal'] = $kib_old['NilaiPerolehan'];
               $kib['GUID'] = $data['GUID'];
+              $kib['Kd_Riwayat'] = 30;
               if($data['rubahkondisi']) {
                 $kib['Kd_Riwayat'] = 1;
                 $kib['kondisi'] = $data['old_kondisi'];
@@ -2839,7 +2848,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               if($data['ubahkapitalisasi']) $kib['Kd_Riwayat'] = 2;
               if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
-              if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
+              if($data['pindahruang']) $kib['Kd_Riwayat'] = 30;
 
               // pr($kib);
               

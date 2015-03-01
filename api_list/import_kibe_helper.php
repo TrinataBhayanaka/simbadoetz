@@ -5,6 +5,11 @@ $CONFIG['default']['db_user'] = 'simbada';
 $CONFIG['default']['db_pass'] = 'margonda100';
 $CONFIG['default']['db_name'] = 'simbada_2014_full_v1';
 
+// $CONFIG['default']['db_host'] = 'localhost';
+// $CONFIG['default']['db_user'] = 'root';
+// $CONFIG['default']['db_pass'] = 'root123root';
+// $CONFIG['default']['db_name'] = 'simbada_2014';
+
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
@@ -108,6 +113,7 @@ function store_aset($data,$link,$totaldata)
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
+        $tblAset['GUID'] = $data['GUID'];
         if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
         }else {
@@ -135,12 +141,14 @@ function store_aset($data,$link,$totaldata)
             $tblAset['Status_Validasi_Barang'] = 1;
 
         }
-
+        $startreg = 0;
         $query = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
         $result = $link->query($query);
         while($row = mysqli_fetch_assoc($result)) {
 		  $startreg = $row['noRegister'];
 		}
+
+        if(!$startreg) $startreg = 0;
 
         $loops = $startreg+$data['Kuantitas'];
         $xlsxount = 0;
@@ -173,7 +181,10 @@ function store_aset($data,$link,$totaldata)
             $query = "INSERT INTO aset ({$field}) VALUES ({$value})" or die("Error in the consult.." . mysqli_error($link));
             
             $exec = $link->query($query);
+            $tblKib['Aset_ID'] = mysqli_insert_id($link);
 
+            
+            
             // if(!$exec){
             //   $command = "ROLLBACK;";
             //   $roll = $link->query($command);
@@ -181,13 +192,13 @@ function store_aset($data,$link,$totaldata)
             //   exit;
             // }
 
-            $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+   //          $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 
-            $result = $link->query($query_id);
+   //          $result = $link->query($query_id);
 
-	        while($row = mysqli_fetch_assoc($result)) {
-			  $tblKib['Aset_ID'] = $row['Aset_ID'];
-			}
+	  //       while($row = mysqli_fetch_assoc($result)) {
+			//   $tblKib['Aset_ID'] = $row['Aset_ID'];
+			// }
 
             if($data['TipeAset']=="A"){
                 $tblKib['HakTanah'] = $data['HakTanah'];
@@ -294,6 +305,8 @@ function store_aset($data,$link,$totaldata)
             
             if($tabel!="aset"){
                 $exec = $link->query($query);
+                $kib[$idkey] = mysqli_insert_id($link);
+                // echo $kib[$idkey];exit;
              //    if(!$exec){
 	            //   $command = "ROLLBACK;";
 	            //   $roll = $link->query($command);
@@ -302,15 +315,67 @@ function store_aset($data,$link,$totaldata)
 	            // }
             }
 
+            if($data['TipeAset']=="H"){
+                $kib['Aset_ID'] = $tblKib['Aset_ID'];
+                $kib['kodeKelompok'] = $data['kodeKelompok'];
+                $kib['kodeSatker'] = $data['kodeSatker'];
+                $kib['kodeLokasi'] = $tblAset['kodeLokasi'];
+                $kib['TglPerolehan'] = $data['TglPerolehan'];
+                $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $kib['noKontrak'] = $data['noKontrak'];
+                $kib['kondisi'] = $data['kondisi'];
+                $kib['Info'] = $data['Info'];
+                $kib['Alamat'] = $data['Alamat'];
+                $kib['Tahun'] = $tblAset['Tahun'];
+                $kib['kodeKA'] = $tblAset['kodeKA'];
+                $kib['noRegister'] = $tblAset['noRegister'];
+                $kib['AsalUsul'] = $data['AsalUsul'];
+                $kib['TglPembukuan'] = $data['TglPerolehan'];
+                $kib['StatusValidasi'] = 1;
+                $kib['Status_Validasi_Barang'] = 1;
+                $kib['Kuantitas'] = 1;
+                $kib['Satuan'] = $data['Satuan'];
+                $kib['UserNm'] = $data['UserNm'];
+                $kib['TipeAset'] = $data['TipeAset'];
+                $kib['kodeRuangan'] = $data['kodeRuangan'];
+            } elseif ($data['TipeAset']=="E") {
+                $kib['Aset_ID'] = $tblKib['Aset_ID'];
+                $kib['kodeKelompok'] = $data['kodeKelompok'];
+                $kib['kodeSatker'] = $data['kodeSatker'];
+                $kib['kodeLokasi'] = $tblAset['kodeLokasi'];
+                $kib['noRegister'] = $tblAset['noRegister'];
+                $kib['TglPerolehan'] = $data['TglPerolehan'];
+                $kib['TglPembukuan'] = $data['TglPerolehan'];
+                $kib['kodeKA'] = $tblAset['kodeKA'];
+                $kib['kodeRuangan'] = $data['kodeRuangan'];
+                $kib['StatusValidasi'] = 1;
+                $kib['Status_Validasi_Barang'] = 1;
+                $kib['Tahun'] = $tblAset['Tahun'];
+                $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $kib['Alamat'] = $data['Alamat'];
+                $kib['Info'] = $data['Info'];
+                $kib['AsalUsul'] = $data['AsalUsul'];
+                $kib['kondisi'] = $data['kondisi'];
+                $kib['Judul'] = $data['Judul'];
+                $kib['Pengarang'] = $data['Pengarang'];
+                $kib['Penerbit'] = $data['Penerbit'];
+                $kib['Spesifikasi'] = $data['Spesifikasi'];
+                $kib['AsalDaerah'] = $data['AsalDaerah'];
+                $kib['Material'] = $data['Material'];
+                $kib['Ukuran'] = $data['Ukuran'];
+                $kib['StatusTampil'] = 1;
+                $kib['GUID'] = $data['GUID'];
+            }
+
             if(isset($data['xls'])){
                 //log
-                  $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$tblKib['Aset_ID']}'" or die("Error in the consult.." . mysqli_error($link));
+     //              $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$tblKib['Aset_ID']}'" or die("Error in the consult.." . mysqli_error($link));
 
-                  $result = $link->query($sqlkib);
+     //              $result = $link->query($sqlkib);
 
-			      while($row = mysqli_fetch_assoc($result)) {
-					$kib = $row;
-				  }
+			  //     while($row = mysqli_fetch_assoc($result)) {
+					// $kib = $row;
+				 //  }
                       
                   $kib['TglPerubahan'] = $kib['TglPerolehan'];    
                   $kib['changeDate'] = date("Y-m-d");
