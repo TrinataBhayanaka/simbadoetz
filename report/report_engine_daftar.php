@@ -262,7 +262,7 @@ $head = "
                                                             <td rowspan='2' style=\"width:10%;text-align:center;font-weight:bold;\">Nama / Jenis Barang yang dibeli</td>
                                                             <td colspan='2' style=\"width:30%;text-align:center;font-weight:bold;\">SPK/PERJANJiAN KONTRAK</td>
                                                             <td colspan='2'  style=\"width:20%;text-align:center;font-weight:bold;\">DPA/SPM/KWITANSI</td>
-                                                            <td colspan='3'  style=\"width:20%;text-align:center;font-weight:bold;\">Jumlah</td>
+                                                            <td colspan='2'  style=\"width:20%;text-align:center;font-weight:bold;\">Jumlah</td>
                                                             <td rowspan='2' style=\"width:10%;text-align:center;font-weight:bold;\">Digunakaan pada unit</td>
                                                             <td rowspan='2' style=\"width:5%;text-align:center;font-weight:bold;\">Ket</td>
                                                   </tr>
@@ -272,7 +272,6 @@ $head = "
                                                             <td>Tanggal</td>
                                                             <td>Nomor</td>
                                                             <td>Banyaknya<br/>Barang</td>
-                                                            <td>Harga Satuan</td>
                                                             <td>Total</td>
                                                   </tr>
                                                 </thead>
@@ -321,7 +320,8 @@ $head = "
                                                             <td style=\"width: 90%;text-align:left\">: Jawa Tengah</td>
 
                                              </tr>
-                                        </table>";
+                                        </table>
+											<br>	";
                                                             $body.="<table style=\"text-align: left; width: 100%; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 
                                              <thead>
@@ -330,7 +330,7 @@ $head = "
                                                             <td rowspan='2' style=\"width:10%;text-align:center;font-weight:bold;\">Nama / Jenis Barang yang dibeli</td>
                                                             <td colspan='2' style=\"width:20%;text-align:center;font-weight:bold;\">SPK/PERJANJiAN KONTRAK</td>
                                                             <td colspan='2'  style=\"width:30%;text-align:center;font-weight:bold;\">DPA/SPM/KWITANSI</td>
-                                                            <td colspan='3'  style=\"width:20%;text-align:center;font-weight:bold;\">Jumlah</td>
+                                                            <td colspan='2'  style=\"width:20%;text-align:center;font-weight:bold;\">Jumlah</td>
                                                             <td rowspan='2' style=\"width:10%;text-align:center;font-weight:bold;\">Digunakaan pada unit</td>
                                                             <td rowspan='2' style=\"width:10%;text-align:center;font-weight:bold;\">Ket</td>
                                                   </tr>
@@ -359,8 +359,7 @@ $head = "
                          <td>$tglsp2d</td>
                          <td>$nosp2d</td>
                          <td>$Jumlah</td>
-                          <td>$Satuan</td>
-                               <td>$Total</td>
+						 <td>$Total</td>
                          <td>$keterangan</td>
                           <td>$info</td>
                </tr>

@@ -41,6 +41,7 @@ $data=array(
 $REPORT_RETRIEVE=new RETRIEVE_REPORT();
 
 $data=$REPORT_RETRIEVE->daftar_pengadaan_berdasarkan_skpd($skpd_id,$tglawalperolehan,$tglakhirperolehan);
+// exit;
 $tglPerolehanAwal=  format_tanggal($tglawalperolehan);
 $tglPerolehanAkhir=  format_tanggal($tglakhirperolehan);
 $tglcetak=  format_tanggal($tglcetak);
@@ -48,8 +49,8 @@ $tglcetak=  format_tanggal($tglcetak);
 
 $gambar = $FILE_GAMBAR_KABUPATEN;
 $html=$REPORT->report_daftar_pengadaan($data, $gambar,$tglPerolehanAwal,$tglPerolehanAkhir,$tglcetak) ;
-//pr($html);
-//exit;
+// pr($html);
+// exit;
 
 if($tipe==1){
 $REPORT->show_status_download_kib();
