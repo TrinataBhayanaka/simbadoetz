@@ -41,7 +41,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     $satuan = ceil(intval($data['Satuan']) + ($bop/$data['Kuantitas']));
 
     $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
-    $updateKapital = mysql_query("UPDATE kapitalisasi SET n_status = '1', nilai = if(nilai is null,0,nilai)+".intval($bop)."  WHERE idKontrak = '{$noKontrak['id']}' AND asetKapitalisasi = '{$data['Aset_ID']}'");
+    $updateKapital = mysql_query("UPDATE kapitalisasi SET n_status = '1', nilai = if(nilai is null,0,nilai)+{$bop}  WHERE idKontrak = '{$noKontrak['id']}' AND asetKapitalisasi = '{$data['Aset_ID']}'");
   }  
 
 
@@ -51,26 +51,18 @@ while ($dataKapital = mysql_fetch_assoc($sql)){
         }
 // pr($kapital);
 foreach ($kapital as $key => $value) {
-   $sqlkib2 = "SELECT * FROM aset WHERE Aset_ID = '{$value['asetKapitalisasi']}'";
-    $sqlquery = mysql_query($sqlkib2);
-    while ($dataAset = mysql_fetch_assoc($sqlquery)){
-            $asetkap = $dataAset;
-        }
-        
-  $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET TglPembukuan = '{$asetkap['TglPerolehan']}' , NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
-  $sqlaset = mysql_query("UPDATE aset SET TglPembukuan = '{$asetkap['TglPerolehan']}' , NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},Satuan = if(Satuan is null,0,Satuan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
-  
+  $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+  $sqlaset = mysql_query("UPDATE aset SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},Satuan = if(Satuan is null,0,Satuan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+
   //log
   $sqlkib = "SELECT * FROM {$value['tipeAset']} WHERE Aset_ID = '{$value['Aset_ID']}'";
   $sqlquery = mysql_query($sqlkib);
   while ($dataAset = mysql_fetch_assoc($sqlquery)){
           $kib = $dataAset;
-      }
-      
+      }    
   $kib['changeDate'] = date("Y-m-d");
-  $kib['TglPerubahan'] = $asetkap['TglPerolehan'];
-  $kib['TglPembukuan'] = $asetkap['TglPerolehan'];
-  $kib['action'] = "kapitalisasi";
+  $kib['TglPerubahan'] = $kib['TglPerolehan'];
+  $kib['action'] = 3;
   $kib['operator'] = $_SESSION['ses_uoperatorid'];
   $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'] - $value['nilai'];
   $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
