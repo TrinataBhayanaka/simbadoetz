@@ -21,7 +21,7 @@ class UpdateAset extends DB{
 		$sql = array(
 	            'table'=>"mutasi AS m ",
 	            'field'=>"m.Mutasi_ID, m.TglSKKDH",
-	            'condition'=>"m.fixMutasi = 1 AND m.Mutasi_ID > 404 ",
+	            'condition'=>"m.fixMutasi = 1 AND m.Mutasi_ID >= 404 ",
 	            );
 
 	    $res = $this->db->lazyQuery($sql,$debug);
@@ -31,7 +31,7 @@ class UpdateAset extends DB{
 
 				$sql = array(
 			            'table'=>"mutasiaset AS ma, aset AS a",
-			            'field'=>"ma.Aset_ID, a.TglPembukuan",
+			            'field'=>"ma.Aset_ID, a.TglPembukuan, a.TipeAset",
 			            'condition'=>"ma.Mutasi_ID = {$value['Mutasi_ID']} AND ma.Status = 1",
 			            'joinmethod'=>'LEFT JOIN',
 			            'join'=>'ma.Aset_ID = a.Aset_ID'
@@ -97,6 +97,7 @@ if (isset($_POST)){
 		<td>Tgl SKKDH</td>
 		<td>Aset ID</td>
 		<td>Tgl Pembukuan</td>
+		<td>Tipe Aset</td>
 		<td>Update ?</td>
 	</tr>
 
@@ -116,6 +117,7 @@ if (isset($_POST)){
 				<td><?=$value['TglSKKDH']?></td>
 				<td><?=$val['Aset_ID']?></td>
 				<td><?=$val['TglPembukuan']?></td>
+				<td><?=$val['TipeAset']?></td>
 				<td><input type="checkbox" name="Aset_ID[]" value="<?=$val['Aset_ID']?>|<?=$value['TglSKKDH']?>"></td>
 				<?php
 				echo "</tr>";
