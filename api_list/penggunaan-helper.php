@@ -241,7 +241,7 @@ $run = new PENGGUNAAN;
 $nokontrak = $argv[2];
 $debug = $argv[3];
 
-$nokontrak = "050/D/1734/DIKPORA/2014";
+// $nokontrak = "050/D/1734/DIKPORA/2014";
 $aset = $run->getAset($nokontrak);
 
 // $kib = $run->getKib($aset['tipe']);
