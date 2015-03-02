@@ -13,11 +13,11 @@ class PENGGUNAAN extends DB{
         $this->db = new DB;
 	}
 
-	function usulan($guid, $kontrak, $debug=false)
+	function usulan($getAset, $kontrak, $debug=false)
 	{
 
-		$getAset = $this->getAset($guid, $kontrak);
-		$noKontrak = array_keys($getAset['fullData']);
+		// $getAset = $this->getAset($guid, $kontrak);
+		
 		// pr($getAset);
 		// exit;
 		$UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
@@ -27,352 +27,228 @@ class PENGGUNAAN extends DB{
         $ses_uid=$_SESSION['ses_uid'];
 
         $penggu_penet_eks_ket="migrasi penggunaan";   
-        $penggu_penet_eks_nopenet=$noKontrak[0];   
+        $penggu_penet_eks_nopenet=$kontrak;   
         $penggu_penet_eks_tglpenet=$data['penggu_penet_eks_tglpenet']; 
         $olah_tgl=  date('Y-m-d H:i:s');
         $TglSKKDH = "2014-12-31";
-        $panjang=count($nmaset);
-
+        
         
         $sql = array(
                 'table'=>'Penggunaan',
-                'field'=>'NoSKKDH , TglSKKDH, Keterangan, NotUse, TglUpdate, UserNm, FixPenggunaan, GUID',
-                'value' => "'{$penggu_penet_eks_nopenet}','{$TglSKKDH}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}','0','{$ses_uid}'",
+                'field'=>'NoSKKDH , TglSKKDH, Keterangan, NotUse, TglUpdate, UserNm, Status, FixPenggunaan, GUID',
+                'value' => "'{$penggu_penet_eks_nopenet}','{$TglSKKDH}', '{$penggu_penet_eks_ket}','0','{$olah_tgl}','{$UserNm}', 1, '1','{$ses_uid}'",
                 );
         $res = $this->db->lazyQuery($sql,$debug,1);
         $insertid = $this->db->insert_id();
 
         $sleep = 1;
-        for($i=0;$i<$panjang;$i++){
+        $count = 1;
 
-            $sql1 = array(
-                'table'=>'Penggunaanaset',
-                'field'=>"Penggunaan_ID,Aset_ID, kodeSatker",
-                'value' => "'{$penggunaan_id}','{$nmaset[$i]}', '{$nmasetsatker}'",
-                );
-            $res = $this->db->lazyQuery($sql1,$debug,1);
-
+        if ($getAset['asetlain']){
+            foreach ($getAset['asetlain'] as $key => $val) {
             
-            
-            $sql2 = array(
-                'table'=>'Aset',
-                'field'=>"NotUse=1",
-                'condition' => "Aset_ID='{$nmaset[$i]}'",
-                'limit' => '1',
-                );
-            $res = $this->db->lazyQuery($sql2,$debug,2);
-           	
-           	$sleep++;
-           	if ($sleep == 200){
-           		sleep(1);
-           		$sleep = 1;	
-           	} 
-        }
+                foreach ($val as $value) {
 
-        
-        if ($res) return $insertid;
-        return false;
-	}
+                    echo "data aset lain :".$count."\n\n";
+                    $nmasetsatker = $key;
+                    $sql1 = array(
+                            'table'=>'Penggunaanaset',
+                            'field'=>"Penggunaan_ID,Aset_ID, kodeSatker, Status",
+                            'value' => "'{$insertid}','{$value}', '{$nmasetsatker}',1",
+                            );
+                    $res = $this->db->lazyQuery($sql1,$debug,1);
 
-	function getSatker($kode, $debug=false)
-	{
-		$sql = array(
-                'table'=>"satker",
-                'field'=>"Aset_ID",
-                'condition' => "GUID = 1 ",
-                );
-
-        $res = $this->db->lazyQuery($sql,$debug);
-	}
-
-	function getKontrak($kontrak=false, $info=false, $debug=false)
-	{
-		$listTable2 = array(
-                        // 1=>'tanah',
-                        // 2=>'mesin',
-                        // 3=>'bangunan',
-                        // 4=>'jaringan',
-                        5=>'asetlain',
-                        // 6=>'kdp',
-                        // 7=>'aset',
-                        8=>'aset'
+                    $sql2 = array(
+                        'table'=>'Aset',
+                        'field'=>"NotUse=1, fixPenggunaan = 1",
+                        'condition' => "Aset_ID='{$value}'",
+                        'limit' => '1',
                         );
-		foreach ($listTable2 as $key => $value) {
+                    $res = $this->db->lazyQuery($sql2,$debug,2);
 
-            if ($value == 'aset'){
-                $sql = array(
-                    'table'=>"{$value}",
-                    'field'=>"Aset_ID",
-                    'condition' => "info = '{$info}'",
-                    );
-            }else{
-                $sql = array(
-                    'table'=>"{$value}",
-                    'field'=>"Aset_ID",
-                    'condition' => "GUID != '212' AND GUID !=''",
-                    );
-            }
-			
-
-	        $res = $this->db->lazyQuery($sql,$debug);
-	        if ($res) $data[$key] = $res;
-		}
-
-		
-		if ($data){
-
-			foreach ($data as $key => $value) {
-				
-				foreach ($value as $key => $val) {
-					$asetid_tmp[] = $val['Aset_ID'];
-				}
-			}
-
-			// pr($asetid_tmp);
-			logFile('jumlah aset : '. count($asetid_tmp));
-			$implode = implode(',', $asetid_tmp);
-			$sql = array(
-	                'table'=>"aset",
-	                'field'=>"noKontrak",
-	                'condition' => "Aset_ID IN ({$implode}) GROUP BY noKontrak",
-	                );
-
-	        $res = $this->db->lazyQuery($sql,$debug);
-	        if ($res){
-
-	        	foreach ($res as $key => $value) {
-
-                    if ($value['noKontrak'] == $kontrak){
-                        $dataKontrak[] = $value['noKontrak'];    
+                    $sleep++;
+                    if ($sleep == 200){
+                        sleep(1);
+                        $sleep = 1; 
                     }
-	        		
-	        	}
-	        	
-	        	if ($dataKontrak) return array('kontrak'=>$dataKontrak, 'listaset'=>$implode);
-	        }
-	        // pr($dataKontrak);exit;
 
-	        
-	        
-		}
-		
-		return false;
-	}
-
-	function getAset($unique, $namaKontrak=false)
-	{
-
-		$info = "Import-287263660";
-		$listTable2 = array(
-                        // 1=>'tanah',
-                        // 2=>'mesin',
-                        // 3=>'bangunan',
-                        // 4=>'jaringan',
-                        5=>'asetlain',
-                        // 6=>'kdp'
-                        );
-
-
-		$dataKontrak = $this->getKontrak($namaKontrak, $info);
-        // pr($dataKontrak);
-        // exit;
-		$dataAset = array();
-        $tipeAset = array('A','B','C','D','E','F','G','H');
-        if ($dataKontrak['kontrak']){
-        	foreach ($dataKontrak['kontrak'] as $key => $value) {
-        		
-        		foreach ($tipeAset as $val) {
-
-        			$sql = array(
-			                'table'=>"aset",
-			                'field'=>"Aset_ID",
-			                'condition' => "noKontrak = '{$value}' AND TipeAset = '{$val}' AND Aset_ID IN ({$dataKontrak['listaset']})",
-			                );
-
-			        $res = $this->db->lazyQuery($sql,$debug);
-			        if ($res) $dataAset[$value]['aset'][$val] = $res;
-        		}
-        		sleep(1);
-        		// $dataKontrak[$key] = $dataAset;
-        	}
-        }
-
-        if ($dataAset) return array('fullData'=>$dataAset, 'asetid'=>$dataKontrak['listaset']);
-		
-		return false;
-	}
-
-	function validasi($usulanid, $debug=false)
-	{
-
-
-		// $tabeltmp = $_SESSION['penggunaan_validasi']['jenisaset'];
-  //       $getTable = $this->getTableKibAlias($tabeltmp);
-  //       $tabel = $getTable['listTableReal'];
-
-
-        $explodeID = $usulanid;
-        
-        
-        if($explodeID!=""){
-            $sql2 = array(
-                'table'=>'Penggunaan',
-                'field'=>"Status=1, FixPenggunaan = 1",
-                'condition' => "Penggunaan_ID='{$explodeID}'",
-                );
-            $res2 = $this->db->lazyQuery($sql2,$debug,2);
-
-            $sql3 = array(
-                'table'=>'PenggunaanAset',
-                'field'=>"Status=1",
-                'condition' => "Penggunaan_ID='{$explodeID}'",
-                );
-            $res3 = $this->db->lazyQuery($sql3,$debug,2);
-        }
-    
-
-        /* Log It */
-
-        
-
-        $sql = array(
-            'table'=>'PenggunaanAset',
-            'field'=>"Aset_ID",
-            'condition' => "Penggunaan_ID='{$explodeID}'",
-            );
-        $res = $this->db->lazyQuery($sql,$debug);
-        
-        
-        // pr($res);
-
-        $listTable = array(
-                        'A'=>'tanah',
-                        'B'=>'mesin',
-                        'C'=>'bangunan',
-                        'D'=>'jaringan',
-                        'E'=>'asetlain',
-                        'F'=>'kdp');
-
-        if ($res){
-        	$sleep = 1;
-            $count = 1;
-            foreach ($res as $key => $val) {
-
-
-                $sql = array(
-                        'table'=>'aset',
-                        'field'=>"TipeAset",
-                        'condition' => "Aset_ID={$val['Aset_ID']}",
-                        );
-                $result = $this->db->lazyQuery($sql,$debug);
-                $asetid[$val['Aset_ID']] = $listTable[implode(',', $result[0])];
-
-                $sql3 = array(
-                    'table'=>'aset',
-                    'field'=>"fixPenggunaan=1",
-                    'condition' => "Aset_ID='{$val['Aset_ID']}'",
-                    );
-                $res3 = $this->db->lazyQuery($sql3,$debug,2);
-
-                logFile('Data count : '.$count);
-                $count++;
+                    $count++; 
+                }
                 
-                $sleep++;
-
-
-	           	if ($sleep == 200){
-	           		sleep(1);
-	           		$sleep = 1;	
-	           	} 
             }
-
-            /*
-            $sleep = 1;
-            
-            foreach ($asetid as $key => $value) {
-                logFile('log data penggunaan, Aset_ID ='.$key);
-                $this->db->logIt($tabel=array($value), $Aset_ID=$key, 22);
-
-                $sleep++;
-	           	if ($sleep == 200){
-	           		sleep(1);
-	           		$sleep = 1;	
-	           	} 
-            }
-            */
-        }else{
-            logFile('gagal log penggunaan');
         }
+        
+        if ($getAset['persediaan']){
+            foreach ($getAset['persediaan'] as $key => $val) {
+            
+                foreach ($val as $value) {
 
-        if ($res2 && $res3) return true;
+                    echo "data aset persediaan :".$count."\n\n";
+                    $nmasetsatker = $key;
+                    $sql1 = array(
+                            'table'=>'Penggunaanaset',
+                            'field'=>"Penggunaan_ID,Aset_ID, kodeSatker, Status",
+                            'value' => "'{$insertid}','{$value}', '{$nmasetsatker}', 1",
+                            );
+                    $res = $this->db->lazyQuery($sql1,$debug,1);
+
+                    $sql2 = array(
+                        'table'=>'Aset',
+                        'field'=>"NotUse=1, fixPenggunaan = 1",
+                        'condition' => "Aset_ID='{$value}'",
+                        'limit' => '1',
+                        );
+                    $res = $this->db->lazyQuery($sql2,$debug,2);
+
+                    $sleep++;
+                    if ($sleep == 200){
+                        sleep(1);
+                        $sleep = 1; 
+                    } 
+
+                    $count++;
+                }
+                
+
+            }  
+        }
+        
+
+        
+        if ($res) return true;
         return false;
 	}
 
-	function getGUID()
-	{	
-		$listTable = array(
-                        // 'A'=>'tanah',
-                        // 'B'=>'mesin',
-                        // 'C'=>'bangunan',
-                        // 'D'=>'jaringan',
-                        'E'=>'asetlain',
-                        // 'F'=>'kdp'
+	
+    function getKib($tabelKib=array())
+    {
+
+        $tabel = array('E'=>'asetlain');
+        $tabelAlias = array('E','H');
+        $ignoreTabel = array('H');
+        $ignoreGUID = " AND GUID != '212'";
+        // pr($tabel);
+        foreach ($tabelKib as $key => $value) {
+
+            if (!in_array($value, $ignoreTabel)){
+
+                $sql = array(
+                        'table'=>"{$tabel[$value]}",
+                        'field'=>"Aset_ID, GUID",
+                        'condition' => "GUID != '' {$ignoreGUID}",
+                        // 'limit' => 100,
                         );
+                $res = $this->db->lazyQuery($sql,$debug);
+                if ($res){
+                    $data[$tabel[$value]] = $res;
+                }
+            }
+            
+            
+        }
+        // pr($data);
+        if ($data){
+            foreach ($data as $key => $value) {
 
-		foreach ($listTable as $key => $value) {
+                foreach ($value as $val) {
+                    $newData[$key][] = $val['Aset_ID'];
+                }
+                
+            }
+            return $newData;
+        } 
+        return false;
+        
+    }
 
-			$sql = array(
-	            'table'=>"{$value}",
-	            'field'=>"kodeSatker",
-	            'condition' => "GUID !='' AND GUID !='212'",
-	            );
-	        $res = $this->db->lazyQuery($sql,$debug);
-	        if ($res){
-	        	foreach ($res as $key => $value) {
-	        		$newData[] = $value['kodeSatker'];
-	        	}
+	function getAset($noKontrak=false, $info=false, $debug=false)
+	{
 
-	        	
-	        }
+        $filter = "";
+        if ($info) $filter .=  "AND info LIKE '%{$info}%'";
+		
+		$sql = array(
+                'table'=>"aset",
+                'field'=>"Aset_ID, TipeAset, kodeSatker",
+                'condition' => "noKontrak = '{$noKontrak}' {$filter}",
+                // 'limit' => 100,
+                );
 
-	        
-		}
-		return $newData;
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res){
+
+            foreach ($res as $key => $value) {
+                $newData[$value['TipeAset']][$value['kodeSatker']][] = $value['Aset_ID'];
+            }
+
+            $data['tipe'] = array_keys($newData);
+            $data['aset'] = $newData;
+            // pr($asetlain);
+
+            return $data;
+        } 
+		return false;
 	}
+
+	
+	function intersectAset($aset, $kib)
+    {
+
+        if ($aset){
+
+            if ($kib){
+
+                // pr($aset);exit;
+                foreach ($aset['aset']['E'] as $key => $value) {
+                    // pr($value);
+                    // exit;
+                    $intersect['asetlain'][$key] = array_intersect($value, $kib['asetlain']);
+                    $intersect['countkib'][$key] = count($intersect['asetlain'][$key]);
+                }
+                
+            }
+
+            $intersect['persediaan'] = $aset['aset']['H'];
+            $keys = array_keys($aset['aset']['H']);
+            // pr($keys);
+            $intersect['countpersediaan'][$keys[0]] = count($aset['aset']['H'][$keys[0]]);
+        }
+
+        if ($intersect) return $intersect;
+        return false;
+    }
 }
 
 /*
     jika hanya sampai di penggunaan aktifkan GUID = '212'
     jika sampai mutasi gunakan operator GUID !='' and GUID !='212'
 */
+
+// 050/D/2716/DIKPORA/2014'
 $run = new PENGGUNAAN;
-$getGUID = $run->getGUID();
 
-$kontrakArr = array("050/D/2716/DIKPORA/2014");
-// pr($getGUID);
+pr($argv);
+$nokontrak = $argv[2];
+$debug = $argv[3];
 
-if ($getGUID){
-	
-	$unique = array_unique($getGUID);
-	// pr($unique);exit;
-	foreach ($unique as $key => $value) {
-		
-        foreach ($kontrakArr as $kontrak) {
-            logFile('NoKontrak : '.$kontrak);
-            $usulan = $run->usulan($value, $kontrak);
-            
-            // echo 'sukses usulan';
-            logFile('==================== Usulan Penggunaan DONE =====================');
-            if ($usulan){
-                $validasi = $run->validasi($usulan);
-                // echo 'sukses validasi';
-                logFile('==================== Validasi Penggunaan DONE =====================');
-            }
-
-        }
-		
-	}
-}
-
+// $nokontrak = "050/D/2716/DIKPORA/2014";
+$aset = $run->getAset($nokontrak);
+$kib = $run->getKib($aset['tipe']);
+$inter = $run->intersectAset($aset, $kib);
+// echo 'H :'. count($aset['aset']['H']);
+// echo '<br>';
+// echo 'E :'.count($aset['aset']['E']);
+// echo '<br>';
+echo 'KIB : ';
+pr($inter['countkib']);
+echo 'Persediaan : ';
+pr($inter['countpersediaan']);
+// pr($aset);
+// pr($kib
+// pr($inter);
+// pr($argv);exit;
+if ($debug)exit;
+// exit;
+$usulan = $run->usulan($inter, $nokontrak);
 
 ?>
