@@ -76,6 +76,8 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusan/dftr_aset_tambahan_usulan_psb.php?pid=1&flegAset=1" onsubmit="return requiredFilterHPS(1,1, 'kodeSatker')">
 				<ul>
 					<li>&nbsp;</li>
+					<li><u><i>*) untuk menampilkan seluruh data cukup isi field <strong class="blink_text_red" >Tipe Aset</strong> & <strong class="blink_text_red">Kode Satker</strong></i></u></li>
+					<li>&nbsp;</li>
 					<li>
 						<span class="span2">Nomor Kontrak</span>
 						<input type='text' style="width: 200px;" name="bup_nokontrak" placeholder=""/>
