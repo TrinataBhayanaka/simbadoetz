@@ -526,7 +526,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $sqlSelect = array(
                         'table'=>"Aset",
                         'field'=>"MAX(noRegister) AS noRegister",
-                        'condition'=>"kodeKelompok = '{$kelompokAwal[$i]}' AND kodeSatker = '{$satkerAwal[$i]}' AND kodeLokasi = '{$lokasiAwal[$i]}'",
+                        'condition'=>"kodeKelompok = '{$kelompokAwal[$i]}' AND kodeLokasi = '{$lokasiBaru}'",
                         );
 
                 $result = $this->db->lazyQuery($sqlSelect,$debug);
@@ -987,7 +987,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         $sqlSelect = array(
                                 'table'=>"Aset",
                                 'field'=>"MAX(noRegister) AS noRegister",
-                                'condition'=>"kodeKelompok = '{$kelompokAwal[$i]}' AND kodeSatker = '{$satkerAwal[$i]}' AND kodeLokasi = '{$lokasiAwal[$i]}'",
+                                'condition'=>"kodeKelompok = '{$kelompokAwal[$i]}' AND kodeLokasi = '{$lokasiBaru}'",
                                 );
 
                         $result = $this->db->lazyQuery($sqlSelect,$debug);

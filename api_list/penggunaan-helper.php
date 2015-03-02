@@ -47,7 +47,7 @@ class PENGGUNAAN extends DB{
         if ($getAset['asetlain']){
             foreach ($getAset['asetlain'] as $key => $val) {
             
-                foreach ($val as $value) {
+                foreach ($val as $value => $value1) {
 
                     echo "data aset lain :".$count."\n\n";
                     $nmasetsatker = $key;
@@ -81,7 +81,7 @@ class PENGGUNAAN extends DB{
         if ($getAset['persediaan']){
             foreach ($getAset['persediaan'] as $key => $val) {
             
-                foreach ($val as $value) {
+                foreach ($val as $value => $value1) {
 
                     echo "data aset persediaan :".$count."\n\n";
                     $nmasetsatker = $key;
@@ -169,16 +169,22 @@ class PENGGUNAAN extends DB{
 		
 		$sql = array(
                 'table'=>"aset",
-                'field'=>"Aset_ID, TipeAset, kodeSatker",
+                'field'=>"Aset_ID, TipeAset, kodeSatker, GUID",
                 'condition' => "noKontrak = '{$noKontrak}' {$filter}",
-                // 'limit' => 100,
+                // 'limit' => 10,
                 );
 
         $res = $this->db->lazyQuery($sql,$debug);
         if ($res){
 
             foreach ($res as $key => $value) {
-                $newData[$value['TipeAset']][$value['kodeSatker']][] = $value['Aset_ID'];
+
+                if ($value['GUID']){
+                    $newData[$value['TipeAset']][$value['kodeSatker']][$value['Aset_ID']] = $value['GUID'];
+                }else{
+                    $newData[$value['TipeAset']][$value['kodeSatker']][$value['Aset_ID']] = $value['kodeSatker'];
+                }
+                
             }
 
             $data['tipe'] = array_keys($newData);
@@ -191,7 +197,7 @@ class PENGGUNAAN extends DB{
 	}
 
 	
-	function intersectAset($aset, $kib)
+	function intersectAset($aset, $kib=true)
     {
 
         if ($aset){
@@ -202,16 +208,20 @@ class PENGGUNAAN extends DB{
                 foreach ($aset['aset']['E'] as $key => $value) {
                     // pr($value);
                     // exit;
-                    $intersect['asetlain'][$key] = array_intersect($value, $kib['asetlain']);
+                    $intersect['asetlain'][$key] = $value;
                     $intersect['countkib'][$key] = count($intersect['asetlain'][$key]);
                 }
                 
             }
 
-            $intersect['persediaan'] = $aset['aset']['H'];
-            $keys = array_keys($aset['aset']['H']);
-            // pr($keys);
-            $intersect['countpersediaan'][$keys[0]] = count($aset['aset']['H'][$keys[0]]);
+            if ($aset['aset']['H']){
+
+                $intersect['persediaan'] = $aset['aset']['H'];
+                $keys = array_keys($aset['aset']['H']);
+                // pr($keys);
+                $intersect['countpersediaan'][$keys[0]] = count($aset['aset']['H'][$keys[0]]);
+            }
+            
         }
 
         if ($intersect) return $intersect;
@@ -227,18 +237,20 @@ class PENGGUNAAN extends DB{
 // 050/D/2716/DIKPORA/2014'
 $run = new PENGGUNAAN;
 
-pr($argv);
+// pr($argv);
 $nokontrak = $argv[2];
 $debug = $argv[3];
 
-// $nokontrak = "050/D/2716/DIKPORA/2014";
+// $nokontrak = "050/D/1734/DIKPORA/2014";
 $aset = $run->getAset($nokontrak);
-$kib = $run->getKib($aset['tipe']);
-$inter = $run->intersectAset($aset, $kib);
+
+// $kib = $run->getKib($aset['tipe']);
+$inter = $run->intersectAset($aset);
 // echo 'H :'. count($aset['aset']['H']);
 // echo '<br>';
 // echo 'E :'.count($aset['aset']['E']);
 // echo '<br>';
+
 echo 'KIB : ';
 pr($inter['countkib']);
 echo 'Persediaan : ';
@@ -246,7 +258,7 @@ pr($inter['countpersediaan']);
 // pr($aset);
 // pr($kib
 // pr($inter);
-// pr($argv);exit;
+// exit;
 if ($debug)exit;
 // exit;
 $usulan = $run->usulan($inter, $nokontrak);

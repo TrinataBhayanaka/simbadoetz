@@ -4305,21 +4305,23 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                
             // }
             // $resData[]=$res;
+                    
+            $resData[]=$resUsulAst;
 
 
         }
          // //////////////////////////////////////////pr($resData);
          // exit;
-         // foreach ($res as $value) {
+         foreach ($resData as $value) {
 
-         //            if ($value){
+                    if ($value){
                         
-         //                foreach ($value as $val) {
-         //                    $newData[] = $val;
-         //                } 
-         //            }
+                        foreach ($value as $val) {
+                            $newData[] = $val;
+                        } 
+                    }
                     
-         //        }
+                }
         // //////////////////////////////////////////pr($newData);
         // exit;
          // //////////////////////////////////////////pr($res);
@@ -4344,7 +4346,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         // //////////////////////////////////////////pr($res1);
         // //////////////////////////////////////////pr($res);
         // //////////////////////////////////////////////////pr($res);exit;
-        if ($resUsulAst) return array('dataArr'=>$resUsulAst, 'dataRow'=>$resUsulan);
+        if ($resUsulAst) return array('dataArr'=>$newData, 'dataRow'=>$resUsulan);
         return false;
         
     }
@@ -4388,6 +4390,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     );
 
                     $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
+                    pr($resUsulAst);
             //////////////////////////////////////////pr($Aset_IDUsl);
             // foreach ($Aset_IDUsl as $keyUsl => $valueUsl) {
 
@@ -4481,22 +4484,24 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                
             // }
-            // $resData[]=$res;
+            $resData[]=$resUsulAst;
 
 
         }
+        // pr($resData);
          // //////////////////////////////////////////pr($resData);
          // exit;
-         // foreach ($res as $value) {
+         foreach ($resData as $value) {
 
-         //            if ($value){
+                    if ($value){
                         
-         //                foreach ($value as $val) {
-         //                    $newData[] = $val;
-         //                } 
-         //            }
+                        foreach ($value as $val) {
+                            $newData[] = $val;
+                        } 
+                    }
                     
-         //        }
+                }
+        // pr($newData);
         // //////////////////////////////////////////pr($newData);
         // exit;
          // //////////////////////////////////////////pr($res);
@@ -4521,7 +4526,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         // //////////////////////////////////////////pr($res1);
         // //////////////////////////////////////////pr($res);
         // //////////////////////////////////////////////////pr($res);exit;
-        if ($resUsulAst) return array('dataArr'=>$resUsulAst, 'dataRow'=>$resUsulan);
+        if ($resUsulAst) return array('dataArr'=>$newData, 'dataRow'=>$resUsulan);
         return false;
         
     }
@@ -4659,22 +4664,22 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                
             // }
-            // $resData[]=$res;
+            $resData[]=$resUsulAst;
 
 
         }
          // //////////////////////////////////////////pr($resData);
          // exit;
-         // foreach ($res as $value) {
+         foreach ($resData as $value) {
 
-         //            if ($value){
+                    if ($value){
                         
-         //                foreach ($value as $val) {
-         //                    $newData[] = $val;
-         //                } 
-         //            }
+                        foreach ($value as $val) {
+                            $newData[] = $val;
+                        } 
+                    }
                     
-         //        }
+                }
         // //////////////////////////////////////////pr($newData);
         // exit;
          // //////////////////////////////////////////pr($res);
@@ -4699,7 +4704,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         // //////////////////////////////////////////pr($res1);
         // //////////////////////////////////////////pr($res);
         // //////////////////////////////////////////////////pr($res);exit;
-        if ($resUsulAst) return array('dataArr'=>$resUsulAst, 'dataRow'=>$resUsulan);
+        if ($resUsulAst) return array('dataArr'=>$newData, 'dataRow'=>$resUsulan);
         return false;
         
     }
