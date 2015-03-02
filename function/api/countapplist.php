@@ -20,11 +20,20 @@ open_connection();
             if($value!=""){
                 $dataku[]=$value;
             }
+
         }
 		$count = count($dataku);	
+		$Aset_ID=implode(",", $dataku);
+		$sqlNilai="SELECT SUM(NilaiPerolehan) FROM aset WHERE Aset_ID IN ({$Aset_ID})";
+		$resultNilai=mysql_query($sqlNilai);
+		$rowresultNilai = mysql_fetch_array($resultNilai);
+		$totalNilaiPerolehan=number_format($rowresultNilai[0]);
+		// print_r($totalNilaiPerolehan);
+
 	} else {
 		$datafinal = "";
 		$count = 0;
+		$totalNilaiPerolehan=0;
 	}
 
 	$rvwsql = mysql_query("SELECT aset_list FROM apl_userasetlist WHERE UserNm = '{$UserNm}' AND aset_action = '{$rvwact}' AND UserSes = '{$sess}' LIMIT 1");
@@ -38,13 +47,15 @@ open_connection();
                 $datakurvw[]=$valuervw;
             }
         }
+
 		$rvwcount = count($datakurvw);	
 	} else {
 		$datafinalrvw = "";
 		$rvwcount = 0;
 	}
+
 	// $count = array('countAset' =>$count ,'totalAset' =>'3'  );
-	print json_encode(array('countAset' =>$count ,'totalAset' =>$rvwcount ));
+	print json_encode(array('countAset' =>$count ,'totalAset' =>$rvwcount,'totalNilaiAset' =>$totalNilaiPerolehan ));
 	// echo $count;
 
 exit;
