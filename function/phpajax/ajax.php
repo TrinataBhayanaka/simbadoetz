@@ -186,6 +186,16 @@ function hapusUsulanMutasi($data, $debug=false)
 		    $res = $DBVAR->lazyQuery($sql,$debug,2);
 		    if ($res) return true;
 
+        }else{
+
+        	$sql = array(
+		            'table'=>'mutasi',
+		            'field'=>"FixMutasi = 3",
+		            'condition' => "Mutasi_ID = '{$data[mutasiid]}' ",
+		            'limit' => '1',
+		            );
+		    $res = $DBVAR->lazyQuery($sql,$debug,2);
+		    if ($res) return true;
         }
     	
 	    	
