@@ -69,6 +69,8 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 			<form method="POST" action="<?php echo"$url_rewrite";?>/module/penghapusan/dftr_usulan_aset_pms.php?pid=1" onsubmit="return requiredFilter(0,1, 'kodeSatker')">
 				<ul>
 					<li>&nbsp;</li>
+					<li><i>*)<u> cukup isi field <strong class="blink_text_red">Kode Satker</strong> untuk menampilkan seluruh data yang tersedia berdasarkan Satker </u></i></li>
+					<li>&nbsp;</li>
 					<li>
 						<span class="span2">Nomor&nbsp;Usulan</span>
 						<input isdatepicker="true" style="width: 200px;" id="bup_pp_sp_nousulan" name="bup_pp_sp_nousulan"  type="text">

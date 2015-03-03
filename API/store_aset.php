@@ -2575,21 +2575,27 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
+	    $tblKib['kodeKA'] = 1;
         }else {
             if($data['TipeAset'] == 'B'){
                 if($tblAset['NilaiPerolehan'] < 300000){
                     $tblAset['kodeKA'] = 0;
+		    $tblKib['kodeKA'] = 0;
                 } else {
                     $tblAset['kodeKA'] = 1;
+		    $tblKib['kodeKA'] = 1;
                 }
             } elseif ($data['TipeAset'] == 'C') {
                 if($tblAset['NilaiPerolehan'] < 10000000){
                     $tblAset['kodeKA'] = 0;
+		    $tblKib['kodeKA'] = 0;
                 } else {
                     $tblAset['kodeKA'] = 1;
+		    $tblKib['kodeKA'] = 1;
                 }
             } else {
                 $tblAset['kodeKA'] = 0;
+		$tblKib['kodeKA'] = 0;
             }
          }   
         
@@ -2730,7 +2736,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
             if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
             if(isset($tblAset['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
-
+	   
 
             if(isset($tblAset['noRegister'])) $tblKib['noRegister'] = $tblAset['noRegister']; 
             if(isset($data['kodeRuangan'])) $tblKib['kodeRuangan'] = $tblAset['kodeRuangan'];
