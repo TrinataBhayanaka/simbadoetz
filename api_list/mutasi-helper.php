@@ -708,6 +708,7 @@ echo 'jumlah countPersediaan : '.intval($getAset['countPersediaan'])."\n";
 if ($debug)exit;
 
 $filter = $run->usulan($getAset, $nokontrak);
+echo '==================== Usulan Mutasi DONE =====================';
 // pr($getAset);
 exit;
 $getUsulan = $run->usulan(2, 'no-dokumen');
