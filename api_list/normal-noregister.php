@@ -112,7 +112,7 @@ class noregister extends DB{
 		}
 	}
 
-	function logReg($data)
+	function logReg($data, $debug=false)
 	{
 
 		$tglUpdate = date('Y-m-d H:i:s');
@@ -147,7 +147,7 @@ class noregister extends DB{
 				// $this->db->logIt($tabel=array('aset'), $Aset_ID=$val['Aset_ID'], $kd_riwayat=40, $noDokumen=false, $tglProses =$olah_tgl, $text="Update no register");
 
 				$dataLog = array('Aset_ID'=>$val['Aset_ID'], 'regLama'=>$val['currentReg'], 'regBaru'=>$val['noRegister']);
-				$this->logReg($dataLog);
+				$this->logReg($dataLog, $debug);
 				
 				$noRegister = $val['noRegister'];
 				// aset
