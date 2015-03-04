@@ -6458,7 +6458,7 @@ $html = "<html>
      style=\"width: 80px; height: 85px;\" alt=\"\"
      src=\"$gambar\"></td>
           <td style=\"width: 902px; text-align: center;\">
-          <h3>DAFTAR ASET TETAP</h3>
+          <h3>DAFTAR ASET</h3>
           <h3>ASET LAINNYA</h3>
           </td>
         </tr>
@@ -20099,10 +20099,11 @@ $footer ="
 					}else{
 						$ketKondisi = "";
 					} 
+					
 					$noReg = sprintf("%04s", $row->noRegister);
 					$nilaiPrlhn = $row->NilaiPerolehan_Awal;
-					$kuantitas = 1;
-					$nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
+					// $kuantitas = 1;
+					// $nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
 					// $kdRwyt = $row->Kd_Riwayat;
 					// jika kondisi 
 					// 2(Ubah Kapitalisasi)
@@ -20112,6 +20113,10 @@ $footer ="
 						$LastSatker = $row->kodeSatker;
 						$FirstSatker = $row->satkerAwal;
 						
+						$kuantitas = 1;
+						// $nilaiAwalPerolehan = number_format($row->NilaiPerolehan_Awal,2,",",".");
+						$nilaiAwalPrlhn = $row->NilaiPerolehan_Awal;
+						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
 						if($LastSatker != $FirstSatker){
 							$jmlTambah = 1;
 							$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan;
@@ -20139,39 +20144,57 @@ $footer ="
 						$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
 							// echo "selisih".$cekSelisih;
 							if($cekSelisih >= 0){
-								//tambah
+								//mutasi tambah
 								if($cekSelisih == 0){
 									$valAdd = $row->NilaiPerolehan;
+									// $nilaiAwalPerolehan = 0;
+									$nilaiAwalPrlhn = 0;
+									$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+									$kuantitas = 0;
 								}else{
 									$valAdd = $cekSelisih;
-								
+									$nilaiAwalPrlhn = $row->NilaiPerolehan_Awal;
+									$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+									$kuantitas = 1;		
 								}
 								$jmlTambah = 1;
-								$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan_Awal + $valAdd;
+								$nilaiPrlhnMutasiTambah =  $valAdd;
 								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-								//kurang
+								
+								//mutasi kurang
 								$valSubst = 0;
 								$jmlKurang = 0;
 								$nilaiPrlhnMutasiKurang = $valSubst;
 								$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+								
+								//jumlah akhir		
+								$jmlHasilMutasi = 1;	
+								$nilaiPerolehanHasilMutasi = $row->NilaiPerolehan;
+								$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+					
 							}else{
-									//tambah
+								$kuantitas = 1;	
+								$nilaiAwalPrlhn = $row->NilaiPerolehan_Awal;
+								$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+								//mutasi tambah
 								$valAdd = 0;
 								$jmlTambah = 0;
 								$nilaiPrlhnMutasiTambah = $valAdd;
 								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-								//kurang
+								
+								//mutasi kurang
 								$valSubst = abs($cekSelisih);
 								$jmlKurang = 1;
-								$nilaiPrlhnMutasiKurang = $row->NilaiPerolehan_Awal - $valSubst;
+								$nilaiPrlhnMutasiKurang = $valSubst;
 								$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+								
+								//jumlah akhir
+								$jmlHasilMutasi = 1;	
+								$nilaiPerolehanHasilMutasi = $row->NilaiPerolehan_Awal - $nilaiPrlhnMutasiKurang;
+								$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 							}
-						
-						$jmlHasilMutasi = 1;	
-						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
-						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 					}
-						
+					$perolehanTotal = $perolehanTotal + $nilaiAwalPrlhn;	
 					$perolehanTotalKurang = $perolehanTotalKurang + $nilaiPrlhnMutasiKurang;
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
 					$perolehanTotalMutasi = $perolehanTotalMutasi + $nilaiPerolehanHasilMutasi;
@@ -20180,6 +20203,7 @@ $footer ="
 					if($row->Konstruksi != 0 && $row->Konstruksi != ''){
 						$konstruksi = $row->Konstruksi;
 					}
+					
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
@@ -29157,7 +29181,7 @@ return $hasil_html;
 			$paramGol ="kdp_ori";
 			$kondisi ="and kondisi != 3";
 		}else{
-			$paramGol ="aset";
+			$paramGol ="aset_lain_3";
 			$kondisi ="and kondisi = 3";
 		}
 		$tglDefault = '2008-01-01';
@@ -29305,7 +29329,7 @@ return $hasil_html;
 			$kondisi ="and kondisi != 3";
 			$kodeKelompok ="kodeKelompok like '06%' and";
 		}else{
-			$paramGol ="aset";
+			$paramGol ="aset_lain_3";
 			$kondisi ="and kondisi = 3";
 			$kodeKelompok ="kodeKelompok like '07%' and";
 		}
@@ -29469,7 +29493,7 @@ return $hasil_html;
 			$kodeKelompok ="kodeKelompok like '$golChild%' and";
 		}else{
 			if($golChild == '07.21'){
-				$paramGol ="aset";
+				$paramGol ="aset_lain_3";
 				$kondisi ="and kondisi = 3";
 				$kodeKelompok ="kodeKelompok like '07.21%' and";
 			}
@@ -29634,17 +29658,17 @@ return $hasil_html;
 	$thnFix = $ceckTgl[0];
 	
 	$paramKib 		= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
-	$paramMutasi 	= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+	$paramMutasi 	= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.SatkerAwal LIKE '$skpd_id%' order by a.TglSKKDH desc";
 	$paramPnghpsn 	= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
 	$paramLog 		= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0') order by a.log_id desc";
 	
 	$paramKib_bc 		= "a.TglPerolehan <'2008-01-01' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
-	$paramMutasi_bc 	= "a.TglPerolehan <'2008-01-01' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+	$paramMutasi_bc 	= "a.TglPerolehan <'2008-01-01' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.SatkerAwal LIKE '$skpd_id%' order by a.TglSKKDH desc";
 	$paramPnghpsn_bc 	= "a.TglPerolehan <'2008-01-01' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
 	$paramLog_bc 		= "a.TglPerolehan <'2008-01-01' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  order by a.log_id desc";
 
 	$paramKib_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%'";
-	$paramMutasi_2 	    = "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' order by a.TglSKKDH desc";
+	$paramMutasi_2 	    = "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.SatkerAwal LIKE '$skpd_id%' order by a.TglSKKDH desc";
 	$paramPnghpsn_2 	= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.kodeSatker LIKE '$skpd_id%' order by a.TglHapus desc"; 
 	$paramLog_2 		= "a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.kodeSatker LIKE '$skpd_id%' AND (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  order by a.log_id desc";
 			
@@ -29712,7 +29736,7 @@ return $hasil_html;
 									NoSertifikat, TglSertifikat, Penggunaan, BatasUtara, BatasSelatan, BatasBarat, BatasTimur, Tmp_Hak, GUID, MasaManfaat, 
 									AkumulasiPenyusutan, PenyusutanPerTahun)
 								select a.Tanah_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
-									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, 
+									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan_Awal, 
 									a.Alamat, a.Info,a. AsalUsul, a.kondisi, a.CaraPerolehan, a.LuasTotal, a.LuasBangunan, a.LuasSekitar, a.LuasKosong, a.HakTanah,
 									a.NoSertifikat, a.TglSertifikat, a.Penggunaan, a.BatasUtara, a.BatasSelatan, a.BatasBarat, a.BatasTimur, a.Tmp_Hak, a.GUID, a.MasaManfaat, 
 									a.AkumulasiPenyusutan, a.PenyusutanPerTahun  
@@ -29768,7 +29792,7 @@ return $hasil_html;
 									NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
 									NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
 									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
-										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan_Awal, a.Alamat, a.Info, 
 										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
 										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
 										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
@@ -29827,7 +29851,7 @@ return $hasil_html;
 											NoRangka, NoMesin, NoSTNK, TglSTNK, NoBPKB, TglBPKB, NoDokumen, TglDokumen, Pabrik, TahunBuat, BahanBakar, 
 											NegaraAsal, NegaraRakit, Kapasitas, Bobot, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
 									select a.Mesin_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
-										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan_Awal, a.Alamat, a.Info, 
 										a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran,a. Silinder, a.MerkMesin, a.JumlahMesin, a.Material, a.NoSeri,
 										a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
 										a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
@@ -29884,7 +29908,7 @@ return $hasil_html;
 										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
 										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
 									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
-										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan_Awal, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
 										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
 										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
 										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
@@ -29941,7 +29965,7 @@ return $hasil_html;
 										NoSurat, TglSurat, NoIMB, TglIMB, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, Tmp_Tingkat, Tmp_Beton, Tmp_Luas, 
 										KelompokTanah_ID, GUID, TglPembangunan, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
 									select a.Bangunan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 
-										a.kodeRuangan,a.Status_Validasi_Barang,a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
+										a.kodeRuangan,a.Status_Validasi_Barang,a.StatusTampil, a.Tahun, a.NilaiPerolehan_Awal, a.Alamat, a.Info, a.AsalUsul, a.kondisi, 
 										a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
 										a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
 										a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
@@ -29999,7 +30023,7 @@ return $hasil_html;
 									NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID, TanggalPemakaian, LuasJaringan, MasaManfaat, 
 									AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
 								select a.Jaringan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
-									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
+									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan_Awal, a.Alamat, a.Info, 
 									a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Panjang, a.Lebar, a.NoDokumen, a.TglDokumen, a.StatusTanah, 
 									a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
 									a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
@@ -30047,7 +30071,7 @@ return $hasil_html;
 									Info, AsalUsul, kondisi, CaraPerolehan, Judul, AsalDaerah, Pengarang, Penerbit, Spesifikasi, TahunTerbit, ISBN, Material, 
 									Ukuran, GUID, MasaManfaat, AkumulasiPenyusutan, NilaiBuku, PenyusutanPerTahun)
 								select a.AsetLain_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, 
-									a.kodeData, a.kodeKA, a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil,a.Tahun, a.NilaiPerolehan, a.Alamat, 
+									a.kodeData, a.kodeKA, a.kodeRuangan,a.Status_Validasi_Barang, a.StatusTampil,a.Tahun, a.NilaiPerolehan_Awal, a.Alamat, 
 									a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Judul, a.AsalDaerah, a.Pengarang, a.Penerbit, a.Spesifikasi, a.TahunTerbit, a.ISBN, a.Material, 
 									a.Ukuran, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
 								from log_asetlain a
@@ -30094,7 +30118,7 @@ return $hasil_html;
 									TglMulai, StatusTanah, NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID)
 								select a.KDP_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, 
 									a.TglPembukuan, a.kodeData, a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, 
-									a.NilaiPerolehan, a.Alamat, a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, 
+									a.NilaiPerolehan_Awal, a.Alamat, a.Info, a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, 
 									a.TglMulai, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID  
 								from log_kdp a
 								inner join kdp t on t.Aset_ID=a.Aset_ID
