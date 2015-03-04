@@ -118,8 +118,8 @@ class noregister extends DB{
 		$tglUpdate = date('Y-m-d H:i:s');
 		$sql = array(
                 'table'=>"tmp_register",
-                'field'=>"Aset_ID , regLama, regBaru, tglUpdate",
-                'value'=>"'$data[Aset_ID]',$data[regLama], $data[regBaru], '{$tglUpdate}'",
+                'field'=>"Aset_ID , regLama, regBaru, tglUpdate, n_status",
+                'value'=>"'$data[Aset_ID]',$data[regLama], $data[regBaru], '{$tglUpdate}', {$data[n_status]}",
                 );
 
         $res = $this->db->lazyQuery($sql,$debug,1);
@@ -137,7 +137,7 @@ class noregister extends DB{
 
 
 			// set autocommit = 0
-			$this->begin();
+			// $this->begin();
 			
 			$totaldata = count($data);
 			$count = 1;
@@ -146,7 +146,7 @@ class noregister extends DB{
 				
 				// $this->db->logIt($tabel=array('aset'), $Aset_ID=$val['Aset_ID'], $kd_riwayat=40, $noDokumen=false, $tglProses =$olah_tgl, $text="Update no register");
 
-				$dataLog = array('Aset_ID'=>$val['Aset_ID'], 'regLama'=>$val['currentReg'], 'regBaru'=>$val['noRegister']);
+				$dataLog = array('Aset_ID'=>$val['Aset_ID'], 'regLama'=>$val['currentReg'], 'regBaru'=>$val['noRegister'], 'n_status'=>1);
 				$this->logReg($dataLog, $debug);
 				
 				$noRegister = $val['noRegister'];
@@ -159,10 +159,10 @@ class noregister extends DB{
 		                );
 
 		        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-		        if (!$res2){
-		        	$this->rollback();
-		        	return false;
-		        }
+		        // if (!$res2){
+		        // 	$this->rollback();
+		        // 	return false;
+		        // }
 		        // kib
 		        $tabelKib = $tabel[$val['TipeAset']];
 		        
@@ -174,10 +174,10 @@ class noregister extends DB{
 		                );
 
 		        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-		        if (!$res2){
-		        	$this->rollback();
-		        	return false;
-		        }
+		        // if (!$res2){
+		        // 	$this->rollback();
+		        // 	return false;
+		        // }
 		        // log aset
 		        $sql2 = array(
 		                'table'=>"log_aset",
@@ -186,10 +186,10 @@ class noregister extends DB{
 		                );
 
 		        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-		        if (!$res2){
-		        	$this->rollback();
-		        	return false;
-		        }
+		        // if (!$res2){
+		        // 	$this->rollback();
+		        // 	return false;
+		        // }
 		        // log kib
 		        $sql2 = array(
 		                'table'=>"log_{$tabelKib}",
@@ -198,10 +198,10 @@ class noregister extends DB{
 		                );
 
 		        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-		        if (!$res2){
-		        	$this->rollback();
-		        	return false;
-		        }
+		        // if (!$res2){
+		        // 	$this->rollback();
+		        // 	return false;
+		        // }
 		        // kapitalisasi
 		        $sql2 = array(
 		                'table'=>"kapitalisasi",
@@ -210,10 +210,10 @@ class noregister extends DB{
 		                );
 
 		        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-		        if (!$res2){
-		        	$this->rollback();
-		        	return false;
-		        }
+		        // if (!$res2){
+		        // 	$this->rollback();
+		        // 	return false;
+		        // }
 		        // mutasiaset
 		        $sql2 = array(
 		                'table'=>"mutasiaset",
@@ -222,10 +222,10 @@ class noregister extends DB{
 		                );
 
 		        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-		        if (!$res2){
-		        	$this->rollback();
-		        	return false;
-		        }
+		        // if (!$res2){
+		        // 	$this->rollback();
+		        // 	return false;
+		        // }
 
 		        echo "Upate no register " . $count . " dari " .$totaldata. "\n";
 		        // $noRegister++;
@@ -233,27 +233,46 @@ class noregister extends DB{
 			}
 			
 			
-			$this->commit();
+			// $this->commit();
 
 			echo "==== Update berhasil ==== \n";
 		}
 		
 	}
 
+	function rollbackData()
+	{
+
+		$sql = array(
+	            'table'=>"tmp_register AS t, aset AS a",
+	            'field'=>"t.Aset_ID, t.regBaru AS currentReg, t.regLama AS noRegister, t.n_status, a.TipeAset",
+	            'condition'=>"t.regBaru > 1",
+	            'joinmethod' =>'LEFT JOIN',
+	            'join'=>"t.Aset_ID = a.Aset_ID",
+	            // 'limit'=>10
+	            );
+
+	    $res = $this->db->lazyQuery($sql,$debug);
+	    if ($res){
+	    	return $res;
+	    }
+
+	    return false;
+	}
 }
 
 $register = new noregister;
 
 $debug = $argv[2];
 
-$getSatker = $register->getSatkerTujuan();
-// pr($getSatker);
-$filterAset = $register->filterData($getSatker);
+$getSatker = $register->rollbackData();
+// pr($getSatker);exit;
+// $filterAset = $register->filterData($getSatker);
 
-echo "Jumlah total data = " . count($filterAset) . "\n";
-
+echo "Jumlah total data = " . count($getSatker) . "\n";
+// pr($filterAset);
 if ($debug) exit;
 // echo 'masuk';
-$updateAset = $register->updateAset($filterAset);
+$updateAset = $register->updateAset($getSatker);
 
 ?>
