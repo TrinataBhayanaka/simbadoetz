@@ -119,7 +119,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
     	// alert('ada');
     	var param = "api_layanan.php?<?php echo $par_data_table?>";
-        dTableParam("layanan_tabel", param, 8);
+        dTableParam("layanan_tabel", param, 9);
         // log();
     });
 
@@ -192,6 +192,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
 						<th>Satker</th>
+						<th>Info</th>
 						<th>Tgl Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Detail</th>

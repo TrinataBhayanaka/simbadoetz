@@ -142,7 +142,7 @@ function store_aset($data,$link,$totaldata)
 
         }
         $startreg = 0;
-        $query = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+        $query = "SELECT MAX(CAST(noRegister AS SIGNED)) AS noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
         $result = $link->query($query);
         while($row = mysqli_fetch_assoc($result)) {
 		  $startreg = $row['noRegister'];

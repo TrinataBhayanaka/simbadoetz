@@ -148,7 +148,8 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
 		  $xlsdata[$no]['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];		
 		  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 2);
-		  if($kib[0] == "05"){
+		  $kib = explode(".", $xlsdata[$no]['kodeKelompok']);
+		  if($kib[0] == "02"){
 		  	$xlsdata[$no]['TipeAset'] = 'B';
 		  } elseif ($kib[0] == "08") {
 		  	$xlsdata[$no]['TipeAset'] = 'H';
