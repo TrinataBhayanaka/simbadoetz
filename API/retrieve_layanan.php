@@ -94,7 +94,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                     }
                     
                 }
-
+                // pr($newData);
                 if ($newData) return $newData;
             }
             

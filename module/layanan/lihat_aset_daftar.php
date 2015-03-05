@@ -119,7 +119,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
     	// alert('ada');
     	var param = "api_layanan.php?<?php echo $par_data_table?>";
-        dTableParam("layanan_tabel", param, 9);
+        dTableParam("layanan_tabel", param, 10);
         // log();
     });
 
@@ -160,11 +160,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<div class="detailRight">
 						
 						<ul>
+							<?php 
+							if ($_SESSION['ses_ujabatan']=1):
+							?>
 							<li>
 								<a href="<?php echo "$url_rewrite/module/layanan/lihat_aset_filter.php?pid=1"; ?>">
 									   <input type="button" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
 								 </a>
-							</li><!--
+							</li>
+						<?php endif;?>
+							<!--
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid'] ?>">
 								  <input type="hidden" class="hiddenrecord" value="<?php echo @$count ?>">
@@ -187,7 +192,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<tr>
 						<th>No</th>
 						
-						<!--<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>-->
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>

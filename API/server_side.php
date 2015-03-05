@@ -195,11 +195,24 @@ class ServerSide{
 
 			            		$impl = implode('_', $concate);
 			            		$completeURi = $impl; 
-								
+								// pr($value);
 								$checked = false;
+								
 								if ($value['checked']) $checked = true;
+								// echo $tmp[1]; 
+								if ($tmp[1]=="Layanan"){
+									if ($value['noKontrak']!=""){
+										$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi, 'checked'=>$checked));
+									}else{
+										$row[] = $this->span();
+									} 
+								}else{
 
-								$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi, 'checked'=>$checked));
+									$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi, 'checked'=>$checked));
+								}
+								
+
+								
 			            	
 			            	}else{
 			            		$row[] = $this->additional('checkbox', array('name'=>$expl[1]));
@@ -240,8 +253,10 @@ class ServerSide{
 			switch ($id) {
 				case 'checkbox':
 					$checked = "";
+					$disabled = "";
 					if ($data['checked']) $checked = "checked = checked";
-					return "<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"{$data['name']}[]\" value=\"{$data['value']}\" {$checked}>";
+					// if ($data['disabled']) $disabled = "disabled = disabled";
+					return "<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"{$data['name']}[]\" value=\"{$data['value']}\" {$checked} >";
 					break;
 				
 				case 'detail':
@@ -256,6 +271,11 @@ class ServerSide{
 		}
 
 		return false;
+	}
+
+	function span()
+	{
+		return "<span>&nbsp;</span>";
 	}
 }
 ?>

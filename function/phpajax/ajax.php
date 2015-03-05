@@ -88,7 +88,7 @@ function hapusUsulanMutasi($data, $debug=false)
 
 	global $DBVAR;
 
-	$ses_satkerkode = $_SESSION['ses_satkerkode'];
+	$ses_satkerkode = $_SESSION['ses_param_mutasi']['kodeSatker'];
 
     $filter = "";
     if ($ses_satkerkode) $filter .= "AND SatkerAwal = '{$ses_satkerkode}'";
