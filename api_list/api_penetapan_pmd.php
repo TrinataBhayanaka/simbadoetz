@@ -285,7 +285,7 @@ foreach ($data as $key => $value)
                              $row[]=$jmlUsul;
                              $row[]= $TotalAset;
                              $row[]=$change2;
-                             $row[]=number_format($NilaiASet['TotalNilaiPerolehan']);
+                             $row[]=number_format($NilaiASet['TotalNilaiPerolehan'],4);
                              // $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
                              $row[]=$value[AlasanHapus];
                              $row[]="<span class=\"label label-{$label}\" >{$text}</span>";

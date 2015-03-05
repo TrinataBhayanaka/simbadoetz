@@ -154,7 +154,7 @@ $menu_id = 10;
 						</td>
 						<td><?php $change=$hsl_data[TglUpdate]; $change2=  format_tanggal_db3($change); echo "$change2";?>
 						</td>
-						<td><?=number_format($hsl_data['TotalNilaiPerolehan'])?>
+						<td><?=number_format($hsl_data['TotalNilaiPerolehan'],4)?>
 						</td>
 						<td>
 							<?=$hsl_data['KetUsulan']?>

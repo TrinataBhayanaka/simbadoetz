@@ -351,13 +351,13 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<?php echo number_format($TglPerolehanAwal);?>
+							<?php echo number_format($TglPerolehanAwal,4);?>
 						</td>
 						<!-- <td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
 						</td> -->
 						<td>
-							<?=number_format($TglPerolehanbaru)?>
+							<?=number_format($TglPerolehanbaru,4)?>
 						</td>
 							
 					</tr>

@@ -250,7 +250,7 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<?php echo number_format($value[NilaiPerolehan]);?>
+							<?php echo number_format($value[NilaiPerolehan],4);?>
 						</td>
 						<td>
 							<?php echo $kondisi. ' - ' .$value[AsalUsul]?>

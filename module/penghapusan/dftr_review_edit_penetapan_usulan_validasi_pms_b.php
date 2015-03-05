@@ -267,7 +267,7 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<?php echo number_format($nilai[NilaiPerolehan]);?>
+							<?php echo number_format($nilai[NilaiPerolehan],4);?>
 						</td>
 						<td>
 							<a href="<?=$url?>" class="btn btn-info" onClick="return confirm('Lakukan Perubahan Validasi Untuk Aset_ID [ <?=$nilai[Aset_ID]?> ]')" <?=$disabled?>>Ubah Status Validasi</a>

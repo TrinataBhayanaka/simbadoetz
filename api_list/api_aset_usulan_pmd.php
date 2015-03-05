@@ -218,7 +218,7 @@ foreach ($data as $key => $value)
                              $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
                              $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                              $row[]=$TglPerolehan;
-                             $row[]=number_format($value[NilaiPerolehan]);
+                             $row[]=number_format($value[NilaiPerolehan],4);
                              $row[]=$kondisi. ' - ' .$value[AsalUsul];
                              $row[]="{$value[Merk]}$value[Model] ";
                              
