@@ -171,10 +171,23 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 
                 $table = $this->getTableKibAlias($arrayTable[$asetidTmp[1]]);
                 // pr($table);
+
+                $nodok = "hps-data-layanan";
+                $olah_tgl = date('Y-m-d H:i:s');
+                $this->db->logIt($tabel=array($table['listTableReal']), $Aset_ID=$asetid, $kd_riwayat=77, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Data Dihapus");
+
+                $sql1 = array(
+                        'table'=>"aset",
+                        'field'=>"Status_Validasi_Barang = 0, StatusValidasi = 0",
+                        'condition' => "Aset_ID = '{$asetid}'",
+                        );
+
+                $res1 = $this->db->lazyQuery($sql1,$debug,2);
+
                 $sql1 = array(
                         'table'=>"{$table['listTableReal']}",
-                        'field'=>"StatusTampil = 0",
-                        'condition' => "Aset_ID = '{$value}'",
+                        'field'=>"StatusTampil = 0, StatusValidasi = 0",
+                        'condition' => "Aset_ID = '{$asetid}'",
                         );
 
                 $res1 = $this->db->lazyQuery($sql1,$debug,2);
