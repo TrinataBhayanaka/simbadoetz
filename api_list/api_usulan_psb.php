@@ -269,7 +269,7 @@ foreach ($data as $key => $value)
                              $row[]=$SatkerUsul;
                              $row[]=$jumlahAset;
                              $row[]=$change2;
-                             $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
+                             $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan],4);
                              $row[]=$value[KetUsulan];
                              $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
                              $row[]=$tindakan;
