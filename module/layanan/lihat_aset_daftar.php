@@ -58,12 +58,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						}
 				}
 			//alert(boxeschecked);
-				if(boxeschecked!=0){
-					button.disabled=false;
-				}
-				else {
-					button.disabled=true;
-				}
+				// if(boxeschecked!=0){
+				// 	button.disabled=false;
+				// }
+				// else {
+				// 	button.disabled=true;
+				// }
 			
 			} );
 			
