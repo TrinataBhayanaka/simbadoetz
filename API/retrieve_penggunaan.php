@@ -496,7 +496,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 $sql = array(
                         'table'=>"aset AS a, kelompok AS k, satker AS s",
                         'field'=>"SQL_CALC_FOUND_ROWS a.Aset_ID, a.TipeAset, k.Uraian, s.NamaSatker, a.noKontrak",
-                        'condition'=>"a.TipeAset IN ({$implode}) AND a.Status_Validasi_Barang = 1 AND a.NotUse IS NULL  {$filterkontrak}  $kondisi GROUP BY a.Aset_ID $order",
+                        'condition'=>"a.TipeAset IN ({$implode}) AND a.Status_Validasi_Barang = 1 AND (a.NotUse IS NULL OR a.NotUse =0)  {$filterkontrak}  $kondisi GROUP BY a.Aset_ID $order",
                         'limit'=>"$limit",
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
