@@ -5,7 +5,7 @@ open_connection();
 	$data = $_POST['data'];
 	$noreg = $_POST['noreg'];
 
-	$sql = mysql_query("SELECT COUNT(*) as total FROM aset WHERE kodeKelompok LIKE '{$data[0]}' AND kodeLokasi LIKE '{$data[1]}' AND noRegister = '{$noreg}'");
+	$sql = mysql_query("SELECT COUNT(*) as total FROM aset WHERE kodeKelompok LIKE '{$data[0]}' AND kodeLokasi LIKE '{$data[1]}' AND noRegister = '{$noreg}' AND Status_Validasi_Barang = '1'");
 	while ($row = mysql_fetch_assoc($sql)){
 		$list = $row['total'];
 	}
