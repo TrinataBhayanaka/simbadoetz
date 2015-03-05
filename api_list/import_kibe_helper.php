@@ -1,7 +1,7 @@
 <?php
 
-$CONFIG['default']['db_host'] = 'localhost';
-$CONFIG['default']['db_user'] = 'simbada';
+$CONFIG['default']['db_host'] = '192.168.254.52';
+$CONFIG['default']['db_user'] = 'remote';
 $CONFIG['default']['db_pass'] = 'margonda100';
 $CONFIG['default']['db_name'] = 'simbada_2014_full_v1';
 
