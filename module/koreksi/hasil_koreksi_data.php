@@ -109,7 +109,7 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 							</td>
 							<td class="text-center">
 								<a href="koreksi_data.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&reg=<?=$value['min']?>&tbl=<?=$_POST['tipeAset']?>" id="url_<?=$i?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Koreksi</a>
-								<small><label id="info_<?=$i?>" class="label label-danger"></label></small>
+								<small><label id="info_<?=$i?>" class="label label-important"></label></small>
 							</td>
 						</tr>
 				<?php
