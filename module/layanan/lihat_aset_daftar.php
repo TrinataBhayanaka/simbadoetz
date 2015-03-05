@@ -58,12 +58,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						}
 				}
 			//alert(boxeschecked);
-				if(boxeschecked!=0){
-					button.disabled=false;
-				}
-				else {
-					button.disabled=true;
-				}
+				// if(boxeschecked!=0){
+				// 	button.disabled=false;
+				// }
+				// else {
+				// 	button.disabled=true;
+				// }
 			
 			} );
 			
@@ -156,19 +156,22 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			-->
 		<?php //$HELPER_FILTER->back($link=$url_rewrite.'/module/layanan/lihat_aset_filter.php',$val='Kembali ke halaman utama : Cari aset',$page=1)?>
 			<form name="myform" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/layanan/"; ?>hapus_aset.php" onsubmit="return checkBefore()">
+			<?php 
+			// pr($_SESSION);
+			if ($_SESSION['ses_ujabatan']==1):
+			?>
 			<input type="submit" name="submit2" class="btn btn-danger" value="Hapus Aset" id="submit" disabled/>
+			<?php endif;?>
 			<div class="detailRight">
 						
 						<ul>
-							<?php 
-							if ($_SESSION['ses_ujabatan']=1):
-							?>
+							
 							<li>
 								<a href="<?php echo "$url_rewrite/module/layanan/lihat_aset_filter.php?pid=1"; ?>">
 									   <input type="button" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
 								 </a>
 							</li>
-						<?php endif;?>
+						
 							<!--
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid'] ?>">

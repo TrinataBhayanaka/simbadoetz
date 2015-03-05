@@ -1349,8 +1349,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             // pr($table);
 
-            $ses_satkerkode = $_SESSION['ses_param_mutasi']['kodeSatker'];
-
+            $ses_satkerkode = $_SESSION['ses_mutasi_val_filter']['kodeSatker'];
+            // pr($_SESSION);
             $satkerAwal = "";
             if ($ses_satkerkode) $satkerAwal .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
 
@@ -1373,7 +1373,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
                             'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, a.TipeAset, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
                             'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal} GROUP BY ma.Aset_ID",
-                            'limit'=>'100',
+                            // 'limit'=>'100',
                             'joinmethod' => 'LEFT JOIN',
                             'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
                             );
@@ -1396,7 +1396,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                                 'table'=>"{$listTable}",
                                 'field'=>"*",
                                 'condition'=>"Aset_ID = {$value['Aset_ID']}",
-                                'limit'=>'100',
+                                // 'limit'=>'100',
                                 );
 
                         $resultKib = $this->db->lazyQuery($sqlkib,$debug);

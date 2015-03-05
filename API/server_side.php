@@ -202,9 +202,10 @@ class ServerSide{
 								// echo $tmp[1]; 
 								if ($tmp[1]=="Layanan"){
 									if ($value['noKontrak']!=""){
-										$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi, 'checked'=>$checked));
-									}else{
 										$row[] = $this->span();
+										
+									}else{
+										$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi, 'checked'=>$checked));
 									} 
 								}else{
 
