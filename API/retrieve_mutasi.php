@@ -1349,7 +1349,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
             // pr($table);
 
-            $ses_satkerkode = $_SESSION['ses_satkerkode'];
+            $ses_satkerkode = $_SESSION['ses_param_mutasi']['kodeSatker'];
 
             $satkerAwal = "";
             if ($ses_satkerkode) $satkerAwal .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
