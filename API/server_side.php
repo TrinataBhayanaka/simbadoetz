@@ -203,6 +203,8 @@ class ServerSide{
 								if ($tmp[1]=="Layanan"){
 									if ($value['noKontrak']!=""){
 										$row[] = $this->additional('checkbox', array('name'=>$expl[1], 'value'=>$completeURi, 'checked'=>$checked));
+									}else{
+										$row[] = $this->span();
 									} 
 								}else{
 
@@ -269,6 +271,11 @@ class ServerSide{
 		}
 
 		return false;
+	}
+
+	function span()
+	{
+		return "<span>&nbsp;</span>";
 	}
 }
 ?>
