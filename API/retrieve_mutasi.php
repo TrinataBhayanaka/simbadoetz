@@ -525,7 +525,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 
                 $sqlSelect = array(
                         'table'=>"Aset",
-                        'field'=>"MAX(noRegister) AS noRegister",
+                        'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
                         'condition'=>"kodeKelompok = '{$kelompokAwal[$i]}' AND kodeLokasi = '{$lokasiBaru}'",
                         );
 
@@ -788,7 +788,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sql = array(
                                     'table'=>"{$table['listTableOri']}",
-                                    'field'=>"MAX(noRegister) AS noRegister",
+                                    'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
                                     'condition'=>"kodeKelompok = '{$resultAwal[0][kodeKelompok]}' AND kodeSatker = '{$getLokasiTujuan[0][SatkerTujuan]}' AND kodeLokasi = '{$implLokasi}'",
                                     );
                             $result = $this->db->lazyQuery($sql,$debug);
@@ -1173,8 +1173,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             // pr($table);
 
             $TipeAset = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
-            $ses_satkerkode = $_SESSION['ses_satkerkode'];
+            $ses_satkerkode = $_SESSION['ses_param_mutasi']['kodeSatker'];
 
+            // pr($_SESSION);
             $satkerAwal = "";
             if ($ses_satkerkode) $satkerAwal .= "AND ma.SatkerAwal = '{$ses_satkerkode}'";
 
