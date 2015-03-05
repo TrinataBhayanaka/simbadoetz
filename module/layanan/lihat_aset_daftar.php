@@ -160,11 +160,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<div class="detailRight">
 						
 						<ul>
+							<?php 
+							if ($_SESSION['ses_ujabatan']=1):
+							?>
 							<li>
 								<a href="<?php echo "$url_rewrite/module/layanan/lihat_aset_filter.php?pid=1"; ?>">
 									   <input type="button" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
 								 </a>
-							</li><!--
+							</li>
+						<?php endif;?>
+							<!--
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid'] ?>">
 								  <input type="hidden" class="hiddenrecord" value="<?php echo @$count ?>">
