@@ -28,19 +28,19 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 			$("#url_"+idnumber[1]).hide("fast");
 			$("#url_"+idnumber[1]).attr('disabled','disabled');
 			$("#url_"+idnumber[1]).attr('href','#');
-			$("#info").html('Data tidak ditemukan');
+			$("#info_"+idnumber[1]).html('Data tidak ditemukan');
 		} else {
 			$.post('<?=$url_rewrite?>/function/api/asetExistCheck.php', {data:others, noreg:$(item).val()}, function(data){
 				if(data == 1){
 					$("#url_"+idnumber[1]).show("fast");
 					$("#url_"+idnumber[1]).removeAttr('disabled');
 					$("#url_"+idnumber[1]).attr('href','koreksi_data.php?kdkel='+others[0]+'&kdlok='+others[1]+'&reg='+$(item).val()+'&tbl='+others[2]);
-					$("#info").html('');
+					$("#info_"+idnumber[1]).html('');
 				} else {
 					$("#url_"+idnumber[1]).hide("fast");
 					$("#url_"+idnumber[1]).attr('disabled','disabled');
 					$("#url_"+idnumber[1]).attr('href','#');
-					$("#info").html('Data tidak ditemukan');
+					$("#info_"+idnumber[1]).html('Data tidak ditemukan');
 				}
 			})
 		}	
@@ -109,7 +109,7 @@ $get_data_filter = $RETRIEVE->retrieve_filterKoreksi($_POST,$_SESSION['ses_satke
 							</td>
 							<td class="text-center">
 								<a href="koreksi_data.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&reg=<?=$value['min']?>&tbl=<?=$_POST['tipeAset']?>" id="url_<?=$i?>" class="btn btn-success btn-small" ><i class="fa fa-edit"></i>&nbsp;Koreksi</a>
-								<small><label id="info" class="label label-danger"></label></small>
+								<small><label id="info_<?=$i?>" class="label label-danger"></label></small>
 							</td>
 						</tr>
 				<?php
