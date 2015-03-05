@@ -102,15 +102,16 @@ class report_engine_daftar extends report_engine {
 
                foreach ($dataArr as $key => $value) {
                     $perolehan = number_format($value[NilaiPerolehan], 2, ",", ".");
-                    // pr($value['kodeSatker']);
+                    // pr($value['noRegister']);
                     $Satker=$this->getNamaSatker($value['kodeSatker']);
                     $NamaSatker=$Satker[0]->NamaSatker;
+                    $kodeNoReg=sprintf("%04s",$value['noRegister']);
                     // pr();
                     $body.="<tbody>
                <tr>
                          <td style=\"width:5%\">$no</td>
                          <td style=\"width:20%\">{$value[Kelompok]}</td>
-                         <td style=\"width:15%;text-align:center\">{$value[kodeLokasi]}<br/>{$value[kodeKelompok]}</td>
+                         <td style=\"width:15%;text-align:center\">{$value[kodeLokasi]}<br/>{$value[kodeKelompok]}.{$kodeNoReg}</td>
                          <td style=\"width:20%;text-align:center\">{$NamaSatker}</td>
                          <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
                          <td style=\"width:15%;text-align:right\">{$perolehan}</td>
