@@ -66,11 +66,11 @@ class PENGGUNAAN extends DB{
                         );
                     $res = $this->db->lazyQuery($sql2,$debug,2);
 
-                    $sleep++;
-                    if ($sleep == 200){
-                        sleep(1);
-                        $sleep = 1; 
-                    }
+                    // $sleep++;
+                    // if ($sleep == 200){
+                    //     sleep(1);
+                    //     $sleep = 1; 
+                    // }
 
                     $count++; 
                 }
@@ -123,7 +123,7 @@ class PENGGUNAAN extends DB{
     function getKib($tabelKib=array())
     {
 
-        $tabel = array('E'=>'asetlain');
+        $tabel = array('B'=>'mesin','E'=>'asetlain');
         $tabelAlias = array('E','H');
         $ignoreTabel = array('H');
         $ignoreGUID = " AND GUID != '212'";
@@ -204,8 +204,16 @@ class PENGGUNAAN extends DB{
 
             if ($kib){
 
+                /*
                 // pr($aset);exit;
                 foreach ($aset['aset']['E'] as $key => $value) {
+                    // pr($value);
+                    // exit;
+                    $intersect['asetlain'][$key] = $value;
+                    $intersect['countkib'][$key] = count($intersect['asetlain'][$key]);
+                }
+                */
+                foreach ($aset['aset']['B'] as $key => $value) {
                     // pr($value);
                     // exit;
                     $intersect['asetlain'][$key] = $value;
@@ -241,7 +249,7 @@ $run = new PENGGUNAAN;
 $nokontrak = $argv[2];
 $debug = $argv[3];
 
-// $nokontrak = "050/D/1734/DIKPORA/2014";
+// $nokontrak = "001/sdn klego 1_";
 $aset = $run->getAset($nokontrak);
 
 // $kib = $run->getKib($aset['tipe']);
@@ -262,5 +270,5 @@ pr($inter['countpersediaan']);
 if ($debug)exit;
 // exit;
 $usulan = $run->usulan($inter, $nokontrak);
-
+echo '=== usulan penggunaan selesai =====';
 ?>
