@@ -100,11 +100,11 @@ class PENGGUNAAN extends DB{
                         );
                     $res = $this->db->lazyQuery($sql2,$debug,2);
 
-                    $sleep++;
-                    if ($sleep == 200){
-                        sleep(1);
-                        $sleep = 1; 
-                    } 
+                    // $sleep++;
+                    // if ($sleep == 200){
+                    //     sleep(1);
+                    //     $sleep = 1; 
+                    // } 
 
                     $count++;
                 }
