@@ -21,7 +21,7 @@ $SSConfig['searchField'] = array('a.Aset_ID', 'a.noKontrak', 'k.Uraian', 's.Nama
 
 
 $SSConfig['view'][1] = "no";
-// $SSConfig['view'][2] = "checkbox|Layanan|Aset_ID&TipeAset"; // checkbox|name input | value
+$SSConfig['view'][2] = "checkbox|Layanan|Aset_ID&TipeAset"; // checkbox|name input | value
 $SSConfig['view'][3] = "noRegister";
 $SSConfig['view'][4] = "noKontrak";
 $SSConfig['view'][5] = "kodeKelompok|Uraian";

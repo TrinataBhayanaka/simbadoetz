@@ -187,7 +187,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<tr>
 						<th>No</th>
 						
-						<!--<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>-->
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
