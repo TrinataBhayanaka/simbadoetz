@@ -43,7 +43,7 @@ class MUTASI extends DB{
 
         $listTable = array(
                 // 'A'=>'tanah',
-                // 'B'=>'mesin',
+                'B'=>'mesin',
                 // 'C'=>'bangunan',
                 // 'D'=>'jaringan',
                 'E'=>'asetlain',
@@ -465,7 +465,7 @@ class MUTASI extends DB{
 	{	
 		$listTable = array(
                         // 'A'=>'tanah',
-                        // 'B'=>'mesin',
+                        'B'=>'mesin',
                         // 'C'=>'bangunan',
                         // 'D'=>'jaringan',
                         'E'=>'asetlain',
@@ -504,6 +504,7 @@ class MUTASI extends DB{
         $limit = "";
 
         $listTableOri = array(
+                        'B'=>'mesin',
                         'E'=>'asetlain',
                         'H'=>'aset',
                         );
@@ -699,7 +700,7 @@ $run = new MUTASI;
 $nokontrak = $argv[2];
 $debug = $argv[3];
 
-// $nokontrak = "050/D/1734/DIKPORA/2014";
+// $nokontrak = "050/D/0067/DIKPORA/2014";
 $getAset = $run->getAset($nokontrak);
 // pr($getAset);
 echo 'jumlah total data : '.intval($getAset['jlh'])."\n";
@@ -707,24 +708,12 @@ echo 'jumlah countAsetLain : '.intval($getAset['countAsetLain'])."\n";
 echo 'jumlah countPersediaan : '.intval($getAset['countPersediaan'])."\n";
 if ($debug)exit;
 
+// pr($getAset);
+// exit;
 $filter = $run->usulan($getAset, $nokontrak);
 echo '==================== Usulan Mutasi DONE =====================';
-// pr($getAset);
-exit;
-$getUsulan = $run->usulan(2, 'no-dokumen');
 
-logFile('==================== Usulan Mutasi DONE =====================');
-if ($getUsulan){
-	
-	$unique['aset_id'] = array_unique($getUsulan['asetid']);
-	$unique['Mutasi_ID'] = $getUsulan['mutasiid'];
-	// pr($unique);
-	
-	$validasi = $run->validasi($unique);
-	logFile('==================== Validasi Mutasi DONE =====================');
-		
-	
-}
+exit;
 
 
 ?>
