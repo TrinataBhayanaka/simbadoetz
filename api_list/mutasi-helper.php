@@ -76,9 +76,10 @@ class MUTASI extends DB{
 
                     // $sleep = 1;
 
+                    usleep(100);
                     $this->db->logIt($tabel=array($listTable[$tipe]), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses Mutasi");
 
-                       
+                    // exit;   
                         // $getJenisAset = $this->getJenisAset($nmaset);
 
                         // $getKIB = $this->getTableKibAlias($getJenisAset[$i]);
@@ -604,6 +605,7 @@ class MUTASI extends DB{
             $count = 1;
             $jlh = 0;
             $countAsetLain = 0;
+            $countMesin = 0;
             $countPersediaan = 0;
             foreach ($res as $key => $value) {
 
@@ -617,7 +619,10 @@ class MUTASI extends DB{
                         // $newData[$value['TipeAset']][$value['kodeSatker']][$value['GUID']][$value['Aset_ID']] = $value['kodeKelompok'];
                         $jlh = $jlh+1;
                         // $jlh++;
-                    
+                        
+                        if ($value['TipeAset'] == 'B'){
+                            $countMesin = $countMesin+1;
+                        }
                         if ($value['TipeAset'] == 'E'){
                             $countAsetLain = $countAsetLain+1;
                         }
@@ -637,6 +642,7 @@ class MUTASI extends DB{
                 $data['tipe'] = array_keys($newData);
                 $data['aset'] = $newData;
                 $data['jlh'] = $jlh;
+                $data['countMesin'] = intval($countMesin);
                 $data['countAsetLain'] = intval($countAsetLain);
                 $data['countPersediaan'] = intval($countPersediaan);
                 // pr($asetlain);
@@ -700,10 +706,11 @@ $run = new MUTASI;
 $nokontrak = $argv[2];
 $debug = $argv[3];
 
-// $nokontrak = "050/D/0067/DIKPORA/2014";
+// $nokontrak = "050/D/2032.1/DIKPORA/2014";
 $getAset = $run->getAset($nokontrak);
 // pr($getAset);
 echo 'jumlah total data : '.intval($getAset['jlh'])."\n";
+echo 'jumlah countMesin : '.intval($getAset['countMesin'])."\n";
 echo 'jumlah countAsetLain : '.intval($getAset['countAsetLain'])."\n";
 echo 'jumlah countPersediaan : '.intval($getAset['countPersediaan'])."\n";
 if ($debug)exit;
