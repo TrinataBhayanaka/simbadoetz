@@ -225,12 +225,26 @@ foreach ($data as $key => $value)
                 $SatkerUsul=$NamaSatker[0]['NamaSatker'];
               }
 
+             
               if($value['StatusPenetapan']==0){
                   $label="warning";
-                  $text="belum diproses";
+                  $text="<span class=\"label label-{$label}\" >belum diproses</span>";
                 }elseif($value['StatusPenetapan']==1){
                   $label="info";
-                  $text="sudah ditetapkan";
+                  $text="<span class=\"label label-{$label}\" >sudah ditetapkan</span>";
+                }
+                
+                if($value['Penetapan_ID']==0){
+                  $textvalid="";
+                }else{
+                   $textvalid="<span class=\"label\" style=\"margin-top:3px\">Belum Validasi</span>";
+                   if($value['Penetapan_ID']){
+                     $datastatus=$PENGHAPUSAN->DataPenetapan($value['Penetapan_ID']);
+                      if($datastatus[0]['Status']==1){
+                        $textvalid="<span class=\"label label-success\" style=\"margin-top:3px\">Sudah Validasi</span>";
+                   
+                      }
+                   }
                 }
 							// //pr($value[TglPerolehan]);
 							// $TglPerolehanTmp=explode("-", $value[TglPerolehan]);
@@ -271,7 +285,7 @@ foreach ($data as $key => $value)
                              $row[]=$change2;
                              $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan],4);
                              $row[]=$value[KetUsulan];
-                             $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
+                             $row[]=$text.$textvalid;
                              $row[]=$tindakan;
                              
                              $output['aaData'][] = $row;
