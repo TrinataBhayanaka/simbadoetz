@@ -1731,7 +1731,7 @@ class core_api_report extends DB {
 																				from 
 																					kdp_ori as KDPA,kelompok as K  
 																				where
-																					AL.kodeKelompok = K.Kode  
+																					KDPA.kodeKelompok = K.Kode  
 																					 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
 																					and $parameter_sql
 																				group by 
@@ -1860,7 +1860,7 @@ class core_api_report extends DB {
 																				from 
 																					kdp_ori as KDPA,kelompok as K  
 																				where
-																					AL.kodeKelompok = K.Kode  
+																					KDPA.kodeKelompok = K.Kode  
 																					 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
 																					and $newparameter_sql_06
 																				group by 
@@ -2633,7 +2633,7 @@ class core_api_report extends DB {
 														// $KodeKaCondt1_mesin = "AND M.kodeKA = 1";
 														// $KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
 														if($thnceck >= $thnExtraDefault){
-																
+															//$tahunPerolehan  >= 2008	
 															$query_02 = "select distinct(M.kodeSatker),
 															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
@@ -2680,10 +2680,10 @@ class core_api_report extends DB {
 															$query = $dataQuery;		
 
 														}elseif($thnceck < $thnExtraDefault){
-														
-															// echo "masukk";
-															// echo "sini aja";
-															// exit;
+															/*echo "tahun cek=".$thnceck;
+															echo "masukk";
+															echo "sini aja";
+															exit;*/
 															$query_02 = "select distinct(M.kodeSatker),
 															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
@@ -3961,9 +3961,9 @@ class core_api_report extends DB {
 										
 							//	Status_Validasi_Barang = 1		
 						}
-						/*echo $queryok ; 	
+						echo $queryok ; 	
 						echo "<br>";
-						echo "<br>";*/
+						echo "<br>";
 						// exit;
 						$result = $this->query($queryok) or die ($this->error('error'));		
 						while ($data = $this->fetch_object($result))
@@ -4094,9 +4094,9 @@ class core_api_report extends DB {
 								}
 								
 							}
-							/*echo "<br>";
+							echo "<br>";
 							echo $queryresult;
-							echo "<br>";*/
+							echo "<br>";
 							$resultfix = $this->query($queryresult) or die ($this->error('error'));	
 							if($resultfix){
 							while ($data3 = $this->fetch_object($resultfix))
@@ -4278,6 +4278,7 @@ class core_api_report extends DB {
 		// pr($satker);
 		// exit;
 		// echo $satker[0];
+		$tglDefault_Extra = '2008-01-01';
 		$tglDefault = '2008-01-01';
 		$thnDefault ="2008";
 			
@@ -4387,17 +4388,35 @@ class core_api_report extends DB {
 				WHERE kodeSatker like '$satker_id%' 
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
-				and Status_Validasi_Barang =1 and kodeLokasi like '12%' and kondisi = 3 $KodeKaCondt1 ";	
+				and Status_Validasi_Barang =1 and kodeLokasi like '12%' and kondisi = 3 $KodeKaCondt1 ";
+
+			$query_extra_02= "SELECT sum(NilaiPerolehan) as nilai FROM mesin_Rplctn
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglDefault_Extra' AND TglPerolehan <='$tglAkhirDefault'
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan < 300000) and kondisi != 3";
+							
+			$query_extra_03= "SELECT sum(NilaiPerolehan) as nilai FROM bangunan_Rplctn
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglDefault_Extra' AND TglPerolehan <='$tglAkhirDefault'
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan < 10000000) and kondisi != 3";			
 			
 			if($thnFix < $thnDefault){
 				// echo "tahun kurang dari 2008";
 				$queryALL = array($query_01,$query_02_default,$query_03_default,$query_04,$query_05,$query_06,$query_07);
 			}elseif($thnceck >= $thnDefault){
 				// echo "tahun diatas dari 2008";
-				$queryALL = array($query_01,$query_02_condt_1,$query_03_condt_1,$query_04,$query_05,$query_06,$query_07);
+				$queryALL = array($query_01,$query_02_condt_1,$query_03_condt_1,$query_04,$query_05,$query_06,$query_07,
+									$query_extra_02,$query_extra_03);
 			}else{
 				// echo "<2008 >2008";
-				$queryALL = array($query_01,$query_02_condt_2,$query_03_condt_2,$query_04,$query_05,$query_06,$query_07);
+				$queryALL = array($query_01,$query_02_condt_2,$query_03_condt_2,$query_04,$query_05,$query_06,$query_07,
+								 $query_extra_02,$query_extra_03);
 				// $queryALL = array($query_02_condt_2);
 			}
 		// $hitung  = count($queryALL);
@@ -4467,6 +4486,7 @@ class core_api_report extends DB {
 		}
 		// pr($satker);
 		// exit;
+		$tglDefault_Extra = '2008-01-01';
 		$tglDefault = '2008-01-01';
 		$thnDefault ="2008";
 			
@@ -4577,20 +4597,38 @@ class core_api_report extends DB {
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan < '$tglAkhirDefault' 
 				and Status_Validasi_Barang =1 and kondisi = 3 and kodeLokasi like '12%' $KodeKaCondt1";	
 			
+			$query_extra_02= "SELECT sum(NilaiPerolehan) as nilai FROM mesin_Rplctn
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglDefault_Extra' AND TglPerolehan <='$tglAkhirDefault'
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan < 300000) and kondisi != 3";
+							
+			$query_extra_03= "SELECT sum(NilaiPerolehan) as nilai FROM bangunan_Rplctn
+							WHERE kodeSatker like '$satker_id%' 
+							and TglPerolehan >= '$tglDefault_Extra' AND TglPerolehan <='$tglAkhirDefault'
+							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+							and Status_Validasi_Barang =1 and StatusTampil = 1 
+							and kodeLokasi like '12%' 
+							and (NilaiPerolehan < 10000000) and kondisi != 3";
+
+			
 			if($thnFix < $thnDefault){
 				// echo "tahun kurang dari 2008";
 				$queryALL = array($query_01,$query_02_default,$query_03_default,$query_04,$query_05,$query_06,$query_07);
 			}elseif($thnceck >= $thnDefault){
 				// echo "tahun diatas dari 2008";
-				$queryALL = array($query_01,$query_02_condt_1,$query_03_condt_1,$query_04,$query_05,$query_06,$query_07);
+				$queryALL = array($query_01,$query_02_condt_1,$query_03_condt_1,$query_04,$query_05,$query_06,$query_07,
+								  $query_extra_02,$query_extra_03);
 			}else{
 				// echo "<2008 >2008";
-				$queryALL = array($query_01,$query_02_condt_2,$query_03_condt_2,$query_04,$query_05,$query_06,$query_07);
-				// $queryALL = array($query_02_condt_2);
+				$queryALL = array($query_01,$query_02_condt_2,$query_03_condt_2,$query_04,$query_05,$query_06,$query_07,
+								 $query_extra_02,$query_extra_03);
 			}
-		// $hitung  = count($queryALL);
-		// echo "hitung".$hitung;
-		// pr($queryALL);
+		/*$hitung  = count($queryALL);
+		echo "hitung".$hitung;
+		pr($queryALL);*/
 		// exit;
 			
 			for ($i = 0; $i < count($queryALL); $i++)
@@ -4609,21 +4647,21 @@ class core_api_report extends DB {
 					// $i = 0;
 					while ($dataAll = $this->fetch_object($result))
 					{
-						// $datafix[] = $data3->nilai;
 						if($dataAll->nilai == NULL){
+							// echo "klo null";
+							// echo "<br/>";
 							$nilai = 0;
 						}else{
+							// echo "klo isi";
+							// echo "<br/>";
 							$nilai = $dataAll->nilai;
 						}
 						$getdata[$data][]= $nilai;
 					}
 					
-							
 				}
-				
 			}
 			// pr($data);
-			
 		}
 		// pr($getdata);
 		// exit;
@@ -7074,7 +7112,6 @@ class core_api_report extends DB {
 			}else{
 				// echo "all";
 				// echo "<br>";
-				
 				$AllTableTemp = array($queryKibA,$queryAlterA,$queryLogA,$queryMutasiA,$queryPnghpsnA,
 									$queryKibB,$queryAlterB,$queryLogB,$queryMutasiB,$queryPnghpsnB,
 									$queryKibB_Rplctn,$queryAlterB_Rplctn,$queryLogB_Rplctn,$queryMutasiB_Rplctn,$queryPnghpsnB_Rplctn,
@@ -7085,8 +7122,6 @@ class core_api_report extends DB {
 									$queryKibF,$queryAlterF,$queryLogF,$queryMutasiF,$queryPnghpsnF,
 						      $query_asetlain_3,$query_alter_asetlain_3,$query_asetlain_3_tanah,$query_asetlain_3_mesin,$query_asetlain_3_bangunan,
 						      $query_asetlain_3_jaringan,$query_asetlain_3_asettetaplain,$query_asetlain_3_kdp,$query_mutasi_asetlain_3,$query_hapus_asetlain_3);						
-				
-			
 			}
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
