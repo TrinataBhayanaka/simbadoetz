@@ -3966,9 +3966,9 @@ class core_api_report extends DB {
 										
 							//	Status_Validasi_Barang = 1		
 						}
-						echo $queryok ; 	
+						/*echo $queryok ; 	
 						echo "<br>";
-						echo "<br>";
+						echo "<br>";*/
 						// exit;
 						$result = $this->query($queryok) or die ($this->error('error'));		
 						while ($data = $this->fetch_object($result))
@@ -4099,9 +4099,9 @@ class core_api_report extends DB {
 								}
 								
 							}
-							echo "<br>";
+							/*echo "<br>";
 							echo $queryresult;
-							echo "<br>";
+							echo "<br>";*/
 							$resultfix = $this->query($queryresult) or die ($this->error('error'));	
 							if($resultfix){
 							while ($data3 = $this->fetch_object($resultfix))
