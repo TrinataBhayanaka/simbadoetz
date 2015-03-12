@@ -1,7 +1,8 @@
 <?php
 
-$CONFIG['default']['db_host'] = 'localhost';
-$CONFIG['default']['db_user'] = 'simbada';
+
+$CONFIG['default']['db_host'] = '192.168.254.52';
+$CONFIG['default']['db_user'] = 'remote';
 $CONFIG['default']['db_pass'] = 'margonda100';
 $CONFIG['default']['db_name'] = 'simbada_2014_full_v1';
 
@@ -9,6 +10,7 @@ $CONFIG['default']['db_name'] = 'simbada_2014_full_v1';
 // $CONFIG['default']['db_user'] = 'root';
 // $CONFIG['default']['db_pass'] = 'root123root';
 // $CONFIG['default']['db_name'] = 'simbada_2014';
+
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
@@ -145,7 +147,7 @@ function store_aset($data,$link,$totaldata)
 
         }
         $startreg = 0;
-        $query = "SELECT MAX(CAST(noRegister AS SIGNED)) FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+        $query = "SELECT MAX(CAST(noRegister AS SIGNED)) AS noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
         $result = $link->query($query);
         while($row = mysqli_fetch_assoc($result)) {
 		  $startreg = $row['noRegister'];

@@ -325,7 +325,7 @@ $menu_id = 10;
 							<?php echo $TglPerolehan;?>
 						</td>
 						<td>
-							<?php echo number_format($nilai[NilaiPerolehan]);?>
+							<?php echo number_format($nilai[NilaiPerolehan],4);?>
 						</td>
 						<td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>

@@ -13,24 +13,17 @@ class MUTASI extends DB{
         $this->db = new DB;
 	}
 
-	function usulan($idpenggunaan, $nodok, $debug=false)
+	function usulan($dataAset, $nodok, $debug=false)
 	{
 
-		// get list aset
-
-		$getPenggunaan = $this->getPenggunaan($idpenggunaan);
-
-		$getKodeSatker = $this->getGUID($getPenggunaan);
-
-		// pr($getKodeSatker);
-		// exit;
+		// pr($dataAset);
 		$jenisaset = $data['jenisaset'];
 
         $olah_tgl= date('Y-m-d H:i:s');
         $alasan="Mutasi [importing]";
-        $pemakai="dinas pendidikan";
+        $pemakai="Sekolah";
         $kodeKelompok = $data['kodeKelompok'];
-
+        $TglSKKDH = "2014-12-31";
         
 
         $UserNm=$_SESSION['ses_uoperatorid'];// usernm akan diganti jika session di implementasikan
@@ -49,170 +42,124 @@ class MUTASI extends DB{
         // pr($jenisaset);
 
         $listTable = array(
-                'A'=>'tanah',
+                // 'A'=>'tanah',
                 'B'=>'mesin',
-                'C'=>'bangunan',
-                'D'=>'jaringan',
+                // 'C'=>'bangunan',
+                // 'D'=>'jaringan',
                 'E'=>'asetlain',
-                'F'=>'kdp');
+                // 'F'=>'kdp'
+                'H'=>'aset'
+                );
 
-        foreach ($getKodeSatker['satker'] as $satker => $value) {
-       		
-       		$sql = array(
-	                'table'=>"Mutasi",
-	                'field'=>"NoSKKDH , TglSKKDH, Keterangan, SatkerTujuan, NotUse, TglUpdate, UserNm, FixMutasi, Pemakai",
-	                'value'=>"'$nodok','$olah_tgl', '$alasan','$satker',0,'$olah_tgl','$UserNm','0','$pemakai'",
-	                );
+        // pr($getKodeSatker);
 
-	        $res = $this->db->lazyQuery($sql,$debug,1);
-	        $mutasiIDReturn = $this->db->insert_id();
-
-	        $nmaset = $value;
-	        $panjang=count($nmaset);
-
-	        $sleep = 1;
-	        for($i=0;$i<$panjang;$i++){
+        $no = 1;
+        foreach ($dataAset['aset'] as $tipe => $value) {
             
-	            $getJenisAset = $this->getJenisAset($nmaset);
-
-	            $getKIB = $this->getTableKibAlias($getJenisAset[$i]);
-
-	            $asset_id = $nmaset[$i];
-
-	            $satkerAwal =$getKodeSatker['aset'][$asset_id]['kodeSatker'];
-		        $kelompokAwal =$getKodeSatker['aset'][$asset_id]['kodeKelompok'];
-		        $lokasiAwal =$getKodeSatker['aset'][$asset_id]['kodeLokasi'];
-		        $registerAwal =$getKodeSatker['aset'][$asset_id]['noRegister'];
-		        $namaSatkerAwal =$getKodeSatker['aset'][$asset_id]['NamaSatker'];
-
-	           	$lokasiBaru = ubahLokasi($lokasiAwal,$satker);
-	            // pr($lokasiBaru);
-	            // exit;
-	            $sqlSelect = array(
-	                    'table'=>"Aset",
-	                    'field'=>"MAX(noRegister) AS noRegister",
-	                    'condition'=>"kodeKelompok = '{$kelompokAwal}' AND kodeSatker = '{$satkerAwal}' AND kodeLokasi = '{$lokasiAwal}'",
-	                    );
-
-	            $result = $this->db->lazyQuery($sqlSelect,$debug);
-	            
-	            $gabung_nomor_reg_tujuan=intval(($result[0]['noRegister'])+1);
-
-	            // if (!in_array($asset_id, $asetKapitalisasi)){
-	                $sql1 = array(
-	                        'table'=>"MutasiAset",
-	                        'field'=>"Mutasi_ID,Aset_ID,NamaSatkerAwal, NomorRegAwal,NomorRegBaru,SatkerAwal,SatkerTujuan",
-	                        'value'=>"'$mutasi_id','$asset_id','$namaSatkerAwal','$registerAwal','$gabung_nomor_reg_tujuan','$satkerAwal','$satker'",
-	                        );
-
-	                $res1 = $this->db->lazyQuery($sql1,$debug,1);
-	                if (!$res1){
-	                    logFile('rollback 3');
-	                    
-	                    return false;   
-	                }   
-	            // }else{
-
-	            //      $sql1 = array(
-	            //             'table'=>"MutasiAset",
-	            //             'field'=>"Mutasi_ID,Aset_ID,NamaSatkerAwal, NomorRegAwal,NomorRegBaru,SatkerAwal,SatkerTujuan, Aset_ID_Tujuan",
-	            //             'value'=>"'$mutasi_id','$asset_id','$namaSatkerAwal','$registerAwal','$gabung_nomor_reg_tujuan','$satkerAwal','$satker', {$asetKapitalisasiOri[$asset_id]}",
-	            //             );
-
-	            //     $res1 = $this->db->lazyQuery($sql1,$debug,1);
-	            //     if (!$res1){
-	            //         logFile('rollback 4');
-	                    
-	            //         return false;   
-	            //     }
-	            // }
-
-	            $sql2 = array(
-	                    'table'=>"Aset",
-	                    'field'=>"StatusValidasi = 3, Status_Validasi_Barang = 3",
-	                    'condition'=>"Aset_ID='$asset_id'",
-	                    );
-
-	            $res2 = $this->db->lazyQuery($sql2,$debug,2); 
-	            if (!$res2){
-	                logFile('rollback 5');
-	                
-	                return false;   
-	            }
-	            // pr($getKIB);
-	            $sqlKib = array(
-	                    'table'=>"{$getKIB['listTableOri']}",
-	                    'field'=>"StatusValidasi = 3, Status_Validasi_Barang = 3, StatusTampil = 3",
-	                    'condition'=>"Aset_ID='$asset_id'",
-	                    );
-
-	            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
-	            if (!$resKib){
-	                logFile('rollback 5');
-	                
-	                return false;   
-	            }
-
-	            $sql3 = array(
-	                    'table'=>"PenggunaanAset",
-	                    'field'=>"StatusMutasi=1, Mutasi_ID='$mutasi_id'",
-	                    'condition'=>"Aset_ID='$asset_id'",
-	                    );
-
-	            $res3 = $this->db->lazyQuery($sql3,$debug,2);
-	            if (!$res3){
-	                logFile('rollback 6');
-	                
-	                return false;   
-	            }
-	            
-	            $sql = array(
-	                    'table'=>'aset',
-	                    'field'=>"TipeAset",
-	                    'condition' => "Aset_ID={$asset_id}",
-	                    );
-	            $result = $this->db->lazyQuery($sql,$debug);
-	            $asetid[$asset_id] = $listTable[implode(',', $result[0])];
-	        	
-	        	$sleep++;
-	        	if ($sleep == 200){
-	        		sleep(1);
-	        		$sleep = 1;
-	        	}
-
-	        	$returnAsetID[] = $value[$i];
-	        }
-       	}
-        
-        
-
-        if ($result){
-            
-            $noDokumen = "Mutasi [importing]";
-
-            $sleep = 1;
-            foreach ($asetid as $key => $value) {
-                // if (!in_array($key, $asetKapitalisasi)){
-                    $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi");
-                // }else{
-                //     $this->db->logIt($tabel=array($value), $Aset_ID=$key, $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Usulan Mutasi dengan mode kapitalisasi", $tmpSatker=$asetKapitalisasiOri[$key]);
-                // }
+            foreach ($value as $satkerTujuan => $val) {
                 
-                $sleep++;
-                if ($sleep == 200){
-                	sleep(1);
-                	$sleep = 1;
+                $sql = array(
+                        'table'=>"Mutasi",
+                        'field'=>"NoSKKDH , TglSKKDH, Keterangan, SatkerTujuan, NotUse, TglUpdate, UserNm, FixMutasi, Pemakai",
+                        'value'=>"'$nodok','$TglSKKDH', '$alasan','$satkerTujuan',0,'$olah_tgl','1','1','$pemakai'",
+                        );
+
+                $res = $this->db->lazyQuery($sql,$debug,1);
+                $mutasiIDReturn = $this->db->insert_id();
+
+                
+                foreach ($val as $key => $v) {
+
+                    $gabung_nomor_reg_tujuan = 0;
+                    // $nmaset = $key;
+                    // $panjang=count($nmaset);
+
+                    // $sleep = 1;
+
+                    usleep(100);
+                    $this->db->logIt($tabel=array($listTable[$tipe]), $Aset_ID=$key, $kd_riwayat=3, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses Mutasi");
+
+                    // exit;   
+                        // $getJenisAset = $this->getJenisAset($nmaset);
+
+                        // $getKIB = $this->getTableKibAlias($getJenisAset[$i]);
+
+                        $asset_id = $key;
+
+                        // $getLokasiTujuan = $this->get_satker_tujuan($data['Mutasi_ID'], $data['aset_id'][$key]);
+
+
+                        $satkerAwal =$v['kodeSatker'];
+                        $kelompokAwal =$v['kodeKelompok'];
+                        $lokasiAwal =$v['kodeLokasi'];
+                        $registerAwal =$v['noRegister'];
+                        $namaSatkerAwal ="DINAS PENDIDIKAN, PEMUDA DAN OLAHRAGA";
+
+                        $lokasiBaru = ubahLokasi($lokasiAwal,$satkerTujuan);
+                        // pr($lokasiBaru);
+                        // exit;
+
+                        $sqlSelect = array(
+                                'table'=>"Aset",
+                                'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
+                                'condition'=>"kodeKelompok = '{$kelompokAwal}' AND kodeLokasi = '{$lokasiBaru}'",
+                                );
+
+                        $result = $this->db->lazyQuery($sqlSelect,$debug);
+                        
+                        $gabung_nomor_reg_tujuan=intval(($result[0]['noRegister'])+1);
+
+                        // if (!in_array($asset_id, $asetKapitalisasi)){
+                            $sql1 = array(
+                                    'table'=>"MutasiAset",
+                                    'field'=>"Mutasi_ID,Aset_ID,NamaSatkerAwal, NomorRegAwal,NomorRegBaru,SatkerAwal,SatkerTujuan, Status",
+                                    'value'=>"'$mutasi_id','$asset_id','$namaSatkerAwal','$registerAwal','$gabung_nomor_reg_tujuan','$satkerAwal','$satkerTujuan', 1",
+                                    );
+
+                            $res1 = $this->db->lazyQuery($sql1,$debug,1);
+                            
+
+                        $sql2 = array(
+                                'table'=>"Aset",
+                                'field'=>"TglPembukuan = '{$TglSKKDH}', StatusValidasi = 1, Status_Validasi_Barang = 1, noRegister = '{$gabung_nomor_reg_tujuan}', kodeSatker = '{$satkerTujuan}', kodeLokasi = '{$lokasiBaru}',NotUse = 0, fixPenggunaan = 0, statusPemanfaatan = 0",
+                                'condition'=>"Aset_ID='$asset_id'",
+                                );
+
+                        $res2 = $this->db->lazyQuery($sql2,$debug,2); 
+                        
+
+                        $ignoreTable = array('F','H');
+                        if (!in_array($tipe, $ignoreTable)){
+
+                            $sqlKib = array(
+                                    'table'=>"{$listTable[$tipe]}",
+                                    'field'=>"TglPembukuan = '{$TglSKKDH}', StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1, noRegister = '{$gabung_nomor_reg_tujuan}', kodeSatker = '{$satkerTujuan}', kodeLokasi = '{$lokasiBaru}'",
+                                    'condition'=>"Aset_ID='$asset_id'",
+                                    );
+
+                            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+                            
+                        }
+                        
+
+                        $sql3 = array(
+                                'table'=>"PenggunaanAset",
+                                'field'=>"StatusMutasi=1, Mutasi_ID='$mutasi_id'",
+                                'condition'=>"Aset_ID='$asset_id'",
+                                );
+
+                        $res3 = $this->db->lazyQuery($sql3,$debug,2);
+                        
+                        echo 'Data ke : '.$no. "\n";;
+                        $no++;
                 }
+                
+                
             }
 
-            logFile('commit transaksi mutasi');
-           
-            return array('asetid'=>$returnAsetID, 'mutasiid'=>$mutasiIDReturn);
-        } 
-
-        logFile('Rollback transaksi mutasi');
+        }
         
-        return false;
+        return true;
 	}
 
 
@@ -397,8 +344,8 @@ class MUTASI extends DB{
                         
                         $sql = array(
                                 'table'=>"{$table['listTableOri']}",
-                                'field'=>"MAX(noRegister) AS noRegister",
-                                'condition'=>"kodeKelompok = '{$resultAwal[0][kodeKelompok]}' AND kodeSatker = '{$getLokasiTujuan[0][SatkerTujuan]}' AND kodeLokasi = '{$implLokasi}'",
+                                'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
+                                'condition'=>"kodeKelompok = '{$resultAwal[0][kodeKelompok]}' AND kodeLokasi = '{$implLokasi}'",
                                 );
                         $result = $this->db->lazyQuery($sql,$debug);
 
@@ -518,12 +465,15 @@ class MUTASI extends DB{
 	function getGUID($aset)
 	{	
 		$listTable = array(
-                        'A'=>'tanah',
+                        // 'A'=>'tanah',
                         'B'=>'mesin',
-                        'C'=>'bangunan',
-                        'D'=>'jaringan',
+                        // 'C'=>'bangunan',
+                        // 'D'=>'jaringan',
                         'E'=>'asetlain',
-                        'F'=>'kdp');
+                        // 'F'=>'kdp',
+                        // 'G'=>'aset',
+                        'H'=>'aset'
+                        );
 
 		foreach ($listTable as $key => $value) {
 
@@ -549,11 +499,166 @@ class MUTASI extends DB{
 		return $newData;
 	}
 
+    function getKib($noKontrak=false,$info=false, $debug=false)
+    {
+
+        $limit = "";
+
+        $listTableOri = array(
+                        'B'=>'mesin',
+                        'E'=>'asetlain',
+                        'H'=>'aset',
+                        );
+
+        $filter = "";
+        if ($info) $filter .=  "AND info LIKE '%{$info}%'";
+
+        $sql = array(
+                'table'=>"aset",
+                'field'=>"Aset_ID, TipeAset",
+                'condition' => "noKontrak = '{$noKontrak}' AND NotUse = 1 AND fixPenggunaan = 1 AND StatusValidasi = 1 {$filter}",
+                'limit' => "{$limit}",
+                );
+
+        $res = $this->db->lazyQuery($sql,$debug);
+
+        if ($res){
+
+            foreach ($res as $tipe => $value) {
+                
+                $asetid[$value['TipeAset']][] = $value['Aset_ID'];
+                // $id[] = $value['Aset_ID'];
+            }
+
+            foreach ($asetid as $tipe => $value) {
+                
+            $tmp = "";
+            
+            $tmp = implode(',', $value);
+            // pr($tmp);exit;
+                $tabel = $listTableOri[$tipe];
+                $jenisaset = $tipe;
+                // $tabel = $listTableOri['E'];
+                // $jenisaset = 'E';
+
+                $alias = " ,CONCAT('{$tipe}') AS TipeAset";
+                $sql = array(
+                        'table'=>"{$tabel}",
+                        'field'=>"Aset_ID, kodeSatker, kodeKelompok, kodeLokasi, noRegister, GUID {$alias}",
+                        'condition' => "Aset_ID IN ({$tmp})",
+                        'limit' => "{$limit}",
+                        );
+
+                $res1 = $this->db->lazyQuery($sql,$debug);
+                if ($res1){
+
+                    
+
+                    // foreach ($res1 as $key => $value) {
+                    //     $res1[$key]['TipeAset'] = $jenisaset;
+                    // }
+                    
+                    $newData[] = $res1;
+                }
+            }
+
+            // pr($newData);exit;
+            if ($newData){
+                foreach ($newData as $key => $value) {
+                    
+                    foreach ($value as $key => $val) {
+                        $data[] = $val;
+                    }
+                    
+                }
+            }
+            return $data;
+            
+        }
+
+    }
+
+    function getAset($noKontrak=false, $info=false, $debug=false)
+    {
+
+        $filter = "";
+        if ($info) $filter .=  "AND info LIKE '%{$info}%'";
+        
+        // $sql = array(
+        //         'table'=>"aset",
+        //         'field'=>"Aset_ID, TipeAset, kodeSatker, kodeKelompok, kodeLokasi, noRegister, GUID",
+        //         'condition' => "noKontrak = '{$noKontrak}' AND NotUse = 1 AND fixPenggunaan = 1 AND StatusValidasi = 1 {$filter}",
+        //         'limit' => 10,
+        //         );
+
+        // $res = $this->db->lazyQuery($sql,$debug);
+
+        $res = $this->getKib($noKontrak);
+
+        // pr($res);
+        // pr($datakib);
+        
+        
+        // exit;
+        if ($res){
+
+            $count = 1;
+            $jlh = 0;
+            $countAsetLain = 0;
+            $countMesin = 0;
+            $countPersediaan = 0;
+            foreach ($res as $key => $value) {
+
+                if ($value['GUID']){
+
+                    if ($value['GUID'] != $value['kodeSatker']){
+                        $newData[$value['TipeAset']][$value['GUID']][$value['Aset_ID']]['kodeSatker'] = $value['kodeSatker'];
+                        $newData[$value['TipeAset']][$value['GUID']][$value['Aset_ID']]['kodeKelompok'] = $value['kodeKelompok'];
+                        $newData[$value['TipeAset']][$value['GUID']][$value['Aset_ID']]['kodeLokasi'] = $value['kodeLokasi'];
+                        $newData[$value['TipeAset']][$value['GUID']][$value['Aset_ID']]['noRegister'] = $value['noRegister'];
+                        // $newData[$value['TipeAset']][$value['kodeSatker']][$value['GUID']][$value['Aset_ID']] = $value['kodeKelompok'];
+                        $jlh = $jlh+1;
+                        // $jlh++;
+                        
+                        if ($value['TipeAset'] == 'B'){
+                            $countMesin = $countMesin+1;
+                        }
+                        if ($value['TipeAset'] == 'E'){
+                            $countAsetLain = $countAsetLain+1;
+                        }
+                        if ($value['TipeAset'] == 'H'){
+                            $countPersediaan = $countPersediaan+1;
+                        }
+                    }
+                    
+                    
+                }
+                
+                
+            }
+
+            if ($newData){
+
+                $data['tipe'] = array_keys($newData);
+                $data['aset'] = $newData;
+                $data['jlh'] = $jlh;
+                $data['countMesin'] = intval($countMesin);
+                $data['countAsetLain'] = intval($countAsetLain);
+                $data['countPersediaan'] = intval($countPersediaan);
+                // pr($asetlain);
+
+                return $data;
+            }
+            
+        } 
+        return false;
+    }
+
 
 	function getTableKibAlias($type=1)
     {
-	    $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
-	    $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+	    $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k',7=>'ase',8=>'as');
+	    $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F',7=>'G', 8=>'H');
 
 	    $listTable = array(
 	                    1=>'tanah AS t',
@@ -561,7 +666,10 @@ class MUTASI extends DB{
 	                    3=>'bangunan AS b',
 	                    4=>'jaringan AS j',
 	                    5=>'asetlain AS al',
-	                    6=>'kdp AS k');
+	                    6=>'kdp AS k',
+                        7=>'aset AS ase',
+                        8=>'aset AS as'
+                        );
 
 	    $listTableOri = array(
 	                    1=>'tanah',
@@ -569,7 +677,10 @@ class MUTASI extends DB{
 	                    3=>'bangunan',
 	                    4=>'jaringan',
 	                    5=>'asetlain',
-	                    6=>'kdp');
+	                    6=>'kdp',
+                        7=>'aset',
+                        8=>'aset',
+                        );
 
 	    $data['listTable'] = $listTable[$type];
 	    $data['listTableAlias'] = $listTableAlias[$type];
@@ -578,24 +689,38 @@ class MUTASI extends DB{
 
 	    return $data;
     }
+
+    
 }
 
+/*
+    skenario mutasi
 
+    1. ambil data penggunaanaset berdasarkan id penggunaan yang dilewatkan
+    2. ambil data kode satker tujuan di kib berdasarkan aset yang ada di penggunanaset
+    3. insert data mutasi
+    4. lakukan proses mutasi
+*/
 $run = new MUTASI;
-$getUsulan = $run->usulan(4, 'no-dok');
 
-logFile('==================== Usulan Mutasi DONE =====================');
-if ($getUsulan){
-	
-	$unique['aset_id'] = array_unique($getUsulan['asetid']);
-	$unique['Mutasi_ID'] = $getUsulan['mutasiid'];
-	// pr($unique);
-	
-	$validasi = $run->validasi($unique);
-	logFile('==================== Validasi Mutasi DONE =====================');
-		
-	
-}
+$nokontrak = $argv[2];
+$debug = $argv[3];
+
+// $nokontrak = "050/D/2032.1/DIKPORA/2014";
+$getAset = $run->getAset($nokontrak);
+// pr($getAset);
+echo 'jumlah total data : '.intval($getAset['jlh'])."\n";
+echo 'jumlah countMesin : '.intval($getAset['countMesin'])."\n";
+echo 'jumlah countAsetLain : '.intval($getAset['countAsetLain'])."\n";
+echo 'jumlah countPersediaan : '.intval($getAset['countPersediaan'])."\n";
+if ($debug)exit;
+
+// pr($getAset);
+// exit;
+$filter = $run->usulan($getAset, $nokontrak);
+echo '==================== Usulan Mutasi DONE =====================';
+
+exit;
 
 
 ?>

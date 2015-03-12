@@ -225,12 +225,26 @@ foreach ($data as $key => $value)
                 $SatkerUsul=$NamaSatker[0]['NamaSatker'];
               }
 
+             
               if($value['StatusPenetapan']==0){
                   $label="warning";
-                  $text="belum diproses";
+                  $text="<span class=\"label label-{$label}\" >belum diproses</span>";
                 }elseif($value['StatusPenetapan']==1){
                   $label="info";
-                  $text="sudah ditetapkan";
+                  $text="<span class=\"label label-{$label}\" >sudah ditetapkan</span>";
+                }
+                
+                if($value['Penetapan_ID']==0){
+                  $textvalid="";
+                }else{
+                   $textvalid="<span class=\"label\" style=\"margin-top:3px\">Belum Validasi</span>";
+                   if($value['Penetapan_ID']){
+                     $datastatus=$PENGHAPUSAN->DataPenetapan($value['Penetapan_ID']);
+                      if($datastatus[0]['Status']==1){
+                        $textvalid="<span class=\"label label-success\" style=\"margin-top:3px\">Sudah Validasi</span>";
+                   
+                      }
+                   }
                 }
 							// //pr($value[TglPerolehan]);
 							// $TglPerolehanTmp=explode("-", $value[TglPerolehan]);
@@ -239,20 +253,20 @@ foreach ($data as $key => $value)
               if($value['StatusPenetapan']==0){
               
                   
-                      $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/penghapusan_usulan_daftar_proses_hapus_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
-                      <a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
+                      $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/penghapusan_usulan_daftar_proses_hapus_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\" style=\"margin-top:3px\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
+                      <a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
 
-                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
-                     <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tipe_file=2\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
+                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
+                     <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tipe_file=2\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
                   
                  
                     
                     
                 }elseif($value['StatusPenetapan']==1){
                  
-                   $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
-                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
-                     <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tipe_file=2\" class=\"btn btn-info btn-small\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
+                   $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
+                    <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
+                     <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tipe_file=2\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
                 
                
                 }  
@@ -270,9 +284,9 @@ foreach ($data as $key => $value)
                              $row[]=$SatkerUsul;
                              $row[]=$jumlahAset;
                              $row[]=$change2;
-                             $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan]);
+                             $row[]=number_format($totalNilaiPerolehan[TotalNilaiPerolehan],4);
                              $row[]=$value[KetUsulan];
-                             $row[]="<span class=\"label label-{$label}\" >{$text}</span>";
+                             $row[]=$text.$textvalid;
                              $row[]=$tindakan;
                              
                              $output['aaData'][] = $row;
