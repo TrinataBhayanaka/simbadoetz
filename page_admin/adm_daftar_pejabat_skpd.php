@@ -43,6 +43,10 @@ if (isset($_POST['idbtn']))
     //echo '<script type=text/javascript>alert("Sukses");</script>';
     //$query = "INSERT INTO Pejabat VALUES (null, )";
     
+    if (!$_POST['Satker_ID']){
+        echo '<script type=text/javascript>alert("Pilih Daftar SKPD"); history.back()</script>';
+        exit;
+    }   
     $query = "SELECT Pejabat_ID FROM Pejabat WHERE Satker_ID ={$_POST['Satker_ID']} AND Tahun = '{$_POST[tahun]}'";
     // echo $query;
     $result = $DBVAR->query($query) or die ($DBVAR->error());
