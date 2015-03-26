@@ -21,6 +21,7 @@ include "../../config/config.php";
 			$SessionUser['satker'] = $_POST['kodeSatker'];
 			$SessionUser['kodeKelompok'] = $_POST['kodeKelompok'];
 			$SessionUser['tipeAset'] = $_POST['tipeAset'];
+			$SessionUser['tahunRuangan'] = $_POST['tahunRuangan'];
 			
 			/*if(!isset($SessionUser['tahun']) && !isset($SessionUser['tahun'])){
 				$SessionUser['tahun'] = $dataSesi['Tahun'];
@@ -32,8 +33,8 @@ include "../../config/config.php";
 				// $tahun2 = $SessionUser['tahunTujuan'];
 				// $satker = $SessionUser['satker'];
 			}*/
+			$par_data_table="tahun=$SessionUser[tahun]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]&thnR=$SessionUser[tahunRuangan]";
 		
-		$par_data_table="tahun=$SessionUser[tahun]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]";
 		// pr($par_data_table);
 		// exit;
 ?>
@@ -147,9 +148,14 @@ include "../../config/config.php";
 					<input type="submit" class="btn btn-info btn-small" id= "submit" value="Update Ruangan" name="submit"  onclick="return check_pilihan(); disabled"/>
 					<input type="hidden" name="kodeSatker" value="<?=$kodeSatker?>">
 					<input type="hidden" name="kodeRuang" value="<?=$kodeRuangan?>">
+					<input type="hidden" name="kodeRuang" value="<?=$kodeRuangan?>">
 				</li>
 			</ul>
 		</div>
+		<?php
+			//parameter datatabel
+			// $par_data_table="tahun=$SessionUser[tahun]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]&thnR=$tahunRuangan";
+		?>
 			<script>
 			$(document).ready(function() {
 				  $('#kir_aset').dataTable(
@@ -160,6 +166,10 @@ include "../../config/config.php";
 							"aoColumns":[
 								 {"bSortable": false},
 								 {"bSortable": false,"sClass": "checkbox-column" },
+								 {"bSortable": true},
+								 {"bSortable": true},
+								 {"bSortable": true},
+								 {"bSortable": true},
 								 {"bSortable": true},
 								 {"bSortable": true},
 								 {"bSortable": true},
@@ -186,16 +196,24 @@ include "../../config/config.php";
 						<th>Satker</th>
 						<th>Kode Kelompok</th>
 						<th>Nama Barang</th>
+						<th>Merk</th>
+						<th>NoRegister</th>
+						<th>Nilai Perolehan</th>
+						<th>Ruangan</th>
 						<th>Tahun</th>
 					</tr>
 				</thead>
 				<tbody>			
 					 <tr>
-                        <td colspan="6">Data Tidak di temukan</td>
+                        <td colspan="10">Data Tidak di temukan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

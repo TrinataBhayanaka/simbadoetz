@@ -91,6 +91,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					</select>
 				</li>
 				<li>&nbsp;</li>
+				<input type ="hidden" name="tahunRuangan" value="<?=$_GET['thn']?>">
 				<li>
 					<span class="span2">&nbsp;</span>
 					<input type="submit" class="btn btn-primary" value="Tampilkan Data" id="submit" />

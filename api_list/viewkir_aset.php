@@ -27,7 +27,8 @@ $id=$_SESSION['user_id'];//Nanti diganti
  // echo "masuk aja dulu";
  // pr($_GET);
  // exit;
-$aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.kodeSatker','a.StatusValidasi','a.Status_Validasi_Barang');
+$aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.kodeSatker',
+				 'a.StatusValidasi','a.Status_Validasi_Barang','a.NilaiPerolehan','a.noRegister','a.kodeRuangan','a.TipeAset');
 $test = count($aColumns);
   
 // echo $aColumns; 
@@ -46,6 +47,7 @@ $tahun 			= $_GET['tahun'];
 $satker 		= $_GET['satker'];
 $kodeKelompok	= $_GET['kodeKelompok'];
 $tipeAset		= $_GET['tipeAset'];
+$thnR			= $_GET['thnR'];
 if($tipeAset == 'tanah'){
 	$tipe = '01';
 }elseif($tipeAset == 'mesin'){
@@ -252,7 +254,7 @@ if (!empty($data)){
 	{
 		// pr($aRow);
 		//DAFTAR FIELD
-		
+		 // $noReg = sprintf("%04s", $row->noRegister);
 		$row = array();
 		$id =  $aRow['Aset_ID'];
 		$Tahun = $aRow['Tahun'];
@@ -260,15 +262,44 @@ if (!empty($data)){
 		$NamaSatker = $aRow['NamaSatker'];
 		$Kd_Kelompok = $aRow['kodeKelompok'];
 		$Uraian = $aRow['Uraian'];
+		$noRegister = $aRow['noRegister'];
+		$NilaiPerolehan = $aRow['NilaiPerolehan'];
+		$kodeRuangan = $aRow['kodeRuangan'];
+		$TipeAset = $aRow['TipeAset'];
+		//cek ruangan 
+		if($kodeRuangan != ''){
+			$queryRuangan = "select NamaSatker from satker where kode ='$Kd_Satker' and Tahun = '$thnR' and Kd_Ruang = '$kodeRuangan' limit 1";
+			$exequeryRuangan = $DBVAR->query($queryRuangan);
+			$GetData = $DBVAR->fetch_array($exequeryRuangan);
+			$NamaRuangan = $GetData['NamaSatker'];
+		}else{
+			$NamaRuangan = "";
+		}
+		
+		//cek merk by tipe aset
+		if($TipeAset == 'B'){
+			$queryTipe = "select Merk from mesin where kodeSatker ='$Kd_Satker' and Aset_ID = '$id' limit 1";
+			// pr($queryTipe);
+			$exequeryTipe = $DBVAR->query($queryTipe);
+			$GetDataTipe = $DBVAR->fetch_array($exequeryTipe);
+			// pr($GetDataTipe);
+			$Merk = $GetDataTipe['Merk'];
+		}else{
+			$Merk = "";
+		}
 		
 		$checkbox   = "<input type=\"checkbox\" class =\"icheck-input checkbox\" name=\"id_aset[]\" value=\"$id\" onchange=\"return AreAnyCheckboxesChecked();\" $aRow[checked]>";
 						 
-		  $row[] ="<center>".$no."<center>";
-		  $row[] ="<center>".$checkbox."<center>";
+		  $row[] ="<center>".$no."</center>";
+		  $row[] ="<center>".$checkbox."</center>";
 		  $row[] =$Kd_Satker;
 		  $row[] =$Kd_Kelompok;
 		  $row[] =$Uraian;
-		  $row[] =$Tahun;
+		  $row[] =$Merk;
+		  $row[] ="<center>".sprintf('%04s',$noRegister)."</center>";
+		  $row[] ="<center>".number_format($NilaiPerolehan,2,",",".")."</center>";
+		  $row[] =$NamaRuangan;
+		  $row[] ="<center>".$Tahun."</center>";
 		 
 		  
 		$no++;
