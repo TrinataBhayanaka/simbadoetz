@@ -135,9 +135,10 @@ include "../../config/config.php";
 				</li>
 				<li>
 					<span class="labelInfo">Tgl Perubahan</span>
-					<div class="input-prepend"><span class="add-on"><i class="fa fa-calendar"></i></span>
-							<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required/> 
-						</div>
+					<!--<div class="input-prepend"><span class="add-on"><i class="fa fa-calendar"></i></span>-->
+							<!--<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required/>--> 
+							<input type="text" class="span2 full" name="tglPerubahan" id="" value="2014-12-31" readonly> 
+						<!--</div>-->
 				</li>
 				<li>
 					*)Tgl Perubahan Disesuaikan Dengan Tahun Berlaku Rekapitulasi
