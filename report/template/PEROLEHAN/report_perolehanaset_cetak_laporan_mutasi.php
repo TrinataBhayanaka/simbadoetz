@@ -43,11 +43,11 @@ $REPORT=new report_engine();
 //menggunakan api untuk query berdasarkan variable yg telah dimasukan
 $REPORT->set_data($data);
 
-$hit = 2;
+/*$hit = 2;
 $flag = '';
 $TypeRprtr = 'mutasi';
 $Info = 'mutasi';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id);
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id);*/
 // exit;
 //mendapatkan jenis query yang digunakan
 $result=$REPORT->MutasiBarangSmpl($skpd_id,$tglawalperolehan,$tglakhirperolehan);
@@ -68,7 +68,7 @@ if($tglcetak != ''){
 
 // pr($result);
 // exit;
-$html=$REPORT->retrieve_html_laporan_mutasi($result,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak,$thnPejabat);
+$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak,$thnPejabat);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {

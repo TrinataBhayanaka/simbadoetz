@@ -41,7 +41,7 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 
 $hit = 2;
 $flag = '';
-$TypeRprtr = 'neraca';
+$TypeRprtr = 'upb';
 $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);

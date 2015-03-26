@@ -59,9 +59,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kib.php"; ?>">
 						 <script>
 						$(document).ready(function() {
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li").mask('9999-99-99');
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li,#tglawalLabel,#tglakhirlLabel").mask('9999-99-99');
 							$( "#tahun_label,#tahun_rekap_kib").mask('9999');
-							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li" ).datepicker({ dateFormat: 'yy-mm-dd' });
+							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li,#tglawalLabel,#tglakhirlLabel" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
 							/*$('#tahun_label').keydown(function (e) {
 								// Allow: backspace, delete, tab, escape, enter and .
@@ -596,9 +596,27 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						</div>
 						  <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_label.php"; ?>">
 						<ul>
-							<li>
+							<!--<li>
 								<span class="span2">Tahun</span>
-								<input name="tahun_label" id="tahun_label" maxlength='4' type="text" value="<?php echo date('Y')?>" required>
+								<input name="tahun_label" id="tahun_label" maxlength='4' type="text" value="<?php //echo date('Y')?>" required>
+							</li>-->
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglawalLabel" id="tglawalLabel" value="" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglakhirlLabel" id="tglakhirlLabel" value="" required/>
+									</div>
+								</div>
 							</li>
 							<li>
 								<span class="span2">Kelompok</span>
