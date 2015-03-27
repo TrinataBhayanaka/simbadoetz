@@ -8309,7 +8309,7 @@ class core_api_report extends DB {
 						inner join kelompok as K on T.kodeKelompok=K.Kode 
 						inner join aset as a on a.Aset_ID=T.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where
-						and T.StatusTampil =1 and T.Kd_Riwayat = 0 
+						and T.StatusTampil =1 and T.Status_Validasi_Barang =1 and T.Kd_Riwayat = 0 
 						and $newparameter_sql
 					order by 
 					T.kodeSatker,T.kodeKelompok,T.Tahun ";
@@ -8329,7 +8329,7 @@ class core_api_report extends DB {
 						inner join kelompok as K on M.kodeKelompok=K.Kode 
 						inner join aset as a on a.Aset_ID=M.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where 
-						M.StatusTampil =1 and M.Kd_Riwayat = 0 
+						M.StatusTampil =1 and M.Status_Validasi_Barang =1 and M.Kd_Riwayat = 0 
 						and $newparameter_sql
 					order by 
 						M.kodeSatker,M.kodeKelompok,M.Tahun ";	
@@ -8351,7 +8351,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on B.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=B.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
-					B.StatusTampil =1 and B.Kd_Riwayat = 0 
+					B.StatusTampil =1 and B.Kd_Riwayat = 0 and B.Status_Validasi_Barang =1 
 					and $newparameter_sql
 				order by B.kodeSatker,B.kodeKelompok,B.Tahun ";	
 	}
@@ -8372,7 +8372,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on J.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=J.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
-					 J.StatusTampil =1 and J.Kd_Riwayat = 0 
+					 J.StatusTampil =1 and J.Kd_Riwayat = 0 and J.Status_Validasi_Barang =1
 					and $newparameter_sql
 				order by J.kodeSatker,J.kodeKelompok,J.Tahun ";	
 	}
@@ -8393,7 +8393,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on AL.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=AL.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
-					AL.StatusTampil =1 and AL.Kd_Riwayat = 0 
+					AL.StatusTampil =1 and AL.Kd_Riwayat = 0  and AL.Status_Validasi_Barang =1
 					and $newparameter_sql
 				order by AL.kodeSatker,AL.kodeKelompok,AL.Tahun";	
 	}
@@ -8414,7 +8414,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on KDPA.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=KDPA.Aset_ID and a.noKontrak is null	and a.Status_Validasi_Barang = 1	 			
 				where
-					KDPA.StatusTampil =1 and KDPA.Kd_Riwayat = 0 
+					KDPA.StatusTampil =1 and KDPA.Kd_Riwayat = 0 and KDPA.Status_Validasi_Barang =1
 					and $newparameter_sql
 				order by KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.Tahun";	
 	}
@@ -8446,7 +8446,7 @@ class core_api_report extends DB {
 						inner join aset as a on a.Aset_ID=T.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where
 						T.kodeKelompok=K.Kode 
-						and T.StatusTampil =1 and T.Kd_Riwayat = 0 
+						and T.StatusTampil =1 and T.Kd_Riwayat = 0  and T.Status_Validasi_Barang =1
 						and $newparameter_sql_01
 					order by 
 					T.kodeSatker,T.kodeKelompok,T.Tahun";
@@ -8459,7 +8459,7 @@ class core_api_report extends DB {
 						inner join kelompok as K on M.kodeKelompok=K.Kode 
 						inner join aset as a on a.Aset_ID=M.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where 
-						M.StatusTampil =1 and M.Kd_Riwayat = 0 
+						M.StatusTampil =1 and M.Kd_Riwayat = 0 and M.Status_Validasi_Barang =1
 						and $newparameter_sql_02
 					order by 
 						M.kodeSatker,M.kodeKelompok,M.Tahun";
@@ -8474,7 +8474,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on B.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=B.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
-					B.StatusTampil =1 and B.Kd_Riwayat = 0 
+					B.StatusTampil =1 and B.Kd_Riwayat = 0 and B.Status_Validasi_Barang =1
 					and $newparameter_sql_03
 				order by B.kodeSatker,B.kodeKelompok,B.Tahun";	
 				
@@ -8488,7 +8488,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on J.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=J.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
-					 J.StatusTampil =1 and J.Kd_Riwayat = 0 
+					 J.StatusTampil =1 and J.Kd_Riwayat = 0 and J.Status_Validasi_Barang =1
 					and $newparameter_sql_04
 				order by J.kodeSatker,J.kodeKelompok,J.Tahun ";			
 	
@@ -8502,7 +8502,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on AL.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=AL.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
-					AL.StatusTampil =1 and AL.Kd_Riwayat = 0 
+					AL.StatusTampil =1 and AL.Kd_Riwayat = 0 and AL.Status_Validasi_Barang =1
 					and $newparameter_sql_05
 				order by AL.kodeSatker,AL.kodeKelompok,AL.Tahun ";		
 				
@@ -8516,7 +8516,7 @@ class core_api_report extends DB {
 					inner join kelompok as K on KDPA.kodeKelompok=K.Kode 
 					inner join aset as a on a.Aset_ID=KDPA.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1					
 				where
-					KDPA.StatusTampil =1 and KDPA.Kd_Riwayat = 0 
+					KDPA.StatusTampil =1 and KDPA.Kd_Riwayat = 0 and KDPA.Status_Validasi_Barang =1
 					and $newparameter_sql_06
 				order by KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.Tahun ";	
 				
