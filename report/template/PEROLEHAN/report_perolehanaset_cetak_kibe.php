@@ -93,9 +93,9 @@ if($tglcetak != ''){
 }
 //retrieve html
 $html=$REPORT->retrieve_html_kib_e($result, $gambar,$tanggalCetak,$thnPejabat);
-/*$count = count($html);
+$count = count($html);
 
-	for ($i = 0; $i < $count; $i++) {
+	/*for ($i = 0; $i < $count; $i++) {
 		 
 		echo $html[$i];     
 	}

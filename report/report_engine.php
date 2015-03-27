@@ -18395,7 +18395,7 @@ $footer ="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
 									<td style=\"width: 83px; text-align:center;\">$row->Kode</td>
-									<td style=\"width: 64px; text-align:center;\">$noReg&nbsp;&nbsp;$row->kodeLokasi</td>
+									<td style=\"width: 64px; text-align:center;\">$noReg</td>
 									<td style=\"width: 118px;\">$row->Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
 									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
@@ -20105,7 +20105,7 @@ $body="
 							$nilaiPerolehanHasilMutasi = 0;
 							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 					}elseif($row->Kd_Riwayat == '27'){
-						echo "MASUK PEMUSNAHAN PENGHAPUSAN";
+						// echo "MASUK PEMUSNAHAN PENGHAPUSAN";
 							$kuantitas = 1;	
 							$nilaiAwalPrlhn = $row->NilaiPerolehan;
 							$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
@@ -20194,8 +20194,8 @@ $body="
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
-									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok <br/>$row->Aset_ID</td>
-									<td style=\"width: 64px; text-align:center;\">$noReg <br/> $ket</td>
+									<td style=\"width: 83px; text-align:center;\">$row->kodeKelompok</td>
+									<td style=\"width: 64px; text-align:center;\">$noReg</td>
 									<td style=\"width: 118px;\">$Uraian</td>
 									<td style=\"width: 45px; \">$row->Merk</td>
 									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>

@@ -3881,7 +3881,9 @@ class core_api_report extends DB {
 						$tmp[] = "(".$val ." IS NULL or $val='' )";
 			   
 					}else{
-						$tmp[] = $val ." = '$value[$val]'";
+						// $tmp[] = $val ." = '$value[$val]'";
+						$tmp[] = $val ." = '".addslashes($value[$val])."'";
+								
 					}
 				  
 				}
@@ -4935,60 +4937,6 @@ class core_api_report extends DB {
 	
 	//cara sederhana mutasi barang dari ka andreas
 	public function MutasiBarangSmpl($skpd_id,$tglawalperolehan,$tglakhirperolehan){
-		/*if($satker_id){
-			$splitKodeSatker = explode ('.',$satker_id);
-			if(count($splitKodeSatker) == 4){	
-				$paramSatker = "kode = '$satker_id'";
-			}else{
-				$paramSatker = "kode like '$satker_id%'";
-			}
-	
-			$qsat = "SELECT kode FROM satker where $paramSatker and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
-			$rsat = $this->query($qsat) or die ($this->error());
-			while($dtrsat = $this->fetch_object($rsat)){
-				if($dtrsat != ''){
-					// $satker[] = $dtrsat->kode;
-					// $satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
-					$satker[] = $dtrsat->kode;
-				}	
-			}
-		}else{
-			$qsat = "  SELECT distinct(`kodeSatker`) FROM `aset` where (`NilaiPerolehan` is not null and `NilaiPerolehan` != '') order by kodeSatker asc   ";
-			$rsat = $this->query($qsat) or die ($this->error());
-			while($dtrsat = $this->fetch_object($rsat)){
-				if($dtrsat != ''){
-					// $satker[] = $dtrsat->kode;
-					// $satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
-					$satker[] = $dtrsat->kode;
-				}	
-			}
-		*/
-		
-		/*if($satker){
-			foreach ($satker as $data=>$satker_id){*/
-				/*$query= "SELECT * 
-						FROM 
-							mutasi_aset
-						where 
-							kodeSatker like '$satker_id%'  
-							and TglPembukuan >= '$tglAwal' AND TglPembukuan <= '$tglAkhir'";*/
-				
-				/*$query= "SELECT * 
-						FROM 
-							mutasi_aset
-						where 
-							 TglPembukuan >= '$tglAwal' AND TglPembukuan <= '$tglAkhir'";
-							
-				// pr($query);
-				$result = $this->query($query) or die ($this->error('error dataQuery'));
-				if($result){
-					while ($dataAll = $this->fetch_object($result))
-					{
-						$getdata[]= $dataAll;
-					}
-				}
-			}
-		}*/
 		//new code
 		//set parameter
 		//parameter dengan kodeSatker(semua log)
@@ -8359,7 +8307,7 @@ class core_api_report extends DB {
 					from 
 						log_tanah as T
 						inner join kelompok as K on T.kodeKelompok=K.Kode 
-						inner join aset as a on a.Aset_ID=T.Aset_ID and a.noKontrak is null
+						inner join aset as a on a.Aset_ID=T.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where
 						and T.StatusTampil =1 and T.Kd_Riwayat = 0 
 						and $newparameter_sql
@@ -8379,7 +8327,7 @@ class core_api_report extends DB {
 					from 
 						log_mesin as M 
 						inner join kelompok as K on M.kodeKelompok=K.Kode 
-						inner join aset as a on a.Aset_ID=M.Aset_ID and a.noKontrak is null
+						inner join aset as a on a.Aset_ID=M.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where 
 						M.StatusTampil =1 and M.Kd_Riwayat = 0 
 						and $newparameter_sql
@@ -8401,7 +8349,7 @@ class core_api_report extends DB {
 				from 
 					log_bangunan as B
 					inner join kelompok as K on B.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=B.Aset_ID and a.noKontrak is null
+					inner join aset as a on a.Aset_ID=B.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
 					B.StatusTampil =1 and B.Kd_Riwayat = 0 
 					and $newparameter_sql
@@ -8422,7 +8370,7 @@ class core_api_report extends DB {
 				from 
 					log_jaringan as J
 					inner join kelompok as K on J.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=J.Aset_ID and a.noKontrak is null
+					inner join aset as a on a.Aset_ID=J.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
 					 J.StatusTampil =1 and J.Kd_Riwayat = 0 
 					and $newparameter_sql
@@ -8443,7 +8391,7 @@ class core_api_report extends DB {
 				from 
 					log_asetlain as AL
 					inner join kelompok as K on AL.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=AL.Aset_ID and a.noKontrak is null
+					inner join aset as a on a.Aset_ID=AL.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
 					AL.StatusTampil =1 and AL.Kd_Riwayat = 0 
 					and $newparameter_sql
@@ -8464,7 +8412,7 @@ class core_api_report extends DB {
 				from 
 					log_kdp as KDPA
 					inner join kelompok as K on KDPA.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=KDPA.Aset_ID and a.noKontrak is null					
+					inner join aset as a on a.Aset_ID=KDPA.Aset_ID and a.noKontrak is null	and a.Status_Validasi_Barang = 1	 			
 				where
 					KDPA.StatusTampil =1 and KDPA.Kd_Riwayat = 0 
 					and $newparameter_sql
@@ -8495,7 +8443,7 @@ class core_api_report extends DB {
 					from 
 						log_tanah as T
 						inner join kelompok as K on T.kodeKelompok=K.Kode 
-						inner join aset as a on a.Aset_ID=T.Aset_ID and a.noKontrak is null
+						inner join aset as a on a.Aset_ID=T.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where
 						T.kodeKelompok=K.Kode 
 						and T.StatusTampil =1 and T.Kd_Riwayat = 0 
@@ -8509,7 +8457,7 @@ class core_api_report extends DB {
 					from 
 						log_mesin as M 
 						inner join kelompok as K on M.kodeKelompok=K.Kode 
-						inner join aset as a on a.Aset_ID=M.Aset_ID and a.noKontrak is null
+						inner join aset as a on a.Aset_ID=M.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where 
 						M.StatusTampil =1 and M.Kd_Riwayat = 0 
 						and $newparameter_sql_02
@@ -8524,7 +8472,7 @@ class core_api_report extends DB {
 				from 
 					log_bangunan as B
 					inner join kelompok as K on B.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=B.Aset_ID and a.noKontrak is null
+					inner join aset as a on a.Aset_ID=B.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
 					B.StatusTampil =1 and B.Kd_Riwayat = 0 
 					and $newparameter_sql_03
@@ -8538,7 +8486,7 @@ class core_api_report extends DB {
 				from 
 					log_jaringan as J
 					inner join kelompok as K on J.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=J.Aset_ID and a.noKontrak is null
+					inner join aset as a on a.Aset_ID=J.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
 					 J.StatusTampil =1 and J.Kd_Riwayat = 0 
 					and $newparameter_sql_04
@@ -8552,7 +8500,7 @@ class core_api_report extends DB {
 				from 
 					log_asetlain as AL
 					inner join kelompok as K on AL.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=AL.Aset_ID and a.noKontrak is null
+					inner join aset as a on a.Aset_ID=AL.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 				where
 					AL.StatusTampil =1 and AL.Kd_Riwayat = 0 
 					and $newparameter_sql_05
@@ -8566,7 +8514,7 @@ class core_api_report extends DB {
 				from 
 					log_kdp as KDPA 
 					inner join kelompok as K on KDPA.kodeKelompok=K.Kode 
-					inner join aset as a on a.Aset_ID=KDPA.Aset_ID and a.noKontrak is null					
+					inner join aset as a on a.Aset_ID=KDPA.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1					
 				where
 					KDPA.StatusTampil =1 and KDPA.Kd_Riwayat = 0 
 					and $newparameter_sql_06
