@@ -9,7 +9,7 @@ $menu_id = 13;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 // pr($_SESSION);
-?>
+// ?>
 
 <?php
 	include"$path/meta.php";
@@ -104,13 +104,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<?php 
-									if($_SESSION[ses_uoperatorid] == '1'){
-										// selectSatker('kodeSatker11','255',true,false); 
 										selectAllSatker('kodeSatker11','255',true,false,false,true);
-									}else{
-										selectSatker('kodeSatker11','255',true,false); 
-										// selectAllSatker('kodeSatker11','255',true,false,false,true);
-									}
 								?>
 								<br>
 							</li>
@@ -161,13 +155,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<?php 
-								if($_SESSION[ses_uoperatorid] == '1'){
 										selectAllSatker('kodeSatker12','255',true,false); 
-										// selectSatker('kodeSatker12','255',true,false); 
-									}else{
-										selectSatker('kodeSatker12','255',true,false); 
-										// selectAllSatker('kodeSatker12','255',true,false); 
-									}
 								?>
 								<br>
 							</li>
@@ -221,8 +209,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php 
-						
+								// if($_SESSION[ses_uaksesadmin] == '1'){
 									selectAllSatker('kodeSatker1','255',true,false,false,true);
+								// }else{
+									// selectSatker('kodeSatker1','255',true,false,false,true);
+								// }
 								// selectAllSatker('kodeSatker1','255',true,false); 
 							?>
 							<br>
