@@ -13,7 +13,7 @@ $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
 $skpd_id = $_REQUEST['kodeSatker8'];
-// $tahun = $_REQUEST['tahun_label'];
+$tahun = $_REQUEST['tahun_label'];
 $tglawal = $_REQUEST['tglawalLabel'];
 if($tglawal != ''){
 	$tglawalperolehan = $tglawal;
@@ -21,12 +21,14 @@ if($tglawal != ''){
 	$tglawalperolehan = '0000-00-00';
 }
 $tglakhirperolehan = $_REQUEST['tglakhirlLabel'];
-
+$kodeRuangan = $_REQUEST['kodeRuangan2'];
 //add tahun
 $split = explode('-',$tglakhirperolehan);
-$tahun = $split[0]; 
+// $tahun = $split[0]; 
 $gol = $_REQUEST['gol'];
 $label = $_REQUEST['label'];
+
+// pr($_REQUEST);
 // exit;
 $data=array(
     "modul"=>$modul,
@@ -34,7 +36,7 @@ $data=array(
     "skpd_id"=>$skpd_id,
 	"tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
-	// "tahun"=>$tahun,
+	"kodeRuangan"=>$kodeRuangan,
     "gol"=>$gol,
     "tab"=>$tab,
 	"label"=>$label

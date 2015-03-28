@@ -24,7 +24,7 @@ $skpd_id = $_GET['skpd_id'];
 $kodeRuangan = $_GET['kodeRuangan'];
 $kir = $_GET['kir'];
 $tipe = $_GET['tipe_file'];
-pr($_GET);
+// pr($_GET);
 // exit;
 $data=array(
     "modul"=>$modul,

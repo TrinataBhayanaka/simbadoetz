@@ -22,6 +22,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 					$('#hiddenthn').val(tmp[0]);
 				} 
 			}
+			
+		function newruangan2(){
+				if($("#kodeSatker8").val() != "" && $("#tahun_label").val() != ""){
+					var tgl = $("#tahun_label").val();
+					//var tmp = tgl.split("-");
+					// $('#hiddenthn2').val(tmp[0]);
+					$('#tahun_label').val(tgl);
+				} 
+			}	
 	</script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -614,7 +623,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglakhirlLabel" id="tglakhirlLabel" value="" required/>
+								<input type="text" class="span2 full" name="tglakhirlLabel" id="tglakhirlLabel" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -629,10 +638,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									<option value="06">F Konstruksi dan Pengerjaan</option>
 							  </select>
 							</li>
-							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-						
-									selectAllSatker('kodeSatker8','255',true,false,false,true);
+							<?php 
+								selectAllSatker('kodeSatker8','255',true,false,false,true);
 							?>
+							<br>
+							<li>
+								<span class="span2">Tahun Ruangan</span>
+								<input name="tahun_label" id="tahun_label" maxlength='4' width="10px" type="text" value="<?php //echo date('Y')?>" onblur="return newruangan2();">
+							</li>
+								<?=selectRuangKir('kodeRuangan2','kodeSatker8','255',true,false,false,'tahun_label');?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -644,6 +658,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="mode" value="1">
 						<input type="hidden" name="tab" value="10">
 						<input type="hidden" name="label" value="label">
+						<input type="hidden" id="tahun_label" value="">
 						</form>
 						</div>
 						

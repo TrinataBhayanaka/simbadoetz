@@ -206,11 +206,16 @@ while ($aRow = $DBVAR->fetch_array($rResult)) {
 	$rincian ="<center><a href=\"filterDetailKir.php?kdS=$Kd_Satker&kdR=$Kd_Ruang&thn=$Tahun\" class=\"btn btn-info btn-small\">
 			<i class=\"icon-plus icon-white\"></i>&nbsp;Rincian
 			</a></center>";
-	  
+	
+	/*$view ="<center><a href=\"filterDetailKir.php?kdS=$Kd_Satker&kdR=$Kd_Ruang&thn=$Tahun\" class=\"btn btn-warning\">
+			<i class=\"fa fa-eye\"></i>&nbsp;View
+			</a></center>";*/
+		
 	  $row[] ="<center>".$no."</center>";
 	  $row[] ="<center>".$Tahun."</center>";
       $row[] =$Kd_Ruang."&nbsp;".$NamaSatker;
-	  $row[] =$rincian;
+	  $row[] =$rincian."&nbsp;".$view;
+	  // $row[] =$rincian."&nbsp;".$view;
       
 	$no++;
      $output['aaData'][] = $row;
