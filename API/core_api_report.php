@@ -769,7 +769,6 @@ class core_api_report extends DB {
 			}
 			
 			if($ekstra == 'ekstra'){
-				
 				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id == ""){
 					
 					$query_tgl_awal = " TglPerolehan >= '$tglawalperolehan' ";
@@ -2991,6 +2990,8 @@ class core_api_report extends DB {
 												  break;
 												  case '8':
 												  {
+													// echo "masukkkk";
+													// exit;
 													//ekstra non aset
 													// exit;
 													if($parameter_sql != ''){
@@ -8526,9 +8527,9 @@ class core_api_report extends DB {
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
-					/*echo "query_$i =".$AllTableTemp[$i];
+					echo "query_$i =".$AllTableTemp[$i];
 					echo "<br>";
-					echo "<br>";*/
+					echo "<br>";
 					// exit;
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 				}

@@ -180,7 +180,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						<input type="hidden" name="menuID" value="14">
 						<input type="hidden" name="mode" value="1">
-						<input type="hidden" name="tab" value="11">
+						<input type="hidden" name="tab" value="8">
 						<input type="hidden" name="ekstra" value="ekstra">
 						</form>
 						</div>
