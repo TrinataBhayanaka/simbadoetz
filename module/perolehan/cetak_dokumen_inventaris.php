@@ -200,7 +200,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						
 						<div class="tab-pane" id="rekapbarang">
 						<div class="breadcrumb">
-							<div class="titleTab">Rekapitulasi Barang</div>
+							<div class="titleTab">Rekapitulasi Barang </div>
 						</div>
 						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapBarangkib.php"; ?>">
 						<ul>
