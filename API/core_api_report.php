@@ -27,6 +27,7 @@ class core_api_report extends DB {
      var $intra;
      var $ekstra;
      var $rekap;
+     var $rekap_barang;
      var $label;
      var $gol;
      var $aset;
@@ -110,6 +111,7 @@ class core_api_report extends DB {
 		  $this->kib=$hasil_data['kib'];
 		  $this->kb=$hasil_data['kb'];
 		  $this->rekap=$hasil_data['rekap'];
+		  $this->rekap_barang=$hasil_data['rekap_barang'];
 		  $this->label=$hasil_data['label'];
 		  $this->gol=$hasil_data['gol'];
 		  $this->aset=$hasil_data['aset'];
@@ -166,6 +168,7 @@ class core_api_report extends DB {
           $kib=$this->kib;
           $kb=$this->kb;
           $rekap=$this->rekap;
+          $rekap_barang=$this->rekap_barang;
           $label=$this->label;
           $gol=$this->gol;
           $aset=$this->aset;
@@ -386,6 +389,7 @@ class core_api_report extends DB {
 			if($rekap =='RekapKIB-A')
 			{
 				// $query_satker_fix = " T.kodeSatker LIKE '$skpd_id%'";
+				
 				$splitKodeSatker = explode ('.',$skpd_id);
 						if(count($splitKodeSatker) == 4){	
 							$paramSatker = "T.kodeSatker = '$skpd_id'";
@@ -455,6 +459,103 @@ class core_api_report extends DB {
 	
 					$query_satker_fix = $paramSatker;
 			}
+		// echo "masukk";
+		// exit;
+		//rekap barang
+		//this for rekap kib a -kib f
+			if($rekap_barang =='RekapBarangKIB-A')
+			{	
+				// $query_satker_fix = " T.kodeSatker LIKE '$skpd_id%'";
+				if($skpd_id != ''){
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "T.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "T.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+				}	
+					$query_tahun = "T.Tahun <= '$tahun'";	
+			}
+			if($rekap_barang =='RekapBarangKIB-B')
+			{
+				// $query_satker_fix = " M.kodeSatker LIKE '$skpd_id%'";
+				if($skpd_id != ''){
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "M.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "M.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+				}	
+					$query_tahun = "M.Tahun <= '$tahun'";	
+			}
+			if($rekap_barang =='RekapBarangKIB-C')
+			{
+				// $query_satker_fix = " B.kodeSatker LIKE '$skpd_id%'";
+				if($skpd_id != ''){
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "B.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "B.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+				}	
+					$query_tahun = "B.Tahun <= '$tahun'";	
+			}
+			if($rekap_barang =='RekapBarangKIB-D')
+			{
+				// $query_satker_fix = " J.kodeSatker LIKE '$skpd_id%'";
+				if($skpd_id != ''){
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "J.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "J.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+				}	
+					$query_tahun = "J.Tahun <= '$tahun'";	
+			}
+			if($rekap_barang =='RekapBarangKIB-E')
+			{
+				// $query_satker_fix = " AL.kodeSatker LIKE '$skpd_id%'";
+				if($skpd_id != ''){
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "AL.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "AL.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+				}	
+					$query_tahun = "AL.Tahun <= '$tahun'";	
+			}
+			if($rekap_barang =='RekapBarangKIB-F')
+			{
+				// $query_satker_fix = " KDPA.kodeSatker LIKE '$skpd_id%'";
+				if($skpd_id != ''){
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "KDPA.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "KDPA.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+				}	
+					$query_tahun = "KDPA.Tahun <= '$tahun'";	
+			}	
+			
+			
+			
 			
 		// this for kir
 			if($kir =='kir'){
@@ -801,7 +902,90 @@ class core_api_report extends DB {
 			// echo "param =".$parameter_sql;
 			
 			// exit;
+			$rekap_barang_a_condition = "select 
+												T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+													K.Kode, K.Uraian
+												from 
+													tanahView as T,kelompok as K
+												where
+													T.kodeKelompok=K.Kode  and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+													and $parameter_sql
+												order by 
+													T.kodeSatker,T.kodeKelompok $limit";
 			
+			$rekap_barang_b_condition ="select distinct(M.kodeSatker),
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+												from 
+													mesin_ori as M,kelompok as K 
+												where 
+													M.kodeKelompok=K.Kode  
+													 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and $parameter_sql
+												group by 
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
+												order by 
+													M.kodeSatker,M.kodeKelompok $limit";
+			
+			$rekap_barang_c_condition="select B.Aset_ID, B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+											B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.noRegister,B.Alamat,
+											B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+											B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											bangunan_ori as B,kelompok as K  
+											where
+											B.kodeKelompok = K.Kode 
+											 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 
+											and $parameter_sql
+											order by B.kodeSatker,B.kodeKelompok $limit";
+			
+			$rekap_barang_d_condition="select J.Aset_ID, J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+											J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.noRegister,J.Alamat,
+											J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+											J.kondisi, J.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											jaringan_ori as J,kelompok as K  
+											where
+											J.kodeKelompok = K.Kode 
+											 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 
+											and $parameter_sql
+											order by J.kodeSatker,J.kodeKelompok $limit";
+			
+			$rekap_barang_e_condition="select distinct(AL.kodeSatker), 
+											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+											AL.kondisi, AL.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											asetlain_ori as AL,kelompok as K  
+											where
+											AL.kodeKelompok = K.Kode 
+											 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 
+											and $parameter_sql
+											group by AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+											AL.kondisi, AL.kodeLokasi,
+											K.Kode, K.Uraian
+											order by AL.kodeSatker,AL.kodeKelompok $limit";
+			
+			$rekap_barang_f_condition="select KDPA.Aset_ID, KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+											KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.noRegister,KDPA.Alamat,
+											KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+											KDPA.kondisi, KDPA.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											kdp_ori as KDPA,kelompok as K  
+											where
+											AL.kodeKelompok = K.Kode  
+											 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+											and $parameter_sql
+											order by KDPA.kodeSatker,KDPA.kodeKelompok $limit";
 			
 			//start update query kib a (ok)
 			$kb_a_condition = "select 
@@ -3206,9 +3390,84 @@ class core_api_report extends DB {
 																		*/
 																	}
 												  }
-                                             }
+                                                 }
 												  break;
-												}
+												   case '11':
+												  {
+													if (isset($rekap_barang))
+													  {
+														switch ($rekap_barang)
+														{
+														 case 'RekapBarangKIB-A':
+														 {
+															// echo "masukkk";
+															// exit;
+															if($parameter_sql!="" ) {
+																			 $query = $rekap_barang_a_condition; 
+																			 // echo "masukkk";
+															}
+															if($parameter_sql=="" ) {
+																		$query = $rekap_barang_a_default; 
+															}
+														 }		
+														 break;
+														 case 'RekapBarangKIB-B':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_b_condition;
+																						}
+															  if($parameter_sql=="" ) {
+																		$query = $rekap_barang_b_default;
+																						}
+														 }
+														 break;
+														 case 'RekapBarangKIB-C':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_c_condition;
+															  }
+															  if($parameter_sql=="" ) {
+																		$query = $rekap_barang_c_default;
+															  }
+														 }
+														 break;
+														 case 'RekapBarangKIB-D':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_d_condition;
+															  }
+															  if($parameter_sql=="" ){
+																		$query = $rekap_barang_d_default;
+															  }
+														 }
+														 break;
+														 
+														 case 'RekapBarangKIB-E':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_e_condition;
+															   }
+															  if($parameter_sql=="" ){
+																		$query = $rekap_barang_e_default;
+															  }
+														 }
+														 break;
+												
+														 case 'RekapBarangKIB-F':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_f_condition;	
+															  }
+															  if($parameter_sql=="" ){
+																		$query = $rekap_barang_f_default;	
+															  }
+														 }
+														 break;
+														}
+                                                       }
+												  }
+												  break;
+											}
 										}
                                    
 									}
