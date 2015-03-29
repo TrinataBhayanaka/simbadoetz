@@ -49,6 +49,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 					  <ul class="nav nav-tabs">
 						<li class="active"><a href="#kib" data-toggle="tab">KIB</a></li>
 						<li><a href="#rekapkib" data-toggle="tab">Rekapitulasi KIB</a></li>
+						<li><a href="#rekapbarang" data-toggle="tab">Rekapitulasi Barang</a></li>
 						<li><a href="#kir" data-toggle="tab">KIR</a></li>
 						<li><a href="#biskpd" data-toggle="tab">Buku Inventaris SKPD</a></li>
 						<li><a href="#biskpdgab" data-toggle="tab">Buku Inventaris Gabungan SKPD</a></li>
@@ -69,7 +70,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						 <script>
 						$(document).ready(function() {
 							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li,#tglawalLabel,#tglakhirlLabel").mask('9999-99-99');
-							$( "#tahun_label,#tahun_rekap_kib").mask('9999');
+							$( "#tahun_label,#tahun_rekap_kib,#tahun_rekap").mask('9999');
 							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li,#tglawalLabel,#tglakhirlLabel" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
 							/*$('#tahun_label').keydown(function (e) {
@@ -196,6 +197,57 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="tab" value="9">
 						</form>
 						</div>
+						
+						<div class="tab-pane" id="rekapbarang">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Barang</div>
+						</div>
+						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapBarangkib.php"; ?>">
+						<ul>
+							<li>
+								<input type="radio" name="rekap_barang" value="RekapBarangKIB-A" class="inven1" checked >&nbsp; KIB-A
+								<input type="radio" name="rekap_barang" value="RekapBarangKIB-B" class="inven2" >&nbsp; KIB-B
+								<input type="radio" name="rekap_barang" value="RekapBarangKIB-C" class="inven3" > &nbsp; KIB-C
+								<input type="radio" name="rekap_barang" value="RekapBarangKIB-D" class="inven4" > &nbsp;KIB-D
+								<input type="radio" name="rekap_barang" value="RekapBarangKIB-E" class="inven5" > &nbsp;KIB-E
+								<input type="radio"name="rekap_barang" value="RekapBarangKIB-F" class="inven6"> &nbsp;KIB-F
+								<br/>
+							</li>
+							<li>&nbsp;
+							</li>
+							<li>
+								<span class="span2">Tahun</span>
+								<input name="tahun_rekap" id ="tahun_rekap" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+							</li>
+							<?php //selectAllSatker('kodeSatker7','255',true,false); 
+					
+									selectAllSatker('kodeSatker16','255',true,false,false,true);
+							
+							?>
+							<br />
+							<!--<li>
+								<span class="span2">Tanggal Cetak</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglCetakRekapKib" id="tglCetakRekapKib" value="" required/>
+									</div>
+								</div>
+							</li>-->
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="lanjut" class="btn btn-primary" value="Lanjut" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						<input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="11">
+						</form>
+						</div>
+						
+						
+						
 						
 						<div class="tab-pane" id="kir">
 						<div class="breadcrumb">
