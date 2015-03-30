@@ -43,11 +43,13 @@ $cond_kelompok ="k.Kode = a.kodeKelompok ";
 // $cond_satker ="s.kode = a.kodeSatker";
 $status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang AND";
 //variabel ajax
-$tahun 			= $_GET['tahun'];
+$tahun_aw 		= $_GET['tahun_aw'];
+$tahun_ak 		= $_GET['tahun_ak'];
 $satker 		= $_GET['satker'];
 $kodeKelompok	= $_GET['kodeKelompok'];
 $tipeAset		= $_GET['tipeAset'];
 $thnR			= $_GET['thnR'];
+// pr($_GET);
 if($tipeAset == 'tanah'){
 	$tipe = '01';
 }elseif($tipeAset == 'mesin'){
@@ -120,20 +122,20 @@ if (isset($_GET['iSortCol_0'])) {
  */
 $sWhere = "";
 
-if ($satker != '' AND $tahun != '' AND $tipeAset != '' AND $kodeKelompok != ''){
-	$sWhere=" WHERE $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
+if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AND $kodeKelompok != ''){
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
 }
-elseif($satker != '' AND $tahun != '' AND $tipeAset != '' AND $kodeKelompok == ''){
-	$sWhere=" WHERE $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
+elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == ''){
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
 }
 
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
      //$sWhere = "WHERE (";
-	 if ($satker != '' AND $tahun != '' AND $tipeAset != '' AND $kodeKelompok != ''){
-	$sWhere=" WHERE $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND (";
+	 if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != ''){
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND (";
 	}
-	elseif($satker != '' AND $tahun != '' AND $tipeAset != '' AND $kodeKelompok == ''){
-		$sWhere=" WHERE $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND (";
+	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == ''){
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND (";
 	}
 	 
      // $sWhere.="(";
@@ -150,9 +152,9 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
 for ($i = 0; $i < count($aColumns); $i++) {
      if (isset($_GET['bSearchable_' . $i]) && $_GET['bSearchable_' . $i] == "true" && $_GET['sSearch_' . $i] != '') {
           if ($sWhere == "") {
-               $sWhere = "WHERE $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
+               $sWhere = "WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
           } else {
-               $sWhere .= " AND $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
+               $sWhere .= " AND $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
           }
           $sWhere .= "" . $aColumns[$i] . " LIKE '%" . mysql_real_escape_string($_GET['sSearch_' . $i]) . "%' ";
      }
@@ -199,11 +201,11 @@ $iFilteredTotal = $aResultFilterTotal[0];
 if($kodeKelompok != ''){
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
 }else{
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE $status a.Tahun='$tahun' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
 }
 	// 	echo $sQuery;
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());

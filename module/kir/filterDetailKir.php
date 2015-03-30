@@ -18,7 +18,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 ?>
 	<script>
 	jQuery(function($){
-	   $("#Tahun").mask("9999");
+	   $("#Tahun_aw,#Tahun_ak").mask("9999");
 	   $("select").select2();
 	});
 	
@@ -72,7 +72,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<ul>
 				<li>
 					<span class="span2">Tahun Perolehan</span>
-					<input name="Tahun" id="Tahun" class="span1"  type="text" required>
+					<input name="Tahun_aw" id="Tahun_aw" class="span1"  type="text" required>
+					.
+					<input name="Tahun_ak" id="Tahun_ak" class="span1"  type="text" required>
 					<input type="hidden" name ="kodehidden" id="satker" value="<?=$_GET['kdS']?>">
 				</li>
 				<?=selectSatker('kodeSatker','235',true,false,'required');?>

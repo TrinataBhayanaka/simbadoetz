@@ -17,7 +17,8 @@ include "../../config/config.php";
 		// pr($dataSesi);
 		// exit;
 		// pr($SessionUser);
-			$SessionUser['tahun'] = $_POST['Tahun'];
+			$SessionUser['tahun_aw'] = $_POST['Tahun_aw'];
+			$SessionUser['tahun_ak'] = $_POST['Tahun_ak'];
 			$SessionUser['satker'] = $_POST['kodeSatker'];
 			$SessionUser['kodeKelompok'] = $_POST['kodeKelompok'];
 			$SessionUser['tipeAset'] = $_POST['tipeAset'];
@@ -33,7 +34,7 @@ include "../../config/config.php";
 				// $tahun2 = $SessionUser['tahunTujuan'];
 				// $satker = $SessionUser['satker'];
 			}*/
-			$par_data_table="tahun=$SessionUser[tahun]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]&thnR=$SessionUser[tahunRuangan]";
+			$par_data_table="tahun_aw=$SessionUser[tahun_aw]&tahun_ak=$SessionUser[tahun_ak]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]&thnR=$SessionUser[tahunRuangan]";
 		
 		// pr($par_data_table);
 		// exit;
