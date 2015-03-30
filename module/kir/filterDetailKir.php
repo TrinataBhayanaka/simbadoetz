@@ -31,6 +31,21 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			return false;
 		}
 	}
+	
+	function check_tahun(){
+		var tahun_aw = document.getElementById("Tahun_aw");
+		var tahun_ak = document.getElementById("Tahun_ak");
+		if (tahun_ak.value < tahun_aw.value)
+		{
+			alert('Tahun Awal Tidak Boleh Lebih Kecil \n Dari Tahun Akhir');
+			$('#submit').attr('disabled','disabled');
+            $(submit).css("background","grey");
+			// return false;
+		}else{
+			$('#submit').removeAttr('disabled');
+		    $('#submit').css("background","#04c");
+		}
+	}
 	</script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -74,7 +89,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<span class="span2">Tahun Perolehan</span>
 					<input name="Tahun_aw" id="Tahun_aw" class="span1"  type="text" required>
 					.
-					<input name="Tahun_ak" id="Tahun_ak" class="span1"  type="text" required>
+					<input name="Tahun_ak" id="Tahun_ak" class="span1"  type="text" onblur="return check_tahun(this);"  required>
 					<input type="hidden" name ="kodehidden" id="satker" value="<?=$_GET['kdS']?>">
 				</li>
 				<?=selectSatker('kodeSatker','235',true,false,'required');?>
