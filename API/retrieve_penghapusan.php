@@ -261,6 +261,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //////////////////////////////////////////////pr($jenisaset);
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
+        $kodePemilik = $data['kodepemilik'];
         $kodeKelompok = $data['kodeKelompok'];
         $tahun = $data['bup_tahun'];
         //////////////////pr($jenisaset);
@@ -272,6 +273,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
         if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
+        if ($kodePemilik) $filterkontrak .= " AND ast.kodeLokasi LIKE '{$kodePemilik}.%' ";
+
         if ($kodeSatker){ 
             $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
         }else{
@@ -321,7 +324,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                              );
-                    // //////////////////pr($sqlAset);
+                    // pr($sqlAset);
                     $resAset = $this->db->lazyQuery($sqlAset,$debug);
                     // //////////pr($resAset);
                         // $sQuery = "
@@ -437,6 +440,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //////////////////////////////////////////////pr($jenisaset);
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
+        $kodePemilik = $data['kodepemilik'];
         $kodeKelompok = $data['kodeKelompok'];
         $tahun = $data['bup_tahun'];
         // ////////////////////////////////////////////////////pr($jenisaset);
@@ -447,6 +451,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
         if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
+        if ($kodePemilik) $filterkontrak .= " AND ast.kodeLokasi LIKE '{$kodePemilik}.%' ";
         if ($kodeSatker){ 
             $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
         }else{
@@ -607,6 +612,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         //////////////////////////////////////////////pr($jenisaset);
         $nokontrak = $data['bup_nokontrak'];
         $kodeSatker = $data['kodeSatker'];
+        $kodePemilik = $data['kodepemilik'];
         $kodeKelompok = $data['kodeKelompok'];
         $tahun = $data['bup_tahun'];
         // ////////////////////////////////////////////////////pr($jenisaset);
@@ -617,6 +623,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $filterkontrak = "";
         if ($nokontrak) $filterkontrak .= " AND ast.noKontrak = '{$nokontrak}' ";
         if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
+        if ($kodePemilik) $filterkontrak .= " AND ast.kodeLokasi LIKE '{$kodePemilik}.%' ";
         if ($kodeSatker){ 
             $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
         }else{
@@ -10367,12 +10374,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         6=>'kdp AS k');
 
         $listTableField = array(
-                        1=>'t.LuasTotal,t.LuasBangunan,t.LuasSekitar,t.LuasKosong,t.HakTanah,t.NoSertifikat,t.TglSertifikat',
-                        2=>'m.Merk,m.Model,m.Ukuran,m.NoSeri,m.NoRangka,m.NoMesin,m.NoSTNK,m.NoBPKB',
-                        3=>'b.TglPakai,b.Konstruksi,b.Beton,b.JumlahLantai,b.LuasLantai,b.Dinding,b.Lantai,b.LangitLangit,b.Atap',
-                        4=>'j.Konstruksi,j.Panjang,j.Lebar,j.NoDokumen,j.TglDokumen,j.StatusTanah,j.NoSertifikat,j.TglSertifikat,j.LuasJaringan',
-                        5=>'al.Judul,al.AsalDaerah,al.Pengarang,al.Penerbit,al.Spesifikasi,al.TahunTerbit,al.ISBN,al.Material,al.Ukuran',
-                        6=>'k.Konstruksi,k.Beton,k.JumlahLantai,k.LuasLantai,k.TglMulai,k.StatusTanah,k.NoSertifikat,k.TglSertifikat');
+                        1=>'t.kodeLokasi,t.LuasTotal,t.LuasBangunan,t.LuasSekitar,t.LuasKosong,t.HakTanah,t.NoSertifikat,t.TglSertifikat',
+                        2=>'m.kodeLokasi,m.Merk,m.Model,m.Ukuran,m.NoSeri,m.NoRangka,m.NoMesin,m.NoSTNK,m.NoBPKB',
+                        3=>'b.kodeLokasi,b.TglPakai,b.Konstruksi,b.Beton,b.JumlahLantai,b.LuasLantai,b.Dinding,b.Lantai,b.LangitLangit,b.Atap',
+                        4=>'j.kodeLokasi,j.Konstruksi,j.Panjang,j.Lebar,j.NoDokumen,j.TglDokumen,j.StatusTanah,j.NoSertifikat,j.TglSertifikat,j.LuasJaringan',
+                        5=>'al.kodeLokasi,al.Judul,al.AsalDaerah,al.Pengarang,al.Penerbit,al.Spesifikasi,al.TahunTerbit,al.ISBN,al.Material,al.Ukuran',
+                        6=>'k.kodeLokasi,k.Konstruksi,k.Beton,k.JumlahLantai,k.LuasLantai,k.TglMulai,k.StatusTanah,k.NoSertifikat,k.TglSertifikat');
         $listTable = array(
                         1=>'tanah AS t',
                         2=>'mesin AS m',
