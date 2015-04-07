@@ -4332,7 +4332,73 @@ class core_api_report extends DB {
 		}
 	
 	}
-
+	//laporan tambahan
+	public function ceckKib ($satker,$tahun,$paramKib){
+		foreach ($satker as $Satker_ID)
+			{
+					// pr($value);
+					if($paramKib == 01){
+						//KIB-A
+						$queryok ="select 
+										T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+											K.Kode, K.Uraian
+										from 
+											tanahView as T,kelompok as K
+										where
+											T.kodeKelompok=K.Kode  and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+											and T.kodeSatker = '$Satker_ID' and T.Tahun <= '$tahun'
+										order by 
+											T.kodeSatker,T.kodeKelompok";
+					}elseif($paramKib == 03){
+						//KIB-B
+						$queryok ="select B.Aset_ID, B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+											B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.noRegister,B.Alamat,
+											B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+											B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+											K.Kode, K.Uraian
+										from 
+											bangunan_ori as B,kelompok as K  
+										where
+											B.kodeKelompok = K.Kode 
+											and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 
+											and B.kodeSatker = '$Satker_ID' and B.Tahun <= '$tahun'
+										order by B.kodeSatker,B.kodeKelompok";
+					}elseif($paramKib == 04){
+						//KIB-D
+						$queryok ="select J.Aset_ID, J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+											J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.noRegister,J.Alamat,
+											J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+											J.kondisi, J.kodeLokasi,
+											K.Kode, K.Uraian
+										from 
+											jaringan_ori as J,kelompok as K  
+											where
+											J.kodeKelompok = K.Kode 
+											and J.Status_Validasi_Barang =1 and J.StatusTampil =1 
+											and J.kodeSatker = '$Satker_ID' and J.Tahun <= '$tahun'
+											order by J.kodeSatker,J.kodeLokasi,J.Tahun,J.kodeKelompok";
+					}
+					/*echo $queryok ; 	
+					echo "<br>";
+					echo "<br>";*/
+					// exit;
+					$result = $this->query($queryok) or die ($this->error('error'));		
+					while ($data = $this->fetch_object($result))
+					{
+						$getdata[$Satker_ID][]= $data;
+					}
+					
+			}
+				
+				// pr($getdata);
+				// exit;
+		return 	$getdata;
+	}
+	
+	
+	
+	
+	
 	public function ceckGol ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol){
 			// echo $satker."-".$tglawalperolehan."-".$tglakhirperolehan."-".$paramGol;
 			// exit;
@@ -5590,20 +5656,23 @@ class core_api_report extends DB {
 			}
 			else{
 				/*echo "<br/>";
-				echo "non deklarasi (ekstra)";
+				echo "non deklarasi";
 				echo "<br/>";*/
+				// exit;
 				$paramKib 		= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.$paramSatker ";
 				$paramMutasi 	= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglSKKDH >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.$paramSatker_mts_tr  order by a.TglSKKDH desc";
 				$paramPnghpsn 	= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglHapus >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan'  AND a.$paramSatker order by a.TglHapus desc"; 
 				$paramLog 		= "a.TglPerolehan <='$tglakhirperolehan' AND a.TglPerubahan >'$tglakhirperolehan' AND a.TglPembukuan <='$tglakhirperolehan' AND a.$paramSatker AND (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  order by a.log_id desc";
-				
 			}
 		}
-		
+		// echo "hit =".$hit;
+		// exit;
 		if($hit == 1){
 		//single query
 			if($flag == 'A'){
 			//KIB A
+				echo "KIB A";
+				// EXIT;
 				$queryKib 		= "create temporary table tanahView as
 								select a.Tanah_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
 									a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, 
@@ -6356,6 +6425,7 @@ class core_api_report extends DB {
 						      $queryKibC,$queryAlterC,$queryLogC,$queryMutasiC,$queryPnghpsnC);
 			}
 			else{
+				// echo "masukkkkkkkk sini kocak";
 				$AllTableTemp = array($queryKib,$queryAlter,$queryLog,$queryMutasi,$queryPnghpsn);
 			}
 			

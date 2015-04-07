@@ -82,14 +82,6 @@ $result = arrayToObject($result_query);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-if($tglcetak != ''){
-	$tanggalCetak = format_tanggal($tglcetak);
-	$thnPejabat =substr($tglcetak,0,4);	
-}else{
-	$tglcetak = date("Y-m-d");
-	$tanggalCetak = format_tanggal($tglcetak);	
-	$thnPejabat =substr($tglcetak,0,4);
-}
 //retrieve html
 $html=$REPORT->retrieve_html_kib_b_rekap_barang($result,$gambar,$skpd_id);
 
@@ -98,8 +90,8 @@ $html=$REPORT->retrieve_html_kib_b_rekap_barang($result,$gambar,$skpd_id);
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
-}*/	
-// exit;
+}
+exit;*/
 if($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

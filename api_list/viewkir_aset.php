@@ -45,6 +45,8 @@ $status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang AND";
 //variabel ajax
 $tahun_aw 		= $_GET['tahun_aw'];
 $tahun_ak 		= $_GET['tahun_ak'];
+$reg_aw 		= $_GET['Reg_aw'];
+$reg_ak 		= $_GET['Reg_ak'];
 $satker 		= $_GET['satker'];
 $kodeKelompok	= $_GET['kodeKelompok'];
 $tipeAset		= $_GET['tipeAset'];
@@ -122,19 +124,30 @@ if (isset($_GET['iSortCol_0'])) {
  */
 $sWhere = "";
 
-if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AND $kodeKelompok != ''){
+if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != ''){
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
+}
+elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  == '' AND $reg_ak  == ''){
 	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
 }
-elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == ''){
+elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != ''){
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
+}
+elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  == '' AND $reg_ak  == ''){
 	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
 }
 
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
      //$sWhere = "WHERE (";
-	 if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != ''){
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND (";
+	 if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != ''){
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND (";
+	}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  == '' AND $reg_ak  == ''){
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND (";
 	}
-	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == ''){
+	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != ''){
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND (";
+	}
+	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  == '' AND $reg_ak  == ''){
 		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND (";
 	}
 	 
@@ -154,7 +167,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
           if ($sWhere == "") {
                $sWhere = "WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
           } else {
-               $sWhere .= " AND $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
+               $sWhere .= " AND $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
           }
           $sWhere .= "" . $aColumns[$i] . " LIKE '%" . mysql_real_escape_string($_GET['sSearch_' . $i]) . "%' ";
      }
@@ -198,10 +211,20 @@ $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
 
 /* Total data set length */
-if($kodeKelompok != ''){
+if($kodeKelompok != '' && $reg_aw  != '' && $reg_ak  != ''){
+	$sQuery = "
+		SELECT COUNT(" . $sIndexColumn . ")
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'
+		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
+}elseif($kodeKelompok != '' && $reg_aw  == '' && $reg_ak  == ''){
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
 		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok'";
+}elseif($kodeKelompok == '' && $reg_aw  != '' && $reg_ak  != ''){
+	$sQuery = "
+		SELECT COUNT(" . $sIndexColumn . ")
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' 
+		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
 }else{
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")

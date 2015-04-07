@@ -84,7 +84,6 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 //retrieve html
 $html=$REPORT->retrieve_html_kib_e_rekap_barang($result, $gambar,$skpd_id);
 /*$count = count($html);
-
 	for ($i = 0; $i < $count; $i++) {
 		 
 		echo $html[$i];     

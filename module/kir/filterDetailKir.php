@@ -18,7 +18,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 ?>
 	<script>
 	jQuery(function($){
-	   $("#Tahun_aw,#Tahun_ak").mask("9999");
+	   $("#Tahun_aw,#Tahun_ak,#register_aw,#register_ak").mask("9999");
 	   $("select").select2();
 	});
 	
@@ -88,7 +88,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				<li>
 					<span class="span2">Tahun Perolehan</span>
 					<input name="Tahun_aw" id="Tahun_aw" class="span1"  type="text" required>
-					.
+					s/d
 					<input name="Tahun_ak" id="Tahun_ak" class="span1"  type="text" onblur="return check_tahun(this);"  required>
 					<input type="hidden" name ="kodehidden" id="satker" value="<?=$_GET['kdS']?>">
 				</li>
@@ -96,6 +96,13 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 				<li>&nbsp;</li>
 				<?php selectAset('kodeKelompok','235',true,false); ?>
 				<li>&nbsp;</li>
+				<li>
+					<span class="span2">Kode Register</span>
+					<input type="number" name="register_aw" id="" class="span1"  type="text" >
+					s/d
+					<input type="number" name="register_ak" id="" class="span1"  type="text" >
+					<input type="hidden" name ="kodehidden" id="satker" value="<?=$_GET['kdS']?>">
+				</li>
 				<li>
 					<span class="span2">Tipe Aset</span>
 					<select name="tipeAset" id="tipeAset" style="width:170px">
