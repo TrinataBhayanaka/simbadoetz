@@ -40,6 +40,13 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 // pr($query);
 // exit;
+
+//get satker
+if ($tahun !='')
+{
+	$get_satker = $REPORT->validasi_data_satker_id($skpd_id);
+}
+
 $tglawalperolehan = '0000-00-00';
 $tglakhirperolehan = $tahun.'-12-31';
 
@@ -50,8 +57,12 @@ $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
 // exit;
+//function get data
+$paramKib = '04';
+$resultParamKib = $REPORT->ceckKib($get_satker,$tahun,$paramKib);
+
 //mengenerate query
-$result_query=$REPORT->retrieve_query($query);
+// $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
 // exit;
 //set gambar untuk laporan
@@ -59,10 +70,10 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 
 
 //retrieve html
-$html=$REPORT->retrieve_html_kib_d_rekap_barang($result_query, $gambar,$skpd_id);
-/*$count = count($html);
+$html=$REPORT->retrieve_html_kib_d_rekap_barang($resultParamKib, $gambar,$skpd_id);
+$count = count($html);
 
-	for ($i = 0; $i < $count; $i++) {
+/*for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
