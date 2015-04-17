@@ -1,8 +1,5 @@
 <?php
 include "../../../config/config.php";
-
-	$PERENCANAAN = new RETRIEVE_PERENCANAAN;
-
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -22,20 +19,16 @@ $menu_id = 10;
 	<!-- SQL Sementara -->
 	<?php
 
-		// if(isset($_POST['kodeKelompok'])){
-		//     if($_POST['Aset_ID'] == "")
-		//     {
-		//       	$dataArr = $STORE->store_inventarisasi($_POST);
-		//     }  else
-		//     {
-		//       $dataArr = $STORE->store_edit_aset($_POST,$_POST['Aset_ID']);
-		//     }
-		//   }		
+		if(isset($_POST['kodeKelompok'])){
+		    if($_POST['Aset_ID'] == "")
+		    {
+		      	$dataArr = $STORE->store_inventarisasi($_POST);
+		    }  else
+		    {
+		      $dataArr = $STORE->store_edit_aset($_POST,$_POST['Aset_ID']);
+		    }
+		  }		
 
-$dataDatabase = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan_edit($_GET); 
-// pr($dataDatabase);
-$data=$dataDatabase['data'];
-$kib=$dataDatabase['kib'];
 	?>
 	<!-- End Sql -->
 	<script type="text/javascript">
@@ -56,28 +49,28 @@ $kib=$dataDatabase['kib'];
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Rencana Pemeliharaan</li>
+			  <li class="active">Rencana Pengadaan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Rencana Pemeliharaan</div>
-				<div class="subtitle">Data Rencana Pemeliharaan</div>
+				<div class="title">Perencanaan</div>
+				<div class="subtitle">Rencana Pengadaan</div>
 			</div>	
 
 			<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pemeliharaan_buat_filter.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_tambah.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
-					<span class="text">Buat Rencana Pemeliharaan</span>
+					<span class="text">Tambah Rencana Pengadaan</span>
 				</a>
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pemeliharaan_filter.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_filter.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
-					<span class="text">Data Rencana Pemeliharaan</span>
+					<span class="text">Data Rencana Pengadaan</span>
 				</a>
 			</div>		
 
@@ -87,17 +80,11 @@ $kib=$dataDatabase['kib'];
 			
 
 			<div>
-			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_pemeliharaan_prosestambah.php" method="POST">
-
+			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_prosestambah.php" method="POST">
 				 <div class="detailLeft">
 								
 						<ul>	
-							<?php //selectAset('kodeKelompok','255',true,false,'required'); ?>
-
-							<li>
-								<span class="span2">Jenis Aset</span>
-								<input type="text" class="span3"  value="<?=$data['Uraian']?> / <?=$data['Kode_Kelompok']?>"  disabled/>
-							</li>
+							<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
 						</ul>
 						
 					</div>
@@ -108,52 +95,33 @@ $kib=$dataDatabase['kib'];
 						<ul>
 							<li>
 								<span class="span2">Jumlah</span>
-								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=$data['Kuantitas']?>" onchange="return totalHrg()" disabled/>
+								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=($kontrak[0]['tipeAset'] == 3)? 1 : ''?>" onchange="return totalHrg()" required/>
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								
-								<input type="text" class="span3" data-a-sign="Rp " data-a-dec="," data-a-sep="." value="<?=$data['Harga_Satuan']?>" disabled/>
+								<!-- <input type="text" class="span3" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onchange="return totalHrg()" required/> -->
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
-								
-								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." value="<?=$data['Kuantitas']*$data['Harga_Satuan']?>" disabled/>
+								<!-- <input type="text" class="span3" name="NilaiPerolehan" id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/> -->
+								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" readonly/>
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
 							</li>
+
 							<li>
-								<span class="span2">Rekening</span>
-								<input type="text" class="span3"  value="<?=$data['NamaRekening']?> / <?=$data['Kode_Rekening']?>"  disabled/>
+							<?php selectRekening('kdRekening','205',true,(isset($rinc) ? $rinc['kdRekening'] : false)); ?><br />
 							</li>
-							
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3" disabled><?=$data['Info']?></textarea>
-							</li>
-							<li>
-								<span class="span2">Harga Pemeliharaan</span>
-								
-								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
-								<input type="hidden" name="Harga_Pemeliharaan" id="hrgSatuan" value="" >
-							</li>
-							<li>
-								<span class="span2">Total Pemeliharaan</span>
-								
-								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="" readonly/>
-								<input type="hidden" name="TotalPemeliharaan" id="nilaiPerolehan" value="" >
-								
-							</li>
-							<li>
-								<span class="span2">Uraian Pemeliharaan</span>
-								<textarea name="uraian_pemeliharaan" class="span3" ></textarea>
+								<textarea name="Info" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Info'] : ''?></textarea>
 							</li>
 						</ul>
 							
 					</div>
 					<div class="detailLeft">
-						<?php
-							if($_GET['tipe']=="A"){
-						?>
-						<ul class="tanah">
+						<ul class="tanah" style="display:none">
 							<li>
 								<span class="span2">Hak Tanah</span>
 								<select id="hakpakai" name="HakTanah" style="width:255px" disabled>
@@ -180,10 +148,7 @@ $kib=$dataDatabase['kib'];
 							</li> -->
 
 						</ul>
-						<?php
-							}elseif($_GET['tipe']=="B"){
-						?>
-						<ul class="mesin" >
+						<ul class="mesin" style="display:none">
 							<!-- <li>
 								<span class="span2">Kondisi</span>
 								<select id="kondisiMesin" name="kondisi" style="width:155px" disabled>
@@ -195,46 +160,42 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Merk</span>
-								<input type="text" class="span3" name="Merk" value="<?=$kib['Merk']?>" disabled/>
+								<input type="text" class="span3" name="Merk" disabled/>
 							</li>
 							<li>
 								<span class="span2">Type</span>
-								<input type="text" class="span3" name="Model" value="<?=$kib['Model']?>" disabled/>
+								<input type="text" class="span3" name="Model" disabled/>
 							</li>
 							<li>
 								<span class="span2">Ukuran / CC</span>
-								<input type="text" class="span3" name="Ukuran" value="<?=$kib['Ukuran']?>" disabled/>
+								<input type="text" class="span3" name="Ukuran" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Pabrik</span>
-								<input type="text" class="span3" name="Pabrik" value="<?=$kib['NoSeri']?>" disabled/>
+								<input type="text" class="span3" name="Pabrik" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Mesin</span>
-								<input type="text" class="span3" name="NoMesin" value="<?=$kib['NoMesin']?>" disabled/>
+								<input type="text" class="span3" name="NoMesin" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Polisi</span>
-								<input type="text" class="span3" name="NoSeri" value="<?=$kib['NoSTNK']?>" disabled/>
+								<input type="text" class="span3" name="NoSeri" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. BPKB</span>
-								<input type="text" class="span3" name="NoBPKB" value="<?=$kib['NoBPKB']?>" disabled/>
+								<input type="text" class="span3" name="NoBPKB" disabled/>
 							</li>
 							<li>
 								<span class="span2">Bahan</span>
-								<input type="text" class="span3" name="Material" value="<?=$kib['Bahan']?>" disabled/>
+								<input type="text" class="span3" name="Material" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Rangka</span>
-								<input type="text" class="span3" name="NoRangka" value="<?=$kib['NoRangka']?>" disabled/>
+								<input type="text" class="span3" name="NoRangka" disabled/>
 							</li>
 						</ul>
-
-						<?php
-							}elseif($_GET['tipe']=="C"){
-						?>
-						<ul class="bangunan" >
+						<ul class="bangunan" style="display:none">
 							<!-- <li>
 								<span class="span2">Kondisi Bangunan</span>
 								<select name="kondisi" style="width:155px" disabled>
@@ -254,26 +215,22 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
-								<input type="text" class="span3" name="JumlahLantai" value="<?=$kib['JumlahLantai']?>" disabled/>
+								<input type="text" class="span3" name="JumlahLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['JumlahLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Luas Lantai (M2)</span>
-								<input type="text" class="span3" name="LuasLantai"value="<?=$kib['LuasLantai']?>" disabled/>
+								<input type="text" class="span3" name="LuasLantai" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Dokumen</span>
-								<input type="text" class="span3" name="NoSurat" value="<?=$kib['NoDokumen']?>" disabled/>
+								<input type="text" class="span3" name="NoSurat" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglSurat" id="tglSurat" value="<?=$kib['TglDokumen']?>" disabled/>
+								<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglSurat" id="tglSurat" disabled/>
 							</li>
 						</ul>
-
-						<?php
-							}elseif($_GET['tipe']=="D"){
-						?>
-						<ul class="jaringan" >
+						<ul class="jaringan" style="display:none">
 							<!-- <li>
 								<span class="span2">Kondisi</span>
 								<select name="kondisi" style="width:155px" >disabled
@@ -285,34 +242,30 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Konstruksi</span>
-								<input type="text" class="span3" name="Konstruksi" value="<?=$kib['Konstruksi']?>" disabled/>
+								<input type="text" class="span3" name="Konstruksi" disabled/>
 							</li>
 							<li>
 								<span class="span2">Panjang (KM)</span>
-								<input type="text" class="span2" name="Panjang" value="<?=$kib['Panjang']?>" disabled/>
+								<input type="text" class="span2" name="Panjang" disabled/>
 							</li>
 							<li>
 								<span class="span2">Lebar (M)</span>
-								<input type="text" class="span2" name="Lebar" value="<?=$kib['Lebar']?>" disabled/>
+								<input type="text" class="span2" name="Lebar" disabled/>
 							</li>
 							<li>
 								<span class="span2">Luas (M2)</span>
-								<input type="text" class="span2" name="LuasJaringan"  value="<?=$kib['LuasJaringan']?>" disabled/>
+								<input type="text" class="span2" name="LuasJaringan" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Dokumen</span>
-								<input type="text" class="span3" name="NoDokumen" value="<?=$kib['NoDokumen']?>" disabled/>
+								<input type="text" class="span3" name="NoDokumen" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['LuasLantai'] : ''?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" value="<?=$kib['TglDokumen']?>" disabled/>
+								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" disabled/>
 							</li>
 						</ul>
-
-						<?php
-							}elseif($_GET['tipe']=="E"){
-						?>
-						<ul class="asetlain">
+						<ul class="asetlain" style="display:none">
 							<!-- <li>
 								<span class="span2">Kondisi</span>
 								<select name="kondisi" style="width:155px" disabled>
@@ -324,38 +277,34 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Judul</span>
-								<input type="text" class="span3" name="Judul" value="<?=$kib['Judul']?>" disabled/>
+								<input type="text" class="span3" name="Judul" disabled/>
 							</li>
 							<li>
 								<span class="span2">Pengarang</span>
-								<input type="text" class="span3" value="<?=$kib['Pengarang']?>" name="Pengarang" disabled/>
+								<input type="text" class="span3" name="Pengarang" disabled/>
 							</li>
 							<li>
 								<span class="span2">Penerbit</span>
-								<input type="text" class="span3" value="<?=$kib['Penerbit']?>" name="Penerbit" disabled/>
+								<input type="text" class="span3" name="Penerbit" disabled/>
 							</li>
 							<li>
 								<span class="span2">Spesifikasi</span>
-								<input type="text" class="span3" value="<?=$kib['Spesifikasi']?>" name="Spesifikasi" disabled/>
+								<input type="text" class="span3" name="Spesifikasi" disabled/>
 							</li>
 							<li>
 								<span class="span2">Asal Daerah</span>
-								<input type="text" class="span3" value="<?=$kib['AsalDaerah']?>" name="AsalDaerah" disabled/>
+								<input type="text" class="span3" name="AsalDaerah" disabled/>
 							</li>
 							<li>
 								<span class="span2">Bahan</span>
-								<input type="text" class="span3" value="<?=$kib['Material']?>" name="Material" disabled/>
+								<input type="text" class="span3" name="Material" disabled/>
 							</li>
 							<li>
 								<span class="span2">Ukuran</span>
-								<input type="text" class="span3" value="<?=$kib['Ukuran']?>" name="Ukuran" disabled/>
+								<input type="text" class="span3" name="Ukuran" disabled/>
 							</li>
 						</ul>
-
-						<?php
-							}elseif($_GET['tipe']=="F"){
-						?>
-						<ul class="kdp" >
+						<ul class="kdp" style="display:none">
 							<!-- <li>
 								<span class="span2">Kondisi Bangunan</span>
 								<select name="kondisi" style="width:155px" disabled>
@@ -375,21 +324,17 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
-								<input type="text" class="span3" value="<?=$kib['JumlahLantai']?>" name="JumlahLantai" disabled/>
+								<input type="text" class="span3" name="JumlahLantai" disabled/>
 							</li>
 							<li>
 								<span class="span2">Luas Lantai</span>
-								<input type="text" class="span3" value="<?=$kib['LuasLantai']?>"  name="LuasLantai" disabled/>
+								<input type="text" class="span3" name="LuasLantai" disabled/>
 							</li>
 						</ul>
-						<?php
-					}
-						?>
 					</div>
 					<!-- hidden -->
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
-					<input type="hidden" name="TipeAset" id="TipeAset" value="<?=$_GET['tipe']?>">
-					<input type="hidden" name="IDRENCANA"  value="<?=$_GET['id']?>">
+					<input type="hidden" name="TipeAset" id="TipeAset" value="">
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>
 			<li>

@@ -10388,8 +10388,6 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         5=>'asetlain AS al',
                         6=>'kdp AS k');
 
-
-        $FieltableGeneral="{$listTableAlias[$type]}.Aset_ID,{$listTableAlias[$type]}.kodeKelompok,{$listTableAlias[$type]}.kodeSatker,{$listTableAlias[$type]}.kodeLokasi,{$listTableAlias[$type]}.noRegister,{$listTableAlias[$type]}.TglPerolehan,{$listTableAlias[$type]}.TglPembukuan,{$listTableAlias[$type]}.kodeData,{$listTableAlias[$type]}.kodeKA,{$listTableAlias[$type]}.kodeRuangan,{$listTableAlias[$type]}.Status_Validasi_Barang,{$listTableAlias[$type]}.StatusTampil,{$listTableAlias[$type]}.Tahun,{$listTableAlias[$type]}.NilaiPerolehan,{$listTableAlias[$type]}.Alamat,{$listTableAlias[$type]}.Info,{$listTableAlias[$type]}.AsalUsul,{$listTableAlias[$type]}.kondisi,{$listTableAlias[$type]}.CaraPerolehan";
         $listTableOri = array(
                         1=>'tanah',
                         2=>'mesin',

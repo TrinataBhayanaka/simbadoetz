@@ -102,9 +102,10 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pemeliharaan($_POST);
 						<th>Rekening</th>
 						<th>Kuantitas</th>
 						<th>Harga Satuan</th>
-						<th>Total</th>
-						<th>Info</th>
-						<th>Status Pemeliharaan</th>
+						<th>Nilai Perolehan</th>
+						<th>Harga Pemeliharaan</th>
+						<th>Total Pemeliharaan</th>
+						<th>Uraian Pemeliharaan</th>
 						<th>Tindakan</th>
 					</tr>
 				</thead>
@@ -130,12 +131,13 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pemeliharaan($_POST);
                         <td>[<?=$value['Kode_Rekening']?>]<br/>
                         	<strong><?=$value['NamaRekening']?></strong></td>
                         <td><?=$value['Kuantitas']?></td>
-                        <td><?=$value['Harga_Satuan']?></td>
-                        <td><?=$total?></td>
-                        <td><?=$value['Info']?></td>
+                        <td>Rp. <?=number_format($value['Harga_Satuan'])?></td>
+                        <td>Rp. <?=number_format($total)?></td>
+                        <td>Rp. <?=number_format($value['Harga_Pemeliharaan'])?></td>
                         <td align="center">
-                        	<span class="label label-<?=$css?>"><?=$text?></span>
+                        	Rp. <?=number_format($value['Harga_Pemeliharaan']*$value['Kuantitas'])?>
                         </td>
+                        <td><?=$value['Uraian_Pemeliharaan']?></td>
                         <td><a href="#" class="btn btn-info btn-small">Edit</a><a href="#" class="btn btn-danger btn-small">Hapus</a></td>
                      </tr>
                 <?php
@@ -145,6 +147,7 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pemeliharaan($_POST);
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

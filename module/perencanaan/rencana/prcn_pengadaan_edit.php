@@ -56,28 +56,28 @@ $kib=$dataDatabase['kib'];
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Perencanaan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Rencana Pemeliharaan</li>
+			  <li class="active">Rencana Pengadaan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Rencana Pemeliharaan</div>
-				<div class="subtitle">Data Rencana Pemeliharaan</div>
+				<div class="title">Perencanaan</div>
+				<div class="subtitle">Rencana Pengadaan</div>
 			</div>	
 
 			<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pemeliharaan_buat_filter.php">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_tambah.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
-					<span class="text">Buat Rencana Pemeliharaan</span>
+					<span class="text">Tambah Rencana Pengadaan</span>
 				</a>
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pemeliharaan_filter.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_filter.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
-					<span class="text">Data Rencana Pemeliharaan</span>
+					<span class="text">Data Rencana Pengadaan</span>
 				</a>
 			</div>		
 
@@ -87,8 +87,7 @@ $kib=$dataDatabase['kib'];
 			
 
 			<div>
-			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_pemeliharaan_prosestambah.php" method="POST">
-
+			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_prosestambah.php" method="POST">
 				 <div class="detailLeft">
 								
 						<ul>	
@@ -108,43 +107,28 @@ $kib=$dataDatabase['kib'];
 						<ul>
 							<li>
 								<span class="span2">Jumlah</span>
-								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=$data['Kuantitas']?>" onchange="return totalHrg()" disabled/>
+								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=$data['Kuantitas']?>" onchange="return totalHrg()" required/>
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
 								
-								<input type="text" class="span3" data-a-sign="Rp " data-a-dec="," data-a-sep="." value="<?=$data['Harga_Satuan']?>" disabled/>
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=$data['Harga_Satuan']?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=$data['Harga_Satuan']?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
 								
-								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." value="<?=$data['Kuantitas']*$data['Harga_Satuan']?>" disabled/>
-							</li>
+								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=$data['Kuantitas']*$data['Harga_Satuan']?>" readonly/>
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=$data['Kuantitas']*$data['Harga_Satuan']?>" >
 							<li>
 								<span class="span2">Rekening</span>
 								<input type="text" class="span3"  value="<?=$data['NamaRekening']?> / <?=$data['Kode_Rekening']?>"  disabled/>
 							</li>
 							
+							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3" disabled><?=$data['Info']?></textarea>
-							</li>
-							<li>
-								<span class="span2">Harga Pemeliharaan</span>
-								
-								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
-								<input type="hidden" name="Harga_Pemeliharaan" id="hrgSatuan" value="" >
-							</li>
-							<li>
-								<span class="span2">Total Pemeliharaan</span>
-								
-								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="" readonly/>
-								<input type="hidden" name="TotalPemeliharaan" id="nilaiPerolehan" value="" >
-								
-							</li>
-							<li>
-								<span class="span2">Uraian Pemeliharaan</span>
-								<textarea name="uraian_pemeliharaan" class="span3" ></textarea>
+								<textarea name="Info" class="span3" ><?=$data['Info']?></textarea>
 							</li>
 						</ul>
 							
@@ -388,8 +372,7 @@ $kib=$dataDatabase['kib'];
 					</div>
 					<!-- hidden -->
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
-					<input type="hidden" name="TipeAset" id="TipeAset" value="<?=$_GET['tipe']?>">
-					<input type="hidden" name="IDRENCANA"  value="<?=$_GET['id']?>">
+					<input type="hidden" name="TipeAset" id="TipeAset" value="">
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>
 			<li>

@@ -102,7 +102,7 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_POST);
 						<th>Rekening</th>
 						<th>Kuantitas</th>
 						<th>Harga Satuan</th>
-						<th>Total</th>
+						<th>Nilai Perolehan</th>
 						<th>Info</th>
 						<th>Status Pemeliharaan</th>
 						<th>Tindakan</th>
@@ -130,13 +130,27 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_POST);
                         <td>[<?=$value['Kode_Rekening']?>]<br/>
                         	<strong><?=$value['NamaRekening']?></strong></td>
                         <td><?=$value['Kuantitas']?></td>
-                        <td><?=$value['Harga_Satuan']?></td>
-                        <td><?=$total?></td>
+                        <td>Rp. <?=number_format($value['Harga_Satuan'])?></td>
+                        <td>Rp. <?=number_format($total)?></td>
                         <td><?=$value['Info']?></td>
                         <td align="center">
                         	<span class="label label-<?=$css?>"><?=$text?></span>
                         </td>
-                        <td><a href="#" class="btn btn-info btn-small">Edit</a><a href="#" class="btn btn-danger btn-small">Hapus</a></td>
+                        <td>
+                        <?php
+                        	if($value['Status_Pemeliharaan']==0){
+                        ?>	
+                        	<a href="#" class="btn btn-info btn-small">Edit</a>
+                        	<!-- <a href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_edit.php?id=<?=$value['Rencana_ID']?>&tipe=<?=$value['TipeAset']?>" class="btn btn-info btn-small">Edit</a> -->
+                        	<a href="#" class="btn btn-danger btn-small">Hapus</a>
+                        <?php
+                    	}else{
+                    	?>
+                    	<a href="#" class="btn btn-success btn-small">Detail</a>
+                    	<?php
+                    	}
+                        ?>
+                        </td>
                      </tr>
                 <?php
                 }
