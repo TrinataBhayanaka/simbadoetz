@@ -8,8 +8,8 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
 	}
 	
 	public function store_rencanaPengadaan($data){
-        pr($data);
-        // exit;
+        //pr($data);
+        // //exit;
         $Created_Date=date("Y-m-d");
         $sql = array(
                     'table'=>'rencana',
@@ -62,14 +62,14 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
                     );
          $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
         }
-        pr($sql);
-        exit;
+        //pr($sql);
+        //exit;
         if ($res) return $res;
         return false; 
     }
 public function store_rencanaPemeliharaan($data){
-        pr($data);
-        // exit;
+        //pr($data);
+        // //exit;
         $Created_Date=date("Y-m-d");
         // $sql = array(
         //             'table'=>'rencana',
@@ -128,8 +128,8 @@ public function store_rencanaPemeliharaan($data){
         //             );
         //  $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
         // }
-        pr($sql);
-        exit;
+        //pr($sql);
+        //exit;
         if ($res) return $res;
         return false; 
     }
@@ -161,8 +161,8 @@ public function store_rencanaPemeliharaan($data){
                     'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
                     );
                 $res = $this->db->lazyQuery($sql,$debug);
-// pr($sql);
-// pr($res);
+// //pr($sql);
+// //pr($res);
               
         if ($res) return $res;
         return false;
@@ -195,8 +195,8 @@ public function store_rencanaPemeliharaan($data){
                     'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
                     );
                 $res = $this->db->lazyQuery($sql,$debug);
-// pr($sql);
-// pr($res);
+// //pr($sql);
+// //pr($res);
               
         if ($res) return $res;
         return false;
@@ -208,7 +208,7 @@ public function store_rencanaPemeliharaan($data){
         $Rencana_ID = $data['id'];
        
         $TipeAset = $data['tipe'];
-// pr($data);
+// //pr($data);
         // $kondisi= trim($data['condition']);
         // if($kondisi!="")$kondisi=" and $kondisi";
         // $limit= $data['limit'];
@@ -229,8 +229,8 @@ public function store_rencanaPemeliharaan($data){
                     'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
                     );
                 $res = $this->db->lazyQuery($sql,$debug);
-// pr($sql);
-// pr($res);
+// //pr($sql);
+// //pr($res);
             if($TipeAset=="A"){
                 $sqlKib = array(
                     'table'=>'prcn_tanah',
@@ -286,7 +286,7 @@ public function store_rencanaPemeliharaan($data){
                 $resKib = $this->db->lazyQuery($sqlKib,$debug);
                 
             }
-              // pr($resKib);
+              // //pr($resKib);
         if ($res) return array("data"=>$res['0'],"kib"=>$resKib['0']);
         return false;
         
@@ -318,8 +318,8 @@ public function store_rencanaPemeliharaan($data){
                     'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
                     );
                 $res = $this->db->lazyQuery($sql,$debug);
-// pr($sql);
-// pr($res);
+// //pr($sql);
+// //pr($res);
               
         if ($res) return $res;
         return false;
@@ -352,8 +352,8 @@ public function store_rencanaPemeliharaan($data){
                     'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
                     );
                 $res = $this->db->lazyQuery($sql,$debug);
-// pr($sql);
-// pr($res);
+// //pr($sql);
+// //pr($res);
               
         if ($res) return $res;
         return false;
