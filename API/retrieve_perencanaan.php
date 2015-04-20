@@ -73,7 +73,7 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
         $Tgl_Update=date("Y-m-d");
         $sql = array(
             'table'=>'rencana',
-            'field'=>"Kuantitas='$data[Kuantitas]', Harga_Satuan='$data[Satuan]',Tgl_Update='$Tgl_Update', Info='$data[Info]'",
+            'field'=>"Tahun='$data[Tahun]',Kuantitas='$data[Kuantitas]', Harga_Satuan='$data[Satuan]',Tgl_Update='$Tgl_Update', Info='$data[Info]'",
             'condition' => "Rencana_ID='$data[IDRENCANA]'",
             );
         $res = $this->db->lazyQuery($sql,$debug,2);
@@ -286,12 +286,12 @@ public function store_rencanaPemeliharaan($data){
        
 
              $sql = array(
-                    'table'=>'rencana as r,kelompok as kel,koderekening as rek',
-                    'field'=>"r.*, kel.Uraian,rek.NamaRekening ",
+                    'table'=>'rencana as r,kelompok as kel,koderekening as rek,satker as sat',
+                    'field'=>"r.*, kel.Uraian,rek.NamaRekening,sat.NamaSatker ",
                     'condition' => "r.Rencana_ID='$Rencana_ID' AND (r.Status_Pemeliharaan=0 OR r.Status_Pemeliharaan=1) {$filter} GROUP BY r.Rencana_ID ORDER BY r.Rencana_ID",
                     'limit'=>"1",
                    'joinmethod' => ' LEFT JOIN ',
-                    'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
+                    'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening,r.Kode_Satker=sat.kode'
                     );
                 $res = $this->db->lazyQuery($sql,$debug);
 // //pr($sql);

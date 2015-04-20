@@ -92,10 +92,17 @@ $kib=$dataDatabase['kib'];
 								
 						<ul>	
 							<?php //selectAset('kodeKelompok','255',true,false,'required'); ?>
-
+							<li>
+								<span class="span2">Tahun</span>
+								<input type="text" class="span1" name="Tahun" value="<?=$data['Tahun']?>"  required/>
+							</li>
 							<li>
 								<span class="span2">Jenis Aset</span>
 								<input type="text" class="span3"  value="<?=$data['Uraian']?> / <?=$data['Kode_Kelompok']?>"  disabled/>
+							</li>
+							<li>
+								<span class="span2">Kode Satker</span>
+								<input type="text" class="span4"  value="<?=$data['NamaSatker']?>"  disabled/>
 							</li>
 						</ul>
 						
