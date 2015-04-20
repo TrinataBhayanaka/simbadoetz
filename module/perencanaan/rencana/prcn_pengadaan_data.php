@@ -71,8 +71,8 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_POST);
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Perencanaan</div>
-				<div class="subtitle">Rencana Pengadaan</div>
+				<div class="title">Rencana Pengadaan</div>
+				<div class="subtitle">Data Rencana Pengadaan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
@@ -140,8 +140,8 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_POST);
                         <?php
                         	if($value['Status_Pemeliharaan']==0){
                         ?>	
-                        	<a href="#" class="btn btn-info btn-small">Edit</a>
-                        	<!-- <a href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_edit.php?id=<?=$value['Rencana_ID']?>&tipe=<?=$value['TipeAset']?>" class="btn btn-info btn-small">Edit</a> -->
+                        	<!-- <a href="#" class="btn btn-info btn-small">Edit</a> -->
+                        	<a href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_edit.php?id=<?=$value['Rencana_ID']?>&tipe=<?=$value['TipeAset']?>" class="btn btn-info btn-small">Edit</a>
                         	<a href="#" class="btn btn-danger btn-small">Hapus</a>
                         <?php
                     	}else{

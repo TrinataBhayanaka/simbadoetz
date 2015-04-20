@@ -60,8 +60,8 @@ $kib=$dataDatabase['kib'];
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Perencanaan</div>
-				<div class="subtitle">Rencana Pengadaan</div>
+				<div class="title">Rencana Pengadaan</div>
+				<div class="subtitle">Edit Rencana Pengadaan</div>
 			</div>	
 
 			<div class="grey-container shortcut-wrapper">
@@ -87,7 +87,7 @@ $kib=$dataDatabase['kib'];
 			
 
 			<div>
-			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_prosestambah.php" method="POST">
+			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_prosesedit.php" method="POST">
 				 <div class="detailLeft">
 								
 						<ul>	
@@ -136,27 +136,36 @@ $kib=$dataDatabase['kib'];
 					<div class="detailLeft">
 						<?php
 							if($_GET['tipe']=="A"){
+								$selectPakai="";
+								$seletPengelolaan="";
+								// pr($kib['HakTanah']);
+								if($kib['HakTanah']=="Hak Pakai"){
+									$seletPakai="selected";
+								}elseif($kib['HakTanah']=="Hak Pengelolaan"){
+									$seletPengelolaan="selected";
+
+								}
 						?>
 						<ul class="tanah">
 							<li>
 								<span class="span2">Hak Tanah</span>
-								<select id="hakpakai" name="HakTanah" style="width:255px" disabled>
-									<option value="Hak Pakai">Hak Pakai</option>
-									<option value="Hak Pengelolaan">Hak Pengelolaan</option>
+								<select id="hakpakai" name="HakTanah" style="width:255px" >
+									<option value="Hak Pakai" <?=$selectPakai?>>Hak Pakai</option>
+									<option value="Hak Pengelolaan" <?=$seletPengelolaan?>>Hak Pengelolaan</option>
 								</select>
 							</li>
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Luas (M2)</span>
-								<input type="text" class="span3" name="LuasTotal" disabled/>
+								<input type="text" class="span3" name="LuasTotal" value="<?=$kib['LuasTanah']?>" />
 							</li>
 							<li>
 								<span class="span2">No. Sertifikat</span>
-								<input type="text" class="span3" name="NoSertifikat" disabled/>
+								<input type="text" class="span3" name="NoSertifikat"value="<?=$kib['NoSertifikat']?>"  />
 							</li>
 							<li>
 								<span class="span2">Tgl. Sertifikat</span>
-								<input type="text" class="span2" name="TglSertifikat" id="datepicker" disabled/>
+								<input type="text" class="span2" name="TglSertifikat" id="datepicker" value="<?=$kib['TglSertifikat']?>" />
 							</li>
 							<!-- <li>
 								<span class="span2">Penggunaan</span>
@@ -179,44 +188,51 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Merk</span>
-								<input type="text" class="span3" name="Merk" value="<?=$kib['Merk']?>" disabled/>
+								<input type="text" class="span3" name="Merk" value="<?=$kib['Merk']?>" />
 							</li>
 							<li>
 								<span class="span2">Type</span>
-								<input type="text" class="span3" name="Model" value="<?=$kib['Model']?>" disabled/>
+								<input type="text" class="span3" name="Model" value="<?=$kib['Model']?>" />
 							</li>
 							<li>
 								<span class="span2">Ukuran / CC</span>
-								<input type="text" class="span3" name="Ukuran" value="<?=$kib['Ukuran']?>" disabled/>
+								<input type="text" class="span3" name="Ukuran" value="<?=$kib['Ukuran']?>" />
 							</li>
 							<li>
 								<span class="span2">No. Pabrik</span>
-								<input type="text" class="span3" name="Pabrik" value="<?=$kib['NoSeri']?>" disabled/>
+								<input type="text" class="span3" name="NoPabrik" value="<?=$kib['NoSeri']?>" />
 							</li>
 							<li>
 								<span class="span2">No. Mesin</span>
-								<input type="text" class="span3" name="NoMesin" value="<?=$kib['NoMesin']?>" disabled/>
+								<input type="text" class="span3" name="NoMesin" value="<?=$kib['NoMesin']?>" />
 							</li>
 							<li>
 								<span class="span2">No. Polisi</span>
-								<input type="text" class="span3" name="NoSeri" value="<?=$kib['NoSTNK']?>" disabled/>
+								<input type="text" class="span3" name="NoSTNK" value="<?=$kib['NoSTNK']?>" />
 							</li>
 							<li>
 								<span class="span2">No. BPKB</span>
-								<input type="text" class="span3" name="NoBPKB" value="<?=$kib['NoBPKB']?>" disabled/>
+								<input type="text" class="span3" name="NoBPKB" value="<?=$kib['NoBPKB']?>" />
 							</li>
 							<li>
 								<span class="span2">Bahan</span>
-								<input type="text" class="span3" name="Material" value="<?=$kib['Bahan']?>" disabled/>
+								<input type="text" class="span3" name="Material" value="<?=$kib['Bahan']?>" />
 							</li>
 							<li>
 								<span class="span2">No. Rangka</span>
-								<input type="text" class="span3" name="NoRangka" value="<?=$kib['NoRangka']?>" disabled/>
+								<input type="text" class="span3" name="NoRangka" value="<?=$kib['NoRangka']?>" />
 							</li>
 						</ul>
 
 						<?php
 							}elseif($_GET['tipe']=="C"){
+								$select1="";
+								$select2="";
+								if($kib['Beton']=="1"){
+									$select1="selected";
+								}elseif($kib['Beton']=="2"){
+									$select2="selected";
+								}
 						?>
 						<ul class="bangunan" >
 							<!-- <li>
@@ -230,27 +246,27 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Beton / Tidak</span>
-								<select name="Beton" style="width:155px" disabled>
-									<option value="1">Beton</option>
-									<option value="2">Tidak</option>
+								<select name="Beton" style="width:155px" >
+									<option value="1" <?=$select1?>>Beton</option>
+									<option value="2" <?=$select2?>>Tidak</option>
 								</select>
 							</li>
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
-								<input type="text" class="span3" name="JumlahLantai" value="<?=$kib['JumlahLantai']?>" disabled/>
+								<input type="text" class="span3" name="JumlahLantai" value="<?=$kib['JumlahLantai']?>" />
 							</li>
 							<li>
 								<span class="span2">Luas Lantai (M2)</span>
-								<input type="text" class="span3" name="LuasLantai"value="<?=$kib['LuasLantai']?>" disabled/>
+								<input type="text" class="span3" name="LuasLantai"value="<?=$kib['LuasLantai']?>" />
 							</li>
 							<li>
 								<span class="span2">No. Dokumen</span>
-								<input type="text" class="span3" name="NoSurat" value="<?=$kib['NoDokumen']?>" disabled/>
+								<input type="text" class="span3" name="NoSurat" value="<?=$kib['NoDokumen']?>" />
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglSurat" id="tglSurat" value="<?=$kib['TglDokumen']?>" disabled/>
+								<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglSurat" id="tglSurat" value="<?=$kib['TglDokumen']?>" />
 							</li>
 						</ul>
 
@@ -269,27 +285,27 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Konstruksi</span>
-								<input type="text" class="span3" name="Konstruksi" value="<?=$kib['Konstruksi']?>" disabled/>
+								<input type="text" class="span3" name="Konstruksi" value="<?=$kib['Konstruksi']?>" />
 							</li>
 							<li>
 								<span class="span2">Panjang (KM)</span>
-								<input type="text" class="span2" name="Panjang" value="<?=$kib['Panjang']?>" disabled/>
+								<input type="text" class="span2" name="Panjang" value="<?=$kib['Panjang']?>" />
 							</li>
 							<li>
 								<span class="span2">Lebar (M)</span>
-								<input type="text" class="span2" name="Lebar" value="<?=$kib['Lebar']?>" disabled/>
+								<input type="text" class="span2" name="Lebar" value="<?=$kib['Lebar']?>" />
 							</li>
 							<li>
 								<span class="span2">Luas (M2)</span>
-								<input type="text" class="span2" name="LuasJaringan"  value="<?=$kib['LuasJaringan']?>" disabled/>
+								<input type="text" class="span2" name="LuasJaringan"  value="<?=$kib['LuasJaringan']?>" />
 							</li>
 							<li>
 								<span class="span2">No. Dokumen</span>
-								<input type="text" class="span3" name="NoDokumen" value="<?=$kib['NoDokumen']?>" disabled/>
+								<input type="text" class="span3" name="NoDokumen" value="<?=$kib['NoDokumen']?>" />
 							</li>
 							<li>
 								<span class="span2">Tgl. Dokumen</span>
-								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" value="<?=$kib['TglDokumen']?>" disabled/>
+								<input type="text" placeholder="yyyy-mm-dd" class="span2" name="tglDokumen" id="tglDokumen" value="<?=$kib['TglDokumen']?>" />
 							</li>
 						</ul>
 
@@ -308,36 +324,44 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Judul</span>
-								<input type="text" class="span3" name="Judul" value="<?=$kib['Judul']?>" disabled/>
+								<input type="text" class="span3" name="Judul" value="<?=$kib['Judul']?>" />
 							</li>
 							<li>
 								<span class="span2">Pengarang</span>
-								<input type="text" class="span3" value="<?=$kib['Pengarang']?>" name="Pengarang" disabled/>
+								<input type="text" class="span3" value="<?=$kib['Pengarang']?>" name="Pengarang" />
 							</li>
 							<li>
 								<span class="span2">Penerbit</span>
-								<input type="text" class="span3" value="<?=$kib['Penerbit']?>" name="Penerbit" disabled/>
+								<input type="text" class="span3" value="<?=$kib['Penerbit']?>" name="Penerbit" />
 							</li>
 							<li>
 								<span class="span2">Spesifikasi</span>
-								<input type="text" class="span3" value="<?=$kib['Spesifikasi']?>" name="Spesifikasi" disabled/>
+								<input type="text" class="span3" value="<?=$kib['Spesifikasi']?>" name="Spesifikasi" />
 							</li>
 							<li>
 								<span class="span2">Asal Daerah</span>
-								<input type="text" class="span3" value="<?=$kib['AsalDaerah']?>" name="AsalDaerah" disabled/>
+								<input type="text" class="span3" value="<?=$kib['AsalDaerah']?>" name="AsalDaerah" />
 							</li>
 							<li>
 								<span class="span2">Bahan</span>
-								<input type="text" class="span3" value="<?=$kib['Material']?>" name="Material" disabled/>
+								<input type="text" class="span3" value="<?=$kib['Material']?>" name="Material" />
 							</li>
 							<li>
 								<span class="span2">Ukuran</span>
-								<input type="text" class="span3" value="<?=$kib['Ukuran']?>" name="Ukuran" disabled/>
+								<input type="text" class="span3" value="<?=$kib['Ukuran']?>" name="Ukuran" />
 							</li>
 						</ul>
 
 						<?php
 							}elseif($_GET['tipe']=="F"){
+
+								$select1="";
+								$select2="";
+								if($kib['Beton']=="1"){
+									$select1="selected";
+								}elseif($kib['Beton']=="2"){
+									$select2="selected";
+								}
 						?>
 						<ul class="kdp" >
 							<!-- <li>
@@ -351,19 +375,19 @@ $kib=$dataDatabase['kib'];
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Beton / Tidak</span>
-								<select name="Beton" style="width:155px" disabled>
-									<option value="1">Beton</option>
-									<option value="2">Tidak</option>
+								<select name="Beton" style="width:155px" >
+									<option value="1" <?=$select1?>>Beton</option>
+									<option value="2" <?=$select2?>>Tidak</option>
 								</select>
 							</li>
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah Lantai</span>
-								<input type="text" class="span3" value="<?=$kib['JumlahLantai']?>" name="JumlahLantai" disabled/>
+								<input type="text" class="span3" value="<?=$kib['JumlahLantai']?>" name="JumlahLantai" />
 							</li>
 							<li>
 								<span class="span2">Luas Lantai</span>
-								<input type="text" class="span3" value="<?=$kib['LuasLantai']?>"  name="LuasLantai" disabled/>
+								<input type="text" class="span3" value="<?=$kib['LuasLantai']?>"  name="LuasLantai" />
 							</li>
 						</ul>
 						<?php
@@ -371,8 +395,9 @@ $kib=$dataDatabase['kib'];
 						?>
 					</div>
 					<!-- hidden -->
-					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
-					<input type="hidden" name="TipeAset" id="TipeAset" value="">
+					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>"><input type="hidden" name="TipeAset" id="TipeAset" value="<?=$_GET['tipe']?>">
+					<input type="hidden" name="IDRENCANA"  value="<?=$_GET['id']?>">
+		
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>
 			<li>

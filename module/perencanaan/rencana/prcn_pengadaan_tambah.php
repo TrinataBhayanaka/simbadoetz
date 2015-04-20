@@ -53,8 +53,8 @@ $menu_id = 10;
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Perencanaan</div>
-				<div class="subtitle">Rencana Pengadaan</div>
+				<div class="title">Rencana Pengadaan</div>
+				<div class="subtitle">Tambah Rencana Pengadaan</div>
 			</div>	
 
 			<div class="grey-container shortcut-wrapper">
@@ -84,6 +84,10 @@ $menu_id = 10;
 				 <div class="detailLeft">
 								
 						<ul>	
+							<li>
+								<span class="span2">Tahun</span>
+								<input type="text" class="span1" name="Tahun" value=""  required/>
+							</li>
 							<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
 						</ul>
 						
@@ -92,7 +96,9 @@ $menu_id = 10;
 					<div style="height:5px;width:100%;clear:both"></div>
 
 						<div class="detailLeft">
-						<ul>
+						<ul>		
+					<?=selectSatker('kodeSatker',$width='205',$br=true,false);?>
+						<li>&nbsp;</li>
 							<li>
 								<span class="span2">Jumlah</span>
 								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=($kontrak[0]['tipeAset'] == 3)? 1 : ''?>" onchange="return totalHrg()" required/>
@@ -172,7 +178,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">No. Pabrik</span>
-								<input type="text" class="span3" name="Pabrik" disabled/>
+								<input type="text" class="span3" name="NoPabrik" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. Mesin</span>
@@ -180,7 +186,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">No. Polisi</span>
-								<input type="text" class="span3" name="NoSeri" disabled/>
+								<input type="text" class="span3" name="NoSTNK" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. BPKB</span>

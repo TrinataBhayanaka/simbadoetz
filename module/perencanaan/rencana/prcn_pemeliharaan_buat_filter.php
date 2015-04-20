@@ -79,17 +79,36 @@ $menu_id = 10;
 			
 
 			<div>
-			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_dataPemeliharaan.php" method="POST">
+			<form action="<?php echo"$url_rewrite";?>/module/perencanaan/rencana/prcn_pengadaan_dataPemeliharaan.php" method="POST" onsubmit="return requiredFilterHPS(0,1, 'kodeSatker')">
 				<ul>
-					<li>
+					<!-- <li>
 						<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
-					</li>
+					</li> -->
 					<li>
 						&nbsp;
 					</li>
-					 <li>
-						<?php selectRekening('kdRekening','205',true,(isset($rinc) ? $rinc['kdRekening'] : false)); ?><br />
+					<li>
+
+						<span class="span2">Tipe Aset</span>
+						<select name="jenisaset" style="width:170px" id="jenisaset">
+
+							<option value="">Pilih Tipe Aset</option>
+							<option value="A">Tanah</option>
+							<option value="B">Mesin</option>
+							<option value="C">Bangunan</option>
+							<option value="D">Jaringan</option>
+							<option value="E">Aset Tetap Lain</option>
+							<option value="F">KDP</option>
+						</select>
+                    </li>  
+					<li>
+						&nbsp;
 					</li>
+					<?=selectSatker('kodeSatker',$width='205',$br=true,false);?>
+                    <li>&nbsp;</li>
+					<!--  <li>
+						<?php selectRekening('kdRekening','205',true,(isset($rinc) ? $rinc['kdRekening'] : false)); ?><br />
+					</li> -->
 					<li>
 						<span class="span2">&nbsp;
 						  </span>
