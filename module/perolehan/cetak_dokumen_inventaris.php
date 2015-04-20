@@ -3,7 +3,7 @@ include "../../config/config.php";
 
 $USERAUTH = new UserAuth();
 $SESSION = new Session();
-$menu_id = 5;
+$menu_id = 14;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 ?>
