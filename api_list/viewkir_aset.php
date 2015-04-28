@@ -41,7 +41,7 @@ $sTable_inner_join_kelompok = "kelompok as k";
 // $sTable_inner_join_satker ="satker as s";
 $cond_kelompok ="k.Kode = a.kodeKelompok ";
 // $cond_satker ="s.kode = a.kodeSatker";
-$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang AND";
+$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
 //variabel ajax
 $tahun_aw 		= $_GET['tahun_aw'];
 $tahun_ak 		= $_GET['tahun_ak'];
