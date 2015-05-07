@@ -1572,7 +1572,7 @@ class core_api_report extends DB {
 																		$newparameter_sql_02 = implode('AND ', $param_02);
 																		$newparameter_sql_05 = implode('AND ', $param_05);
 																		// pr($param);
-																		$query_02 = "select M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																		$query_02 = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																						M.Silinder,M.kodeRuangan,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
 																					from 
@@ -1589,7 +1589,7 @@ class core_api_report extends DB {
 																					order by 
 																						M.kodeSatker,M.kodeRuangan,M.Tahun,M.kodeKelompok $limit";
 																		
-																		$query_05 = "select AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																		$query_05 = "select distinct(AL.kodeSatker),AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,
@@ -4395,8 +4395,179 @@ class core_api_report extends DB {
 		return 	$getdata;
 	}
 	
+	public function perencanaan ($satker_id,$tahun){
+	if($satker_id){
+			$splitKodeSatker = explode ('.',$satker_id);
+				if(count($splitKodeSatker) == 4){	
+					$paramSatker = "kode = '$satker_id'";
+				}else{
+					$paramSatker = "kode like '$satker_id%'";
+				}
+			$qsat = "SELECT kode,NamaSatker FROM satker where $paramSatker and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}
+		}else{
+			$qsat = "SELECT kode,NamaSatker FROM satker where kode is not null and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL ";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}
+		
+		}
+		// pr($satker);
+		// exit;
+		foreach ($satker as $data=>$satker_id){
+		
+			$query_01 = "select k.Uraian,
+								rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info
+						from rencana as rn
+						inner join prcn_tanah as pr ON pr.Rencana_ID = rn.Rencana_ID
+						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
+						where 
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+						group by  
+						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";
+			
+			$query_02 = "select pr.merk,k.Uraian,
+								rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info
+						from rencana as rn
+						inner join prcn_mesin as pr ON pr.Rencana_ID = rn.Rencana_ID
+						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
+						where 
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+						group by  
+						pr.merk,
+						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";
+			
+			$query_03 = "select k.Uraian,
+								rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info
+						from rencana as rn
+						inner join 	prcn_bangunan as pr ON pr.Rencana_ID = rn.Rencana_ID
+						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
+						where 
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+						group by  
+						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";			
+			
+			$query_04 = "select k.Uraian,
+								rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info
+						from rencana as rn
+						inner join 	prcn_jaringan as pr ON pr.Rencana_ID = rn.Rencana_ID
+						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
+						where 
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+						group by  
+						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";	
+			
+			$query_05 = "select k.Uraian,
+								rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info
+						from rencana as rn
+						inner join 	prcn_asettetaplain as pr ON pr.Rencana_ID = rn.Rencana_ID
+						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
+						where 
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+						group by  
+						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";
+			
+			$query_06 = "select k.Uraian,
+								rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info
+						from rencana as rn
+						inner join 	prcn_kdp as pr ON pr.Rencana_ID = rn.Rencana_ID
+						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
+						where 
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+						group by  
+						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";			
+			
+			$queryALLPrncn = array($query_01,$query_02,$query_03,$query_04,$query_05,$query_06);
+			for ($i = 0; $i < count($queryALLPrncn); $i++)
+			{
+				
+				/*echo "<br>";
+				echo "query_$i =".$queryALLPrncn[$i];
+				echo "<br>";
+				echo "<br>";*/
+				// exit;
+				$resultPrcn = $this->query($queryALLPrncn[$i]) or die ($this->error('error dataQuery'));
+				// echo "masukk";
+					// exit;
+				
+				if($resultPrcn){
+					// $i = 0;
+					while ($dataAllPrcn = $this->fetch_object($resultPrcn))
+					{
+						$dataPr[$data][]= $dataAllPrcn;
+					}
+				}
+			}
+		}
+		// pr($dataPr);
+		// exit;
+		if($dataPr) return $dataPr;
 	
+	}
 	
+	public function pemeliharaan ($satker_id,$tanggalAwal,$tanggalAkhir){
+	if($satker_id){
+			$splitKodeSatker = explode ('.',$satker_id);
+				if(count($splitKodeSatker) == 4){	
+					$paramSatker = "kode = '$satker_id'";
+				}else{
+					$paramSatker = "kode like '$satker_id%'";
+				}
+			$qsat = "SELECT kode,NamaSatker FROM satker where $paramSatker and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}
+		}else{
+			$qsat = "SELECT kode,NamaSatker FROM satker where kode is not null and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL ";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}
+		
+		}
+		// pr($satker);
+		// exit;
+		foreach ($satker as $data=>$satker_id){
+		
+			$queryALLPemlhrn = "SELECT a.noRegister, a.kodeKelompok, a.NilaiPerolehan,k.Uraian,
+							 pr.RencanaPemeliharaan_ID,pr.kodeRekening, pr.HargaSatuan, pr.UraianPemeliharaan, 
+							 pr.keterangan, pr.Lokasi,pr.TglPemeliharaan
+					  FROM   aset as a 
+					  INNER JOIN kelompok as k ON k.Kode = a.kodeKelompok 
+					  INNER JOIN rencana_pemeliharaan as pr ON pr.Aset_ID = a.Aset_ID
+					  WHERE pr.kodeSatker = '$satker_id' AND pr.TglPemeliharaan >= '$tanggalAwal' AND pr.TglPemeliharaan <= '$tanggalAkhir'";
+			// pr($queryALLPemlhrn);
+			
+				$resultPmlhrn = $this->query($queryALLPemlhrn) or die ($this->error('error dataQuery'));
+				if($resultPmlhrn){
+					while ($dataAllPmlhrn = $this->fetch_object($resultPmlhrn))
+					{
+						$dataPmlhrn[$data][]= $dataAllPmlhrn;
+					}
+				}
+		}
+		// pr($dataPmlhrn);
+		// exit;
+		if($dataPmlhrn) return $dataPmlhrn;
+	
+	}
 	
 	
 	public function ceckGol ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol){
