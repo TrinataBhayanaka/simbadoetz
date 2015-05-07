@@ -1573,7 +1573,7 @@ class core_api_report extends DB {
 																		$newparameter_sql_05 = implode('AND ', $param_05);
 																		// pr($param);
 																		$query_02 = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+																						M.Tahun, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																						M.Silinder,M.kodeRuangan,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
 																					from 
 																						mesin_ori as M,kelompok as K 
@@ -1584,13 +1584,13 @@ class core_api_report extends DB {
 																						and $newparameter_sql_02
 																					group by 
 																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-																						M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+																						M.Tahun,M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
 																						M.kodeLokasi, M.kodeRuangan,M.kondisi,K.Kode, K.Uraian 
 																					order by 
 																						M.kodeSatker,M.kodeRuangan,M.Tahun,M.kodeKelompok $limit";
 																		
 																		$query_05 = "select distinct(AL.kodeSatker),AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
-																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
 																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,
 																					K.Kode, K.Uraian
@@ -1603,7 +1603,7 @@ class core_api_report extends DB {
 																					and $newparameter_sql_05
 																				group by 
 																					AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
-																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
 																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,AL.kondisi,
 																					K.Kode, K.Uraian
