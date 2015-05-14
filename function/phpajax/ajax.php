@@ -267,7 +267,7 @@ function retrieve_data_aset_by_type($data, $debug=false)
             'table'=>"{$tableAlias[listTable]}, kelompok AS k",
             'field'=>"{$tableAlias[listTableAlias]}.*, k.Uraian",
             'condition'=>"{$tableAlias[listTableAlias]}.Status_Validasi_Barang = 1 AND {$tableAlias[listTableAlias]}.StatusTampil = 1 AND {$tableAlias[listTableAlias]}.kodeSatker = '{$data['idsatker']}'",
-            'limit'=>'100',
+            
             'joinmethod' => 'LEFT JOIN',
             'join' => "{$tableAlias[listTableAlias]}.kodeKelompok = k.kode"
             );
