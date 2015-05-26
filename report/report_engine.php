@@ -6778,6 +6778,696 @@ return $hasil_html;
 
 
 }		
+//extra perencanaan
+public function retrieve_html_rencana_pengadaan_barang($dataArr,$gambar,$skpd_id,$thnPejabat,$tglcetak){
+		foreach ($dataArr as $satker_id => $value)
+			{
+						
+				$detailSatker=$this->get_satker($skpd_id);
+				// pr($detailSatker);
+				$NoBidang = $detailSatker[0];
+				$NoUnitOrganisasi = $detailSatker[1];
+				$NoSubUnitOrganisasi = $detailSatker[2];
+				$NoUPB = $detailSatker[3];
+
+				if($NoBidang !=""){
+					$paramKodeLokasi = $NoBidang;
+				}
+				if($NoBidang !="" && $NoUnitOrganisasi != ""){
+					$paramKodeLokasi = $NoUnitOrganisasi;
+				}
+				if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+				}
+				if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+				}
+				$Bidang = $detailSatker[4][0];
+				$UnitOrganisasi = $detailSatker[4][1];
+				$SubUnitOrganisasi = $detailSatker[4][2];
+				$UPB = $detailSatker[4][3];
+				
+				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+				$thnPejabat);
+				if($nip_pengurus!="")
+				{
+					$nip_pengurus_fix=$nip_pengurus;
+				}
+				else
+				{
+					$nip_pengurus_fix='........................................';
+				}
+
+				if($nip_pengguna!="")
+				{
+					$nip_pengguna_fix=$nip_pengguna;
+				}
+				else
+				{
+					$nip_pengguna_fix='........................................';
+				}
+
+				if($nama_jabatan_pengguna!="")
+				{
+					$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+				}
+				else
+				{
+					$nama_jabatan_pengguna_fix='........................................';
+				}
+
+				if($nama_jabatan_pengurus!="")
+				{
+					$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+				}
+				else
+				{
+					$nama_jabatan_pengurus_fix='........................................';
+				}
+				$ex = explode('.',$skpd_id);
+				$hit = count($ex);
+				if($hit == 1){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+						";
+				}elseif($hit == 2){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>";
+				}elseif($hit == 3){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							   <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>SUB UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$SubUnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>";
+				}elseif($hit == 4){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							   <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>SUB UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$SubUnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UPB</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UPB</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>";
+				}
+			   //==end new==//
+			   $html="<html><body>
+                         <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+     
+                              <tr>
+                                   <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                   <td style=\"width: 90%; text-align: center;\">
+                                        <h3>DAFTAR RENCANA KEBUTUHAN BARANG UNIT(DRKBU)</h3>
+                                   </td>
+                              </tr>
+						</table>
+                         <br />
+                         <br />";
+						 
+                 $html.="<table border=\"0\" style=\" width=100%\" >
+                              <tr align=\"left\" >
+								   <td style=\"font-weight: bold;\">
+										<p>PROVINSI</p>
+								   </td>
+								   <td width=\"65%\">
+										<p>:&nbsp;$this->NAMA_PROVINSI</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>KABUPATEN/KOTA</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  $head
+							  </table>
+                              <br />
+                              <br />";
+                                        
+				$html.="<table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+							<thead> 
+								  <tr>
+									   <td style=\"font-weight: bold; width: 30px; text-align: center;\" >No</td>
+									   <td style=\"font-weight: bold; width: 160px; text-align: center;\" >Nama /<br>Jenis Barang</td>
+									   <td style=\"font-weight: bold; text-align: center;\">Merk/Tipe<br>Ukuran</td>
+									   <td style=\"font-weight: bold; text-align: center;\">Jumlah<br>Barang</td>
+									   <td style=\"font-weight: bold; width: 160px; text-align: center;\">Harga Satuan (Rp)</td>
+									   <td style=\"font-weight: bold; width: 160px; text-align: center;\">Jumlah Biaya (Rp)</td>
+									   <td style=\"font-weight: bold; text-align: center;\">Kode Rekening</td>
+									   <td style=\"font-weight: bold; width: 200px; text-align: center;\">Keterangan</td>
+									   
+								  </tr>
+								  <tr>
+									   <td style=\"text-align: center; font-weight: bold;\">1</td>
+									   <td style=\"text-align: center; font-weight: bold;\">2</td>
+									   <td style=\"text-align: center; font-weight: bold;\">3</td>
+									   <td style=\"text-align: center; font-weight: bold;\">4</td>
+									   <td style=\"text-align: center; width: 50px; font-weight: bold;\">5</td>
+									   <td style=\"text-align: center; width: 75px; font-weight: bold;\">6</td>
+									   <td style=\"text-align: center; width: 110px; font-weight: bold;\">7</td>
+									   <td style=\"text-align: center; width: 85px; font-weight: bold;\">8</td>
+								  </tr>
+							  </thead>";
+						
+							
+							$no = 1;
+							foreach ($value as $keys => $data)
+							{	
+									
+								$Kuantitas = $data->Kuantitas;
+								$HargaSatuan = number_format($data->Harga_Satuan,2,",",".");
+								$jmlBiaya = $Kuantitas * $data->Harga_Satuan;
+								$jmlBiayaFix = number_format($jmlBiaya,2,",",".");
+								$perolehanTotal = $perolehanTotal + $jmlBiaya;
+								$noReg = sprintf("%04s", $data->noRegister);
+								if($data->TglSertifikat == ''){
+									$tgl = ''; 
+								}else{
+									list($tahun, $bulan, $tanggal)= explode('-', $data->TglSertifikat);
+									$tgl = "$tanggal/$bulan/$tahun";
+								}
+						   
+								$html.="
+								<tr>
+									 <td style=\"text-align: center; width: 30px;font-weight: \">$no</td>
+									 <td style=\"width: 160px;font-weight: \" align=\"left\">$data->Uraian</td>
+									 <td style=\"text-align: center; font-weight: \">$data->merk</td>
+									 <td style=\"text-align: center;\">$Kuantitas</td>
+									 <td style=\"text-align: right;  width: 50px; font-weight: \">$HargaSatuan</td>
+									 <td style=\"text-align:right; width: 75px; font-weight: \">$jmlBiayaFix</td>
+									 <td style=\"width: 110px; text-align: c; \">$data->Kode_Rekening</td>
+									 <td style=\"text-align: ; width: 85px; font-weight: \">$data->Info</td>
+									 
+								</tr>
+								";
+								$no++;
+							}	
+					}
+                                         
+						$printperolehanTotal=number_format($perolehanTotal,2,",",".");
+						$html.=" 
+									<tr>
+										 <td style=\"text-align: center; font-weight: bold;\" colspan=\"5\">Total Harga</td>
+										 <td style=\"text-align: right; font-weight: bold;\" >$printperolehanTotal</td>
+										 <td colspan =\"2\"></td>
+									</tr>
+									</table><table border=\"0\">
+									<tr>
+										<td colspan=\"8\">&nbsp;</td>
+									</tr></table>";
+						$footer.="<table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tglcetak</td>
+							  </tr>
+							  
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
+							  </tr>
+							  <tr>
+								   <td colspan=\"11\" style=\"height: 80px\"></td>
+							  </tr>
+							  
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+							  </tr>
+								   <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+							  </tr>
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+							  </tr>
+
+						 </table>";
+						   $html.=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+						   $html.="
+						 </body>
+					</html>"; 		
+	
+					
+						$get_html[]=$html.$footer;
+              return $get_html;
+          
+    }
+
+public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd_id,$thnPejabat,$tglcetak){
+		foreach ($dataArr as $satker_id => $value)
+			{
+						
+				$detailSatker=$this->get_satker($skpd_id);
+				// pr($detailSatker);
+				$NoBidang = $detailSatker[0];
+				$NoUnitOrganisasi = $detailSatker[1];
+				$NoSubUnitOrganisasi = $detailSatker[2];
+				$NoUPB = $detailSatker[3];
+
+				if($NoBidang !=""){
+					$paramKodeLokasi = $NoBidang;
+				}
+				if($NoBidang !="" && $NoUnitOrganisasi != ""){
+					$paramKodeLokasi = $NoUnitOrganisasi;
+				}
+				if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi;
+				}
+				if($NoBidang !="" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi !="" && $NoUPB !=""){
+					$paramKodeLokasi = $NoUnitOrganisasi.".".$NoSubUnitOrganisasi.".".$NoUPB;
+				}
+				$Bidang = $detailSatker[4][0];
+				$UnitOrganisasi = $detailSatker[4][1];
+				$SubUnitOrganisasi = $detailSatker[4][2];
+				$UPB = $detailSatker[4][3];
+				
+				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+				$thnPejabat);
+				if($nip_pengurus!="")
+				{
+					$nip_pengurus_fix=$nip_pengurus;
+				}
+				else
+				{
+					$nip_pengurus_fix='........................................';
+				}
+
+				if($nip_pengguna!="")
+				{
+					$nip_pengguna_fix=$nip_pengguna;
+				}
+				else
+				{
+					$nip_pengguna_fix='........................................';
+				}
+
+				if($nama_jabatan_pengguna!="")
+				{
+					$nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+				}
+				else
+				{
+					$nama_jabatan_pengguna_fix='........................................';
+				}
+
+				if($nama_jabatan_pengurus!="")
+				{
+					$nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+				}
+				else
+				{
+					$nama_jabatan_pengurus_fix='........................................';
+				}
+				$ex = explode('.',$skpd_id);
+				$hit = count($ex);
+				if($hit == 1){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+						";
+				}elseif($hit == 2){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>";
+				}elseif($hit == 3){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							   <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>SUB UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$SubUnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>";
+				}elseif($hit == 4){
+					$head = "<tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>BIDANG</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$Bidang</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							   <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>SUB UNIT ORGANISASI</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$SubUnitOrganisasi</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>UPB</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$UPB</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>";
+				}
+			   //==end new==//
+			   $html="<html><body>
+                         <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+     
+                              <tr>
+                                   <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                   <td style=\"width: 90%; text-align: center;\">
+                                        <h3>DAFTAR RENCANA KEBUTUHAN PEMELIHARAAN BARANG UNIT(DRKPBU)</h3>
+                                   </td>
+                              </tr>
+						</table>
+                         <br />
+                         <br />";
+						 
+                 $html.="<table border=\"0\" style=\" width=100%\" >
+                              <tr align=\"left\" >
+								   <td style=\"font-weight: bold;\">
+										<p>PROVINSI</p>
+								   </td>
+								   <td width=\"65%\">
+										<p>:&nbsp;$this->NAMA_PROVINSI</p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  <tr>
+								   <td style=\"font-weight: bold; width=20%\">
+										<p>KABUPATEN/KOTA</p>
+								   </td>
+								   <td width=\"60%\">
+
+									   <p>:&nbsp;$this->NAMA_KABUPATEN </p>
+								   </td>
+								   <td width=\"20%\">&nbsp;</td>
+							  </tr>
+							  $head
+							  </table>
+                              <br />
+                              <br />";
+                                        
+				$html.="<table style=\"text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+							<thead> 
+								  <tr>
+									   <td style=\"font-weight: bold; width: 30px; text-align: center;\" >No</td>
+									   <td style=\"font-weight: bold; width: 160px; text-align: center;\" >Nama /<br>Jenis Barang</td>
+									   <td style=\"font-weight: bold; width: 160px; text-align: center;\">Uraian Pemeliharaan</td>
+									   <td style=\"font-weight: bold; width: 100px;  text-align: center;\">Lokasi</td>
+									   <td style=\"font-weight: bold; text-align: center;\">Kode Barang</td>
+									   <td style=\"font-weight: bold; text-align: center;\">Jumlah<br>Barang</td>
+									   <td style=\"font-weight: bold; width: 100px; text-align: center;\">Harga <br>Satuan (Rp)</td>
+									   <td style=\"font-weight: bold; width: 160px; text-align: center;\">Harga <br>Pemeliharaan (Rp)</td>
+									   <td style=\"font-weight: bold; text-align: center;\">Kode Rekening</td>
+									   <td style=\"font-weight: bold; width: 200px; text-align: center;\">Keterangan</td>
+									   
+								  </tr>
+								  <tr>
+									   <td style=\"text-align: center; font-weight: bold;\">1</td>
+									   <td style=\"text-align: center; font-weight: bold;\">2</td>
+									   <td style=\"text-align: center; font-weight: bold;\">3</td>
+									   <td style=\"text-align: center; font-weight: bold;\">4</td>
+									   <td style=\"text-align: center; width: 50px; font-weight: bold;\">5</td>
+									   <td style=\"text-align: center; width: 75px; font-weight: bold;\">6</td>
+									   <td style=\"text-align: center; width: 100px; font-weight: bold;\">7</td>
+									   <td style=\"text-align: center; width: 160px; font-weight: bold;\">8</td>
+									   <td style=\"text-align: center; width: 85px; font-weight: bold;\">9</td>
+									   <td style=\"text-align: center; width: 85px; font-weight: bold;\">10</td>
+								  </tr>
+							  </thead>";
+						
+							
+							$no = 1;
+							foreach ($value as $keys => $data)
+							{	
+									
+								$Kuantitas = 1;
+								$HargaSatuan = number_format($data->NilaiPerolehan,2,",",".");
+								$HargaPemeliharaan = number_format($data->HargaSatuan,2,",",".");
+								$html.="
+								<tr>
+									 <td style=\"text-align: center; width: 30px;font-weight: \">$no</td>
+									 <td style=\"width: 160px;font-weight: \" align=\"left\">$data->Uraian</td>
+									 <td style=\"text-align: ; font-weight: \">$data->UraianPemeliharaan</td>
+									 <td style=\"text-align: ;\">$data->Lokasi</td>
+									 <td style=\"text-align: center;\">$data->kodeKelompok</td>
+									 <td style=\"text-align: center;\">$Kuantitas</td>
+									 <td style=\"text-align: right; \">$HargaSatuan</td>
+									 <td style=\"text-align: right;  \">$HargaPemeliharaan</td>
+									 <td style=\"width: 110px; text-align: center; \">$data->kodeRekening</td>
+									 <td style=\"text-align: ; width: 85px; font-weight: \">$data->keterangan</td>
+									 
+								</tr>
+								";
+								$no++;
+							}	
+					}
+                                         
+						// $printperolehanTotal=number_format($perolehanTotal,2,",",".");
+						$html.="</table><table border=\"0\">
+									<tr>
+										<td colspan=\"8\">&nbsp;</td>
+									</tr></table>";
+						$footer.="<table style=\"text-align: left; border-collapse: collapse; width: 1024px; height: 90px;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">MENGETAHUI</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\" width=\"400px\">$this->NAMA_KABUPATEN, $tglcetak</td>
+							  </tr>
+							  
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengguna</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">$InfoJabatanPengurus</td>
+							  </tr>
+							  <tr>
+								   <td colspan=\"11\" style=\"height: 80px\"></td>
+							  </tr>
+							  
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengguna_fix</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">$nama_jabatan_pengurus_fix</td>
+							  </tr>
+								   <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">______________________________</td>
+							  </tr>
+							  <tr>
+								   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengguna_fix</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td>&nbsp;</td>
+								   <td style=\"text-align: center;\" colspan=\"3\">NIP.&nbsp;$nip_pengurus_fix</td>
+							  </tr>
+
+						 </table>";
+						   $html.=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+						   $html.="
+						 </body>
+					</html>"; 		
+	
+					
+						$get_html[]=$html.$footer;
+              return $get_html;
+          
+    }
+
+
 //REKAP BARANG TAMBAHAN
 //Rekapitulasi KIB-A
 	public function retrieve_html_kib_a_rekap_barang($dataArr,$gambar,$skpd_id){
@@ -12096,7 +12786,7 @@ return $hasil_html;
 												// $thn = $row->Tahun;
 												$status_print++;
 
-                                             }
+                                         }
                                              //udah dites
 													
 													// $jumlahTotal = $jumlahTotal + $row->Kuantitas;
@@ -12956,7 +13646,7 @@ return $hasil_html;
      }        
 
 //KIB-A (ok)    
-	public function retrieve_html_kib_a($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+	public function retrieve_html_kib_a($dataArr,$gambar,$tanggalCetak,$thnPejabat,$tipe){
          // echo "masukk";
           if($dataArr!="")
           {
@@ -13072,12 +13762,16 @@ return $hasil_html;
                 {
                     $nama_jabatan_pengurus_fix='........................................';
                 }
-
+				if($tipe == 1){
+				$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+				}else{
+				$html_gambar = "";
+				}
                $body="<body>
                          <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
      
                               <tr>
-                                   <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                   <td style=\"width: 10%;\">$html_gambar</td>
                                    <td style=\"width: 90%; text-align: center;\">
                                         <h3>KARTU INVENTARIS BARANG (KIB) A</h3>
                                         <h3>TANAH</h3>
@@ -13287,8 +13981,11 @@ return $hasil_html;
 				  </tr>
 
 			 </table>";
-			 
-			   $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+			   if($tipe == 1){
+				$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+			   }else{
+				$footer=  '';
+			   }
 			   $akhir_footer="
 			 </body>
 		</html>";   
@@ -13379,7 +14076,11 @@ return $hasil_html;
                 {
                     $nama_jabatan_pengurus_fix='........................................';
                 }
-			
+				if($tipe == 1){
+				$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+				}else{
+				$html_gambar = "";
+				}
 
                                                   $body="";     
                                                   $body.="
@@ -13387,7 +14088,7 @@ return $hasil_html;
 												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                             <h3>KARTU INVENTARIS BARANG (KIB) A</h3>
                                                             <h3>TANAH</h3>
@@ -13640,8 +14341,12 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
-                                               $akhir_footer="
+                                                if($tipe == 1){
+													$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												   }else{
+													$footer=  '';
+												   }
+											   $akhir_footer="
                                              </body>
                                         </html>"; 
                                         	
@@ -13658,7 +14363,7 @@ return $hasil_html;
    
 
 //KIB-B (ok)
-	public function retrieve_html_kib_b($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+	public function retrieve_html_kib_b($dataArr,$gambar,$tanggalCetak,$thnPejabat,$tipe){
       if($dataArr!="")
           {
 		 
@@ -13773,14 +14478,19 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												}
-
+												
+												if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}	
                                         
                                         $body="
 											<body>
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                             <h3>KARTU INVENTARIS BARANG (KIB) B</h3>
 															<h3>PERALATAN DAN MESIN</h3>
@@ -13982,7 +14692,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";
@@ -14063,14 +14777,19 @@ return $hasil_html;
 												else
 												{
 													$nama_jabatan_pengurus_fix='........................................';
-												}  
+												} 
+											     if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}		
                                                   $body="";     
                                                   $body.="
                                                <body>
 												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                             <h3>KARTU INVENTARIS BARANG (KIB) B</h3>
 															<h3>PERALATAN DAN MESIN</h3>
@@ -14317,7 +15036,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";
@@ -14335,7 +15058,7 @@ return $hasil_html;
 
 
 //KIB-C (ok)
-	public function retrieve_html_kib_c($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+	public function retrieve_html_kib_c($dataArr,$gambar,$tanggalCetak,$thnPejabat,$tipe){
          
           if($dataArr!="")
           {
@@ -14451,13 +15174,17 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												}
-
+												if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}
                                         $body="
 											<body>
 												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) C</h3>
 															 <h3>GEDUNG DAN BANGUNAN</h3>
@@ -14666,7 +15393,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";      
@@ -14751,7 +15482,11 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												}
-
+												if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}
                                         
 
                                                   $body="";     
@@ -14760,7 +15495,7 @@ return $hasil_html;
 												<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) C</h3>
 															 <h3>GEDUNG DAN BANGUNAN</h3>
@@ -15031,7 +15766,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";
@@ -15048,7 +15787,7 @@ return $hasil_html;
 
 
 //KIB-D (ok)
-    public function retrieve_html_kib_d($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+    public function retrieve_html_kib_d($dataArr,$gambar,$tanggalCetak,$thnPejabat,$tipe){
          
           if($dataArr!="")
           {
@@ -15167,14 +15906,18 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												}
-			
+			                                     if($tipe == 1){
+													$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+													}else{
+													$html_gambar = "";
+													}
 											
                                         $body="
 											<body>
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) D</h3>
 															 <h3>JALAN IRIGASI DAN JARINGAN</h3>
@@ -15398,7 +16141,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";  
@@ -15486,7 +16233,11 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												}
-
+												if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}	
                                         
 
                                                   $body="";     
@@ -15495,7 +16246,7 @@ return $hasil_html;
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) D</h3>
 															 <h3>JALAN IRIGASI DAN JARINGAN</h3>
@@ -15785,7 +16536,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";
@@ -15802,7 +16557,7 @@ return $hasil_html;
 
 
 //KIB-E (ok)
-	public function retrieve_html_kib_e($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+	public function retrieve_html_kib_e($dataArr,$gambar,$tanggalCetak,$thnPejabat,$tipe){
 			 if($dataArr!="")
           {
 			  // include ('../../../function/tanggal/tanggal.php');
@@ -15918,13 +16673,17 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												}
-                                        
+												if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}
                                         $body="
 											<body>
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) E</h3>
 																<h3>ASET TETAP LAINNYA</h3>
@@ -16144,7 +16903,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";      
@@ -16233,13 +16996,18 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												} 
+												if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}
                                                   $body="";     
                                                   $body.="
                                                <body>
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) E</h3>
 																<h3>ASET TETAP LAINNYA</h3>
@@ -16519,7 +17287,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";      
@@ -16535,7 +17307,7 @@ return $hasil_html;
      }        
 
 //KIB-F (ok)	 
-	public function retrieve_html_kib_f($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+	public function retrieve_html_kib_f($dataArr,$gambar,$tanggalCetak,$thnPejabat,$tipe){
 			 if($dataArr!="")
           {
 			  // include ('../../../function/tanggal/tanggal.php');
@@ -16653,13 +17425,18 @@ return $hasil_html;
 											{
 												$nama_jabatan_pengurus_fix='........................................';
 											}
+											if($tipe == 1){
+											$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+											}else{
+											$html_gambar = "";
+											}
                                         
                                         $body="
 											<body>
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) F</h3>
 																<h3>KONSTRUKSI DALAM PENGERJAAN</h3>
@@ -16873,7 +17650,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";      
@@ -16960,13 +17741,18 @@ return $hasil_html;
 												{
 													$nama_jabatan_pengurus_fix='........................................';
 												}
+												if($tipe == 1){
+												$html_gambar = "<img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\">";
+												}else{
+												$html_gambar = "";
+												}
                                                   $body="";     
                                                   $body.="
                                                <body>
                                              <table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 
                                                   <tr>
-                                                       <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
+                                                       <td style=\"width: 10%;\">$html_gambar</td>
                                                        <td style=\"width: 90%; text-align: center;\">
                                                              <h3>KARTU INVENTARIS BARANG (KIB) F</h3>
 																<h3>KONSTRUKSI DALAM PENGERJAAN</h3>
@@ -17227,7 +18013,11 @@ return $hasil_html;
                                                   </tr>
 
                                              </table>";
-                                               $footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+                                               if($tipe == 1){
+												$footer=  $this->set_footer_to_png($this->path, $this->url_rewrite, $footer);
+												}else{
+												$footer=  '';
+												}
 											   $akhir_footer="
                                              </body>
                                         </html>";      
@@ -32073,4 +32863,4 @@ return $hasil_html;
  }
      
 ?>
- 
+ 

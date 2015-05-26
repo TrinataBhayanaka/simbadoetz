@@ -74,7 +74,7 @@ if($tglcetak != ''){
 	$thnPejabat =substr($tglcetak,0,4);		
 }
 // exit;
-$html=$REPORT->retrieve_html_kib_f($result_query,$gambar,$tanggalCetak,$thnPejabat);
+$html=$REPORT->retrieve_html_kib_f($result_query,$gambar,$tanggalCetak,$thnPejabat,$tipe);
 
 /*$count = count($html);
 //pr($count);
