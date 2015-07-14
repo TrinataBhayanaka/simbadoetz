@@ -11,6 +11,7 @@
  *
  * @author andreas
  */
+session_write_close();
 class core_api_report extends DB {
      //put your code here
      var $kategori_report=0;
