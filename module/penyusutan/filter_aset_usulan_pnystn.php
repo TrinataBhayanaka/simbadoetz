@@ -22,9 +22,14 @@
 	});
 	function check (){
 			var kodeKelompok = document.getElementById("kodeKelompok").value;
-			//alert(kodeKelompok);
+			var split_str = kodeKelompok.split(".");
+			var kodeKelompokSplit = split_str[0];
+			// alert(kodeKelompok);
 			if(kodeKelompok == ''){
 				alert('Pilih Jenis Aset');
+				return false;
+			}else if(kodeKelompokSplit == '01' || kodeKelompokSplit == '05' || kodeKelompokSplit == '06' || kodeKelompokSplit == '07' || kodeKelompokSplit == '08'){
+				alert('Pilih Jenis Aset Yang Sesuai');
 				return false;
 			}
 	   }
@@ -95,7 +100,7 @@
 					</li>  
                     <li>&nbsp;</li>
 					<?//=selectSatker('kodeSatker',$width='205',$br=true,false);?>-->
-                    <li>&nbsp;</li>
+					<li>&nbsp;</li>
 						<input type="hidden" name="Usulan_ID" value="<?=$Usulan_ID?>" />
 						<input type="hidden" name="Satker_ID" value="<?=$Satker_ID?>" />
 					<li>
