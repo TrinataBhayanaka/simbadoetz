@@ -4830,9 +4830,7 @@ foreach ($dataArr as $satker_id => $value)
         <tbody>
 		<tr>
 			<td>&nbsp;</td>
-			<td style=\"text-align: left; font-weight: bold;\">ASET TETAP</td>
-			<td>&nbsp;</td>
-			<td>$totALL</td>
+			<td style=\"text-align: left; font-weight: bold;\" colspan=\"6\">ASET TETAP</td>
 		</tr>";
     
     // $no =1;
@@ -4881,13 +4879,8 @@ foreach ($dataArr as $satker_id => $value)
 			  
 			  $header.="<tr>
 				<td>&nbsp;</td>
-				<td style=\"text-align: left; font-weight: bold;\">ASET LAINNYA</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			  </tr>";
+				<td style=\"text-align: left; font-weight: bold;\" colspan=\"6\">ASET LAINNYA</td>
+				</tr>";
 		}
 		$html .= "$header
 				<tr>
