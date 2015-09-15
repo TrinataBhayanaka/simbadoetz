@@ -62,8 +62,8 @@ $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperole
 
 //retrieve html
 $html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
-/*$count = count($html);
-	for ($i = 0; $i < $count; $i++) {
+$count = count($html);
+	/*for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}

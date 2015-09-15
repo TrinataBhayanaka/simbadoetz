@@ -7,8 +7,7 @@ open_connection();
 	if($sess=="") $limit = "LIMIT 10"; else $limit="";
 	$cond = "KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL AND Kd_Ruang is NULL AND";
 	if($_GET['free'] == 0) $cond = "";
-	$sql = mysql_query("SELECT * FROM satker WHERE {$cond} Kd_Ruang IS NULL AND kode LIKE '{$sess}%' AND (kode LIKE '{$term}%' OR NamaSatker LIKE '%{$term}%') ORDER BY Satker_ID ASC {$limit}");	
-	
+	$sql = mysql_query("SELECT * FROM satker WHERE {$cond} Kd_Ruang IS NULL AND kode LIKE '{$sess}%' AND (kode LIKE '{$term}%' OR NamaSatker LIKE '%{$term}%') ORDER BY Satker_ID ASC {$limit}");
 	while ($row = mysql_fetch_assoc($sql)){
 				$data[] = $row;
 			}

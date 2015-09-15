@@ -12,6 +12,24 @@
  * @author andreas
  */
 session_write_close();
+class stdObject {
+	public function __construct(array $arguments = array()) {
+        if (!empty($arguments)) {
+            foreach ($arguments as $property => $argument) {
+                $this->{$property} = $argument;
+            }
+        }
+    }
+
+    public function __call($method, $arguments) {
+        $arguments = array_merge(array("stdObject" => $this), $arguments); // Note: method argument 0 will always referred to the main class ($this).
+        if (isset($this->{$method}) && is_callable($this->{$method})) {
+            return call_user_func_array($this->{$method}, $arguments);
+        } else {
+            throw new Exception("Fatal error: Call to undefined method stdObject::{$method}()");
+        }
+    }						
+}
 class core_api_report extends DB {
      //put your code here
      var $kategori_report=0;
@@ -2609,7 +2627,7 @@ class core_api_report extends DB {
                                                   break;
 												  case '7':
 												  {
-												  
+												  //intra
 												  if($parameter_sql != ''){
 														// $Tgl = $tglperolehan;
 														$thnIntraDefault ="2008";
@@ -2678,7 +2696,7 @@ class core_api_report extends DB {
 																			
 															$query_02 = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
-																			M.Silinder,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
+																			M.Silinder,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
 																		from 
 																			mesin_ori as M,kelompok as K 
 																		where 
@@ -2697,7 +2715,7 @@ class core_api_report extends DB {
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
-																		K.Kode, K.Uraian
+																		K.Kode, K.Uraian,B.PenyusutanPerTahun,B.AkumulasiPenyusutan,B.NilaiBuku
 																	from 
 																		bangunan_ori as B,kelompok as K  
 																	where
@@ -2717,7 +2735,7 @@ class core_api_report extends DB {
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
-																		K.Kode, K.Uraian
+																		K.Kode, K.Uraian,J.PenyusutanPerTahun,J.AkumulasiPenyusutan,J.NilaiBuku
 																	from 
 																		jaringan_ori as J,kelompok as K  
 																	where
@@ -2835,7 +2853,7 @@ class core_api_report extends DB {
 															$query_02_default = "select distinct(M.kodeSatker),
 															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
-																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
 																		from 
 																			mesin_ori as M,kelompok as K 
 																		where 
@@ -2852,7 +2870,7 @@ class core_api_report extends DB {
 															$query_02_condt = "select distinct(M.kodeSatker),
 															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
-																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
 																		from 
 																			mesin_ori as M,kelompok as K 
 																		where 
@@ -2871,7 +2889,7 @@ class core_api_report extends DB {
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
-																		K.Kode, K.Uraian
+																		K.Kode, K.Uraian,B.PenyusutanPerTahun,B.AkumulasiPenyusutan,B.NilaiBuku
 																	from 
 																		bangunan_ori as B,kelompok as K  
 																	where
@@ -2891,7 +2909,7 @@ class core_api_report extends DB {
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
-																		K.Kode, K.Uraian
+																		K.Kode, K.Uraian,B.PenyusutanPerTahun,B.AkumulasiPenyusutan,B.NilaiBuku
 																	from 
 																		bangunan_ori as B,kelompok as K  
 																	where
@@ -2911,7 +2929,7 @@ class core_api_report extends DB {
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
-																		K.Kode, K.Uraian
+																		K.Kode, K.Uraian,J.PenyusutanPerTahun,J.AkumulasiPenyusutan,J.NilaiBuku
 																	from 
 																		jaringan_ori as J,kelompok as K  
 																	where
@@ -4629,24 +4647,28 @@ class core_api_report extends DB {
 						}elseif($paramGol == 02){
 							
 							if($thnFix < $thnDefault){
-								$queryok="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
+								$queryok="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai,
+										  sum(m.PenyusutanPerTahun) as NilaiPP,sum(m.AkumulasiPenyusutan) as NilaiAP,sum(m.NilaiBuku) as NilaiBuku  
 									   from mesin_ori as m,kelompok as k where 
 									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and M.TglPerolehan >= '$tglAwalDefault' AND M.TglPerolehan <= '$tglAkhirDefault' and M.TglPembukuan >= '$tglAwalDefault' AND M.TglPembukuan <= '$tglAkhirDefault' and m.Status_Validasi_Barang =1 and m.StatusTampil = 1 and m.kodeLokasi like '12%' group by m.kodeKelompok 
 									   $KodeKa_m ORDER BY m.kodeKelompok ";
 							}elseif($thnceck >= $thnDefault){
-								$queryok ="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
+								$queryok ="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai,
+                                   sum(m.PenyusutanPerTahun) as NilaiPP,sum(m.AkumulasiPenyusutan) as NilaiAP,sum(m.NilaiBuku) as NilaiBuku 								
 								   from mesin_ori as m,kelompok as k where 
 								   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.TglPerolehan >= '$tglAwalDefault' and m.TglPerolehan <='$tglAkhirDefault' and m.TglPembukuan >= '$tglAwalDefault' and m.TglPembukuan <='$tglAkhirDefault' 
 								   and (m.NilaiPerolehan >=300000 $KodeKa_m_2) and m.Status_Validasi_Barang =1 and m.StatusTampil = 1 and m.kodeLokasi like '12%' and m.kodeLokasi like '12%' 
 								   group by m.kodeKelompok ";
 							}else{
-								$queryok ="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
+								$queryok ="select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai,
+									   sum(m.PenyusutanPerTahun) as NilaiPP,sum(m.AkumulasiPenyusutan) as NilaiAP,sum(m.NilaiBuku) as NilaiBuku 								
 									   from mesin_ori as m,kelompok as k where 
 									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker ='$Satker_ID' and m.kondisi != '3' and M.TglPerolehan >= '$tglAwalDefault' AND M.TglPerolehan < '$tgldefault' and M.TglPembukuan >= '$tglAwalDefault' AND M.TglPembukuan <= '$tglAkhirDefault' and m.Status_Validasi_Barang =1 and m.StatusTampil = 1 and m.kodeLokasi like '12%' 
 									   $KodeKa_m
 									   group by m.kodeKelompok 
 									   union all
-									   select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai 
+									   select m.kodeKelompok,k.Uraian,count(m.Aset_ID) as jumlah,sum(m.NilaiPerolehan) as Nilai,
+									   sum(m.PenyusutanPerTahun) as NilaiPP,sum(m.AkumulasiPenyusutan) as NilaiAP,sum(m.NilaiBuku) as NilaiBuku 		
 									   from mesin_Rplctn as m,kelompok as k where 
 									   m.kodeKelompok = k.Kode and m.kodeKelompok like '$data%' and m.kodeSatker = '$Satker_ID' and m.kondisi != '3' and m.TglPerolehan >= '$tgldefault' and m.TglPerolehan <='$tglAkhirDefault' and M.TglPembukuan >= '$tglAwalDefault' AND M.TglPembukuan <= '$tglAkhirDefault'  
 									   and (m.NilaiPerolehan >=300000 $KodeKa_m_2) and m.Status_Validasi_Barang =1 and m.StatusTampil = 1 and m.kodeLokasi like '12%' 
@@ -4655,24 +4677,29 @@ class core_api_report extends DB {
 							
 						}elseif($paramGol == 03){
 							if($thnFix < $thnDefault){
-								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan_ori as b, kelompok as k 
+								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan,b.PenyusutanPerTahun,b.AkumulasiPenyusutan,b.NilaiBuku
+										FROM bangunan_ori as b, kelompok as k 
 										WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.TglPerolehan >= '$tglAwalDefault' AND b. TglPerolehan <= '$tglAkhirDefault' and b.TglPembukuan >= '$tglAwalDefault' AND b. TglPembukuan <= '$tglAkhirDefault'  and b.kondisi != '3' and b.Status_Validasi_Barang =1 and b.StatusTampil = 1 and b.kodeLokasi like '12%'
 										$KodeKa_b order by b.kodeKelompok ";
 							}elseif($thnceck >= $thnDefault){
-								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan_ori as b, kelompok as k 
+								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan,b.PenyusutanPerTahun,b.AkumulasiPenyusutan,b.NilaiBuku
+										FROM bangunan_ori as b, kelompok as k 
 										WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.TglPerolehan >= '$tglAwalDefault' AND b. TglPerolehan <= '$tglAkhirDefault' and b.TglPembukuan >= '$tglAwalDefault' and b.TglPembukuan <= '$tglAkhirDefault' 
 										and (b.NilaiPerolehan >=10000000 $KodeKa_b_2) and b.kondisi != '3' and b.Status_Validasi_Barang =1 and b.StatusTampil = 1 and b.kodeLokasi like '12%'";
 							}else{
-								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan_ori as b, kelompok as k 
+								$queryok ="SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan,b.PenyusutanPerTahun,b.AkumulasiPenyusutan,b.NilaiBuku
+									FROM bangunan_ori as b, kelompok as k 
 									WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.TglPerolehan >= '$tglAwalDefault' AND b. TglPerolehan <= '$tgldefault' and b.TglPembukuan >= '$tglAwalDefault' AND b.TglPembukuan <= '$tglAkhirDefault' and b.kondisi != '3' and b.Status_Validasi_Barang =1 and b.StatusTampil = 1 and b.kodeLokasi like '12%' 
 									$KodeKa_b
 									union all
-									SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan FROM bangunan_Rplctn as b, kelompok as k 
+									SELECT k.Uraian, b.Alamat, b.LuasLantai, b.NilaiPerolehan,b.PenyusutanPerTahun,b.AkumulasiPenyusutan,b.NilaiBuku
+									FROM bangunan_Rplctn as b, kelompok as k 
 									WHERE b.kodeKelompok =k.Kode and b.kodeKelompok like '$data%' and b.kodeSatker = '$Satker_ID' and b.TglPerolehan >= '$tgldefault' and b.TglPerolehan <= '$tglAkhirDefault' and b.TglPembukuan >= '$tglAwalDefault' AND b.TglPembukuan <= '$tglAkhirDefault' 
 									and (b.NilaiPerolehan >=10000000 $KodeKa_b_2) and b.kondisi != '3' and b.Status_Validasi_Barang =1 and b.StatusTampil = 1 and b.kodeLokasi like '12%'";
 							}
 						}elseif($paramGol == 04){
-							$queryok ="SELECT k.Uraian, j.Alamat, j.LuasJaringan, j.NilaiPerolehan FROM jaringan_ori as j, kelompok as k 
+							$queryok ="SELECT k.Uraian, j.Alamat, j.LuasJaringan, j.NilaiPerolehan,j.PenyusutanPerTahun,j.AkumulasiPenyusutan,j.NilaiBuku 
+										FROM jaringan_ori as j, kelompok as k 
 										WHERE j.kodeKelompok =k.Kode and j.kodeKelompok like '$data%' and j.kodeSatker = '$Satker_ID' and j.TglPerolehan >= '$tglAwalDefault' and j.TglPerolehan <= '$tglAkhirDefault' and j.TglPembukuan >= '$tglAwalDefault' and j.TglPembukuan <= '$tglAkhirDefault'  and j.kondisi != '3' and j.Status_Validasi_Barang =1 and j.StatusTampil = 1 and j.kodeLokasi like '12%'
 										$KodeKa_j
 										order by j.kodeKelompok ";
@@ -4715,11 +4742,60 @@ class core_api_report extends DB {
 						echo "<br>";
 						echo "<br>";*/
 						// exit;
+						
+						
 						if($paramGol != 'NonAset'){
-							$result = $this->query($queryok) or die ($this->error('error'));		
-							while ($data = $this->fetch_object($result))
-							{
-								$getdata[$Satker_ID][$value][]= $data;
+							$result = $this->query($queryok) or die ($this->error('error'));
+							$temp = array();
+							$getdatacstm = array();
+							$cek = mysql_num_rows($result);
+							if($cek > 0){								
+								while ($data = $this->fetch_object($result))
+								{	
+									if($paramGol == 02 || $paramGol == 05){
+									//extra edit start
+									$temp[] = $data;
+									$countTemp = count($temp);
+									if($countTemp == 1){
+										$getdatacstm[]= $data;
+									}else{
+										$getValueBeforeLast = $temp[$countTemp-2];
+										$lastValueArrayKel=end($temp);
+										
+										if($lastValueArrayKel->kodeKelompok == $getValueBeforeLast->kodeKelompok)
+										{
+											$NewJumlah= $lastValueArrayKel->jumlah + $getValueBeforeLast->jumlah;
+											$NewNilai = $lastValueArrayKel->Nilai + $getValueBeforeLast->Nilai;
+											$NewNilaiPP = $lastValueArrayKel->NilaiPP + $getValueBeforeLast->NilaiPP;
+											$NewNilaiAP = $lastValueArrayKel->NilaiAP + $getValueBeforeLast->NilaiAP;
+											$NewNilaiNB = $lastValueArrayKel->NilaiBuku + $getValueBeforeLast->NilaiBuku;
+											
+											$obj = new stdObject();
+											$obj->kodeKelompok = $getValueBeforeLast->kodeKelompok;
+											$obj->Uraian = $getValueBeforeLast->Uraian;
+											$obj->jumlah = $NewJumlah;
+											$obj->Nilai = $NewNilai;
+											$obj->NilaiPP = $NewNilaiPP;
+											$obj->NilaiAP = $NewNilaiAP;
+											$obj->NilaiBuku = $NewNilaiNB;
+											
+											array_pop($getdatacstm);
+											$getdatacstm[] = $obj;
+										}else{
+											$getdatacstm[]= $lastValueArrayKel;
+										}
+											//no action
+										} 
+									}else{
+										// $getdatacstm[]= $data;
+										$getdata[$Satker_ID][$value][]= $data;
+									}
+								}
+								
+								if($paramGol == 02 || $paramGol == 05){
+									$getdata[$Satker_ID][$value][]= $getdatacstm;
+								}
+								
 							}
 						}else{
 							$ExeTable = array($queryok_non_1,$queryok_non_2);
@@ -4736,7 +4812,8 @@ class core_api_report extends DB {
 									}
 							}	
 						}
-						
+						// pr($getdata);
+						// exit;
 					}
 				}
 				// pr($getdata);
@@ -4801,11 +4878,17 @@ class core_api_report extends DB {
 								if($data2 == '01.01'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM tanahView WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+												   sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+												   FROM mesin_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '03.11' || $data2 == '03.12'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													jumlah FROM bangunan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM jaringan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM asetlain_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '06.01' || $data2 == '06.20'){
@@ -4820,11 +4903,17 @@ class core_api_report extends DB {
 								if($data2 == '01.01'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM tanahView WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=300000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM mesin_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=300000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '03.11' || $data2 == '03.12'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=10000000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM bangunan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=10000000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM jaringan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM asetlain_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '06.01' || $data2 == '06.20'){
@@ -4841,19 +4930,29 @@ class core_api_report extends DB {
 								if($data2 == '01.01'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM tanahView WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM mesin_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
 													$KodeKaCondt1
 													UNION ALL
-													SELECT sum(NilaiPerolehan) as nilai,count(Aset_ID) as jumlah FROM mesin_Rplctn WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+													SELECT sum(NilaiPerolehan) as nilai,count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM mesin_Rplctn WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
 													and (NilaiPerolehan >=300000 $KodeKa) and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
 								}elseif($data2 == '03.11' || $data2 == '03.12'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+												sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+												FROM bangunan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
 												$KodeKaCondt1
 												UNION ALL
-												SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_Rplctn WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+												SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+												sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+												FROM bangunan_Rplctn WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
 												and (NilaiPerolehan >=10000000 $KodeKa)  and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";	
 								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM jaringan_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
 								}elseif($data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM asetlain_ori WHERE kodeKelompok like '$data2%' and $paramSatker and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '06.01' || $data2 == '06.20'){
@@ -4875,12 +4974,38 @@ class core_api_report extends DB {
 							while ($data3 = $this->fetch_object($resultfix))
 							{
 								// $datafix[] = $data3->nilai;
+								//total nilai perolehan 
 								if($data3->nilai == NULL){
-									$nilai = 0;
+									$nilaiPrlhn = 0;
 								}else{
-									$nilai = $data3->nilai;
+									$nilaiPrlhn = $data3->nilai;
 								}
-								$datafix[] = $data3->jumlah."_".$nilai;
+								if($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11' || $data2 == '03.11' || $data2 == '03.12' || $data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
+									//total nilai penyusutan pertahun
+									if($data3->NilaiPP == NULL){
+										$nilaiPP = 0;
+									}else{
+										$nilaiPP = $data3->NilaiPP;
+									}
+									//total nilai akumulasi penyusutan
+									if($data3->NilaiAP == NULL){
+										$nilaiAP = 0;
+									}else{
+										$nilaiAP = $data3->NilaiAP;
+									}
+									//total nilai buku
+									if($data3->NilaiBuku == NULL){
+										$nilaiBK = 0;
+									}else{
+										$nilaiBK = $data3->NilaiBuku;
+									}
+								}else{
+									$nilaiPP = 0;
+									$nilaiAP = 0;
+									$nilaiBK = 0;
+								}
+								$datafix[] = $data3->jumlah."_".$nilaiPrlhn."_".$nilaiPP."_".$nilaiAP."_".$nilaiBK;
+								// $datafix[] = $data3->jumlah."_".$nilaiPrlhn;
 								// pr($datafix);
 							}
 								$getdata[$Satker_ID][$data."_".$value][$data2."_".$value2][]= $datafix;
@@ -4921,11 +5046,17 @@ class core_api_report extends DB {
 								if($data2 == '01.01'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM tanahView WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM mesin_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '03.11' || $data2 == '03.12'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM bangunan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah 
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM jaringan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM asetlain_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '06.01' || $data2 == '06.20'){
@@ -4940,11 +5071,17 @@ class core_api_report extends DB {
 								if($data2 == '01.01'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM tanahView WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=300000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM mesin_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=300000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '03.11' || $data2 == '03.12'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=10000000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 	
+													FROM bangunan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and NilaiPerolehan >=10000000 and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 $KodeKaCondt1";
 								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 	
+													FROM jaringan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM asetlain_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '06.01' || $data2 == '06.20'){
@@ -4961,19 +5098,29 @@ class core_api_report extends DB {
 								if($data2 == '01.01'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM tanahView WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '02.02' || $data2 == '02.03' || $data2 == '02.04' || $data2 == '02.05' || $data2 == '02.06' || $data2 == '02.07' || $data2 == '02.08' || $data2 == '02.09' || $data2 == '02.10' || $data2 == '02.11'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM mesin_ori WHERE kodeKelompok like '$data2%' and kodeSatker  like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM mesin_ori WHERE kodeKelompok like '$data2%' and kodeSatker  like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
 													$KodeKaCondt1
 													UNION ALL
-													SELECT sum(NilaiPerolehan) as nilai,count(Aset_ID) as jumlah FROM mesin_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+													SELECT sum(NilaiPerolehan) as nilai,count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM mesin_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
 													and (NilaiPerolehan >=300000 $KodeKa) and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
 								}elseif($data2 == '03.11' || $data2 == '03.12'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+												sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+												FROM bangunan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <'$tgldefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 
 												$KodeKaCondt1
 												UNION ALL
-												SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM bangunan_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
+												SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+												sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+												FROM bangunan_Rplctn WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tgldefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' 
 												and (NilaiPerolehan >=10000000 $KodeKa)  and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";	
 								}elseif($data2 == '04.13' || $data2 == '04.14' || $data2 == '04.15' || $data2 == '04.16'){
-									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM jaringan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
+									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah,
+													sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+													FROM jaringan_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1 ";
 								}elseif($data2 == '05.17' || $data2 == '05.18' || $data2 == '05.19'){
 									$queryresult ="SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jumlah FROM asetlain_ori WHERE kodeKelompok like '$data2%' and kodeSatker like '$Satker_ID%' and kodeLokasi like '12%' and TglPerolehan >='$tglAwalDefault' and TglPerolehan <='$tglAkhirDefault' and TglPembukuan >='$tglAwalDefault' and TglPembukuan <='$tglAkhirDefault' and kondisi !='3' and Status_Validasi_Barang =1 and StatusTampil = 1";
 								}elseif($data2 == '06.01' || $data2 == '06.20'){
@@ -4992,13 +5139,33 @@ class core_api_report extends DB {
 							if($resultfix){
 								while ($data3 = $this->fetch_object($resultfix))
 								{
-									// $datafix[] = $data3->nilai;
-									if($data3->nilai == NULL){
-										$nilai = 0;
-									}else{
-										$nilai = $data3->nilai;
-									}
-									$datafix[] = $data3->jumlah."_".$nilai;
+									//total nilai perolehan 
+								if($data3->nilai == NULL){
+									$nilaiPrlhn = 0;
+								}else{
+									$nilaiPrlhn = $data3->nilai;
+								}
+								//total nilai penyusutan pertahun
+								if($data3->NilaiPP == NULL){
+									$nilaiPP = 0;
+								}else{
+									$nilaiPP = $data3->NilaiPP;
+								}
+								//total nilai akumulasi penyusutan
+								if($data3->NilaiAP == NULL){
+									$nilaiAP = 0;
+								}else{
+									$nilaiAP = $data3->NilaiAP;
+								}
+								//total nilai buku
+								if($data3->NilaiBuku == NULL){
+									$nilaiBK = 0;
+								}else{
+									$nilaiBK = $data3->NilaiBuku;
+								}
+								
+									$datafix[] = $data3->jumlah."_".$nilaiPrlhn."_".$nilaiPP."_".$nilaiAP."_".$nilaiBK;
+									// $datafix[] = $data3->jumlah."_".$nilai;
 									
 								}
 									$getdata[$Satker_ID][$data."_".$value][$data2."_".$value2][]= $datafix;
@@ -5084,21 +5251,27 @@ class core_api_report extends DB {
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 							";
-			$query_02_default = "SELECT sum(NilaiPerolehan) as nilai FROM mesin_ori
+			$query_02_default = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_ori
 							WHERE $paramSatkr  
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 							and kondisi != 3 $KodeKaCondt1";
 							
-			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin_ori
+			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_ori
 							WHERE $paramSatkr  
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 			//modif				
-			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin_ori
+			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_ori
 							WHERE $paramSatkr 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5106,7 +5279,9 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM mesin_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_Rplctn
 							WHERE $paramSatkr 
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5114,14 +5289,18 @@ class core_api_report extends DB {
 							and kodeLokasi like '12%' 
 							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 			
-			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan_ori
+			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM bangunan_ori
 							WHERE $paramSatkr
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 							and kondisi != 3 $KodeKaCondt1";
 							
-			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan_ori
+			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM bangunan_ori
 						WHERE $paramSatkr 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5129,7 +5308,9 @@ class core_api_report extends DB {
 						and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";
 			
 			//modif			
-			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai  FROM bangunan_ori
+			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM bangunan_ori
 							WHERE $paramSatkr
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5137,7 +5318,9 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM bangunan_Rplctn
 							WHERE $paramSatkr 
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
 							and TglPembukuan >= '$tglAwalDefault' 
@@ -5146,7 +5329,9 @@ class core_api_report extends DB {
 							and kodeLokasi like '12%' 
 							and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";	
 							
-			$query_04 = "SELECT sum(NilaiPerolehan) as nilai FROM jaringan_ori
+			$query_04 = "SELECT sum(NilaiPerolehan) as nilai,
+				sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+				FROM jaringan_ori
 				WHERE $paramSatkr  
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
@@ -5226,7 +5411,28 @@ class core_api_report extends DB {
 						}else{
 							$nilai = $dataAll->nilai;
 						}
-						$getdata[$data][]= $nilai;
+						
+						//tambah penyusutan
+						if($dataAll->NilaiPP == NULL || $dataAll->NilaiPP == ''){
+							$nilaiPP = 0;
+						}else{
+							$nilaiPP = $dataAll->NilaiPP;
+						}
+						
+						if($dataAll->NilaiAP == NULL || $dataAll->NilaiAP == ''){
+							$nilaiAP = 0;
+						}else{
+							$nilaiAP = $dataAll->NilaiAP;
+						}
+						
+						if($dataAll->NilaiBuku == NULL || $dataAll->NilaiBuku == ''){
+							$nilaiBK = 0;
+						}else{
+							$nilaiBK = $dataAll->NilaiBuku;
+						}
+						
+						$getdata[$data][]= $nilai."_".$nilaiPP."_".$nilaiAP."_".$nilaiBK;
+						// $getdata[$data][]= $nilai;
 					}
 					
 				}
@@ -5289,7 +5495,9 @@ class core_api_report extends DB {
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 							";
-			$query_02_default = "SELECT sum(NilaiPerolehan) as nilai FROM mesin_ori
+			$query_02_default = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_ori
 							WHERE kodeSatker = '$satker_id'  
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5297,7 +5505,9 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1";
 							
-			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin_ori
+			$query_02_condt_1 = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_ori
 							WHERE kodeSatker = '$satker_id'  
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5305,7 +5515,9 @@ class core_api_report extends DB {
 							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 			
 			//modif			
-			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai FROM mesin_ori
+			$query_02_condt_2 = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_ori
 							WHERE kodeSatker = '$satker_id' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5313,7 +5525,9 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM mesin_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM mesin_Rplctn
 							WHERE kodeSatker = '$satker_id'  
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5321,21 +5535,27 @@ class core_api_report extends DB {
 							and kodeLokasi like '12%' 
 							and (NilaiPerolehan >= 300000 $KodeKa) and kondisi != 3";
 			
-			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan_ori
+			$query_03_default = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM bangunan_ori
 							WHERE kodeSatker = '$satker_id' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 							and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 							$KodeKaCondt1 and kondisi != 3";
 							
-			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai FROM bangunan_ori
+			$query_03_condt_1 = "SELECT sum(NilaiPerolehan) as nilai,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM bangunan_ori
 						WHERE $kodeKelompok kodeSatker = '$satker_id'  
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";
 			//modif				
-			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai  FROM bangunan_ori
+			$query_03_condt_2 = "SELECT sum(NilaiPerolehan) as nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM bangunan_ori
 							WHERE kodeSatker = '$satker_id' 
 							and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -5343,7 +5563,9 @@ class core_api_report extends DB {
 							and kondisi != 3
 							$KodeKaCondt1
 							union all 
-							SELECT sum(NilaiPerolehan) as Nilai FROM bangunan_Rplctn
+							SELECT sum(NilaiPerolehan) as Nilai,
+							sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+							FROM bangunan_Rplctn
 							WHERE kodeSatker = '$satker_id' 
 							and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
 							and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
@@ -5351,7 +5573,9 @@ class core_api_report extends DB {
 							and kodeLokasi like '12%' 
 							and (NilaiPerolehan >= 10000000 $KodeKa) and kondisi != 3";	
 							
-			$query_04 = "SELECT sum(NilaiPerolehan) as nilai FROM jaringan_ori
+			$query_04 = "SELECT sum(NilaiPerolehan) as nilai,
+				sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+				FROM jaringan_ori
 				WHERE kodeSatker = '$satker_id'  
 				and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 				and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
@@ -5429,7 +5653,7 @@ class core_api_report extends DB {
 					// $i = 0;
 					while ($dataAll = $this->fetch_object($result))
 					{
-						if($dataAll->nilai == NULL){
+						if($dataAll->nilai == NULL || $dataAll->nilai == ''){
 							// echo "klo null";
 							// echo "<br/>";
 							$nilai = 0;
@@ -5438,7 +5662,27 @@ class core_api_report extends DB {
 							// echo "<br/>";
 							$nilai = $dataAll->nilai;
 						}
-						$getdata[$data][]= $nilai;
+						//tambah penyusutan
+						if($dataAll->NilaiPP == NULL || $dataAll->NilaiPP == ''){
+							$nilaiPP = 0;
+						}else{
+							$nilaiPP = $dataAll->NilaiPP;
+						}
+						
+						if($dataAll->NilaiAP == NULL || $dataAll->NilaiAP == ''){
+							$nilaiAP = 0;
+						}else{
+							$nilaiAP = $dataAll->NilaiAP;
+						}
+						
+						if($dataAll->NilaiBuku == NULL || $dataAll->NilaiBuku == ''){
+							$nilaiBK = 0;
+						}else{
+							$nilaiBK = $dataAll->NilaiBuku;
+						}
+						
+						
+						$getdata[$data][]= $nilai."_".$nilaiPP."_".$nilaiAP."_".$nilaiBK;
 					}
 					
 				}
@@ -5843,7 +6087,7 @@ class core_api_report extends DB {
 		//single query
 			if($flag == 'A'){
 			//KIB A
-				echo "KIB A";
+				// echo "KIB A";
 				// EXIT;
 				$queryKib 		= "create temporary table tanahView as
 								select a.Tanah_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 

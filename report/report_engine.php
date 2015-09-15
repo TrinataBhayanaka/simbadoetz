@@ -4094,6 +4094,9 @@ if($skpd_id != ''){
 		<td style=\"text-align: center; font-weight: bold;\">KDP</td>
 		<td style=\"text-align: center; font-weight: bold;\">ASET LAIN</td>
 		<td style=\"text-align: center; font-weight: bold;\">NON ASET</td>
+		<td style=\"text-align: center; font-weight: bold;\">PENYUSUTAN<BR>PER TAHUN</td>
+		<td style=\"text-align: center; font-weight: bold;\">AKUMULASI<BR>PENYUSUTAN</td>
+		<td style=\"text-align: center; font-weight: bold;\">NILAI<BR>BUKU</td>
 		<td style=\"text-align: center; font-weight: bold;\">JUMLAH</td>
 	</tr>";
 	
@@ -4105,7 +4108,7 @@ if($skpd_id != ''){
 		
 		$cekjmlArray = count($value); 
 		if($cekjmlArray ==  11){
-			$nilai_tanah =$value[0];
+			/*$nilai_tanah =$value[0];
 			$nilai_mesin =$value[1] + $value[2];
 			$nilai_bangunan =$value[3] + $value[4];
 			$nilai_jaringan =$value[5];
@@ -4117,10 +4120,87 @@ if($skpd_id != ''){
                      + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;
 					 
 			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;
-							
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;*/
+			//tanah
+			$ex_nilai_tanah = explode('_',$value[0]);
+			$nilai_tanah =$ex_nilai_tanah[0];
+			
+			//mesin <2008
+			$ex_nilai_mesin_1 = explode('_',$value[1]);
+			$nilai_mesin_1 = $ex_nilai_mesin_1[0];
+			$nilai_mesin_PP_1 = $ex_nilai_mesin_1[1];
+			$nilai_mesin_AP_1 = $ex_nilai_mesin_1[2];
+			$nilai_mesin_NB_1 = $ex_nilai_mesin_1[3];
+			
+			//mesin >2008
+			$ex_nilai_mesin_2 = explode('_',$value[2]);
+			$nilai_mesin_2 = $ex_nilai_mesin_2[0];
+			$nilai_mesin_PP_2 = $ex_nilai_mesin_2[1];
+			$nilai_mesin_AP_2 = $ex_nilai_mesin_2[2];
+			$nilai_mesin_NB_2 = $ex_nilai_mesin_2[3];
+			
+			$nilai_mesin =$nilai_mesin_1 + $nilai_mesin_2;
+			
+			//bangunan < 2008
+			$ex_nilai_bangunan_1 = explode('_',$value[3]);
+			$nilai_bangunan_1 	 = $ex_nilai_bangunan_1[0];
+			$nilai_bangunan_PP_1 = $ex_nilai_bangunan_1[1];
+			$nilai_bangunan_AP_1 = $ex_nilai_bangunan_1[2];
+			$nilai_bangunan_NB_1 = $ex_nilai_bangunan_1[3];
+			
+			//bangunan >2008
+			$ex_nilai_bangunan_2 = explode('_',$value[4]);
+			$nilai_bangunan_2 	 = $ex_nilai_bangunan_2[0];
+			$nilai_bangunan_PP_2 = $ex_nilai_bangunan_2[1];
+			$nilai_bangunan_AP_2 = $ex_nilai_bangunan_2[2];
+			$nilai_bangunan_NB_2 = $ex_nilai_bangunan_2[3];
+			
+			$nilai_bangunan =$nilai_bangunan_1 + $nilai_bangunan_2;
+			
+			//jaringan
+			$ex_nilai_jaringan = explode('_',$value[5]);
+			$nilai_jarngn 	=$ex_nilai_jaringan[0];
+			$nilai_jaringan_PP =$ex_nilai_jaringan[1];
+			$nilai_jaringan_AP =$ex_nilai_jaringan[2];
+			$nilai_jaringan_NB =$ex_nilai_jaringan[3];
+			$nilai_jaringan	= $nilai_jarngn;
+			
+			//TOTAL ALL PENYUSUTAN
+			$penyusutanPP = $nilai_mesin_PP_1 + $nilai_mesin_PP_2 + $nilai_bangunan_PP_1 + $nilai_bangunan_PP_2 +$nilai_jaringan_PP ; 
+			
+			$penyusutanAP = $nilai_mesin_AP_1 + $nilai_mesin_AP_2 + $nilai_bangunan_AP_1 + $nilai_bangunan_AP_2 +$nilai_jaringan_AP;
+			
+			$penyusutanNB = $nilai_mesin_NB_1 + $nilai_mesin_NB_2 + $nilai_bangunan_NB_1 + $nilai_bangunan_NB_2	+ $nilai_jaringan_NB;			  
+			
+			//aset tetap lain
+			$ex_nilai_aset_tetap_lain = explode('_',$value[6]);
+			$nilai_asettetaplain =$ex_nilai_aset_tetap_lain[0];
+			
+			//kdp
+			$ex_nilai_kdp = explode('_',$value[7]);
+			$nilai_kdp =$ex_nilai_kdp[0];
+			
+			//aset lain
+			$ex_nilai_aset_lain = explode('_',$value[8]);
+			$nilai_asetlain =$ex_nilai_aset_lain[0];
+			
+			//non aset
+			$ex_nilai_non_aset_1 = explode('_',$value[9]);
+			$nonAset_1 = $ex_nilai_non_aset_1[0];
+			
+			$ex_nilai_non_aset_2 = explode('_',$value[10]);
+			$nonAset_2 = $ex_nilai_non_aset_2[0];
+			
+			$nonAset = $nonAset_1 + $nonAset_2;
+			
+			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;
+					 
+			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;	
+			
 		}else{
-			$nilai_tanah =$value[0];
+			/*$nilai_tanah =$value[0];
 			$nilai_mesin =$value[1];
 			$nilai_bangunan =$value[2];
 			$nilai_jaringan =$value[3];
@@ -4131,7 +4211,68 @@ if($skpd_id != ''){
 			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
                      + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;
 			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;		 
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;*/
+
+			//tanah
+			$ex_nilai_tanah = explode('_',$value[0]);
+			$nilai_tanah =$ex_nilai_tanah[0];
+			
+			//mesin
+			$ex_nilai_mesin_1 = explode('_',$value[1]);
+			$nilai_mesin_1 = $ex_nilai_mesin_1[0];
+			$nilai_mesin_PP_1 = $ex_nilai_mesin_1[1];
+			$nilai_mesin_AP_1 = $ex_nilai_mesin_1[2];
+			$nilai_mesin_NB_1 = $ex_nilai_mesin_1[3];
+			$nilai_mesin = $nilai_mesin_1;
+			
+			//bangunan
+			$ex_nilai_bangunan_1 = explode('_',$value[2]);
+			$nilai_bangunan_1 	 = $ex_nilai_bangunan_1[0];
+			$nilai_bangunan_PP_1 = $ex_nilai_bangunan_1[1];
+			$nilai_bangunan_AP_1 = $ex_nilai_bangunan_1[2];
+			$nilai_bangunan_NB_1 = $ex_nilai_bangunan_1[3];
+			$nilai_bangunan =$nilai_bangunan_1;
+			
+			//jaringan
+			$ex_nilai_jaringan = explode('_',$value[3]);
+			$nilai_jarngn 	=$ex_nilai_jaringan[0];
+			$nilai_jaringan_PP =$ex_nilai_jaringan[1];
+			$nilai_jaringan_AP =$ex_nilai_jaringan[2];
+			$nilai_jaringan_NB =$ex_nilai_jaringan[3];
+			$nilai_jaringan =$nilai_jarngn;
+			
+			//TOTAL ALL PENYUSUTAN
+			$penyusutanPP = $nilai_mesin_PP_1 + $nilai_bangunan_PP_1 + $nilai_jaringan_PP ; 
+			
+			$penyusutanAP = $nilai_mesin_AP_1 + $nilai_bangunan_AP_1 + $nilai_jaringan_AP;
+			
+			$penyusutanNB = $nilai_mesin_NB_1 + $nilai_bangunan_NB_1 +	$nilai_jaringan_NB;
+			
+			//aset tetap lain
+			$ex_nilai_aset_tetap_lain = explode('_',$value[4]);
+			$nilai_asettetaplain =$ex_nilai_aset_tetap_lain[0];
+			
+			//kdp
+			$ex_nilai_kdp = explode('_',$value[5]);
+			$nilai_kdp =$ex_nilai_kdp[0];
+			
+			//aset lain
+			$ex_nilai_aset_lain = explode('_',$value[6]);
+			$nilai_asetlain =$ex_nilai_aset_lain[0];
+			
+			//non aset
+			$ex_nilai_non_aset_1 = explode('_',$value[7]);
+			$nonAset_1 = $ex_nilai_non_aset_1[0];
+			
+			$ex_nilai_non_aset_2 = explode('_',$value[8]);
+			$nonAset_2 = $ex_nilai_non_aset_2[0];
+			
+			$nonAset = $nonAset_1 + $nonAset_2;	
+			
+			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;
+			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;				
 		}
 		
 		$html.="<tr>
@@ -4145,6 +4286,9 @@ if($skpd_id != ''){
 					<td style=\"text-align: right;\">".number_format($nilai_kdp,2,",",".")."</td>
 					<td style=\"text-align: right;\">".number_format($nilai_asetlain,2,",",".")."</td>
 					<td style=\"text-align: right;\">".number_format($nonAset,2,",",".")."</td>
+					<td style=\"text-align: right;\">".number_format($penyusutanPP,2,",",".")."</td>
+					<td style=\"text-align: right;\">".number_format($penyusutanAP,2,",",".")."</td>
+					<td style=\"text-align: right;\">".number_format($penyusutanNB,2,",",".")."</td>
 					<td style=\"text-align: right;\">".number_format($total,2,",",".")."</td>
 				</tr>
 			";
@@ -4157,7 +4301,10 @@ if($skpd_id != ''){
 		$totalAsetTetap += $nilai_asettetaplain; 	
 		$totalKdp += $nilai_kdp; 	
 		$totalAsetLain += $nilai_asetlain; 
-		$totalNonAset += $nonAset; 
+		$totalNonAset += $nonAset;
+		$totalPP += $penyusutanPP; 
+		$totalAP += $penyusutanAP; 
+		$totalNB += $penyusutanNB; 
 		
 	}
 	$html.="<tr>
@@ -4170,6 +4317,9 @@ if($skpd_id != ''){
 				<td style=\"text-align: right;\">".number_format($totalKdp,2,",",".")."</td>
 				<td style=\"text-align: right;\">".number_format($totalAsetLain,2,",",".")."</td>
 				<td style=\"text-align: right;\">".number_format($totalNonAset,2,",",".")."</td>
+				<td style=\"text-align: right;\">".number_format($totalPP,2,",",".")."</td>
+				<td style=\"text-align: right;\">".number_format($totalAP,2,",",".")."</td>
+				<td style=\"text-align: right;\">".number_format($totalNB,2,",",".")."</td>
 				<td style=\"text-align: right;\">".number_format($TotAllFix,2,",",".")."</td>
 			</tr>";
 	$html.="</table></body></html>";
@@ -4317,6 +4467,9 @@ if($skpd_id != ''){
 		<td style=\"text-align: center; font-weight: bold;\">KDP</td>
 		<td style=\"text-align: center; font-weight: bold;\">ASET LAIN</td>
 		<td style=\"text-align: center; font-weight: bold;\">NON ASET</td>
+		<td style=\"text-align: center; font-weight: bold;\">PENYUSUTAN<BR>PER TAHUN</td>
+		<td style=\"text-align: center; font-weight: bold;\">AKUMULASI<BR>PENYUSUTAN</td>
+		<td style=\"text-align: center; font-weight: bold;\">NILAI<BR>BUKU</td>
 		<td style=\"text-align: center; font-weight: bold;\">JUMLAH</td>
 	</tr>";
 	
@@ -4328,34 +4481,154 @@ if($skpd_id != ''){
 		
 		$cekjmlArray = count($value); 
 		if($cekjmlArray == 11){
-			$nilai_tanah =$value[0];
-			$nilai_mesin =$value[1] + $value[2];
-			$nilai_bangunan =$value[3] + $value[4];
-			$nilai_jaringan =$value[5];
-			$nilai_asettetaplain =$value[6];
-			$nilai_kdp =$value[7];
-			$nilai_asetlain =$value[8];
-			$nonAset = $value[9] + $value[10];
+			//tanah
+			$ex_nilai_tanah = explode('_',$value[0]);
+			$nilai_tanah =$ex_nilai_tanah[0];
+			
+			//mesin <2008
+			$ex_nilai_mesin_1 = explode('_',$value[1]);
+			$nilai_mesin_1 = $ex_nilai_mesin_1[0];
+			$nilai_mesin_PP_1 = $ex_nilai_mesin_1[1];
+			$nilai_mesin_AP_1 = $ex_nilai_mesin_1[2];
+			$nilai_mesin_NB_1 = $ex_nilai_mesin_1[3];
+			
+			//mesin >2008
+			$ex_nilai_mesin_2 = explode('_',$value[2]);
+			$nilai_mesin_2 = $ex_nilai_mesin_2[0];
+			$nilai_mesin_PP_2 = $ex_nilai_mesin_2[1];
+			$nilai_mesin_AP_2 = $ex_nilai_mesin_2[2];
+			$nilai_mesin_NB_2 = $ex_nilai_mesin_2[3];
+			
+			$nilai_mesin =$nilai_mesin_1 + $nilai_mesin_2;
+			
+			//bangunan < 2008
+			$ex_nilai_bangunan_1 = explode('_',$value[3]);
+			$nilai_bangunan_1 	 = $ex_nilai_bangunan_1[0];
+			$nilai_bangunan_PP_1 = $ex_nilai_bangunan_1[1];
+			$nilai_bangunan_AP_1 = $ex_nilai_bangunan_1[2];
+			$nilai_bangunan_NB_1 = $ex_nilai_bangunan_1[3];
+			
+			//bangunan >2008
+			$ex_nilai_bangunan_2 = explode('_',$value[4]);
+			$nilai_bangunan_2 	 = $ex_nilai_bangunan_2[0];
+			$nilai_bangunan_PP_2 = $ex_nilai_bangunan_2[1];
+			$nilai_bangunan_AP_2 = $ex_nilai_bangunan_2[2];
+			$nilai_bangunan_NB_2 = $ex_nilai_bangunan_2[3];
+			
+			$nilai_bangunan =$nilai_bangunan_1 + $nilai_bangunan_2;
+			
+			//jaringan
+			$ex_nilai_jaringan = explode('_',$value[5]);
+			$nilai_jarngn 	=$ex_nilai_jaringan[0];
+			$nilai_jaringan_PP =$ex_nilai_jaringan[1];
+			$nilai_jaringan_AP =$ex_nilai_jaringan[2];
+			$nilai_jaringan_NB =$ex_nilai_jaringan[3];
+			$nilai_jaringan	= $nilai_jarngn;
+			
+			//TOTAL ALL PENYUSUTAN
+			$penyusutanPP = $nilai_mesin_PP_1 + $nilai_mesin_PP_2 + $nilai_bangunan_PP_1 + $nilai_bangunan_PP_2 +$nilai_jaringan_PP ; 
+			
+			$penyusutanAP = $nilai_mesin_AP_1 + $nilai_mesin_AP_2 + $nilai_bangunan_AP_1 + $nilai_bangunan_AP_2 +$nilai_jaringan_AP;
+			
+			$penyusutanNB = $nilai_mesin_NB_1 + $nilai_mesin_NB_2 + $nilai_bangunan_NB_1 + $nilai_bangunan_NB_2	+ $nilai_jaringan_NB;			  
+			
+			//aset tetap lain
+			$ex_nilai_aset_tetap_lain = explode('_',$value[6]);
+			$nilai_asettetaplain =$ex_nilai_aset_tetap_lain[0];
+			
+			//kdp
+			$ex_nilai_kdp = explode('_',$value[7]);
+			$nilai_kdp =$ex_nilai_kdp[0];
+			
+			//aset lain
+			$ex_nilai_aset_lain = explode('_',$value[8]);
+			$nilai_asetlain =$ex_nilai_aset_lain[0];
+			
+			//non aset
+			$ex_nilai_non_aset_1 = explode('_',$value[9]);
+			$nonAset_1 = $ex_nilai_non_aset_1[0];
+			
+			$ex_nilai_non_aset_2 = explode('_',$value[10]);
+			$nonAset_2 = $ex_nilai_non_aset_2[0];
+			
+			$nonAset = $nonAset_1 + $nonAset_2;
 			
 			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;
 					 
 			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;
 							
 		}else{
-			$nilai_tanah =$value[0];
+			//tanah
+			$ex_nilai_tanah = explode('_',$value[0]);
+			$nilai_tanah =$ex_nilai_tanah[0];
+			
+			//mesin
+			$ex_nilai_mesin_1 = explode('_',$value[1]);
+			$nilai_mesin_1 = $ex_nilai_mesin_1[0];
+			$nilai_mesin_PP_1 = $ex_nilai_mesin_1[1];
+			$nilai_mesin_AP_1 = $ex_nilai_mesin_1[2];
+			$nilai_mesin_NB_1 = $ex_nilai_mesin_1[3];
+			$nilai_mesin = $nilai_mesin_1;
+			
+			//bangunan
+			$ex_nilai_bangunan_1 = explode('_',$value[2]);
+			$nilai_bangunan_1 	 = $ex_nilai_bangunan_1[0];
+			$nilai_bangunan_PP_1 = $ex_nilai_bangunan_1[1];
+			$nilai_bangunan_AP_1 = $ex_nilai_bangunan_1[2];
+			$nilai_bangunan_NB_1 = $ex_nilai_bangunan_1[3];
+			$nilai_bangunan =$nilai_bangunan_1;
+			
+			//jaringan
+			$ex_nilai_jaringan = explode('_',$value[3]);
+			$nilai_jarngn 	=$ex_nilai_jaringan[0];
+			$nilai_jaringan_PP =$ex_nilai_jaringan[1];
+			$nilai_jaringan_AP =$ex_nilai_jaringan[2];
+			$nilai_jaringan_NB =$ex_nilai_jaringan[3];
+			$nilai_jaringan =$nilai_jarngn;
+			
+			//TOTAL ALL PENYUSUTAN
+			$penyusutanPP = $nilai_mesin_PP_1 + $nilai_bangunan_PP_1 + $nilai_jaringan_PP ; 
+			
+			$penyusutanAP = $nilai_mesin_AP_1 + $nilai_bangunan_AP_1 + $nilai_jaringan_AP;
+			
+			$penyusutanNB = $nilai_mesin_NB_1 + $nilai_bangunan_NB_1 +	$nilai_jaringan_NB;
+			
+			//aset tetap lain
+			$ex_nilai_aset_tetap_lain = explode('_',$value[4]);
+			$nilai_asettetaplain =$ex_nilai_aset_tetap_lain[0];
+			
+			//kdp
+			$ex_nilai_kdp = explode('_',$value[5]);
+			$nilai_kdp =$ex_nilai_kdp[0];
+			
+			//aset lain
+			$ex_nilai_aset_lain = explode('_',$value[6]);
+			$nilai_asetlain =$ex_nilai_aset_lain[0];
+			
+			//non aset
+			$ex_nilai_non_aset_1 = explode('_',$value[7]);
+			$nonAset_1 = $ex_nilai_non_aset_1[0];
+			
+			$ex_nilai_non_aset_2 = explode('_',$value[8]);
+			$nonAset_2 = $ex_nilai_non_aset_2[0];
+			
+			$nonAset = $nonAset_1 + $nonAset_2;	
+			
+			/*$nilai_tanah =$value[0];
 			$nilai_mesin =$value[1];
 			$nilai_bangunan =$value[2];
 			$nilai_jaringan =$value[3];
 			$nilai_asettetaplain =$value[4];
 			$nilai_kdp =$value[5];
 			$nilai_asetlain =$value[6];
-			$nonAset = $value[7] + $value[8];
+			$nonAset = $value[7] + $value[8];*/
+			
 			$total = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;
 			$TotAll = $nilai_tanah + $nilai_mesin + $nilai_bangunan + $nilai_jaringan
-                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset;		 
+                     + $nilai_asettetaplain + $nilai_kdp + $nilai_asetlain + $nonAset + $penyusutanPP + $penyusutanAP + $penyusutanNB;		 
 		}
 		
 		$html.="<tr>
@@ -4369,6 +4642,9 @@ if($skpd_id != ''){
 					<td style=\"text-align: right;\">".number_format($nilai_kdp,2,",",".")."</td>
 					<td style=\"text-align: right;\">".number_format($nilai_asetlain,2,",",".")."</td>
 					<td style=\"text-align: right;\">".number_format($nonAset,2,",",".")."</td>
+					<td style=\"text-align: right;\">".number_format($penyusutanPP,2,",",".")."</td>
+					<td style=\"text-align: right;\">".number_format($penyusutanAP,2,",",".")."</td>
+					<td style=\"text-align: right;\">".number_format($penyusutanNB,2,",",".")."</td>
 					<td style=\"text-align: right;\">".number_format($total,2,",",".")."</td>
 				</tr>
 			";
@@ -4382,6 +4658,9 @@ if($skpd_id != ''){
 		$totalKdp += $nilai_kdp; 	
 		$totalAsetLain += $nilai_asetlain; 
 		$totalNonAset += $nonAset; 
+		$totalPP += $penyusutanPP; 
+		$totalAP += $penyusutanAP; 
+		$totalNB += $penyusutanNB; 
 		
 	}
 	$html.="<tr>
@@ -4394,6 +4673,9 @@ if($skpd_id != ''){
 				<td style=\"text-align: right;\">".number_format($totalKdp,2,",",".")."</td>
 				<td style=\"text-align: right;\">".number_format($totalAsetLain,2,",",".")."</td>
 				<td style=\"text-align: right;\">".number_format($totalNonAset,2,",",".")."</td>
+				<td style=\"text-align: right;\">".number_format($totalPP,2,",",".")."</td>
+				<td style=\"text-align: right;\">".number_format($totalAP,2,",",".")."</td>
+				<td style=\"text-align: right;\">".number_format($totalNB,2,",",".")."</td>
 				<td style=\"text-align: right;\">".number_format($TotAllFix,2,",",".")."</td>
 			</tr>";
 	$html.="</table></body></html>";
@@ -4540,6 +4822,9 @@ foreach ($dataArr as $satker_id => $value)
           <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
           <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
           <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">PENYUSUTAN<BR>PER TAHUN(Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">AKUMULASI<BR>PENYUSUTAN(Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI<BR>BUKU(Rp.)</td>
         </tr>
         </thead>
         <tbody>
@@ -4562,44 +4847,19 @@ foreach ($dataArr as $satker_id => $value)
 		$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 		$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 		
-		// $totalALL += $TotalNilai[0];
-		// echo "total nilai ".$totalALL;
-		//this is for all value
-		// if($keys != '07_Aset Lainnya'){
-			// $totalALL += $TotalNilai[0];
-		// }
+		//tambah penyusutan
+		$TotalNilaiPPFix=number_format($TotalNilai[2],2,",",".");
+		$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
+		$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
 		
 		
-		//this is for header 
-		/*if($keys == '01_Tanah'){
-			$header ="<tr>
-						<td>&nbsp;</td>
-						<td style=\"text-align: left; font-weight: bold;\">ASET TETAP</td>
-						<td>&nbsp;</td>
-						<td>$totalALL</td>
-					  </tr>"; 
-				  
-		}elseif($keys == '07_Aset Lainnya'){
-			$header="<tr>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					  </tr>
-					  <tr>
-						<td>&nbsp;</td>
-						<td style=\"text-align: left; font-weight: bold;\">ASET LAINNYA</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					  </tr>";
-			
-		}else{
-			$header="";
-		}*/
-	
 		if($keys != '07_Aset Lainnya'){
 			$totalALL = $totalALL + $TotalNilai[0];
 			$jmlALL = $jmlALL + $TotalNilai[1];
+			//tambah penyusutan
+			$totalALLPP = $totalALLPP + $TotalNilai[2];
+			$totalALLAP = $totalALLAP + $TotalNilai[3];
+			$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[4];
 			$header = "";
 		}else{
 			
@@ -4608,12 +4868,23 @@ foreach ($dataArr as $satker_id => $value)
 				<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET TETAP</td>
 				<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
 				<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALLPP,2,",",".")."</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALLAP,2,",",".")."</td>
+				<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALLNilaiBuku,2,",",".")."</td>
 			</tr>";
 			  $totalALL = $TotalNilai[0];
 			  $jmlALL = $TotalNilai[1];
+			  //tambah penyusutan
+			  $totalALLPP = $TotalNilai[2];
+			  $totalALLAP = $TotalNilai[3];
+			  $totalALLNilaiBuku = $TotalNilai[4];
+			  
 			  $header.="<tr>
 				<td>&nbsp;</td>
 				<td style=\"text-align: left; font-weight: bold;\">ASET LAINNYA</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			  </tr>";
@@ -4622,8 +4893,11 @@ foreach ($dataArr as $satker_id => $value)
 				<tr>
 					<td style=\"text-align: center; font-weight: bold;\">$kode_1_parent</td>
 					<td style=\"text-align: left; font-weight: bold;\">$kode_2_parent</td>
-					<td style=\"text-align: center;\">$TotalJmlFix</td>
-					<td style=\"text-align: center;\">$TotalNilaiFix</td>
+					<td style=\"text-align: center; font-weight: bold;\">$TotalJmlFix</td>
+					<td style=\"text-align: center; font-weight: bold;\">$TotalNilaiFix</td>
+					<td style=\"text-align: center; font-weight: bold;\">$TotalNilaiPPFix</td>
+					<td style=\"text-align: center; font-weight: bold;\">$TotalNilaiAPFix</td>
+					<td style=\"text-align: center; font-weight: bold;\">$TotalNilaiNilaiBukuFix</td>
 				  </tr>";
         
         foreach ($data as $index => $value)
@@ -4643,14 +4917,23 @@ foreach ($dataArr as $satker_id => $value)
 				
 			$nilai_1 =$value[0][0];
 			$nilai_2 =$value[0][1];
+			
 			$ex_1 = explode("_",$nilai_1);
 			// pr($ex_1);
 				$jumlah_1 = $ex_1[0];
 				$nilai_1= $ex_1[1];	
+				//tambah penyusutan
+				$nilaiPP_1= $ex_1[2];
+				$nilaiAP_1= $ex_1[3];
+				$nilaiNB_1= $ex_1[4];
 			$ex_2 = explode("_",$nilai_2);
 			// pr($ex_2);
 				$jumlah_2 = $ex_2[0];
-				$nilai_2 = $ex_2[1];	
+				$nilai_2 = $ex_2[1];
+				//tambah penyusutan
+				$nilaiPP_2= $ex_2[2];
+				$nilaiAP_2= $ex_2[3];
+				$nilaiNB_2= $ex_2[4];				
 			/*echo "jumlah_1 =".$jumlah_1;
 			echo "<br>";
 			echo "jumlah_2 =".$jumlah_2;
@@ -4666,6 +4949,11 @@ foreach ($dataArr as $satker_id => $value)
 			$nilaiFix = ($nilai_1) + ($nilai_2);
 			/*echo "nilaiFix =".$nilaiFix;
 			echo "<br>";*/
+			//tambah penyusutan
+			$nilaiPPFix = ($nilaiPP_1) + ($nilaiPP_2);
+			$nilaiAPFix = ($nilaiAP_1) + ($nilaiAP_2);
+			$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+			
 		}else{
 			$hit = 1;
 			// echo "hit =".$hit; 
@@ -4673,52 +4961,55 @@ foreach ($dataArr as $satker_id => $value)
 			$ex_1 = explode("_",$nilai_1);
 				$jumlah_1 = $ex_1[0];
 				$nilai_1= $ex_1[1];
+				//tambah penyusutan
+				$nilaiPP_1= $ex_1[2];
+				$nilaiAP_1= $ex_1[3];
+				$nilaiNB_1= $ex_1[4];
+				
 			$jmlFix = $jumlah_1;
-			$nilaiFix = $nilai_1;	
+			$nilaiFix = $nilai_1;
+			$nilaiPPFix = $nilaiPP_1;
+			$nilaiAPFix = $nilaiAP_1;
+			$nilaiNBFix = $nilaiNB_1;
 		}
 		// echo $jmlFix;
 		// echo "<br>";
 		// echo $nilaiFix;
 		// echo "<br>";
-		
-		
-               
-				
+
 				 $html .= "<tr>
 						<td style=\"text-align: right;\">$kode_1_child</td>
                         <td style=\"text-align: ;\">$kode_2_child</td>
                         <td style=\"text-align: center;\">".number_format($jmlFix,0,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($nilaiFix,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($nilaiPPFix,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($nilaiAPFix,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($nilaiNBFix,2,",",".")."</td>
                       </tr>";
 				 if($kode_1_child == '07.24'){
 					$html .="<tr>
 								<td colspan = \"2\" align=\"center\" style=\"font-weight: bold;\">TOTAL ASET LAINNYA</td>
 								<td align=\"right\" style=\"font-weight: bold;\">".number_format($jmlALL,2,",",".")."</td>
 								<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALL,2,",",".")."</td>
+								<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALLPP,2,",",".")."</td>
+								<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALLAP,2,",",".")."</td>
+								<td align=\"right\" style=\"font-weight: bold;\">".number_format($totalALLNilaiBuku,2,",",".")."</td>
 							</tr>
 							</table>
 							</tbody>
 						</body>
 					</html>";
 				 }	  
-					  
-                // $total_perolehan += ($nilaiFix);
 				
         }
         // $no++;
         $jmlFix = 0;
 		$nilaiFix = 0;
+		$nilaiPPFix = 0;
+		$nilaiAPFix = 0;
+		$nilaiNBFix = 0;
     }
-		/*$html .="
-			
-			<tr>
-				<td colspan = \"3\" align=\"center\" style=\"font-weight: bold;\">TOTAL</td>
-				<td align=\"right\" style=\"font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
-			</tr>
-			</table>
-			</tbody>
-		</body>
-	</html>"; */ 
+		
 	$total_perolehan = 0;
 	// $totALL = $totalALL;	
     $hasil_html[]=$html;
@@ -5472,6 +5763,9 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
           <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
           <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">PENYUSUTAN<br>PERTAHUN (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">AKUMULASI<br>PENYUSUTAN (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI<br>BUKU (Rp.)</td>
         </tr>
         </thead>
         <tbody>";
@@ -5483,13 +5777,21 @@ foreach ($dataArr as $satker_id => $value)
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= '02';
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+	// pr($TotalNilai);
 	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
+	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
+	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
+	
 	$html.="<tr>
 				<td style=\"text-align: center; font-weight: bold;\">$no</td>
 				<td style=\"text-align: left; font-weight: bold;\">$NamaSatker</td>
 				<td style=\"text-align: center; font-weight: bold;\">$TotalJmlFix</td>
 				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixPP</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixAP</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixNB</td>
 			  </tr>";
     foreach ($value as $keys => $data)
     {	
@@ -5499,30 +5801,59 @@ foreach ($dataArr as $satker_id => $value)
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
 					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
 				  </tr>";
         
-        foreach ($data as $index => $value)
+        foreach ($data as $index => $val)
         {
+			// pr($data);
+			// $value;
+			// pr($value);
+			// echo $value[0]->kodeKelompok;
+			// echo $value->kodeKelompok;
+			foreach($val as $vl=>$value){
                 $html .= "<tr>
 						<td style=\"text-align: ;\">&nbsp;</td>
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
                         <td style=\"text-align: center;\">&nbsp;$value->jumlah</td>
                         <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiPP,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiAP,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
                       </tr>";
                 $total += ($value->jumlah);
                 $total_perolehan += ($value->Nilai);
+				
 				$total_kel += ($value->jumlah);
                 $total_perolehan_kel += ($value->Nilai);
+				
+				$total_perolehan_PP += ($value->NilaiPP);
+				$total_perolehan_kel_PP += ($value->NilaiPP);
+				
+				$total_perolehan_AP += ($value->NilaiAP);
+				$total_perolehan_kel_AP += ($value->NilaiAP);
+				
+				$total_perolehan_NB += ($value->NilaiBuku);
+				$total_perolehan_kel_NB += ($value->NilaiBuku);
 				// $tot_perkel=
+			}	
         }
 		$html .="<tr>
 				<td></td>
 				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($total_kel,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_PP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_AP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_NB,2,",",".")."</td>
 			</tr>";
 		$total_kel = 0;
 		$total_perolehan_kel= 0;	
+		$total_perolehan_kel_PP = 0;
+		$total_perolehan_kel_AP = 0;
+		$total_perolehan_kel_NB = 0;
     }
 	
 	$no++;	
@@ -5533,12 +5864,19 @@ $html .="
 				<td colspan = \"2\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($total,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_PP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_AP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_NB,2,",",".")."</td>
 			</tr>
 			</table>
 			</tbody>
 		</body>
 	</html>";   
-	$total_perolehan = 0;	
+	$total_perolehan = 0;
+	$total_perolehan_PP = 0;
+	$total_perolehan_AP = 0;
+	$total_perolehan_NB = 0;
+	
     $hasil_html[]=$html;
 return $hasil_html;
 
@@ -5683,6 +6021,9 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
           <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
           <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+		  <td style=\"text-align: center; font-weight: bold; width: \">PENYUSUTAN<br>PERTAHUN (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">AKUMULASI<br>PENYUSUTAN (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI<br>BUKU (Rp.)</td>
         </tr>
         </thead>
         <tbody>";
@@ -5693,7 +6034,13 @@ foreach ($dataArr as $satker_id => $value)
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= '03';
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+	
+	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
+	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
+	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
+	
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 		$html.="<tr>
 					<td style=\"text-align: center; font-weight: bold;\">$no</td>
@@ -5701,6 +6048,9 @@ foreach ($dataArr as $satker_id => $value)
 					<td>&nbsp;</td>
 					<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
 					<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+					<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixPP</td>
+					<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixAP</td>
+					<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixNB</td>
 			   </tr>";
     foreach ($value as $keys => $data)
     {	
@@ -5710,6 +6060,9 @@ foreach ($dataArr as $satker_id => $value)
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
 					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: center;\">&nbsp;</td>
 				  </tr>";
         
@@ -5721,9 +6074,21 @@ foreach ($dataArr as $satker_id => $value)
                         <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
                         <td style=\"text-align: right;\">".number_format($value->LuasLantai,0,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->PenyusutanPerTahun,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
                       </tr>";
                 $total_perolehan += ($value->NilaiPerolehan);
                 $total_perolehan_kel += ($value->NilaiPerolehan);
+				
+				$total_perolehan_PP += ($value->PenyusutanPerTahun);
+				$total_perolehan_kel_PP += ($value->PenyusutanPerTahun);
+				
+				$total_perolehan_AP += ($value->AkumulasiPenyusutan);
+				$total_perolehan_kel_AP += ($value->AkumulasiPenyusutan);
+				
+				$total_perolehan_NB += ($value->NilaiBuku);
+				$total_perolehan_kel_NB += ($value->NilaiBuku);
         }
 		$html .="<tr>
 				<td></td>
@@ -5731,8 +6096,15 @@ foreach ($dataArr as $satker_id => $value)
 				<td></td>
 				<td></td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_PP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_AP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_NB,2,",",".")."</td>
 			</tr>";
 		$total_perolehan_kel= 0;
+		$total_perolehan_kel_PP = 0;
+		$total_perolehan_kel_AP = 0;
+		$total_perolehan_kel_NB = 0;
+		
     } 
 	$no++;
 }
@@ -5742,12 +6114,18 @@ $html .="
 			<tr>
 				<td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_PP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_AP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_NB,2,",",".")."</td>
 			</tr>
 			</table>
 			</tbody>
 		</body>
 	</html>";   
 	$total_perolehan = 0;	
+	$total_perolehan_PP = 0;	
+	$total_perolehan_AP = 0;	
+	$total_perolehan_NB = 0;	
     $hasil_html[]=$html;
 	return $hasil_html;
 }		
@@ -5890,6 +6268,9 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: \">ALAMAT / LOKASI</td>
           <td style=\"text-align: center; font-weight: bold; width: \">LUAS (M2)</td>
           <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+		  <td style=\"text-align: center; font-weight: bold; width: \">PENYUSUTAN<br>PERTAHUN (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">AKUMULASI<br>PENYUSUTAN (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI<br>BUKU (Rp.)</td>
         </tr>
         </thead>
         <tbody>";
@@ -5900,14 +6281,20 @@ foreach ($dataArr as $satker_id => $value)
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= '04';
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
+	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
+	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
     $html.="<tr>
 				<td style=\"text-align: center; font-weight: bold;\">$no</td>
 				<td  style=\"font-weight: bold;\">$NamaSatker</td>
 				<td>&nbsp;</td>
 				<td style=\"text-align: center; font-weight: bold;\">&nbsp;</td>
 				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixPP</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixAP</td>
+				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFixNB</td>
 		   </tr>";
 	foreach ($value as $keys => $data)
     {	
@@ -5916,6 +6303,9 @@ foreach ($dataArr as $satker_id => $value)
 					<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;$keys</td>
 					<td style=\"text-align: center;\">&nbsp; </td>
 					<td style=\"text-align: left; font-weight: bold;\"></td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
+					<td style=\"text-align: center;\">&nbsp;</td>
 					<td style=\"text-align: center;\">&nbsp;</td>
 				  </tr>";
         
@@ -5927,9 +6317,22 @@ foreach ($dataArr as $satker_id => $value)
                         <td style=\"text-align: ;\">&nbsp;$value->Alamat</td>
                         <td style=\"text-align: right;\">".number_format($value->LuasJaringan,0,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
+						<td style=\"text-align: right;\">".number_format($value->PenyusutanPerTahun,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
+                      
                       </tr>";
                 $total_perolehan += ($value->NilaiPerolehan);
                 $total_perolehan_kel += ($value->NilaiPerolehan);
+				
+				$total_perolehan_PP += ($value->PenyusutanPerTahun);
+				$total_perolehan_kel_PP += ($value->PenyusutanPerTahun);
+				
+				$total_perolehan_AP += ($value->AkumulasiPenyusutan);
+				$total_perolehan_kel_AP += ($value->AkumulasiPenyusutan);
+				
+				$total_perolehan_NB += ($value->NilaiBuku);
+				$total_perolehan_kel_NB += ($value->NilaiBuku);
         }
 		$html .="<tr>
 				<td></td>
@@ -5937,9 +6340,15 @@ foreach ($dataArr as $satker_id => $value)
 				<td></td>
 				<td></td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_PP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_AP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel_NB,2,",",".")."</td>
 			</tr>";
 		$total_perolehan_kel= 0;
-    } 
+		$total_perolehan_kel_PP = 0;
+		$total_perolehan_kel_AP = 0;
+		$total_perolehan_kel_NB = 0;
+	} 
 	$no++;
 }
 
@@ -5948,12 +6357,18 @@ $html .="
 			<tr>
 				<td colspan = \"4\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_PP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_AP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_NB,2,",",".")."</td>
 			</tr>
 			</table>
 			</tbody>
 		</body>
 	</html>";   
-	$total_perolehan = 0;	
+	$total_perolehan = 0;
+	$total_perolehan_PP = 0;	
+	$total_perolehan_AP = 0;	
+	$total_perolehan_NB = 0;		
     $hasil_html[]=$html;
 	return $hasil_html;
 }		
@@ -6119,8 +6534,9 @@ foreach ($dataArr as $satker_id => $value)
 					<td style=\"text-align: center;\">&nbsp;</td>
 				  </tr>";
         
-        foreach ($data as $index => $value)
+        foreach ($data as $index => $val)
         {
+			foreach($val as $vl=>$value){	
                 $html .= "<tr>
 						<td style=\"text-align: ;\">&nbsp;</td>
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
@@ -6132,6 +6548,7 @@ foreach ($dataArr as $satker_id => $value)
 				$total_kel += ($value->jumlah);
                 $total_perolehan_kel += ($value->Nilai);
 				// $tot_perkel=
+			}	
         }
 		$html .="<tr>
 				<td></td>
@@ -18251,6 +18668,9 @@ $body="
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
+				<td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Penyusutan<br>Per Tahun</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi<br>Penyusutan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Nilai<br>Buku</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
             </tr>
             <tr align=\"center\"></tr>
@@ -18279,7 +18699,10 @@ $body="
                 <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
                 <td style=\"text-align:center; font-weight: bold;\">13</td>
                 <td style=\"text-align:center; font-weight: bold;\">14</td>
-                <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
+                <td style=\"text-align:center; font-weight: bold;\">15</td>
+                <td style=\"text-align:center; font-weight: bold;\">16</td>
+                <td style=\"text-align:center; font-weight: bold;\">17</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">18</td>
             </tr></thead>";
 																					  
 }
@@ -18288,11 +18711,17 @@ $body="
 if ($skpdeh != $row->kodeSatker && $no>1){
 // $printbarang=  number_format($barangTotal);
                         //$printpanjang= number_format($panjangTotal);
-                        $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
-                        $tabletotal="
+                    $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                    $printPPTotal=  number_format($PenyusutanPerTahunTotal,2,",",".");
+                    $printAPTotal=  number_format($AkumulasiPenyusutanTotal,2,",",".");
+                    $printNBTotal=  number_format($NilaiBukuTotal,2,",",".");
+                    $tabletotal="
 						<tr>
 							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
 							<td style=\"text-align: right;\">$printperolehanTotal</td>
+							<td style=\"text-align: right;\">$printPPTotal</td>
+							<td style=\"text-align: right;\">$printAPTotal</td>
+							<td style=\"text-align: right;\">$printNBTotal</td>
                             <td>&nbsp;</td>
 						</tr></table>"; 
 
@@ -18549,6 +18978,9 @@ $footer ="
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Satuan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
+				<td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Penyusutan<br>Per Tahun</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi<br>Penyusutan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Nilai<br>Buku</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
             </tr>
             <tr align=\"center\"></tr>
@@ -18577,7 +19009,10 @@ $footer ="
                 <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
                 <td style=\"text-align:center; font-weight: bold;\">13</td>
                 <td style=\"text-align:center; font-weight: bold;\">14</td>
-                <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
+                <td style=\"text-align:center; font-weight: bold;\">15</td>
+                <td style=\"text-align:center; font-weight: bold;\">16</td>
+                <td style=\"text-align:center; font-weight: bold;\">17</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">18</td>
             </tr></thead>";
                                                  //udah dites disini footer 
 		// $skpdeh = $row->kodeSatker;
@@ -18613,6 +19048,12 @@ $footer ="
 						$nilaiPrlhn = $row->NilaiPerolehan;
 						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
 						$kuantitas = 1;
+						$PenyusutanPerTahun = $row->PenyusutanPerTahun;
+						$PenyusutanPerTahunFix = number_format($row->PenyusutanPerTahun,2,",",".");
+						$AkumulasiPenyusutan = $row->AkumulasiPenyusutan;
+						$AkumulasiPenyusutanFix = number_format($row->AkumulasiPenyusutan,2,",",".");
+						$NilaiBuku = $row->NilaiBuku; 
+						$NilaiBukuFix = number_format($row->NilaiBuku,2,",",".");
 					}else{
 						$awal = $split[0];
 						$akhir = end($split);
@@ -18620,9 +19061,21 @@ $footer ="
 						$hasil = ($akhir - $awal) + 1;
 						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
 						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+						
+						$PenyusutanPerTahun = $hasil * $row->PenyusutanPerTahun;
+						$PenyusutanPerTahunFix = number_format($PenyusutanPerTahun,2,",",".");
+						
+						$AkumulasiPenyusutan = $hasil * $row->AkumulasiPenyusutan;
+						$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan,2,",",".");
+						
+						$NilaiBuku = $hasil * $row->NilaiBuku;
+						$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
 						$kuantitas = $hasil;
 					}
 					$perolehanTotal = $perolehanTotal + $nilaiPrlhn;
+					$PenyusutanPerTahunTotal = $PenyusutanPerTahunTotal + $PenyusutanPerTahun;
+					$AkumulasiPenyusutanTotal = $AkumulasiPenyusutanTotal + $AkumulasiPenyusutan;
+					$NilaiBukuTotal = $NilaiBukuTotal + $NilaiBuku;
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
@@ -18639,6 +19092,9 @@ $footer ="
 									<td style=\"width: 81px;\">$ketKondisi</td>
 									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
 									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnFix</td>
+									<td style=\"width: 80px; text-align:right;\">$PenyusutanPerTahunFix</td>
+									<td style=\"width: 80px; text-align:right;\">$AkumulasiPenyusutanFix</td>
+									<td style=\"width: 80px; text-align:right;\">$NilaiBukuFix</td>
 									<td style=\"width: 60px;\">$row->Info</td>
 								</tr>";
                                                             
@@ -18647,10 +19103,16 @@ $footer ="
                                             
                     // $printbarang=  number_format($barangTotal);
                     $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                    $printPPTotal=  number_format($PenyusutanPerTahunTotal,2,",",".");
+                    $printAPTotal=  number_format($AkumulasiPenyusutanTotal,2,",",".");
+                    $printNBTotal=  number_format($NilaiBukuTotal,2,",",".");
                     $tabletotal="
 						<tr>
 							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
 							<td style=\"text-align: right;\">$printperolehanTotal</td>
+							<td style=\"text-align: right;\">$printPPTotal</td>
+							<td style=\"text-align: right;\">$printAPTotal</td>
+							<td style=\"text-align: right;\">$printNBTotal</td>
                             <td>&nbsp;</td>
 						</tr></table>"; 
 						
@@ -31878,7 +32340,9 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
 		}elseif($gol == '02'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3'
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -31886,21 +32350,27 @@ return $hasil_html;
 						$KodeKaCondt1";
 			
 			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						and (NilaiPerolehan >= 300000 $KodeKa)";
 			}else{
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol2 
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault'
@@ -31909,7 +32379,9 @@ return $hasil_html;
 			}
 		}elseif($gol == '03'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3'
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -31917,21 +32389,27 @@ return $hasil_html;
 						$KodeKaCondt1";
 			
 			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						and (NilaiPerolehan >= 10000000 $KodeKa)";
 			}else{
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol2 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol2 
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -31939,7 +32417,9 @@ return $hasil_html;
 						and (NilaiPerolehan >= 10000000 $KodeKa) and kodeLokasi like '12%' ";
 			}
 		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
-			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+			sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+			FROM $paramGol
 			WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
 			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
@@ -31979,18 +32459,44 @@ return $hasil_html;
 				}else{
 					$Nilai=$value->Nilai;
 				}
-				
 				$jml=$value->jml;
 				
-				$NilaiFix += $Nilai;
+				if($gol = '02' || $gol = '03' || $gol = '04'){
+					if($value->NilaiPP == NULL || $value->NilaiPP == ''){
+						$NilaiPP=0;
+					}else{
+						$NilaiPP=$value->NilaiPP;
+					}
+					
+					if($value->NilaiAP == NULL || $value->NilaiAP == ''){
+						$NilaiAP=0;
+					}else{
+						$NilaiAP=$value->NilaiAP;
+					}
+					
+					if($value->NilaiBuku == NULL || $value->NilaiBuku == ''){
+						$NilaiBuku=0;
+					}else{
+						$NilaiBuku=$value->NilaiBuku;
+					}
+				}
 				$jmlFix += $jml;
+				$NilaiFix += $Nilai;
+				$NilaiPPFix += $NilaiPP;
+				$NilaiAPFix += $NilaiAP;
+				$NilaiBukuFix += $NilaiBuku;
 				
 			}
 		}
 		// echo "NilaiFix =".$NilaiFix;
 		// echo "<br>";
 		// echo "jmlFix =".$jmlFix;
-	return array($NilaiFix,$jmlFix);
+		if($gol = '02' || $gol = '03' || $gol = '04'){
+			return array($NilaiFix,$jmlFix,$NilaiPPFix,$NilaiAPFix,$NilaiBukuFix);
+		}else{
+			return array($NilaiFix,$jmlFix);
+		}
+	
 	
 	}
 
@@ -32058,28 +32564,36 @@ return $hasil_html;
 						";
 		}elseif($gol == '02'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1";
 			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						and (NilaiPerolehan >= 300000 $KodeKa)";
 			}else{
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol2 
+						SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM $paramGol2 
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -32089,28 +32603,36 @@ return $hasil_html;
 			}
 		}elseif($gol == '03'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1";
 			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+					sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+					FROM $paramGol
 					WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 					and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 					and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 					and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 					and (NilaiPerolehan >= 10000000 $KodeKa)";
 			}else{
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
 						$KodeKaCondt1
 						union all 
-						SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol2 
+						SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+						FROM $paramGol2 
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
@@ -32118,7 +32640,16 @@ return $hasil_html;
 						and kodeLokasi like '12%' 
 						and (NilaiPerolehan >= 10000000 $KodeKa)";
 			}
-		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
+		}elseif($gol == '04'){
+			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+					sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku 
+			FROM $paramGol
+			WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+			";
+		}elseif($gol == '05' || $gol == '06' ){
 			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
 			WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
@@ -32146,11 +32677,39 @@ return $hasil_html;
 				}else{
 					$Nilai=$value->nilai;
 				}
+				
 				// $Nilai=$value->nilai;
 				$jml=$value->jml;
-				
+				if($gol == '02' || $gol == '03' || $gol == '04'){
+					if($value->NilaiPP == NULL || $value->NilaiPP == ''){
+						$nilaiPP = 0;
+					}else{
+						$nilaiPP = $value->NilaiPP;
+					}
+					//total nilai akumulasi penyusutan
+					if($value->NilaiAP == NULL || $value->NilaiAP == ''){
+						$nilaiAP = 0;
+					}else{
+						$nilaiAP = $value->NilaiAP;
+					}
+					//total nilai buku
+					if($value->NilaiBuku == NULL || $value->NilaiBuku == ''){
+						$nilaiBK = 0;
+					}else{
+						$nilaiBK = $value->NilaiBuku;
+					}
+				}else{
+					$nilaiPP = 0;
+					$nilaiAP = 0;
+					$nilaiBK = 0;
+				}
 				$NilaiFix += $Nilai;
 				$jmlFix += $jml;
+				
+				$NilaiPPFix += $nilaiPP;
+				$NilaiAPFix += $nilaiAP;
+				$NilaiBukuFix += $nilaiBK;
+				
 				
 				$tempAllNilaiFix [] = $NilaiFix;
 				$tempAlljmlFix [] = $jmlFix;
@@ -32163,7 +32722,7 @@ return $hasil_html;
 		// echo "NilaiFix =".$NilaiFix;
 		// echo "<br>";
 		// echo "jmlFix =".$jmlFix;
-	return array($NilaiFix,$jmlFix);
+	return array($NilaiFix,$jmlFix,$NilaiPPFix,$NilaiAPFix,$NilaiBukuFix);
 	
 	} 
 	
