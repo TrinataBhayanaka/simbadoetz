@@ -9,15 +9,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 include"$path/meta.php";
 include"$path/header.php";
 include"$path/menu.php";
-
+// pr($_POST);
 $Penyusutan_ID = $_POST['Penyusutan_ID'];
 $Satker_ID = $_POST['Satker_ID'];
+$Usulan = $_POST['Usulan_ID'];
 if($_SESSION['ses_uaksesadmin']){
 	//akses admin
-	$par_data_table="usernm={$_SESSION['ses_uoperatorid']}&akses={$_SESSION['ses_uaksesadmin']}&Penyusutan_ID={$Penyusutan_ID}&Satker_ID={$Satker_ID}";
+	$par_data_table="usernm={$_SESSION['ses_uoperatorid']}&akses={$_SESSION['ses_uaksesadmin']}&Penyusutan_ID={$Penyusutan_ID}&Satker_ID={$Satker_ID}&usulan={$Usulan}";
 }else{
 	//akses user biasa
-	$par_data_table="usernm={$_SESSION['ses_uoperatorid']}&Penyusutan_ID={$Penyusutan_ID}&Satker_ID={$Satker_ID}";
+	$par_data_table="usernm={$_SESSION['ses_uoperatorid']}&Penyusutan_ID={$Penyusutan_ID}&Satker_ID={$Satker_ID}&usulan={$Usulan}";
 }
 // echo $par_data_table;
 // exit;
@@ -110,6 +111,7 @@ $FlagPenetapan=$PENYUSUTAN->getPenetapanKet($Penyusutan_ID,$Satker_ID);
 				</li>
 				<li>
 					<input type="submit" class="btn btn-info btn-small" id= "submit" value="Pilih Usulan" name="submit"  onclick="return check_pilihan(); disabled"/>
+					<a class="btn btn-success detailRight" href="filter_aset_penetapan_pnystn.php?idPenyusutan=<?=$_GET['idPenyusutan']?>&satker=<?=$_GET['satker']?>"><i class="fa fa-reply"></i>Kembali Ke Daftar Usulan</a>
 					<input type="hidden" name="Satker_ID" value="<?=$Satker_ID?>">
 					<input type="hidden" name="Penyusutan_ID" value="<?=$Penyusutan_ID?>">
 				</li>

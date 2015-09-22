@@ -24,7 +24,8 @@ session_write_close();
 		//update StatusRunning = 3 tanda pernah dilakukan pembatalan penyusutan
 		$query="update  penyusutan_pertahun  set StatusRunning=3 where Penyusutan_ID=$Penyusutan_ID";
 		$DBVAR->query($query) or die($DBVAR->error());
-		$status=exec("php running_penyusutan_batal_server_custome.php $Penyusutan_ID $Satker  > log/penyusutan-custome-batal.txt 2>&1 &");
+		// $status=exec("php running_penyusutan_batal_server_custome.php $Penyusutan_ID $Satker  > log/penyusutan-custome-batal.txt 2>&1 &");
+		$status=exec("php running_penyusutan_batal_server_custome.php $Penyusutan_ID $Satker  > log/penyusutan-custome-batal.txt &");
 		 header('Location: validasi_pnystn.php?pid=1');
 	}
 	

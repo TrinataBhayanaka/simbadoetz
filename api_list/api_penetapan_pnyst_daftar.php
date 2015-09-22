@@ -18,12 +18,21 @@ $id=$_SESSION['user_id'];//Nanti diganti
 /* Array of database columns which should be read and sent back to DataTables. Use a space where
  * you want to insert a non-database field (for example a counter or static image)
  */
-
+// pr($_GET);
 $usernm = $_GET['usernm'];
 $akses = $_GET['akses'];
 $Penyusutan_ID = $_GET['Penyusutan_ID'];
 $Satker_ID = $_GET['Satker_ID'];
-/*echo 'usernm ='.$usernm; 
+$Usulan = $_GET['usulan'];
+// echo "usulan".$Usulan;
+if($Usulan != ''){
+	$QueryHandler =" AND NoUsulan = '{$Usulan}' AND Penetapan_ID is null";
+}else{
+	$QueryHandler =" AND Penetapan_ID is null";
+}
+// echo "masukkk =".$QueryHandler; 
+/*echo 'usernm
+ ='.$usernm; 
 echo '<br>';
 echo 'akses ='.$akses;*/ 
 
@@ -101,7 +110,7 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
 $sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
 		FROM   $sTable 
-		$sWhere
+		$sWhere $QueryHandler
 		$sOrder
 		$sLimit
 		";
@@ -121,7 +130,7 @@ $iFilteredTotal = $aResultFilterTotal[0];
 /* Total data set length */
 $sQuery = "
 		SELECT COUNT(`" . $sIndexColumn . "`)
-		FROM   $sTable $sWhere
+		FROM   $sTable $sWhere $QueryHandler
 	";
 
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());

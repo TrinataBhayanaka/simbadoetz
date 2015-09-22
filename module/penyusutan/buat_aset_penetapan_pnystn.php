@@ -15,7 +15,19 @@
 	   $("select").select2();
 	   $("#TglPenyusutan").mask('9999-99-99');
 	   $("#TglPenyusutan" ).datepicker({ dateFormat: 'yy-mm-dd' });
-
+	});
+	$(document).on('change', '#kodeSatker', function (){
+	   if($("#kodeSatker").val() != ""){	
+			$.post('<?=$url_rewrite?>/function/api/cekpenetapanpenyusutan.php', {kodesatker:$("#kodeSatker").val(),tahun:$("#tahun").val()}, function(data){
+			alert(data);
+			if(data != 0){
+				 alert("Anda Telah Membuat \n Lebih dari satu Penetapan di Tahun yang sama");
+				 $('#simpan').attr("disabled","disabled");
+			}else{
+				$("#simpan").removeAttr("disabled");
+			}
+		})
+		}
 	});
 	</script>
 	<section id="main">
@@ -73,10 +85,10 @@
 					</li>
 						<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 						<input type="hidden" name="FixPenyusutan" value="1">
-						<input type="hidden" name="Tahun" value=<?=date('Y')?>>
+						<input type="hidden" id= "tahun" name="Tahun" value=<?=date('Y')?>>
 					<li>
 						<span class="span2">&nbsp;</span>
-						<input type="submit" name="simpan" class="btn btn-primary" value="Simpan" />
+						<input type="submit" name="simpan" id="simpan" class="btn btn-primary" value="Simpan" />
 						<a href="javascript:history.back()"><input type="button" name="batal" class="btn" value="Batal" ></a>
 					</li>
 				</ul>
