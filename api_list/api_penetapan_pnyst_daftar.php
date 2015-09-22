@@ -81,7 +81,8 @@ if (isset($_GET['iSortCol_0'])) {
  */
 $sWhere = "";
 if ($akses == 1){
-	$sWhere = "WHERE Jenis_Usulan = 'PNY' AND SatkerUsul ='{$Satker_ID}'";
+	// $sWhere = "WHERE Jenis_Usulan = 'PNY' AND SatkerUsul ='{$Satker_ID}'";
+	$sWhere = "WHERE Jenis_Usulan = 'PNY'";
 }else{
 	$sWhere = "WHERE UserNM ={$usernm} AND Jenis_Usulan = 'PNY' AND SatkerUsul ='{$Satker_ID}'";
 }

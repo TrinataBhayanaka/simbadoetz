@@ -89,11 +89,11 @@ $FlagUsulan=$PENYUSUTAN->getUsulanKet($Usulan_ID,$Satker_ID);
 				</li>
 				<li>
 					<span class="labelInfo">Tgl Usulan</span>
-					<input type="text" name = "TglUpdate" style="width:300px" value="<?=$FlagUsulan['TglUpdate']?>" disabled/>
+					<input type="text" name = "TglUpdate" class="span2 full"  value="<?=$FlagUsulan['TglUpdate']?>" disabled/>
 				</li>
 				<li>
 					<span class="labelInfo">Keterangan</span>
-					<input type="text" name="KetUsulan" class="span2 full" id="" value="<?=$FlagUsulan['KetUsulan']?>" disabled/> 
+					<input type="text" name="KetUsulan"  style="width:300px" id="" value="<?=$FlagUsulan['KetUsulan']?>" disabled/> 
 				</li>
 				<li>
 					<span class="labelInfo">Satker</span>
