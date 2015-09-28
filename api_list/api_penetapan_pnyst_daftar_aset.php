@@ -249,9 +249,9 @@ if (!empty($data)){
 		  $row[] ="<center>".number_format($NilaiPerolehan,2,",",".")."</center>";
 		  $row[] ="<center>".$Tahun."</center>";
 		  $row[] =$Info;
-		  $row[] =$PenyusutanPerTaun;
-		  $row[] =$AkumulasiPenyusutan;
-		  $row[] =$NilaiBuku;
+		  $row[] ="<center>".number_format($PenyusutanPerTaun,2,",",".")."</center>";
+		  $row[] ="<center>".number_format($AkumulasiPenyusutan,2,",",".")."</center>";
+		  $row[] ="<center>".number_format($NilaiBuku,2,",",".")."</center>";
 		 
 		  
 		$no++;

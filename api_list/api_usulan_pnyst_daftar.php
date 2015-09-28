@@ -51,6 +51,17 @@ $kodeKelompok	= $_GET['kodeKelompok'];
 $AddCondtn_1 = "";
 $AddCondtn_2 = "";
 
+//handler double filter or more Aset_ID 
+$ceckAset_ID = "select Aset_ID from usulan where Usulan_ID = '{$Usulan_ID}'";
+$exeCeckAset_ID = $DBVAR->fetch($ceckAset_ID,1);
+$Aset_IDUsulan = $exeCeckAset_ID[0]['Aset_ID'];  
+if($exeCeckAset_ID[0]['Aset_ID'] != ''){
+	$QueryHandler = "AND a.Aset_ID NOT IN ($Aset_IDUsulan)";
+}else{
+	$QueryHandler = "";
+}
+
+// pr($exeCeckAset_ID);
 // echo $tahun;
 /* REMOVE THIS LINE (it just includes my SQL connection user/pass) */
 //include( $_SERVER['DOCUMENT_ROOT'] . "/datatables/mysql.php" );
@@ -228,13 +239,13 @@ if($paramKelompok[0] == '02' || $paramKelompok[0] == '03'){
 			FROM   $sTable 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 			$sWhere
-			$AddCondtn_1
+			$AddCondtn_1 $QueryHandler
 		UNION ALL
 			SELECT $fieldCustom
 			FROM   $sTable 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 			$sWhere
-			$AddCondtn_2
+			$AddCondtn_2 $QueryHandler
 		$sOrder
 		$sLimit
 		";
@@ -244,7 +255,7 @@ if($paramKelompok[0] == '02' || $paramKelompok[0] == '03'){
 			FROM   $sTable 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 			$sWhere
-			$AddCondtn_1
+			$AddCondtn_1 $QueryHandler
 		$sOrder
 		$sLimit
 		";
@@ -280,13 +291,13 @@ if ($Satker_ID != '' AND $kodeKelompok != '' ){
 			FROM   $sTable 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 			$sWhere
-			$AddCondtn_1
+			$AddCondtn_1 $QueryHandler
 		UNION ALL
 			SELECT COUNT(" . $sIndexColumn . ") as jml
 			FROM   $sTable 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 			$sWhere
-			$AddCondtn_2
+			$AddCondtn_2 $QueryHandler
 		";
 	}elseif($paramKelompok[0] == '04'){
 		$sQuery = "
@@ -294,7 +305,7 @@ if ($Satker_ID != '' AND $kodeKelompok != '' ){
 				FROM   $sTable 
 				INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 				$sWhere
-				$AddCondtn_1
+				$AddCondtn_1 $QueryHandler
 			";
 	}
 }
@@ -390,9 +401,9 @@ if (!empty($data)){
 		  $row[] ="<center>".number_format($NilaiPerolehan,2,",",".")."</center>";
 		  $row[] ="<center>".$Tahun."</center>";
 		  $row[] =$Info;
-		  $row[] =$PenyusutanPerTaun;
-		  $row[] =$AkumulasiPenyusutan;
-		  $row[] =$NilaiBuku;
+		  $row[] ="<center>".number_format($PenyusutanPerTaun,2,",",".")."</center>";
+		  $row[] ="<center>".number_format($AkumulasiPenyusutan,2,",",".")."</center>";
+		  $row[] ="<center>".number_format($NilaiBuku,2,",",".")."</center>";
 		 
 		  
 		$no++;

@@ -41,7 +41,7 @@ if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
              intval($_GET['iDisplayLength']);
 }
 
-
+$extCondt = "AND pp.StatusRunning != 3";
 /*
  * Ordering
  */
@@ -99,7 +99,7 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
 $sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
 		FROM   $sTable INNER JOIN $sTable_inner_join ON $cond
-		$sWhere
+		$sWhere $extCondt
 		$sOrder
 		$sLimit
 		";
@@ -119,7 +119,7 @@ $iFilteredTotal = $aResultFilterTotal[0];
 /* Total data set length */
 $sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable INNER JOIN $sTable_inner_join ON $cond $sWhere
+		FROM   $sTable INNER JOIN $sTable_inner_join ON $cond $sWhere $extCondt
 	";
 // echo $sQuery;
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
@@ -174,8 +174,8 @@ while ($value = $DBVAR->fetch_array($rResult)) {
 			  $label="info";
 			  $text="batal disusutkan";
 			}
-			
-		   // $message = $label."&nbsp".$text;	
+			$tahunAktif = date('Y');
+			// $message = $label."&nbsp".$text;	
 		   $message = "<span class=\"label label-$label\">$text</span>";	
 			
 			if($value['StatusRunning']==0){
@@ -185,7 +185,9 @@ while ($value = $DBVAR->fetch_array($rResult)) {
 				}  
 			}elseif($value['StatusRunning']==2){
 				if($_SESSION['ses_uaksesadmin'] == 1){	
-					$tindakan="<a href=\"{$url_rewrite}/module/penyusutan/running_penyusutan_batal.php?idPenyusutan={$value[Penyusutan_ID]}&satker={$value[SatkerUsul]}\" class=\"btn btn-danger btn-small\"><i class=\"fa fa-reply\"></i></i>&nbsp;Batal Penyusutan</a>";
+					if($tahunAktif == $value['Tahun']){
+						$tindakan="<a href=\"{$url_rewrite}/module/penyusutan/running_penyusutan_batal.php?idPenyusutan={$value[Penyusutan_ID]}&satker={$value[SatkerUsul]}\" class=\"btn btn-danger btn-small\"><i class=\"fa fa-reply\"></i></i>&nbsp;Batal Penyusutan</a>";
+					}
 				}	
 			}  
                 

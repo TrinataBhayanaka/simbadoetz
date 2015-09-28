@@ -19,7 +19,7 @@
 	$(document).on('change', '#kodeSatker', function (){
 	   if($("#kodeSatker").val() != ""){	
 			$.post('<?=$url_rewrite?>/function/api/cekpenetapanpenyusutan.php', {kodesatker:$("#kodeSatker").val(),tahun:$("#tahun").val()}, function(data){
-			alert(data);
+			// alert(data);
 			if(data != 0){
 				 alert("Anda Telah Membuat \n Lebih dari satu Penetapan di Tahun yang sama");
 				 $('#simpan').attr("disabled","disabled");

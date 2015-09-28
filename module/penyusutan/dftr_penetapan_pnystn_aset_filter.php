@@ -111,7 +111,7 @@ $par_data_table = "id_usulanPenetapan={$implodeUsulan}&Penyusutan_ID={$Penyusuta
 				</li>
 				<li>
 					<span class="labelInfo">Satker</span>
-					<input type="text" name="SatkerUsul" value="<?=$FlagPenetapan['NamaSatker']?>" disabled/>
+					<input type="text" name="SatkerUsul" style="width:350px" value="<?=$FlagPenetapan['NamaSatker']?>" disabled/>
 				</li>
 				<li>
 					<input type="submit" class="btn btn-info btn-small" id= "submit" value="Pilih Usulan" name="submit"  onclick="return check_pilihan(); disabled"/>
