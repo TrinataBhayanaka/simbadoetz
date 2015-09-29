@@ -9,7 +9,8 @@
 #Andreas Hadiyono (andre.hadiyono@gmail.com)
 #Gunadarma University
 include "../../config/config.php";
-
+// echo "masuk";
+// exit;
 $Penyusutan_ID = $_GET['idPenyusutan'];	
 $queryPenyusutan = "SELECT Penyusutan_ID,StatusRunning FROM penyusutan_pertahun WHERE Penyusutan_ID	='{$Penyusutan_ID}'";
 $exePenyusutan = $DBVAR->query($queryPenyusutan) or die($DBVAR->error());

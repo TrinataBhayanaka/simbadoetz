@@ -249,9 +249,12 @@ if (!empty($data)){
 		  $row[] ="<center>".number_format($NilaiPerolehan,2,",",".")."</center>";
 		  $row[] ="<center>".$Tahun."</center>";
 		  $row[] =$Info;
-		  $row[] ="<center>".number_format($PenyusutanPerTaun,2,",",".")."</center>";
+		  /*$row[] ="<center>".number_format($PenyusutanPerTaun,2,",",".")."</center>";
 		  $row[] ="<center>".number_format($AkumulasiPenyusutan,2,",",".")."</center>";
-		  $row[] ="<center>".number_format($NilaiBuku,2,",",".")."</center>";
+		  $row[] ="<center>".number_format($NilaiBuku,2,",",".")."</center>";*/
+		  $row[] ="<center>".$PenyusutanPerTaun."</center>";
+		  $row[] ="<center>".$AkumulasiPenyusutan."</center>";
+		  $row[] ="<center>".$NilaiBuku."</center>";
 		 
 		  
 		$no++;

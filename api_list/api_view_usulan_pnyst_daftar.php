@@ -261,9 +261,27 @@ if (!empty($data)){
 		  $row[] ="<center>".number_format($NilaiPerolehan,2,",",".")."</center>";
 		  $row[] ="<center>".$Tahun."</center>";
 		  $row[] =$Info;
-		  $row[] ="<center>".number_format($PenyusutanPerTaun,2,",",".")."</center>";
+		  /*$row[] ="<center>".number_format($PenyusutanPerTaun,2,",",".")."</center>";
 		  $row[] ="<center>".number_format($AkumulasiPenyusutan,2,",",".")."</center>";
-		  $row[] ="<center>".number_format($NilaiBuku,2,",",".")."</center>";
+		  $row[] ="<center>".number_format($NilaiBuku,2,",",".")."</center>";*/
+		  
+		  if($AkumulasiPenyusutan === 'NULL' || $AkumulasiPenyusutan == 0){
+			$row[] ="<center>".$AkumulasiPenyusutan."</center>";
+		  }else{
+			$row[] ="<center>".number_format($AkumulasiPenyusutan,2,",",".")."</center>";
+		  }
+		  
+		  if($PenyusutanPerTaun === 'NULL' || $PenyusutanPerTaun == 0){
+			$row[] ="<center>".$PenyusutanPerTaun."</center>";
+		  }else{
+			$row[] ="<center>".number_format($PenyusutanPerTaun,2,",",".")."</center>";
+		  }
+		  
+		  if($NilaiBuku === 'NULL' || $NilaiBuku == 0){
+			$row[] ="<center>".$NilaiBuku."</center>";
+		  }else{
+			$row[] ="<center>".number_format($NilaiBuku,2,",",".")."</center>";	
+		  }
 		  $row[] =$status;
 		 
 		  
