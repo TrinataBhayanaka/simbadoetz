@@ -50,7 +50,7 @@ $satker = $skpd_id;
 	}
 // pr($get_satker);
 // exit;
-
+$skpd = $get_satker[0];
 /*$hit = 2;
 $flag = '';
 $TypeRprtr = '';
@@ -76,7 +76,7 @@ if($tglcetak != ''){
 	$thnPejabat =substr($tglcetak,0,4);	
 }
 //retrieve html
-$html=$REPORT->retrieve_html_laporan_mutasi_skpd($result,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat);
+$html=$REPORT->retrieve_html_laporan_mutasi_skpd($result,$skpd,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat);
 // exit;
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

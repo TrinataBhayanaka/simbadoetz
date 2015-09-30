@@ -21,14 +21,18 @@ $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglcetak = $_GET['tglcetak'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
+$kodeRuangan = $_GET['kodeRuangan'];
 $kir = $_GET['kir'];
+$tipe = $_GET['tipe_file'];
 // pr($_GET);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
+    "kodeRuangan"=>$kodeRuangan,
     "tab"=>$tab,
 	"kir"=>$kir
 );
@@ -87,7 +91,7 @@ if($tglcetak != ''){
 	$tanggalCetak = format_tanggal($tglcetak);	
 	$thnPejabat =substr($tglcetak,0,4);
 }
-
+// echo "tglcetak".$tanggalCetak;
 //retrieve html
 $html=$REPORT->retrieve_html_kir($result,$gambar,$tanggalCetak,$thnPejabat);
 /*$count = count($html);
@@ -127,8 +131,10 @@ exit;
 }
 else 
 {
+	echo "masuk";
+	// exit;
 	$waktu=date("dymhis");
-	$filename ="Kartu Inventaris Ruangan_$waktu.xls";
+	$filename ="Kartu_Inventaris_Ruangan_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	

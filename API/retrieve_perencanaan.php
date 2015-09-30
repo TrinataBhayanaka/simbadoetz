@@ -7,165 +7,432 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
 		$this->db = new DB;
 	}
 	
-	public function retrieve_harga_barang_filter($data,$debug=false)
-    {
-        
-        $tahun = $data['shb_thn'];
-        $njb = $data['kelompok_id'];
-        $ket = $data['shb_ket'];
-        $menuID = $data['menuID'];
-
-        $filter = "";
-        if ($tahun) $filter .= " AND tahun = '{$tahun}'";
-        if ($njb) $filter .= " AND Kelompok_ID = '{$njb}'";
-        if ($ket) $filter .= " AND Keterangan = '{$ket}'";
-
-        // pr($data);
-        $StatusPemeliharaan = "";
-        if ($menuID==2) $StatusPemeliharaan .= "StatusPemeliharaan=0";
-        if ($menuID==3) $StatusPemeliharaan .= "StatusPemeliharaan=1";
-
+	public function store_rencanaPengadaan($data){
+        //pr($data);
+        // //exit;
+        $Created_Date=date("Y-m-d");
         $sql = array(
-                'table'=>'StandarHarga AS st',
-                'field'=>"st.*",
-                'condition' => "{$StatusPemeliharaan} {$filter}",
-                'limit' => '100',
-                );
-
-        $res = $this->db->lazyQuery($sql,$debug);
-        if ($res) return $res;
-        return false;
-        
-    }
-
-    
-    public function store_shb_data($data,$debug=false)
-    {
-        
-        // pr($data);
-        $njb =$data['shb_add_njb_id'];
-        $mat =$data['shb_add_mat'];
-        $tanggal =explode("/",$data['shb_add_tgl']);
-        $tgl =$tanggal[2]."-".$tanggal[0]."-".$tanggal[1];
-        $bhn =$data['shb_add_bhn'];
-		$satuan=$data['shb_add_satuan'];
-        $ket =$data['shb_add_ket'];
-        $hrg =$data['shb_add_hrg'];
-	
-        // $query 	="INSERT INTO StandarHarga (StandarHarga_ID,StatusPemeliharaan,Kelompok_ID,Merk,TglUpdate,Spesifikasi,Satuan,Keterangan,
-                    // NilaiStandar) VALUES (null,0,'".$njb."','".$mat."','".$tgl."','".$bhn."','".$satuan."','".$ket."','".$hrg."')";
-        $sql = array(
-                'table'=>'StandarHarga',
-                'field'=>"StatusPemeliharaan,Kelompok_ID,Merk,
-                			TglUpdate,Spesifikasi,Satuan,Keterangan,NilaiStandar",
-                'value' => "0,'{$njb}','{$mat}','{$tgl}','{$bhn}','{$satuan}','{$ket}','{$hrg}'",
-                );
-
+                    'table'=>'rencana',
+                    'field'=>"Rencana_ID, Kode_Kelompok,Kode_Satker, Kuantitas, Harga_Satuan, Kode_Rekening, Info,Tahun,TipeAset,Tgl_Update,Created_Date",
+                    'value' => "'','$data[kodeKelompok]','$data[kodeSatker]','$data[Kuantitas]','$data[Satuan]','$data[kdRekening]','$data[Info]','$data[Tahun]','$data[TipeAset]','$Created_Date','$Created_Date'",
+                    );
         $res = $this->db->lazyQuery($sql,$debug,1);
-        if ($res) return true;
-        return false;
-        
-        
+        $id_rencana=mysql_insert_id();
+
+        if($data[TipeAset]=="A"){
+            $sqlKib = array(
+                    'table'=>'prcn_tanah',
+                    'field'=>"prcn_tanah_ID,Rencana_ID, LuasTanah, HakTanah,NoSertifikat, TglSertifikat",
+                    'value' => "'','$id_rencana','$data[LuasTotal]','$data[HakTanah]','$data[NoSertifikat]','$data[TglSertifikat]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        }elseif($data[TipeAset]=="B"){
+            $sqlKib = array(
+                    'table'=>'prcn_mesin',
+                    'field'=>"prcn_mesin_ID,Rencana_ID, Merk, Model, Ukuran, NoSeri, NoRangka,NoMesin,NoSTNK,NoBPKB,Bahan",
+                    'value' => "'','$id_rencana','$data[Merk]','$data[Model]','$data[Ukuran]','$data[NoPabrik]','$data[NoRangka]','$data[NoMesin]','$data[NoSTNK]','$data[NoBPKB]','$data[Material]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        }elseif($data[TipeAset]=="C"){
+            $sqlKib = array(
+                    'table'=>'prcn_bangunan',
+                    'field'=>"prcn_bangunan_ID,Rencana_ID, Beton, JumlahLantai, LuasLantai, NoDokumen, TglDokumen",
+                    'value' => "'','$id_rencana','$data[Beton]','$data[JumlahLantai]','$data[LuasLantai]','$data[NoSurat]','$data[tglSurat]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        }elseif($data[TipeAset]=="D"){
+            $sqlKib = array(
+                    'table'=>'prcn_jaringan',
+                    'field'=>"prcn_jaringan_ID,Rencana_ID, Konstruksi, Panjang, Lebar, LuasJaringan, NoDokumen,TglDokumen",
+                    'value' => "'','$id_rencana','$data[Konstruksi]','$data[Panjang]','$data[Lebar]','$data[LuasJaringan]','$data[NoDokumen]','$data[tglDokumen]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        }elseif($data[TipeAset]=="E"){
+            $sqlKib = array(
+                    'table'=>'prcn_asettetaplain',
+                    'field'=>"prcn_asettetaplain_ID,Rencana_ID, Judul, AsalDaerah, Pengarang, Penerbit, Spesifikasi,Material, Ukuran",
+                    'value' => "'','$id_rencana','$data[Judul]','$data[AsalDaerah]','$data[Pengarang]','$data[Penerbit]','$data[Spesifikasi]','$data[Material]','$data[Ukuran]'",
+                    );
+         $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        }elseif($data[TipeAset]=="F"){
+            $sqlKib = array(
+                    'table'=>'prcn_kdp',
+                    'field'=>"prcn_kdp_ID,Rencana_ID, Beton, JumlahLantai, LuasLantai",
+                    'value' => "'','$id_rencana','$data[Beton]','$data[JumlahLantai]','$data[LuasLantai]'",
+                    );
+         $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        }
+        //pr($sql);
+        //exit;
+        if ($res) return $res;
+        return false; 
+    }
+    public function update_rencanaPengadaan($data){
+        // pr($data);
+        // exit;
+        $Tgl_Update=date("Y-m-d");
+        $sql = array(
+            'table'=>'rencana',
+            'field'=>"Tahun='$data[Tahun]',Kuantitas='$data[Kuantitas]', Harga_Satuan='$data[Satuan]',Tgl_Update='$Tgl_Update', Info='$data[Info]'",
+            'condition' => "Rencana_ID='$data[IDRENCANA]'",
+            );
+        $res = $this->db->lazyQuery($sql,$debug,2);
+        // $id_rencana=mysql_insert_id();
+
+        if($data[TipeAset]=="A"){
+            $sqlKib = array(
+                    'table'=>'prcn_tanah',
+                    'field'=>"LuasTanah='$data[LuasTotal]', HakTanah='$data[HakTanah]',NoSertifikat='$data[NoSertifikat]', TglSertifikat='$data[TglSertifikat]'",
+                     'condition' => "Rencana_ID='$data[IDRENCANA]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+        }elseif($data[TipeAset]=="B"){
+            $sqlKib = array(
+                    'table'=>'prcn_mesin',
+                    'field'=>"Merk='$data[Merk]', Model='$data[Model]', Ukuran='$data[Ukuran]', NoSeri='$data[NoPabrik]',NoSTNK='$data[NoSTNK]', NoRangka='$data[NoRangka]',NoMesin='$data[NoMesin]',NoBPKB='$data[NoBPKB]',Bahan='$data[Material]'",
+                     'condition' => "Rencana_ID='$data[IDRENCANA]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+        }elseif($data[TipeAset]=="C"){
+            $sqlKib = array(
+                    'table'=>'prcn_bangunan',
+                    'field'=>" Beton='$data[Beton]', JumlahLantai='$data[JumlahLantai]', LuasLantai='$data[LuasLantai]', NoDokumen='$data[NoSurat]', TglDokumen='$data[tglSurat]'",
+                     'condition' => "Rencana_ID='$data[IDRENCANA]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+        }elseif($data[TipeAset]=="D"){
+            $sqlKib = array(
+                    'table'=>'prcn_jaringan',
+                    'field'=>" Konstruksi='$data[Konstruksi]', Panjang='$data[Panjang]', Lebar='$data[Lebar]', LuasJaringan='$data[LuasJaringan]', NoDokumen='$data[NoDokumen]',TglDokumen='$data[tglDokumen]'",
+                     'condition' => "Rencana_ID='$data[IDRENCANA]'",
+                    );
+            $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+        }elseif($data[TipeAset]=="E"){
+            $sqlKib = array(
+                    'table'=>'prcn_asettetaplain',
+                    'field'=>"Judul='$data[Judul]', AsalDaerah='$data[AsalDaerah]', Pengarang='$data[Pengarang]', Penerbit='$data[Penerbit]', Spesifikasi='$data[Spesifikasi]',Material='$data[Material]', Ukuran='$data[Ukuran]'",
+                     'condition' => "Rencana_ID='$data[IDRENCANA]'",
+                    );
+         $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+        }elseif($data[TipeAset]=="F"){
+            $sqlKib = array(
+                    'table'=>'prcn_kdp',
+                    'field'=>"Beton='$data[Beton]', JumlahLantai='$data[JumlahLantai]', LuasLantai='$data[LuasLantai]'",
+                     'condition' => "Rencana_ID='$data[IDRENCANA]'",
+                    );
+         $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        }
+        //pr($sql);
+        //exit;
+        if ($res) return $res;
+        return false; 
+    }
+public function store_rencanaPemeliharaan($data){
+        //pr($data);
+        // //exit;
+        $Created_Date=date("Y-m-d");
+        // $sql = array(
+        //             'table'=>'rencana',
+        //             'field'=>"Rencana_ID, Kode_Kelompok, Kuantitas, Harga_Satuan, Kode_Rekening, Info,TipeAset,Tgl_Update,Created_Date",
+        //             'value' => "'','$data[kodeKelompok]','$data[Kuantitas]','$data[Satuan]','$data[kdRekening]','$data[Info]','$data[TipeAset]','$Created_Date','$Created_Date'",
+        //             );
+        // $res = $this->db->lazyQuery($sql,$debug,1);
+        // $id_rencana=mysql_insert_id();
+        $sql = array(
+                        'table'=>'rencana',
+                        'field'=>"Harga_Pemeliharaan='$data[Harga_Pemeliharaan]', Uraian_Pemeliharaan='$data[uraian_pemeliharaan]',Tgl_Update='$Created_Date', Status_Pemeliharaan='1'",
+                        'condition' => "Rencana_ID='$data[IDRENCANA]'",
+                        );
+                    $res = $this->db->lazyQuery($sql,$debug,2);
+
+        // if($data[TipeAset]=="A"){
+        //     $sqlKib = array(
+        //             'table'=>'prcn_tanah',
+        //             'field'=>"prcn_tanah_ID,Rencana_ID, LuasTanah, HakTanah,NoSertifikat, TglSertifikat",
+        //             'value' => "'','$id_rencana','$data[LuasTotal]','$data[HakTanah]','$data[NoSertifikat]','$data[TglSertifikat]'",
+        //             );
+        //     $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        // }elseif($data[TipeAset]=="B"){
+        //     $sqlKib = array(
+        //             'table'=>'prcn_mesin',
+        //             'field'=>"prcn_mesin_ID,Rencana_ID, Merk, Model, Ukuran, NoSeri, NoRangka,NoMesin,NoBPKB,Bahan",
+        //             'value' => "'','$id_rencana','$data[Merk]','$data[Model]','$data[Ukuran]','$data[Pabrik]','$data[NoRangka]','$data[NoMesin]','$data[NoBPKB]','$data[Material]'",
+        //             );
+        //     $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        // }elseif($data[TipeAset]=="C"){
+        //     $sqlKib = array(
+        //             'table'=>'prcn_bangunan',
+        //             'field'=>"prcn_bangunan_ID,Rencana_ID, Beton, JumlahLantai, LuasLantai, NoDokumen, TglDokumen",
+        //             'value' => "'','$id_rencana','$data[Beton]','$data[JumlahLantai]','$data[LuasLantai]','$data[NoSurat]','$data[tglSurat]'",
+        //             );
+        //     $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        // }elseif($data[TipeAset]=="D"){
+        //     $sqlKib = array(
+        //             'table'=>'prcn_jaringan',
+        //             'field'=>"prcn_jaringan_ID,Rencana_ID, Konstruksi, Panjang, Lebar, LuasJaringan, NoDokumen,TglDokumen",
+        //             'value' => "'','$id_rencana','$data[Konstruksi]','$data[Panjang]','$data[Lebar]','$data[LuasJaringan]','$data[NoDokumen]','$data[tglDokumen]'",
+        //             );
+        //     $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        // }elseif($data[TipeAset]=="E"){
+        //     $sqlKib = array(
+        //             'table'=>'prcn_asettetaplain',
+        //             'field'=>"prcn_asettetaplain_ID,Rencana_ID, Judul, AsalDaerah, Pengarang, Penerbit, Spesifikasi,Material, Ukuran",
+        //             'value' => "'','$id_rencana','$data[Judul]','$data[AsalDaerah]','$data[Pengarang]','$data[Penerbit]','$data[Spesifikasi]','$data[Material]','$data[Ukuran]'",
+        //             );
+        //  $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        // }elseif($data[TipeAset]=="F"){
+        //     $sqlKib = array(
+        //             'table'=>'prcn_kdp',
+        //             'field'=>"prcn_kdp_ID,Rencana_ID, Beton, JumlahLantai, LuasLantai",
+        //             'value' => "'','$id_rencana','$data[Beton]','$data[JumlahLantai]','$data[LuasLantai]'",
+        //             );
+        //  $resKib = $this->db->lazyQuery($sqlKib,$debug,1);
+        // }
+        //pr($sql);
+        //exit;
+        if ($res) return $res;
+        return false; 
     }
 
-    public function retrieve_skb_filter($data,$debug=false)
+    public function retrieve_daftar_perencanaan_pengadaanSerSide($data,$debug=false)
     {
-		$skb_njb	= $data['kelompok_id'];
-		$skb_skpd	= $data['skpd_id'];
-		$skb_lokasi	= $data['lokasi_id'];
-		
+        $kodeKelompok = $data['kodeKelompok'];
+       
+        $kdRekening = $data['kdRekening'];
+
+        $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
+
         $filter = "";
-		if ($skb_njb) $filter .= " AND skb_njb = '{$skb_njb}'";
-        if ($skb_skpd) $filter .= " AND skb_skpd = '{$skb_skpd}'";
-        if ($skb_lokasi) $filter .= " AND skb_lokasi = '{$skb_lokasi}'";
+        if ($kodeKelompok) $filter .= " AND r.Kode_Kelompok = '{$kodeKelompok}' ";
+        if ($kdRekening) $filter .= " AND r.Kode_Rekening = '{$kdRekening}' ";
 
+       
 
-		$sql = array(
-                'table'=>'StandarKebutuhan',
-                'field'=>"*",
-                'condition' => "1 {$filter}",
-                'limit' => '100'
-                );
-
-        $res = $this->db->lazyQuery($sql,$debug);
+             $sql = array(
+                    'table'=>'rencana as r,kelompok as kel,koderekening as rek',
+                    'field'=>" SQL_CALC_FOUND_ROWS r.*, kel.Uraian,rek.NamaRekening ",
+                    'condition' => "r.Status_Pemeliharaan=0 {$filter} {$kondisi} GROUP BY r.Rencana_ID {$order} ",
+                    'limit'=>"$limit",
+                   'joinmethod' => ' LEFT JOIN ',
+                    'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
+                    );
+                $res = $this->db->lazyQuery($sql,$debug);
+// //pr($sql);
+// //pr($res);
+              
         if ($res) return $res;
         return false;
-
-	}
-
-
-	public function retrieve_rkb_filter($data,$debug=false)
-    {
-		//field name dari form filter
-		$rkb_tahun	= $data['rkb_thn'];
-		$rkb_skpd	= $data['skpd_id'];
-		$rkb_lokasi	= $data['lokasi_id'];
-		$rkb_njb	= $data['kelompok_id'];
         
-        // pr($data);	
-		$filter = "";
-        if ($rkb_tahun) $filter .= " AND Tahun = '{$rkb_tahun}'";
-        if ($rkb_skpd) $filter .= " AND Satker_ID = '{$rkb_skpd}'";
-        if ($skb_lokasi) $filter .= " AND lokasi_ID = '{$rkb_lokasi}'";
-        if ($rkb_njb) $filter .= " AND Kelompok_ID = '{$rkb_njb}'";
+    }
+     public function retrieve_daftar_perencanaan_pengadaan($data,$debug=false)
+    {
 
-		$sql = array(
-                'table'=>'Perencanaan',
-                'field'=>"*",
-                'condition' => "1 {$filter}",
-                'limit' => '100'
-                );
+        // pr($data);
+        // exit;
+        $kodeKelompok = $data['kodeKelompok'];
+       
+        // $kdRekening = $data['kdRekening'];
+        $kodeSatker = $data['kodeSatker'];
+        $TipeAset = $data['jenisaset'];
 
-        $res = $this->db->lazyQuery($sql,$debug);
+        // $kondisi= trim($data['condition']);
+        // if($kondisi!="")$kondisi=" and $kondisi";
+        // $limit= $data['limit'];
+        // $order= $data['order'];
+
+        $filter = "";
+        if ($kodeKelompok) $filter .= " AND r.Kode_Kelompok = '{$kodeKelompok}' ";
+        // if ($kdRekening) $filter .= " AND r.Kode_Rekening = '{$kdRekening}' ";
+        if ($kodeSatker) $filter .= " AND r.Kode_Satker = '{$kodeSatker}' ";
+        if ($TipeAset) $filter .= " AND r.TipeAset = '{$TipeAset}' ";
+
+       
+
+             $sql = array(
+                    'table'=>'rencana as r,kelompok as kel,koderekening as rek,satker as sat',
+                    'field'=>"r.*, kel.Uraian,rek.NamaRekening,sat.NamaSatker ",
+                    'condition' => "(r.Status_Pemeliharaan=0 OR r.Status_Pemeliharaan=1) {$filter} GROUP BY r.Rencana_ID ORDER BY r.Rencana_ID",
+                    // 'limit'=>"$limit",
+                   'joinmethod' => ' LEFT JOIN ',
+                    'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening,r.Kode_Satker=sat.kode'
+                    );
+                $res = $this->db->lazyQuery($sql,$debug);
+// //pr($sql);
+// //pr($res);
+              
         if ($res) return $res;
         return false;
-
-	}
-
-	public function retrieve_rkb_edit($data,$debug=false)
+        
+    }
+    public function retrieve_daftar_perencanaan_pengadaan_edit($data,$debug=false)
     {
-		$id = $data['ID'];
-		$sql = array(
-                'table'=>'Perencanaan',
-                'field'=>"*",
-                'condition' => "Perencanaan_ID='$id'",
-                'limit' => '100'
-                );
 
-        $res = $this->db->lazyQuery($sql,$debug);
+        $Rencana_ID = $data['id'];
+       
+        $TipeAset = $data['tipe'];
+// //pr($data);
+        // $kondisi= trim($data['condition']);
+        // if($kondisi!="")$kondisi=" and $kondisi";
+        // $limit= $data['limit'];
+        // $order= $data['order'];
+
+        $filter = "";
+        // if ($kodeKelompok) $filter .= " AND r.Kode_Kelompok = '{$kodeKelompok}' ";
+        // if ($kdRekening) $filter .= " AND r.Kode_Rekening = '{$kdRekening}' ";
+
+       
+
+             $sql = array(
+                    'table'=>'rencana as r,kelompok as kel,koderekening as rek,satker as sat',
+                    'field'=>"r.*, kel.Uraian,rek.NamaRekening,sat.NamaSatker ",
+                    'condition' => "r.Rencana_ID='$Rencana_ID' AND (r.Status_Pemeliharaan=0 OR r.Status_Pemeliharaan=1) {$filter} GROUP BY r.Rencana_ID ORDER BY r.Rencana_ID",
+                    'limit'=>"1",
+                   'joinmethod' => ' LEFT JOIN ',
+                    'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening,r.Kode_Satker=sat.kode'
+                    );
+                $res = $this->db->lazyQuery($sql,$debug);
+// //pr($sql);
+// //pr($res);
+            if($TipeAset=="A"){
+                $sqlKib = array(
+                    'table'=>'prcn_tanah',
+                    'field'=>"*",
+                    'condition' => "Rencana_ID='$Rencana_ID'",
+                    'limit'=>"1"
+                    );
+                $resKib = $this->db->lazyQuery($sqlKib,$debug);
+
+            }elseif($TipeAset=="B"){
+                $sqlKib = array(
+                    'table'=>'prcn_mesin',
+                    'field'=>"*",
+                    'condition' => "Rencana_ID='$Rencana_ID'",
+                    'limit'=>"1"
+                    );
+                $resKib = $this->db->lazyQuery($sqlKib,$debug);
+
+            }elseif($TipeAset=="C"){
+                $sqlKib = array(
+                    'table'=>'prcn_bangunan',
+                    'field'=>"*",
+                    'condition' => "Rencana_ID='$Rencana_ID'",
+                    'limit'=>"1"
+                    );
+                $resKib = $this->db->lazyQuery($sqlKib,$debug);
+                
+            }elseif($TipeAset=="D"){
+                $sqlKib = array(
+                    'table'=>'prcn_jaringan',
+                    'field'=>"*",
+                    'condition' => "Rencana_ID='$Rencana_ID'",
+                    'limit'=>"1"
+                    );
+                $resKib = $this->db->lazyQuery($sqlKib,$debug);
+                
+            }elseif($TipeAset=="E"){
+                $sqlKib = array(
+                    'table'=>'prcn_asettetaplain',
+                    'field'=>"*",
+                    'condition' => "Rencana_ID='$Rencana_ID'",
+                    'limit'=>"1"
+                    );
+                $resKib = $this->db->lazyQuery($sqlKib,$debug);
+                
+            }elseif($TipeAset=="F"){
+                $sqlKib = array(
+                    'table'=>'prcn_kdp',
+                    'field'=>"*",
+                    'condition' => "Rencana_ID='$Rencana_ID'",
+                    'limit'=>"1"
+                    );
+                $resKib = $this->db->lazyQuery($sqlKib,$debug);
+                
+            }
+              // //pr($resKib);
+        if ($res) return array("data"=>$res['0'],"kib"=>$resKib['0']);
+        return false;
+        
+    }
+    public function retrieve_daftar_perencanaan_pengadaanPemeliharaan($data,$debug=false)
+    {
+        // pr($data);
+        // exit;
+        // $kodeKelompok = $data['kodeKelompok'];
+       
+        // $kdRekening = $data['kdRekening'];
+        $TipeAset = $data['jenisaset'];
+        $kodeSatker = $data['kodeSatker'];
+        
+        // $kondisi= trim($data['condition']);
+        // if($kondisi!="")$kondisi=" and $kondisi";
+        // $limit= $data['limit'];
+        // $order= $data['order'];
+
+        $filter = "";
+        if ($kodeKelompok) $filter .= " AND r.Kode_Kelompok = '{$kodeKelompok}' ";
+        if ($kdRekening) $filter .= " AND r.Kode_Rekening = '{$kdRekening}' ";
+        if ($TipeAset) $filter .= " AND r.TipeAset = '{$TipeAset}' ";
+        if ($kodeSatker) $filter .= " AND r.Kode_Satker = '{$kodeSatker}' ";
+
+       
+
+             $sql = array(
+                    'table'=>'rencana as r,kelompok as kel,koderekening as rek',
+                    'field'=>"r.*, kel.Uraian,rek.NamaRekening ",
+                    'condition' => "r.Status_Pemeliharaan=0 {$filter} GROUP BY r.Rencana_ID ORDER BY r.Rencana_ID",
+                    // 'limit'=>"$limit",
+                   'joinmethod' => ' LEFT JOIN ',
+                    'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
+                    );
+                $res = $this->db->lazyQuery($sql,$debug);
+// //pr($sql);
+// //pr($res);
+              
         if ($res) return $res;
         return false;
-
+        
     }
-
-    function getTableKibAlias($type=1)
+     public function retrieve_daftar_perencanaan_pemeliharaan($data,$debug=false)
     {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
-        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+        // pr($data);
+        // exit;
+        // $kodeKelompok = $data['kodeKelompok'];
+       
+        // $kdRekening = $data['kdRekening'];
+        $TipeAset = $data['jenisaset'];
+        $kodeSatker = $data['kodeSatker'];
 
-        $listTable = array(
-                        1=>'tanah AS t',
-                        2=>'mesin AS m',
-                        3=>'bangunan AS b',
-                        4=>'jaringan AS j',
-                        5=>'asetlain AS al',
-                        6=>'kdp AS k');
-        $listTable2 = array(
-                        1=>'tanah',
-                        2=>'mesin',
-                        3=>'bangunan',
-                        4=>'jaringan',
-                        5=>'asetlain',
-                        6=>'kdp');
+        // $kondisi= trim($data['condition']);
+        // if($kondisi!="")$kondisi=" and $kondisi";
+        // $limit= $data['limit'];
+        // $order= $data['order'];
 
-        $data['listTable'] = $listTable[$type];
-        $data['listTableAlias'] = $listTableAlias[$type];
-        $data['listTableReal'] = $listTable2[$type];
-        $data['listTableAbjad'] = $listTableAbjad[$type];
+        $filter = "";
+        if ($kodeKelompok) $filter .= " AND r.Kode_Kelompok = '{$kodeKelompok}' ";
+        if ($kdRekening) $filter .= " AND r.Kode_Rekening = '{$kdRekening}' ";
+        if ($TipeAset) $filter .= " AND r.TipeAset= '{$TipeAset}' ";
+        if ($kodeSatker) $filter .= " AND r.Kode_Satker = '{$kodeSatker}' ";
 
+       
 
-        return $data;
+             $sql = array(
+                    'table'=>'rencana as r,kelompok as kel,koderekening as rek',
+                    'field'=>"r.*, kel.Uraian,rek.NamaRekening ",
+                    'condition' => "r.Status_Pemeliharaan=1 {$filter} GROUP BY r.Rencana_ID ORDER BY r.Rencana_ID",
+                    // 'limit'=>"$limit",
+                   'joinmethod' => ' LEFT JOIN ',
+                    'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening'
+                    );
+                $res = $this->db->lazyQuery($sql,$debug);
+// //pr($sql);
+// //pr($res);
+              
+        if ($res) return $res;
+        return false;
+        
     }
-     
 }
 ?>

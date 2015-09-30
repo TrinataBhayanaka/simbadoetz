@@ -14,15 +14,29 @@ $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
 $skpd_id = $_REQUEST['kodeSatker8'];
 $tahun = $_REQUEST['tahun_label'];
+$tglawal = $_REQUEST['tglawalLabel'];
+if($tglawal != ''){
+	$tglawalperolehan = $tglawal;
+}else{
+	$tglawalperolehan = '0000-00-00';
+}
+$tglakhirperolehan = $_REQUEST['tglakhirlLabel'];
+$kodeRuangan = $_REQUEST['kodeRuangan2'];
+//add tahun
+$split = explode('-',$tglakhirperolehan);
+// $tahun = $split[0]; 
 $gol = $_REQUEST['gol'];
 $label = $_REQUEST['label'];
 
+// pr($_REQUEST);
 // exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "skpd_id"=>$skpd_id,
-	"tahun"=>$tahun,
+	"tglawalperolehan"=>$tglawalperolehan,
+    "tglakhirperolehan"=>$tglakhirperolehan,
+	"kodeRuangan"=>$kodeRuangan,
     "gol"=>$gol,
     "tab"=>$tab,
 	"label"=>$label
@@ -54,7 +68,7 @@ if($gol == 01){
 }
 $TypeRprtr = '';
 $Info = '';
-$tglakhirperolehan = $tahun.'-'."12".'-'."31";
+// $tglakhirperolehan = $tahun.'-'."12".'-'."31";
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
 // exit;
@@ -66,7 +80,7 @@ $result_query=$REPORT->retrieve_query($query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 
-$html=$REPORT->retrieve_html_cetak_label($result_query, $gambar);
+$html=$REPORT->retrieve_html_cetak_label($result_query,$gambar,$tahun);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

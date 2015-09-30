@@ -44,13 +44,6 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 		
 	}
-$satker = $skpd_id;
-
-	if ($tglawalperolehan !='' && $tglakhirperolehan)
-	{
-		$get_satker = $REPORT->validasi_data_satker_id($satker);
-		
-	}
 
 $hit = 1;
 $flag = 'Lain';
@@ -58,7 +51,7 @@ $TypeRprtr = 'Lain';
 $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
-$paramGol = '';
+$paramGol = 'Lain';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
 
 //set gambar untuk laporan

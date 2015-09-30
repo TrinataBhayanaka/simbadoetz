@@ -25,6 +25,8 @@ $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
 // pr($_GET);
+// echo $tipe;
+// pr($_GET);
 // exit;
 $data=array(
     "modul"=>$modul,
@@ -60,6 +62,7 @@ $result_query=$REPORT->retrieve_query($query);
 // exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
+// pr($gambar);
 // exit;
 //retrieve html
 if($tglcetak != ''){
@@ -71,7 +74,7 @@ if($tglcetak != ''){
 	$thnPejabat =substr($tglcetak,0,4);
 }
 
-$html=$REPORT->retrieve_html_kib_a($result_query,$gambar,$tanggalCetak,$thnPejabat);
+$html=$REPORT->retrieve_html_kib_a($result_query,$gambar,$tanggalCetak,$thnPejabat,$tipe);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

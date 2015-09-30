@@ -1,0 +1,34 @@
+ALTER TABLE aset
+  MODIFY COLUMN AkumulasiPenyusutan decimal(50,4),
+  MODIFY COLUMN PenyusutanPertaun decimal(50,4);
+  
+ALTER TABLE mesin
+  MODIFY COLUMN AkumulasiPenyusutan decimal(50,4),
+  MODIFY COLUMN NilaiBuku decimal(50,4);
+  MODIFY COLUMN PenyusutanPerTahun decimal(50,4);
+  
+ALTER TABLE log_mesin
+  MODIFY COLUMN AkumulasiPenyusutan decimal(50,4),
+  MODIFY COLUMN NilaiBuku decimal(50,4);
+  MODIFY COLUMN PenyusutanPerTahun decimal(50,4);
+
+ALTER TABLE bangunan
+  MODIFY COLUMN AkumulasiPenyusutan decimal(50,4),
+  MODIFY COLUMN NilaiBuku decimal(50,4);
+  MODIFY COLUMN PenyusutanPerTahun decimal(50,4);  
+
+ALTER TABLE log_bangunan
+  MODIFY COLUMN AkumulasiPenyusutan decimal(50,4),
+  MODIFY COLUMN NilaiBuku decimal(50,4);
+  MODIFY COLUMN PenyusutanPerTahun decimal(50,4);  
+   
+ALTER TABLE jaringan
+  MODIFY COLUMN AkumulasiPenyusutan decimal(50,4),
+  MODIFY COLUMN NilaiBuku decimal(50,4);
+  MODIFY COLUMN PenyusutanPerTahun decimal(50,4);  
+   
+ALTER TABLE log_jaringan
+  MODIFY COLUMN AkumulasiPenyusutan decimal(50,4),
+  MODIFY COLUMN NilaiBuku decimal(50,4);
+  MODIFY COLUMN PenyusutanPerTahun decimal(50,4);  
+   

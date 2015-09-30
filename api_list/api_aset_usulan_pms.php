@@ -39,6 +39,7 @@ $dataParam['bup_tahun']=$_GET['bup_tahun'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['kodeKelompok']=$_GET['kodeKelompok'];
+$dataParam['kodepemilik']=$_GET['kodepemilik'];
 $dataParam['page']=$_GET['page'];
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
