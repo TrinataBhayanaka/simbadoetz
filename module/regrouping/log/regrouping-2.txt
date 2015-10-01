@@ -1,0 +1,31 @@
+ 
+                                 
+
+                                                
+                                
+
+                                
+
+ 
+                
+
+        Start: 2015-10-01 04:27:25  
+ update aset set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update tanah set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update mesin set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update log_mesin set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update bangunan set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update log_bangunan set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update jaringan set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update log_jaringan set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update kdp set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update log_kdp set kodeSatker='07.01.02.02' where kodeSatker='07.01.01.04'  
+update mutasiaset set SatkerAwal='07.01.02.02' where SatkerAwal='07.01.01.04'  
+update mutasiaset set SatkerTujuan='07.01.02.02' where SatkerTujuan='07.01.01.04'  
+update transfer set fromSatker='07.01.02.02' where fromSatker='07.01.01.04'  
+update transfer set toSatker='07.01.02.02' where toSatker='07.01.01.04'  
+update satker  set kode='07.01.02.02' , NamaSatker='Puskesmas Bendan Andreas',KodeSektor='07', KodeSatker='07.01',KodeUnit='02', Gudang='02'  where kode='07.01.01.04' 
+update satker  set kode='07.01.02.02' , NamaSatker='Puskesmas Bendan Andreas',KodeSektor='07', KodeSatker='07.01',KodeUnit='02', Gudang='02'  where kode='07.01.01.04' 
+delete from satker where  kode='07.01.01.04' 
+Akhir: 2015-10-01 04:27:33
+Waktu proses: 7.1307330131531 seconds 

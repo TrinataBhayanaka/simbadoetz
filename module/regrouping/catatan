@@ -1,0 +1,4 @@
+ALTER TABLE `aset` ADD `INFO_REGROUP_LOK` VARCHAR(255) NOT NULL ;
+
+INSERT INTO `simda_to_simbada_14jul2015`.`tbl_user_menu_parent` (`menuParentID`, `menuParentDesc`, `menuOrder`) VALUES (NULL, 'Regrouping', '14');
+INSERT INTO `simda_to_simbada_14jul2015`.`tbl_user_menu` (`menuID`, `menuDesc`, `menuParent`, `menuPath`, `menuStatus`, `menuAksesLogin`) VALUES (NULL, 'Regrouping', '20', 'regrouping/index.php', '1', '1');

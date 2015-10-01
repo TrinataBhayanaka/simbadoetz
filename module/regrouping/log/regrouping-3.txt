@@ -1,0 +1,31 @@
+ 
+                                 
+
+                                                
+                                
+
+                                
+
+ 
+                
+
+        Start: 2015-10-01 04:37:24  
+ update aset set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update tanah set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update mesin set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update log_mesin set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update bangunan set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update log_bangunan set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update jaringan set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update log_jaringan set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update kdp set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update log_kdp set kodeSatker='07.01.02.03' where kodeSatker='07.01.01.08'  
+update mutasiaset set SatkerAwal='07.01.02.03' where SatkerAwal='07.01.01.08'  
+update mutasiaset set SatkerTujuan='07.01.02.03' where SatkerTujuan='07.01.01.08'  
+update transfer set fromSatker='07.01.02.03' where fromSatker='07.01.01.08'  
+update transfer set toSatker='07.01.02.03' where toSatker='07.01.01.08'  
+update satker  set kode='07.01.02.03' , NamaSatker='Pustu Pemkot Percobaan',KodeSektor='07', KodeSatker='07.01',KodeUnit='02', Gudang='03'  where kode='07.01.01.08' 
+update satker  set kode='07.01.02.03' , NamaSatker='Pustu Pemkot Percobaan',KodeSektor='07', KodeSatker='07.01',KodeUnit='02', Gudang='03'  where kode='07.01.01.08' 
+delete from satker where  kode='07.01.01.08' 
+Akhir: 2015-10-01 04:37:28
+Waktu proses: 3.7692368030548 seconds 
