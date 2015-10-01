@@ -15,3 +15,4 @@ db/simda_to_simbada.sql
 config/config.php
 db/*
 htacess-ovan
+module/regrouping/log/*
