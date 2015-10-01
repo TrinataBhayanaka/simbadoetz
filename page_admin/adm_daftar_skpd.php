@@ -219,39 +219,55 @@ if (isset($_POST['Hapus']))
 	$sql = "SELECT kode FROM Satker WHERE Satker_ID = '$Satker_ID'";
 	$res = mysql_query($sql) or die (mysql_error());
 	$data = mysql_fetch_object($res);
+
+
 	if($data){
 		$tmp_kode = $data->kode;
 		
-		$sql = array(
-                'table'=>"satker",
-                'field'=>"Satker_ID",
-                'condition'=>"kode LIKE '{$tmp_kode}%'",
-                );
+		$sqlaset = array(
+	                'table'=>"aset AS a",
+	                'field'=>'COUNT(1) AS total',
+	                'condition' => "a.kodeSatker = '{$tmp_kode}'",
+	                );
+		$result = $DBVAR->lazyQuery($sqlaset,$debug=false);
 
-        $res = $DBVAR->lazyQuery($sql,$debug=false);
-        if ($res){
+		if ($result[0]['total']>0){
+			echo '<script type=text/javascript>alert("Satker mempunyai aset aktif");</script>';
+		}else{
 
-        	$failed = array();
-        	$userid = $_SESSION['ses_aoperatorid'];
-        	$date = date('Y-m-d H:i:s');
-        	foreach ($res as $key => $value) {
-        		
-        		$sql2 = array(
-	                    'table'=>"satker",
-	                    'field'=>"kode = NULL, CNOTE1 = 'Delete By Operator ID : {$userid} on {$date}'",
-	                    'condition'=>"Satker_ID='{$value['Satker_ID']}'",
-	                    );
+			$sql = array(
+	                'table'=>"satker",
+	                'field'=>"Satker_ID",
+	                'condition'=>"kode LIKE '{$tmp_kode}%'",
+	                );
 
-	            $res2 = $DBVAR->lazyQuery($sql2,$debug=false,2); 
-	            if (!$res2) $failed = array(1);
-        	}
+	        $res = $DBVAR->lazyQuery($sql,$debug=false);
+	        if ($res){
 
-        	if (count($failed)>0){
-        		echo '<script type=text/javascript>alert("Gagal");</script>';
-        	}else{
-        		echo '<script type=text/javascript>alert("Sukses");</script>';
-        	}
-        }
+	        	$failed = array();
+	        	$userid = $_SESSION['ses_aoperatorid'];
+	        	$date = date('Y-m-d H:i:s');
+	        	foreach ($res as $key => $value) {
+	        		
+	        		$sql2 = array(
+		                    'table'=>"satker",
+		                    'field'=>"kode = NULL, CNOTE1 = 'Delete By Operator ID : {$userid} on {$date}'",
+		                    'condition'=>"Satker_ID='{$value['Satker_ID']}'",
+		                    );
+
+		            $res2 = $DBVAR->lazyQuery($sql2,$debug=false,2); 
+		            if (!$res2) $failed = array(1);
+	        	}
+
+	        	if (count($failed)>0){
+	        		echo '<script type=text/javascript>alert("Gagal");</script>';
+	        	}else{
+	        		echo '<script type=text/javascript>alert("Sukses");</script>';
+	        	}
+	        }
+		}
+
+		
 	}
 	/*
 	exit;
@@ -456,7 +472,16 @@ $shufle = str_shuffle('bhsyd18743');
 		}
 	}
 
-	
+	function validateDelete()
+	{
+		var txt;
+		var r = confirm("Hapus Data ?");
+		if (r == true) {
+		    // execute query
+		} else {
+		    return false;
+		}
+	}
 </script>  
 <table width="100%" align="center" cellpadding="0" cellspacing="5" border="0" bgcolor="white">
 			<tr>
@@ -913,7 +938,7 @@ $shufle = str_shuffle('bhsyd18743');
 									$KodeRuanganDisabled = 'disabled';
 									$NamaRuanganDisabled = 'disabled';
 									//$linkButtonLeft = "window.location.href='?page=$_GET[page]&pr=$_GET[pr]&a=e'";
-									$linkButtonRight = '';
+									$linkButtonRight = 'return validateDelete()';
 									$buttonLeftdisabled = '';
 									$buttonRightdisabled = '';
 									$buttonTypeLeft = 'button';
