@@ -31,7 +31,7 @@ $nama_satker_baru = $row->nama_satker_baru;
 
 //ketinggalan 1
 //tanah
-$query="update log_tanah set kodeSatker='$satker_baru' where kodeSatker='$satker_lama' ";
+$query="update log_tanah set kodeSatker='$satker_baru' where kodeSatker='$satker_lama' ;";
 echo "$query <br/>";
 //aset
 $query="update aset set kodeLokasi=concat(SUBSTRING_INDEX(kodeLokasi, '.', 3),'.',SUBSTRING_INDEX(kodeSatker, '.', 2),'.',substring(kodeLokasi,16,2),'.',SUBSTRING_INDEX(kodeSatker, '.', -2))
