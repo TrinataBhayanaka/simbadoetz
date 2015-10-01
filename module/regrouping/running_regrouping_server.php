@@ -74,6 +74,15 @@ $query="update log_kdp set kodeSatker='$satker_baru' where kodeSatker='$satker_l
 echo "$query \n";
 $result= $DBVAR->query($query)or die($DBVAR->error());
 
+//update asetlain
+$query="update asetlain set kodeSatker='$satker_baru' where kodeSatker='$satker_lama' ";
+echo "$query \n";
+$result= $DBVAR->query($query)or die($DBVAR->error());
+
+$query="update log_asetlain set kodeSatker='$satker_baru' where kodeSatker='$satker_lama' ";
+echo "$query \n";
+$result= $DBVAR->query($query)or die($DBVAR->error());
+
 //mutasi aset
 $query="update mutasiaset set SatkerAwal='$satker_baru' where SatkerAwal='$satker_lama' ";
 echo "$query \n";
