@@ -9,7 +9,7 @@
  
                 
 
-        Start: 2015-10-01 03:59:21  
+        Start: 2015-10-01 07:32:28  
  update aset set kodeSatker='04.01.01.06' where kodeSatker='04.01.01.02'  
 update tanah set kodeSatker='04.01.01.06' where kodeSatker='04.01.01.02'  
 update mesin set kodeSatker='04.01.01.06' where kodeSatker='04.01.01.02'  
@@ -24,6 +24,8 @@ update mutasiaset set SatkerAwal='04.01.01.06' where SatkerAwal='04.01.01.02'
 update mutasiaset set SatkerTujuan='04.01.01.06' where SatkerTujuan='04.01.01.02'  
 update transfer set fromSatker='04.01.01.06' where fromSatker='04.01.01.02'  
 update transfer set toSatker='04.01.01.06' where toSatker='04.01.01.02'  
-insert into satker  set kode='04.01.01.06' , NamaSatker='Andreas',KodeSektor='04', KodeSatker='04.01',KodeUnit='01', Gudang='06'  
-Akhir: 2015-10-01 03:59:25
-Waktu proses: 3.6607930660248 seconds 
+update satker  set kode='04.01.01.06' , NamaSatker='Asisten Andreas2',KodeSektor='04', KodeSatker='04.01',KodeUnit='01', Gudang='06'  where kode='04.01.01.02' 
+update satker  set kode='04.01.01.06' , NamaSatker='Asisten Andreas2',KodeSektor='04', KodeSatker='04.01',KodeUnit='01', Gudang='06'  where kode='04.01.01.02' 
+delete from satker where  kode='04.01.01.02' 
+Akhir: 2015-10-01 07:32:31
+Waktu proses: 2.6738741397858 seconds 

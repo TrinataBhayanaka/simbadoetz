@@ -29,12 +29,12 @@ $get_data_regrouping= $REGROUPING->getStatusRegrouping();
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Regrouping SKPD</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Status Regrouping SKPD</li>
+			  <li><a href="#">Pindah Lokasi SKPD</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Status Pindah Lokasi SKPD</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Status Regrouping SKPD</div>
+				<div class="title">Status Pindah Lokasi SKPD</div>
 				<div class="subtitle">Daftar SKPD</div>
 			</div>	
 

@@ -20,12 +20,12 @@ include"$path/menu.php";
 <section id="main">
      <ul class="breadcrumb">
           <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-          <li><a href="#">Regrouping SKPD</a><span class="divider"><b>&raquo;</b></span></li>
-          <li class="active">Tambah Regrouping SKPD</li>
+          <li><a href="#">Pindah Lokasi SKPD</a><span class="divider"><b>&raquo;</b></span></li>
+          <li class="active">Tambah Pindah Lokasi SKPD</li>
 <?php SignInOut(); ?>
      </ul>
      <div class="breadcrumb">
-          <div class="title">Tambah Regrouping SKPD</div>
+          <div class="title">Tambah Pindah Lokasi SKPD</div>
           <div class="subtitle">    </div>
      </div>	
 
