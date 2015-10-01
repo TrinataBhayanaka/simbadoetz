@@ -8,6 +8,16 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $this->db = new DB;
 	}
 	
+    function removeAsetList($action)
+    {
+        $userid = $_SESSION['ses_uoperatorid'];
+        $token = $_SESSION['ses_utoken'];
+        $sql = "DELETE FROM apl_userasetlist WHERE aset_action = '{$action}' AND UserNm = {$userid} AND UserSes = '{$token}' LIMIT 1";
+        $res = $this->db->query($sql);
+        if ($res) return true;
+        return false;
+    }
+    
     function getAsetList($action)
     {
         // pr($_SESSION);
@@ -29,7 +39,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         return false;
     }
 
-    function removeAsetList($action)
+    /*function removeAsetList($action)
     {
         $userid = $_SESSION['ses_uoperatorid'];
         $sql = "DELETE FROM apl_userasetlist WHERE aset_action = '{$action}' AND UserNm = {$userid} LIMIT 1";
@@ -40,7 +50,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         }
 
         return false;
-    } 
+    } */
 
 	function retrieve_mutasi_filter($data,$debug=false)
 	{
