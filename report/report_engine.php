@@ -14928,7 +14928,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
                                                                  <td style=\"text-align: center; width: 30px;font-weight: \">$no</td>
                                                                  <td style=\"width: 160px;font-weight: \" align=\"left\">$row->Uraian</td>
                                                                  <td style=\"text-align: center; font-weight: \">$row->Kode</td>
-                                                                 <td style=\"font-weight: \">$noReg</td>
+                                                                 <td style=\"text-align: center; font-weight: \">$noReg</td>
                                                                  <td style=\"width: 50px; font-weight: \" align=\"right\">$luas</td>
                                                                  <td style=\"text-align: center; width: 75px; font-weight: \">$row->Tahun</td>
                                                                  <td style=\"width: 110px; font-weight: \">$row->Alamat</td>
