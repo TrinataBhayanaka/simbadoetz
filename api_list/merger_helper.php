@@ -51,7 +51,7 @@ class MERGER extends DB{
                 $sql = array(
                         'table'=>"aset AS a, satker AS s",
                         'field'=>"a.kodeLokasi, s.NamaSatker",
-                        'condition'=>"a.kodeSatker = '{$newSatker}' AND Aset_ID = {$value['Aset_ID']}",
+                        'condition'=>"a.kodeSatker = '{$newSatker}' AND s.kd_Ruang IS NULL",
                         'joinmethod' => 'LEFT JOIN',
                         'join'=>'a.kodeSatker = s.kode',
                         'limit'=>1,
@@ -112,7 +112,7 @@ class MERGER extends DB{
     function updateData($id, $debug=false)
     {
         
-        $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+        // $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
 
         $sql = array(
                 'table'=>"tmp_merger",
@@ -134,12 +134,12 @@ class MERGER extends DB{
                     $this->updateLog($value['id'], 1);
                     foreach ($unserial as $key => $val) {
                         
-                        $table = $this->getTableKibAlias($listTableAbjad[$val['TipeAset']]);
+                        $table = $this->getTableKibAlias($val['TipeAset']);
                         
                         $sql = array(
                                 'table'=>"{$table['listTableOri']}",
                                 'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
-                                'condition'=>"kodeKelompok = '{$val[kodeKelompok]}' AND kodeSatker = '{$newSatker}' AND kodeLokasi = '{$implLokasi}'",
+                                'condition'=>"kodeKelompok = '{$val[kodeKelompok]}' AND kodeSatker = '{$val['kodeSatker']}' AND kodeLokasi = '{$val['kodeLokasi']}'",
                                 );
                         $resultnoreg = $this->db->lazyQuery($sql,$debug);
 
