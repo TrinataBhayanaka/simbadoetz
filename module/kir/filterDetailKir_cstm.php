@@ -106,7 +106,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			
 			<ul>
 				<li>
-					<span class="span2">Ruangan</span>
+					<span class="span2">Ruangan Tujuan</span>
 					<select name="kodeRuang" id="kodeRuang" style="width:170px">
 						<option value="">-</option>
 						<?php 
