@@ -216,13 +216,63 @@ if (isset($_POST['Hapus']))
 			}
 		}
 		
-	$sql = "SELECT Tmp_KodeSatker FROM Satker WHERE Satker_ID = '$Satker_ID'";
+	$sql = "SELECT kode FROM Satker WHERE Satker_ID = '$Satker_ID'";
 	$res = mysql_query($sql) or die (mysql_error());
 	$data = mysql_fetch_object($res);
-	
-	$tmp_kode = $data->Tmp_KodeSatker;
-	$query = "DELETE FROM Satker WHERE Tmp_KodeSatker LIKE '$tmp_kode%'";
-	//print_r($query);
+
+
+	if($data){
+		$tmp_kode = $data->kode;
+		
+		$sqlaset = array(
+	                'table'=>"aset AS a",
+	                'field'=>'COUNT(1) AS total',
+	                'condition' => "a.kodeSatker = '{$tmp_kode}'",
+	                );
+		$result = $DBVAR->lazyQuery($sqlaset,$debug=false);
+
+		if ($result[0]['total']>0){
+			echo '<script type=text/javascript>alert("Satker mempunyai aset aktif");</script>';
+		}else{
+
+			$sql = array(
+	                'table'=>"satker",
+	                'field'=>"Satker_ID",
+	                'condition'=>"kode LIKE '{$tmp_kode}%'",
+	                );
+
+	        $res = $DBVAR->lazyQuery($sql,$debug=false);
+	        if ($res){
+
+	        	$failed = array();
+	        	$userid = $_SESSION['ses_aoperatorid'];
+	        	$date = date('Y-m-d H:i:s');
+	        	foreach ($res as $key => $value) {
+	        		
+	        		$sql2 = array(
+		                    'table'=>"satker",
+		                    'field'=>"kode = NULL, CNOTE1 = 'Delete By Operator ID : {$userid} on {$date}'",
+		                    'condition'=>"Satker_ID='{$value['Satker_ID']}'",
+		                    );
+
+		            $res2 = $DBVAR->lazyQuery($sql2,$debug=false,2); 
+		            if (!$res2) $failed = array(1);
+	        	}
+
+	        	if (count($failed)>0){
+	        		echo '<script type=text/javascript>alert("Gagal");</script>';
+	        	}else{
+	        		echo '<script type=text/javascript>alert("Sukses");</script>';
+	        	}
+	        }
+		}
+
+		
+	}
+	/*
+	exit;
+	$query = "DELETE FROM Satker WHERE kode LIKE '$tmp_kode%'";
+	print_r($query);exit;
 	$result = mysql_query($query) or die (mysql_error());
 	if ($result)
 	{
@@ -231,7 +281,7 @@ if (isset($_POST['Hapus']))
 	else
 	{
 		echo '<script type=text/javascript>alert("Gagal");</script>';
-	}
+	}*/
 }
 
 if (isset($_POST['Update']))
@@ -422,7 +472,16 @@ $shufle = str_shuffle('bhsyd18743');
 		}
 	}
 
-	
+	function validateDelete()
+	{
+		var txt;
+		var r = confirm("Hapus Data ?");
+		if (r == true) {
+		    // execute query
+		} else {
+		    return false;
+		}
+	}
 </script>  
 <table width="100%" align="center" cellpadding="0" cellspacing="5" border="0" bgcolor="white">
 			<tr>
@@ -442,6 +501,7 @@ $shufle = str_shuffle('bhsyd18743');
 									AND KodeSektor IS NOT NULL
 									AND KodeSatker IS NULL
 									AND KodeUnit IS NULL
+									AND kode IS NOT NULL
 									ORDER BY KodeSektor ASC";
 						$result = mysql_query($query) or die (mysql_error());
 						while ($data = mysql_fetch_array($result))
@@ -459,7 +519,7 @@ $shufle = str_shuffle('bhsyd18743');
 								{
 									
 									$qSubParent = "SELECT * FROM Satker WHERE NGO IS FALSE AND KodeSektor = '".$data['KodeSektor']."' 
-													AND KodeSatker IS NOT NULL AND KodeUnit IS NULL ORDER BY KodeSatker ASC";
+													AND KodeSatker IS NOT NULL AND KodeUnit IS NULL AND kode IS NOT NULL ORDER BY KodeSatker ASC";
 									
 									$rSubParent = mysql_query($qSubParent) or die (mysql_error());
 									while ($dataSubParent = mysql_fetch_array($rSubParent))
@@ -486,6 +546,7 @@ $shufle = str_shuffle('bhsyd18743');
 															AND KodeUnit IS NOT NULL
 															AND Kd_Ruang IS NULL
 															AND Gudang IS NULL
+															AND kode IS NOT NULL
 															ORDER BY KodeUnit ASC";
 												// pr($qSubSubParent);
 												$rSubSubParent = mysql_query($qSubSubParent) or die (mysql_error());
@@ -509,7 +570,7 @@ $shufle = str_shuffle('bhsyd18743');
 																$sql1 = "SELECT * FROM Satker WHERE KodeSektor = '{$dataSubParent['KodeSektor']}' 
 																		AND KodeSatker = '{$dataSubParent['KodeSatker']}'
 																		AND KodeUnit = '{$dataSubSubParent['KodeUnit']}'
-																		AND Gudang !=0 AND Kd_Ruang IS NULL";
+																		AND Gudang !=0 AND Kd_Ruang IS NULL AND kode IS NOT NULL";
 																// pr($sql1);
 																$result1 = mysql_query($sql1) or die(mysql_error());
 																
@@ -533,7 +594,7 @@ $shufle = str_shuffle('bhsyd18743');
 																				$sql2 = "SELECT * FROM Satker WHERE KodeSektor = '{$dataSubParent['KodeSektor']}' 
 																						AND KodeSatker = '{$dataSubParent['KodeSatker']}'
 																						AND KodeUnit = '{$dataSubSubParent['KodeUnit']}'
-																						AND Gudang = '{$dataRuangan['Gudang']}' AND Kd_Ruang IS NOT NULL";
+																						AND Gudang = '{$dataRuangan['Gudang']}' AND Kd_Ruang IS NOT NULL AND kode IS NOT NULL";
 																				// pr($sql1);
 																				$result2 = mysql_query($sql2) or die(mysql_error());
 																				
@@ -877,7 +938,7 @@ $shufle = str_shuffle('bhsyd18743');
 									$KodeRuanganDisabled = 'disabled';
 									$NamaRuanganDisabled = 'disabled';
 									//$linkButtonLeft = "window.location.href='?page=$_GET[page]&pr=$_GET[pr]&a=e'";
-									$linkButtonRight = '';
+									$linkButtonRight = 'return validateDelete()';
 									$buttonLeftdisabled = '';
 									$buttonRightdisabled = '';
 									$buttonTypeLeft = 'button';
