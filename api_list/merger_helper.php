@@ -37,7 +37,7 @@ class MERGER extends DB{
                 'table'=>"aset AS a",
                 'field'=>"a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TipeAset, a.Tahun",
                 'condition'=>"a.kodeSatker = '{$oldSatker}'",
-                'limit'=>100,
+                'limit'=>2,
                 );
 
         $aset = $this->db->lazyQuery($sql,$debug);
@@ -49,25 +49,31 @@ class MERGER extends DB{
                 $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
 
                 $sql = array(
-                        'table'=>"satker",
-                        'field'=>"NamaSatker",
-                        'condition'=>"kode = '{$newSatker}'",
+                        'table'=>"aset AS a, satker AS s",
+                        'field'=>"a.kodeLokasi, s.NamaSatker",
+                        'condition'=>"a.kodeSatker = '{$newSatker}' AND s.kd_Ruang IS NULL",
+                        'joinmethod' => 'LEFT JOIN',
+                        'join'=>'a.kodeSatker = s.kode',
                         'limit'=>1,
                         );
 
                 $satker = $this->db->lazyQuery($sql,$debug);
 
                 $table = $this->getTableKibAlias($listTableAbjad[$value['TipeAset']]);
+                
+
+                $tmpKodeLokasi = explode('.', $satker[0]['kodeLokasi']);
                 $tmpKodeSatker = explode('.', $newSatker);
 
-                $prefix = "12.11.33";
+                // $prefix = "12.11.33";
+                $prefix = $tmpKodeLokasi[0].'.'.$tmpKodeLokasi[1].'.'.$tmpKodeLokasi[2];
                 $prefixkodesatker = $tmpKodeSatker[0].'.'.$tmpKodeSatker[1];
                 $prefixTahun = substr($value['Tahun'], 2,2);
                 $postfixkodeSatker = $tmpKodeSatker[2].'.'.$tmpKodeSatker[3];
 
                 $implLokasi = $prefix.'.'.$prefixkodesatker.'.'.$prefixTahun.'.'.$postfixkodeSatker;
                         
-                $sql = array(
+                /*$sql = array(
                         'table'=>"{$table['listTableOri']}",
                         'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
                         'condition'=>"kodeKelompok = '{$value[kodeKelompok]}' AND kodeSatker = '{$newSatker}' AND kodeLokasi = '{$implLokasi}'",
@@ -75,14 +81,14 @@ class MERGER extends DB{
                 $resultnoreg = $this->db->lazyQuery($sql,$debug);
 
                 $gabung_nomor_reg_tujuan=intval(($resultnoreg[0]['noRegister'])+1);
-                
+                */
                 $data[$key]['Aset_ID'] = $value['Aset_ID'];
                 $data[$key]['kodeSatker'] = $newSatker;
                 $data[$key]['oldKodeSatker'] = $oldSatker;
                 $data[$key]['NamaSatker'] = $satker[0]['NamaSatker'];
                 $data[$key]['kodeKelompok'] = $value['kodeKelompok'];
                 $data[$key]['kodeLokasi'] = $implLokasi;
-                $data[$key]['noRegister'] = $gabung_nomor_reg_tujuan;
+                // $data[$key]['noRegister'] = $gabung_nomor_reg_tujuan;
                 $data[$key]['TipeAset'] = $listTableAbjad[$value['TipeAset']];
 
                 
@@ -106,6 +112,8 @@ class MERGER extends DB{
     function updateData($id, $debug=false)
     {
         
+        // $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+
         $sql = array(
                 'table'=>"tmp_merger",
                 'field'=>"*",
@@ -126,7 +134,17 @@ class MERGER extends DB{
                     $this->updateLog($value['id'], 1);
                     foreach ($unserial as $key => $val) {
                         
+                        $table = $this->getTableKibAlias($val['TipeAset']);
+                        
+                        $sql = array(
+                                'table'=>"{$table['listTableOri']}",
+                                'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
+                                'condition'=>"kodeKelompok = '{$val[kodeKelompok]}' AND kodeSatker = '{$val['kodeSatker']}' AND kodeLokasi = '{$val['kodeLokasi']}'",
+                                );
+                        $resultnoreg = $this->db->lazyQuery($sql,$debug);
 
+                        $val['noRegister'] = intval(($resultnoreg[0]['noRegister'])+1);
+                        
                         $this->updateTblAset($val);
                         $this->updateTblKib($val);
                         $this->updateTblLogKib($val);
