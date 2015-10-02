@@ -8,8 +8,8 @@ $SESSION = new Session();
 $menu_id = 59;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-// pr($SessionUser);
-	// pr($_GET);
+	// pr($_POST);
+	// $asetList=implode(',',$_POST['id_aset']);
 	include"$path/meta.php";
 	include"$path/header.php";
 	include"$path/menu.php";
@@ -20,30 +20,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	jQuery(function($){
 	   $("#Tahun_aw,#Tahun_ak,#register_aw,#register_ak").mask("9999");
 	   $("select").select2();
+	   $( "#tglPerubahan").mask('9999-99-99');
+	 $( "#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
 	});
-	
 	function check(){
-		var satker = document.getElementById("satker");
+		var satker = document.getElementById("kodeRuang");
 		// alert(satker);
-		var satkerfilter = document.getElementById("kodeSatker");
-		 if(satker.value != satkerfilter.value){
-			alert('KodeSatker Harus Sama\n Dengan Filter KodeSatker KIR');
+		 if(satker.value == ''){
+			alert('Pilih Ruangan');
 			return false;
-		}
-	}
-	
-	function check_tahun(){
-		var tahun_aw = document.getElementById("Tahun_aw");
-		var tahun_ak = document.getElementById("Tahun_ak");
-		if (tahun_ak.value < tahun_aw.value)
-		{
-			alert('Tahun Awal Tidak Boleh Lebih Kecil \n Dari Tahun Akhir');
-			$('#submit').attr('disabled','disabled');
-            $(submit).css("background","grey");
-			// return false;
-		}else{
-			$('#submit').removeAttr('disabled');
-		    $('#submit').css("background","#04c");
 		}
 	}
 	</script>
@@ -81,9 +66,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			</a>
 		</div>
 		<?php
-			$kodeSatker = $_GET['kdS'];
-			$kodeRuangan = $_GET['kdR'];
-			$tahunRuangan = $_GET['thn'];
+			$kodeSatker = $_POST['kodeSatker'];
+			$kodeRuangan = $_POST['kodeRuang'];
+			$tahunRuangan = $_POST['tahunRuangan'];
 			//get nama ruangan
 			$queryRuangan =$DBVAR->query("SELECT NamaSatker from satker where kode = '$kodeSatker' and Kd_Ruang = '$kodeRuangan'
 								and Tahun = '$tahunRuangan'");
@@ -112,44 +97,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 		<br>
 		<!--<form name="myform" method="post" action="<?=$url_rewrite?>/module/kir/dftr_aset.php?kdS=<?//=$_GET[kdS]?>&kdR=<?//=$_GET[kdR]?>&thn=<?//=$_GET[thn]?>" onsubmit="return check(this)";>-->
 		
-		<form name="myform" method="post" action="<?=$url_rewrite?>/module/kir/dftr_aset.php?kdS=<?=$_GET[kdS]?>&kdR=<?=$_GET[kdR]?>&thn=<?=$_GET[thn]?>">
+		<form name="myform" method="post" action="<?=$url_rewrite?>/module/kir/proses_pindah_ruangan.php" onsubmit="return check(this)";>
 			<?php //$_SESSION['ses_filter_ruangan_kir'] = $_POST;?>
-			<input type="hidden" name ="kodeSatker" id="satker" value="<?=$kodeSatker?>">
-			<input type="hidden" name ="tahunRuangan" id="satker" value="<?=$tahunRuangan?>">
-			<input type="hidden" name ="kodeRuangan" id="satker" value="<?=$kodeRuangan?>">
+			<input type="hidden" name ="kodeSatker" id="" value="<?=$kodeSatker?>">
+			<input type="hidden" name ="tahunRuangan" id="" value="<?=$tahunRuangan?>">
+			<!--<input type="hidden" name ="kodeRuangan" id="" value="<?//=$kodeRuangan?>">-->
+			<!--<input type="hidden" name ="asetList" id="" value="<?//=$asetList?>">-->
 			
 			<ul>
 				<li>
-					<span class="span2">Tahun Perolehan</span>
-					<input name="Tahun_aw" id="Tahun_aw" class="span1"  type="text" required>
-					s/d
-					<input name="Tahun_ak" id="Tahun_ak" class="span1"  type="text" onblur="return check_tahun(this);"  required>
-				</li>
-				<? //=selectSatker('kodeSatker','235',true,false,'required');?>
-				<!--<li>&nbsp;</li>-->
-				<?php selectAset('kodeKelompok','235',true,false); ?>
-				<li>&nbsp;</li>
-				<li>
-					<span class="span2">Kode Register</span>
-					<input type="number" name="register_aw" id="" class="span1"  type="text" value="1">
-					s/d
-					<input type="number" name="register_ak" id="" class="span1"  type="text" value="1">
-				</li>
-				<li>
-					<span class="span2">Tipe Aset</span>
-					<select name="tipeAset" id="tipeAset" style="width:170px">
-						<option value="tanah">Tanah</option>
-						<option value="mesin">Mesin</option>
-						<option value="bangunan">Bangunan</option>
-						<option value="jaringan">Jaringan</option>
-						<option value="asetlain">Aset Lain</option>
-						<option value="kdp">KDP</option>
-					</select>
-				</li>
-				<li>&nbsp;</li>
-				<li>
 					<span class="span2">Ruangan</span>
-					<select name="ruangan" id="ruangan" style="width:170px">
+					<select name="kodeRuang" id="kodeRuang" style="width:170px">
 						<option value="">-</option>
 						<?php 
 							$queryRuangan = "select NamaSatker,Kd_Ruang from satker where kode ='$kodeSatker' and Tahun = '$tahunRuangan' and Kd_Ruang != '$kodeRuangan'";
@@ -163,6 +121,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<?php
 						}?>
 					</select>
+				</li>
+				<li>&nbsp;</li>
+				<li>
+					<span class="span2">Tgl Perubahan</span>
+					<!--<div class="input-prepend"><span class="add-on"><i class="fa fa-calendar"></i></span>-->
+							<!--<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required/>--> 
+							<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required> 
+						<!--</div>-->
+				</li>
+				<li>
+					*)Tgl Perubahan Disesuaikan Dengan Tahun Berlaku Rekapitulasi
 				</li>
 				<li>&nbsp;</li>
 				<li>

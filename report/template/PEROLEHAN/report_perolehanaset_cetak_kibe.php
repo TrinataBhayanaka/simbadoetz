@@ -24,6 +24,7 @@ if($tglawal != ''){
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
+$pemilik = $_GET['pemilik'];
 // pr($_GET);
 $data=array(
     "modul"=>$modul,
@@ -32,6 +33,7 @@ $data=array(
     "tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
+	"pemilik"=>$pemilik,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
 );

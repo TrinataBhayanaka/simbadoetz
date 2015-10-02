@@ -24,6 +24,7 @@ if($tglawal != ''){
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
+$pemilik = $_GET['pemilik'];
 // pr($_GET);
 // exit;
 $data=array(
@@ -33,6 +34,7 @@ $data=array(
     "tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
+	"pemilik"=>$pemilik,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
@@ -46,6 +48,7 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
+// exit;
 $hit = count($query);
 $flag = 'C';
 $TypeRprtr = '';

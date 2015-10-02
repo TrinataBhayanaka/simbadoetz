@@ -14,44 +14,26 @@ $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
-$rekap = $_GET['rekap'];
-$tglcetak = $_GET['tglcetak'];
+$rekap_barang_sensus = $_GET['rekap_barang_sensus'];
 $tahun = $_GET['tahun'];
 // $kelompok=$_GET['bidang'];
+$tglcetak = $_GET['tglcetak'];
 $tipe=$_GET['tipe_file'];
 $pemilik = $_GET['pemilik'];
 // pr($_GET);
+// exit;
 $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
-    "rekap"=>$rekap,
+    "rekap_barang_sensus"=>$rekap_barang_sensus,
     // "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
 	"pemilik"=>$pemilik,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
-
-function arrayToObject($result_query) {
-	if (!is_array($result_query)) {
-		return $result_query;
-	}
-	
-	$object = new stdClass();
-	if (is_array($result_query) && count($result_query) > 0) {
-		foreach ($result_query as $name=>$value) {
-			// $name = strtolower(trim($name));
-			// if (!empty($name)) {
-				$object->$name = arrayToObject($value);
-			// }
-		}
-		return $object;
-	}
-	else {
-		return FALSE;
-	}
-}
-
+// pr($data);
+// exit;
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -64,44 +46,39 @@ $query=$REPORT->list_query($data);
 // exit;
 $tglawalperolehan = '0000-00-00';
 $tglakhirperolehan = $tahun.'-12-31';
-
+// exit;
 $hit = count($query);
-$flag = 'E';
+$flag = 'D';
 $TypeRprtr = '';
 $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
 // exit;
 //mengenerate query
-// $result_query=$REPORT->retrieve_query($query);
-$table_name = "asetlain";
-$result_query=$REPORT->QueryKib($query,$table_name);
-$result = arrayToObject($result_query);
-// pr($result);
+$result_query=$REPORT->retrieve_query($query);
+// pr($result_query);
 // exit;
-//set gambar untuk laporan
+// set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
-
+// exit;
 if($tglcetak != ''){
 	$tanggalCetak = format_tanggal($tglcetak);
-	$thnPejabat =substr($tglcetak,0,4);		
+	$thnPejabat =substr($tglcetak,0,4);	
 }else{
 	$tglcetak = date("Y-m-d");
 	$tanggalCetak = format_tanggal($tglcetak);	
-	$thnPejabat =substr($tglcetak,0,4);	
+	$thnPejabat =substr($tglcetak,0,4);
 }
 //retrieve html
-$html=$REPORT->retrieve_html_kib_e_rekap($result, $gambar,$tanggalCetak,$thnPejabat);
-/*$count = count($html);
+$html=$REPORT->retrieve_html_kib_d_rekap_sensus($result_query,$gambar,$tanggalCetak,$thnPejabat);
 
+/*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
-		 
-		echo $html[$i];     
+		 echo $html[$i];     
 	}
 exit;*/
-
-if($tipe!="2"){
-$REPORT->show_status_download_kib();	
+if($tipe==1){
+$REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
@@ -110,10 +87,14 @@ $mpdf->StartProgressBarOutput(2);
 $mpdf->useGraphs = true;
 $mpdf->list_number_suffix = ')';
 $mpdf->hyphenate = true;
+
 $count = count($html);
+
 	for ($i = 0; $i < $count; $i++) {
 		 if($i==0)
-			  $mpdf->WriteHTML($html[$i]);
+			{ 
+			$mpdf->WriteHTML($html[$i]);
+			}
 		 else
 		 {
 			   $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
@@ -122,27 +103,27 @@ $count = count($html);
 		 }
 	}
 
-
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Rekap Kartu Inventaris E $waktu.pdf";
+$namafile="$path/report/output/Rekap Kartu Inventaris Barang Sensus D $waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Rekap Kartu Inventaris E $waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Rekap Kartu Inventaris Barang Sensus D $waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
-else 
+else
 {
 	
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Rekap_Kartu_Inventaris-E_$waktu.xls";
+	$filename ="Rekap_Kartu_Inventaris_Barang_Sensus_D_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
-	
 	$count = count($html);
+	
 	for ($i = 0; $i < $count; $i++) {
            echo "$html[$i]";
            
      }
+     
+	
 }
-
 ?>

@@ -19,6 +19,7 @@ $tglcetak = $_GET['tglcetak'];
 $tahun = $_GET['tahun'];
 // $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
+$pemilik = $_GET['pemilik'];
 // pr($_GET);
 $data=array(
     "modul"=>$modul,
@@ -26,6 +27,7 @@ $data=array(
     "rekap"=>$rekap,
     // "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
+	"pemilik"=>$pemilik,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
@@ -39,6 +41,7 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
+// exit;
 $tglawalperolehan = '0000-00-00';
 $tglakhirperolehan = $tahun.'-12-31';
 

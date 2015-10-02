@@ -12,7 +12,7 @@ $skpd_id = $_REQUEST['kodeSatker16'];
 // $kelompok=$_REQUEST['bidang'];
 $tipe=$_REQUEST['tipe_file'];
 $rekap_barang = $_REQUEST['rekap_barang'];
-
+$pemilik = $_REQUEST['pemilik'];
 // pr($_REQUEST);
 // exit;
 $data=array(
@@ -21,6 +21,7 @@ $data=array(
     "rekap_barang"=>$rekap_barang,
     "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
+	 "pemilik"=>$pemilik,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
@@ -28,7 +29,7 @@ $data=array(
 // print_r($_POST);
 // exit;
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&rekap_barang=$rekap_barang&tahun=$tahun&tipe_file=";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&&pemilik=$pemilik&rekap_barang=$rekap_barang&tahun=$tahun&tipe_file=";
 // echo $paramater_url;
 if(isset($rekap_barang))
 {

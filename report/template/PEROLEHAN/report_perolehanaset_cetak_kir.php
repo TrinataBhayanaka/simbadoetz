@@ -23,6 +23,7 @@ $tab = $_GET['tab'];
 $skpd_id = $_GET['skpd_id'];
 $kodeRuangan = $_GET['kodeRuangan'];
 $kir = $_GET['kir'];
+$pemilik = $_GET['pemilik'];
 $tipe = $_GET['tipe_file'];
 // pr($_GET);
 // exit;
@@ -33,6 +34,7 @@ $data=array(
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     "kodeRuangan"=>$kodeRuangan,
+    "pemilik"=>$pemilik,
     "tab"=>$tab,
 	"kir"=>$kir
 );
@@ -131,7 +133,7 @@ exit;
 }
 else 
 {
-	echo "masuk";
+	// echo "masuk";
 	// exit;
 	$waktu=date("dymhis");
 	$filename ="Kartu_Inventaris_Ruangan_$waktu.xls";

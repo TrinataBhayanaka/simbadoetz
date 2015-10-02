@@ -2,7 +2,19 @@
 include "../../config/config.php";
 
 $LAYANAN = new RETRIEVE_LAYANAN;
-// pr($_POST);exit;
+// pr($_POST);
+$kd_nokontrak = $_POST['kd_nokontrak']; 
+$kd_tahun = $_POST['kd_tahun']; 
+$kodeSatker = $_POST['kodeSatker']; 
+$statusaset = $_POST['statusaset']; 
+$jenisaset = $_POST['jenisaset'];
+$imp = implode(',',$jenisaset);
+/*echo "<pre>";
+echo "implode =".$imp;  
+echo "</pre>";*/
+$param = "no_kontrak={$kd_nokontrak}&tahun={$kd_tahun}&Satker_ID={$kodeSatker}&status={$statusaset}&jns_aset={$imp}";
+
+// exit;
 // $menu_id = 51;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
@@ -162,6 +174,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			?>
 			<input type="submit" name="submit2" class="btn btn-danger" value="Hapus Aset" id="submit" disabled/>
 			<?php endif;?>
+			<a href="<?php echo "$url_rewrite/report/template/PEROLEHAN/liat_dftr_aset.php?$param"; ?>" target="blank">
+			   <input type="button" name="cetak" class="btn btn-info" value="Cetak Aset" >
+			</a>
+			
 			<div class="detailRight">
 						
 						<ul>

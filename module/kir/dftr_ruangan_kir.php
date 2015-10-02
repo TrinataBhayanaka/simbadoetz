@@ -65,7 +65,7 @@ include "../../config/config.php";
 				    </span>
 					<span class="text">Export Ruangan</span>
 				</a>
-				<a class="shortcut-link active" href="">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/kir/filter_ruangan_kir.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
