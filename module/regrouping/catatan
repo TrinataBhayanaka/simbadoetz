@@ -1,3 +1,8 @@
 
 INSERT INTO `tbl_user_menu_parent` (`menuParentID`, `menuParentDesc`, `menuOrder`) VALUES (NULL, 'Regrouping', '14');
 INSERT INTO `tbl_user_menu` (`menuID`, `menuDesc`, `menuParent`, `menuPath`, `menuStatus`, `menuAksesLogin`) VALUES (NULL, 'Pindah lokasi', '19', 'regrouping/index.php', '1', '1');
+
+
+===== merger
+INSERT INTO `tbl_user_menu` (`menuID`, `menuDesc`, `menuParent`, `menuPath`, `menuStatus`, `menuAksesLogin`) VALUES
+(60, 'Merger Data', 19, 'regrouping/merger_preview.php', 1, 1);
