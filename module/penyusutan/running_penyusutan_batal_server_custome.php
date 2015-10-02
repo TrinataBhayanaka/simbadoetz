@@ -99,8 +99,8 @@ for($i = 0; $i < $hitung; $i++){
 	}
 	 
     //update table status untuk penyusutan
-     // $query="update  penyusutan_pertahun  set StatusRunning=0 where Penyusutan_ID=$Penyusutan_ID";
-     // $DBVAR->query($query) or die($DBVAR->error());
+     $query="update  penyusutan_pertahun  set Penyusutan_ID = NUll where Penyusutan_ID=$Penyusutan_ID";
+     $DBVAR->query($query) or die($DBVAR->error());
     
     function cek_masamanfaat($kd_aset1,$kd_aset2,$kd_aset3,$DBVAR){
          $query="select * from ref_masamanfaat where kd_aset1='$kd_aset1' "

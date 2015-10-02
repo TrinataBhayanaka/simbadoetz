@@ -203,18 +203,19 @@ while ($aRow = $DBVAR->fetch_array($rResult)) {
     $Kd_Satker = $aRow['kode'];
 	$NamaSatker = $aRow['NamaSatker'];
 	
-	$rincian ="<center><a href=\"filterDetailKir.php?kdS=$Kd_Satker&kdR=$Kd_Ruang&thn=$Tahun\" class=\"btn btn-info btn-small\">
+	/*$rincian ="<center><a href=\"filterDetailKir.php?kdS=$Kd_Satker&kdR=$Kd_Ruang&thn=$Tahun\" class=\"btn btn-info btn-small\">
 			<i class=\"icon-plus icon-white\"></i>&nbsp;Rincian
-			</a></center>";
-	
-	/*$view ="<center><a href=\"filterDetailKir.php?kdS=$Kd_Satker&kdR=$Kd_Ruang&thn=$Tahun\" class=\"btn btn-warning\">
-			<i class=\"fa fa-eye\"></i>&nbsp;View
 			</a></center>";*/
+	
+	$view ="<center><a href=\"dftr_ruangan_kir_detail.php?kdS=$Kd_Satker&kdR=$Kd_Ruang&thn=$Tahun\" class=\"btn btn-warning\">
+			<i class=\"fa fa-eye\"></i>&nbsp;Rincian
+			</a></center>";
 		
 	  $row[] ="<center>".$no."</center>";
 	  $row[] ="<center>".$Tahun."</center>";
       $row[] =$Kd_Ruang."&nbsp;".$NamaSatker;
-	  $row[] =$rincian."&nbsp;".$view;
+	  $row[] =$view;
+	  // $row[] =$rincian."&nbsp;".$view;
 	  // $row[] =$rincian."&nbsp;".$view;
       
 	$no++;

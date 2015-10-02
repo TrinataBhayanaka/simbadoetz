@@ -8,29 +8,13 @@ include "../../config/config.php";
         $SessionUser = $SESSION->get_session_user();
         $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
         session_start();
-		// pr($_POST);
-		// exit;
-		// pr($_SESSION);
-		// exit;
-		$dataSesi = $_SESSION['ses_filter_ruangan_kir'];
+		// pr($_GET);
+		$kodeSatker = $_GET['kdS'];
+		$kodeRuangan = $_GET['kdR'];
+		$tahunRuangan = $_GET['thn'];
 		
-		// pr($dataSesi);
-		// exit;
-		// pr($SessionUser);
-			$SessionUser['tahun_aw'] = $_POST['Tahun_aw'];
-			$SessionUser['tahun_ak'] = $_POST['Tahun_ak'];
-			$SessionUser['register_aw'] = $_POST['register_aw'];
-			$SessionUser['register_ak'] = $_POST['register_ak'];
-			$SessionUser['satker'] = $_POST['kodeSatker'];
-			$SessionUser['kodeKelompok'] = $_POST['kodeKelompok'];
-			$SessionUser['tipeAset'] = $_POST['tipeAset'];
-			$SessionUser['ruangan'] = $_POST['ruangan'];
-			$SessionUser['tahunRuangan'] = $_POST['tahunRuangan'];
-			
-			$par_data_table="tahun_aw=$SessionUser[tahun_aw]&tahun_ak=$SessionUser[tahun_ak]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]&thnR=$SessionUser[tahunRuangan]&ruangan=$SessionUser[ruangan]&Reg_aw=$SessionUser[register_aw]&Reg_ak=$SessionUser[register_ak]";
-		
-		// pr($par_data_table);
-		// exit;
+		$par_data_table="kodeSatker=$kodeSatker&kodeRuangan=$kodeRuangan&tahunRuangan=$tahunRuangan";
+	
 ?>
 
 <?php
@@ -54,12 +38,12 @@ include "../../config/config.php";
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
-			    updDataCheckbox('KIRASET');
+			    updDataCheckbox('KIRASETDETAIL');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
-			    updDataCheckbox('KIRASET');
+			    updDataCheckbox('KIRASETDETAIL');
 			}}, 100);
 		}
 	
@@ -99,11 +83,9 @@ include "../../config/config.php";
 				    </span>
 					<span class="text">KIR</span>
 				</a>
-		</div>		
+		</div>
+		
 		<?php
-			$tahunRuangan = $_GET['thn'];
-			$kodeSatker = $_GET['kdS'];
-			$kodeRuangan = $_GET['kdR'];
 			//get nama ruangan
 			$queryRuangan =$DBVAR->query("SELECT NamaSatker from satker where kode = '$kodeSatker' and Kd_Ruang = '$kodeRuangan'
 								and Tahun = '$tahunRuangan'");
@@ -113,13 +95,9 @@ include "../../config/config.php";
 			$resultSatker = $DBVAR->fetch_array($querySatker);	
 		?>
 		<section class="formLegend">
-			<form id="Form2" name="myform" method="POST" action ="<?=$url_rewrite?>/module/kir/proses_update_ruangan.php">
+			<form id="Form2" name="myform" method="POST" action ="<?=$url_rewrite?>/module/kir/filterDetailKir_cstm.php">
 			<div class="detailLeft" style="width:100%">
 			<ul>
-				<li>
-					<span class="labelInfo">Tahun Ruangan</span>
-					<input type="text" value="<?=$tahunRuangan?>" disabled/>
-				</li>
 				<li>
 					<span class="labelInfo">Satker</span>
 					<input type="text" value="<?=$resultSatker['NamaSatker']?>" disabled/>
@@ -129,27 +107,20 @@ include "../../config/config.php";
 					<input type="text" style="width:300px" value="<?=$resultRuangan['NamaSatker']?>" disabled/>
 				</li>
 				<li>
-					<span class="labelInfo">Tgl Perubahan</span>
-					<!--<div class="input-prepend"><span class="add-on"><i class="fa fa-calendar"></i></span>-->
-							<!--<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required/>--> 
-							<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required> 
-						<!--</div>-->
+					<span class="labelInfo">Tahun Ruangan</span>
+					<input type="text" value="<?=$tahunRuangan?>" disabled/>
 				</li>
 				<li>
-					*)Tgl Perubahan Disesuaikan Dengan Tahun Berlaku Rekapitulasi
-				</li>
-				<li>
-					<input type="submit" class="btn btn-info btn-small" id= "submit" value="Update Ruangan" name="submit"  onclick="return check_pilihan(); disabled"/>
+					<input type="submit" id="submit" class="btn btn-warning btn-small" value="Pindah Ruangan" name="submit"  onclick="return check_pilihan(); disabled"/>
+					<a href="filterDetailKir.php?kdS=<?=$kodeSatker ?>&kdR=<?=$kodeRuangan ?>&thn=<?=$tahunRuangan?>">
+					&nbsp;<input type="button" class="btn btn-info btn-small" value="Tambah Data" name="tambahData"/></a>
 					<input type="hidden" name="kodeSatker" value="<?=$kodeSatker?>">
 					<input type="hidden" name="kodeRuang" value="<?=$kodeRuangan?>">
 					<input type="hidden" name="tahunRuangan" value="<?=$tahunRuangan?>">
 				</li>
 			</ul>
 		</div>
-		<?php
-			//parameter datatabel
-			// $par_data_table="tahun=$SessionUser[tahun]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]&thnR=$tahunRuangan";
-		?>
+		
 			<script>
 			$(document).ready(function() {
 				  $('#kir_aset').dataTable(
@@ -172,7 +143,7 @@ include "../../config/config.php";
 
 							"bProcessing": true,
 							"bServerSide": true,
-							"sAjaxSource": "<?=$url_rewrite?>/api_list/viewkir_aset.php?<?php echo $par_data_table?>"
+							"sAjaxSource": "<?=$url_rewrite?>/api_list/viewkir_aset_detail.php?<?php echo $par_data_table?>"
 					   }
 						  );
 			  });

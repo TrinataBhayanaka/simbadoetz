@@ -14,6 +14,7 @@ $skpd_id = $_REQUEST['kodeSatker'];
 // $kelompok=$_REQUEST['bidang'];
 $tipe=$_REQUEST['tipe_file'];
 $kib = $_REQUEST['kib'];
+$pemilik = $_REQUEST['pemilik'];
 // pr($_REQUEST);
 // exit;
 $data=array(
@@ -23,6 +24,7 @@ $data=array(
     "tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
+    "pemilik"=>$pemilik,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
@@ -30,7 +32,7 @@ $data=array(
 // print_r($_POST);
 // exit;
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tglawalperolehan=$tglawalperolehan&tglakhirperolehan=$tglakhirperolehan&kib=$kib&tglcetak=$tglcetak&tipe_file=$tipe";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&pemilik=$pemilik&tglawalperolehan=$tglawalperolehan&tglakhirperolehan=$tglakhirperolehan&kib=$kib&tglcetak=$tglcetak&tipe_file=$tipe";
 // echo $paramater_url;
 if(isset($kib))
 {

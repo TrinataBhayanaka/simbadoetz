@@ -50,6 +50,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li class="active"><a href="#kib" data-toggle="tab">KIB</a></li>
 						<li><a href="#rekapkib" data-toggle="tab">Rekapitulasi KIB</a></li>
 						<li><a href="#rekapbarang" data-toggle="tab">Rekapitulasi Barang</a></li>
+						<li><a href="#rekapsensusbarang" data-toggle="tab">Rekapitulasi Sensus Barang</a></li>
 						<li><a href="#kir" data-toggle="tab">KIR</a></li>
 						<li><a href="#biskpd" data-toggle="tab">Buku Inventaris SKPD</a></li>
 						<li><a href="#biskpdgab" data-toggle="tab">Buku Inventaris Gabungan SKPD</a></li>
@@ -72,23 +73,6 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li,#tglawalLabel,#tglakhirlLabel").mask('9999-99-99');
 							$( "#tahun_label,#tahun_rekap_kib,#tahun_rekap").mask('9999');
 							$( "#tglPerolehan_1,#tglPerolehan_2,#tglPerolehan_awal_kir,#tglPerolehan_akhir_kir,#tglawalPerolehan_bis,#tglakhirPerolehan_bis,#tglPerolehan_Awal_biid,#tglPerolehan_Akhir_biid,#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehan_awal_rekapbis,#tglPerolehan_akhir_rekapbis,#tglPerolehan_awal_induk,#tglPerolehan_akhir_induk,#tglCetakKib,#tglCetakRekapKib,#tglCetakKir,#tglCetakBiv,#tglCetakRekapBiv,#tglCetakBivIndk,#tglCetakRekapBivIndk,#tglPerolehan_awal_kb,#tglPerolehan_akhir_kb,#tglCetakKb,#tglawalPerolehan_bisgab,#tglakhirPerolehan_bisgab,#tglCetakBivgab,#tglawalPerolehan_li,#tglpembukuan_li,#tglawalLabel,#tglakhirlLabel" ).datepicker({ dateFormat: 'yy-mm-dd' });
-
-							/*$('#tahun_label').keydown(function (e) {
-								// Allow: backspace, delete, tab, escape, enter and .
-								if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-									 // Allow: Ctrl+A
-									(e.keyCode == 65 && e.ctrlKey === true) || 
-									 // Allow: home, end, left, right
-									(e.keyCode >= 35 && e.keyCode <= 39)) {
-										 // let it happen, don't do anything
-										 return;
-								}
-								// Ensure that it is a number and stop the keypress
-								if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-									e.preventDefault();
-								}
-							});*/
-						
 						});
 						
 						</script>
@@ -127,7 +111,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								selectAllSatker('kodeSatker','255',true,false,false,true);
 							?>
 							<br />
-
+							<li>
+								<span class="span2">Kode Pemilik</span>
+								<select name = "pemilik" class="" id="sel1">
+									<option value="12" selected>12 - Pemerintah Kota</option>
+									<option value="11">11 - Pemerintah Provinsi</option>
+									<option value="00">00 - Kementrian Lembaga</option>
+							  </select>
+							</li>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
 								<div class="control">
@@ -178,6 +169,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							?>
 							<br />
 							<li>
+								<span class="span2">Kode Pemilik</span>
+								<select name = "pemilik" class="" id="sel1">
+									<option value="12" selected>12 - Pemerintah Kota</option>
+									<option value="11">11 - Pemerintah Provinsi</option>
+									<option value="00">00 - Kementrian Lembaga</option>
+							  </select>
+							</li>
+							<li>
 								<span class="span2">Tanggal Cetak</span>
 								<div class="control">
 									<div class="input-prepend">
@@ -225,6 +224,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							
 							?>
 							<br />
+							<li>
+								<span class="span2">Kode Pemilik</span>
+								<select name = "pemilik" class="" id="sel1">
+									<option value="12" selected>12 - Pemerintah Kota</option>
+									<option value="11">11 - Pemerintah Provinsi</option>
+									<option value="00">00 - Kementrian Lembaga</option>
+							  </select>
+							</li>
+							
 							<!--<li>
 								<span class="span2">Tanggal Cetak</span>
 								<div class="control">
@@ -246,6 +254,52 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						</form>
 						</div>
 						
+						<div class="tab-pane" id="rekapsensusbarang">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Sensus Barang </div>
+						</div>
+						 <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapSensusBarangkib.php"; ?>">
+						<ul>
+							<li>
+								<input type="radio" name="rekap_barang_sensus" value="RekapBarangSensusKIB-A" class="inven1" checked >&nbsp; KIB-A
+								<input type="radio" name="rekap_barang_sensus" value="RekapBarangSensusKIB-B" class="inven2" >&nbsp; KIB-B
+								<input type="radio" name="rekap_barang_sensus" value="RekapBarangSensusKIB-C" class="inven3" > &nbsp; KIB-C
+								<input type="radio" name="rekap_barang_sensus" value="RekapBarangSensusKIB-D" class="inven4" > &nbsp;KIB-D
+								<input type="radio" name="rekap_barang_sensus" value="RekapBarangSensusKIB-E" class="inven5" > &nbsp;KIB-E
+								<input type="radio"name="rekap_barang_sensus" value="RekapBarangSensusKIB-F" class="inven6"> &nbsp;KIB-F
+								<br/>
+							</li>
+							<li>&nbsp;
+							</li>
+							<li>
+								<span class="span2">Tahun</span>
+								<input name="tahun_rekap_sensus" id ="tahun_rekap" type="text" maxlength='4' value="<?php echo date('Y')?>" required>
+							</li>
+							<?php //selectAllSatker('kodeSatker7','255',true,false); 
+					
+									selectAllSatker('kodeSatker18','255',true,false,false,true);
+							
+							?>
+							<br />
+							<li>
+								<span class="span2">Kode Pemilik</span>
+								<select name = "pemilik" class="" id="sel1">
+									<option value="12" selected>12 - Pemerintah Kota</option>
+									<option value="11">11 - Pemerintah Provinsi</option>
+									<option value="00">00 - Kementrian Lembaga</option>
+							  </select>
+							</li>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="lanjut" class="btn btn-primary" value="Lanjut" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						<input type="hidden" name="menuID" value="14">
+						<input type="hidden" name="mode" value="1">
+						<input type="hidden" name="tab" value="12">
+						</form>
+						</div>
 						
 						
 						
@@ -278,8 +332,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									selectAllSatker('kodeSatker2','255',true,false,false,true);
 							
 							?>
-							
 							<br>
+							<li>
+								<span class="span2">Kode Pemilik</span>
+								<select name = "pemilik" class="" id="sel1">
+									<option value="12" selected>12 - Pemerintah Kota</option>
+									<option value="11">11 - Pemerintah Provinsi</option>
+									<option value="00">00 - Kementrian Lembaga</option>
+							  </select>
+							</li>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
 								<div class="control">

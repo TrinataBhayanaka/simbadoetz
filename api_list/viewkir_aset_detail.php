@@ -43,29 +43,10 @@ $cond_kelompok ="k.Kode = a.kodeKelompok ";
 // $cond_satker ="s.kode = a.kodeSatker";
 $status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
 //variabel ajax
-$tahun_aw 		= $_GET['tahun_aw'];
-$tahun_ak 		= $_GET['tahun_ak'];
-$reg_aw 		= $_GET['Reg_aw'];
-$reg_ak 		= $_GET['Reg_ak'];
-$satker 		= $_GET['satker'];
-$kodeKelompok	= $_GET['kodeKelompok'];
-$tipeAset		= $_GET['tipeAset'];
-$thnR			= $_GET['thnR'];
-$kd_ruangan		= $_GET['ruangan'];
-// pr($_GET);
-if($tipeAset == 'tanah'){
-	$tipe = '01';
-}elseif($tipeAset == 'mesin'){
-	$tipe = '02';
-}elseif($tipeAset == 'bangunan'){
-	$tipe = '03';
-}elseif($tipeAset == 'jaringan'){
-	$tipe = '04';
-}elseif($tipeAset == 'asetlain'){
-	$tipe = '05';
-}elseif($tipeAset == 'kdp'){
-	$tipe = '06';
-}
+$kodeSatker 		= $_GET['kodeSatker'];
+$kodeRuangan 		= $_GET['kodeRuangan'];
+$tahunRuangan 		= $_GET['tahunRuangan'];
+
 // echo $tahun;
 /* REMOVE THIS LINE (it just includes my SQL connection user/pass) */
 //include( $_SERVER['DOCUMENT_ROOT'] . "/datatables/mysql.php" );
@@ -112,7 +93,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY a.kodeKelompok,a.noRegister asc";
+          $sOrder = "";
      }
 }
 // ECHO $sOrder;
@@ -124,36 +105,12 @@ if (isset($_GET['iSortCol_0'])) {
  * on very large tables, and MySQL's regex functionality is very limited
  */
 $sWhere = "";
+$sWhere=" WHERE $status a.kodeSatker='$kodeSatker' AND a.kodeRuangan='$kodeRuangan'";
 
-if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan'";
-}
-elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == '' ){
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok='$kodeKelompok' ";
-}
-elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
-	
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan'";
-}
-elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
-	
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok like '$tipe%'";
-}
 
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
-     //$sWhere = "WHERE (";
-	 if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
-		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan' AND (";
-	}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
-		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND (";
-	}
-	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
-		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan'  AND (";
-	}
-	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
-		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'  AND (";
-	}
-	 
+    $sWhere=" WHERE $status a.kodeSatker='$kodeSatker' AND a.kodeRuangan='$kodeRuangan' AND (";
+	
      // $sWhere.="(";
      for ($i = 0; $i < count($aColumns); $i++) {
           if (isset($_GET['bSearchable_' . $i]) && $_GET['bSearchable_' . $i] == "true") {
@@ -164,29 +121,12 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
      $sWhere .= ')';
 }
 
-/* Individual column filtering */
-/*for ($i = 0; $i < count($aColumns); $i++) {
-     if (isset($_GET['bSearchable_' . $i]) && $_GET['bSearchable_' . $i] == "true" && $_GET['sSearch_' . $i] != '') {
-          if ($sWhere == "") {
-               $sWhere = "WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'";
-          } else {
-               $sWhere .= " AND $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
-          }
-          $sWhere .= "" . $aColumns[$i] . " LIKE '%" . mysql_real_escape_string($_GET['sSearch_' . $i]) . "%' ";
-     }
-}*/
 // echo $sWhere;
 
 /*
  * SQL queries
  * Get data to display
  */
- /*SELECT a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.Tahun,k.Uraian,s.NamaSatker from aset a 
- inner join kelompok as k on k.Kode = a.kodeKelompok 
- inner join satker as s on s.kode = a.kodeSatker 
- where a.tahun = '2014' and a.kodeSatker = '01.01.01.01' and a.kodekelompok like '02%' limit 1 */
- 
- // echo $sWhere;
 
 $sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
@@ -196,7 +136,6 @@ $sQuery = "
 		$sOrder
 		$sLimit
 		";
-
 // echo $sQuery;
 // $rResult = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
 //get data all
@@ -214,33 +153,10 @@ $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
 
 /* Total data set length */
-if($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR != ''){
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' 
-		AND a.kodeKelompok='$kodeKelompok'
-		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'
-		AND kodeRuangan ='$thnR' ";
-}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR == '' ){
-	$sQuery = "
-		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker'
-		AND a.kodeKelompok='$kodeKelompok'
-		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
-}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR != ''){
-	$sQuery = "
-		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' 
-		AND a.kodeKelompok like '$tipe%' 
-		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'
-		AND kodeRuangan ='$thnR'";
-}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR == ''){
-	$sQuery = "
-		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' 
-		AND a.kodeKelompok like '$tipe%'
-		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
-}
+		FROM   $sTable WHERE $status a.kodeSatker='$kodeSatker' AND a.kodeRuangan='$kodeRuangan'";
+
 	// 	echo $sQuery;
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
@@ -260,7 +176,7 @@ $no=$_GET['iDisplayStart']+1;
 
 //ini buat apluserlist
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-$data_post=$PENGHAPUSAN->apl_userasetlistHPS("KIRASET");
+$data_post=$PENGHAPUSAN->apl_userasetlistHPS("KIRASETDETAIL");
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 // $POST['kirfilter']=$POST;
 
@@ -304,8 +220,7 @@ if (!empty($data)){
 		$TipeAset = $aRow['TipeAset'];
 		//cek ruangan 
 		if($kodeRuangan != ''){
-			$queryRuangan = "select NamaSatker from satker where kode ='$Kd_Satker' and Tahun = '$thnR' and Kd_Ruang= '$kodeRuangan' limit 1";
-			// echo $queryRuangan;
+			$queryRuangan = "select NamaSatker from satker where kode ='$Kd_Satker' and Tahun = '$tahunRuangan' and Kd_Ruang = '$kodeRuangan' limit 1";
 			$exequeryRuangan = $DBVAR->query($queryRuangan);
 			$GetData = $DBVAR->fetch_array($exequeryRuangan);
 			$NamaRuangan = $GetData['NamaSatker'];

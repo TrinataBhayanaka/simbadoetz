@@ -14,11 +14,24 @@ include "../../config/config.php";
 	 $resetDataView = $DBVAR->is_table_exists('lihat_daftar_aset_'.$SessionUser['ses_uoperatorid'], 0);
 	
 	 $idkontrak = $_GET['id'];
+	 //temp sql
+	 $handler = $DBVAR->query("select toSatker from transfer where id='$idkontrak'");
+	 $getData = $DBVAR->fetch_array($handler);
+	 // pr($getData);
+	 $expld = explode('.',$getData['toSatker']);
+	 //handler 08
+	 $flag = end($expld);
+	 // pr($flag);
+	 $strlen = strlen($flag);
+	 // $strlen = '3';
+	 
 ?>
 	<script>
 	jQuery(function($){
 	   $("#Tahun").mask("9999");
+	   $("#kodeLokasi_08").mask("99.99.99.99.99.99.99.999");
 	   $("#kodeLokasi").mask("99.99.99.99.99.99.99.99");
+	    
 	   $("#tipeAset").select2();
 	});
 	</script>
@@ -47,7 +60,14 @@ include "../../config/config.php";
 							</li>
 							<li>
 								<span>Kode Lokasi</span><br/>
-								<input id="kodeLokasi" name="kodeLokasi" type="text" style="width:170px">
+								<?php
+								if($strlen == '3'){
+									echo"<input id=\"kodeLokasi_08\" name=\"kodeLokasi\" type=\"text\" style=\"width:170px\">";
+								}elseif($strlen == '2'){
+									echo"<input id=\"kodeLokasi\" name=\"kodeLokasi\" type=\"text\" style=\"width:170px\">";
+								}
+								?>
+								
 							</li>
 							<li>
 								<span>Jenis Aset</span><br/>

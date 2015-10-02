@@ -47,6 +47,7 @@ class core_api_report extends DB {
      var $ekstra;
      var $rekap;
      var $rekap_barang;
+     var $rekap_barang_sensus;
      var $label;
      var $gol;
      var $aset;
@@ -131,6 +132,7 @@ class core_api_report extends DB {
 		  $this->kb=$hasil_data['kb'];
 		  $this->rekap=$hasil_data['rekap'];
 		  $this->rekap_barang=$hasil_data['rekap_barang'];
+		  $this->rekap_barang_sensus=$hasil_data['rekap_barang_sensus'];
 		  $this->label=$hasil_data['label'];
 		  $this->gol=$hasil_data['gol'];
 		  $this->aset=$hasil_data['aset'];
@@ -188,6 +190,7 @@ class core_api_report extends DB {
           $kb=$this->kb;
           $rekap=$this->rekap;
           $rekap_barang=$this->rekap_barang;
+          $rekap_barang_sensus=$this->rekap_barang_sensus;
           $label=$this->label;
           $gol=$this->gol;
           $aset=$this->aset;
@@ -241,7 +244,7 @@ class core_api_report extends DB {
 						}else{
 							$paramSatker = "T.kodeSatker like '$skpd_id%'";
 						}
-	
+				$queryPemilik = "T.kodeLokasi like '$pemilik%'";
 				$query_satker_fix = $paramSatker;
 				
 			}
@@ -256,7 +259,7 @@ class core_api_report extends DB {
 						}else{
 							$paramSatker = "M.kodeSatker like '$skpd_id%'";
 						}
-	
+				$queryPemilik = "M.kodeLokasi like '$pemilik%'";
 				$query_satker_fix = $paramSatker;
 			}
 			if($kib =='KIB-C')
@@ -270,7 +273,7 @@ class core_api_report extends DB {
 						}else{
 							$paramSatker = "B.kodeSatker like '$skpd_id%'";
 						}
-	
+				$queryPemilik = "B.kodeLokasi like '$pemilik%'";
 				$query_satker_fix = $paramSatker;
 			}
 			if($kib =='KIB-D')
@@ -284,7 +287,7 @@ class core_api_report extends DB {
 						}else{
 							$paramSatker = "J.kodeSatker like '$skpd_id%'";
 						}
-	
+					$queryPemilik = "J.kodeLokasi like '$pemilik%'";
 					$query_satker_fix = $paramSatker;
 			}
 			if($kib =='KIB-E')
@@ -298,7 +301,7 @@ class core_api_report extends DB {
 						}else{
 							$paramSatker = "AL.kodeSatker like '$skpd_id%'";
 						}
-	
+					$queryPemilik = "AL.kodeLokasi like '$pemilik%'";
 					$query_satker_fix = $paramSatker;
 			}
 			if($kib =='KIB-F')
@@ -312,7 +315,7 @@ class core_api_report extends DB {
 						}else{
 							$paramSatker = "KDPA.kodeSatker like '$skpd_id%'";
 						}
-	
+					$queryPemilik = "KDPA.kodeLokasi like '$pemilik%'";
 					$query_satker_fix = $paramSatker;
 			}
 			
@@ -417,6 +420,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$queryPemilik = "T.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-B')
 			{
@@ -429,6 +433,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$queryPemilik = "M.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-C')
 			{
@@ -441,6 +446,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$queryPemilik = "B.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-D')
 			{
@@ -453,6 +459,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$queryPemilik = "J.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-E')
 			{
@@ -465,6 +472,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$queryPemilik = "AL.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-F')
 			{
@@ -477,9 +485,91 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$queryPemilik = "KDPA.kodeLokasi like '$pemilik%'";
 			}
-		// echo "masukk";
-		// exit;
+		
+		//rekap sensus
+			if($rekap_barang_sensus =='RekapBarangSensusKIB-A')
+			{
+				// $query_satker_fix = " T.kodeSatker LIKE '$skpd_id%'";
+				
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "T.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "T.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+					$queryPemilik = "T.kodeLokasi like '$pemilik%'";
+			}
+			if($rekap_barang_sensus =='RekapBarangSensusKIB-B')
+			{
+				// $query_satker_fix = " M.kodeSatker LIKE '$skpd_id%'";
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "M.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "M.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+					$queryPemilik = "M.kodeLokasi like '$pemilik%'";
+			}
+			if($rekap_barang_sensus =='RekapBarangSensusKIB-C')
+			{
+				// $query_satker_fix = " B.kodeSatker LIKE '$skpd_id%'";
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "B.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "B.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+					$queryPemilik = "B.kodeLokasi like '$pemilik%'";
+			}
+			if($rekap_barang_sensus =='RekapBarangSensusKIB-D')
+			{
+				// $query_satker_fix = " J.kodeSatker LIKE '$skpd_id%'";
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "J.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "J.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+					$queryPemilik = "J.kodeLokasi like '$pemilik%'";
+			}
+			if($rekap_barang_sensus =='RekapBarangSensusKIB-E')
+			{
+				// $query_satker_fix = " AL.kodeSatker LIKE '$skpd_id%'";
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "AL.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "AL.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+					$queryPemilik = "AL.kodeLokasi like '$pemilik%'";
+			}
+			if($rekap_barang_sensus =='RekapBarangSensusKIB-F')
+			{
+				// $query_satker_fix = " KDPA.kodeSatker LIKE '$skpd_id%'";
+				$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "KDPA.kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "KDPA.kodeSatker like '$skpd_id%'";
+						}
+	
+					$query_satker_fix = $paramSatker;
+					$queryPemilik = "KDPA.kodeLokasi like '$pemilik%'";
+			}
+		
+		
 		//rekap barang
 		//this for rekap kib a -kib f
 			if($rekap_barang =='RekapBarangKIB-A')
@@ -495,7 +585,8 @@ class core_api_report extends DB {
 	
 					$query_satker_fix = $paramSatker;
 				}	
-					$query_tahun = "T.Tahun <= '$tahun'";	
+					$query_tahun = "T.Tahun <= '$tahun'";
+					$queryPemilik = "T.kodeLokasi like '$pemilik%'";					
 			}
 			if($rekap_barang =='RekapBarangKIB-B')
 			{
@@ -510,7 +601,8 @@ class core_api_report extends DB {
 	
 					$query_satker_fix = $paramSatker;
 				}	
-					$query_tahun = "M.Tahun <= '$tahun'";	
+					$query_tahun = "M.Tahun <= '$tahun'";
+					$queryPemilik = "M.kodeLokasi like '$pemilik%'";					
 			}
 			if($rekap_barang =='RekapBarangKIB-C')
 			{
@@ -525,7 +617,8 @@ class core_api_report extends DB {
 	
 					$query_satker_fix = $paramSatker;
 				}	
-					$query_tahun = "B.Tahun <= '$tahun'";	
+					$query_tahun = "B.Tahun <= '$tahun'";
+					$queryPemilik = "B.kodeLokasi like '$pemilik%'";		
 			}
 			if($rekap_barang =='RekapBarangKIB-D')
 			{
@@ -540,7 +633,8 @@ class core_api_report extends DB {
 	
 					$query_satker_fix = $paramSatker;
 				}	
-					$query_tahun = "J.Tahun <= '$tahun'";	
+					$query_tahun = "J.Tahun <= '$tahun'";
+					$queryPemilik = "J.kodeLokasi like '$pemilik%'";		
 			}
 			if($rekap_barang =='RekapBarangKIB-E')
 			{
@@ -556,6 +650,7 @@ class core_api_report extends DB {
 					$query_satker_fix = $paramSatker;
 				}	
 					$query_tahun = "AL.Tahun <= '$tahun'";	
+					$queryPemilik = "AL.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap_barang =='RekapBarangKIB-F')
 			{
@@ -570,7 +665,8 @@ class core_api_report extends DB {
 	
 					$query_satker_fix = $paramSatker;
 				}	
-					$query_tahun = "KDPA.Tahun <= '$tahun'";	
+					$query_tahun = "KDPA.Tahun <= '$tahun'";
+					$queryPemilik = "KDPA.kodeLokasi like '$pemilik%'";					
 			}	
 			
 			
@@ -583,6 +679,7 @@ class core_api_report extends DB {
 				$query_tgl_akhir = " TglPembukuan <= '$tglakhirperolehan' ";
 				$query_kodeRuangan ="kodeRuangan ='$kodeRuangan'";
 				// $query_satker_fix = " kodeSatker LIKE '$skpd_id%'";
+				$queryPemilik = "kodeLokasi like '$pemilik%'";
 				$splitKodeSatker = explode ('.',$skpd_id);
 					if(count($splitKodeSatker) == 4){	
 						$paramSatker = "kodeSatker = '$skpd_id'";
@@ -946,6 +1043,18 @@ class core_api_report extends DB {
 													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 												order by 
 													M.kodeSatker,M.kodeKelompok $limit";
+													
+			$rekap_barang_b_condition_sensus ="select M.kodeSatker,
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+												from 
+													mesin_ori as M,kelompok as K 
+												where 
+													M.kodeKelompok=K.Kode  
+													 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and $parameter_sql
+												order by 
+													M.kodeSatker,M.kodeKelompok $limit";										
 			
 			$rekap_barang_c_condition="select B.Aset_ID, B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 											B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.noRegister,B.Alamat,
@@ -973,6 +1082,8 @@ class core_api_report extends DB {
 											and $parameter_sql
 											order by J.kodeSatker,J.kodeKelompok $limit";
 			
+				
+			
 			$rekap_barang_e_condition="select distinct(AL.kodeSatker), 
 											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
@@ -991,6 +1102,20 @@ class core_api_report extends DB {
 											AL.kondisi, AL.kodeLokasi,
 											K.Kode, K.Uraian
 											order by AL.kodeSatker,AL.kodeKelompok $limit";
+											
+			$rekap_barang_e_condition_sensus="select AL.kodeSatker, 
+											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+											AL.kondisi, AL.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											asetlain_ori as AL,kelompok as K  
+											where
+											AL.kodeKelompok = K.Kode 
+											 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 
+											and $parameter_sql
+											order by AL.kodeSatker,AL.kodeKelompok $limit";								
 			
 			$rekap_barang_f_condition="select KDPA.Aset_ID, KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 											KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.noRegister,KDPA.Alamat,
@@ -1000,7 +1125,7 @@ class core_api_report extends DB {
 											from 
 											kdp_ori as KDPA,kelompok as K  
 											where
-											AL.kodeKelompok = K.Kode  
+											KDPA.kodeKelompok = K.Kode  
 											 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
 											and $parameter_sql
 											order by KDPA.kodeSatker,KDPA.kodeKelompok $limit";
@@ -1087,7 +1212,7 @@ class core_api_report extends DB {
 											from 
 											kdp_ori as KDPA,kelompok as K  
 											where
-											AL.kodeKelompok = K.Kode  
+											KDPA.kodeKelompok = K.Kode  
 											 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
 											and $parameter_sql
 											order by 
@@ -1106,7 +1231,7 @@ class core_api_report extends DB {
 													T.kodeKelompok=K.Kode  and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
 													and $parameter_sql
 												order by 
-													T.kodeSatker,T.kodeLokasi,T.Tahun,T.kodeKelompok $limit";
+													T.kodeSatker,T.Tahun,T.kodeKelompok $limit";
 			
 			$Modul_1_Mode_1_Case_a_default   = "select 
 													T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
@@ -1116,7 +1241,7 @@ class core_api_report extends DB {
 												where
 													T.kodeKelompok=K.Kode  and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
 												order by 
-													T.kodeSatker,T.kodeLokasi,T.Tahun,T.kodeKelompok $limit";	
+													T.kodeSatker,T.Tahun,T.kodeKelompok $limit";	
 			//end update query kib a								
            
 		   //start update query kib b (ok)
@@ -1134,7 +1259,7 @@ class core_api_report extends DB {
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
 													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 												order by 
-													M.kodeSatker,M.kodeLokasi,M.Tahun,M.kodeKelompok $limit";
+													M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 										
 			$Modul_1_Mode_1_Case_b_default = "select distinct(M.kodeSatker),
 													M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
@@ -1150,7 +1275,7 @@ class core_api_report extends DB {
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
 													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 												order by 
-													M.kodeSatker,M.kodeLokasi,M.Tahun,M.kodeKelompok $limit";								
+													M.kodeSatker,M.Tahun,M.kodeKelompok $limit";								
           //end update query kib b (ok)
 		  
 		  //start update query kib c (ok)
@@ -1165,7 +1290,7 @@ class core_api_report extends DB {
 											B.kodeKelompok = K.Kode 
 											 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 
 											and $parameter_sql
-											order by B.kodeSatker,B.kodeLokasi,B.Tahun,B.kodeKelompok $limit";
+											order by B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
           //ok
           $Modul_1_Mode_1_Case_c_default = "select B.Aset_ID, B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 											B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.noRegister,B.Alamat,
@@ -1177,7 +1302,7 @@ class core_api_report extends DB {
 											where
 											B.kodeKelompok = K.Kode 
 											 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 
-											order by  B.kodeSatker,B.kodeLokasi,B.Tahun,B.kodeKelompok $limit";
+											order by  B.kodeSatker,B.Tahun,B.kodeKelompok $limit";
           //end update query kib c (ok)
 		  
 		 //start update query kib d (ok)
@@ -1192,7 +1317,7 @@ class core_api_report extends DB {
 											J.kodeKelompok = K.Kode 
 											 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 
 											and $parameter_sql
-											order by J.kodeSatker,J.kodeLokasi,J.Tahun,J.kodeKelompok $limit";
+											order by J.kodeSatker,J.Tahun,J.kodeKelompok $limit";
           
 		  $Modul_1_Mode_1_Case_d_default = "select J.Aset_ID, J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 											J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.noRegister,J.Alamat,
@@ -1204,7 +1329,7 @@ class core_api_report extends DB {
 											where
 											J.kodeKelompok = K.Kode 
 											 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 
-											order by J.kodeSatker,J.kodeLokasi,J.Tahun,J.kodeKelompok  $limit";
+											order by J.kodeSatker,J.Tahun,J.kodeKelompok  $limit";
 		 //end update query kib d (ok)
 
 
@@ -1227,7 +1352,7 @@ class core_api_report extends DB {
 											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 											AL.kondisi, AL.kodeLokasi,
 											K.Kode, K.Uraian
-											order by AL.kodeSatker,AL.kodeLokasi,AL.Tahun,AL.kodeKelompok $limit";
+											order by AL.kodeSatker,AL.Tahun,AL.kodeKelompok $limit";
 											
 			  $Modul_1_Mode_1_Case_e_default = "select distinct(AL.kodeSatker),AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 												AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
@@ -1243,7 +1368,7 @@ class core_api_report extends DB {
 												AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 												AL.kondisi, AL.kodeLokasi,
 												K.Kode, K.Uraian
-												order by AL.kodeSatker,AL.kodeLokasi,AL.Tahun,AL.kodeKelompok $limit";
+												order by AL.kodeSatker,AL.Tahun,AL.kodeKelompok $limit";
 	     //end update query kib d (ok)
 		 
          //start update query kib f (ok)
@@ -1255,10 +1380,10 @@ class core_api_report extends DB {
 											from 
 											kdp_ori as KDPA,kelompok as K  
 											where
-											AL.kodeKelompok = K.Kode  
+											KDPA.kodeKelompok = K.Kode  
 											 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
 											and $parameter_sql
-											order by KDPA.kodeSatker,KDPA.kodeLokasi,KDPA.Tahun,KDPA.kodeKelompok $limit";
+											order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";
           
 		  $Modul_1_Mode_1_Case_f_default = "select KDPA.Aset_ID, KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 											KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.noRegister,KDPA.Alamat,
@@ -1268,9 +1393,9 @@ class core_api_report extends DB {
 											from 
 											kdp_ori as KDPA,kelompok as K  
 											where
-											AL.kodeKelompok = K.Kode  
+											KDPA.kodeKelompok = K.Kode  
 											 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
-											order by KDPA.kodeSatker,KDPA.kodeLokasi,KDPA.Tahun,KDPA.kodeKelompok $limit";
+											order by KDPA.kodeSatker,KDPA.Tahun,KDPA.kodeKelompok $limit";
 		//end update query kib f (ok)
 		
 		
@@ -3487,6 +3612,81 @@ class core_api_report extends DB {
                                                        }
 												  }
 												  break;
+												  case '12':
+												  {
+													if (isset($rekap_barang_sensus))
+													  {
+														switch ($rekap_barang_sensus)
+														{
+														 case 'RekapBarangSensusKIB-A':
+														 {
+															// echo "masukkk";
+															// exit;
+															if($parameter_sql!="" ) {
+																			 $query = $rekap_barang_a_condition; 
+																			 // echo "masukkk";
+															}
+															if($parameter_sql=="" ) {
+																		$query = $rekap_barang_a_default; 
+															}
+														 }		
+														 break;
+														 case 'RekapBarangSensusKIB-B':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_b_condition_sensus;
+																						}
+															  if($parameter_sql=="" ) {
+																		$query = "";
+																						}
+														 }
+														 break;
+														 case 'RekapBarangSensusKIB-C':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_c_condition;
+															  }
+															  if($parameter_sql=="" ) {
+																		$query = "";
+															  }
+														 }
+														 break;
+														 case 'RekapBarangSensusKIB-D':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_d_condition;
+															  }
+															  if($parameter_sql=="" ){
+																		$query = $rekap_barang_d_default;
+															  }
+														 }
+														 break;
+														 
+														 case 'RekapBarangSensusKIB-E':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_e_condition_sensus;
+															   }
+															  if($parameter_sql=="" ){
+																		$query = $rekap_barang_e_default;
+															  }
+														 }
+														 break;
+												
+														 case 'RekapBarangSensusKIB-F':
+														 {
+															  if($parameter_sql!="" ){
+																		$query = $rekap_barang_f_condition;	
+															  }
+															  if($parameter_sql=="" ){
+																		$query = $rekap_barang_f_default;	
+															  }
+														 }
+														 break;
+														}
+                                                       }
+												  }
+												  break;	
 											}
 										}
                                    
@@ -4039,6 +4239,53 @@ class core_api_report extends DB {
         <?php
     }
     
+	//pilih download 
+    public function show_pilih_download_cstm($url)
+    {
+		$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tahun=$tahun&kib=$kib&tipe_file=";
+        ?>
+        <html>
+        <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <title><?php echo $this->config->app_title?></title>
+                <!-- include css file -->
+                
+                <link rel="stylesheet" href="<?php echo $this->url_rewrite?>/css/simbada.css" type="text/css" media="screen" />
+                <link rel="stylesheet" href="<?php echo $this->url_rewrite?>/css/jquery-ui.css" type="text/css">
+                <link rel="stylesheet" href="<?php echo $this->url_rewrite?>/css/example.css" TYPE="text/css" MEDIA="screen">
+        
+        </head>
+        <body>
+        <div id="frame_header">
+                <div id="header"></div>
+        </div>
+        <!-- <div id="list_header"> 
+           
+        </div>-->
+        <div style="border-style:solid; width:40%; margin:20px auto; border-width:1px; box-shadow:5px 5px 5px #ccd" align="center">
+            <table border="0">
+                <tr>
+                    <th height="50px" valign=""><p style="font-size:25px;">Download Laporan tersedia dalam bentuk:</p><hr></th>
+                </tr>
+				<tr>
+                    <td><p style="font-size: 12px; color: blue">1. <a href="<?php echo "$url"."1"?>" target="_blank">PDF</a><br/></p></td>
+                </tr>
+
+               <tr>
+                    <td><p style="font-size: 12px; color: blue">2. <a href="<?php echo "$url"."2"?>" target="_blank">Micorosoft Excel</a></p></td>
+                </tr>
+                
+                <tr>
+                    <td><p style="font-size: 12px; color: red">Cat : Bila file tidak bisa di download, kemungkinan data tidak ditemukan</p></td>
+                </tr>
+                
+            </table>
+        
+        </body>
+        </html>
+        <?php
+    }
+	
     //pilih download 
     public function show_pilih_download($url)
     {

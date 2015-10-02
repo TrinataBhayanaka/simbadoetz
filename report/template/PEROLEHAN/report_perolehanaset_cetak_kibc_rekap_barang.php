@@ -19,6 +19,7 @@ $rekap_barang = $_GET['rekap_barang'];
 $tahun = $_GET['tahun'];
 // $kelompok=$_GET['bidang'];
 $tipe=$_GET['tipe_file'];
+$pemilik = $_GET['pemilik'];
 
 $data=array(
     "modul"=>$modul,
@@ -26,6 +27,7 @@ $data=array(
     "rekap_barang"=>$rekap_barang,
     "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
+	"pemilik"=>$pemilik,
     // "kelompok"=>$kelompok,
     "tab"=>$tab
 );
