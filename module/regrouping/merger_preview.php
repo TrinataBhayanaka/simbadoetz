@@ -85,6 +85,7 @@ $get_data_regrouping= $REGROUPING->getMergeDataPreview();
                         	<?php
                         	if ($val['n_status']==1) echo "Sedang dilakukan regrouping";
                         	if ($val['n_status']==2) echo "Sukses regrouping";
+                        	if ($val['n_status']==3) echo "Gagal regrouping";
                         	?>
                         </td>
                         

@@ -13,12 +13,7 @@ class MERGER extends DB{
         $this->db = new DB;
 	}
 
-	function usulan($dataAset, $nodok, $debug=false)
-	{
-
-		
-    }
-
+	
 	function dataAset($oldSatker, $newSatker, $debug=false)
     {
 
@@ -65,7 +60,6 @@ class MERGER extends DB{
                 $tmpKodeLokasi = explode('.', $satker[0]['kodeLokasi']);
                 $tmpKodeSatker = explode('.', $newSatker);
 
-                // $prefix = "12.11.33";
                 $prefix = $tmpKodeLokasi[0].'.'.$tmpKodeLokasi[1].'.'.$tmpKodeLokasi[2];
                 $prefixkodesatker = $tmpKodeSatker[0].'.'.$tmpKodeSatker[1];
                 $prefixTahun = substr($value['Tahun'], 2,2);
@@ -73,22 +67,13 @@ class MERGER extends DB{
 
                 $implLokasi = $prefix.'.'.$prefixkodesatker.'.'.$prefixTahun.'.'.$postfixkodeSatker;
                         
-                /*$sql = array(
-                        'table'=>"{$table['listTableOri']}",
-                        'field'=>"MAX( CAST( noRegister AS SIGNED ) ) AS noRegister",
-                        'condition'=>"kodeKelompok = '{$value[kodeKelompok]}' AND kodeSatker = '{$newSatker}' AND kodeLokasi = '{$implLokasi}'",
-                        );
-                $resultnoreg = $this->db->lazyQuery($sql,$debug);
-
-                $gabung_nomor_reg_tujuan=intval(($resultnoreg[0]['noRegister'])+1);
-                */
+                
                 $data[$key]['Aset_ID'] = $value['Aset_ID'];
                 $data[$key]['kodeSatker'] = $newSatker;
                 $data[$key]['oldKodeSatker'] = $oldSatker;
                 $data[$key]['NamaSatker'] = $satker[0]['NamaSatker'];
                 $data[$key]['kodeKelompok'] = $value['kodeKelompok'];
                 $data[$key]['kodeLokasi'] = $implLokasi;
-                // $data[$key]['noRegister'] = $gabung_nomor_reg_tujuan;
                 $data[$key]['TipeAset'] = $listTableAbjad[$value['TipeAset']];
 
                 
@@ -112,8 +97,7 @@ class MERGER extends DB{
     function updateData($id, $debug=false)
     {
         
-        // $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
-
+        
         $sql = array(
                 'table'=>"tmp_merger",
                 'field'=>"*",
@@ -130,8 +114,12 @@ class MERGER extends DB{
 
                     $count = 1;
                     $logCount = 1;
+                    $olah_tgl = date('Y-m-d');
 
                     $this->updateLog($value['id'], 1);
+
+                    // $this->db->begin();
+                    $errorReport = array();
                     foreach ($unserial as $key => $val) {
                         
                         $table = $this->getTableKibAlias($val['TipeAset']);
@@ -145,15 +133,23 @@ class MERGER extends DB{
 
                         $val['noRegister'] = intval(($resultnoreg[0]['noRegister'])+1);
                         
-                        $this->updateTblAset($val);
-                        $this->updateTblKib($val);
-                        $this->updateTblLogKib($val);
-                        $this->updateMutasi($val);
-                        $this->updateMutasiAset($val);
-                        $this->updateUsulan($val);
-
+                        $updateTblAset = $this->updateTblAset($val);
+                        if (!$updateTblAset)$errorReport[] = 1;
+                        $updateTblKib = $this->updateTblKib($val);
+                        if (!$updateTblKib)$errorReport[] = 1;
+                        $updateTblLogKib = $this->updateTblLogKib($val);
+                        if (!$updateTblLogKib)$errorReport[] = 1;
+                        $updateMutasi = $this->updateMutasi($val);
+                        if (!$updateMutasi)$errorReport[] = 1;
+                        $updateMutasiAset = $this->updateMutasiAset($val);
+                        if (!$updateMutasiAset)$errorReport[] = 1;
+                        $updateUsulan = $this->updateUsulan($val);
+                        if (!$updateUsulan)$errorReport[] = 1;
+                        
+                        $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$val['Aset_ID'], $kd_riwayat=3, $noDokumen="MTS-MERGER", $tglProses =$olah_tgl, $text="Sukses Mutasi");
+                        
                         $val['eventid'] = $aset[0]['id'];
-                        $this->insertLog($val);
+                        $insertLog = $this->insertLog($val);
 
                         if ($count == 200){
                             sleep(1);
@@ -166,7 +162,16 @@ class MERGER extends DB{
                         $logCount++;
                     }
 
-                    $this->updateLog($value['id'], 2);
+                    if (count($errorReport)>0){
+                        echo "rollback data \n";
+                        // $this->db->rollback();
+                        $this->updateLog($value['id'], 3);
+                    } else {
+                        echo "commit data \n";
+                        // $this->db->commit();
+                        $this->updateLog($value['id'], 2);
+                    }
+
                 }
 
             }
