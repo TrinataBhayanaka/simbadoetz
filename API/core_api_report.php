@@ -1044,7 +1044,7 @@ class core_api_report extends DB {
 												order by 
 													M.kodeSatker,M.kodeKelompok $limit";
 													
-			$rekap_barang_b_condition_sensus ="select M.kodeSatker,
+			$rekap_barang_b_condition_sensus ="select M.kodeSatker,M.noRegister,
 													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
@@ -1103,7 +1103,7 @@ class core_api_report extends DB {
 											K.Kode, K.Uraian
 											order by AL.kodeSatker,AL.kodeKelompok $limit";
 											
-			$rekap_barang_e_condition_sensus="select AL.kodeSatker, 
+			$rekap_barang_e_condition_sensus="select AL.kodeSatker, AL.noRegister,
 											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
@@ -3315,41 +3315,41 @@ class core_api_report extends DB {
 															// echo "masukkk";
 															// exit;
 															if($parameter_sql!="" ) {
-																			 $query = $Modul_1_Mode_1_Case_a_condition; 
+																			 $query = $rekap_barang_a_condition; 
 																			 // echo "masukkk";
 															}
 															if($parameter_sql=="" ) {
-																		$query = $Modul_1_Mode_1_Case_a_default; 
+																		$query = ""; 
 															}
 														 }		
 														 break;
 														 case 'RekapKIB-B':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $Modul_1_Mode_1_Case_b_condition;
+																		$query = $rekap_barang_b_condition;
 																						}
 															  if($parameter_sql=="" ) {
-																		$query = $Modul_1_Mode_1_Case_b_default;
+																		$query = "";
 																						}
 														 }
 														 break;
 														 case 'RekapKIB-C':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $Modul_1_Mode_1_Case_c_condition;
+																		$query = $rekap_barang_b_condition;
 															  }
 															  if($parameter_sql=="" ) {
-																		$query = $Modul_1_Mode_1_Case_c_default;
+																		$query = "";
 															  }
 														 }
 														 break;
 														 case 'RekapKIB-D':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $Modul_1_Mode_1_Case_d_condition;
+																		$query = $rekap_barang_d_condition;
 															  }
 															  if($parameter_sql=="" ){
-																		$query = $Modul_1_Mode_1_Case_d_default;
+																		$query = "";
 															  }
 														 }
 														 break;
@@ -3357,10 +3357,10 @@ class core_api_report extends DB {
 														 case 'RekapKIB-E':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $Modul_1_Mode_1_Case_e_condition;
+																		$query = $rekap_barang_e_condition;
 															   }
 															  if($parameter_sql=="" ){
-																		$query = $Modul_1_Mode_1_Case_e_default;
+																		$query = "";
 															  }
 														 }
 														 break;
@@ -3368,10 +3368,10 @@ class core_api_report extends DB {
 														 case 'RekapKIB-F':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $Modul_1_Mode_1_Case_f_condition;	
+																		$query = $rekap_barang_f_condition;	
 															  }
 															  if($parameter_sql=="" ){
-																		$query = $Modul_1_Mode_1_Case_f_default;	
+																		$query = "";	
 															  }
 														 }
 														 break;
