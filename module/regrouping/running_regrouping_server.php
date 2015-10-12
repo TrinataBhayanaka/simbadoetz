@@ -244,7 +244,7 @@ kodeLokasi,kodeSatker FROM `aset` WHERE `kodeSatker` LIKE '07.01.02.02' and kode
 
 $query="update satker  set kode='$satker_baru' , NamaSatker='$nama_satker_baru',"
         . "KodeSektor='$KodeSektor', KodeSatker='$KodeSatker',KodeUnit='$KodeUnit', Gudang='$Gudang' "
-        . " where kode='$satker_lama'";echo "$query \n";
+        . " where kode='$satker_lama' and Kd_Ruang is NULL ";echo "$query \n";
         echo "$query \n";
 $result= $DBVAR->query($query)or die($DBVAR->error());
 
