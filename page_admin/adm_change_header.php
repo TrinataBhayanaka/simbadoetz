@@ -9,6 +9,8 @@ if (isset($_POST['btn_save']))
     
     $namaDaerah = $_POST['namaDaerah'];
     $title = $_POST['title'];
+    $tahun_aktif=$_POST['tahun_aktif'];
+   
     $path_header = "$path/css/img_stat";
     $code = $RETRIEVE_ADMIN->retrieve_table_admin('lokasi','KodeLokasi',"Lokasi_ID = ".$app_location_code);
     
@@ -32,6 +34,7 @@ if (isset($_POST['btn_save']))
 			'NAMA_KABUPATEN'=>$NAMA_KABUPATEN,
 			'app_location_code'=>$kode_lokasi,
 			'app_location_desc'=>$app_location_desc,
+                                        'tahun_aktif'=>$tahun_aktif,
 			'mode'=>'2');
 	    $update_app_conf = $UPDATE_ADMIN->admin_update_app_conf($param);
 	}
@@ -47,6 +50,7 @@ if (isset($_POST['btn_save']))
 			'NAMA_KABUPATEN'=>$NAMA_KABUPATEN,
 			'app_location_code'=>$kode_lokasi,
 			'app_location_desc'=>$app_location_desc,
+                                         'tahun_aktif'=>$tahun_aktif,
 			'mode'=>'2');
 	    $update_app_conf = $UPDATE_ADMIN->admin_update_app_conf($param);
 	    
@@ -57,6 +61,7 @@ if (isset($_POST['btn_save']))
 			'NAMA_KABUPATEN'=>$NAMA_KABUPATEN,
 			'app_location_code'=>$kode_lokasi,
 			'app_location_desc'=>$app_location_desc,
+                                         'tahun_aktif'=>$tahun_aktif,
 			'mode'=>'2');
 	$update_app_conf = $UPDATE_ADMIN->admin_update_app_conf($param);
 	
@@ -156,6 +161,12 @@ $Lokasi_ID = $Lokasi_ID->Lokasi_ID;
         <td valign="top" align="left" width="">Title header website</td>
         <td valign="top" align="left" width="80%">:<input type="text" name="title" maxlength="" size="50"  value="<?=$dataArr->app_title?>"></td>
       </tr>
+      
+      <tr>
+        <td valign="top" align="left" width="">Tahun Pelaporan</td>
+        <td valign="top" align="left" width="80%">:<input type="number" name="tahun_aktif" maxlength="" size="50"  value="<?=$dataArr->tahun_aktif?>"></td>
+      </tr>
+      
       <tr>
         <td valign="top" align="left">Gambar header</td>
         <td valign="top" align="left" width="80%">:<input type="file" name="file_header" value=""> <?php if ($dataArr->app_header_value !='') echo "<label style='font-size:12px'>File aktif : $dataArr->app_header_value </label>"?></td>
