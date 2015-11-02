@@ -112,6 +112,7 @@ $sys_config = $RETRIEVE->get_app_config();
 
 // pr($sys_config);
 $title = $sys_config->app_title;
+$TAHUN_AKTIF=$sys_config->tahun_aktif;
 
 $data_conf = explode ('.',$sys_config->app_location_code);
 // $count_ = count($data_conf);

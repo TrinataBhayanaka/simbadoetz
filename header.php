@@ -17,7 +17,7 @@ $SESSION = new Session();
 
 /* Ambil session user */
 $UserSession = $SESSION->get_session_user();
-
+pr($TAHUN_AKTIF);
 
 if (isset($_POST['login']))
 {

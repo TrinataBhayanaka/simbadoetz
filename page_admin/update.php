@@ -46,14 +46,15 @@ class UPDATE_ADMIN extends DB {
                 if ($param['logo_admin'] !='')
                 {
                     $query = "UPDATE tbl_app_config SET
-                            app_admin_logo  = '$param[file_name]'
+                            app_admin_logo  = '$param[file_name]', tahun_aktif='$param[tahun_aktif]'
                             WHERE app_location_desc  = '$param[NAMA_KABUPATEN]'";
                     //print_r($query);
                     $result = $this->query($query) or die ($this->error());
                     
                     
                 }
-                $query = "UPDATE tbl_app_config SET app_admin_title = '$param[title]', app_created_by = '$param[teks_footer]' WHERE app_location_desc  = '$param[NAMA_KABUPATEN]'";
+                $query = "UPDATE tbl_app_config SET app_admin_title = '$param[title]', tahun_aktif='$param[tahun_aktif]',
+                        app_created_by = '$param[teks_footer]' WHERE app_location_desc  = '$param[NAMA_KABUPATEN]'";
                 //print_r($query);
                 $result = $this->query($query) or die ($this->error());
                 return true;
@@ -66,7 +67,7 @@ class UPDATE_ADMIN extends DB {
                 if ($param['file_header'] !='')
                 {
                     $query = "UPDATE tbl_app_config SET
-                            app_title = '$param[title]',
+                            app_title = '$param[title]', tahun_aktif='$param[tahun_aktif]',
                             app_header_value = '".$_FILES[$param['file_header']]['name']."'
                             WHERE app_location_desc  = '$param[NAMA_KABUPATEN]'";
                     $result = $this->query($query) or die ($this->error());
@@ -74,18 +75,19 @@ class UPDATE_ADMIN extends DB {
                 if ($param['file_konten'] !='')
                 {
                     $query = "UPDATE tbl_app_config SET
-                            app_title = '$param[title]',
+                            app_title = '$param[title]', tahun_aktif='$param[tahun_aktif]',
                             app_content_value = '".$_FILES[$param['file_konten']]['name']."'
                             WHERE app_location_desc  = '$param[NAMA_KABUPATEN]'";
                     $result = $this->query($query) or die ($this->error());
                 }
                 
                 $query = "UPDATE tbl_app_config SET app_title = '$param[title]',
-                            app_location_code = '$code_lokasi',
+                            app_location_code = '$code_lokasi', tahun_aktif=$param[tahun_aktif],
                             app_location_desc = '$param[app_location_desc]'
                             WHERE app_location_desc  = '$param[NAMA_KABUPATEN]'";
-                
+                //  print_r($query);
                 $result = $this->query($query) or die ($this->error());
+                
                 return true;
             
                 break;

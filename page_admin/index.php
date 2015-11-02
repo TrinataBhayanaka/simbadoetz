@@ -1,3 +1,7 @@
+
+<!DOCTYPE html>
+<html>
+
 <?php
 define('_SIMBADA_V1_', TRUE);
 
@@ -68,7 +72,7 @@ $user_ses = $SESSION->get_session_admin();
 // $NAMA_KABUPATEN = $NAMA_KABUPATEN;
 include "header.php";
 
-echo "<div style=\"margin:0px auto; border-style:none; width:90%;\" align=\"center\">";
+echo "<body><div style=\"margin:0px auto; border-style:none; width:90%;\" align=\"center\">";
 
 if ($sessionAdmin['ses_atoken'] != '')
 { 
@@ -87,5 +91,6 @@ print_r($_SESSION);
 echo "<div style='' align='right'>";
 include 'footer.php';
 echo "</div>";
-echo "</div>";
+echo "</div></body>";
 ?>
+</html>

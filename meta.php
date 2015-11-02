@@ -40,7 +40,25 @@ if ($u_sess) $isLogin = true;
 				format: 'yyyy-mm-dd',
 				autoclose:true,
 				clearBtn:true,
-				forceParse:true 
+				forceParse:true,
+                                                      startDate: '<?=$TAHUN_AKTIF?>-01-01',
+                                                      endDate: '<?=$TAHUN_AKTIF?>-12-31'
+			});
+                  $( ".datepicker" ).datepicker({ 
+				format: 'yyyy-mm-dd',
+				autoclose:true,
+				clearBtn:true,
+				forceParse:true,
+                                                      startDate: '<?=$TAHUN_AKTIF?>-01-01',
+                                                      endDate: '<?=$TAHUN_AKTIF?>-12-31'
+			});
+                    $( "#datepicker2" ).datepicker({ 
+				format: 'yyyy-mm-dd',
+				autoclose:true,
+				clearBtn:true,
+				forceParse:true,
+                                                      startDate: '<?=$TAHUN_AKTIF?>-01-01',
+                                                      endDate: '<?=$TAHUN_AKTIF?>-12-31'
 			});
 			$( "#datepicker-other" ).datepicker({ 
 				format: 'yyyy-mm-dd',

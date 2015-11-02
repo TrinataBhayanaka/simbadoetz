@@ -92,9 +92,9 @@ class STORE_ADMIN extends DB {
         switch ($param['mode'])
         {
             case '1':
-                $query = "INSERT INTO tbl_app_config (app_id, app_location, app_admin_logo, app_admin_title , app_created_by, app_status )
+                $query = "INSERT INTO tbl_app_config (app_id, app_location, app_admin_logo, app_admin_title , app_created_by, app_status,tahun_aktif )
                             VALUES (NULL, '$param[NAMA_KABUPATEN]', '$param[file_name]', '$param[title]',
-                            '$param[teks_footer]', 1)";
+                            '$param[teks_footer]', 1,'$param[tahun_aktif]')";
                 
                 $result = $this->query($query) or die ($this->error());
                 
