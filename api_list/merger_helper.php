@@ -84,8 +84,8 @@ class MERGER extends DB{
             $date = date('Y-m-d H:i:s');
             $sql = array(
                     'table'=>"tmp_merger",
-                    'field'=>"Aset, event, data, create_date",
-                    'value'=>"{$totalAset}, '$oldSatker', '$dataevent','$date'",
+                    'field'=>"Aset, event, target, data, create_date",
+                    'value'=>"{$totalAset}, '$oldSatker', '{$newSatker}', '$dataevent','$date'",
                     );
 
             $res = $this->db->lazyQuery($sql,$debug,1);
