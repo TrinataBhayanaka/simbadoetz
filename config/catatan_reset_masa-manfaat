@@ -1,0 +1,7 @@
+update aset set  MasaManfaat=NULL, AkumulasiPenyusutan=NULL,  PenyusutanPerTahun=NULL;
+update tanah set  MasaManfaat=NULL, AkumulasiPenyusutan=NULL, NilaiBuku=NULL, PenyusutanPerTahun=NULL;
+update mesin set  MasaManfaat=NULL, AkumulasiPenyusutan=NULL, NilaiBuku=NULL, PenyusutanPerTahun=NULL;
+update bangunan set  MasaManfaat=NULL, AkumulasiPenyusutan=NULL, NilaiBuku=NULL, PenyusutanPerTahun=NULL;
+update jaringan set  MasaManfaat=NULL, AkumulasiPenyusutan=NULL, NilaiBuku=NULL, PenyusutanPerTahun=NULL;
+update asetlain set  MasaManfaat=NULL, AkumulasiPenyusutan=NULL, NilaiBuku=NULL, PenyusutanPerTahun=NULL;
+update kdp set  MasaManfaat=NULL, AkumulasiPenyusutan=NULL, NilaiBuku=NULL, PenyusutanPerTahun=NULL;

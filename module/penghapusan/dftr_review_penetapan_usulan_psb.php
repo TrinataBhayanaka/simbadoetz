@@ -176,7 +176,7 @@ $menu_id = 10;
 						<span  class="labelInfo">Tanggal SK Penghapusan</span>
 							<div class="input-prepend">
 								<span class="add-on"><i class="fa fa-calendar"></i></span>
-								<input name="bup_pp_tanggal" type="text" id="tanggal1" <?php echo $disabledForm;?> required/>
+								<input name="bup_pp_tanggal" type="text" id="datepicker" <?php echo $disabledForm;?> required/>
 							</div>
 					</li>
 					<li>
