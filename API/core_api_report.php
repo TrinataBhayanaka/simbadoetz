@@ -4698,7 +4698,7 @@ class core_api_report extends DB {
 						inner join prcn_tanah as pr ON pr.Rencana_ID = rn.Rencana_ID
 						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
 						where 
-							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  and rn.n_status=1
 						group by  
 						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";
 			
@@ -4708,7 +4708,7 @@ class core_api_report extends DB {
 						inner join prcn_mesin as pr ON pr.Rencana_ID = rn.Rencana_ID
 						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
 						where 
-							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  and rn.n_status=1 
 						group by  
 						pr.merk,
 						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";
@@ -4719,7 +4719,7 @@ class core_api_report extends DB {
 						inner join 	prcn_bangunan as pr ON pr.Rencana_ID = rn.Rencana_ID
 						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
 						where 
-							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0   and rn.n_status=1
 						group by  
 						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";			
 			
@@ -4729,7 +4729,7 @@ class core_api_report extends DB {
 						inner join 	prcn_jaringan as pr ON pr.Rencana_ID = rn.Rencana_ID
 						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
 						where 
-							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  and rn.n_status=1 
 						group by  
 						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";	
 			
@@ -4739,7 +4739,7 @@ class core_api_report extends DB {
 						inner join 	prcn_asettetaplain as pr ON pr.Rencana_ID = rn.Rencana_ID
 						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
 						where 
-							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  and rn.n_status=1 
 						group by  
 						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";
 			
@@ -4749,7 +4749,7 @@ class core_api_report extends DB {
 						inner join 	prcn_kdp as pr ON pr.Rencana_ID = rn.Rencana_ID
 						inner join kelompok as k ON k.Kode = rn.Kode_Kelompok
 						where 
-							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  
+							rn.Tahun = '$tahun' and rn.Kode_Satker = '$satker_id' and rn.Status_Pemeliharaan = 0  and rn.n_status=1 
 						group by  
 						rn.Kode_Kelompok,rn.Kuantitas,rn.Harga_Satuan,rn.Kode_Rekening,rn.Info";			
 			
