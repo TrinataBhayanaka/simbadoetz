@@ -55,7 +55,7 @@ class RETRIEVE_REGROUPING extends RETRIEVE{
       $sql = array(
               'table'=>"satker",
               'field'=>"NamaSatker",
-              'condition'=>"kode = '{$kodeSatker}' ",
+              'condition'=>"kode = '{$aset[0]['target']}' ",
               'limit'=>1
               );
 
