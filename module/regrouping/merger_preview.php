@@ -69,7 +69,7 @@ $get_data_regrouping= $REGROUPING->getMergeDataPreview();
 					foreach($get_data_regrouping as $val){
                        $text_status=array("0"=>"Belum regrouping",
                                           "1"=>"Sedang regrouping",
-                                          "2"=>"Telah regrouping")
+                                          "2"=>"Sukses regrouping")
                                            
                                                                            
                                                                            
@@ -83,9 +83,10 @@ $get_data_regrouping= $REGROUPING->getMergeDataPreview();
                         
                         <td>
                         	<?php
-                        	if ($val['n_status']==1) echo "Sedang dilakukan regrouping";
-                        	if ($val['n_status']==2) echo "Sukses regrouping";
-                        	if ($val['n_status']==0) echo "Batal regrouping";
+                        	echo $text_status[$val['n_status']];
+                        	// if ($val['n_status']==1) echo "Sedang dilakukan regrouping";
+                        	// if ($val['n_status']==2) echo "Sukses regrouping";
+                        	// if ($val['n_status']==0) echo "Batal regrouping";
                         	?>
                         </td>
                         
