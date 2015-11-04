@@ -24,9 +24,12 @@ $menu_id = 10;
 	// 	$POST['page'] = intval($_GET['pid']);
 	// pr($_POST);
 	//     $par_data_table="kodeKelompok={$POST['kodeKelompok']}&kdRekening={$POST['kdRekening']}";
+if($_POST){
+$data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_POST);
+}else{
 
-$data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_POST); 
-// pr($data);
+$data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_GET);
+} 
 		// $data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_pmd($_POST);
 		//////pr($data);
 		 // $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
@@ -141,8 +144,8 @@ $data = $PERENCANAAN->retrieve_daftar_perencanaan_pengadaan($_POST);
                         	if($value['Status_Pemeliharaan']==0){
                         ?>	
                         	<!-- <a href="#" class="btn btn-info btn-small">Edit</a> -->
-                        	<a href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_edit.php?id=<?=$value['Rencana_ID']?>&tipe=<?=$value['TipeAset']?>" class="btn btn-info btn-small">Edit</a>
-                        	<a href="#" class="btn btn-danger btn-small">Hapus</a>
+                        	<a href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_edit.php?id=<?=$value['Rencana_ID']?>&tipe=<?=$value['TipeAset']?>&satker=<?=$value['Kode_Satker']?>" class="btn btn-info btn-small">Edit</a>
+                        	<a href="<?=$url_rewrite?>/module/perencanaan/rencana/prcn_pengadaan_delete.php?id=<?=$value['Rencana_ID']?>&tipe=<?=$value['TipeAset']?>&satker=<?=$value['Kode_Satker']?>" class="btn btn-danger btn-small" onClick="return confirm('Anda yakin akan menghapus data ini?');">Hapus</a>
                         <?php
                     	}else{
                     	?>

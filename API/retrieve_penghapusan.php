@@ -89,6 +89,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         return false;
 
     }
+    
     public function TotalNilaiPerolehan($Aset_ID){
 
 // //////pr($value);

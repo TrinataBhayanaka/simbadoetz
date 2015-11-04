@@ -404,6 +404,7 @@ $kib=$dataDatabase['kib'];
 					<!-- hidden -->
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>"><input type="hidden" name="TipeAset" id="TipeAset" value="<?=$_GET['tipe']?>">
 					<input type="hidden" name="IDRENCANA"  value="<?=$_GET['id']?>">
+					<input type="hidden" name="SATKER"  value="<?=$_GET['satker']?>">
 		
 		<div style="height:5px;width:100%;clear:both"></div>		
 		<ul>
