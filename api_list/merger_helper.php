@@ -1,6 +1,6 @@
 <?php
 
-include "../../config/config.php";
+include "../config/config.php";
 
 
 class MERGER extends DB{
@@ -32,7 +32,7 @@ class MERGER extends DB{
                 'table'=>"aset AS a",
                 'field'=>"a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TipeAset, a.Tahun",
                 'condition'=>"a.kodeSatker = '{$oldSatker}'",
-                'limit'=>2,
+                // 'limit'=>2,
                 );
 
         $aset = $this->db->lazyQuery($sql,$debug);
@@ -87,9 +87,10 @@ class MERGER extends DB{
                     'field'=>"Aset, event, target, data, create_date",
                     'value'=>"{$totalAset}, '$oldSatker', '{$newSatker}', '$dataevent','$date'",
                     );
-
+            usleep(100);
             $res = $this->db->lazyQuery($sql,$debug,1);
-            echo "Sukses insert data \n";
+            if ($res) echo "Sukses insert data \n";
+
         }
         
     }
@@ -131,35 +132,37 @@ class MERGER extends DB{
                                 );
                         $resultnoreg = $this->db->lazyQuery($sql,$debug);
 
-                        $val['noRegister'] = intval(($resultnoreg[0]['noRegister'])+1);
+                        $logIt = $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$val['Aset_ID'], $kd_riwayat=3, $noDokumen="MTS-MERGER", $tglProses =$olah_tgl, $text="Sukses Mutasi");
+                        if ($logIt){
+                            $val['noRegister'] = intval(($resultnoreg[0]['noRegister'])+1);
                         
-                        $updateTblAset = $this->updateTblAset($val);
-                        if (!$updateTblAset)$errorReport[] = 1;
-                        $updateTblKib = $this->updateTblKib($val);
-                        if (!$updateTblKib)$errorReport[] = 1;
-                        $updateTblLogKib = $this->updateTblLogKib($val);
-                        if (!$updateTblLogKib)$errorReport[] = 1;
-                        $updateMutasi = $this->updateMutasi($val);
-                        if (!$updateMutasi)$errorReport[] = 1;
-                        $updateMutasiAset = $this->updateMutasiAset($val);
-                        if (!$updateMutasiAset)$errorReport[] = 1;
-                        $updateUsulan = $this->updateUsulan($val);
-                        if (!$updateUsulan)$errorReport[] = 1;
-                        
-                        $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$val['Aset_ID'], $kd_riwayat=3, $noDokumen="MTS-MERGER", $tglProses =$olah_tgl, $text="Sukses Mutasi");
-                        
-                        $val['eventid'] = $aset[0]['id'];
-                        $insertLog = $this->insertLog($val);
+                            $updateTblAset = $this->updateTblAset($val);
+                            if (!$updateTblAset)$errorReport[] = 1;
+                            $updateTblKib = $this->updateTblKib($val);
+                            if (!$updateTblKib)$errorReport[] = 1;
+                            // $updateTblLogKib = $this->updateTblLogKib($val);
+                            // if (!$updateTblLogKib)$errorReport[] = 1;
+                            $updateMutasi = $this->updateMutasi($val);
+                            if (!$updateMutasi)$errorReport[] = 1;
+                            $updateMutasiAset = $this->updateMutasiAset($val);
+                            if (!$updateMutasiAset)$errorReport[] = 1;
+                            $updateUsulan = $this->updateUsulan($val);
+                            if (!$updateUsulan)$errorReport[] = 1;
+                            
+                            $val['eventid'] = $aset[0]['id'];
+                            $insertLog = $this->insertLog($val);
 
-                        if ($count == 200){
-                            sleep(1);
-                            $count = 1;
-                        }else{
-                            $count++;
+                            if ($count == 200){
+                                sleep(1);
+                                $count = 1;
+                            }else{
+                                $count++;
+                            }
+
+                            echo "insert data ke - {$logCount} \n";
+                            $logCount++;
                         }
-
-                        echo "insert data ke - {$logCount} \n";
-                        $logCount++;
+                        
                     }
 
                     if (count($errorReport)>0){
@@ -412,6 +415,8 @@ $run = new MERGER;
 $action = $argv[1];
 $oldSatker = $argv[2];
 $newSatker = $argv[3];
+
+// $action = $_GET['action'];
 // $oldSatker = $_GET['old'];
 // $newSatker = $_GET['new'];
 
