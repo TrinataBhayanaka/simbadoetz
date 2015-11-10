@@ -41,7 +41,7 @@ class RETRIEVE_REGROUPING extends RETRIEVE{
     if ($aset){
 
       $kodeSatkerTmp = unserialize($aset[0]['data']);
-      $kodeSatker = $kodeSatkerTmp[0]['kodeSatker'];
+      $kodeSatker = $aset[0]['target'];
       // pr($kodeSatker);
       $sql = array(
               'table'=>"satker",
