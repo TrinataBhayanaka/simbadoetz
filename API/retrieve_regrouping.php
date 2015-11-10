@@ -81,16 +81,16 @@ class RETRIEVE_REGROUPING extends RETRIEVE{
     $sql = array(
             'table'=>"tmp_merger",
             'field'=>"*",
-            'condition'=>"n_status IN (0,1,2) ORDER BY id DESC",
+            'condition'=>"n_status IN (0,1,2) ORDER BY id DESC limit 1",
             );
 
     $aset = $this->lazyQuery($sql,$debug);
 
     if ($aset){
-
+      // pr($aset);
       foreach ($aset as $key => $value) {
           $kodeSatkerTmp = unserialize($value['data']);
-          $kodeSatker = $kodeSatkerTmp[0]['kodeSatker'];
+          $kodeSatker = $value['target'];
           // pr($kodeSatker);
           $sql = array(
                   'table'=>"satker",
