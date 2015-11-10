@@ -81,7 +81,7 @@ class RETRIEVE_REGROUPING extends RETRIEVE{
     $sql = array(
             'table'=>"tmp_merger",
             'field'=>"*",
-            'condition'=>"n_status IN (0,1,2) ORDER BY id DESC limit 1",
+            'condition'=>"n_status IN (0,1,2) ORDER BY id DESC",
             );
 
     $aset = $this->lazyQuery($sql,$debug);

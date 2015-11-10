@@ -83,7 +83,12 @@ $get_data_regrouping= $REGROUPING->getMergeDataPreview();
                         
                         <td>
                         	<?php
-                        	echo $text_status[$val['n_status']];
+                        	if ($val['n_status']==0){
+                        		echo "<a href='{$url_rewrite}/module/regrouping/merger_list.php?kode={$val['old_kodeSatker']}'>{$text_status[$val['n_status']]}</a>";
+                        	}else{
+                        		echo $text_status[$val['n_status']];
+                        	}
+                        	
                         	// if ($val['n_status']==1) echo "Sedang dilakukan regrouping";
                         	// if ($val['n_status']==2) echo "Sukses regrouping";
                         	// if ($val['n_status']==0) echo "Batal regrouping";
