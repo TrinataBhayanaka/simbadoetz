@@ -13,7 +13,7 @@ class MERGER extends DB{
         $this->db = new DB;
 	}
 
-	
+
 	function dataAset($oldSatker, $newSatker, $debug=false)
     {
 
@@ -81,11 +81,14 @@ class MERGER extends DB{
 
             $totalAset = count($aset);
             $dataevent = serialize($data);
+
+            $shufle = str_shuffle('ABCDEFGHIJKLMNOPQR');
+            logFile($dataevent, $shufle);
             $date = date('Y-m-d H:i:s');
             $sql = array(
                     'table'=>"tmp_merger",
                     'field'=>"Aset, event, target, data, create_date",
-                    'value'=>"{$totalAset}, '$oldSatker', '{$newSatker}', '$dataevent','$date'",
+                    'value'=>"{$totalAset}, '$oldSatker', '{$newSatker}', '$shufle','$date'",
                     );
             usleep(100);
             $res = $this->db->lazyQuery($sql,$debug,1);
@@ -97,7 +100,7 @@ class MERGER extends DB{
 
     function updateData($id, $debug=false)
     {
-        
+        global $path;
         
         $sql = array(
                 'table'=>"tmp_merger",
@@ -108,9 +111,15 @@ class MERGER extends DB{
 
         $aset = $this->db->lazyQuery($sql,$debug);
         if ($aset){
+            // pr($aset);
+
+            
             foreach ($aset as $key => $value) {
                 
-                $unserial = unserialize($value['data']);
+                $getFile = openFile($path.'/log/'.$aset[0]['data']);
+            
+                $unserial = unserialize($getFile);
+                // print($unserial);
                 if ($unserial){
 
                     $count = 1;
@@ -121,6 +130,7 @@ class MERGER extends DB{
 
                     // $this->db->begin();
                     $errorReport = array();
+
                     foreach ($unserial as $key => $val) {
                         
                         $table = $this->getTableKibAlias($val['TipeAset']);
@@ -430,6 +440,7 @@ if ($action==2){
     echo "start transaction update";
     
     $getAset = $run->updateData($oldSatker);
+
 }
 
 
