@@ -149,8 +149,12 @@ class MERGER extends DB{
                         
                             $updateTblAset = $this->updateTblAset($val);
                             if (!$updateTblAset)$errorReport[] = 1;
-                            $updateTblKib = $this->updateTblKib($val);
-                            if (!$updateTblKib)$errorReport[] = 1;
+                            
+                            if ($val['TipeAset']!=8){
+                                $updateTblKib = $this->updateTblKib($val);
+                                if (!$updateTblKib)$errorReport[] = 1;
+                            }
+                            
                             // $updateTblLogKib = $this->updateTblLogKib($val);
                             // if (!$updateTblLogKib)$errorReport[] = 1;
                             $updateMutasi = $this->updateMutasi($val);
@@ -381,8 +385,8 @@ class MERGER extends DB{
 
     function getTableKibAlias($type=1)
     {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
-        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k',8=>'a');
+        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F',8=>'H');
 
         $listTable = array(
                         1=>'tanah AS t',
@@ -390,7 +394,8 @@ class MERGER extends DB{
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS k',
+                        8=>'aset AS a');
 
         $listTableOri = array(
                         1=>'tanah',
@@ -398,7 +403,8 @@ class MERGER extends DB{
                         3=>'bangunan',
                         4=>'jaringan',
                         5=>'asetlain',
-                        6=>'kdp');
+                        6=>'kdp',
+                        8=>'aset');
 
         $data['listTable'] = $listTable[$type];
         $data['listTableAlias'] = $listTableAlias[$type];
