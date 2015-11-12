@@ -94,7 +94,7 @@ $(document).ready(function() {
 						<li>
 							<span class="span2">Tipe Aset</span>
 							<select name="KelompokAset"  required="1" id="kode">
-								 <option value=""></option>
+								 <option value="">Pilih Kelompok Aset</option>
 								 <?php for($i=0;$i<count($KelompokAset); $i++){
 									  if($flag == 1){
 										echo "<option value='{$KelompokAset[$i]}'>{$KelompokAset[$i]}
@@ -118,7 +118,13 @@ $(document).ready(function() {
 						</li>--> 
 						<li>
 							<span class="span2">Tahun Penyusutan</span>
-							<input type="text" name="tahun" id = "tahun" readonly value="<?=date('Y')?>">
+							<!--<input type="text" name="tahun" id = "tahun" readonly value="<?=date('Y')?>">-->
+							<select name="tahun"  required="1" id="kode">
+								 <option value="">Pilih Tahun</option>
+								 <option value="2014">2014</option>
+								 <option value="<?=date('Y')?>">2015</option>
+								
+							</select>
 							<input type="hidden" name="UserNm"  value="<?=$Session['ses_satkerid']?>">
 						</li> 		
 						<li><input type="submit" value="simpan" id="simpan" name="simpan" class="btn btn-primary"></li>

@@ -420,6 +420,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "T.Tahun <= '$tahun'";
 					$queryPemilik = "T.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-B')
@@ -433,6 +434,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "M.Tahun <= '$tahun'";
 					$queryPemilik = "M.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-C')
@@ -446,6 +448,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "B.Tahun <= '$tahun'";
 					$queryPemilik = "B.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-D')
@@ -459,6 +462,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "J.Tahun <= '$tahun'";
 					$queryPemilik = "J.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-E')
@@ -472,6 +476,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "AL.Tahun <= '$tahun'";
 					$queryPemilik = "AL.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap =='RekapKIB-F')
@@ -485,6 +490,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "KDPA.Tahun <= '$tahun'";
 					$queryPemilik = "KDPA.kodeLokasi like '$pemilik%'";
 			}
 		
@@ -501,6 +507,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "T.Tahun <= '$tahun'";
 					$queryPemilik = "T.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap_barang_sensus =='RekapBarangSensusKIB-B')
@@ -514,6 +521,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "M.Tahun <= '$tahun'";
 					$queryPemilik = "M.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap_barang_sensus =='RekapBarangSensusKIB-C')
@@ -527,6 +535,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "B.Tahun <= '$tahun'";
 					$queryPemilik = "B.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap_barang_sensus =='RekapBarangSensusKIB-D')
@@ -540,6 +549,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "J.Tahun <= '$tahun'";
 					$queryPemilik = "J.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap_barang_sensus =='RekapBarangSensusKIB-E')
@@ -553,6 +563,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "AL.Tahun <= '$tahun'";
 					$queryPemilik = "AL.kodeLokasi like '$pemilik%'";
 			}
 			if($rekap_barang_sensus =='RekapBarangSensusKIB-F')
@@ -566,6 +577,7 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
+					$query_tahun = "KDPA.Tahun <= '$tahun'";
 					$queryPemilik = "KDPA.kodeLokasi like '$pemilik%'";
 			}
 		
@@ -3336,7 +3348,7 @@ class core_api_report extends DB {
 														 case 'RekapKIB-C':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $rekap_barang_b_condition;
+																		$query = $rekap_barang_c_condition;
 															  }
 															  if($parameter_sql=="" ) {
 																		$query = "";
