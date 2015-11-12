@@ -85,16 +85,16 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker($param);
 			if($Session['ses_uaksesadmin'] == 1){
 			switch ($val['StatusRunning']) {
 				case 0:
-					$tahun = date('Y');
-					if($val['Tahun'] == $tahun){
+					// $tahun = date('Y');
+					// if($val['Tahun'] == $tahun){
 					echo "<a href=\"running_penyusutan_tmp.php?id={$val['id']}\" class=\"btn btn-warning\">Lakukan Penyusutan</a>";
-					}
+					// }
 					break;
 				case 2:
-					$tahun = date('Y');
-					if($val['Tahun'] == $tahun){
+					// $tahun = date('Y');
+					// if($val['Tahun'] == $tahun){
 						echo "<a href=\"running_penyusutan_tmp_batal.php?id={$val['id']}\" class=\"btn btn-danger\">Batal Penyusutan</a>";
-					}
+					// }
 					break;
 			default:
 				 echo "-";
