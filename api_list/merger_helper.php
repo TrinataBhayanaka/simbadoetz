@@ -31,7 +31,7 @@ class MERGER extends DB{
         $sql = array(
                 'table'=>"aset AS a",
                 'field'=>"a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TipeAset, a.Tahun",
-                'condition'=>"a.kodeSatker = '{$oldSatker}'",
+                'condition'=>"a.kodeSatker = '{$oldSatker}' AND a.TipeAset !=''",
                 // 'limit'=>2,
                 );
 
