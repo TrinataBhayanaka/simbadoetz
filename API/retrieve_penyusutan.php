@@ -15,29 +15,72 @@ class RETRIEVE_PENYUSUTAN extends RETRIEVE{
 		parent::__construct();
 		$this->db = new DB;
 	}
+		  public function getDataPenyusutan($id=NULL){
+               if ($id!="")
+                         $par="where id='$id'";
+               $query="select * from penyusutan_tahun $par";
+			   $result = $this->query($query) or die($this->error());
+                 while ($data = $this->fetch_array($result))
+               {
+                       $dataArr[] = $data;
+               }
+			   return $dataArr;
+                 
+          }
       
           public function getStatusPenyusutan($par=NULL){
                if ($par!="")
                          $par="where KelompokAset='$par'";
                $query="select * from penyusutan_tahun_pertama $par";
-			   // echo "<pre>";
-			   // echo $query; 
-               $result = $this->query($query) or die($this->error());
+			   $result = $this->query($query) or die($this->error());
                  while ($data = $this->fetch_array($result))
                {
                        $dataArr[] = $data;
                }
-			   // echo "<pre>";
-			   // print_r($dataArr);
-               return $dataArr;
+			   return $dataArr;
                  
           }
 		  
+		  public function getStatusPenyusutansatker($par=NULL){
+				// pr($par);
+               if ($par!=""){
+                 $count =explode('.',$par);
+				 $hit = count($count);
+				 if($hit == 4){
+					 $par="where KodeSatker='$par'";
+				 }else{
+					 $par = "where KodeSatker like '$par%'";
+				 }
+			   }else{
+				$par = '';
+			   }		 
+               $query="select * from penyusutan_tahun $par";
+			   $result = $this->query($query) or die($this->error());
+                 while ($data = $this->fetch_array($result))
+               {
+                       $dataArr[] = $data;
+               }
+			   return $dataArr;
+          }
+		  
+		   public function getNamaSatkercustome($kodeSatker){
+		   // pr($kodeSatker);
+			// $sql = "select kode,NamaSatker where Satker_ID";
+			$sqlSat = array(
+				'table'=>"satker AS sat",
+				'field'=>"sat.NamaSatker,sat.kode",
+				'condition' => "sat.kode='$kodeSatker' and sat.Kd_Ruang is null GROUP BY sat.kode",
+				 );
+			$resSat = $this->db->lazyQuery($sqlSat,$debug);
+			if ($resSat) return $resSat;
+			return false;
+		}
+		
 		  public function getNamaSatker($kodeSatker){
 			$sqlSat = array(
 				'table'=>"Satker AS sat",
 				'field'=>"sat.NamaSatker",
-				'condition' => "sat.Kode='$kodeSatker' GROUP BY sat.Kode",
+				'condition' => "sat.Kode='$kodeSatker'GROUP BY sat.Kode",
 				 );
 			$resSat = $this->db->lazyQuery($sqlSat,$debug);
 			if ($resSat) return $resSat;
