@@ -16,7 +16,12 @@ $tahun 	= $argv[2];
 $kodeSatker=$argv[3];
 $id=$argv[4];
 
-$newTahun = $tahun - 1; 
+if($tahun == 2014 || $tahun == 2015){
+	$newTahun = '2014';
+}else{
+	$newTahun = $tahun - 1; 
+}
+// $newTahun = $tahun - 1; 
 $aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.Info','a.NilaiPerolehan','a.noRegister','a.PenyusutanPerTaun','a.AkumulasiPenyusutan','a.TipeAset','a.kodeSatker','a.StatusValidasi','a.Status_Validasi_Barang');
 $fieldCustom = str_replace(" , ", " ", implode(", ", $aColumns));
 $sTable = "aset as a";
@@ -89,8 +94,9 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
         $Tahun=$Data['Tahun'];
   
 		//cek untuk rollback
-			$ceck = $tahun - 2015;
-			if($tahun == 2015){
+			//$ceck = $tahun - 2015;
+			
+			if($tahun == 2014){
 			//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
 			$QueryAset	  = "UPDATE aset SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
@@ -136,9 +142,10 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 			$action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
 			
 			//insert log
-			$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
+			// $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
+			$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}'";
 			$exeQueryLog = $DBVAR->query($QueryLog);
-		}elseif($tahun > 2015){
+		}elseif($tahun >= 2015){
 				$QueryLogSelect = "select PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,MasaManfaat from $tableLog where Aset_ID = {$Aset_ID} order by log_id desc limit 1";
 				$exeQueryLogSelect = $DBVAR->query($QueryLogSelect);
 				$resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
@@ -187,7 +194,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 					$ExeQueryKib = $DBVAR->query($QueryKib);
 				}
 				$action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
-				$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
+				// $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
+				$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' ";
 				$exeQueryLog = $DBVAR->query($QueryLog);
 		
 			}
