@@ -19,13 +19,13 @@ $tahun = date('Y');
 <script>
 
 $(document).ready(function() {
-	$("#kode").on('change', function(){
-	
-		var satker = document.getElementById("kodeSatker");
-		var tahun = document.getElementById("tahun");
-		var kode = document.getElementById("kode");
-		//alert(satker.value);
-		$.post('../../function/api/asetSusutExistCheck.php', {satker:satker.value, tahun:tahun.value,kode:kode.value}, function(result){
+	$('#kode,#tahun').on('change', function(){
+		var satker = $('#kodeSatker').val();;
+		var tahun = $('#tahun').val();
+		var kode = $('#kode').val();
+		
+		if(kode !='' && tahun !=''){
+		$.post('../../function/api/asetSusutExistCheck.php', {satker:satker, tahun:tahun,kode:kode}, function(result){
 		if(result == 1){
 			alert('Tipe Aset Telah Disusutkan');
 			$('#simpan').attr('disabled','disabled');
@@ -34,8 +34,8 @@ $(document).ready(function() {
 			$('#simpan').removeAttr('disabled');
 		    $('#simpan').css("background","#04c");
 		}
-		
 		})
+	  }
 	});	
 });			
 
