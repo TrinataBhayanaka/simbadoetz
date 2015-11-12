@@ -387,7 +387,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                         'table'=>"aset AS a, {$listTable}, kelompok AS k",
                         'field'=>"{$listTableAlias}.*, k.Uraian",
                         'condition'=>"a.Aset_ID IN ({$cols})",
-                        'limit'=>'100',
+                        // 'limit'=>'100',
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "a.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode"
                         );

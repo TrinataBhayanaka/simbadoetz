@@ -127,6 +127,23 @@ class RETRIEVE_PERENCANAAN extends RETRIEVE{
         if ($res) return $res;
         return false; 
     }
+     public function delete_rencanaPengadaan($data){
+        // pr($data);
+        // exit;
+        $Tgl_Update=date("Y-m-d");
+        $sql = array(
+            'table'=>'rencana',
+            'field'=>"n_status='0'",
+            'condition' => "Rencana_ID='$data[id]'",
+            );
+        $res = $this->db->lazyQuery($sql,$debug,2);
+        // $id_rencana=mysql_insert_id();
+
+        //pr($sql);
+        //exit;
+        if ($res) return $res;
+        return false; 
+    }
 public function store_rencanaPemeliharaan($data){
         //pr($data);
         // //exit;
@@ -254,7 +271,7 @@ public function store_rencanaPemeliharaan($data){
              $sql = array(
                     'table'=>'rencana as r,kelompok as kel,koderekening as rek,satker as sat',
                     'field'=>"r.*, kel.Uraian,rek.NamaRekening,sat.NamaSatker ",
-                    'condition' => "(r.Status_Pemeliharaan=0 OR r.Status_Pemeliharaan=1) {$filter} GROUP BY r.Rencana_ID ORDER BY r.Rencana_ID",
+                    'condition' => "(r.Status_Pemeliharaan=0 OR r.Status_Pemeliharaan=1) AND n_status='1' {$filter} GROUP BY r.Rencana_ID ORDER BY r.Rencana_ID",
                     // 'limit'=>"$limit",
                    'joinmethod' => ' LEFT JOIN ',
                     'join' => 'r.Kode_Kelompok = kel.Kode, r.Kode_Rekening=rek.KodeRekening,r.Kode_Satker=sat.kode'

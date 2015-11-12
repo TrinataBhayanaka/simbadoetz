@@ -40,6 +40,7 @@ $REPORT->set_data($data);
 // $result_query=$REPORT->retrieve_query($query);
 // exit;
 $rencana = $REPORT->perencanaan($skpd_id,$tahun);
+// pr($REPORT->perencanaan($skpd_id,$tahun));
 // pr($rencana);
 // exit;
 if($tglcetak != ''){

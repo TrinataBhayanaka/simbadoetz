@@ -13,7 +13,7 @@ class MERGER extends DB{
         $this->db = new DB;
 	}
 
-	
+
 	function dataAset($oldSatker, $newSatker, $debug=false)
     {
 
@@ -32,7 +32,7 @@ class MERGER extends DB{
                 'table'=>"aset AS a",
                 'field'=>"a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TipeAset, a.Tahun",
                 'condition'=>"a.kodeSatker = '{$oldSatker}'",
-                'limit'=>2,
+                // 'limit'=>2,
                 );
 
         $aset = $this->db->lazyQuery($sql,$debug);
@@ -81,22 +81,26 @@ class MERGER extends DB{
 
             $totalAset = count($aset);
             $dataevent = serialize($data);
+
+            $shufle = str_shuffle('ABCDEFGHIJKLMNOPQR');
+            logFile($dataevent, $shufle);
             $date = date('Y-m-d H:i:s');
             $sql = array(
                     'table'=>"tmp_merger",
-                    'field'=>"Aset, event, data, create_date",
-                    'value'=>"{$totalAset}, '$oldSatker', '$dataevent','$date'",
+                    'field'=>"Aset, event, target, data, create_date",
+                    'value'=>"{$totalAset}, '$oldSatker', '{$newSatker}', '$shufle','$date'",
                     );
-
+            usleep(100);
             $res = $this->db->lazyQuery($sql,$debug,1);
-            echo "Sukses insert data \n";
+            if ($res) echo "Sukses insert data \n";
+
         }
         
     }
 
     function updateData($id, $debug=false)
     {
-        
+        global $path;
         
         $sql = array(
                 'table'=>"tmp_merger",
@@ -107,9 +111,15 @@ class MERGER extends DB{
 
         $aset = $this->db->lazyQuery($sql,$debug);
         if ($aset){
+            // pr($aset);
+
+            
             foreach ($aset as $key => $value) {
                 
-                $unserial = unserialize($value['data']);
+                $getFile = openFile($path.'/log/'.$aset[0]['data']);
+            
+                $unserial = unserialize($getFile);
+                // print($unserial);
                 if ($unserial){
 
                     $count = 1;
@@ -120,6 +130,7 @@ class MERGER extends DB{
 
                     // $this->db->begin();
                     $errorReport = array();
+
                     foreach ($unserial as $key => $val) {
                         
                         $table = $this->getTableKibAlias($val['TipeAset']);
@@ -131,35 +142,37 @@ class MERGER extends DB{
                                 );
                         $resultnoreg = $this->db->lazyQuery($sql,$debug);
 
-                        $val['noRegister'] = intval(($resultnoreg[0]['noRegister'])+1);
+                        $logIt = $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$val['Aset_ID'], $kd_riwayat=3, $noDokumen="MTS-MERGER", $tglProses =$olah_tgl, $text="Sukses Mutasi");
+                        if ($logIt){
+                            $val['noRegister'] = intval(($resultnoreg[0]['noRegister'])+1);
                         
-                        $updateTblAset = $this->updateTblAset($val);
-                        if (!$updateTblAset)$errorReport[] = 1;
-                        $updateTblKib = $this->updateTblKib($val);
-                        if (!$updateTblKib)$errorReport[] = 1;
-                        $updateTblLogKib = $this->updateTblLogKib($val);
-                        if (!$updateTblLogKib)$errorReport[] = 1;
-                        $updateMutasi = $this->updateMutasi($val);
-                        if (!$updateMutasi)$errorReport[] = 1;
-                        $updateMutasiAset = $this->updateMutasiAset($val);
-                        if (!$updateMutasiAset)$errorReport[] = 1;
-                        $updateUsulan = $this->updateUsulan($val);
-                        if (!$updateUsulan)$errorReport[] = 1;
-                        
-                        $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$val['Aset_ID'], $kd_riwayat=3, $noDokumen="MTS-MERGER", $tglProses =$olah_tgl, $text="Sukses Mutasi");
-                        
-                        $val['eventid'] = $aset[0]['id'];
-                        $insertLog = $this->insertLog($val);
+                            $updateTblAset = $this->updateTblAset($val);
+                            if (!$updateTblAset)$errorReport[] = 1;
+                            $updateTblKib = $this->updateTblKib($val);
+                            if (!$updateTblKib)$errorReport[] = 1;
+                            // $updateTblLogKib = $this->updateTblLogKib($val);
+                            // if (!$updateTblLogKib)$errorReport[] = 1;
+                            $updateMutasi = $this->updateMutasi($val);
+                            if (!$updateMutasi)$errorReport[] = 1;
+                            $updateMutasiAset = $this->updateMutasiAset($val);
+                            if (!$updateMutasiAset)$errorReport[] = 1;
+                            $updateUsulan = $this->updateUsulan($val);
+                            if (!$updateUsulan)$errorReport[] = 1;
+                            
+                            $val['eventid'] = $aset[0]['id'];
+                            $insertLog = $this->insertLog($val);
 
-                        if ($count == 200){
-                            sleep(1);
-                            $count = 1;
-                        }else{
-                            $count++;
+                            if ($count == 200){
+                                sleep(1);
+                                $count = 1;
+                            }else{
+                                $count++;
+                            }
+
+                            echo "insert data ke - {$logCount} \n";
+                            $logCount++;
                         }
-
-                        echo "insert data ke - {$logCount} \n";
-                        $logCount++;
+                        
                     }
 
                     if (count($errorReport)>0){
@@ -412,6 +425,8 @@ $run = new MERGER;
 $action = $argv[1];
 $oldSatker = $argv[2];
 $newSatker = $argv[3];
+
+// $action = $_GET['action'];
 // $oldSatker = $_GET['old'];
 // $newSatker = $_GET['new'];
 
@@ -425,6 +440,7 @@ if ($action==2){
     echo "start transaction update";
     
     $getAset = $run->updateData($oldSatker);
+
 }
 
 

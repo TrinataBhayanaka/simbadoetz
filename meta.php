@@ -6,7 +6,7 @@ if ($u_sess) $isLogin = true;
 
 <html>
 <head>
-	<title> SIMBADA PEKALONGAN </title>
+	<title> <?=$title?></title>
 	<link rel="shortcut icon" href="<?php echo "$url_rewrite/"; ?>favicon.png" type="image/x-icon" />
 	<!--<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>-->
     <link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/font-awesome.min.css"/>
@@ -40,7 +40,25 @@ if ($u_sess) $isLogin = true;
 				format: 'yyyy-mm-dd',
 				autoclose:true,
 				clearBtn:true,
-				forceParse:true 
+				forceParse:true,
+                                                      startDate: '<?=$TAHUN_AKTIF?>-01-01',
+                                                      endDate: '<?=$TAHUN_AKTIF?>-12-31'
+			});
+                  $( ".datepicker" ).datepicker({ 
+				format: 'yyyy-mm-dd',
+				autoclose:true,
+				clearBtn:true,
+				forceParse:true,
+                                                      startDate: '<?=$TAHUN_AKTIF?>-01-01',
+                                                      endDate: '<?=$TAHUN_AKTIF?>-12-31'
+			});
+                    $( "#datepicker2" ).datepicker({ 
+				format: 'yyyy-mm-dd',
+				autoclose:true,
+				clearBtn:true,
+				forceParse:true,
+                                                      startDate: '<?=$TAHUN_AKTIF?>-01-01',
+                                                      endDate: '<?=$TAHUN_AKTIF?>-12-31'
 			});
 			$( "#datepicker-other" ).datepicker({ 
 				format: 'yyyy-mm-dd',

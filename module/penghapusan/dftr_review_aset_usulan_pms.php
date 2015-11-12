@@ -152,7 +152,7 @@ if($_SESSION['kdSatkerFilterPMD']){
 						<span  class="labelInfo">Tanggal Usulan</span>
 							<div class="input-prepend">
 								<span class="add-on"><i class="fa fa-calendar"></i></span>
-								<input name="tanggalUsulan" type="text" id="tanggal2" <?php echo $disabledForm;?> required/>
+								<input name="tanggalUsulan" type="text" id="datepicker" <?php echo $disabledForm;?> required/>
 							</div>
 					</li>
 					<li>

@@ -1,0 +1,1 @@
+ALTER TABLE `tbl_app_config` ADD `tahun_aktif` INT NULL ; 
