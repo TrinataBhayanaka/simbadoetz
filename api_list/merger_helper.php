@@ -41,6 +41,7 @@ class MERGER extends DB{
 
             foreach ($aset as $key => $value) {
 
+                $value['TipeAset'] = trim($value['TipeAset']);
                 $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
 
                 $sql = array(
