@@ -23,6 +23,9 @@ $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
+
+$ex = explode('-',$tglakhirperolehan);
+$tahun_neraca = $ex[0];
 $REPORT=new report_engine();
 
 
@@ -61,7 +64,7 @@ $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperole
 // exit;	
 
 //retrieve html
-$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca);
 $count = count($html);
 	/*for ($i = 0; $i < $count; $i++) {
 		 

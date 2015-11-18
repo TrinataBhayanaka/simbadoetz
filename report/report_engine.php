@@ -4940,7 +4940,7 @@ if($skpd_id != ''){
 return $hasil_html;
 }		
 		
-public function retrieve_html_neraca($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_neraca($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca)
 {
 // pr($dataArr);
 // exit;
@@ -5047,6 +5047,7 @@ foreach ($dataArr as $satker_id => $value)
      src=\"$gambar\"></td>
           <td style=\"width: 902px; text-align: center;\">
           <h3>REKAPITULASI BARANG KE NERACA</h3>
+          <h3>TAHUN $tahun_neraca</h3>
           </td>
         </tr>
       </tbody>
