@@ -119,7 +119,7 @@ $(document).ready(function() {
 						<li>
 							<span class="span2">Tahun Penyusutan</span>
 							<!--<input type="text" name="tahun" id = "tahun" readonly value="<?=date('Y')?>">-->
-							<select name="tahun"  required="1" id="kode">
+							<select name="tahun"  required="1" id="tahun">
 								 <option value="">Pilih Tahun</option>
 								 <option value="2014">2014</option>
 								 <option value="<?=date('Y')?>">2015</option>
