@@ -35,20 +35,20 @@ $status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
 if($kib == 'B'){ 
 	$flagKelompok = '02';
 	$AddCondtn_1 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND a.kodeKA = '1'
-					AND a.TglPerolehan >='0000-00-00' AND a.TglPerolehan < '2008-01-01'
+					AND a.TglPerolehan >='0000-00-00' AND a.TglPerolehan <= '2008-01-01'
 					AND a.TglPembukuan >='0000-00-00' AND a.TglPembukuan <= '$newTahun-12-31'";
 			
 	$AddCondtn_2 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND (a.NilaiPerolehan >=300000 OR kodeKA = '1') 
-					AND a.TglPerolehan >='2008-01-01' AND a.TglPerolehan < '$newTahun-12-31'
+					AND a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <= '$newTahun-12-31'
 					AND a.TglPembukuan >='0000-00-00' AND a.TglPembukuan <= '$newTahun-12-31'";				   
 }elseif($kib == 'C'){
 	$flagKelompok = '03';
 	$AddCondtn_1 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND a.kodeKA = '1'
-					AND a.TglPerolehan >='0000-00-00' AND a.TglPerolehan < '2008-01-01'
+					AND a.TglPerolehan >='0000-00-00' AND a.TglPerolehan <= '2008-01-01'
 					AND a.TglPembukuan >='0000-00-00' AND a.TglPembukuan <= '$newTahun-12-31'";
 			
 	$AddCondtn_2 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND (a.NilaiPerolehan >=10000000 OR kodeKA = '1') 
-					AND a.TglPerolehan >='2008-01-01' AND a.TglPerolehan < '$newTahun-12-31'
+					AND a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <= '$newTahun-12-31'
 					AND a.TglPembukuan >='0000-00-00' AND a.TglPembukuan <= '$newTahun-12-31'";
 }elseif($kib == 'D'){
 	$flagKelompok = '04';
