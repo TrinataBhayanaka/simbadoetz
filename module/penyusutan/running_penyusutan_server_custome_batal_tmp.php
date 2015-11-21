@@ -152,7 +152,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 			$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}'";
 			$exeQueryLog = $DBVAR->query($QueryLog);
 		}elseif($tahun >= 2015){
-				$QueryLogSelect = "select PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,MasaManfaat from $tableLog where Aset_ID = {$Aset_ID} order by log_id desc limit 1";
+				$QueryLogSelect = "select PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,MasaManfaat,UmurEkonomis from $tableLog where Aset_ID = {$Aset_ID} order by log_id desc limit 1";
 				$exeQueryLogSelect = $DBVAR->query($QueryLogSelect);
 				$resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
 			
@@ -160,11 +160,14 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 				$NilaiBuku_Awal = $resultQueryLogSelect['NilaiBuku_Awal'];
 				$PenyusutanPerTahun_Awal = $resultQueryLogSelect['PenyusutanPerTahun_Awal'];
 				$MasaManfaat_Awal = $resultQueryLogSelect['MasaManfaat'];
+				$UmurEkonomis = $resultQueryLogSelect['UmurEkonomis'];
 				
 				//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
 				$QueryAset	  = "UPDATE aset SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
-												 PenyusutanPerTaun = '{$PenyusutanPerTahun_Awal}'
+												 PenyusutanPerTaun = '{$PenyusutanPerTahun_Awal}',
+												 NilaiBuku = '{$NilaiBuku_Awal}',
+												 UmurEkonomis = '{$UmurEkonomis}'
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryAset = $DBVAR->query($QueryAset);
 				
@@ -175,7 +178,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 					$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
-												 NilaiBuku = '{$NilaiBuku_Awal}'
+												 NilaiBuku = '{$NilaiBuku_Awal}',
+												 UmurEkonomis = '{$UmurEkonomis}'
 									WHERE Aset_ID = '{$Aset_ID}'";
 					$ExeQueryKib = $DBVAR->query($QueryKib);
 					
@@ -185,7 +189,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 					$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
-												 NilaiBuku = '{$NilaiBuku_Awal}'
+												 NilaiBuku = '{$NilaiBuku_Awal}',
+												 UmurEkonomis = '{$UmurEkonomis}'
 									WHERE Aset_ID = '{$Aset_ID}'";
 					$ExeQueryKib = $DBVAR->query($QueryKib);
 					
@@ -195,7 +200,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 					$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
-												 NilaiBuku = '{$NilaiBuku_Awal}'
+												 NilaiBuku = '{$NilaiBuku_Awal}',
+												 UmurEkonomis = '{$UmurEkonomis}'
 									WHERE Aset_ID = '{$Aset_ID}'";
 					$ExeQueryKib = $DBVAR->query($QueryKib);
 				}
