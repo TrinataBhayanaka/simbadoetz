@@ -16,12 +16,13 @@ $tahun 	= $argv[2];
 $kodeSatker=$argv[3];
 $id=$argv[4];
 
-if($tahun == 2014 || $tahun == 2015){
+/*if($tahun == 2014 || $tahun == 2015){
 	$newTahun = '2014';
 }else{
 	$newTahun = $tahun - 1; 
-}
-// $newTahun = $tahun - 1; 
+}*/
+$newTahun = $tahun - 1; 
+
 $aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.Info','a.NilaiPerolehan','a.noRegister','a.PenyusutanPerTaun','a.AkumulasiPenyusutan','a.TipeAset','a.kodeSatker','a.StatusValidasi','a.Status_Validasi_Barang');
 $fieldCustom = str_replace(" , ", " ", implode(", ", $aColumns));
 $sTable = "aset as a";
@@ -100,7 +101,9 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 			//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
 			$QueryAset	  = "UPDATE aset SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
-											 PenyusutanPerTaun = NULL
+											 PenyusutanPerTaun = NULL,
+											 NilaiBuku = NULL,
+											 UmurEkonomis = NULL
 							WHERE Aset_ID = '$Aset_ID'";
 			$ExeQueryAset = $DBVAR->query($QueryAset);
 			//untuk log txt
@@ -113,7 +116,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
-											 NilaiBuku = NULL
+											 NilaiBuku = NULL,
+											 UmurEkonomis = NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 				
@@ -123,7 +127,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
-											 NilaiBuku = NULL
+											 NilaiBuku = NULL,
+											 UmurEkonomis = NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 				
@@ -133,7 +138,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
-											 NilaiBuku = NULL
+											 NilaiBuku = NULL,
+											 UmurEkonomis = NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 			}

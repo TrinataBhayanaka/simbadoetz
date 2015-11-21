@@ -16,11 +16,13 @@ $tahun 	= $argv[2];
 $kodeSatker=$argv[3];
 $id=$argv[4];
 
-if($tahun == 2014 || $tahun == 2015){
+/*if($tahun == 2014 || $tahun == 2015){
 	$newTahun = '2014';
 }else{
 	$newTahun = $tahun - 1; 
-}
+}*/
+
+$newTahun = $tahun - 1; 
 // $newTahun = $tahun - 1; 
 $aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.Info','a.NilaiPerolehan','a.noRegister','a.PenyusutanPerTaun','a.AkumulasiPenyusutan','a.TipeAset','a.kodeSatker','a.StatusValidasi','a.Status_Validasi_Barang');
 $fieldCustom = str_replace(" , ", " ", implode(", ", $aColumns));
@@ -87,7 +89,7 @@ $sQuery = "
 			$sWhere
 			$AddCondtn_1";
 }	
-echo $sQuery;		
+// echo $sQuery;		
 // $time_start = microtime_float();
 //select Tgl Penyusutan
 $ExeQuery = $DBVAR->query($sQuery) or die($DBVAR->error());
@@ -106,20 +108,24 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 		if ($masa_manfaat!=""){
                    $penyusutan_per_tahun=round($NilaiPerolehan/$masa_manfaat)  ;
                    $Tahun_Aktif= $tahun;
-                   $rentang_tahun_penyusutan=$Tahun_Aktif-$Tahun;
-                   if($rentang_tahun_penyusutan>=$masa_manfaat){
-                        //$AkumulasiPenyusutan=$masa_manfaat*$penyusutan_per_tahun;
-                        $AkumulasiPenyusutan=$NilaiPerolehan;
+                   // $Tahun_Aktif= $tahun - 1;
+                   $rentang_tahun_penyusutan = $Tahun_Aktif-$Tahun;
+				   if($rentang_tahun_penyusutan>=$masa_manfaat){
+                        $AkumulasiPenyusutan = $NilaiPerolehan;
 						$NilaiBuku = 0;
+						$UmurEkonomis = 0;
                    }else{
                         $AkumulasiPenyusutan=$rentang_tahun_penyusutan*$penyusutan_per_tahun;
 						$NilaiBuku=$NilaiPerolehan-$AkumulasiPenyusutan;
+						$UmurEkonomis = $masa_manfaat - $rentang_tahun_penyusutan;
 				   }
                     
 					//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
 					$QueryAset	  = "UPDATE aset SET MasaManfaat = '$masa_manfaat' ,
 													 AkumulasiPenyusutan = '$AkumulasiPenyusutan',	
-													 PenyusutanPerTaun = '$penyusutan_per_tahun'
+													 PenyusutanPerTaun = '$penyusutan_per_tahun',
+													 NilaiBuku = '$NilaiBuku',
+													 UmurEkonomis = '$UmurEkonomis'
 									WHERE Aset_ID = '$Aset_ID'";
 					$ExeQueryAset = $DBVAR->query($QueryAset);
 					//untuk log txt
@@ -132,7 +138,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 						$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '$masa_manfaat' ,
 													 AkumulasiPenyusutan = '$AkumulasiPenyusutan',	
 													 PenyusutanPerTahun = '$penyusutan_per_tahun',
-													 NilaiBuku = '$NilaiBuku'
+													 NilaiBuku = '$NilaiBuku',
+													 UmurEkonomis = '$UmurEkonomis'
 										WHERE Aset_ID = '$Aset_ID'";
 						$ExeQueryKib = $DBVAR->query($QueryKib);
 						
@@ -142,7 +149,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 						$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '$masa_manfaat' ,
 													 AkumulasiPenyusutan = '$AkumulasiPenyusutan',	
 													 PenyusutanPerTahun = '$penyusutan_per_tahun',
-													 NilaiBuku = '$NilaiBuku'
+													 NilaiBuku = '$NilaiBuku',
+													 UmurEkonomis = '$UmurEkonomis'
 										WHERE Aset_ID = '$Aset_ID'";
 						$ExeQueryKib = $DBVAR->query($QueryKib);
 						
@@ -152,7 +160,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 						$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '$masa_manfaat' ,
 													 AkumulasiPenyusutan = '$AkumulasiPenyusutan',	
 													 PenyusutanPerTahun = '$penyusutan_per_tahun',
-													 NilaiBuku = '$NilaiBuku'
+													 NilaiBuku = '$NilaiBuku',
+													 UmurEkonomis = '$UmurEkonomis'
 										WHERE Aset_ID = '$Aset_ID'";
 						$ExeQueryKib = $DBVAR->query($QueryKib);
 					}
@@ -181,7 +190,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 						$AddField = "action,changeDate,TglPerubahan,NilaiPerolehan_Awal,Kd_Riwayat";
 						$action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
 						$changeDate = date('Y-m-d');
-						$TglPerubahan = date('Y-m-d');
+						// $TglPerubahan = date('Y-m-d');
+						$TglPerubahan = $tahun."-01"."-01";;
 						$NilaiPerolehan_Awal = $resultqueryKibSelect->NilaiPerolehan;
 						$Kd_Riwayat = '50';
 						//insert log
@@ -193,7 +203,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 						$AddField = "action,changeDate,TglPerubahan,NilaiPerolehan_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,PenyusutanPerTahun_Awal,Kd_Riwayat";
 						$action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
 						$changeDate = date('Y-m-d');
-						$TglPerubahan = date('Y-m-d');
+						// $TglPerubahan = date('Y-m-d');
+						$TglPerubahan = $tahun."-01"."-01";;
 						$NilaiPerolehan_Awal = $resultqueryKibSelect->NilaiPerolehan;
 						
 						$ceck = $tahun - 2015;
@@ -205,7 +216,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 							$AkumulasiPenyusutan_Awal = $resultQueryLogSelect['AkumulasiPenyusutan'];
 							$NilaiBuku_Awal = $resultQueryLogSelect['NilaiBuku'];
 							$PenyusutanPerTahun_Awal = $resultQueryLogSelect['PenyusutanPerTahun'];
-						}elseif($ceck > 1){
+						}elseif($ceck == 0 || $ceck > 1){
 							$QueryLogSelect = "select PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal from $tableLog where Aset_ID = {$Aset_ID} order by log_id desc limit 1";
 							$exeQueryLogSelect = $DBVAR->query($QueryLogSelect);
 							$resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
@@ -227,10 +238,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 					
 		}
 	}	
-		// exit;
-	
-	 
-    //update table status untuk penyusutan
+	//update table status untuk penyusutan
      $query="update penyusutan_tahun  set StatusRunning=2 where id=$id";
      $DBVAR->query($query) or die($DBVAR->error());
     
