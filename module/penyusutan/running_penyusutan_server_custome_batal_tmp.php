@@ -108,7 +108,9 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 			$ExeQueryAset = $DBVAR->query($QueryAset);
 			//untuk log txt
 			echo "$Aset_ID \t $kodeKelompok \t $NilaiPerolehan \t $Tahun \t $masa_manfaat \t $AkumulasiPenyusutan \t $NilaiBuku  \t $penyusutan_per_tahun \n";
-		 
+			//untuk tanggal perubahan reset log andreas
+			$TglPerubahan = $tahun."-01"."-01";
+
 			//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat,NilaiBuku
 			if($Data['TipeAset'] == 'B'){
 				$tableKib = 'mesin';
@@ -121,6 +123,15 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 				
+				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
+				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+											 AkumulasiPenyusutan = NULL,	
+											 PenyusutanPerTahun = NULL,
+											 NilaiBuku = NULL,
+											 UmurEkonomis = NULL
+								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
+				$ExeQueryKib = $DBVAR->query($QueryKib);
+				
 			}elseif($Data['TipeAset'] == 'C'){
 				$tableKib = 'bangunan';
 				$tableLog = 'log_bangunan';
@@ -131,6 +142,16 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 UmurEkonomis = NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
+
+				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
+				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+											 AkumulasiPenyusutan = NULL,	
+											 PenyusutanPerTahun = NULL,
+											 NilaiBuku = NULL,
+											 UmurEkonomis = NULL
+								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
+				$ExeQueryKib = $DBVAR->query($QueryKib);
+
 				
 			}elseif($Data['TipeAset'] == 'D'){
 				$tableKib = 'jaringan';
@@ -142,6 +163,17 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 UmurEkonomis = NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
+
+
+				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
+				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+											 AkumulasiPenyusutan = NULL,	
+											 PenyusutanPerTahun = NULL,
+											 NilaiBuku = NULL,
+											 UmurEkonomis = NULL
+								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
+				$ExeQueryKib = $DBVAR->query($QueryKib);
+
 			}
 
 		
