@@ -29,7 +29,7 @@ $fieldCustom = str_replace(" , ", " ", implode(", ", $aColumns));
 $sTable = "aset as a";
 $sTable_inner_join_kelompok = "kelompok as k";
 $cond_kelompok ="k.Kode = a.kodeKelompok ";
-$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
+$status = "a.Status_Validasi_Barang = 1 AND";
 
 
 if($kib == 'B'){ 
