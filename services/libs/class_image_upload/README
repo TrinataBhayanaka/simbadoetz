@@ -1,0 +1,12 @@
+class.upload.php (c) 2005 Colin Verot
+
+Read class.upload.php for more information or go to
+http://www.verot.net/php_class_upload.htm
+
+Documentation available here
+http://www.verot.net/php_class_upload_docs.htm
+
+See test files index.html and upload.php to have a commented example. Create beforehand a directory called "test" alongside the test files. You might have to set the permissions of that directory to 777. Then go to index.html.
+
+Questions, remarks?
+Email me at colin@verot.net

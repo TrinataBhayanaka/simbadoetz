@@ -93,7 +93,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$ses
 		<script type="text/javascript">
 			$(document).on('submit',function(){
 				if($("#<?=$name?>").val() == ""){
-					alert("Kode Satker tidak boleh kosong");
+						alert("Kode Satker tidak boleh kosong");
 					return false;
 				}
 			})

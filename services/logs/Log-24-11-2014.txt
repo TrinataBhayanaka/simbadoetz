@@ -1,0 +1,14 @@
+a:5:{s:4:"name";s:9:"depan.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpmcYrze";s:5:"error";i:0;s:4:"size";i:256235;}
+a:5:{s:4:"name";s:12:"belakang.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpLtC0e5";s:5:"error";i:0;s:4:"size";i:258034;}
+a:5:{s:4:"name";s:9:"kanan.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpQRxDUV";s:5:"error";i:0;s:4:"size";i:190006;}
+a:5:{s:4:"name";s:8:"kiri.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phprowjAM";s:5:"error";i:0;s:4:"size";i:184145;}
+a:5:{s:4:"name";s:8:"atas.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpOdY2fD";s:5:"error";i:0;s:4:"size";i:199163;}
+a:5:{s:4:"name";s:9:"bawah.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/php78MPVt";s:5:"error";i:0;s:4:"size";i:138094;}
+a:5:{s:4:"name";s:9:"kanan.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpAIHtJT";s:5:"error";i:0;s:4:"size";i:190006;}
+a:5:{s:4:"name";s:8:"kiri.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpFHObxj";s:5:"error";i:0;s:4:"size";i:184145;}
+a:5:{s:4:"name";s:9:"depan.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpAFXkDu";s:5:"error";i:0;s:4:"size";i:256235;}
+a:5:{s:4:"name";s:12:"belakang.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpJOpRmB";s:5:"error";i:0;s:4:"size";i:258034;}
+a:5:{s:4:"name";s:9:"kanan.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpUytw6H";s:5:"error";i:0;s:4:"size";i:190006;}
+a:5:{s:4:"name";s:8:"kiri.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpPAjiQO";s:5:"error";i:0;s:4:"size";i:184145;}
+a:5:{s:4:"name";s:8:"atas.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpkbpaAV";s:5:"error";i:0;s:4:"size";i:199163;}
+a:5:{s:4:"name";s:9:"bawah.JPG";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpdk18j2";s:5:"error";i:0;s:4:"size";i:138094;}
