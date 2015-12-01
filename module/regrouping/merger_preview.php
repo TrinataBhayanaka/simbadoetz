@@ -29,12 +29,12 @@ $get_data_regrouping= $REGROUPING->getMergeDataPreview();
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Pindah Lokasi SKPD</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Status Pindah Lokasi SKPD</li>
+			  <li><a href="#">Penggabungan SKPD</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Status Penggabungan SKPD</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Status Pindah Lokasi SKPD</div>
+				<div class="title">Status Penggabungan SKPD</div>
 				<div class="subtitle">Daftar SKPD</div>
 			</div>	
 
@@ -67,10 +67,10 @@ $get_data_regrouping= $REGROUPING->getMergeDataPreview();
 				if($get_data_regrouping){
 					$no = 1;
 					foreach($get_data_regrouping as $val){
-                                                                           $text_status=array("0"=>"Belum regrouping",
-                                                                                                              "1"=>"Sedang regrouping",
-                                                                                                              "2"=>"Telah regrouping")
-                                                                           
+                       $text_status=array("0"=>"Belum regrouping",
+                                          "1"=>"Sedang regrouping",
+                                          "2"=>"Sukses regrouping")
+                                           
                                                                            
                                                                            
 				?>
@@ -83,9 +83,15 @@ $get_data_regrouping= $REGROUPING->getMergeDataPreview();
                         
                         <td>
                         	<?php
-                        	if ($val['n_status']==1) echo "Sedang dilakukan regrouping";
-                        	if ($val['n_status']==2) echo "Sukses regrouping";
-                        	if ($val['n_status']==3) echo "Gagal regrouping";
+                        	if ($val['n_status']==0){
+                        		echo "<a href='{$url_rewrite}/module/regrouping/merger_list.php?kode={$val['old_kodeSatker']}'>{$text_status[$val['n_status']]}</a>";
+                        	}else{
+                        		echo $text_status[$val['n_status']];
+                        	}
+                        	
+                        	// if ($val['n_status']==1) echo "Sedang dilakukan regrouping";
+                        	// if ($val['n_status']==2) echo "Sukses regrouping";
+                        	// if ($val['n_status']==0) echo "Batal regrouping";
                         	?>
                         </td>
                         

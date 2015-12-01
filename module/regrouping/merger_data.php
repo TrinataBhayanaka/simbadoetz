@@ -88,7 +88,7 @@ if (isset($_POST['submit'])){
                               </select>
                                <select name="kode_baru4">
                                    <?php
-                                   for ($i=1;$i<=30;$i++){
+                                   for ($i=1;$i<=150;$i++){
                                            
                                         $tampil=sprintf("%02d",$i);
                                         echo "<option value=\"$tampil\">$tampil</option>";                                   }

@@ -227,4 +227,15 @@ function logFile($comment, $fileName=false, $method=false)
      fclose($handle);
 }
 
+function openFile($filePath)
+{
+
+     if(file_exists($filePath)) {
+          $handle = fopen($filePath, "r");
+          $fileContents = fread($handle, filesize($filePath));
+          fclose($handle);
+          return $fileContents;
+     }
+     return false;
+}
 ?>
