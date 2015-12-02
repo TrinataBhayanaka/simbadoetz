@@ -1,22 +1,47 @@
-
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 07:38:26
+         compiled from "app/view/module/daftar_aset_tetap/konstruksi.html" */ ?>
+<?php /*%%SmartyHeaderCode:1876792673565e9ff24ec432-45849584%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '6e9b4a4e190fca689963d0aee42dd6a68b1e760e' => 
+    array (
+      0 => 'app/view/module/daftar_aset_tetap/konstruksi.html',
+      1 => 1449041550,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '1876792673565e9ff24ec432-45849584',
+  'function' => 
+  array (
+  ),
+  'variables' => 
+  array (
+    'baseApplication' => 0,
+  ),
+  'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.15',
+  'unifunc' => 'content_565e9ff2507108_92966718',
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_565e9ff2507108_92966718')) {function content_565e9ff2507108_92966718($_smarty_tpl) {?>
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Peralatan dan Mesin
+            Konstruksi Dalam Pengerjaan
             <small>Daftar Aset Tetap</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#"> Daftar Aset Tetap</a></li>
-            <li class="active">Peralatan dan Mesin</li>
+            <li class="active">Konstruksi Dalam Pengerjaan</li>
           </ol>
         </section>
 
         <!-- Main content -->
         <section class="content">
           <!-- Info boxes -->
-         {*}  <div class="row">
+          <div class="row">
  <div class="col-md-12">
               <!-- general form elements -->
               <div class="box box-primary">
@@ -59,14 +84,14 @@
 
 
             </div>
-          </div> {/*}
+          </div>
           <div class="row">
             <!-- right column -->
         <div class="col-md-12">
-          <!-- Form Input Services -->
+          <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Form Input Services</h3>
+              <h3 class="box-title">Horizontal Form</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -105,8 +130,10 @@
               </div>
 
               <div class="box-footer">
-              <span id="linkUrl" style="display:none" ><i>
-                <a href="{$baseApplication}{literal}report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_mesin.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3{/literal}" target="_blank">{$baseApplication}{literal}report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_mesin.php?menuID=&mode=&tab=&skpd_id=<strong>{{satker}}</strong>&tglawalperolehan=<strong>{{tahunAwal}}</strong>&tglakhirperolehan=<strong>{{tahunAkhir}}</strong>&tipe_file=<strong>3</strong>{/literal}</a></i>
+              <span id="linkUrl" style="display:none" >
+                <a href="<?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
+report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3" target="_blank"><?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
+report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3</a>
                 </span>
               </div>
               <!-- /.box-footer -->
@@ -124,3 +151,4 @@
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
   
+<?php }} ?>

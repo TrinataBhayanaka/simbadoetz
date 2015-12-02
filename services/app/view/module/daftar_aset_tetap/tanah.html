@@ -1,3 +1,4 @@
+
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -15,110 +16,39 @@
         <!-- Main content -->
         <section class="content">
           <!-- Info boxes -->
-          <div class="row">
-
-            <!-- right column -->
-        <div class="col-md-6">
-          <!-- Horizontal Form -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Horizontal Form</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal">
-              <div class="box-body">
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="inputEmail3">Tahun Awal</label>
-
-                  <div class="col-sm-8">
-                    <input type="email" placeholder="Tahun Awal" id="inputEmail3" class="form-control">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="inputPassword3">Tahun Akhir</label>
-
-                  <div class="col-sm-8">
-                    <input type="password" placeholder="Tahun Akhir" id="inputPassword3" class="form-control">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label" for="inputPassword3">Kode Satker</label>
-
-                  <div class="col-sm-8">
-                    <select  class="form-control">
-                        <option>--Pilih Satker--</option>
-                    </select>
-                  </div>
-                </div>
-               
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button class="btn btn-default" type="submit">Cancel</button>
-                <button class="btn btn-info pull-right" type="submit">Sign in</button>
-              </div>
-              <!-- /.box-footer -->
-            </form>
-          </div>
-          <!-- /.box -->
-         
-        </div>
-        <!-- left column -->
-            <div class="col-md-6">
+       {*}    <div class="row">
+ <div class="col-md-12">
               <!-- general form elements -->
               <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Penjelasan Parameter API</h3>
+                  <h3 class="box-title">Penjelasan Parameter Services</h3>
                 </div>
                 <!-- /.box-header -->
                 <table class="table table-bordered">
                   <tbody><tr>
-                    <th style="width: 10px">#</th>
-                    <th>Task</th>
-                    <th>Progress</th>
-                    <th style="width: 40px">Label</th>
+                    <th style="width: 10px">No</th>
+                    <th style="width: 200px">Parameter</th>
+                    <th>Keterangan</th>
                   </tr>
                   <tr>
                     <td>1.</td>
-                    <td>Update software</td>
-                    <td>
-                      <div class="progress progress-xs">
-                        <div style="width: 55%" class="progress-bar progress-bar-danger"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-red">55%</span></td>
+                    <td>skpd_id</td>
+                    <td>Diisi dengan kode Satker contoh :<strong> 04.02</strong></td>
                   </tr>
                   <tr>
                     <td>2.</td>
-                    <td>Clean database</td>
-                    <td>
-                      <div class="progress progress-xs">
-                        <div style="width: 70%" class="progress-bar progress-bar-yellow"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-yellow">70%</span></td>
+                    <td>tglawalperolehan</td>
+                    <td>Diisi dengan Format Tanggal yy-mm-dd contoh :<strong> 2015-12-02</strong></td>
                   </tr>
                   <tr>
                     <td>3.</td>
-                    <td>Cron job running</td>
-                    <td>
-                      <div class="progress progress-xs progress-striped active">
-                        <div style="width: 30%" class="progress-bar progress-bar-primary"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-light-blue">30%</span></td>
+                    <td>tglakhirperolehan</td>
+                    <td>Diisi dengan Format Tanggal yy-mm-dd contoh :<strong> 2015-12-02</strong></td>
                   </tr>
                   <tr>
                     <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td>
-                      <div class="progress progress-xs progress-striped active">
-                        <div style="width: 90%" class="progress-bar progress-bar-success"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-green">90%</span></td>
+                    <td>tipe_file</td>
+                    <td>Diisi dengan <strong>3</strong></td>
                   </tr>
                 </tbody>
               </table>
@@ -129,9 +59,68 @@
 
 
             </div>
+          </div> {/*}
+          <div class="row">
+            <!-- right column -->
+        <div class="col-md-12">
+          <!-- Form Input Services -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Form Input Services</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" ng-app="">
+              <div class="box-body">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="inputEmail3" >Tahun Awal</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" placeholder="Tahun Awal" id="datepicker" ng-model="tahunAwal" class="tahunAwal form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="inputPassword3">Tahun Akhir</label>
+
+                  <div class="col-sm-8">
+                    <input type="text" placeholder="Tahun Akhir" id="datepicker" ng-model="tahunAkhir" class="tahunAkhir form-control">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="inputPassword3">Kode Satker</label>
+
+                  <div class="col-sm-8">
+                    <select  class="form-control" ng-model="satker">
+                        <option value="">--Pilih Satker--</option>
+                        <option value="04.02">Dinas</option>
+                    </select>
+                  </div>
+                </div>
+               
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button class="btn btn-info pull-left" id="tombol" type="submit">Create Link Url</button>
+              </div>
+
+              <div class="box-footer">
+              <span id="linkUrl" style="display:none" ><i>
+                <a href="{$baseApplication}{literal}report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3{/literal}" target="_blank">{$baseApplication}{literal}report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id=<strong>{{satker}}</strong>&tglawalperolehan=<strong>{{tahunAwal}}</strong>&tglakhirperolehan=<strong>{{tahunAkhir}}</strong>&tipe_file=3{/literal}</a></i>
+                </span>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+          <!-- /.box -->
+         
+        </div>
+        <!-- left column -->
+           
         <!--/.col (left) -->
         
         <!--/.col (right) -->
       </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+  

@@ -5,6 +5,7 @@
     <script src="{$basedomain}assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="{$basedomain}assets/plugins/fastclick/fastclick.min.js"></script>
+    <script src="{$basedomain}assets/plugins/angular/angular.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{$basedomain}assets/dist/js/app.min.js"></script>
     <!-- Sparkline -->
@@ -20,68 +21,61 @@
     <script src="{$basedomain}assets/dist/js/pages/dashboard2.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{$basedomain}assets/dist/js/demo.js"></script>
+    <script src="{$basedomain}assets/datepicker/bootstrap-datepicker.js"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<script src="{$basedomain}assets/plugins/select2/select2.full.min.js"></script>
 <script type="text/javascript">
   $('select').select2();
 </script>
+    <script type="text/javascript">
+      $("button#tombol").click(function(e){
+
+            $('span#linkUrl').css("display","block");
+
+        }
+    );
+    $("input#datepicker.tahunAwal").change(function(e){
+
+            $('span#linkUrl').css("display","none");
+
+        }
+    );
+
+
+    $( "input#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+
+      </script>
 <script type="text/javascript">
 
 var base_url='{$basedomain}';
 {literal}
- $("#click.page").click(function(e){
+ // $("#click.page").click(function(e){
 
-  pageurl = $(this).attr('href');
-            // alert(pageurl);
-            $newpage =base_url+"home/index/?page="+pageurl;
+ //  pageurl = $(this).attr('href');
+ //            // alert(pageurl);
+ //            $newpage =base_url+"home/index/?page="+pageurl;
 
-            if(pageurl!=window.location){
-                window.history.pushState({path:$newpage},'',$newpage);
-            }
+ //            if(pageurl!=window.location){
+ //                window.history.pushState({path:$newpage},'',$newpage);
+ //            }
 
-            $.post(base_url+"home/ajaxPage",{page:pageurl}, function(data){
-                            // console.log(data);
-                            if (data.status==true) {
-                               // console.log(data.data);
+ //            $.post(base_url+"home/ajaxPage",{page:pageurl}, function(data){
+ //                            // console.log(data);
+ //                            if (data.status==true) {
+ //                               // console.log(data.data);
 
                                  
-                                    $('#pageAjax').html(data.data); 
+ //                                    $('#pageAjax').html(data.data); 
                                     
-                                    $('.ajax-spinner-bars').css("display","none");
-                            }else{
-                                 $('.ajax-spinner-bars').css("display","none"); 
-                            }
-                        }, "JSON")
+ //                                    $('.ajax-spinner-bars').css("display","none");
+ //                            }else{
+ //                                 $('.ajax-spinner-bars').css("display","none"); 
+ //                            }
+ //                        }, "JSON")
 
-            return false;
+ //            return false;
             
-        });
-
-// $(function(){
-//   $("a").click(function(e){
-//   //e.preventDefault();
-//   /*
-//   if uncomment the above line, html5 nonsupported browers won't change the url but will display the ajax content;
-//   if commented, html5 nonsupported browers will reload the page to the specified link.
-//   */
-
-//   //get the link location that was clicked
-//   pageurl = $(this).attr('href');
-// alert(pageurl);
-//   //to get the ajax content and display in div with id 'content'
-//   $.ajax({url:pageurl+'?rel=tab',success: function(data){
-//     $('#pageAjax').html(data);
-//   }});
-
-//   //to change the browser URL to the given link location
-//   if(pageurl!=window.location){
-//     window.history.pushState({path:pageurl},'',pageurl);
-//   }
-//   //stop refreshing to the page given in
-//   return false;
-//   });
-// });
-
+ //        });
 
 {/literal}
 

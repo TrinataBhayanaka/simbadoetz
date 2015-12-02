@@ -1,29 +1,29 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 07:23:06
-         compiled from "app/view/master_template/jsplugin.html" */ ?>
-<?php /*%%SmartyHeaderCode:13748279565659a413a6e1a6-15105368%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 06:07:34
+         compiled from "/home/erjoned/Data/xampp/htdocs/simbadoetz/services/app/view/master_template/jsplugin.html" */ ?>
+<?php /*%%SmartyHeaderCode:1427592353565e8aa6224101-32307190%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '1b69a918042097f57f70b80071e420610f7abb9f' => 
+    '9288da40d0cd476af477a93607543f0774e9543f' => 
     array (
-      0 => 'app/view/master_template/jsplugin.html',
-      1 => 1449040982,
+      0 => '/home/erjoned/Data/xampp/htdocs/simbadoetz/services/app/view/master_template/jsplugin.html',
+      1 => 1449035143,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13748279565659a413a6e1a6-15105368',
+  'nocache_hash' => '1427592353565e8aa6224101-32307190',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.15',
-  'unifunc' => 'content_5659a413a763b0_54196069',
   'variables' => 
   array (
     'basedomain' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.15',
+  'unifunc' => 'content_565e8aa623ba53_60363270',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5659a413a763b0_54196069')) {function content_5659a413a763b0_54196069($_smarty_tpl) {?>
+<?php if ($_valid && !is_callable('content_565e8aa623ba53_60363270')) {function content_565e8aa623ba53_60363270($_smarty_tpl) {?>
     <!-- jQuery 2.1.4 -->
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
@@ -59,63 +59,44 @@ assets/dist/js/pages/dashboard2.js"></script>
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/dist/js/demo.js"></script>
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-assets/datepicker/bootstrap-datepicker.js"></script>
+assets/plugin/datepicker/bootstrap-datepicker.js"></script>
 
-<script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-assets/plugins/select2/select2.full.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 <script type="text/javascript">
   $('select').select2();
 </script>
-    <script type="text/javascript">
-      $("button#tombol").click(function(e){
-
-            $('span#linkUrl').css("display","block");
-
-        }
-    );
-    $("input#datepicker.tahunAwal").change(function(e){
-
-            $('span#linkUrl').css("display","none");
-
-        }
-    );
-
-
-    $( "input#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-
-      </script>
 <script type="text/javascript">
 
 var base_url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 ';
 
- // $("#click.page").click(function(e){
+ $("#click.page").click(function(e){
 
- //  pageurl = $(this).attr('href');
- //            // alert(pageurl);
- //            $newpage =base_url+"home/index/?page="+pageurl;
+  pageurl = $(this).attr('href');
+            // alert(pageurl);
+            $newpage =base_url+"home/index/?page="+pageurl;
 
- //            if(pageurl!=window.location){
- //                window.history.pushState({path:$newpage},'',$newpage);
- //            }
+            if(pageurl!=window.location){
+                window.history.pushState({path:$newpage},'',$newpage);
+            }
 
- //            $.post(base_url+"home/ajaxPage",{page:pageurl}, function(data){
- //                            // console.log(data);
- //                            if (data.status==true) {
- //                               // console.log(data.data);
+            $.post(base_url+"home/ajaxPage",{page:pageurl}, function(data){
+                            // console.log(data);
+                            if (data.status==true) {
+                               // console.log(data.data);
 
                                  
- //                                    $('#pageAjax').html(data.data); 
+                                    $('#pageAjax').html(data.data); 
                                     
- //                                    $('.ajax-spinner-bars').css("display","none");
- //                            }else{
- //                                 $('.ajax-spinner-bars').css("display","none"); 
- //                            }
- //                        }, "JSON")
+                                    $('.ajax-spinner-bars').css("display","none");
+                            }else{
+                                 $('.ajax-spinner-bars').css("display","none"); 
+                            }
+                        }, "JSON")
 
- //            return false;
+            return false;
             
- //        });
+        });
 
 
 

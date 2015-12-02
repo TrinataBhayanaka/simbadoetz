@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-11-30 18:08:57
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 09:14:39
          compiled from "app/view/master_template/meta.html" */ ?>
 <?php /*%%SmartyHeaderCode:16317901315659a413a02cc3-19038442%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '7df2b02b5eb7ee280f4bafef38e1d483e6139b93' => 
     array (
       0 => 'app/view/master_template/meta.html',
-      1 => 1448881693,
+      1 => 1449047676,
       2 => 'file',
     ),
   ),
@@ -48,13 +48,21 @@ assets/dist/css/AdminLTE.min.css">
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/dist/css/skins/_all-skins.min.css">
-<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+assets/datepicker/datepicker.css">
+    <link href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+assets/plugins/select2/select2.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        #linkUrl a{
+            color:#000;
+        }
+    </style>
     <script>
 		var basedomain = "<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 ";

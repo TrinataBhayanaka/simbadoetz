@@ -60,19 +60,26 @@ $paramGol = '01';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
 // pr($resultParamGol);
 // exit;
+
+$serviceJson=json_encode($resultParamGol);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
 $html=$REPORT->retrieve_html_asetTetapTanah($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
 
-/*$count = count($html);
-	for ($i = 0; $i < $count; $i++) {
-		 echo $html[$i];     
-	}
-exit;*/
-
-if($tipe!="2"){
+// pr($dt);
+// $count = count($html);
+// 	for ($i = 0; $i < $count; $i++) {
+// 		 echo $html[$i];     
+// 	}
+// exit;
+// pr($dt);
+// exit;
+if($tipe=="3"){
+	echo $serviceJson;
+	exit;
+}elseif ($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
