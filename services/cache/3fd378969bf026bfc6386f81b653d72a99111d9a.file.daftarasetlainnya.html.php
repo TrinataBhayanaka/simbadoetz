@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 08:40:58
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 16:24:01
          compiled from "app/view/module/daftarasetlainnya.html" */ ?>
 <?php /*%%SmartyHeaderCode:1728099688565e9ff41e7971-50495023%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '3fd378969bf026bfc6386f81b653d72a99111d9a' => 
     array (
       0 => 'app/view/module/daftarasetlainnya.html',
-      1 => 1449045067,
+      1 => 1449073360,
       2 => 'file',
     ),
   ),
@@ -90,7 +90,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
               <span id="linkUrl" style="display:none" >
                 <a href="<?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
 report/template/PEROLEHAN/report_perolehanaset_cetak_aset_lainnya.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3" target="_blank"><?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
-report/template/PEROLEHAN/report_perolehanaset_cetak_aset_lainnya.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3</a>
+report/template/PEROLEHAN/report_perolehanaset_cetak_aset_lainnya.php?menuID=&mode=&tab=&skpd_id=<strong>{{satker}}</strong>&tglawalperolehan=<strong>{{tahunAwal}}</strong>&tglakhirperolehan=<strong>{{tahunAkhir}}</strong>&tipe_file=<strong>3</strong></a>
                 </span>
               </div>
               <!-- /.box-footer -->

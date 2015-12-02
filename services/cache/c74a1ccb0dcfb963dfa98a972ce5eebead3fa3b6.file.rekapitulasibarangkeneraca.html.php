@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 07:38:55
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 16:21:31
          compiled from "app/view/module/rekapitulasibarangkeneraca.html" */ ?>
 <?php /*%%SmartyHeaderCode:434829966565ea00f0987e3-57554825%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c74a1ccb0dcfb963dfa98a972ce5eebead3fa3b6' => 
     array (
       0 => 'app/view/module/rekapitulasibarangkeneraca.html',
-      1 => 1449041696,
+      1 => 1449045040,
       2 => 'file',
     ),
   ),
@@ -15,13 +15,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.15',
+  'unifunc' => 'content_565ea00f0b5b85_15952480',
   'variables' => 
   array (
     'baseApplication' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.15',
-  'unifunc' => 'content_565ea00f0b5b85_15952480',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_565ea00f0b5b85_15952480')) {function content_565ea00f0b5b85_15952480($_smarty_tpl) {?>
 <div class="content-wrapper">
@@ -41,57 +41,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <!-- Main content -->
         <section class="content">
           <!-- Info boxes -->
-          <div class="row">
- <div class="col-md-12">
-              <!-- general form elements -->
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Penjelasan Parameter Services</h3>
-                </div>
-                <!-- /.box-header -->
-                <table class="table table-bordered">
-                  <tbody><tr>
-                    <th style="width: 10px">No</th>
-                    <th style="width: 200px">Parameter</th>
-                    <th>Keterangan</th>
-                  </tr>
-                  <tr>
-                    <td>1.</td>
-                    <td>skpd_id</td>
-                    <td>Diisi dengan kode Satker contoh :<strong> 04.02</strong></td>
-                  </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>tglawalperolehan</td>
-                    <td>Diisi dengan Format Tanggal yy-mm-dd contoh :<strong> 2015-12-02</strong></td>
-                  </tr>
-                  <tr>
-                    <td>3.</td>
-                    <td>tglakhirperolehan</td>
-                    <td>Diisi dengan Format Tanggal yy-mm-dd contoh :<strong> 2015-12-02</strong></td>
-                  </tr>
-                  <tr>
-                    <td>4.</td>
-                    <td>tipe_file</td>
-                    <td>Diisi dengan <strong>3</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-              <!-- /.box -->
-
-              
-
-
-            </div>
-          </div>
+          
           <div class="row">
             <!-- right column -->
         <div class="col-md-12">
-          <!-- Horizontal Form -->
+          <!-- Form Input Services -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Horizontal Form</h3>
+              <h3 class="box-title">Form Input Services</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -132,8 +89,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
               <div class="box-footer">
               <span id="linkUrl" style="display:none" >
                 <a href="<?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
-report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3" target="_blank"><?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
-report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3</a>
+report/template/PEROLEHAN/report_perolehanaset_cetak_rekapneraca.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3" target="_blank"><?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
+report/template/PEROLEHAN/report_perolehanaset_cetak_rekapneraca.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3</a>
                 </span>
               </div>
               <!-- /.box-footer -->
