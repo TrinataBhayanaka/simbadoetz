@@ -1024,7 +1024,7 @@ class core_api_report extends DB {
             }
 			
 			
-            // $limit="limit 100";
+            // $limit="limit 50";
 			
 			// echo "param =".$parameter_sql;
 			
@@ -1040,8 +1040,10 @@ class core_api_report extends DB {
 												order by 
 													T.kodeSatker,T.kodeKelompok $limit";
 			
-			$rekap_barang_b_condition ="select distinct(M.kodeSatker),
-													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+			$rekap_barang_b_condition ="select SUM(M.NilaiPerolehan) as Nilai, 
+													GROUP_CONCAT(M.noRegister) as noReg,
+													M.kodeSatker,
+													M.kodeSatker,M.kodeKelompok,M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 												from 
@@ -1054,7 +1056,7 @@ class core_api_report extends DB {
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
 													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 												order by 
-													M.kodeSatker,M.kodeKelompok $limit";
+													M.kodeSatker,M.kodeKelompok $limit";										
 													
 			$rekap_barang_b_condition_sensus ="select M.kodeSatker,M.noRegister,
 													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
@@ -1096,8 +1098,9 @@ class core_api_report extends DB {
 			
 				
 			
-			$rekap_barang_e_condition="select distinct(AL.kodeSatker), 
-											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+			$rekap_barang_e_condition="select SUM(AL.NilaiPerolehan) as Nilai, 
+											GROUP_CONCAT(AL.noRegister) as noReg, 
+											AL.kodeKelompok,AL.AsalUsul,
 											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 											AL.kondisi, AL.kodeLokasi,
@@ -4410,72 +4413,29 @@ class core_api_report extends DB {
 		if (!$query) return false;
 	
 		$result=mysql_query($query);
-		
+		$i = 0;
 		while ($row=mysql_fetch_assoc($result)){
 		  $data[] = $row;
+		  $register = $row['noReg'];
+		  // echo "noreg =".$register;
+		  // echo"<br>";
+		  // exit;
+		  sort($register);
+		  $urut = $this->sortirNoReg($register);
+		  // pr($urut);
+		  $data[$i]['noRegister'] = $urut;
+			$i++;
+		 // pr($data);
 		}
+		// pr($data); 
+		// exit;
+		
+		
 		if (!$data) {
 			return '';
 		}
-		//untuk mendapatkan field
-		foreach ($data[0] as $key => $val){
-		  
-		  $field [] = $key;
-
-		}
-		$ignoreField = array('Kode','Uraian');
-		$i=1;
-		$data_reg=1;
-		$count_reg=0;
-		$iman=array();
-		foreach ($data as $keys => $value){
-		  
-			$tmp = array();
-			$imp = "";
-
-			foreach ($field as $val){
-				
-				if (!in_array($val, $ignoreField)){
-					if ($value[$val]==''){
-						$tmp[] = "(".$val ." IS NULL or $val='' )";
-			   
-					}else{
-						// $tmp[] = $val ." = '$value[$val]'";
-						$tmp[] = $val ." = '".addslashes($value[$val])."'";
-								
-					}
-				  
-				}
-				
-			}
-			  
-			$imp = implode(' and ', $tmp);
-			
-			$sql = "SELECT noRegister FROM $tableName WHERE {$imp} and StatusTampil = 1 and Status_Validasi_Barang = 1 order by noRegister desc";
-			// pr ($sql); 
-			$res = mysql_query($sql);
-			$register=array();
-
-			while($d = mysql_fetch_assoc($res)){
-			  
-				$register[]= $d['noRegister'];
-			}
-			// pr($register);
-			sort($register);
-			$text_register=implode(",",$register);
-	        //$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
-			$register_no=explode(",",$this->sortirNoReg($text_register));
-			for($m=0;$m<=count($register_no);$m++){
-				if($register_no[$m]!="")
-					{
-					$data[$keys]['noRegister']=$register_no[$m];
-					array_push($iman,$data[$keys])  ;
-					}
-			}
-			$i++;
-		}
-			
-		return $iman;
+		return $data;
+		
 	}
 
 	public function QueryBinv($dataQuery){
