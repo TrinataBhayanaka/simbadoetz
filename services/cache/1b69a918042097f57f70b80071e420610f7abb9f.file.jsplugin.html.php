@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 07:23:06
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 11:04:02
          compiled from "app/view/master_template/jsplugin.html" */ ?>
 <?php /*%%SmartyHeaderCode:13748279565659a413a6e1a6-15105368%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1b69a918042097f57f70b80071e420610f7abb9f' => 
     array (
       0 => 'app/view/master_template/jsplugin.html',
-      1 => 1449040982,
+      1 => 1449054194,
       2 => 'file',
     ),
   ),
@@ -37,7 +37,7 @@ assets/plugins/fastclick/fastclick.min.js"></script>
 assets/plugins/angular/angular.min.js"></script>
     <!-- AdminLTE App -->
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-assets/dist/js/app.min.js"></script>
+assets/dist/js/app.js"></script>
     <!-- Sparkline -->
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/plugins/sparkline/jquery.sparkline.min.js"></script>
@@ -73,7 +73,7 @@ assets/plugins/select2/select2.full.min.js"></script>
 
         }
     );
-    $("input#datepicker.tahunAwal").change(function(e){
+    $("input#datepicker.tahunAwal,input#datepicker.tahunAkhir").change(function(e){
 
             $('span#linkUrl').css("display","none");
 

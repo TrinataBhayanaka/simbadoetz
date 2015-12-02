@@ -7,7 +7,7 @@
     <script src="{$basedomain}assets/plugins/fastclick/fastclick.min.js"></script>
     <script src="{$basedomain}assets/plugins/angular/angular.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="{$basedomain}assets/dist/js/app.min.js"></script>
+    <script src="{$basedomain}assets/dist/js/app.js"></script>
     <!-- Sparkline -->
     <script src="{$basedomain}assets/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->
@@ -34,7 +34,7 @@
 
         }
     );
-    $("input#datepicker.tahunAwal").change(function(e){
+    $("input#datepicker.tahunAwal,input#datepicker.tahunAkhir").change(function(e){
 
             $('span#linkUrl').css("display","none");
 
