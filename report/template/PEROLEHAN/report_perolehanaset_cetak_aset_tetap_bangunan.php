@@ -56,6 +56,7 @@ $skpd_id);
 $paramGol = '03';
 $resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
 // pr($resultParamGol);
+$serviceJson=json_encode($resultParamGol);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
@@ -67,7 +68,10 @@ $html=$REPORT->retrieve_html_asetTetapGedung($resultParamGol,$gambar,$skpd_id,$t
 		 echo $html[$i];     
 	}
 exit;*/
-if($tipe!="2"){
+if($tipe=="3"){
+	echo $serviceJson;
+	exit;
+}elseif($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);

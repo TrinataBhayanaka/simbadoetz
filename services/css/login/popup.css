@@ -1,0 +1,52 @@
+.form .form-bg {
+	display: none; 
+	position: fixed; 
+	z-index:100; 
+	left: 0; 
+	top:0; 
+	width: 100%; 
+	height: 100%; 
+	background: transparent url('bg_black_transparent.png') repeat;
+}
+.form .form-wrapper {
+	display: none; 
+	position: relative; 
+	z-index: 101; 
+	padding: 10px;
+}
+
+.form .form-style-1 {
+	max-width: 620px; 
+	background: #FFFFFF; 
+	top: 40px; 
+	margin: auto; 
+	box-shadow: 0 0 10px orange; 
+	border-radius: 10px 10px;
+}
+.form .form-style-1 .popup-header {
+	font-size: 16px; 
+	font-weight: bold; 
+	text-align: center;
+}
+.form .form-style-1 .popup-content {
+	font-size: 14px; 
+	text-align: justify;
+}
+.form .form-style-1 .form-btn-close {
+	cursor: pointer; 
+	width: 77px; 
+	height: 25px; 
+	margin: 5px 0 0;
+	}
+.form .form-style-1 .form-btn-save {
+	cursor: pointer; 
+	width: 77px; 
+	height: 25px; 
+	margin: 5px 0 0;
+}
+.form .form-style-1 .form-btn-register {
+	cursor: pointer; 
+	width: 77px; 
+	height: 25px; 
+	margin: 5px 0 0;
+}

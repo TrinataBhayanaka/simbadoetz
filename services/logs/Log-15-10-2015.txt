@@ -1,0 +1,98 @@
+SELECT * FROM bpom_news_content WHERE  categoryid = 0 AND articleType = 0 AND n_status = 1  ORDER BY posted_date DESC   LIMIT 10
+SELECT * FROM bpom_news_content WHERE  categoryid = 0 AND articleType = 0 AND n_status = 1  ORDER BY posted_date DESC   LIMIT 10
+UPDATE social_member SET last_login = '2015-10-15 12:33:26' ,login_count = 52, data = 1 WHERE id = 10071  LIMIT 1
+UPDATE social_member SET last_login = '2015-10-15 12:34:07' ,login_count = 52, data = 1 WHERE id = 10071  LIMIT 1
+UPDATE social_member SET last_login = '2015-10-15 12:34:22' ,login_count = 53, data = 2 WHERE id = 10071  LIMIT 1
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_news_content WHERE  categoryid = 0 AND articleType = 1 AND n_status = 1  ORDER BY posted_date DESC   LIMIT 1
+SELECT * FROM bpom_news_content WHERE  categoryid = 0 AND articleType = 1 AND n_status = 1  ORDER BY posted_date DESC   LIMIT 1
+SELECT * FROM bpom_news_content WHERE  categoryid = 0 AND articleType = 1 AND n_status = 1  ORDER BY posted_date DESC   LIMIT 1
+SELECT * FROM bpom_news_content WHERE  categoryid = 0 AND articleType = 1 AND n_status = 1  ORDER BY posted_date DESC   LIMIT 1
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0402' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '04' ORDER BY nama_wilayah  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri_pabrik WHERE  n_status = 1 AND industriID = '1'  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT k.*, p.merek, i.noNPPBKC, i.namaJalan, ind.namaPimpinan, i.kecamatan,
+                    			ind.kodePos, ind.noFax, pk.title FROM bpom_pelaporan_kemasan AS k LEFT JOIN bpom_product AS p ON k.merek=p.id LEFT JOIN 
+                    			bpom_industri_pabrik AS i ON  k.pabrikID = i.id LEFT JOIN bpom_industri AS ind ON  k.industriID = ind.id LEFT JOIN
+                    			bpom_peringatan_kesehatan AS pk ON  k.tulisanPeringatan = pk.id WHERE  k.n_status != 0 AND k.industriID = '1'  
+SELECT * FROM bpom_industri_pabrik WHERE  n_status = 1 AND industriID = '1'  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '30' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '04' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM bpom_product WHERE  1   
+SELECT * FROM bpom_peringatan_kesehatan WHERE  1   
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT k.*, p.merek, i.noNPPBKC, i.namaJalan, ind.namaPimpinan,
+                    			ind.kodePos, ind.noFax, l.nama AS lab_nama, l.alamat AS lab_alamat, l.penanggungjawab AS lab_account FROM bpom_pelaporan_nikotin AS k LEFT JOIN bpom_product AS p ON k.merek=p.id LEFT JOIN 
+                    			bpom_industri_pabrik AS i ON  k.pabrikID = i.id LEFT JOIN bpom_industri AS ind ON  k.industriID = ind.id LEFT JOIN
+                    			bpom_lab AS l ON  k.labID = l.id WHERE  k.n_status != 0 AND k.industriID = '1'  
+SELECT * FROM bpom_lab WHERE  1   
+SELECT * FROM bpom_industri_pabrik WHERE  n_status = 1 AND industriID = '1'  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '30' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '04' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM bpom_product WHERE  1   
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri_pabrik WHERE  n_status = 1 AND industriID = '1'  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0402' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '04' ORDER BY nama_wilayah  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM bpom_industri_pabrik WHERE  n_status = 1 AND industriID = '1'  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0402' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '04' ORDER BY nama_wilayah  
+SELECT * FROM bpom_news_content WHERE  categoryid = 0 AND articleType = 0 AND n_status = 1  ORDER BY posted_date DESC   LIMIT 10
+UPDATE social_member SET last_login = '2015-10-15 14:30:03' ,login_count = 54, data = 3 WHERE id = 10071  LIMIT 1
+SELECT * FROM bpom_industri WHERE  1 AND id = '1'  
+SELECT k.*, p.merek, i.noNPPBKC, i.namaJalan, ind.namaPimpinan, i.kecamatan,
+                    			ind.kodePos, ind.noFax, pk.title FROM bpom_pelaporan_kemasan AS k LEFT JOIN bpom_product AS p ON k.merek=p.id LEFT JOIN 
+                    			bpom_industri_pabrik AS i ON  k.pabrikID = i.id LEFT JOIN bpom_industri AS ind ON  k.industriID = ind.id LEFT JOIN
+                    			bpom_peringatan_kesehatan AS pk ON  k.tulisanPeringatan = pk.id WHERE  k.n_status != 0 AND k.industriID = '1'  
+SELECT * FROM bpom_industri_pabrik WHERE  n_status = 1 AND industriID = '1'  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '3002' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '30' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1 AND kode_wilayah = '0401' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0 AND kode_wilayah = '04' ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE   1  ORDER BY nama_wilayah  
+SELECT * FROM tbl_wilayah WHERE  parent = 0  ORDER BY nama_wilayah  
+SELECT * FROM bpom_product WHERE  1   
+SELECT * FROM bpom_peringatan_kesehatan WHERE  1   
