@@ -21,7 +21,7 @@ $CONFIG['default']['hostname'] = "10.10.200.115";
 $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,4))=='https'?'https':'http';
 // $protocol = isset($_SERVER["https"]) ? 'https' : 'http';
 
-$CONFIG['default']['base_url'] = $protocol.'://localhost/simbadoetz/services/';
+$CONFIG['default']['base_url'] = $protocol.'://simbada.pekalongankota.go.id/simbada/services/';
 $CONFIG['default']['root_path'] = $_SERVER['DOCUMENT_ROOT'].'/services';
 
 $CONFIG['default']['upload_path'] = $_SERVER['DOCUMENT_ROOT'].'/services/public_assets/';
@@ -39,7 +39,7 @@ $CONFIG['default']['document'] = array('application/pdf');
 $CONFIG['default']['unzip'] = 'zipArchive'; //s_linux or zipArchive
 
 $basedomain = $CONFIG['default']['base_url'];
-$base_application = $protocol.'://localhost/simbadoetz/';
+$base_application = $protocol.'://simbada.pekalongankota.go.id/simbada/';
 $CONFIG['uri']['short'] = false;
 $CONFIG['uri']['friendly'] = true;
 $CONFIG['uri']['extension'] = ".html";
