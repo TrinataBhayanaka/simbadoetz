@@ -1,22 +1,22 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 10:24:58
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 05:55:54
          compiled from "app/view/module/mengolahDataKodeSatker.html" */ ?>
-<?php /*%%SmartyHeaderCode:2090438000565fe9d7c35634-56144819%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1352072878565fd8afd27965-59157906%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'da70107249917cd7ad9ef99ab582d41e468b9d3c' => 
     array (
       0 => 'app/view/module/mengolahDataKodeSatker.html',
-      1 => 1449138276,
+      1 => 1449122149,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2090438000565fe9d7c35634-56144819',
+  'nocache_hash' => '1352072878565fd8afd27965-59157906',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.15',
-  'unifunc' => 'content_565fe9d7c4f9d0_17734314',
+  'unifunc' => 'content_565fd8afdacf62_03350583',
   'variables' => 
   array (
     'basedomain' => 0,
@@ -25,7 +25,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_565fe9d7c4f9d0_17734314')) {function content_565fe9d7c4f9d0_17734314($_smarty_tpl) {?>
+<?php if ($_valid && !is_callable('content_565fd8afdacf62_03350583')) {function content_565fd8afdacf62_03350583($_smarty_tpl) {?>
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -75,7 +75,8 @@ home/mengolahData/?page=4">Kode Kelompok</a></li>
                               <b>Get Data Via Url:</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/satker/?term=04.02';
+$url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+home/satker/?term=04.02';
 
 $resultJsonEncode=file_get_contents($url);
 ?&gt;
@@ -91,7 +92,8 @@ $resultJsonEncode=file_get_contents($url);
                             <b>Fetch Data dengan Json_decode :</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/satker/?term=04.02';
+$url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+home/satker/?term=04.02';
 
 $resultJsonEncode=file_get_contents($url);
 
@@ -108,7 +110,8 @@ $resultJsonDecode=json_decode($resultJson);
                             <div id="tab_3" class="tab-pane">
                               <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/satker/?term=04.02';
+$url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+home/satker/?term=04.02';
 
 $resultJsonEncode=file_get_contents($url);
 

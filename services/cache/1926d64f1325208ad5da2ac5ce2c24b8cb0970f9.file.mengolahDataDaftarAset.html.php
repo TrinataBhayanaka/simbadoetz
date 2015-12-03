@@ -1,32 +1,33 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 12:38:48
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 05:52:38
          compiled from "app/view/module/mengolahDataDaftarAset.html" */ ?>
-<?php /*%%SmartyHeaderCode:1482634660565fe9d4e9b113-95465105%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:852476266565fd8a675be78-98471066%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1926d64f1325208ad5da2ac5ce2c24b8cb0970f9' => 
     array (
       0 => 'app/view/module/mengolahDataDaftarAset.html',
-      1 => 1449145254,
+      1 => 1449121485,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1482634660565fe9d4e9b113-95465105',
+  'nocache_hash' => '852476266565fd8a675be78-98471066',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.15',
-  'unifunc' => 'content_565fe9d4eb3557_35862800',
   'variables' => 
   array (
     'basedomain' => 0,
+    'baseApplication' => 0,
     'JsonDecode' => 0,
     'DataJsonDecode' => 0,
     'val' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.15',
+  'unifunc' => 'content_565fd8a67dc931_09767722',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_565fe9d4eb3557_35862800')) {function content_565fe9d4eb3557_35862800($_smarty_tpl) {?>
+<?php if ($_valid && !is_callable('content_565fd8a67dc931_09767722')) {function content_565fd8a67dc931_09767722($_smarty_tpl) {?>
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -76,7 +77,8 @@ home/mengolahData/?page=4">Kode Kelompok</a></li>
                               <b>Get Data Via Url:</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://simbada.pekalongankota.go.id/simbada/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
+$url='<?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
+report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 ?&gt;
@@ -92,7 +94,8 @@ $resultJsonEncode=file_get_contents($url);
                             <b>Fetch Data dengan Json_decode :</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://simbada.pekalongankota.go.id/simbada/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
+$url='<?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
+report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 
@@ -110,7 +113,8 @@ $resultJsonDecode=json_decode($resultJson);
                               
                               <pre style="font-weight: 600;">
 &lt;?php
-$url='http://simbada.pekalongankota.go.id/simbada/services/home/satker/?term=04.02';
+$url='<?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
+report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 
