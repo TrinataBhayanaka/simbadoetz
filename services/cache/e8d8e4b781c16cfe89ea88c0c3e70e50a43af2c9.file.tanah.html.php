@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 09:16:35
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 21:56:01
          compiled from "app/view/module/daftar_aset_tetap/tanah.html" */ ?>
 <?php /*%%SmartyHeaderCode:1837256483565c14154ed852-38175225%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'e8d8e4b781c16cfe89ea88c0c3e70e50a43af2c9' => 
     array (
       0 => 'app/view/module/daftar_aset_tetap/tanah.html',
-      1 => 1449047792,
+      1 => 1449093343,
       2 => 'file',
     ),
   ),
@@ -73,10 +73,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                   <label class="col-sm-3 control-label" for="inputPassword3">Kode Satker</label>
 
                   <div class="col-sm-8">
-                    <select  class="form-control" ng-model="satker">
-                        <option value="">--Pilih Satker--</option>
-                        <option value="04.02">Dinas</option>
-                    </select>
+                      <input id="kodesatker" name="kodesatker" type="text" ng-model="satker" class="col-md-12"/>
                   </div>
                 </div>
                

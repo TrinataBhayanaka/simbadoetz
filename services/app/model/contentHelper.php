@@ -8,7 +8,46 @@ class contentHelper extends Database {
 		$this->user = $session->get_session();
 	}
 
+	function mSatker($term,$sess,$free){
+		$term = $term;
+		$sess = $sess;
+		if($sess=="") $limit = "LIMIT 10"; else $limit="";
+		$cond = "KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL AND Kd_Ruang is NULL AND";
+		if($free == 0) $cond = "";
+		$sql = "SELECT * FROM satker WHERE {$cond} Kd_Ruang IS NULL AND kode LIKE '{$sess}%' AND (kode LIKE '{$term}%' OR NamaSatker LIKE '%{$term}%') ORDER BY Satker_ID ASC {$limit}";
+		// echo $sql;
+		$data = $this->fetch($sql,1);
+		
+		if(!$data){
 
+			$data[] = array("kode"=>"","NamaSatker"=>"No Results Found..");
+		
+		}	
+		// pr($data);
+        if ($data) return $data;
+        return false;
+	}
+	function mKelompok($term){
+		$term = $term;
+		$cond = "(Bidang is NOT NULL OR Bidang is NULL)  AND (Kelompok is NOT NULL OR Kelompok is NULL) AND 
+			 (Sub is NOT NULL OR Sub is NULL) AND (SubSub is NOT NULL OR SubSub is NULL)";
+
+		$sql = "SELECT * FROM kelompok WHERE {$cond} AND (Uraian LIKE '%{$term}%' OR Kode LIKE '{$term}%') ORDER BY Kelompok_ID ASC LIMIT 30";	
+	
+		
+		
+		$data = $this->fetch($sql,1);
+
+		if(!$data){
+
+			$data[] = array("kode"=>"","Uraian"=>"No Results Found..");
+		
+		}		
+
+        if ($data) return $data;
+        return false;
+	
+	}
 
 	function saveDataIndustri($data, $debug=false)
 	{

@@ -84,6 +84,8 @@
 
                   <div class="col-sm-8">
                     <input type="text" placeholder="Tahun Akhir" id="datepicker" ng-model="tahunAkhir" class="tahunAkhir form-control">
+
+                    <input type="text" ng-model="satker" id="satker" value="tes" style="display:none"/>
                   </div>
                 </div>
 
@@ -91,11 +93,14 @@
                   <label class="col-sm-3 control-label" for="inputPassword3">Kode Satker</label>
 
                   <div class="col-sm-8">
-                    <select  class="form-control" ng-model="satker">
-                        <option value="">--Pilih Satker--</option>
-                        <option value="04.02">Dinas</option>
-                    </select>
+                    
+                    <input id="kodesatker" name="kodesatker" type="text" ng-model="satker" class="col-md-12"/>
+
                   </div>
+                <!--   <li>
+    <span class="<?=$span?>">Kode Satker </span><?=$enter?>
+    <input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
+  </li> -->
                 </div>
                
               </div>
