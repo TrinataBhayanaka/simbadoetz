@@ -8714,19 +8714,23 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 								$html.="";
 							}		
 							
-							$split = explode("-", $row->noRegister);
-							if (count($split) == 1){
+							// $split = explode("-", $row->noRegister);
+							// if (count($split) == 1){
 								// $hasil = 1;
-								$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
-								$nilaiPerolehan = $row->NilaiPerolehan;
-							}else{
-								$awal = $split[0];
-								$akhir = end($split);
-								$hasil = (intval($akhir) - intval($awal)) + 1;
-								$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
-								$nilaiPerolehan = $nilaiPrlhn ; 
-								$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
-							}
+								// $nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
+								// $nilaiPerolehan = $row->NilaiPerolehan;
+							// }else{
+								// $awal = $split[0];
+								// $akhir = end($split);
+								// $hasil = (intval($akhir) - intval($awal)) + 1;
+								// $nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+								// $nilaiPerolehan = $nilaiPrlhn ; 
+								// $nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+							// }
+							// $perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+							// $noReg=$row->noRegister;
+							$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
+							$nilaiPerolehan = $row->Nilai;
 							$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
 							$noReg=$row->noRegister;
 																			
@@ -9945,7 +9949,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 						$html.="";
 					}
 					
-					$noReg=$row->noRegister;
+					/*$noReg=$row->noRegister;
 					$split = explode('-',$row->noRegister);
 					if (count($split) == 1){
 						$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
@@ -9957,7 +9961,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 						$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
 						$nilaiPerolehan= $nilaiPrlhn;
 						$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
-					}
+					}*/
 					
 					// $perolehan = number_format($row->NilaiPerolehan,2,",",".");
 					
@@ -9974,6 +9978,9 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 					$mix = $row->Ukuran."&nbsp;".$row->Material;
 					
 					$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+					$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
+					$nilaiPerolehan = $row->Nilai;
+					$noReg=$row->noRegister;
 						   $html.="
 								<tr>
 									<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -10981,7 +10988,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
                                                        
 												//uda dites footer disini
                                              if ($skpdeh != $row->kodeSatker && $no>1){
-
+												// $printperolehanTotal=  number_format($perolehanTotal);
                                              	$printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 												$tabletotal="
 													<tr>
@@ -11274,19 +11281,19 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 
                                              }
                                              //udah dites
-												$split = explode("-", $row->noRegister);
-												if (count($split) == 1){
+												// $split = explode("-", $row->noRegister);
+												// if (count($split) == 1){
 													// $hasil = 1;
-													$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
-													$nilaiPerolehan = $row->NilaiPerolehan;
-												}else{
-													$awal = $split[0];
-													$akhir = end($split);
-													$hasil = (intval($akhir) - intval($awal)) + 1;
-													$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
-													$nilaiPerolehan = $nilaiPrlhn ; 
-													$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
-												}
+													$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
+													$nilaiPerolehan = $row->Nilai;
+												// }else{
+													// $awal = $split[0];
+													// $akhir = end($split);
+													// $hasil = (intval($akhir) - intval($awal)) + 1;
+													// $nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+													// $nilaiPerolehan = $nilaiPrlhn ; 
+													// $nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+												// }
 												$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
 												// $noReg=$this->sortirNoReg($row->noRegister);
 												$noReg=$row->noRegister;
@@ -11318,7 +11325,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
                                              }
                                              //udah dicoba ga muncul
                                              
-                                             $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
+                                             $printperolehanTotal=  number_format($perolehanTotal,0,",",".");
+                                             // $printperolehanTotal=  number_format($perolehanTotal);
                                              $tabletotal="
 													<tr>
 														<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
@@ -13460,7 +13468,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													// $jumlahTotal = $jumlahTotal + $row->Kuantitas;
 													// $jumlah = number_format($row->Kuantitas);
 													
-													$noReg=$row->noRegister;
+													/*$noReg=$row->noRegister;
 													$split = explode('-',$row->noRegister);
 													if (count($split) == 1){
 														$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
@@ -13472,8 +13480,11 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
 														$nilaiPerolehan= $nilaiPrlhn;
 														$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
-													}
-													
+													}*/
+													$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
+													$nilaiPerolehan = $row->Nilai;
+													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+													$noReg=$row->noRegister;
 													// $perolehan = number_format($row->NilaiPerolehan,2,",",".");
 													
 													
@@ -13488,7 +13499,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													}
 													$mix = $row->Ukuran."&nbsp;".$row->Material;
 													
-													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+													// $perolehanTotal = $perolehanTotal + $nilaiPerolehan;
 													       $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
