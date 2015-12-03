@@ -1,0 +1,1 @@
+a:2:{i:0;a:6:{s:5:"Field";s:10:"Kd_Riwayat";s:4:"Type";s:19:"tinyint(3) unsigned";s:4:"Null";s:2:"NO";s:3:"Key";s:0:"";s:7:"Default";N;s:5:"Extra";s:0:"";}i:1;a:6:{s:5:"Field";s:10:"Nm_Riwayat";s:4:"Type";s:12:"varchar(100)";s:4:"Null";s:3:"YES";s:3:"Key";s:0:"";s:7:"Default";N;s:5:"Extra";s:0:"";}}

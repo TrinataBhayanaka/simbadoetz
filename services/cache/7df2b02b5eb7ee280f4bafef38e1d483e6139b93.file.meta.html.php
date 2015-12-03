@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 09:14:39
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 21:56:01
          compiled from "app/view/master_template/meta.html" */ ?>
 <?php /*%%SmartyHeaderCode:16317901315659a413a02cc3-19038442%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '7df2b02b5eb7ee280f4bafef38e1d483e6139b93' => 
     array (
       0 => 'app/view/master_template/meta.html',
-      1 => 1449047676,
+      1 => 1449093359,
       2 => 'file',
     ),
   ),
@@ -28,7 +28,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>API Services | Simbada</title>
+    <title>Services | Simbada</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -51,7 +51,7 @@ assets/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/datepicker/datepicker.css">
     <link href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-assets/plugins/select2/select2.min.css" rel="stylesheet" />
+assets/plugins/select2/select2simbada.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

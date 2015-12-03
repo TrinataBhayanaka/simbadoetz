@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 16:21:31
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 22:44:08
          compiled from "app/view/module/rekapitulasibarangkeneraca.html" */ ?>
 <?php /*%%SmartyHeaderCode:434829966565ea00f0987e3-57554825%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c74a1ccb0dcfb963dfa98a972ce5eebead3fa3b6' => 
     array (
       0 => 'app/view/module/rekapitulasibarangkeneraca.html',
-      1 => 1449045040,
+      1 => 1449093278,
       2 => 'file',
     ),
   ),
@@ -73,10 +73,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                   <label class="col-sm-3 control-label" for="inputPassword3">Kode Satker</label>
 
                   <div class="col-sm-8">
-                    <select  class="form-control" ng-model="satker">
-                        <option value="">--Pilih Satker--</option>
-                        <option value="04.02">Dinas</option>
-                    </select>
+                      <input id="kodesatker" name="kodesatker" type="text" ng-model="satker" class="col-md-12"/>
                   </div>
                 </div>
                
@@ -87,10 +84,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
               </div>
 
               <div class="box-footer">
-              <span id="linkUrl" style="display:none" >
+              <span id="linkUrl" style="display:none" ><i>
                 <a href="<?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
 report/template/PEROLEHAN/report_perolehanaset_cetak_rekapneraca.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3" target="_blank"><?php echo $_smarty_tpl->tpl_vars['baseApplication']->value;?>
-report/template/PEROLEHAN/report_perolehanaset_cetak_rekapneraca.php?menuID=&mode=&tab=&skpd_id={{satker}}&tglawalperolehan={{tahunAwal}}&tglakhirperolehan={{tahunAkhir}}&tipe_file=3</a>
+report/template/PEROLEHAN/report_perolehanaset_cetak_rekapneraca.php?menuID=&mode=&tab=&skpd_id=<strong>{{satker}}</strong>&tglawalperolehan=<strong>{{tahunAwal}}</strong>&tglakhirperolehan=<strong>{{tahunAkhir}}</strong>&tipe_file=<strong>3</strong></a></i>
                 </span>
               </div>
               <!-- /.box-footer -->

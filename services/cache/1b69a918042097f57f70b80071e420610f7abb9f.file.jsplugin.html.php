@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 11:04:02
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-02 23:13:32
          compiled from "app/view/master_template/jsplugin.html" */ ?>
 <?php /*%%SmartyHeaderCode:13748279565659a413a6e1a6-15105368%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1b69a918042097f57f70b80071e420610f7abb9f' => 
     array (
       0 => 'app/view/master_template/jsplugin.html',
-      1 => 1449054194,
+      1 => 1449097958,
       2 => 'file',
     ),
   ),
@@ -25,8 +25,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5659a413a763b0_54196069')) {function content_5659a413a763b0_54196069($_smarty_tpl) {?>
     <!-- jQuery 2.1.4 -->
-    <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script type="text/javascript" language="javascript" src="http://localhost/simbadoetz/js/jquery_simbada.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/bootstrap/js/bootstrap.min.js"></script>
@@ -53,18 +52,81 @@ assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/plugins/chartjs/Chart.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-assets/dist/js/pages/dashboard2.js"></script>
+    <!-- // <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+assets/dist/js/pages/dashboard2.js"></script> -->
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/dist/js/demo.js"></script>
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/datepicker/bootstrap-datepicker.js"></script>
 
-<script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-assets/plugins/select2/select2.full.min.js"></script>
+        <script type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+assets/plugins/select2/select2simbada.js"></script>
 <script type="text/javascript">
-  $('select').select2();
+
+var base_url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+';
+
+  
+$(document).ready(function() {
+  $("#kodesatker").select2({
+                    placeholder: "Pilih Unit Pengelola Barang",
+                    dropdownAutoWidth: 'true',
+                    minimumInputLength: 2,
+                    ajax: {
+                        url: base_url+"home/satker/",
+                        dataType: 'json',
+                        type: "GET",
+                        quietMillis: 50,
+                        data: function (term) {
+                            return {
+                                // free: 1,
+                                // sess: '',
+                                term: term
+                            };
+                        },
+                        results: function (datas) {
+                            return {
+                                results: $.map(datas, function (item) {
+                                    return {
+                                        text: item.kode+" "+item.NamaSatker,
+                                        id: item.kode
+                                    }   
+                                })
+                            };
+                        }
+                    }
+                });
+    $("#kodekelompok").select2({
+                    placeholder: "Pilih Jenis Aset",
+                    dropdownAutoWidth: 'true',
+                    minimumInputLength: 2,
+                    ajax: {
+                        url: base_url+"home/kelompok/",
+                        dataType: 'json',
+                        type: "GET",
+                        quietMillis: 50,
+                        data: function (term) {
+                            return {
+                                // free: 1,
+                                // sess: '',
+                                term: term
+                            };
+                        },
+                        results: function (datas) {
+                            return {
+                                results: $.map(datas, function (item) {
+                                    return {
+                                        text: item.Kode+" "+item.Uraian,
+                                        id: item.Kode
+                                    }   
+                                })
+                            };
+                        }
+                    }
+                });
+} );
+
 </script>
     <script type="text/javascript">
       $("button#tombol").click(function(e){
@@ -86,8 +148,6 @@ assets/plugins/select2/select2.full.min.js"></script>
       </script>
 <script type="text/javascript">
 
-var base_url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-';
 
  // $("#click.page").click(function(e){
 
