@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 09:07:40
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 10:24:58
          compiled from "app/view/module/mengolahDataKodeSatker.html" */ ?>
 <?php /*%%SmartyHeaderCode:2090438000565fe9d7c35634-56144819%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'da70107249917cd7ad9ef99ab582d41e468b9d3c' => 
     array (
       0 => 'app/view/module/mengolahDataKodeSatker.html',
-      1 => 1449133657,
+      1 => 1449138276,
       2 => 'file',
     ),
   ),
@@ -50,14 +50,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 <ul class="nav nav-tabs">
                   <li><a href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 home/mengolahData/?page=1">Penjelasan</a></li>
-                  <!-- <li><a href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-home/mengolahData/?page=2">Daftar Aset Tetap</a></li> -->
+                  <li><a href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+home/mengolahData/?page=2">Daftar Aset Tetap</a></li>
                   <li class="active"><a href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 home/mengolahData/?page=3">Kode Satker</a></li>
                   <li><a href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 home/mengolahData/?page=4">Kode Kelompok</a></li>
                  
-                  <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
                   <div id="tab_1" class="tab-pane active">
@@ -70,7 +69,6 @@ home/mengolahData/?page=4">Kode Kelompok</a></li>
                             <li><a data-toggle="tab" href="#tab_2">Fetch Data</a></li>
                             <li><a data-toggle="tab" href="#tab_3">View Data</a></li>
                             
-                            <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                           </ul>
                           <div class="tab-content">
                             <div id="tab_1" class="tab-pane active">

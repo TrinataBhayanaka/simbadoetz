@@ -22,11 +22,10 @@
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li><a href="{$basedomain}home/mengolahData/?page=1">Penjelasan</a></li>
-                  <!-- <li><a href="{$basedomain}home/mengolahData/?page=2">Daftar Aset Tetap</a></li> -->
+                  <li><a href="{$basedomain}home/mengolahData/?page=2">Daftar Aset Tetap</a></li>
                   <li><a href="{$basedomain}home/mengolahData/?page=3">Kode Satker</a></li>
                   <li class="active"><a href="{$basedomain}home/mengolahData/?page=4">Kode Kelompok</a></li>
                  
-                  <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
                   <div id="tab_11" class="tab-pane active">
@@ -39,7 +38,6 @@
                             <li><a data-toggle="tab" href="#tab_21">Fetch Data</a></li>
                             <li><a data-toggle="tab" href="#tab_31">View Data</a></li>
                             
-                            <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                           </ul>
                           <div class="tab-content">
                             <div id="tab_11" class="tab-pane active">
@@ -78,7 +76,7 @@ $resultJsonDecode=json_decode($resultJson);
                             <div id="tab_31" class="tab-pane">
                               <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/satker/?term=04.02';
+$url='http://localhost/simbadoetz/services/home/kelompok/?term=04.02';
 
 $resultJsonEncode=file_get_contents($url);
 

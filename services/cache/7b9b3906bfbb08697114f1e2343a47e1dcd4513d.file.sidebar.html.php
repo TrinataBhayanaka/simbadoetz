@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 01:11:40
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 10:26:48
          compiled from "app/view/master_template/sidebar.html" */ ?>
 <?php /*%%SmartyHeaderCode:17497404015659a413a40509-10169281%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '7b9b3906bfbb08697114f1e2343a47e1dcd4513d' => 
     array (
       0 => 'app/view/master_template/sidebar.html',
-      1 => 1449105096,
+      1 => 1449138405,
       2 => 'file',
     ),
   ),
@@ -34,7 +34,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <li class="header">MAIN NAVIGATION</li>
             <li class="active treeview">
               <a href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
-" id="clickpage">
+" id="clickpage" class="activ">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
               </a>
