@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 10:45:21
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 12:38:48
          compiled from "app/view/module/mengolahDataDaftarAset.html" */ ?>
 <?php /*%%SmartyHeaderCode:1482634660565fe9d4e9b113-95465105%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1926d64f1325208ad5da2ac5ce2c24b8cb0970f9' => 
     array (
       0 => 'app/view/module/mengolahDataDaftarAset.html',
-      1 => 1449138292,
+      1 => 1449145254,
       2 => 'file',
     ),
   ),
@@ -76,7 +76,7 @@ home/mengolahData/?page=4">Kode Kelompok</a></li>
                               <b>Get Data Via Url:</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
+$url='http://simbada.pekalongankota.go.id/simbada/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 ?&gt;
@@ -92,7 +92,7 @@ $resultJsonEncode=file_get_contents($url);
                             <b>Fetch Data dengan Json_decode :</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
+$url='http://simbada.pekalongankota.go.id/simbada/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 
@@ -110,7 +110,7 @@ $resultJsonDecode=json_decode($resultJson);
                               
                               <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/satker/?term=04.02';
+$url='http://simbada.pekalongankota.go.id/simbada/services/home/satker/?term=04.02';
 
 $resultJsonEncode=file_get_contents($url);
 

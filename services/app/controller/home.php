@@ -124,6 +124,10 @@ class home extends Controller {
     exit;
   }
   function mengolahData(){
+    
+    global $CONFIG, $basedomain, $base_application;
+// pr($base_application);
+    $this->view->assign('baseApplication',$base_application);
     if($_GET['page']=='1'){
 
       return $this->loadView('module/mengolahData');
