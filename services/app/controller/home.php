@@ -91,7 +91,7 @@ class home extends Controller {
     return $this->loadView('home');
   }
   function tesolah(){
-      $url="http://localhost/simbadoetz/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id=04.02&tglawalperolehan=&tglakhirperolehan=2014-12-31&tipe_file=3";
+      $url="http://simbada.pekalongankota.go.id/simbada/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id=04.02&tglawalperolehan=&tglakhirperolehan=2014-12-31&tipe_file=3";
       $resultJson=file_get_contents($url);
       $jsonEncode=json_decode($resultJson);
       // $jsonEncode=$this->objectToArray($jsonEncode);
@@ -129,7 +129,7 @@ class home extends Controller {
       return $this->loadView('module/mengolahData');
 
     }elseif($_GET['page']=='2'){
-      $url="http://localhost/simbadoetz/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id=04.02.01&tglawalperolehan=&tglakhirperolehan=2014-12-31&tipe_file=3";
+      $url="http://simbada.pekalongankota.go.id/simbada/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&mode=&tab=&skpd_id=04.02.01&tglawalperolehan=&tglakhirperolehan=2014-12-31&tipe_file=3";
       $resultJsonEncode=file_get_contents($url);
 
       $resultJsonDecode=json_decode($resultJsonEncode);
@@ -144,7 +144,7 @@ class home extends Controller {
 
     }elseif($_GET['page']=='3'){
 
-      $url="http://localhost/simbadoetz/services/home/satker/?term=04.02";
+      $url="http://simbada.pekalongankota.go.id/simbada/services/home/satker/?term=04.02";
       $resultJsonEncode=file_get_contents($url);
 
       $resultJsonDecode=json_decode($resultJsonEncode);
@@ -154,7 +154,7 @@ class home extends Controller {
       return $this->loadView('module/mengolahDataKodeSatker');
 
     }elseif($_GET['page']=='4'){
-      $url="http://localhost/simbadoetz/services/home/kelompok/?term=02.02";
+      $url="http://simbada.pekalongankota.go.id/simbada/services/home/kelompok/?term=02.02";
       $resultJsonEncode=file_get_contents($url);
 
       $resultJsonDecode=json_decode($resultJsonEncode);
