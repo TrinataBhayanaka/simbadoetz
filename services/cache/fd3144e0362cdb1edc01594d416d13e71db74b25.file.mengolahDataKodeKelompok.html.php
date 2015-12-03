@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 12:39:16
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 12:57:30
          compiled from "app/view/module/mengolahDataKodeKelompok.html" */ ?>
 <?php /*%%SmartyHeaderCode:461823915565fe9d9f305f3-87775556%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'fd3144e0362cdb1edc01594d416d13e71db74b25' => 
     array (
       0 => 'app/view/module/mengolahDataKodeKelompok.html',
-      1 => 1449145247,
+      1 => 1449147447,
       2 => 'file',
     ),
   ),
@@ -59,7 +59,7 @@ home/mengolahData/?page=4">Kode Kelompok</a></li>
                  
                 </ul>
                 <div class="tab-content">
-                  <div id="tab_11" class="tab-pane active">
+                  <div id="tab_112" class="tab-pane active">
                     <div class="row">
                       <div class="col-md-12">
                         <!-- Custom Tabs -->
@@ -75,7 +75,8 @@ home/mengolahData/?page=4">Kode Kelompok</a></li>
                               <b>Get Data Via Url:</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://simbada.pekalongankota.go.id/simbada/services/home/kelompok/?term=02.02';
+$url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+home/kelompok/?term=02.02';
 
 $resultJsonEncode=file_get_contents($url);
 ?&gt;
@@ -91,7 +92,8 @@ $resultJsonEncode=file_get_contents($url);
                             <b>Fetch Data dengan Json_decode :</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://simbada.pekalongankota.go.id/simbada/services/home/kelompok/?term=02.02';
+$url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+home/kelompok/?term=02.02';
 
 $resultJsonEncode=file_get_contents($url);
 
@@ -108,7 +110,8 @@ $resultJsonDecode=json_decode($resultJson);
                             <div id="tab_31" class="tab-pane">
                               <pre style="font-weight: 600;">
 &lt;?php
-$url='http://simbada.pekalongankota.go.id/simbada/home/kelompok/?term=04.02';
+$url='<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+home/kelompok/?term=04.02';
 
 $resultJsonEncode=file_get_contents($url);
 
