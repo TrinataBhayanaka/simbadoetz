@@ -8654,6 +8654,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 									<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Pembelian</td>
 									<td style=\"font-weight: bold; text-align: center; width: 360px;\" colspan=\"5\" rowspan=\"1\">Nomor</td>
 									<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Asal Usul</td>
+									<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Jumlah<br>Barang</td>
 									<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Nilai<br>Perolehan (ribuan Rp)</td>
 									<td style=\"font-weight: bold; text-align: center; width: 70px;\" colspan=\"1\" rowspan=\"2\">Ket</td>
 								</tr>
@@ -8681,6 +8682,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 									<td style=\"font-weight: bold; text-align: center;\">14</td>
 									<td style=\"font-weight: bold; text-align: center;\">15</td>
 									<td style=\"font-weight: bold; text-align: center;\">16</td>
+									<td style=\"font-weight: bold; text-align: center;\">17</td>
 							   </tr>
 							  </thead>";
 						}
@@ -8699,7 +8701,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 								$NamaSatker = $this->get_NamaSatker($getLastSatker);
 								$no = 1;	
 								$html.= "<tr>
-										<td colspan =\"16\" style=\"text-align: left; font-weight: bold;\">$NamaSatker </td>
+										<td colspan =\"17\" style=\"text-align: left; font-weight: bold;\">$NamaSatker </td>
 									</tr>";
 							}elseif($compLastSatker != $getLastSatker){
 								// echo "<br>";
@@ -8707,7 +8709,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 								$NamaSatker = $this->get_NamaSatker($getLastSatker);
 								$no = 1;	
 								$html.= "<tr>
-										<td colspan =\"16\" style=\"text-align: left; font-weight: bold;\">$NamaSatker </td>
+										<td colspan =\"17\" style=\"text-align: left; font-weight: bold;\">$NamaSatker </td>
 									</tr>";
 							}else{
 							
@@ -8733,7 +8735,9 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 							$nilaiPerolehan = $row->Nilai;
 							$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
 							$noReg=$row->noRegister;
-																			
+							$data = $row->noReg;
+							$ex = explode(',',$data);
+							$hit = count($ex);												
 										$html.="
 											<tr align=\"center\">
 												<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -8750,6 +8754,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 												<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
 												<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
 												<td style=\"width: 69; text-align: center;\">$row->AsalUsul</td>
+												<td style=\"width: 81px; text-align: center;\">$hit</td>
 												<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
 												<td style=\"width: 69px;font-weight: \">$row->Info</td>
 											</tr>";
@@ -8761,7 +8766,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 						 $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 						 $html.="
 								<tr>
-									<td style=\"text-align: center;\" colspan=\"14\">Total Harga</td>
+									<td style=\"text-align: center;\" colspan=\"15\">Total Harga</td>
 									<td style=\"text-align: right;\">$printperolehanTotal</td>
 									<td>&nbsp;</td>
 								</tr>
@@ -9880,8 +9885,9 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																												  Pembelian</td>
 										<td colspan=\"1\" rowspan=\"2\" style=\"width:100px; font-weight: bold; text-align: center;\">Asal Usul<br>
 																												  Cara Perolehan</td>
+										<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Jumlah<br>Barang</td>
 										<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Nilai<br>Perolehan<br>
-																												 (Ribuan Rp)</td>
+																												 (Ribuan Rp)</td>																		 
 										
 										<td colspan=\"1\" rowspan=\"2\" style=\"width: 60px;font-weight: bold; text-align: center;\">Ket</td>
 									</tr>
@@ -9914,6 +9920,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 										<td style=\"text-align: center; font-weight: bold;\">14</td>
 										<td style=\"text-align: center; font-weight: bold;\">15</td>
 										<td style=\"text-align: center; font-weight: bold;\">16</td>
+										<td style=\"text-align: center; font-weight: bold;\">17</td>
 									</tr>
 								  </thead>";
 																  
@@ -9977,10 +9984,14 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 					}
 					$mix = $row->Ukuran."&nbsp;".$row->Material;
 					
-					$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
-					$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
 					$nilaiPerolehan = $row->Nilai;
+					$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
+					$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+					
 					$noReg=$row->noRegister;
+					$data = $row->noReg;
+					$ex = explode(',',$data);
+					$hit = count($ex);
 						   $html.="
 								<tr>
 									<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -9997,6 +10008,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 									<td style=\"width: 51px; text-align: center;\">$hasil</td>
 									<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
 									<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+									<td style=\"width: 80px; text-align: center;\">$hit</td>
 									<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
 									<td style=\"width: 60px;\">$row->Info</td>
 								</tr>";
@@ -10008,7 +10020,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 					
 					$html.="
 							<tr>
-								<td style=\"text-align: center;\" colspan=\"14\">Total Harga</td>
+								<td style=\"text-align: center;\" colspan=\"15\">Total Harga</td>
 								<td style=\"text-align: right;\">$printperolehanTotal</td>
 								<td >&nbsp;</td>
 							</tr></table>";
@@ -10954,6 +10966,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Pembelian</td>
 														<td style=\"font-weight: bold; text-align: center; width: 360px;\" colspan=\"5\" rowspan=\"1\">Nomor</td>
 														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Asal Usul</td>
+														<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Jumlah<br>Barang/td>
 														<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Nilai<br>Perolehan (ribuan Rp)</td>
 														<td style=\"font-weight: bold; text-align: center; width: 70px;\" colspan=\"1\" rowspan=\"2\">Ket</td>
 													</tr>
@@ -10981,6 +10994,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														<td style=\"font-weight: bold; text-align: center;\">14</td>
 														<td style=\"font-weight: bold; text-align: center;\">15</td>
 														<td style=\"font-weight: bold; text-align: center;\">16</td>
+														<td style=\"font-weight: bold; text-align: center;\">17</td>
 												   </tr>
 												  </thead>";
                                               
@@ -10992,7 +11006,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
                                              	$printperolehanTotal=  number_format($perolehanTotal,2,",",".");
 												$tabletotal="
 													<tr>
-														<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+														<td style=\"text-align: center;\" colspan=\"15\">Jumlah Harga</td>
 														<td style=\"text-align: right;\">$printperolehanTotal</td>
 														<td></td>
 													</tr>
@@ -11000,7 +11014,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 
 										   $foot="<table border=\"0\">
 														<tr>
-															<td colspan=\"13\">&nbsp;</td>
+															<td colspan=\"14\">&nbsp;</td>
 														</tr>
 													</table>";  
 										     	
@@ -11246,6 +11260,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Pembelian</td>
 														<td style=\"font-weight: bold; text-align: center; width: 360px;\" colspan=\"5\" rowspan=\"1\">Nomor</td>
 														<td style=\"font-weight: bold; text-align: center;\" colspan=\"1\" rowspan=\"2\">Asal Usul</td>
+														<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Jumlah<br>Barang</td
 														<td style=\"font-weight: bold; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"2\">Nilai<br>Perolehan (ribuan Rp)</td>
 														<td style=\"font-weight: bold; text-align: center; width: 70px;\" colspan=\"1\" rowspan=\"2\">Ket</td>
 													</tr>
@@ -11273,6 +11288,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														<td style=\"font-weight: bold; text-align: center;\">14</td>
 														<td style=\"font-weight: bold; text-align: center;\">15</td>
 														<td style=\"font-weight: bold; text-align: center;\">16</td>
+														<td style=\"font-weight: bold; text-align: center;\">17</td>
 												   </tr>
 												  </thead>";
                                                  //udah dites disini footer 
@@ -11280,6 +11296,9 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
                                                 $status_print++;
 
                                              }
+												$data = $row->noReg;
+												$ex = explode(',',$data);
+												$hit = count($ex);
                                              //udah dites
 												// $split = explode("-", $row->noRegister);
 												// if (count($split) == 1){
@@ -11316,6 +11335,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
 																	<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
 																	<td style=\"width: 69; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 81px; text-align: center;\">$hit</td>
 																	<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
 																	<td style=\"width: 69px;font-weight: \">$row->Info</td>
 																</tr>";
@@ -11329,7 +11349,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
                                              // $printperolehanTotal=  number_format($perolehanTotal);
                                              $tabletotal="
 													<tr>
-														<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+														<td style=\"text-align: center;\" colspan=\"15\">Jumlah Harga</td>
 														<td style=\"text-align: right;\">$printperolehanTotal</td>
 														<td></td>
 													</tr>
@@ -11337,7 +11357,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 											 
 											 $foot="<table border=\"0\">
 														<tr>
-															<td colspan=\"13\">&nbsp;</td>
+															<td colspan=\"14\">&nbsp;</td>
 														</tr>
 													</table>"; 
 													
@@ -13101,9 +13121,9 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																																	  Pembelian</td>
 															<td colspan=\"1\" rowspan=\"2\" style=\"width:100px; font-weight: bold; text-align: center;\">Asal Usul<br>
 																																	  Cara Perolehan</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Jumlah<br>Barang</td>
 															<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Nilai<br>Perolehan<br>
 																																	 (Ribuan Rp)</td>
-															
 															<td colspan=\"1\" rowspan=\"2\" style=\"width: 60px;font-weight: bold; text-align: center;\">Ket</td>
 														</tr>
 														<tr>
@@ -13136,6 +13156,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 															<td style=\"text-align: center; font-weight: bold;\">15</td>
 															
 															<td style=\"text-align: center; font-weight: bold;\">16</td>
+															<td style=\"text-align: center; font-weight: bold;\">17</td>
 														</tr>
 													  </thead>";
 																					  
@@ -13149,7 +13170,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 												
 														$tabletotal="
 															<tr>
-																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+																<td style=\"text-align: center;\" colspan=\"15\">Jumlah Harga</td>
 																<td style=\"text-align: right;\">$printperolehanTotal</td>
 																<td ></td>
 															</tr></table>";	
@@ -13158,7 +13179,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													//echo $printluasLantai;
 											    $foot="<table border=\"0\">
 														<tr>
-															<td colspan=\"15\">&nbsp;</td>
+															<td colspan=\"16\">&nbsp;</td>
 														</tr>
 													</table>";  
 													
@@ -13418,6 +13439,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																																	  Pembelian</td>
 															<td colspan=\"1\" rowspan=\"2\" style=\"width:100px; font-weight: bold; text-align: center;\">Asal Usul<br>
 																																	  Cara Perolehan</td>
+															<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Jumlah<br>Barang</td>
 															<td colspan=\"1\" rowspan=\"2\" style=\"width:80px;font-weight: bold; text-align: center;\">Nilai<br>Perolehan<br>
 																																	 (Ribuan Rp)</td>
 															
@@ -13453,6 +13475,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 															<td style=\"text-align: center; font-weight: bold;\">15</td>
 															
 															<td style=\"text-align: center; font-weight: bold;\">16</td>
+															<td style=\"text-align: center; font-weight: bold;\">17</td>
 														</tr>
 													  </thead>";
                                                  //udah dites disini footer 
@@ -13481,11 +13504,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														$nilaiPerolehan= $nilaiPrlhn;
 														$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
 													}*/
-													$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
-													$nilaiPerolehan = $row->Nilai;
-													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
-													$noReg=$row->noRegister;
-													// $perolehan = number_format($row->NilaiPerolehan,2,",",".");
+													
 													
 													
 													$ex = explode('.',$row->Kode);
@@ -13499,6 +13518,15 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													}
 													$mix = $row->Ukuran."&nbsp;".$row->Material;
 													
+													
+													$nilaiPerolehan = $row->Nilai;
+													$nilaiPrlhnFix = number_format($row->Nilai,2,",",".");
+													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+
+													$noReg=$row->noRegister;
+													$data = $row->noReg;
+													$ex = explode(',',$data);
+													$hit = count($ex);
 													// $perolehanTotal = $perolehanTotal + $nilaiPerolehan;
 													       $body.="
 																<tr>
@@ -13516,8 +13544,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 51px; text-align: center;\">$hasil</td>
 																	<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
 																	<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 80px; text-align: center;\">$hit</td>
 																	<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
-																	
 																	<td style=\"width: 60px;\">$row->Info</td>
 																</tr>";
                                                             
@@ -13530,7 +13558,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 												
 													$tabletotal="
 															<tr>
-																<td style=\"text-align: center;\" colspan=\"14\">Jumlah Harga</td>
+																<td style=\"text-align: center;\" colspan=\"15\">Jumlah Harga</td>
 																<td style=\"text-align: right;\">$printperolehanTotal</td>
 																<td ></td>
 															</tr></table>";

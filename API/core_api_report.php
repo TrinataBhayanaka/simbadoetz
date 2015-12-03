@@ -1042,7 +1042,6 @@ class core_api_report extends DB {
 			
 			$rekap_barang_b_condition ="select SUM(M.NilaiPerolehan) as Nilai, 
 													GROUP_CONCAT(M.noRegister) as noReg,
-													M.kodeSatker,
 													M.kodeSatker,M.kodeKelompok,M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
@@ -1099,7 +1098,8 @@ class core_api_report extends DB {
 				
 			
 			$rekap_barang_e_condition="select SUM(AL.NilaiPerolehan) as Nilai, 
-											GROUP_CONCAT(AL.noRegister) as noReg, 
+											GROUP_CONCAT(AL.noRegister) as noReg,
+											AL.kodeSatker,											
 											AL.kodeKelompok,AL.AsalUsul,
 											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
@@ -7095,9 +7095,9 @@ class core_api_report extends DB {
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
-					/*echo "query_$i =".$AllTableTemp[$i];
+					echo "query_$i =".$AllTableTemp[$i];
 					echo "<br>";
-					echo "<br><br/>";*/
+					echo "<br><br/>";
 					// exit;
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 					
