@@ -98,7 +98,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTaun = NULL,
 											 NilaiBuku = NULL,
-											 UmurEkonomis = NULL
+											 UmurEkonomis = NULL,
+                                                                     TahunPenyusutan=NULL
 							WHERE Aset_ID = '$Aset_ID'";
 			$ExeQueryAset = $DBVAR->query($QueryAset);
 			//untuk log txt
@@ -114,7 +115,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
-											 UmurEkonomis = NULL
+											 UmurEkonomis = NULL,
+                                                                   TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 				
@@ -123,7 +125,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
-											 UmurEkonomis = NULL
+											 UmurEkonomis = NULL,
+                                                                   TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 				
@@ -134,7 +137,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
-											 UmurEkonomis = NULL
+											 UmurEkonomis = NULL,
+                                                                   TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 
@@ -143,7 +147,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
-											 UmurEkonomis = NULL
+											 UmurEkonomis = NULL,
+                                                                   TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 
@@ -155,7 +160,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
-											 UmurEkonomis = NULL
+											 UmurEkonomis = NULL,
+                                                                   TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID'";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 
@@ -165,7 +171,8 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
-											 UmurEkonomis = NULL
+											 UmurEkonomis = NULL,
+                                                                   TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 
@@ -176,7 +183,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 			
 			//insert log
 			// $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
-			$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}'";
+			$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50') and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}'";
 			$exeQueryLog = $DBVAR->query($QueryLog);
 		}elseif($tahun >= 2015){
 				$QueryLogSelect = "select PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,MasaManfaat,UmurEkonomis from $tableLog where Aset_ID = {$Aset_ID} order by log_id desc limit 1";
