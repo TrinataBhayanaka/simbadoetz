@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 09:08:28
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 10:45:15
          compiled from "app/view/module/mengolahData.html" */ ?>
 <?php /*%%SmartyHeaderCode:316997657565f9761f2d3b2-93954321%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'f6eff7872760e8f6b0accb4ea2ab0c18954f92a7' => 
     array (
       0 => 'app/view/module/mengolahData.html',
-      1 => 1449133704,
+      1 => 1449138297,
       2 => 'file',
     ),
   ),
@@ -55,7 +55,6 @@ home/mengolahData/?page=3">Kode Satker</a></li>
                   <li><a href="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 home/mengolahData/?page=4">Kode Kelompok</a></li>
                  
-                  <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
                   <div id="tab_1" class="tab-pane active">

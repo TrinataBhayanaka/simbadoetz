@@ -87,6 +87,11 @@
     background: #E67040;
     border-left-color: #3c8dbc;
 }
+.skin-blue .sidebar-menu>li:hover>a.activ ,.skin-blue .sidebar-menu>li.active>a.activ {
+    color: #fff;
+    background: #E67040;
+    border-left-color: #3c8dbc;
+}
 .skin-blue .sidebar-menu>li>.treeview-menu {
     margin: 0 1px;
     background: #2c3b41;
