@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 03:44:53
+<?php /* Smarty version Smarty-3.1.15, created on 2015-12-03 14:53:40
          compiled from "app/view/master_template/jsplugin.html" */ ?>
 <?php /*%%SmartyHeaderCode:13748279565659a413a6e1a6-15105368%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1b69a918042097f57f70b80071e420610f7abb9f' => 
     array (
       0 => 'app/view/master_template/jsplugin.html',
-      1 => 1449113583,
+      1 => 1449154414,
       2 => 'file',
     ),
   ),
@@ -25,7 +25,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5659a413a763b0_54196069')) {function content_5659a413a763b0_54196069($_smarty_tpl) {?>
     <!-- jQuery 2.1.4 -->
-    <script type="text/javascript" language="javascript" src="http://localhost/simbadoetz/js/jquery_simbada.js"></script>
+    <script type="text/javascript" language="javascript" src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
+assets/plugins/jquery_simbada.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="<?php echo $_smarty_tpl->tpl_vars['basedomain']->value;?>
 assets/bootstrap/js/bootstrap.min.js"></script>

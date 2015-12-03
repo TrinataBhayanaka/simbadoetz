@@ -28,6 +28,7 @@ class home extends Controller {
 	function index(){
 
 		global $CONFIG, $basedomain, $base_application;
+  
 // pr($base_application);
     $this->view->assign('baseApplication',$base_application);
 
@@ -124,7 +125,7 @@ class home extends Controller {
     exit;
   }
   function mengolahData(){
-    
+
     global $CONFIG, $basedomain, $base_application;
 // pr($base_application);
     $this->view->assign('baseApplication',$base_application);
