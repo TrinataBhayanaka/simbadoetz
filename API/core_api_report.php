@@ -794,35 +794,13 @@ class core_api_report extends DB {
 	
 					$query_satker_fix = $paramSatker;
 					
-					// $query_satker_fix = " kodeSatker LIKE '$skpd_id%'";
-					
-					$IDkelompok = "$kelompok";
-					$query_change_satker="SELECT Kode FROM Kelompok as K
-											WHERE Kelompok_ID = $IDkelompok";
-					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
-					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
-						$dataRow2Kel[]=$proses_kode_kel['Kode'];
-					}
-					if($dataRow2Kel!=""){
-						$query_kelompok_fix =" kodeKelompok = '".$dataRow2Kel[0]."'";
-					}
+					$query_kelompok_fix =" kodeKelompok like '".$kelompok."%'";
 					$queryPemilik = "kodeLokasi like '$pemilik%'";
 				}
 				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id =="" && $kelompok != ""){
 					$query_tgl_awal = " TglPerolehan >= '$tglawalperolehan' ";
 					$query_tgl_akhir = " TglPerolehan <= '$tglakhirperolehan' ";
-					
-					// if($kelompok != ""){
-					$IDkelompok = "$kelompok";
-					$query_change_satker="SELECT Kode FROM Kelompok as K
-											WHERE Kelompok_ID = $IDkelompok";
-					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
-					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
-						$dataRow2Kel[]=$proses_kode_kel['Kode'];
-					}
-					if($dataRow2Kel!=""){
-						$query_kelompok_fix ="kodeKelompok = '".$dataRow2Kel[0]."'";
-					}
+					$query_kelompok_fix =" kodeKelompok like '".$kelompok."%'";
 					$queryPemilik = "kodeLokasi like '$pemilik%'";
 				}
 				
@@ -838,7 +816,6 @@ class core_api_report extends DB {
 						}
 	
 					$query_satker_fix = $paramSatker;
-					
 					
 					$queryPemilik = "kodeLokasi like '$pemilik%'";
 					
@@ -1260,7 +1237,8 @@ class core_api_report extends DB {
 			//end update query kib a								
            
 		   //start update query kib b (ok)
-			$Modul_1_Mode_1_Case_b_condition = "select distinct(M.kodeSatker),
+			$Modul_1_Mode_1_Case_b_condition = "select SUM(M.NilaiPerolehan) as Nilai, 
+													GROUP_CONCAT(M.noRegister) as noReg,
 													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
@@ -1276,7 +1254,9 @@ class core_api_report extends DB {
 												order by 
 													M.kodeSatker,M.Tahun,M.kodeKelompok $limit";
 										
-			$Modul_1_Mode_1_Case_b_default = "select distinct(M.kodeSatker),
+			$Modul_1_Mode_1_Case_b_default = "select SUM(M.NilaiPerolehan) as Nilai, 
+													GROUP_CONCAT(M.noRegister) as noReg,
+													M.kodeSatker,
 													M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian 
@@ -1350,7 +1330,9 @@ class core_api_report extends DB {
 
 		 //start update query kib e (ok)
           
-			$Modul_1_Mode_1_Case_e_condition = "select distinct(AL.kodeSatker), 
+			$Modul_1_Mode_1_Case_e_condition = "select SUM(AL.NilaiPerolehan) as Nilai, 
+													GROUP_CONCAT(AL.noRegister) as noReg,
+													AL.kodeSatker, 
 											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
@@ -1369,7 +1351,9 @@ class core_api_report extends DB {
 											K.Kode, K.Uraian
 											order by AL.kodeSatker,AL.Tahun,AL.kodeKelompok $limit";
 											
-			  $Modul_1_Mode_1_Case_e_default = "select distinct(AL.kodeSatker),AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+			  $Modul_1_Mode_1_Case_e_default = "select SUM(AL.NilaiPerolehan) as Nilai, 
+													GROUP_CONCAT(AL.noRegister) as noReg,
+													AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 												AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 												AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 												AL.kondisi, AL.kodeLokasi,
@@ -1731,7 +1715,7 @@ class core_api_report extends DB {
 																		$newparameter_sql_02 = implode('AND ', $param_02);
 																		$newparameter_sql_05 = implode('AND ', $param_05);
 																		// pr($param);
-																		$query_02 = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+																		$query_02 = "select SUM(M.NilaiPerolehan) as Nilai,GROUP_CONCAT(M.noRegister) as noReg,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																						M.Tahun, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																						M.Silinder,M.kodeRuangan,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
 																					from 
@@ -1748,7 +1732,7 @@ class core_api_report extends DB {
 																					order by 
 																						M.kodeSatker,M.kodeRuangan,M.Tahun,M.kodeKelompok $limit";
 																		
-																		$query_05 = "select distinct(AL.kodeSatker),AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+																		$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,GROUP_CONCAT(AL.noRegister) as noReg,AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
 																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,
@@ -2470,18 +2454,21 @@ class core_api_report extends DB {
 													//Buku Inventaris Gabungan SKPD
 													
 													if($parameter_sql!="" ){
-														//pr($parameter_sql);
-														$kel = explode('=',$query_kelompok_fix);
-														$temp_kel = str_replace("'", "", $kel);
-														$kel_prs = explode('.',$temp_kel[1]);
-														if($kel_prs[0] == '01'){
+														pr($parameter_sql);
+														$kel = explode('like ',$query_kelompok_fix);
+														$temp_kel = str_replace("'", "", $kel[1]);
+														$temp_kel = str_replace("%", "", $temp_kel);
+														$kel_prs = explode('.',$temp_kel);
+														$kel_prs =trim($kel_prs[0]);
+														// exit;
+														if($kel_prs == '01'){
 															// echo "gol 1";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
 																$param[]="T.".$pecah[$q];
 															}
 															$newparameter_sql = implode('AND ', $param);
-															$query = "select distinct(T.kodeSatker),T.kodeKelompok,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+															$query = "select SUM(T.NilaiPerolehan) as Nilai, GROUP_CONCAT(T.noRegister) as noReg,T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 																			K.Kode, K.Uraian
 																		from 
 																			tanahView as T,kelompok as K
@@ -2494,7 +2481,7 @@ class core_api_report extends DB {
 																		order by 
 																			T.kodeSatker,T.kodeKelompok,T.Tahun $limit";
 														}
-														elseif($kel_prs[0] == '02'){
+														elseif($kel_prs == '02'){
 															// echo "gol 2";
 															// exit;
 															$pecah = explode("AND ",$parameter_sql);
@@ -2502,7 +2489,7 @@ class core_api_report extends DB {
 																$param[]="M.".$pecah[$q];
 															}
 															$newparameter_sql = implode('AND ', $param);
-															$query = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query = "select SUM(M.NilaiPerolehan) as Nilai, GROUP_CONCAT(M.noRegister) as noReg,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -2518,14 +2505,14 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeSatker,M.kodeKelompok,M.Tahun $limit";	
 														}
-														elseif($kel_prs[0] == '03'){
+														elseif($kel_prs == '03'){
 															// echo "gol 3";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
 																$param[]="B.".$pecah[$q];
 															}
 															$newparameter_sql = implode('AND ', $param);
-															$query = "select distinct(B.kodeSatker),B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query = "select SUM(B.NilaiPerolehan) as Nilai, GROUP_CONCAT(B.noRegister) as noReg,B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -2544,14 +2531,14 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.kodeKelompok,B.Tahun $limit";	
 														}
-														elseif($kel_prs[0] == '04'){
+														elseif($kel_prs == '04'){
 															// echo "gol 4";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
 																$param[]="J.".$pecah[$q];
 															}
 															$newparameter_sql = implode('AND ', $param);
-															$query = "select distinct(J.kodeSatker),J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+															$query = "select SUM(J.NilaiPerolehan) as Nilai, GROUP_CONCAT(J.noRegister) as noReg,J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
@@ -2570,14 +2557,14 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by J.kodeSatker,J.kodeKelompok,J.Tahun $limit";	
 														}
-														elseif($kel_prs[0] == '05'){
+														elseif($kel_prs == '05'){
 															// echo "gol 5";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
 																$param[]="AL.".$pecah[$q];
 															}
 															$newparameter_sql = implode('AND ', $param);
-															$query = "select distinct(AL.kodeSatker),AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+															$query = "select SUM(AL.NilaiPerolehan) as Nilai, GROUP_CONCAT(AL.noRegister) as noReg,AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,
@@ -2596,14 +2583,14 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by AL.kodeSatker, AL.kodeKelompok,AL.Tahun $limit";	
 														}
-														elseif($kel_prs[0] == '06'){
+														elseif($kel_prs == '06'){
 															// echo "gol 6";
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
 																$param[]="KDPA.".$pecah[$q];
 															}
 															$newparameter_sql = implode('AND ', $param);
-															$query = "select distinct(KDPA.kodeSatker),KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+															$query = "select SUM(KDPA.NilaiPerolehan) as Nilai, GROUP_CONCAT(KDPA.noRegister) as noReg,KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
 																		KDPA.kondisi, KDPA.kodeLokasi,
@@ -2622,7 +2609,7 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian	
 																	order by KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.Tahun $limit";	
 														}
-														elseif($kel_prs[0] == '07'){
+														elseif($kel_prs == '07'){
 															// echo "gol 7";
 															/*$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
@@ -2630,7 +2617,6 @@ class core_api_report extends DB {
 															}*/
 															$query = "";	
 														}else{
-															
 															$pecah = explode("AND ",$parameter_sql);
 															for ($q=0;$q<count($pecah);$q++){
 																$param_01[]="T.".$pecah[$q];
@@ -2647,7 +2633,7 @@ class core_api_report extends DB {
 															$newparameter_sql_05 = implode('AND ', $param_05);
 															$newparameter_sql_06 = implode('AND ', $param_06);
 															// pr($param);
-															$query_01 = "select distinct(T.kodeSatker),T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+															$query_01 = "select SUM(T.NilaiPerolehan) as Nilai, GROUP_CONCAT(T.noRegister) as noReg,T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 																			K.Kode, K.Uraian
 																		from 
 																			tanahView as T,kelompok as K
@@ -2660,7 +2646,7 @@ class core_api_report extends DB {
 																		order by 
 																			T.kodeSatker,T.kodeKelompok,T.Tahun $limit";
 																			
-															$query_02 = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02 = "select SUM(M.NilaiPerolehan) as Nilai, GROUP_CONCAT(M.noRegister) as noReg,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -2676,7 +2662,7 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeSatker,M.kodeKelompok,M.Tahun $limit";
 															
-															$query_03 = "select distinct(B.kodeSatker),B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03 = "select SUM(B.NilaiPerolehan) as Nilai, GROUP_CONCAT(B.noRegister) as noReg,B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -2695,7 +2681,7 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeSatker,B.kodeKelompok,B.Tahun $limit";
 
-															$query_04 = "select distinct(J.kodeSatker),J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+															$query_04 = "select SUM(J.NilaiPerolehan) as Nilai, GROUP_CONCAT(J.noRegister) as noReg,J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
@@ -2714,7 +2700,7 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by J.kodeSatker,J.kodeKelompok,J.Tahun $limit";
 															
-															$query_05 = "select distinct(AL.kodeSatker),AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+															$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai, GROUP_CONCAT(AL.noRegister) as noReg,AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,
@@ -2723,7 +2709,7 @@ class core_api_report extends DB {
 																		asetlain_ori as AL,kelompok as K  
 																	where
 																		AL.kodeKelompok = K.Kode 
-																		 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1  
+																		 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 
 																		and $newparameter_sql_05
 																	group by 
 																		AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
@@ -2731,9 +2717,9 @@ class core_api_report extends DB {
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,
 																		K.Kode, K.Uraian
-																	order by AL.kodeSatker,AL.kodeKelompok,AL.Tahun $limit";
+																	order by AL.kodeSatker, AL.kodeKelompok,AL.Tahun $limit";
 														
-															$query_06 = "select distinct(KDPA.kodeSatker),KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+															$query_06 = "select SUM(KDPA.NilaiPerolehan) as Nilai, GROUP_CONCAT(KDPA.noRegister) as noReg,KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
 																		KDPA.kondisi, KDPA.kodeLokasi,
@@ -2824,7 +2810,8 @@ class core_api_report extends DB {
 														$KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
 														if($thnFix < $thnIntraDefault){
 															// echo "tahun < 2007";
-															$query_01 = "select distinct(T.kodeSatker),T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+															$query_01 = "select SUM(T.NilaiPerolehan) as Nilai, 
+																			GROUP_CONCAT(T.noRegister) as noReg,T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 																			K.Kode, K.Uraian
 																		from 
 																			tanahView as T,kelompok as K
@@ -2837,7 +2824,10 @@ class core_api_report extends DB {
 																		order by 
 																			T.kodeKelompok";
 																			
-															$query_02 = "select distinct(M.kodeSatker),M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02 = "select SUM(M.NilaiPerolehan) as Nilai,SUM(M.PenyusutanPerTahun) as Ppt,
+																			SUM(M.AkumulasiPenyusutan) as Ap,SUM(M.NilaiBuku) as Nb,
+																			GROUP_CONCAT(M.noRegister) as noReg, 
+																			M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
 																		from 
@@ -2853,7 +2843,10 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeKelompok";
 															
-															$query_03 = "select distinct(B.kodeSatker),
+															$query_03 = "select SUM(B.NilaiPerolehan) as Nilai,SUM(B.PenyusutanPerTahun) as Ppt,
+																		SUM(B.AkumulasiPenyusutan) as Ap,SUM(B.NilaiBuku) as Nb,
+																		GROUP_CONCAT(B.noRegister) as noReg, 
+																		B.kodeSatker,
 																		B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
@@ -2873,8 +2866,11 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeKelompok";
 
-															$query_04 = "select distinct(J.kodeSatker),
-															J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+															$query_04 = "select SUM(J.NilaiPerolehan) as Nilai,SUM(J.PenyusutanPerTahun) as Ppt,
+																			SUM(J.AkumulasiPenyusutan) as Ap,SUM(J.NilaiBuku) as Nb,
+																		GROUP_CONCAT(J.noRegister) as noReg,
+																		J.kodeSatker,
+																		J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
@@ -2893,8 +2889,10 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by J.kodeKelompok";
 															
-															$query_05 = "select distinct(AL.kodeSatker),
-															AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+															$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,
+																		GROUP_CONCAT(AL.noRegister) as noReg,
+																		AL.kodeSatker,
+																		AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,
@@ -2913,7 +2911,9 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by AL.kodeKelompok";
 														
-															$query_06 = "select distinct(KDPA.kodeSatker),
+															$query_06 = "select SUM(KDPA.NilaiPerolehan) as Nilai,
+																		GROUP_CONCAT(KDPA.noRegister) as noReg,
+																		KDPA.kodeSatker,
 															            KDPA.kodeKelompok,KDPA.KodeRuangan,
 															            KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
@@ -2980,7 +2980,9 @@ class core_api_report extends DB {
 															}
 															
 															
-															$query_01 = "select distinct(T.kodeSatker),T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+															$query_01 = "select SUM(T.NilaiPerolehan) as Nilai,
+																			GROUP_CONCAT(T.noRegister) as noReg,
+																			T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 																			K.Kode, K.Uraian
 																		from 
 																			tanahView as T,kelompok as K
@@ -2993,8 +2995,12 @@ class core_api_report extends DB {
 																		order by 
 																			T.kodeKelompok";
 															
-															$query_02_default = "select distinct(M.kodeSatker),
-															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02_default = "select SUM(M.NilaiPerolehan) as Nilai,
+																			SUM(M.PenyusutanPerTahun) as Ppt,
+																			SUM(M.AkumulasiPenyusutan) as Ap,SUM(M.NilaiBuku) as Nb,
+																			GROUP_CONCAT(M.noRegister) as noReg,
+																			M.kodeSatker,
+																			M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
 																		from 
@@ -3010,8 +3016,12 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeKelompok";
 																			
-															$query_02_condt = "select distinct(M.kodeSatker),
-															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02_condt = "select  SUM(M.NilaiPerolehan) as Nilai,
+																			SUM(M.PenyusutanPerTahun) as Ppt,
+																			SUM(M.AkumulasiPenyusutan) as Ap,SUM(M.NilaiBuku) as Nb,
+																			GROUP_CONCAT(M.noRegister) as noReg,
+																			M.kodeSatker,
+																			M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
 																		from 
@@ -3027,8 +3037,12 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeKelompok";
 															
-															$query_03_default = "select distinct(B.kodeSatker),
-															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03_default = "select SUM(B.NilaiPerolehan) as Nilai,
+																		SUM(B.PenyusutanPerTahun) as Ppt,
+																		SUM(B.AkumulasiPenyusutan) as Ap,SUM(B.NilaiBuku) as Nb,
+																		GROUP_CONCAT(B.noRegister) as noReg, 
+																		B.kodeSatker,
+																		B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -3047,8 +3061,12 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeKelompok";
 															
-															$query_03_condt = "select distinct(B.kodeSatker),
-															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03_condt = "select SUM(B.NilaiPerolehan) as Nilai,
+																		SUM(B.PenyusutanPerTahun) as Ppt,
+																		SUM(B.AkumulasiPenyusutan) as Ap,SUM(B.NilaiBuku) as Nb,
+																		GROUP_CONCAT(B.noRegister) as noReg, 
+																		B.kodeSatker,
+																		B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
@@ -3067,8 +3085,12 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by B.kodeKelompok";
 															
-															$query_04 = "select distinct(J.kodeSatker),
-															J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+															$query_04 = "select SUM(J.NilaiPerolehan) as Nilai,
+																		SUM(J.PenyusutanPerTahun) as Ppt,
+																		SUM(J.AkumulasiPenyusutan) as Ap,SUM(J.NilaiBuku) as Nb,
+																		GROUP_CONCAT(J.noRegister) as noReg,
+																		J.kodeSatker,
+																		J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 																		J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,
@@ -3087,8 +3109,10 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by J.kodeKelompok";
 															
-															$query_05 = "select distinct(AL.kodeSatker),
-															AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+															$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,
+																		GROUP_CONCAT(AL.noRegister) as noReg,
+																		AL.kodeSatker,
+																		AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 																		AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,
@@ -3107,8 +3131,10 @@ class core_api_report extends DB {
 																		K.Kode, K.Uraian
 																	order by AL.kodeKelompok";
 														
-															$query_06 = "select distinct(KDPA.kodeSatker),
-															KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+															$query_06 = "select SUM(KDPA.NilaiPerolehan) as Nilai,
+																		GROUP_CONCAT(KDPA.noRegister) as noReg,
+																		KDPA.kodeSatker,
+																		KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
 																		KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
 																		KDPA.kondisi, KDPA.kodeLokasi,
@@ -3210,8 +3236,9 @@ class core_api_report extends DB {
 														// $KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
 														if($thnceck >= $thnExtraDefault){
 															//$tahunPerolehan  >= 2008	
-															$query_02 = "select distinct(M.kodeSatker),
-															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02 = "select SUM(M.NilaiPerolehan) as Nilai,GROUP_CONCAT(M.noRegister) as noReg,
+																			M.kodeSatker,
+																			M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -3229,8 +3256,9 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeKelompok";
 															
-															$query_03 = "select distinct(B.kodeSatker),
-															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03 = "select SUM(B.NilaiPerolehan) as Nilai,GROUP_CONCAT(B.noRegister) as noReg, 
+																		B.kodeSatker,
+																		B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -3260,8 +3288,9 @@ class core_api_report extends DB {
 															echo "masukk";
 															echo "sini aja";
 															exit;*/
-															$query_02 = "select distinct(M.kodeSatker),
-															M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															$query_02 = "select SUM(M.NilaiPerolehan) as Nilai,GROUP_CONCAT(M.noRegister) as noReg, 
+																			M.kodeSatker,
+																			M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
 																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
 																		from 
@@ -3279,8 +3308,9 @@ class core_api_report extends DB {
 																		order by 
 																			M.kodeKelompok";
 															
-															$query_03 = "select distinct(B.kodeSatker),
-															B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+															$query_03 = "select SUM(B.NilaiPerolehan) as Nilai,GROUP_CONCAT(B.noRegister) as noReg,  
+																		B.kodeSatker,
+																		B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 																		B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
@@ -4448,21 +4478,29 @@ class core_api_report extends DB {
 			}else{
 			// echo "array query";
 			// echo "<br>";
+				$x = 0;
 				for ($i = 0; $i < count($dataQuery); $i++)
 					{
-						// echo "query_$i =".$dataQuery[$i];
-						// echo "<br>";
-						// echo "<br>";
+						/*echo "query_$i =".$dataQuery[$i];
+						echo "<br>";
+						echo "<br>";*/
 						// exit;
 						$result_golongan = $this->query($dataQuery[$i]) or die ($this->error('error dataQuery'));
 						if ($result_golongan)
 						{
+						  
 						   while ($dataArr = mysql_fetch_assoc($result_golongan))
 							{
 								$data[] = $dataArr;
+								$register = $dataArr['noReg'];
+								sort($register);
+								$urut = $this->sortirNoReg($register);
+								$data[$x]['noRegister'] = $urut;
+								$x++;
 							}
 						}
 						$result_golongan = '';
+
 					}
 			}	
 		}else{
@@ -4470,108 +4508,29 @@ class core_api_report extends DB {
 				$result_golongan = $this->query($dataQuery) or die ($this->error('error dataQuery'));
 				if ($result_golongan)
 				{
-				   while ($dataArr = mysql_fetch_assoc($result_golongan))
+					$i = 0;
+					while ($dataArr = mysql_fetch_assoc($result_golongan))
 					{
 						$data[] = $dataArr;
+						$register = $dataArr['noReg'];
+						sort($register);
+						$urut = $this->sortirNoReg($register);
+						$data[$i]['noRegister'] = $urut;
+						$i++;
 					}
 				}
 		}
-		// pr($data);
-		/* exit; */
-		$ignoreField = array('Kode','Uraian');
-		$i=1;
-		$x=0;
-		$data_reg=1;
-		$count_reg=0;
-		// $jml_register =1;
-		// $total_jml_register =1;
-		$putaran=0;
-		$iman=array();
 		// pr($data);
 		// exit;
-		if($data){
-			foreach ($data as $keys => $value){
-				$putaran++;
-				$tmp = array();
-				$tmp1 = array();
-				$getField =array();
-				$imp = "";
-				
-				foreach ($data[$x] as $key => $val){
-					$getField[]  = $key;
-				}
-				// pr($getField);
-					foreach ($getField as $val){
-						
-						if (!in_array($val, $ignoreField)){
-							if ($value[$val]==''){
-								$tmp[] = "(".$val ." IS NULL or $val='' )";
-								$tmp1[] = "(".$val ." IS NULL or $val= )";
-					   
-							}else{
-								$tmp[] = $val ." = '".addslashes($value[$val])."'";
-								$tmp1[] = $val ." = $value[$val]";
-							}
-						  
-						}
-						
-					}
-					
-				$kel = explode(" = ",$tmp1[1]);
-				$kel_prs = explode('.',$kel[1]);
-				
-				if($kel_prs[0] == 01){
-					$tableName = "tanahView";
-				}elseif($kel_prs[0] == 02){
-					$tableName = "mesin_ori";
-				}elseif($kel_prs[0] == 03){
-					$tableName = "bangunan_ori";
-				}elseif($kel_prs[0] == 04){
-					$tableName = "jaringan_ori";
-				}elseif($kel_prs[0] == 05){
-					$tableName = "asetlain_ori";
-				}elseif($kel_prs[0] == 06){
-					$tableName = "kdp_ori";
-				}
-				
-				$imp = implode(' and ', $tmp);
-				$sql = "SELECT noRegister,NilaiPerolehan FROM $tableName WHERE {$imp} and StatusTampil = 1 and Status_Validasi_Barang = 1 order by noRegister desc";
-				// pr($sql);
-				$res = mysql_query($sql);
-				$register=array();
-
-				while($d = @mysql_fetch_assoc($res)){
-				  
-					$register[]= $d['noRegister'];
-					// $total_jml_register+=$d['NilaiPerolehan'];
-				}
-				// pr($register);
-				$jml_register += count($register); 
-				sort($register);
-				$text_register=implode(",",$register);
-				//$data[$keys]['noRegister']=$this->sortirNoReg($text_register);
-				$register_no=explode(",",$this->sortirNoReg($text_register));
-				// pr($register_no);
-				for($m=0;$m<=count($register_no);$m++){
-					if($register_no[$m]!="")
-					{
-						$data[$keys]['noRegister']=$register_no[$m];
-						array_push($iman,$data[$keys]);
-						}
-				}
-				$x++;
-				$i++;
-				// exit;
-			}
-			// pr($data);
-			// echo "jmlh rgetr".$jml_register. "dan total perolehan adalah".$total_jml_register. "looping=".$putaran;
-			// exit;
-			return $iman;
+		
+		if (!$data) {
+			return '';
 		}
-		else{
-			return false;
-		}
-	
+		return $data;
+		
+		
+		
+		
 	}
 	//laporan tambahan
 	public function ceckKib ($satker,$tahun,$paramKib){
@@ -7095,6 +7054,7 @@ class core_api_report extends DB {
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
+
 					// echo "query_$i =".$AllTableTemp[$i];
 					// echo "<br>";
 					// echo "<br><br/>";
