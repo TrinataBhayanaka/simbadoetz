@@ -26,10 +26,9 @@
                   <li><a href="{$basedomain}home/mengolahData/?page=3">Kode Satker</a></li>
                   <li><a href="{$basedomain}home/mengolahData/?page=4">Kode Kelompok</a></li>
                  
-                  <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
-                  <div id="tab_1" class="tab-pane active">
+                  <div id="tab_11" class="tab-pane active">
                     <div class="row">
                       <div class="col-md-12">
                         <!-- Custom Tabs -->
@@ -39,14 +38,13 @@
                             <li><a data-toggle="tab" href="#tab_2">Fetch Data</a></li>
                             <li><a data-toggle="tab" href="#tab_3">View Data</a></li>
                             
-                            <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                           </ul>
                           <div class="tab-content">
                             <div id="tab_1" class="tab-pane active">
                               <b>Get Data Via Url:</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
+$url='{$baseApplication}report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 ?&gt;
@@ -62,7 +60,7 @@ $resultJsonEncode=file_get_contents($url);
                             <b>Fetch Data dengan Json_decode :</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
+$url='{$baseApplication}report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 
@@ -79,7 +77,7 @@ $resultJsonDecode=json_decode($resultJson);
                               
                               <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/satker/?term=04.02';
+$url='{$baseApplication}report/template/PEROLEHAN/report_perolehanaset_cetak_aset_tetap_tanah.php?menuID=&amp;mode=&amp;tab=&amp;skpd_id=04.02.02&amp;tglawalperolehan=&amp;tglakhirperolehan=2014-12-31&amp;tipe_file=3';
 
 $resultJsonEncode=file_get_contents($url);
 

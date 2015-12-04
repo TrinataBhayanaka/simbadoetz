@@ -22,14 +22,13 @@
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li><a href="{$basedomain}home/mengolahData/?page=1">Penjelasan</a></li>
-                  <!-- <li><a href="{$basedomain}home/mengolahData/?page=2">Daftar Aset Tetap</a></li> -->
+                  <li><a href="{$basedomain}home/mengolahData/?page=2">Daftar Aset Tetap</a></li>
                   <li><a href="{$basedomain}home/mengolahData/?page=3">Kode Satker</a></li>
                   <li class="active"><a href="{$basedomain}home/mengolahData/?page=4">Kode Kelompok</a></li>
                  
-                  <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
-                  <div id="tab_11" class="tab-pane active">
+                  <div id="tab_112" class="tab-pane active">
                     <div class="row">
                       <div class="col-md-12">
                         <!-- Custom Tabs -->
@@ -39,14 +38,13 @@
                             <li><a data-toggle="tab" href="#tab_21">Fetch Data</a></li>
                             <li><a data-toggle="tab" href="#tab_31">View Data</a></li>
                             
-                            <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a></li>
                           </ul>
                           <div class="tab-content">
                             <div id="tab_11" class="tab-pane active">
                               <b>Get Data Via Url:</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/kelompok/?term=02.02';
+$url='{$basedomain}home/kelompok/?term=02.02';
 
 $resultJsonEncode=file_get_contents($url);
 ?&gt;
@@ -62,7 +60,7 @@ $resultJsonEncode=file_get_contents($url);
                             <b>Fetch Data dengan Json_decode :</b>
 <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/kelompok/?term=02.02';
+$url='{$basedomain}home/kelompok/?term=02.02';
 
 $resultJsonEncode=file_get_contents($url);
 
@@ -78,7 +76,7 @@ $resultJsonDecode=json_decode($resultJson);
                             <div id="tab_31" class="tab-pane">
                               <pre style="font-weight: 600;">
 &lt;?php
-$url='http://localhost/simbadoetz/services/home/satker/?term=04.02';
+$url='{$basedomain}home/kelompok/?term=04.02';
 
 $resultJsonEncode=file_get_contents($url);
 
