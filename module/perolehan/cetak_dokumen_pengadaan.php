@@ -73,7 +73,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#rekapupb" data-toggle="tab">Rekapitulasi Barang Per UPB</a></li>
 						<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>
 						<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>
-						<li><a href="#laprekapmutasiskpd" data-toggle="tab">Rekap Mutasi Barang</a></li>
+						<!--<li><a href="#laprekapmutasiskpd" data-toggle="tab">Rekap Mutasi Barang</a></li>-->
 						<li><a href="#lapdaftarpengadaan" data-toggle="tab">Laporan Daftar Pengadaan</a></li>    
 					  </ul>
 					  
@@ -712,7 +712,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</form>
                         </div>
                         
-						<div class="tab-pane" id="laprekapmutasiskpd">
+						<!--<div class="tab-pane" id="laprekapmutasiskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekap Mutasi Barang</div>
 						</div>
@@ -738,7 +738,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<?php 
 					
-								selectAllSatker('kodeSatker15','255',true,false,false,true);
+								//selectAllSatker('kodeSatker15','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -748,7 +748,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 						</ul>
 						</form>
-                        </div>
+                        </div>-->
 
 
 						
