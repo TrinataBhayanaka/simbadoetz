@@ -7053,6 +7053,8 @@ class core_api_report extends DB {
 			}
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
+				{
+
 					// echo "query_$i =".$AllTableTemp[$i];
 					// echo "<br>";
 					// echo "<br><br/>";
