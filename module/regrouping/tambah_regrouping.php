@@ -51,7 +51,7 @@ include"$path/menu.php";
                          <li><span class="span2">Kode Satker Baru</span>
                               <select name="kode_baru1">
                                    <?php
-                                   for ($i=1;$i<=30;$i++){
+                                   for ($i=1;$i<=60;$i++){
                                         
                                         $tampil=sprintf("%02d",$i);
                                         echo "<option value=\"$tampil\">$tampil</option>";

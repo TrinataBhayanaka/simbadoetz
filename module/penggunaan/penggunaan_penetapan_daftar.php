@@ -38,9 +38,12 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	if ($_POST){
+		$_SESSION['penggunaan_filter'] = $_POST;
+		$dataPost = $_POST;
+	}else $dataPost = $_SESSION['penggunaan_filter'];
 
-
-	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST);
+	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($dataPost);
 
 ?>
 
