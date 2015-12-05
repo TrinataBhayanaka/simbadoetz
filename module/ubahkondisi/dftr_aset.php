@@ -123,7 +123,7 @@ include "../../config/config.php";
 					</div>
 				</li>
 				<li>
-					<input type="submit" id="submit" class="btn btn-warning btn-small" value="Pindah Ruangan" name="submit" disabled"/>
+					<input type="submit" id="submit" class="btn btn-warning btn-small" value="Ubah Kondisi" name="submit" disabled"/>
 					<input type="hidden" name="kodeSatker" value="<?=$kodeSatker?>">
 					<!--<input type="hidden" name="Tahun" value="<?=$Tahun?>">
 					<input type="hidden" name="noRegister_Awal" value="<?=$noRegister_Awal?>">

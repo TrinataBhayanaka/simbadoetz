@@ -5096,18 +5096,46 @@ foreach ($dataArr as $satker_id => $value)
     foreach ($value as $keys => $data)
     {	
 		// pr($keys);
+		// pr($data);
 		$exp = explode('_',$keys);
+		// pr($exp);
 		$kode_1_parent = $exp[0];
+		// pr($kode_1_parent);
 		$kode_2_parent = end($exp);
-		$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
-		$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
-		$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
-		
-		//tambah penyusutan
-		$TotalNilaiPPFix=number_format($TotalNilai[2],2,",",".");
-		$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
-		$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
-		
+		if($kode_1_parent != 07){
+			
+			$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
+			//nilai perolehan
+			$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+			//jumlah barang
+			$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+			
+			//tambah penyusutan
+			//nilai penyusutan pertahun
+			$TotalNilaiPPFix=number_format($TotalNilai[2],2,",",".");
+			//nilai akumulasi penyusutan
+			$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''){
+				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
+			}else{
+				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[0],2,",",".");
+			}
+			
+		}else{
+			$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
+			$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+			//jumlah barang
+			$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+			
+			//tambah penyusutan
+			//nilai penyusutan pertahun
+			$TotalNilaiPPFix=number_format(0,2,",",".");
+			//nilai akumulasi penyusutan
+			$TotalNilaiAPFix=number_format(0,2,",",".");
+			
+			$TotalNilaiNilaiBukuFix=number_format(0,2,",",".");
+			
+		}
 		
 		if($keys != '07_Aset Lainnya'){
 			$totalALL = $totalALL + $TotalNilai[0];
@@ -5115,7 +5143,13 @@ foreach ($dataArr as $satker_id => $value)
 			//tambah penyusutan
 			$totalALLPP = $totalALLPP + $TotalNilai[2];
 			$totalALLAP = $totalALLAP + $TotalNilai[3];
-			$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[4];
+			//cek jika nilai buku 0 diganti sama nilai perolehan
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''){
+				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[4];
+			}else{
+				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[0];
+			}
+			
 			$header = "";
 		}else{
 			
@@ -5133,7 +5167,13 @@ foreach ($dataArr as $satker_id => $value)
 			  //tambah penyusutan
 			  $totalALLPP = $TotalNilai[2];
 			  $totalALLAP = $TotalNilai[3];
-			  $totalALLNilaiBuku = $TotalNilai[4];
+			 
+			 //cek jika nilai buku 0 diganti sama nilai perolehan (pengecualian aset lain)
+			  // if($TotalNilai[4] != 0){
+				$totalALLNilaiBuku = $TotalNilai[4];
+			  // }else{
+				// $totalALLNilaiBuku = $TotalNilai[0];
+			  // }
 			  
 			  $header.="<tr>
 				<td>&nbsp;</td>
@@ -5153,9 +5193,11 @@ foreach ($dataArr as $satker_id => $value)
         
         foreach ($data as $index => $value)
         {
+		// pr($index);
 		// pr($value);
 		$exp2 = explode('_',$index);
 		$kode_1_child = $exp2[0];
+		// pr($kode_1_child);
 		$kode_2_child = end($exp2);
 		// pr($value[0]);
 		$val =count($value[0]);
@@ -5203,7 +5245,17 @@ foreach ($dataArr as $satker_id => $value)
 			//tambah penyusutan
 			$nilaiPPFix = ($nilaiPP_1) + ($nilaiPP_2);
 			$nilaiAPFix = ($nilaiAP_1) + ($nilaiAP_2);
-			$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+			
+			//cek jika nilai buku 0 diganti sama nilai perolehan
+			if($kode_1_child != '07.01' || $kode_1_child != '07.21' || $kode_1_child != '07.22' || $kode_1_child != '07.23' || $kode_1_child != '07.24'){
+				if($nilaiNB_1 != 0 && $nilaiNB_2 != 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}else{
+					$nilaiNBFix = ($nilai_1) + ($nilai_2);
+				}	
+			}else{
+				$nilaiNBFix = 0;
+			}
 			
 		}else{
 			$hit = 1;
@@ -5221,7 +5273,18 @@ foreach ($dataArr as $satker_id => $value)
 			$nilaiFix = $nilai_1;
 			$nilaiPPFix = $nilaiPP_1;
 			$nilaiAPFix = $nilaiAP_1;
-			$nilaiNBFix = $nilaiNB_1;
+			//cek jika nilai buku 0 diganti sama nilai perolehan
+			if($kode_1_child == '07.01' || $kode_1_child == '07.21' || $kode_1_child == '07.22' || $kode_1_child == '07.23' || $kode_1_child == '07.24'){
+				$nilaiNBFix = 0;
+			}else{
+				if($nilaiNB_1 != 0){
+					$nilaiNBFix = $nilaiNB_1;
+				}else{
+					$nilaiNBFix = $nilai_1;
+				}	
+			}
+			
+			
 		}
 		// echo $jmlFix;
 		// echo "<br>";
@@ -6029,11 +6092,20 @@ foreach ($dataArr as $satker_id => $value)
 	$gol= '02';
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	// pr($TotalNilai);
+	//jumlah
 	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	//nilai perolehan
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+	//nilai buku
+	if($TotalNilai[4]){
+		$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
+	}else{
+		$TotalNilaiFixNB=number_format($TotalNilai[0],2,",",".");
+	}
+	//penyusutan pertahun
 	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
+	//akumulasi penyusutan
 	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
-	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
 	
 	$html.="<tr>
 				<td style=\"text-align: center; font-weight: bold;\">$no</td>
@@ -6065,6 +6137,11 @@ foreach ($dataArr as $satker_id => $value)
 			// echo $value[0]->kodeKelompok;
 			// echo $value->kodeKelompok;
 			foreach($val as $vl=>$value){
+				if($value->NilaiBuku){
+					$NilaiBuku = $value->NilaiBuku;
+				}else{
+					$NilaiBuku = $value->Nilai;
+				}
                 $html .= "<tr>
 						<td style=\"text-align: ;\">&nbsp;</td>
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
@@ -6072,7 +6149,7 @@ foreach ($dataArr as $satker_id => $value)
                         <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->NilaiPP,2,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->NilaiAP,2,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($NilaiBuku,2,",",".")."</td>
                       </tr>";
                 $total += ($value->jumlah);
                 $total_perolehan += ($value->Nilai);
@@ -6086,8 +6163,10 @@ foreach ($dataArr as $satker_id => $value)
 				$total_perolehan_AP += ($value->NilaiAP);
 				$total_perolehan_kel_AP += ($value->NilaiAP);
 				
-				$total_perolehan_NB += ($value->NilaiBuku);
-				$total_perolehan_kel_NB += ($value->NilaiBuku);
+				/*$total_perolehan_NB += ($value->NilaiBuku);
+				$total_perolehan_kel_NB += ($value->NilaiBuku);*/
+				$total_perolehan_NB += ($NilaiBuku);
+				$total_perolehan_kel_NB += ($NilaiBuku);
 				// $tot_perkel=
 			}	
         }
@@ -6286,11 +6365,25 @@ foreach ($dataArr as $satker_id => $value)
 	$gol= '03';
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	
-	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	/*$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
 	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
-	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
+	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");*/
+	//jumlah
+	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	//nilai perolehan
+	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+	//nilai buku
+	if($TotalNilai[4]){
+		$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
+	}else{
+		$TotalNilaiFixNB=number_format($TotalNilai[0],2,",",".");
+	}
+	//penyusutan pertahun
+	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
+	//akumulasi penyusutan
+	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
 	
 	// $TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 		$html.="<tr>
@@ -6318,7 +6411,12 @@ foreach ($dataArr as $satker_id => $value)
 				  </tr>";
         
         foreach ($data as $index => $value)
-        {
+        {		
+				if($value->NilaiBuku){
+					$NilaiBuku = $value->NilaiBuku;
+				}else{
+					$NilaiBuku = $value->NilaiPerolehan;
+				}
                 $html .= "<tr>
 						<td style=\"text-align: ;\">&nbsp;</td>
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
@@ -6327,7 +6425,7 @@ foreach ($dataArr as $satker_id => $value)
                         <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->PenyusutanPerTahun,2,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($NilaiBuku,2,",",".")."</td>
                       </tr>";
                 $total_perolehan += ($value->NilaiPerolehan);
                 $total_perolehan_kel += ($value->NilaiPerolehan);
@@ -6338,8 +6436,10 @@ foreach ($dataArr as $satker_id => $value)
 				$total_perolehan_AP += ($value->AkumulasiPenyusutan);
 				$total_perolehan_kel_AP += ($value->AkumulasiPenyusutan);
 				
-				$total_perolehan_NB += ($value->NilaiBuku);
-				$total_perolehan_kel_NB += ($value->NilaiBuku);
+				/*$total_perolehan_NB += ($value->NilaiBuku);
+				$total_perolehan_kel_NB += ($value->NilaiBuku);*/
+				$total_perolehan_NB += ($NilaiBuku);
+				$total_perolehan_kel_NB += ($NilaiBuku);
         }
 		$html .="<tr>
 				<td></td>
@@ -6532,11 +6632,26 @@ foreach ($dataArr as $satker_id => $value)
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= '04';
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
-	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	/*$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
 	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
-	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
+	$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");*/
+	//jumlah
+	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+	//nilai perolehan
+	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
+	//nilai buku
+	if($TotalNilai[4]){
+		$TotalNilaiFixNB=number_format($TotalNilai[4],2,",",".");
+	}else{
+		$TotalNilaiFixNB=number_format($TotalNilai[0],2,",",".");
+	}
+	//penyusutan pertahun
+	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
+	//akumulasi penyusutan
+	$TotalNilaiFixAP=number_format($TotalNilai[3],2,",",".");
+	
     $html.="<tr>
 				<td style=\"text-align: center; font-weight: bold;\">$no</td>
 				<td  style=\"font-weight: bold;\">$NamaSatker</td>
@@ -6562,6 +6677,11 @@ foreach ($dataArr as $satker_id => $value)
         
         foreach ($data as $index => $value)
         {
+				if($value->NilaiBuku){
+					$NilaiBuku = $value->NilaiBuku;
+				}else{
+					$NilaiBuku = $value->NilaiPerolehan;
+				}
                 $html .= "<tr>
 						<td style=\"text-align: ;\">&nbsp;</td>
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
@@ -6570,7 +6690,7 @@ foreach ($dataArr as $satker_id => $value)
                         <td style=\"text-align: right;\">".number_format($value->NilaiPerolehan,2,",",".")."</td>
 						<td style=\"text-align: right;\">".number_format($value->PenyusutanPerTahun,2,",",".")."</td>
                         <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($NilaiBuku,2,",",".")."</td>
                       
                       </tr>";
                 $total_perolehan += ($value->NilaiPerolehan);
@@ -6582,8 +6702,11 @@ foreach ($dataArr as $satker_id => $value)
 				$total_perolehan_AP += ($value->AkumulasiPenyusutan);
 				$total_perolehan_kel_AP += ($value->AkumulasiPenyusutan);
 				
-				$total_perolehan_NB += ($value->NilaiBuku);
-				$total_perolehan_kel_NB += ($value->NilaiBuku);
+				/*$total_perolehan_NB += ($value->NilaiBuku);
+				$total_perolehan_kel_NB += ($value->NilaiBuku);*/
+				
+				$total_perolehan_NB += ($NilaiBuku);
+				$total_perolehan_kel_NB += ($NilaiBuku);
         }
 		$html .="<tr>
 				<td></td>
@@ -23901,9 +24024,16 @@ $footer ="
 					$AkumulasiPenyusutan = $row->Ap;
 					$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan,2,",",".");
 					
-					$NilaiBuku = $row->Nb;
-					$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
-
+					if($row->Nb){
+						// echo "NilaiBuku";
+						$NilaiBuku = $row->Nb;
+						$NilaiBukuFix = number_format($row->Nb,2,",",".");
+					}else{
+						// echo "nilai perolehan";
+						$NilaiBuku = $row->Nilai;
+						$NilaiBukuFix = number_format($row->Nilai,2,",",".");
+					}
+					
 					$noReg=$row->noRegister;
 					$data = $row->noReg;
 					$ex = explode(',',$data);
@@ -23913,6 +24043,7 @@ $footer ="
 					$PenyusutanPerTahunTotal = $PenyusutanPerTahunTotal + $PenyusutanPerTahun;
 					$AkumulasiPenyusutanTotal = $AkumulasiPenyusutanTotal + $AkumulasiPenyusutan;
 					$NilaiBukuTotal = $NilaiBukuTotal + $NilaiBuku;
+					
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
