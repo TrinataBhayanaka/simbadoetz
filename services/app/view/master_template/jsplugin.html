@@ -1,6 +1,6 @@
 
     <!-- jQuery 2.1.4 -->
-    <script src="{$basedomain}assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script type="text/javascript" language="javascript" src="{$basedomain}assets/plugins/jquery_simbada.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{$basedomain}assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -18,14 +18,76 @@
     <!-- ChartJS 1.0.1 -->
     <script src="{$basedomain}assets/plugins/chartjs/Chart.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{$basedomain}assets/dist/js/pages/dashboard2.js"></script>
+    <!-- // <script src="{$basedomain}assets/dist/js/pages/dashboard2.js"></script> -->
     <!-- AdminLTE for demo purposes -->
     <script src="{$basedomain}assets/dist/js/demo.js"></script>
     <script src="{$basedomain}assets/datepicker/bootstrap-datepicker.js"></script>
 
-<script src="{$basedomain}assets/plugins/select2/select2.full.min.js"></script>
+        <script type="text/javascript" src="{$basedomain}assets/plugins/select2/select2simbada.js"></script>
 <script type="text/javascript">
-  $('select').select2();
+
+var base_url='{$basedomain}';
+{literal}
+  
+$(document).ready(function() {
+  $("#kodesatker").select2({
+                    placeholder: "Pilih Unit Pengelola Barang",
+                    dropdownAutoWidth: 'true',
+                    minimumInputLength: 2,
+                    ajax: {
+                        url: base_url+"home/satker/",
+                        dataType: 'json',
+                        type: "GET",
+                        quietMillis: 50,
+                        data: function (term) {
+                            return {
+                                // free: 1,
+                                // sess: '',
+                                term: term
+                            };
+                        },
+                        results: function (datas) {
+                            return {
+                                results: $.map(datas, function (item) {
+                                    return {
+                                        text: item.kode+" "+item.NamaSatker,
+                                        id: item.kode
+                                    }   
+                                })
+                            };
+                        }
+                    }
+                });
+    $("#kodekelompok").select2({
+                    placeholder: "Pilih Jenis Aset",
+                    dropdownAutoWidth: 'true',
+                    minimumInputLength: 2,
+                    ajax: {
+                        url: base_url+"home/kelompok/",
+                        dataType: 'json',
+                        type: "GET",
+                        quietMillis: 50,
+                        data: function (term) {
+                            return {
+                                // free: 1,
+                                // sess: '',
+                                term: term
+                            };
+                        },
+                        results: function (datas) {
+                            return {
+                                results: $.map(datas, function (item) {
+                                    return {
+                                        text: item.Kode+" "+item.Uraian,
+                                        id: item.Kode
+                                    }   
+                                })
+                            };
+                        }
+                    }
+                });
+} );
+{/literal}
 </script>
     <script type="text/javascript">
       $("button#tombol").click(function(e){
@@ -47,7 +109,6 @@
       </script>
 <script type="text/javascript">
 
-var base_url='{$basedomain}';
 {literal}
  // $("#click.page").click(function(e){
 

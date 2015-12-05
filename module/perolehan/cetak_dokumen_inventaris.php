@@ -52,11 +52,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<li><a href="#rekapbarang" data-toggle="tab">Rekapitulasi Barang</a></li>
 						<li><a href="#rekapsensusbarang" data-toggle="tab">Rekapitulasi Sensus Barang</a></li>
 						<li><a href="#kir" data-toggle="tab">KIR</a></li>
-						<li><a href="#biskpd" data-toggle="tab">Buku Inventaris SKPD</a></li>
+						<!--<li><a href="#biskpd" data-toggle="tab">Buku Inventaris SKPD</a></li>-->
 						<li><a href="#biskpdgab" data-toggle="tab">Buku Inventaris Gabungan SKPD</a></li>
-						<li><a href="#rbiskpd" data-toggle="tab">Rekapitulasi Buku Inventaris SKPD</a></li>
+						<!--<li><a href="#rbiskpd" data-toggle="tab">Rekapitulasi Buku Inventaris SKPD</a></li>
 						<li><a href="#biid" data-toggle="tab">Buku Induk Inventaris Daerah</a></li>
-						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>
+						<li><a href="#rbiid" data-toggle="tab">Rekapitulasi Buku Induk Inventaris Daerah</a></li>-->
 						<li><a href="#label" data-toggle="tab">Label Kode Barang</a></li>
 						<li><a href="#kb" data-toggle="tab">Kartu Barang</a></li>
 						<li><a href="#lpri" data-toggle="tab">Laporan Inventaris</a></li>
@@ -368,7 +368,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						</form>
 						</div>
 						
-						<div class="tab-pane" id="biskpd">
+						<!--<div class="tab-pane" id="biskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Buku Inventaris SKPD</div>
 						</div>
@@ -436,7 +436,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<input type="hidden" name="tab" value="3">
 						<input type="hidden" name="bukuInv" value="bukuInv">
 						</form>
-						</div>
+						</div>-->
 						
 						<div class="tab-pane" id="biskpdgab">
 						<div class="breadcrumb">
@@ -462,7 +462,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<li>
+							<?php selectAllAset('kelompok_id3','235',true,false); ?>
+							<li>&nbsp;</li>
+							<!--<li>
 								<span class="span2">Kelompok</span>
 								<div class="input-append">
 									<input type="text" name="lda_kelompok3" id="lda_kelompok3" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
@@ -470,15 +472,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									<div class="inner" style="display:none;">
 										
 										<?php
-											$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
-											$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
-											js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok3","kelompok_id3",'kelompok3','ldakelompokfilter3');
-											$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-											radiokelompok($style,"kelompok_id3",'kelompok3','ldakelompokfilter3');
+											// $alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
+											// $alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
+											// js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok3","kelompok_id3",'kelompok3','ldakelompokfilter3');
+											// $style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
+											// radiokelompok($style,"kelompok_id3",'kelompok3','ldakelompokfilter3');
 										?>
 									</div>
 								</div>
-							</li>
+							</li>-->
 							<li>
 							<?php //selectAllSatker('kodeSatker3','255',true,false); 
 					
