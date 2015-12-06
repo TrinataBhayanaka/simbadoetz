@@ -661,5 +661,21 @@ class DB
 		$res = $this->lazyQuery($sql,$debug);
 		return $res;
 	}
+
+	function log($activity_id=1, $desc=array(), $debug=false)
+	{	
+		$activity_desc = "";
+		if ($desc) $activity_desc = serialize($desc);
+		$user_id = $_SESSION['ses_uoperatorid'];
+		$datetimes = date('Y-m-d H:i:s'); 
+        $source = $_SERVER['REMOTE_ADDR'];
+
+		$sql = array(
+	            'table'=>'activity_log',
+	            'field'=>"user_id, activity_id, activity_desc, source, datetimes",
+	            'value' => "{$user_id}, '{$activity_id}','{$activity_desc}', '{$source}', '{$datetimes}'",
+	            );
+        $res = $this->lazyQuery($sql,$debug,1);
+	}
 }
 ?>

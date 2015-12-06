@@ -91,6 +91,7 @@ $data_admin = $RETRIEVE_ADMIN->admin_retrieve_app_conf($NAMA_KABUPATEN);
         	</ul>
         </li>
         <li><a href="?page=14">News Update</a></li>
+        <!-- <li><a href="?page=15">Activity User</a></li> -->
 </ul>
 </div>
                                                 </td>

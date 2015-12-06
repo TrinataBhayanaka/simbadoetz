@@ -146,7 +146,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 		<section class="formLegend">
 			
 			<div class="detailLeft">
-					<span class="label label-success">Filter data: <?php echo $_SESSION['parameter_sql_total']?> filter (View seluruh data)</span>
+					<!-- <span class="label label-success">Filter data: <?php echo $_SESSION['parameter_sql_total']?> filter (View seluruh data)</span> -->
 			</div>
 		
 			<div class="detailRight" align="right">
@@ -180,7 +180,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 							<li>
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
-								   <ul class="pager">
+								  <!--  <ul class="pager">
 								   	<?php 
 								   		$prev = intval($_GET['pid']-1);
 								   		$next = intval($_GET['pid']+1);
@@ -188,7 +188,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 										<li><a href="<?php echo"$url_rewrite/module/penggunaan/penggunaan_penetapan_tambah_data.php?pid=$prev";?>" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
 										<li><a href="<?php echo"$url_rewrite/module/penggunaan/penggunaan_penetapan_tambah_data.php?pid=$next";?>" class="buttonnext1">Next</a></li>
-									</ul>
+									</ul> -->
 							</li>
 						</ul>
 							
@@ -206,7 +206,7 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
     </script>
 			<div id="demo">
 			<form name="myform" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data.php">
-                       <input type="submit" name="submit2" class="btn btn-primary" value="Penetapan Penggunaan" id="submit" disabled/>
+                       <input type="submit" name="submit2" class="btn btn-success" value="Tetapkan Penggunaan" id="submit" disabled/><br/>
 							<input type="hidden" name="jenisaset" value="<?php echo implode(',', $dataParam['jenisaset'])?>">
                        <table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="penggunaan_table">
                             <thead>
