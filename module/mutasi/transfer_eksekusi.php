@@ -456,7 +456,7 @@ include "../../config/config.php";
 					<div class="modal-bodyeksekusi">
 					
 					 <div class="formLogin">
-					 		<span class="btn lihat" prop="<?=$nilai2[TipeAset]?>">Load data aset</span>
+					 		<span class="btn lihat" prop="<?=$nilai2[TipeAset]?>" idaset="<?=$nilai2[Aset_ID]?>">Load data aset</span>
 							
 							<div class="formData"></div>
 							<span class="formDataParent"></span>
@@ -480,10 +480,11 @@ include "../../config/config.php";
 
 			var idsatker = $('#kodeSatker').val();
 			var type = $(this).attr('prop');
+			var idaset = $(this).attr('idaset');
 
 			// setTimeout(function(){
 
-				$.post(basedomain+'/function/phpajax/ajax.php',{daftarAset:true, idsatker:idsatker, type:type}, function(data){
+				$.post(basedomain+'/function/phpajax/ajax.php',{daftarAset:true, idsatker:idsatker, type:type, idaset:idaset}, function(data){
 
 		            var html = "";
 
