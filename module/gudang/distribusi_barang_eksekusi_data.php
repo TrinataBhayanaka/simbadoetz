@@ -16,6 +16,7 @@ if($_GET['id']){
 	    {
 	      // pr($_POST);exit;
 	      $dataArr = $STORE->store_transfer($_POST);
+	      $DBVAR->log(2,$_POST);
 	    }  else
 	    {
 	      $dataArr = $STORE->store_edit_transfer($_POST,$_GET['id']);

@@ -217,6 +217,21 @@ class RETRIEVE_ADMIN extends DB {
         return $dataArr;
     
     }
+
+    function getActivity($debug=false)
+    {
+        $sql = array(
+                'table'=>'activity_log AS l, activity AS a, operator AS o',
+                'field'=>'l.*, a.activity_value, o.UserNm',
+                'condition' => "1",
+                'joinmethod' => 'LEFT JOIN',
+                'join' => 'l.activity_id = a.activity_id, l.user_id = o.OperatorID'
+                );
+
+        $res = $this->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
 }
 ?>
 
