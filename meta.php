@@ -18,6 +18,7 @@ if ($u_sess) $isLogin = true;
          <link href="<?php echo "$url_rewrite/"; ?>js/select2/select2.css" rel="stylesheet"/>
          <link href="<?php echo "$url_rewrite/"; ?>js/nprogress/nprogress.css" rel="stylesheet"/>
          <link href="<?php echo "$url_rewrite/"; ?>js/datepicker/css/datepicker.css" rel="stylesheet"/>
+         <link href="<?php echo "$url_rewrite/"; ?>css/smk-accordion.css" rel="stylesheet"/>
          <!-- <link href="<?php echo "$url_rewrite/"; ?>js/pace/style-flash.css" rel="stylesheet"/> -->
 		<style type="text/css" title="currentStyle">
 			@import '<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css';
@@ -193,6 +194,7 @@ if ($u_sess) $isLogin = true;
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/nprogress/nprogress.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.form.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/datepicker/js/bootstrap-datepicker.js"></script>
+	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/smk-accordion.js"></script>
 	  <!--<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/pace/pace.min.js"></script>-->
 	   <script>
 	function change_pemilik() 
@@ -266,5 +268,17 @@ if ($u_sess) $isLogin = true;
 	
     </script> 
      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
+     <script type="text/javascript">
+		jQuery(document).ready(function($){
+
+		$(".accordion-demo").smk_Accordion({
+		showIcon: true, // Show the expand/collapse icons.
+		animation: true, // Expand/collapse sections with slide aniamtion.
+		closeAble: true, // Closeable section.
+		slideSpeed: 200 // the speed of slide animation.
+		});
+
+		});
+</script>
 </head>
 <body>
