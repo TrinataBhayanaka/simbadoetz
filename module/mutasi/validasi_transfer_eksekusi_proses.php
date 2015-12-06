@@ -31,9 +31,9 @@ if ($_POST['submit']){
     if (isset($_POST['aset_id'])){
         if (count($_POST['aset_id'])>0){
             // pr('ada');exit;
-
+            $DBVAR->log(6, $_POST);
             $data = $MUTASI->store_validasi_Mutasi($_POST);
-
+            
         }    
     }
     
