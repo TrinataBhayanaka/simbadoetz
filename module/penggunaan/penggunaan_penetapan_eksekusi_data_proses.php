@@ -24,6 +24,7 @@ $olah_tgl=  format_tanggal_db2($penggu_penet_eks_tglpenet);
 // exit;
 $data=$PENGGUNAAN->store_penetapan_penggunaan($_POST);
 
+$DBVAR->log(3, $_POST);
 
 // exit;
 /*

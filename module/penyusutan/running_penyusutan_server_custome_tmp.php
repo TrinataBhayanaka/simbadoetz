@@ -22,7 +22,7 @@ $id=$argv[4];
 	$newTahun = $tahun - 1; 
 }*/
 
-$newTahun = $tahun - 1; 
+$newTahun = $tahun ; 
 // $newTahun = $tahun - 1; 
 $aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.Info','a.NilaiPerolehan','a.noRegister','a.PenyusutanPerTahun','a.AkumulasiPenyusutan','a.TipeAset','a.kodeSatker','a.Status_Validasi_Barang');
 $fieldCustom = str_replace(" , ", " ", implode(", ", $aColumns));
@@ -293,7 +293,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
                    $penyusutan_per_tahun=round($NilaiPerolehan/$masa_manfaat)  ;
                    $Tahun_Aktif= $tahun;
                    // $Tahun_Aktif= $tahun - 1;
-                   $rentang_tahun_penyusutan = $Tahun_Aktif-$Tahun;
+                   $rentang_tahun_penyusutan = ($Tahun_Aktif-$Tahun)+1;
 				   if($rentang_tahun_penyusutan>=$masa_manfaat){
                         $AkumulasiPenyusutan = $NilaiPerolehan;
 						$NilaiBuku = 0;

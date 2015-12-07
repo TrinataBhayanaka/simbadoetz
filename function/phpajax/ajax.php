@@ -258,7 +258,7 @@ function retrieve_data_aset_by_type($data, $debug=false)
 	global $DBVAR;
     // pr($data);
     $revert = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
-
+    $idaset = intval($data['idaset']);
     // echo $revert[$data['TipeAset']];
     $tableAlias = getTableKibAlias($revert[$data['type']]);
 
@@ -266,7 +266,7 @@ function retrieve_data_aset_by_type($data, $debug=false)
     $sql = array(
             'table'=>"{$tableAlias[listTable]}, kelompok AS k",
             'field'=>"{$tableAlias[listTableAlias]}.*, k.Uraian",
-            'condition'=>"{$tableAlias[listTableAlias]}.Status_Validasi_Barang = 1 AND {$tableAlias[listTableAlias]}.StatusTampil = 1 AND {$tableAlias[listTableAlias]}.kodeSatker = '{$data['idsatker']}'",
+            'condition'=>"{$tableAlias[listTableAlias]}.Status_Validasi_Barang = 1 AND {$tableAlias[listTableAlias]}.StatusTampil = 1 AND {$tableAlias[listTableAlias]}.kodeSatker = '{$data['idsatker']}' AND {$tableAlias[listTableAlias]}.Aset_ID != '{$idaset}'",
             
             'joinmethod' => 'LEFT JOIN',
             'join' => "{$tableAlias[listTableAlias]}.kodeKelompok = k.kode"
