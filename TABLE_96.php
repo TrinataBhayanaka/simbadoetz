@@ -165,18 +165,18 @@ foreach ($TABLE_96 as $key => $val){
            
 }
 
-//print_r($data);
+print_r($data);
 
-$kode='02.06.02.06';
+$kode='02.06';
 
 $temp_kolom=array_column($data, $kode,'Nilai');
-//print_r($temp_kolom);
+print_r($temp_kolom);
 
 $i=0;
 $jml=0;
 foreach ($temp_kolom as $key => $val){
      $databaru[$val][] = $key;
-     echo "$key<br/>";
+    // echo "$key<br/>";
      $jml+=$key;
      $i++;
 }
