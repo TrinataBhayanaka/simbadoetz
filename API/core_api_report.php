@@ -6162,12 +6162,14 @@ class core_api_report extends DB {
 		$splitKodeSatker = explode ('.',$skpd_id);
 		if(count($splitKodeSatker) == 4){	
 			$paramSatker = "kodeSatker = '$skpd_id'";
-			$paramSatker_mts_tr = "SatkerAwal = '$skpd_id'";
+			// $paramSatker_mts_tr = "SatkerAwal = '$skpd_id'";
+			$paramSatker_mts_tr = "SatkerTujuan = '$skpd_id'";
 			$paramSatker_mts_rc = "SatkerTujuan = '$skpd_id'";
 			
 		}else{
 			$paramSatker = "kodeSatker like '$skpd_id%'";
-			$paramSatker_mts_tr = "SatkerAwal like '$skpd_id%'";
+			// $paramSatker_mts_tr = "SatkerAwal like '$skpd_id%'";
+			$paramSatker_mts_tr = "SatkerTujuan like '$skpd_id%'";
 			$paramSatker_mts_rc = "SatkerTujuan like '$skpd_id%'";
 			
 		}
