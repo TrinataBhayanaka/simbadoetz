@@ -191,7 +191,7 @@ if($kib == 'B'){
 					AND a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <= '$newTahun-12-31'";
 }elseif($kib == 'D'){
      	$queryKib 		= "create temporary table aset_tmp as
-                                           select a.Jaringan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 
+                                           select a.Jaringan_ID, a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, 'TipeAset',
                                                  a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, a.NilaiPerolehan, a.Alamat, a.Info, 
                                                  a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Panjang, a.Lebar, a.NoDokumen, a.TglDokumen, a.StatusTanah, 
                                                  a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
@@ -208,7 +208,7 @@ if($kib == 'B'){
     
 
       
-      $queryLog 		= "replace into aset_tmp (Jaringan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, TipeAset
+      $queryLog 		= "replace into aset_tmp (Jaringan_ID, Aset_ID, kodeKelompok, kodeSatker, kodeLokasi, noRegister, TglPerolehan, TglPembukuan, kodeData, TipeAset,
                                             kodeKA, kodeRuangan,Status_Validasi_Barang, StatusTampil, Tahun, NilaiPerolehan, Alamat, Info, 
                                             AsalUsul, kondisi, CaraPerolehan, Konstruksi, Panjang, Lebar, NoDokumen, TglDokumen, StatusTanah, 
                                             NoSertifikat, TglSertifikat, Tanah_ID, KelompokTanah_ID, GUID, TanggalPemakaian, LuasJaringan, MasaManfaat, 
@@ -243,12 +243,12 @@ $sWhere=" WHERE $status a.AkumulasiPenyusutan IS NOT NULL AND a.PenyusutanPerTah
 }		 
 
 //untuk tanggal perubahan reset log andreas
-                                                                      if($tahun == 2014){
-                                                                           $plus_tahun=$tahun+1;
-                                                                     $TglPerubahan = $plus_tahun."-01"."-01";
-                                                                      } 
-                                                                     else
-                                                                           $TglPerubahan = $tahun."-12"."-31";
+if($tahun == 2014){
+   $plus_tahun=$tahun+1;
+$TglPerubahan = $plus_tahun."-01"."-01";
+} 
+else
+   $TglPerubahan = $tahun."-12"."-31";
                                                                      
                                                                      
                                                                      
