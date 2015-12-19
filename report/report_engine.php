@@ -5284,7 +5284,7 @@ foreach ($dataArr as $satker_id => $value)
 			if($kode_1_child == '07.01' || $kode_1_child == '07.21' || $kode_1_child == '07.22' || $kode_1_child == '07.23' || $kode_1_child == '07.24'){
 				$nilaiNBFix = 0;
 			}else{
-				if($nilaiNB_1 != 0){
+				if($nilaiNB_1 != 0 || $nilaiAPFix!=0){
 					$nilaiNBFix = $nilaiNB_1;
 				}else{
 					$nilaiNBFix = $nilai_1;
