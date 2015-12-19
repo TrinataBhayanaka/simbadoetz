@@ -21,7 +21,7 @@ $id=$argv[4];
 }else{
 	$newTahun = $tahun - 1; 
 }*/
-$newTahun = $tahun - 1; 
+$newTahun = $tahun ; 
 
 $aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.Info','a.NilaiPerolehan','a.noRegister','a.PenyusutanPerTahun','a.AkumulasiPenyusutan','a.TipeAset','a.kodeSatker','a.Status_Validasi_Barang');
 $fieldCustom = str_replace(" , ", " ", implode(", ", $aColumns));
@@ -261,10 +261,13 @@ $sQuery = "
 			$sWhere
 			$AddCondtn_1";
 }	
-echo "masukk";
+//echo "masukk";
 // $time_start = microtime_float();
 //select Tgl Penyusutan
 $ExeQuery = $DBVAR->query($sQuery) or die($DBVAR->error());
+echo "Penyusutan tahun pertama $kodeSatker \n"
+        . "Aset_ID \t kodeKelompok  \t NilaiPerolehan \t Tahun \t masa_manfaat \t AkumulasiPenyusutan \t NilaiBuku  \t penyusutan_per_tahun \n";
+
 while($Data = $DBVAR->fetch_array($ExeQuery)){
 		$Aset_ID = $Data['Aset_ID'];
 		
