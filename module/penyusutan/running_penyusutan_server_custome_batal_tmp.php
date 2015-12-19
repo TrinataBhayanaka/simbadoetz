@@ -31,7 +31,13 @@ $sTable_inner_join_kelompok = "kelompok as k";
 $cond_kelompok ="k.Kode = a.kodeKelompok ";
 $status = "a.Status_Validasi_Barang = 1 AND";
 
-
+ if($tahun == 2014){
+    $plus_tahun=$tahun+1;
+    $TglPerubahan_temp = $plus_tahun."-01"."-01";
+  } 
+     else
+     $TglPerubahan_temp = $tahun."-12"."-31";
+     
 if($kib == 'B'){
     $queryKib 		= "create temporary table aset_tmp as
                                       select a.Mesin_ID,a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 'TipeAset',
@@ -62,7 +68,7 @@ if($kib == 'B'){
                                                  from log_mesin a
                                                  inner join mesin t on t.Aset_ID=a.Aset_ID
                                                  inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                                 where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$tahun-12-31'"
+                                                 where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp'"
             . "              order by a.log_id desc";
          $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
      
@@ -118,7 +124,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                                  from log_mesin a
                                                  inner join mesin t on t.Aset_ID=a.Aset_ID
                                                  inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                                 where (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and  a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$tahun-12-31'"
+                                                 where (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and  a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp'"
             . "                          order by a.log_id desc";
          $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
     
@@ -182,7 +188,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                             from log_bangunan a
                                             inner join bangunan t on t.Aset_ID=a.Aset_ID
                                             inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$tahun-12-31' "
+                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
               . ""
               . "    order by a.log_id desc";
         
@@ -241,7 +247,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                             from log_bangunan a
                                             inner join bangunan t on t.Aset_ID=a.Aset_ID
                                             inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$tahun-12-31' "
+                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
               . "   order by a.log_id desc";
         $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
         
@@ -304,7 +310,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                       from log_jaringan a
                                       inner join jaringan t on t.Aset_ID=a.Aset_ID
                                       inner join jaringan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                      where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$tahun-12-31' "
+                                      where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
               . "             order by a.log_id desc";
       $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
       
