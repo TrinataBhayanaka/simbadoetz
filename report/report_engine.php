@@ -5115,7 +5115,7 @@ foreach ($dataArr as $satker_id => $value)
 			$TotalNilaiPPFix=number_format($TotalNilai[2],2,",",".");
 			//nilai akumulasi penyusutan
 			$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
-			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
 			}else{
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[0],2,",",".");
