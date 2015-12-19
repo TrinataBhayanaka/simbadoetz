@@ -5248,9 +5248,16 @@ foreach ($dataArr as $satker_id => $value)
 			
 			//cek jika nilai buku 0 diganti sama nilai perolehan
 			if($kode_1_child != '07.01' || $kode_1_child != '07.21' || $kode_1_child != '07.22' || $kode_1_child != '07.23' || $kode_1_child != '07.24'){
-				if($nilaiNB_1 != 0 || $nilaiNB_2 != 0){
+				if($nilaiNB_1 != 0 && $nilaiNB_2 != 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}elseif($nilaiNB_1 != 0 && $nilaiNB_2 == 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}elseif($nilaiNB_1 == 0 && $nilaiNB_2 != 0){
 					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
 				}else{
+                                                                 if($nilaiAPFix!=0)
+                                                                      $nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+                                                                 else
 					$nilaiNBFix = ($nilai_1) + ($nilai_2);
 				}	
 			}else{
