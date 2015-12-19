@@ -396,9 +396,6 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 			$ExeQueryAset = $DBVAR->query($QueryAset);
 			//untuk log txt
 			echo "$Aset_ID \t $kodeKelompok \t $NilaiPerolehan \t $Tahun \t $masa_manfaat \t $AkumulasiPenyusutan \t $NilaiBuku  \t $penyusutan_per_tahun \n";
-			//untuk tanggal perubahan reset log andreas
-			$TglPerubahan = $tahun."-01"."-01";
-
 			//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat,NilaiBuku
 			if($Data['TipeAset'] == 'B'){
 				$tableKib = 'mesin';
@@ -413,7 +410,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 				$ExeQueryKib = $DBVAR->query($QueryKib);
 				
 				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
-				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+				$QueryKib	  = "UPDATE $tableLog SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
@@ -425,7 +422,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 			}elseif($Data['TipeAset'] == 'C'){
 				$tableKib = 'bangunan';
 				$tableLog = 'log_bangunan';
-				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+				$QueryKib	  = "UPDATE $tableLog SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
@@ -459,7 +456,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 
 
 				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
-				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+				$QueryKib	  = "UPDATE $tableLog SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
