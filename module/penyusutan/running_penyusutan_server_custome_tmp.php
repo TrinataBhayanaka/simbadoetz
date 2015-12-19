@@ -337,7 +337,9 @@ where a.TglPerolehan <='$newTahun-12-31' AND a.TglSKKDH >'$newTahun-12-31' AND "
 
 
 if($tahun == 2014){
-$sWhere=" WHERE $status a.AkumulasiPenyusutan IS NULL AND a.PenyusutanPerTahun IS NULL  
+$sWhere=" WHERE $status 
+    ((a.AkumulasiPenyusutan IS NULL AND a.PenyusutanPerTahun IS NULL) or (a.AkumulasiPenyusutan =0 AND a.PenyusutanPerTahun =0) )
+     
 			  AND a.kodeSatker='$kodeSatker' AND a.kodeKelompok like '$flagKelompok%' ";
 // echo "tahun = 2015";			  
 }elseif($tahun >= 2015){
