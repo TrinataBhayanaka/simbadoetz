@@ -30,6 +30,7 @@ if($tglawal != ''){
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
+$tipeAset=$_GET['tipeAset'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
 // exit;
@@ -159,8 +160,24 @@ if($hit == 1){
 // echo $head;
 // exit;
 //start
-$data = array('tanahView','mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
+if($tipeAset == 'all'){
+	$data = array('tanahView','mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
+}elseif($tipeAset == 'tanah'){
+	$data = array('tanahView');
+}elseif($tipeAset == 'mesin'){
+	$data = array('mesin_ori');
+}elseif($tipeAset == 'bangunan'){
+	$data = array('bangunan_ori');
+}elseif($tipeAset == 'jaringan'){
+	$data = array('jaringan_ori');
+}elseif($tipeAset == 'asetlain'){
+	$data = array('asetlain_ori');
+}elseif($tipeAset == 'kdp'){
+	$data = array('kdp_ori');
+}
+$hit_loop = count($data);
 $i=0;
+$loop = 1;
 $head ="<head>
 			  <meta content=\"text/html; charset=UTF-8\"http-equiv=\"content-type\">
 			  <title></title>
@@ -299,6 +316,13 @@ $data=array();
 		{	
 	   if($gol[AP]==""||$gol[AP]==0)
 			$gol[NB]=$gol[nilai];
+			$jml_total = $jml_total + $gol[jml];
+			$np_total = $np_total + $gol[nilai];
+			$pp_total = $pp_total + $gol[PP];
+			$ap_total = $ap_total + $gol[AP];
+			$nb_total = $nb_total + $gol[NB];
+			
+		
 		$body.="<tr>
 					<td style=\"font-weight: bold;\">{$gol[Golongan]}</td>
 					<td>&nbsp;</td>
@@ -312,7 +336,7 @@ $data=array();
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[AP],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[NB],2,",",".")."</td>                                         
 				</tr>";	
-
+				
 			foreach($gol['Bidang'] as $bidang)
 			{	
 			   if($bidang[AP]==""||$bidang[AP]==0)
@@ -386,11 +410,30 @@ $data=array();
 				}
 			
 			}
-		}	
-	$foot="</table>";
-	$html =$head.$body.$foot;	
-		 }
-  $i++;
+		}
+	// $foot="</table>";
+	// $html =$head.$body.$foot;	
+	}
+	
+	$i++;
+	// pr($i);
+	// pr($hit_loop);
+	if($i == $hit_loop){
+		$foot="<tr>
+				<td colspan = \"6\" style=\"text-align: center; font-weight: bold;\">Jumlah</td>
+				<td style=\"text-align: center; font-weight: bold;\">".number_format($jml_total,0,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($np_total,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($pp_total,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($ap_total,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($nb_total,2,",",".")."</td>
+			</tr>
+		</table>";
+	}else{
+		$foot= '';
+	}
+	$html =$head.$body.$foot;
+	
+  
 }
 //bidang
 function bidang($kode_golongan,$gol,$ps,$pt) {

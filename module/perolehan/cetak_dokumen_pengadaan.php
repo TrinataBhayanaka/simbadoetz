@@ -559,6 +559,18 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
+							<li>
+								<span class="span2">Jenis Aset</span>
+								<select name="tipeAset" id="tipeAset" style="width:170px">
+									<option value="all">Semua Aset</option>
+									<option value="tanah">Tanah</option>
+									<option value="mesin">Mesin</option>
+									<option value="bangunan">Bangunan</option>
+									<option value="jaringan">Jaringan</option>
+									<option value="asetlain">Aset Lain</option>
+									<option value="kdp">KDP</option>
+								</select>
+							</li>
 							<?php //selectAllSatker('kodeSatker8','255',true,false); 
 				
 								selectAllSatker('kodeSatker18','255',true,false,false,true);
