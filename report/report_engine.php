@@ -5115,7 +5115,7 @@ foreach ($dataArr as $satker_id => $value)
 			$TotalNilaiPPFix=number_format($TotalNilai[2],2,",",".");
 			//nilai akumulasi penyusutan
 			$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
-			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
 			}else{
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[0],2,",",".");
@@ -5144,7 +5144,7 @@ foreach ($dataArr as $satker_id => $value)
 			$totalALLPP = $totalALLPP + $TotalNilai[2];
 			$totalALLAP = $totalALLAP + $TotalNilai[3];
 			//cek jika nilai buku 0 diganti sama nilai perolehan
-			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[4];
 			}else{
 				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[0];
@@ -5248,9 +5248,16 @@ foreach ($dataArr as $satker_id => $value)
 			
 			//cek jika nilai buku 0 diganti sama nilai perolehan
 			if($kode_1_child != '07.01' || $kode_1_child != '07.21' || $kode_1_child != '07.22' || $kode_1_child != '07.23' || $kode_1_child != '07.24'){
-				if($nilaiNB_1 != 0 || $nilaiNB_2 != 0){
+				if($nilaiNB_1 != 0 && $nilaiNB_2 != 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}elseif($nilaiNB_1 != 0 && $nilaiNB_2 == 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}elseif($nilaiNB_1 == 0 && $nilaiNB_2 != 0){
 					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
 				}else{
+                                                                 if($nilaiAPFix!=0)
+                                                                      $nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+                                                                 else
 					$nilaiNBFix = ($nilai_1) + ($nilai_2);
 				}	
 			}else{
@@ -5277,7 +5284,7 @@ foreach ($dataArr as $satker_id => $value)
 			if($kode_1_child == '07.01' || $kode_1_child == '07.21' || $kode_1_child == '07.22' || $kode_1_child == '07.23' || $kode_1_child == '07.24'){
 				$nilaiNBFix = 0;
 			}else{
-				if($nilaiNB_1 != 0){
+				if($nilaiNB_1 != 0 || $nilaiAPFix!=0){
 					$nilaiNBFix = $nilaiNB_1;
 				}else{
 					$nilaiNBFix = $nilai_1;
