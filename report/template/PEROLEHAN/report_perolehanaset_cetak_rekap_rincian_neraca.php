@@ -420,7 +420,7 @@ $data=array();
 	// pr($hit_loop);
 	if($i == $hit_loop){
 		$foot="<tr>
-				<td colspan = \"6\" style=\"text-align: center; font-weight: bold;\">Jumlah</td>
+				<td colspan = \"6\" style=\"text-align: center; font-weight: bold;\">Total</td>
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($jml_total,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($np_total,2,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($pp_total,2,",",".")."</td>
