@@ -5335,8 +5335,8 @@ class core_api_report extends DB {
 								}
 							}
 							// echo "<br>";
-							 echo $queryresult;
-							 echo "<br>";
+							 // echo $queryresult;
+							 // echo "<br>";
 							$resultfix = $this->query($queryresult) or die ($this->error('error'));	
 							if($resultfix){
 								while ($data3 = $this->fetch_object($resultfix))
@@ -9232,9 +9232,9 @@ class core_api_report extends DB {
 			
 				for ($i = 0; $i < count($AllTableTemp); $i++)
 				{
-					/*echo "query_$i =".$AllTableTemp[$i];
-					echo "<br>";
-					echo "<br>";*/
+					// echo "query_$i =".$AllTableTemp[$i];
+					// echo "<br>";
+					// echo "<br>";
 					// exit;
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 				}
