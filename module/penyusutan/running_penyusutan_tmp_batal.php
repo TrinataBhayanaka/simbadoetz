@@ -30,19 +30,19 @@ session_write_close();
                     $query="update  penyusutan_tahun  set StatusRunning=1 where id=$id";
                     $DBVAR->query($query) or die($DBVAR->error());
 					// exit;
-                    $status=exec("php running_penyusutan_server_custome_batal_tmp.php B $Tahun $kodeSatker $id > log/penyusutan-B.txt &");
+                    $status=exec("php running_penyusutan_server_custome_batal_tmp.php B $Tahun $kodeSatker $id >> $path/log/batal-penyusutan-B-$kodeSatker.txt &");
 					header('Location: penyusutan.php');
 					break;
 			case "Gedung dan Bangunan (C)":
                    $query="update  penyusutan_tahun  set StatusRunning=1 where id=$id";
                    $DBVAR->query($query) or die($DBVAR->error());
-                   $status=   exec("php running_penyusutan_server_custome_batal_tmp.php C $Tahun $kodeSatker $id > log/penyusutan-C.txt &");
+                   $status=   exec("php running_penyusutan_server_custome_batal_tmp.php C $Tahun $kodeSatker $id >> $path/log/batal-penyusutan-C-$kodeSatker.txt &");
                    header('Location: penyusutan.php');
 				   break;
 			case "Jalan, Irigrasi, dan Jaringan (D)":
                    $query="update  penyusutan_tahun  set StatusRunning=1 where id=$id";
                    $DBVAR->query($query) or die($DBVAR->error());
-                   $status=   exec("php running_penyusutan_server_custome_batal_tmp.php D $Tahun $kodeSatker $id > log/penyusutan-D.txt &");
+                   $status=   exec("php running_penyusutan_server_custome_batal_tmp.php D $Tahun $kodeSatker $id >> $path/log/batal-penyusutan-D-$kodeSatker.txt &");
                    header('Location: penyusutan.php');
 				   break;
 			}
