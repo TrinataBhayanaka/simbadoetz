@@ -571,6 +571,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									<option value="kdp">KDP</option>
 								</select>
 							</li>
+							<li>
+								<span class="span2">Level</span>
+								<select name="levelAset" id="levelAset" style="width:170px">
+									<option value="1">Semua Level</option>
+									<option value="2">Golongan</option>
+									<option value="3">Bidang</option>
+									<option value="4">Kelompok</option>
+									<option value="5">Sub Kelompok</option>
+									<option value="6">Sub Sub Kelompok</option>
+								</select>
+							</li>
 							<?php //selectAllSatker('kodeSatker8','255',true,false); 
 				
 								selectAllSatker('kodeSatker18','255',true,false,false,true);

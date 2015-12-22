@@ -30,6 +30,7 @@ if($tglawal != ''){
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
+$levelAset=$_GET['levelAset'];
 $tipeAset=$_GET['tipeAset'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
@@ -175,9 +176,9 @@ if($tipeAset == 'all'){
 }elseif($tipeAset == 'kdp'){
 	$data = array('kdp_ori');
 }
+
 $hit_loop = count($data);
-$i=0;
-$loop = 1;
+$i = 0;
 $head ="<head>
 			  <meta content=\"text/html; charset=UTF-8\"http-equiv=\"content-type\">
 			  <title></title>
@@ -309,7 +310,10 @@ $data=array();
 		$ps = $param_satker;
 		$pt =$param_tgl;
 		$data[$i]=$data_gol;
-		$data[$i]['Bidang'] = bidang($kode_golongan,$gol,$ps,$pt);
+		$paramLevelGol = $levelAset;
+		if($paramLevelGol != 2){
+			$data[$i]['Bidang'] = bidang($kode_golongan,$gol,$ps,$pt,$paramLevelGol);
+		}
 		//head asal
 		
 		foreach($data as $gol)
@@ -436,7 +440,7 @@ $data=array();
   
 }
 //bidang
-function bidang($kode_golongan,$gol,$ps,$pt) {
+function bidang($kode_golongan,$gol,$ps,$pt,$paramLevelGol) {
 $param_satker = $ps;
 $splitKodeSatker = explode ('.',$param_satker);
 if(count($splitKodeSatker) == 4){	
@@ -517,15 +521,17 @@ $resultparentBidang = mysql_query($sql) or die(mysql_error());
 	while ($data_bidang = mysql_fetch_array($resultparentBidang)) {
 		$kode_kelompok = $data_bidang[Bidang];
 		$data[$a]=$data_bidang;
-		$data[$a]['Kelompok'] =kelompok($kode_kelompok, $gol,$ps,$pt);
-		 
+		$paramLevelBidang = $paramLevelGol;
+		if($paramLevelBidang != 3){
+			$data[$a]['Kelompok'] =kelompok($kode_kelompok, $gol,$ps,$pt,$paramLevelBidang);
+		}
 		$a++;
 		   
 	}
   return $data;
 }
 //kelompok
-function kelompok($kode_bidang,$gol,$ps,$pt) {
+function kelompok($kode_bidang,$gol,$ps,$pt,$paramLevelBidang) {
 $param_satker = $ps;
 $splitKodeSatker = explode ('.',$param_satker);
 if(count($splitKodeSatker) == 4){	
@@ -608,14 +614,18 @@ $resultparentKelompok = mysql_query($sql) or die(mysql_error());
 	  
 		$kode_kelompok = $data_kelompok[kelompok];
 		$data[$b]=$data_kelompok;
-		$data[$b]['Sub'] =sub($kode_kelompok,$gol,$ps,$pt);
+		$paramLevelKelompok = $paramLevelBidang;
+		if($paramLevelKelompok !=4){
+			$data[$b]['Sub'] =sub($kode_kelompok,$gol,$ps,$pt,$paramLevelKelompok);
+		}
+		
 		
 		$b++;
 	}
  return $data;
 }
 //sub
-function sub($kodeKelompok,$gol,$ps,$pt) {
+function sub($kodeKelompok,$gol,$ps,$pt,$paramLevelKelompok) {
 $param_satker = $ps;
 $splitKodeSatker = explode ('.',$param_satker);
 if(count($splitKodeSatker) == 4){	
@@ -699,14 +709,16 @@ $resultparentSub = mysql_query($sql) or die(mysql_error());
 
 		$kode_sub = $data_sub[sub];
 		$data[$c]=$data_sub;
-		$data[$c]['SubSub'] =subsub($kode_sub,$gol,$ps,$pt);
-		
+		$paramLevelSub = $paramLevelKelompok;
+		if($paramLevelSub !=5){
+			$data[$c]['SubSub'] =subsub($kode_sub,$gol,$ps,$pt,$paramLevelSub);
+		}
 		$c++;
 	 }
 return $data ;
 }
 //subsub
-function subsub($kode_sub,$gol,$ps,$pt) {
+function subsub($kode_sub,$gol,$ps,$pt,$paramLevelSub) {
 $param_satker = $ps;
 $splitKodeSatker = explode ('.',$param_satker);
 if(count($splitKodeSatker) == 4){	
