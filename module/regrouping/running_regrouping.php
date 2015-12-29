@@ -30,7 +30,7 @@ if ($status_regrouping == 0) {
           //running
           $query = "update  regrouping  set status_proses=1 where id_regrouping=$regrouping";
           $DBVAR->query($query) or die($DBVAR->error());
-          $status = exec("php running_regrouping_server.php $regrouping > ../../log/regrouping/regrouping-$regrouping.txt &");
+          $status = exec("php running_regrouping_server.php $regrouping > $path/log/regrouping/regrouping-$satker_lama-$satker_baru-$regrouping.txt &");
           echo "<script>alert('Data Regouping Satker $nama_satker_lama ($satker_lama) -->$nama_satker_baru ($satker_baru) Telah Di Proses');"
                   . "       window.location.href=\"$url_rewrite/module/regrouping/index.php\"</script>";
           
