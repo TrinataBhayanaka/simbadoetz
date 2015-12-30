@@ -1,18 +1,26 @@
 <?php
 
-include "../config/database.php";
+include "../../../config/database.php";
+
 // $CONFIG['default']['db_host'] = 'localhost';
 // $CONFIG['default']['db_user'] = 'root';
 // $CONFIG['default']['db_pass'] = 'root123root';
 // $CONFIG['default']['db_name'] = 'simbada_2014';
 
+
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
-$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMPB' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
 
 while($row = mysqli_fetch_assoc($result)) {
   $asetlist = $row;
+} 
+
+$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_mesin";
+$sumall = $link->query($sql);
+while($row = mysqli_fetch_assoc($sumall)) {
+  $sum = $row;
 } 
 
 $cleardata = explode(",", $asetlist['aset_list']);
@@ -32,7 +40,7 @@ foreach ($cleardata as $key => $val) {
 	$counter++;
 	$tmp = explode("|", $val);
 
-	$sql = "SELECT * FROM tmp_asetlain WHERE temp_AsetLain_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
+	$sql = "SELECT * FROM tmp_mesin WHERE tmp_Mesin_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
 	$result = $link->query($sql); 
 
 	while($row = mysqli_fetch_assoc($result)) {
@@ -41,33 +49,36 @@ foreach ($cleardata as $key => $val) {
 
 	echo "ID Data di proses:".$tmp[0]."\n";
 	echo "Jumlah Data:".$datatmp['Jumlah']."\n";
-
+    
 	$data['kodeSatker'] = $datatmp['kodeSatker'];
-	$data['kodeRuangan'] = $datatmp['kodeRuangan'];
-	$data['kodeKelompok'] = $datatmp['kodeKelompok'];
-	$data['Judul'] = addslashes($datatmp['Judul']);
-	$data['Pengarang'] = addslashes($datatmp['Pengarang']);
-	$data['Penerbit'] = addslashes($datatmp['Penerbit']);
-	$data['Spesifikasi'] = $datatmp['Spesifikasi'];
-	$data['AsalDaerah'] = $datatmp['AsalDaerah'];
-	$data['Material'] = $datatmp['Material'];
-	$data['Ukuran'] = $datatmp['Ukuran'];
+    $data['kodeRuangan'] = $datatmp['kodeRuangan'];
+    $data['kodeKelompok'] = $datatmp['kodeKelompok'];
+    $data['Merk'] = $datatmp['Merk'];
+    $data['Model'] = $datatmp['Model'];
+    $data['Ukuran'] = $datatmp['Ukuran'];
+    $data['Pabrik'] = $datatmp['Pabrik'];
+    $data['NoMesin'] = $datatmp['NoMesin'];
+    $data['NoBPKB'] = $datatmp['NoBPKB'];
+    $data['Material'] = $datatmp['Material'];
+    $data['NoRangka'] = $datatmp['NoRangka'];
+    $data['NoSeri'] = $datatmp['NoSeri'];
 	$data['TglPerolehan'] = $datatmp['TglPerolehan'];
 	$data['Alamat'] = $datatmp['Alamat'];
 	$data['Kuantitas'] = $datatmp['Jumlah'];
 	$data['Satuan'] = $datatmp['NilaiPerolehan'];
 	$data['NilaiPerolehan'] = $datatmp['NilaiPerolehan'];
 	$data['NilaiTotal'] = $datatmp['NilaiTotal'];
-	$data['Info'] = $datatmp['Info'];
+	$data['Info'] = "[importing-" .$sum['sumnilai']. "]" . $datatmp['Info'];
 	$data['id'] = $argv[2];
 	$data['noKontrak'] = $datatmp['noKontrak'];
 	$data['kondisi'] = 1;
-	$data['UserNm'] = 1;
+	$data['UserNm'] = $argv[1];
 	$data['Tahun'] = $datatmp['Tahun'];
 	$data['TipeAset'] = $datatmp['TipeAset'];
 	$data['AsalUsul'] = 'Pembelian';
 	$data['GUID'] = $datatmp['GUID'];
 	$data['xls'] = 1;
+
 
 	$totaldata = store_aset($data,$link,$totaldata);
 	echo "=================== Row Finish:".$counter." ===================\n\n";
@@ -80,6 +91,10 @@ foreach ($cleardata as $key => $val) {
 
 echo "Updating table kontrak\n";
 $sql = "UPDATE kontrak SET n_status = '1' WHERE id = '{$argv[2]}'" or die("Error in the consult.." . mysqli_error($link));
+$exec = $link->query($sql);
+
+echo "Updating log import\n";
+$sql = "UPDATE log_import SET totalPerolehan = '{$sum['sumnilai']}', status = 1 WHERE noKontrak = '{$datatmp['noKontrak']}'";
 $exec = $link->query($sql);
 
 // echo "Commit data\n";
@@ -359,6 +374,35 @@ function store_aset($data,$link,$totaldata)
                 $kib['AsalDaerah'] = $data['AsalDaerah'];
                 $kib['Material'] = $data['Material'];
                 $kib['Ukuran'] = $data['Ukuran'];
+                $kib['StatusTampil'] = 1;
+                $kib['GUID'] = $data['GUID'];
+            } elseif ($data['TipeAset']=="B") {
+                $kib['Aset_ID'] = $tblKib['Aset_ID'];
+                $kib['kodeKelompok'] = $data['kodeKelompok'];
+                $kib['kodeSatker'] = $data['kodeSatker'];
+                $kib['kodeLokasi'] = $tblAset['kodeLokasi'];
+                $kib['noRegister'] = $tblAset['noRegister'];
+                $kib['TglPerolehan'] = $data['TglPerolehan'];
+                $kib['TglPembukuan'] = $data['TglPerolehan'];
+                $kib['kodeKA'] = $tblAset['kodeKA'];
+                $kib['kodeRuangan'] = $data['kodeRuangan'];
+                $kib['StatusValidasi'] = 1;
+                $kib['Status_Validasi_Barang'] = 1;
+                $kib['Tahun'] = $tblAset['Tahun'];
+                $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $kib['Alamat'] = $data['Alamat'];
+                $kib['Info'] = $data['Info'];
+                $kib['AsalUsul'] = $data['AsalUsul'];
+                $kib['kondisi'] = $data['kondisi'];
+                $kib['Merk'] = $data['Merk'];
+                $kib['Model'] = $data['Model'];
+                $kib['Ukuran'] = $data['Ukuran'];
+                $kib['Pabrik'] = $data['Pabrik'];
+                $kib['NoMesin'] = $data['NoMesin'];
+                $kib['NoBPKB'] = $data['NoBPKB'];
+                $kib['Material'] = $data['Material'];
+                $kib['NoRangka'] = $data['NoRangka'];
+                $kib['NoSeri'] = $data['NoSeri'];
                 $kib['StatusTampil'] = 1;
                 $kib['GUID'] = $data['GUID'];
             }

@@ -1,6 +1,6 @@
 <?php
 
-include "../config/database.php";
+include "../../../config/database.php";
 // $CONFIG['default']['db_host'] = 'localhost';
 // $CONFIG['default']['db_user'] = 'root';
 // $CONFIG['default']['db_pass'] = 'root123root';
@@ -10,9 +10,14 @@ $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user
 
 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
-
 while($row = mysqli_fetch_assoc($result)) {
   $asetlist = $row;
+} 
+
+$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_asetlain";
+$sumall = $link->query($sql);
+while($row = mysqli_fetch_assoc($sumall)) {
+  $sum = $row;
 } 
 
 $cleardata = explode(",", $asetlist['aset_list']);
@@ -58,11 +63,11 @@ foreach ($cleardata as $key => $val) {
 	$data['Satuan'] = $datatmp['NilaiPerolehan'];
 	$data['NilaiPerolehan'] = $datatmp['NilaiPerolehan'];
 	$data['NilaiTotal'] = $datatmp['NilaiTotal'];
-	$data['Info'] = $datatmp['Info'];
+	$data['Info'] = "[importing-" .$sum['sumnilai']. "]" . $datatmp['Info'];
 	$data['id'] = $argv[2];
 	$data['noKontrak'] = $datatmp['noKontrak'];
 	$data['kondisi'] = 1;
-	$data['UserNm'] = 1;
+	$data['UserNm'] = $argv[1];
 	$data['Tahun'] = $datatmp['Tahun'];
 	$data['TipeAset'] = $datatmp['TipeAset'];
 	$data['AsalUsul'] = 'Pembelian';
@@ -82,6 +87,9 @@ echo "Updating table kontrak\n";
 $sql = "UPDATE kontrak SET n_status = '1' WHERE id = '{$argv[2]}'" or die("Error in the consult.." . mysqli_error($link));
 $exec = $link->query($sql);
 
+echo "Updating log import\n";
+$sql = "UPDATE log_import SET totalPerolehan = '{$sum['sumnilai']}', status = 1 WHERE noKontrak = '{$datatmp['noKontrak']}'";
+$exec = $link->query($sql);
 // echo "Commit data\n";
 // $command = "COMMIT;";
 // $exec = $link->query($command);

@@ -10,16 +10,16 @@ $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
-$RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
+$RETRIEVE_INVENTARISASI = new RETRIEVE_INVENTARISASI;
 if(isset($_GET['id'])){
-	$dataArr = $RETRIEVE_PEROLEHAN->get_kontrak($_GET['id']);
+	// $dataArr = $RETRIEVE_PEROLEHAN->get_kontrak($_GET['id']);
 	// $xlsData = $RETRIEVE_PEROLEHAN->get_tmpData('tmp_asetlain');
 	
 	$POST['page'] = intval($_GET['pid']);
 	$par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
 
 } else{
-	$dataArr = $RETRIEVE_PEROLEHAN->importing_xls2html($_FILES,$_POST);
+	$dataArr = $RETRIEVE_INVENTARISASI->importing_xls2html($_FILES,$_POST);
 
 }
 
@@ -127,46 +127,20 @@ if(isset($_GET['id'])){
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Rincian Barang</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Inventarisasi</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li class="active">Import xls</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Rincian Barang</div>
+				<div class="title">Import Inventarisasi</div>
 				<div class="subtitle">Import Data xls</div>
 			</div>		
 
 		<section class="formLegend">
 			
-		<div class="detailLeft">
-						
-						<ul>
-							<li>
-								<span class="labelInfo">No. Kontrak</span>
-								<input type="text" value="<?=$dataArr['kontrak']['noKontrak']?>" disabled/>
-							</li>
-							<li>
-								<span class="labelInfo">Tgl. Kontrak</span>
-								<input type="text" value="<?=$dataArr['kontrak']['tglKontrak']?>" disabled/>
-							</li>
-						</ul>
-							
-					</div>
 			<div class="detailRight">
 						
 						<ul>
-							<li>
-								<span class="labelInfo">Nilai SPK</span>
-								<input type="text" id="spk" value="<?=number_format($dataArr['kontrak']['nilai'])?>" disabled/>
-								<input type="hidden" id="spkreal" value="<?=$dataArr['kontrak']['nilai']?>" disabled/>
-							</li>
-							<li>
-								<span  class="labelInfo">Total Rincian Barang</span>
-								<input type="text" id="totalRB" value="<?=isset($dataArr['sumTotal']) ? number_format($dataArr['sumTotal']['total']) : '0'?>" disabled/>
-								<input type="hidden" id="totalRBreal" value="<?=isset($dataArr['sumTotal']) ? $dataArr['sumTotal']['total'] : '0'?>" disabled/>
-							</li>
 							<li>
 								<span  class="labelInfo">Total Nilai Data yang dipilih</span>
 								<input type="text" id="totalxls" data-a-sep="," value="<?=number_format(0)?>" disabled/>

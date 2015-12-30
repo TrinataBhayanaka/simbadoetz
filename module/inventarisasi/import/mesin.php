@@ -1,43 +1,47 @@
 <?php
 include "../../../config/config.php";
 include "excel_reader.php";
-
-include"$path/meta.php";
-include"$path/header.php";
-include"$path/menu.php";
-
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
-$RETRIEVE_PEROLEHAN = new RETRIEVE_PEROLEHAN;
-if(isset($_GET['id'])){
-	$dataArr = $RETRIEVE_PEROLEHAN->get_kontrak($_GET['id']);
-	// $xlsData = $RETRIEVE_PEROLEHAN->get_tmpData('tmp_asetlain');
+
+// $get_data_filter = $RETRIEVE->retrieve_kontrak();
+// pr($get_data_filter);
+?>
+
+<?php
+	include"$path/meta.php";
+	include"$path/header.php";
+	include"$path/menu.php";
+
+	$RETRIEVE_INVENTARISASI = new RETRIEVE_INVENTARISASI;
+	if(isset($_GET['id'])){
+		// $dataArr = $RETRIEVE_PEROLEHAN->get_kontrak($_GET['id']);
+		// $xlsData = $RETRIEVE_PEROLEHAN->get_tmpData('tmp_asetlain');
+
+		$POST['page'] = intval($_GET['pid']);
+		$par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
+
+	} else{
+		$dataArr = $RETRIEVE_INVENTARISASI->importing_xls2html_kibb($_FILES,$_POST);
+	}
 	
-	$POST['page'] = intval($_GET['pid']);
-	$par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&page={$POST['page']}";
-
-} else{
-	$dataArr = $RETRIEVE_PEROLEHAN->importing_xls2html($_FILES,$_POST);
-
-}
-
 ?>
 
 	<script>
-	$(function(){
-		$body = $("body");
-		$('#btn-dis').click(function(){
-			$body.addClass("loading");
-			NProgress.inc();
-		});
+		$(function(){
 
-	});
+			$('#btn-dis').click(function(){
+				$body.addClass("loading");
+				NProgress.inc();
+			});
+
+		});
 		$(document).ready(function() {
 	        $('#totalxls').autoNumeric('init', {mDec:0});
 	        setTimeout(function() {
-			    	getTotalValue('XLSIMP');
+			    	getTotalValue('XLSIMPB');
 				}, 500);
           $('#importxls').dataTable(
                    {
@@ -58,9 +62,14 @@ if(isset($_GET['id'])){
 
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_import_xls.php?<?php echo $par_data_table?>"
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_import_xls_kibb.php?<?php echo $par_data_table?>"
                }
                   );
+	        
+	    });
+
+		jQuery(function($) {
+	        $('#totalxls').autoNumeric('init', {mDec:0});
 	        
 	    });
 
@@ -108,18 +117,18 @@ if(isset($_GET['id'])){
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    
-			    updDataCheckbox('XLSIMP');
+			    updDataCheckbox('XLSIMPB');
 
 			    setTimeout(function() {
-			    	getTotalValue('XLSIMP');
+			    	getTotalValue('XLSIMPB');
 				}, 500);
 			}
 			else
 			{
 			   
-			   updDataCheckbox('XLSIMP');
+			   updDataCheckbox('XLSIMPB');
 			   setTimeout(function() {
-			    	getTotalValue('XLSIMP');
+			    	getTotalValue('XLSIMPB');
 				}, 500);
 			}}, 100);
 		}
@@ -127,46 +136,20 @@ if(isset($_GET['id'])){
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Rincian Barang</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Inventarisasi</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li class="active">Import xls</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Rincian Barang</div>
+				<div class="title">Import Inventarisasi</div>
 				<div class="subtitle">Import Data xls</div>
 			</div>		
 
 		<section class="formLegend">
 			
-		<div class="detailLeft">
-						
-						<ul>
-							<li>
-								<span class="labelInfo">No. Kontrak</span>
-								<input type="text" value="<?=$dataArr['kontrak']['noKontrak']?>" disabled/>
-							</li>
-							<li>
-								<span class="labelInfo">Tgl. Kontrak</span>
-								<input type="text" value="<?=$dataArr['kontrak']['tglKontrak']?>" disabled/>
-							</li>
-						</ul>
-							
-					</div>
 			<div class="detailRight">
 						
 						<ul>
-							<li>
-								<span class="labelInfo">Nilai SPK</span>
-								<input type="text" id="spk" value="<?=number_format($dataArr['kontrak']['nilai'])?>" disabled/>
-								<input type="hidden" id="spkreal" value="<?=$dataArr['kontrak']['nilai']?>" disabled/>
-							</li>
-							<li>
-								<span  class="labelInfo">Total Rincian Barang</span>
-								<input type="text" id="totalRB" value="<?=isset($dataArr['sumTotal']) ? number_format($dataArr['sumTotal']['total']) : '0'?>" disabled/>
-								<input type="hidden" id="totalRBreal" value="<?=isset($dataArr['sumTotal']) ? $dataArr['sumTotal']['total'] : '0'?>" disabled/>
-							</li>
 							<li>
 								<span  class="labelInfo">Total Nilai Data yang dipilih</span>
 								<input type="text" id="totalxls" data-a-sep="," value="<?=number_format(0)?>" disabled/>
@@ -182,8 +165,8 @@ if(isset($_GET['id'])){
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-				<form action="" name="checks" ID="Form2">
-					<p><a href="hasil_kibe.php?id=<?=$_GET['id']?>"><button type="button" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Import</button></a>
+				<form action="hasil_kibb.php" method=POST name="checks" ID="Form2">
+					<p><a href="hasil_kibb.php?id=<?=$_GET['id']?>"><button type="button" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Import</button></a>
 							&nbsp;</p>
 
 						<div id="demo">
@@ -203,7 +186,7 @@ if(isset($_GET['id'])){
 							</thead>
 							<tbody>
 								<tr>
-                                    <td colspan="10">Data Tidak di temukkan</td>
+                                    <td colspan="8">Data Tidak di temukkan</td>
                                </tr>
 							</tbody>
 							<tfoot>
@@ -219,39 +202,39 @@ if(isset($_GET['id'])){
 						<input type="hidden" name="jenisaset" value="<?=$_POST['jenisaset']?>">
 						</form>
 			<div class="spacer"></div>
-			    <style type="text/css">
-					/* Start by setting display:none to make this hidden.
-				   Then we position it in relation to the viewport window
-				   with position:fixed. Width, height, top and left speak
-				   speak for themselves. Background we set to 80% white with
-				   our animation centered, and no-repeating */
-					.modal {
-					    display:    none;
-					    position:   fixed;
-					    z-index:    1000;
-					    top:        0;
-					    left:       21.5%;
-					    height:     100%;
-					    width:      100%;
-					    background: rgba( 0, 0, 0, .8 ) 
-					                url('<?=$url_rewrite?>/js/url2.gif') 
-					                50% 50% 
-					                no-repeat;
-					}
+			<style type="text/css">
+				/* Start by setting display:none to make this hidden.
+			   Then we position it in relation to the viewport window
+			   with position:fixed. Width, height, top and left speak
+			   speak for themselves. Background we set to 80% white with
+			   our animation centered, and no-repeating */
+				.modal {
+				    display:    none;
+				    position:   fixed;
+				    z-index:    1000;
+				    top:        0;
+				    left:       21.5%;
+				    height:     100%;
+				    width:      100%;
+				    background: rgba( 0, 0, 0, .8 ) 
+				                url('<?=$url_rewrite?>/js/url2.gif') 
+				                50% 50% 
+				                no-repeat;
+				}
 
-					/* When the body has the loading class, we turn
-					   the scrollbar off with overflow:hidden */
-					body.loading {
-					    overflow: hidden;   
-					}
+				/* When the body has the loading class, we turn
+				   the scrollbar off with overflow:hidden */
+				body.loading {
+				    overflow: hidden;   
+				}
 
-					/* Anytime the body has the loading class, our
-					   modal element will be visible */
-					body.loading .modal {
-					    display: block;
-					}
-					</style>
-					<div class="modal"></div>
+				/* Anytime the body has the loading class, our
+				   modal element will be visible */
+				body.loading .modal {
+				    display: block;
+				}
+				</style>
+				<div class="modal"></div>
 		</section> 
 		     
 	</section>

@@ -1,0 +1,4693 @@
+ 
+Total Data Row : 412
+
+ID Data di proses:1
+Jumlah Data:18
+Baris selesai : 1
+Jumlah data yang masuk : 1
+Baris selesai : 2
+Jumlah data yang masuk : 2
+Baris selesai : 3
+Jumlah data yang masuk : 3
+Baris selesai : 4
+Jumlah data yang masuk : 4
+Baris selesai : 5
+Jumlah data yang masuk : 5
+Baris selesai : 6
+Jumlah data yang masuk : 6
+Baris selesai : 7
+Jumlah data yang masuk : 7
+Baris selesai : 8
+Jumlah data yang masuk : 8
+Baris selesai : 9
+Jumlah data yang masuk : 9
+Baris selesai : 10
+Jumlah data yang masuk : 10
+Baris selesai : 11
+Jumlah data yang masuk : 11
+Baris selesai : 12
+Jumlah data yang masuk : 12
+Baris selesai : 13
+Jumlah data yang masuk : 13
+Baris selesai : 14
+Jumlah data yang masuk : 14
+Baris selesai : 15
+Jumlah data yang masuk : 15
+Baris selesai : 16
+Jumlah data yang masuk : 16
+Baris selesai : 17
+Jumlah data yang masuk : 17
+Baris selesai : 18
+Jumlah data yang masuk : 18
+=================== Row Finish:1 ===================
+
+ID Data di proses:2
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 19
+=================== Row Finish:2 ===================
+
+ID Data di proses:3
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 20
+=================== Row Finish:3 ===================
+
+ID Data di proses:4
+Jumlah Data:7
+Baris selesai : 1
+Jumlah data yang masuk : 21
+Baris selesai : 2
+Jumlah data yang masuk : 22
+Baris selesai : 3
+Jumlah data yang masuk : 23
+Baris selesai : 4
+Jumlah data yang masuk : 24
+Baris selesai : 5
+Jumlah data yang masuk : 25
+Baris selesai : 6
+Jumlah data yang masuk : 26
+Baris selesai : 7
+Jumlah data yang masuk : 27
+=================== Row Finish:4 ===================
+
+ID Data di proses:5
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 28
+=================== Row Finish:5 ===================
+
+ID Data di proses:6
+Jumlah Data:19
+Baris selesai : 1
+Jumlah data yang masuk : 29
+Baris selesai : 2
+Jumlah data yang masuk : 30
+Baris selesai : 3
+Jumlah data yang masuk : 31
+Baris selesai : 4
+Jumlah data yang masuk : 32
+Baris selesai : 5
+Jumlah data yang masuk : 33
+Baris selesai : 6
+Jumlah data yang masuk : 34
+Baris selesai : 7
+Jumlah data yang masuk : 35
+Baris selesai : 8
+Jumlah data yang masuk : 36
+Baris selesai : 9
+Jumlah data yang masuk : 37
+Baris selesai : 10
+Jumlah data yang masuk : 38
+Baris selesai : 11
+Jumlah data yang masuk : 39
+Baris selesai : 12
+Jumlah data yang masuk : 40
+Baris selesai : 13
+Jumlah data yang masuk : 41
+Baris selesai : 14
+Jumlah data yang masuk : 42
+Baris selesai : 15
+Jumlah data yang masuk : 43
+Baris selesai : 16
+Jumlah data yang masuk : 44
+Baris selesai : 17
+Jumlah data yang masuk : 45
+Baris selesai : 18
+Jumlah data yang masuk : 46
+Baris selesai : 19
+Jumlah data yang masuk : 47
+=================== Row Finish:6 ===================
+
+ID Data di proses:7
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 48
+Baris selesai : 2
+Jumlah data yang masuk : 49
+=================== Row Finish:7 ===================
+
+ID Data di proses:8
+Jumlah Data:18
+Baris selesai : 1
+Jumlah data yang masuk : 50
+Baris selesai : 2
+Jumlah data yang masuk : 51
+Baris selesai : 3
+Jumlah data yang masuk : 52
+Baris selesai : 4
+Jumlah data yang masuk : 53
+Baris selesai : 5
+Jumlah data yang masuk : 54
+Baris selesai : 6
+Jumlah data yang masuk : 55
+Baris selesai : 7
+Jumlah data yang masuk : 56
+Baris selesai : 8
+Jumlah data yang masuk : 57
+Baris selesai : 9
+Jumlah data yang masuk : 58
+Baris selesai : 10
+Jumlah data yang masuk : 59
+Baris selesai : 11
+Jumlah data yang masuk : 60
+Baris selesai : 12
+Jumlah data yang masuk : 61
+Baris selesai : 13
+Jumlah data yang masuk : 62
+Baris selesai : 14
+Jumlah data yang masuk : 63
+Baris selesai : 15
+Jumlah data yang masuk : 64
+Baris selesai : 16
+Jumlah data yang masuk : 65
+Baris selesai : 17
+Jumlah data yang masuk : 66
+Baris selesai : 18
+Jumlah data yang masuk : 67
+=================== Row Finish:8 ===================
+
+ID Data di proses:9
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 68
+=================== Row Finish:9 ===================
+
+ID Data di proses:10
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 69
+=================== Row Finish:10 ===================
+
+ID Data di proses:11
+Jumlah Data:7
+Baris selesai : 1
+Jumlah data yang masuk : 70
+Baris selesai : 2
+Jumlah data yang masuk : 71
+Baris selesai : 3
+Jumlah data yang masuk : 72
+Baris selesai : 4
+Jumlah data yang masuk : 73
+Baris selesai : 5
+Jumlah data yang masuk : 74
+Baris selesai : 6
+Jumlah data yang masuk : 75
+Baris selesai : 7
+Jumlah data yang masuk : 76
+=================== Row Finish:11 ===================
+
+ID Data di proses:12
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 77
+=================== Row Finish:12 ===================
+
+ID Data di proses:13
+Jumlah Data:19
+Baris selesai : 1
+Jumlah data yang masuk : 78
+Baris selesai : 2
+Jumlah data yang masuk : 79
+Baris selesai : 3
+Jumlah data yang masuk : 80
+Baris selesai : 4
+Jumlah data yang masuk : 81
+Baris selesai : 5
+Jumlah data yang masuk : 82
+Baris selesai : 6
+Jumlah data yang masuk : 83
+Baris selesai : 7
+Jumlah data yang masuk : 84
+Baris selesai : 8
+Jumlah data yang masuk : 85
+Baris selesai : 9
+Jumlah data yang masuk : 86
+Baris selesai : 10
+Jumlah data yang masuk : 87
+Baris selesai : 11
+Jumlah data yang masuk : 88
+Baris selesai : 12
+Jumlah data yang masuk : 89
+Baris selesai : 13
+Jumlah data yang masuk : 90
+Baris selesai : 14
+Jumlah data yang masuk : 91
+Baris selesai : 15
+Jumlah data yang masuk : 92
+Baris selesai : 16
+Jumlah data yang masuk : 93
+Baris selesai : 17
+Jumlah data yang masuk : 94
+Baris selesai : 18
+Jumlah data yang masuk : 95
+Baris selesai : 19
+Jumlah data yang masuk : 96
+=================== Row Finish:13 ===================
+
+ID Data di proses:14
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 97
+Baris selesai : 2
+Jumlah data yang masuk : 98
+=================== Row Finish:14 ===================
+
+ID Data di proses:15
+Jumlah Data:18
+Baris selesai : 1
+Jumlah data yang masuk : 99
+Baris selesai : 2
+Jumlah data yang masuk : 100
+Baris selesai : 3
+Jumlah data yang masuk : 101
+Baris selesai : 4
+Jumlah data yang masuk : 102
+Baris selesai : 5
+Jumlah data yang masuk : 103
+Baris selesai : 6
+Jumlah data yang masuk : 104
+Baris selesai : 7
+Jumlah data yang masuk : 105
+Baris selesai : 8
+Jumlah data yang masuk : 106
+Baris selesai : 9
+Jumlah data yang masuk : 107
+Baris selesai : 10
+Jumlah data yang masuk : 108
+Baris selesai : 11
+Jumlah data yang masuk : 109
+Baris selesai : 12
+Jumlah data yang masuk : 110
+Baris selesai : 13
+Jumlah data yang masuk : 111
+Baris selesai : 14
+Jumlah data yang masuk : 112
+Baris selesai : 15
+Jumlah data yang masuk : 113
+Baris selesai : 16
+Jumlah data yang masuk : 114
+Baris selesai : 17
+Jumlah data yang masuk : 115
+Baris selesai : 18
+Jumlah data yang masuk : 116
+=================== Row Finish:15 ===================
+
+ID Data di proses:16
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 117
+=================== Row Finish:16 ===================
+
+ID Data di proses:17
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 118
+=================== Row Finish:17 ===================
+
+ID Data di proses:18
+Jumlah Data:7
+Baris selesai : 1
+Jumlah data yang masuk : 119
+Baris selesai : 2
+Jumlah data yang masuk : 120
+Baris selesai : 3
+Jumlah data yang masuk : 121
+Baris selesai : 4
+Jumlah data yang masuk : 122
+Baris selesai : 5
+Jumlah data yang masuk : 123
+Baris selesai : 6
+Jumlah data yang masuk : 124
+Baris selesai : 7
+Jumlah data yang masuk : 125
+=================== Row Finish:18 ===================
+
+ID Data di proses:19
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 126
+=================== Row Finish:19 ===================
+
+ID Data di proses:20
+Jumlah Data:19
+Baris selesai : 1
+Jumlah data yang masuk : 127
+Baris selesai : 2
+Jumlah data yang masuk : 128
+Baris selesai : 3
+Jumlah data yang masuk : 129
+Baris selesai : 4
+Jumlah data yang masuk : 130
+Baris selesai : 5
+Jumlah data yang masuk : 131
+Baris selesai : 6
+Jumlah data yang masuk : 132
+Baris selesai : 7
+Jumlah data yang masuk : 133
+Baris selesai : 8
+Jumlah data yang masuk : 134
+Baris selesai : 9
+Jumlah data yang masuk : 135
+Baris selesai : 10
+Jumlah data yang masuk : 136
+Baris selesai : 11
+Jumlah data yang masuk : 137
+Baris selesai : 12
+Jumlah data yang masuk : 138
+Baris selesai : 13
+Jumlah data yang masuk : 139
+Baris selesai : 14
+Jumlah data yang masuk : 140
+Baris selesai : 15
+Jumlah data yang masuk : 141
+Baris selesai : 16
+Jumlah data yang masuk : 142
+Baris selesai : 17
+Jumlah data yang masuk : 143
+Baris selesai : 18
+Jumlah data yang masuk : 144
+Baris selesai : 19
+Jumlah data yang masuk : 145
+=================== Row Finish:20 ===================
+
+ID Data di proses:21
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 146
+Baris selesai : 2
+Jumlah data yang masuk : 147
+=================== Row Finish:21 ===================
+
+ID Data di proses:22
+Jumlah Data:18
+Baris selesai : 1
+Jumlah data yang masuk : 148
+Baris selesai : 2
+Jumlah data yang masuk : 149
+Baris selesai : 3
+Jumlah data yang masuk : 150
+Baris selesai : 4
+Jumlah data yang masuk : 151
+Baris selesai : 5
+Jumlah data yang masuk : 152
+Baris selesai : 6
+Jumlah data yang masuk : 153
+Baris selesai : 7
+Jumlah data yang masuk : 154
+Baris selesai : 8
+Jumlah data yang masuk : 155
+Baris selesai : 9
+Jumlah data yang masuk : 156
+Baris selesai : 10
+Jumlah data yang masuk : 157
+Baris selesai : 11
+Jumlah data yang masuk : 158
+Baris selesai : 12
+Jumlah data yang masuk : 159
+Baris selesai : 13
+Jumlah data yang masuk : 160
+Baris selesai : 14
+Jumlah data yang masuk : 161
+Baris selesai : 15
+Jumlah data yang masuk : 162
+Baris selesai : 16
+Jumlah data yang masuk : 163
+Baris selesai : 17
+Jumlah data yang masuk : 164
+Baris selesai : 18
+Jumlah data yang masuk : 165
+=================== Row Finish:22 ===================
+
+ID Data di proses:23
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 166
+=================== Row Finish:23 ===================
+
+ID Data di proses:24
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 167
+=================== Row Finish:24 ===================
+
+ID Data di proses:25
+Jumlah Data:7
+Baris selesai : 1
+Jumlah data yang masuk : 168
+Baris selesai : 2
+Jumlah data yang masuk : 169
+Baris selesai : 3
+Jumlah data yang masuk : 170
+Baris selesai : 4
+Jumlah data yang masuk : 171
+Baris selesai : 5
+Jumlah data yang masuk : 172
+Baris selesai : 6
+Jumlah data yang masuk : 173
+Baris selesai : 7
+Jumlah data yang masuk : 174
+=================== Row Finish:25 ===================
+
+ID Data di proses:26
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 175
+=================== Row Finish:26 ===================
+
+ID Data di proses:27
+Jumlah Data:19
+Baris selesai : 1
+Jumlah data yang masuk : 176
+Baris selesai : 2
+Jumlah data yang masuk : 177
+Baris selesai : 3
+Jumlah data yang masuk : 178
+Baris selesai : 4
+Jumlah data yang masuk : 179
+Baris selesai : 5
+Jumlah data yang masuk : 180
+Baris selesai : 6
+Jumlah data yang masuk : 181
+Baris selesai : 7
+Jumlah data yang masuk : 182
+Baris selesai : 8
+Jumlah data yang masuk : 183
+Baris selesai : 9
+Jumlah data yang masuk : 184
+Baris selesai : 10
+Jumlah data yang masuk : 185
+Baris selesai : 11
+Jumlah data yang masuk : 186
+Baris selesai : 12
+Jumlah data yang masuk : 187
+Baris selesai : 13
+Jumlah data yang masuk : 188
+Baris selesai : 14
+Jumlah data yang masuk : 189
+Baris selesai : 15
+Jumlah data yang masuk : 190
+Baris selesai : 16
+Jumlah data yang masuk : 191
+Baris selesai : 17
+Jumlah data yang masuk : 192
+Baris selesai : 18
+Jumlah data yang masuk : 193
+Baris selesai : 19
+Jumlah data yang masuk : 194
+=================== Row Finish:27 ===================
+
+ID Data di proses:28
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 195
+Baris selesai : 2
+Jumlah data yang masuk : 196
+=================== Row Finish:28 ===================
+
+ID Data di proses:29
+Jumlah Data:18
+Baris selesai : 1
+Jumlah data yang masuk : 197
+Baris selesai : 2
+Jumlah data yang masuk : 198
+Baris selesai : 3
+Jumlah data yang masuk : 199
+Baris selesai : 4
+Jumlah data yang masuk : 200
+Baris selesai : 5
+Jumlah data yang masuk : 201
+Baris selesai : 6
+Jumlah data yang masuk : 202
+Baris selesai : 7
+Jumlah data yang masuk : 203
+Baris selesai : 8
+Jumlah data yang masuk : 204
+Baris selesai : 9
+Jumlah data yang masuk : 205
+Baris selesai : 10
+Jumlah data yang masuk : 206
+Baris selesai : 11
+Jumlah data yang masuk : 207
+Baris selesai : 12
+Jumlah data yang masuk : 208
+Baris selesai : 13
+Jumlah data yang masuk : 209
+Baris selesai : 14
+Jumlah data yang masuk : 210
+Baris selesai : 15
+Jumlah data yang masuk : 211
+Baris selesai : 16
+Jumlah data yang masuk : 212
+Baris selesai : 17
+Jumlah data yang masuk : 213
+Baris selesai : 18
+Jumlah data yang masuk : 214
+=================== Row Finish:29 ===================
+
+ID Data di proses:30
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 215
+=================== Row Finish:30 ===================
+
+ID Data di proses:31
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 216
+=================== Row Finish:31 ===================
+
+ID Data di proses:32
+Jumlah Data:7
+Baris selesai : 1
+Jumlah data yang masuk : 217
+Baris selesai : 2
+Jumlah data yang masuk : 218
+Baris selesai : 3
+Jumlah data yang masuk : 219
+Baris selesai : 4
+Jumlah data yang masuk : 220
+Baris selesai : 5
+Jumlah data yang masuk : 221
+Baris selesai : 6
+Jumlah data yang masuk : 222
+Baris selesai : 7
+Jumlah data yang masuk : 223
+=================== Row Finish:32 ===================
+
+ID Data di proses:33
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 224
+=================== Row Finish:33 ===================
+
+ID Data di proses:34
+Jumlah Data:19
+Baris selesai : 1
+Jumlah data yang masuk : 225
+Baris selesai : 2
+Jumlah data yang masuk : 226
+Baris selesai : 3
+Jumlah data yang masuk : 227
+Baris selesai : 4
+Jumlah data yang masuk : 228
+Baris selesai : 5
+Jumlah data yang masuk : 229
+Baris selesai : 6
+Jumlah data yang masuk : 230
+Baris selesai : 7
+Jumlah data yang masuk : 231
+Baris selesai : 8
+Jumlah data yang masuk : 232
+Baris selesai : 9
+Jumlah data yang masuk : 233
+Baris selesai : 10
+Jumlah data yang masuk : 234
+Baris selesai : 11
+Jumlah data yang masuk : 235
+Baris selesai : 12
+Jumlah data yang masuk : 236
+Baris selesai : 13
+Jumlah data yang masuk : 237
+Baris selesai : 14
+Jumlah data yang masuk : 238
+Baris selesai : 15
+Jumlah data yang masuk : 239
+Baris selesai : 16
+Jumlah data yang masuk : 240
+Baris selesai : 17
+Jumlah data yang masuk : 241
+Baris selesai : 18
+Jumlah data yang masuk : 242
+Baris selesai : 19
+Jumlah data yang masuk : 243
+=================== Row Finish:34 ===================
+
+ID Data di proses:35
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 244
+Baris selesai : 2
+Jumlah data yang masuk : 245
+=================== Row Finish:35 ===================
+
+ID Data di proses:36
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 246
+Baris selesai : 2
+Jumlah data yang masuk : 247
+Baris selesai : 3
+Jumlah data yang masuk : 248
+=================== Row Finish:36 ===================
+
+ID Data di proses:37
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 249
+Baris selesai : 2
+Jumlah data yang masuk : 250
+Baris selesai : 3
+Jumlah data yang masuk : 251
+=================== Row Finish:37 ===================
+
+ID Data di proses:38
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 252
+Baris selesai : 2
+Jumlah data yang masuk : 253
+Baris selesai : 3
+Jumlah data yang masuk : 254
+=================== Row Finish:38 ===================
+
+ID Data di proses:39
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 255
+=================== Row Finish:39 ===================
+
+ID Data di proses:40
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 256
+Baris selesai : 2
+Jumlah data yang masuk : 257
+Baris selesai : 3
+Jumlah data yang masuk : 258
+=================== Row Finish:40 ===================
+
+ID Data di proses:41
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 259
+=================== Row Finish:41 ===================
+
+ID Data di proses:42
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 260
+=================== Row Finish:42 ===================
+
+ID Data di proses:43
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 261
+Baris selesai : 2
+Jumlah data yang masuk : 262
+Baris selesai : 3
+Jumlah data yang masuk : 263
+Baris selesai : 4
+Jumlah data yang masuk : 264
+=================== Row Finish:43 ===================
+
+ID Data di proses:44
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 265
+=================== Row Finish:44 ===================
+
+ID Data di proses:45
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 266
+Baris selesai : 2
+Jumlah data yang masuk : 267
+Baris selesai : 3
+Jumlah data yang masuk : 268
+Baris selesai : 4
+Jumlah data yang masuk : 269
+=================== Row Finish:45 ===================
+
+ID Data di proses:46
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 270
+=================== Row Finish:46 ===================
+
+ID Data di proses:47
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 271
+=================== Row Finish:47 ===================
+
+ID Data di proses:48
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 272
+=================== Row Finish:48 ===================
+
+ID Data di proses:49
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 273
+Baris selesai : 2
+Jumlah data yang masuk : 274
+Baris selesai : 3
+Jumlah data yang masuk : 275
+Baris selesai : 4
+Jumlah data yang masuk : 276
+=================== Row Finish:49 ===================
+
+ID Data di proses:50
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 277
+=================== Row Finish:50 ===================
+
+ID Data di proses:51
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 278
+=================== Row Finish:51 ===================
+
+ID Data di proses:52
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 279
+=================== Row Finish:52 ===================
+
+ID Data di proses:53
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 280
+=================== Row Finish:53 ===================
+
+ID Data di proses:54
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 281
+Baris selesai : 2
+Jumlah data yang masuk : 282
+Baris selesai : 3
+Jumlah data yang masuk : 283
+Baris selesai : 4
+Jumlah data yang masuk : 284
+Baris selesai : 5
+Jumlah data yang masuk : 285
+Baris selesai : 6
+Jumlah data yang masuk : 286
+Baris selesai : 7
+Jumlah data yang masuk : 287
+Baris selesai : 8
+Jumlah data yang masuk : 288
+Baris selesai : 9
+Jumlah data yang masuk : 289
+Baris selesai : 10
+Jumlah data yang masuk : 290
+Baris selesai : 11
+Jumlah data yang masuk : 291
+Baris selesai : 12
+Jumlah data yang masuk : 292
+Baris selesai : 13
+Jumlah data yang masuk : 293
+Baris selesai : 14
+Jumlah data yang masuk : 294
+Baris selesai : 15
+Jumlah data yang masuk : 295
+Baris selesai : 16
+Jumlah data yang masuk : 296
+Baris selesai : 17
+Jumlah data yang masuk : 297
+Baris selesai : 18
+Jumlah data yang masuk : 298
+Baris selesai : 19
+Jumlah data yang masuk : 299
+Baris selesai : 20
+Jumlah data yang masuk : 300
+=================== Row Finish:54 ===================
+
+ID Data di proses:55
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 301
+=================== Row Finish:55 ===================
+
+ID Data di proses:56
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 302
+=================== Row Finish:56 ===================
+
+ID Data di proses:57
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 303
+=================== Row Finish:57 ===================
+
+ID Data di proses:58
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 304
+=================== Row Finish:58 ===================
+
+ID Data di proses:59
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 305
+Baris selesai : 2
+Jumlah data yang masuk : 306
+Baris selesai : 3
+Jumlah data yang masuk : 307
+Baris selesai : 4
+Jumlah data yang masuk : 308
+Baris selesai : 5
+Jumlah data yang masuk : 309
+Baris selesai : 6
+Jumlah data yang masuk : 310
+Baris selesai : 7
+Jumlah data yang masuk : 311
+Baris selesai : 8
+Jumlah data yang masuk : 312
+Baris selesai : 9
+Jumlah data yang masuk : 313
+Baris selesai : 10
+Jumlah data yang masuk : 314
+Baris selesai : 11
+Jumlah data yang masuk : 315
+Baris selesai : 12
+Jumlah data yang masuk : 316
+Baris selesai : 13
+Jumlah data yang masuk : 317
+Baris selesai : 14
+Jumlah data yang masuk : 318
+Baris selesai : 15
+Jumlah data yang masuk : 319
+Baris selesai : 16
+Jumlah data yang masuk : 320
+Baris selesai : 17
+Jumlah data yang masuk : 321
+Baris selesai : 18
+Jumlah data yang masuk : 322
+Baris selesai : 19
+Jumlah data yang masuk : 323
+Baris selesai : 20
+Jumlah data yang masuk : 324
+Baris selesai : 21
+Jumlah data yang masuk : 325
+Baris selesai : 22
+Jumlah data yang masuk : 326
+Baris selesai : 23
+Jumlah data yang masuk : 327
+Baris selesai : 24
+Jumlah data yang masuk : 328
+=================== Row Finish:59 ===================
+
+ID Data di proses:60
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 329
+=================== Row Finish:60 ===================
+
+ID Data di proses:61
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 330
+Baris selesai : 2
+Jumlah data yang masuk : 331
+=================== Row Finish:61 ===================
+
+ID Data di proses:62
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 332
+Baris selesai : 2
+Jumlah data yang masuk : 333
+Baris selesai : 3
+Jumlah data yang masuk : 334
+Baris selesai : 4
+Jumlah data yang masuk : 335
+Baris selesai : 5
+Jumlah data yang masuk : 336
+Baris selesai : 6
+Jumlah data yang masuk : 337
+=================== Row Finish:62 ===================
+
+ID Data di proses:63
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 338
+Baris selesai : 2
+Jumlah data yang masuk : 339
+Baris selesai : 3
+Jumlah data yang masuk : 340
+Baris selesai : 4
+Jumlah data yang masuk : 341
+=================== Row Finish:63 ===================
+
+ID Data di proses:64
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 342
+Baris selesai : 2
+Jumlah data yang masuk : 343
+=================== Row Finish:64 ===================
+
+ID Data di proses:65
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 344
+Baris selesai : 2
+Jumlah data yang masuk : 345
+Baris selesai : 3
+Jumlah data yang masuk : 346
+=================== Row Finish:65 ===================
+
+ID Data di proses:66
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 347
+Baris selesai : 2
+Jumlah data yang masuk : 348
+Baris selesai : 3
+Jumlah data yang masuk : 349
+=================== Row Finish:66 ===================
+
+ID Data di proses:67
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 350
+Baris selesai : 2
+Jumlah data yang masuk : 351
+Baris selesai : 3
+Jumlah data yang masuk : 352
+=================== Row Finish:67 ===================
+
+ID Data di proses:68
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 353
+=================== Row Finish:68 ===================
+
+ID Data di proses:69
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 354
+Baris selesai : 2
+Jumlah data yang masuk : 355
+Baris selesai : 3
+Jumlah data yang masuk : 356
+=================== Row Finish:69 ===================
+
+ID Data di proses:70
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 357
+=================== Row Finish:70 ===================
+
+ID Data di proses:71
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 358
+=================== Row Finish:71 ===================
+
+ID Data di proses:72
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 359
+Baris selesai : 2
+Jumlah data yang masuk : 360
+Baris selesai : 3
+Jumlah data yang masuk : 361
+Baris selesai : 4
+Jumlah data yang masuk : 362
+=================== Row Finish:72 ===================
+
+ID Data di proses:73
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 363
+=================== Row Finish:73 ===================
+
+ID Data di proses:74
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 364
+Baris selesai : 2
+Jumlah data yang masuk : 365
+Baris selesai : 3
+Jumlah data yang masuk : 366
+Baris selesai : 4
+Jumlah data yang masuk : 367
+=================== Row Finish:74 ===================
+
+ID Data di proses:75
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 368
+=================== Row Finish:75 ===================
+
+ID Data di proses:76
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 369
+=================== Row Finish:76 ===================
+
+ID Data di proses:77
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 370
+=================== Row Finish:77 ===================
+
+ID Data di proses:78
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 371
+Baris selesai : 2
+Jumlah data yang masuk : 372
+Baris selesai : 3
+Jumlah data yang masuk : 373
+Baris selesai : 4
+Jumlah data yang masuk : 374
+=================== Row Finish:78 ===================
+
+ID Data di proses:79
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 375
+=================== Row Finish:79 ===================
+
+ID Data di proses:80
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 376
+=================== Row Finish:80 ===================
+
+ID Data di proses:81
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 377
+=================== Row Finish:81 ===================
+
+ID Data di proses:82
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 378
+=================== Row Finish:82 ===================
+
+ID Data di proses:83
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 379
+Baris selesai : 2
+Jumlah data yang masuk : 380
+Baris selesai : 3
+Jumlah data yang masuk : 381
+Baris selesai : 4
+Jumlah data yang masuk : 382
+Baris selesai : 5
+Jumlah data yang masuk : 383
+Baris selesai : 6
+Jumlah data yang masuk : 384
+Baris selesai : 7
+Jumlah data yang masuk : 385
+Baris selesai : 8
+Jumlah data yang masuk : 386
+Baris selesai : 9
+Jumlah data yang masuk : 387
+Baris selesai : 10
+Jumlah data yang masuk : 388
+Baris selesai : 11
+Jumlah data yang masuk : 389
+Baris selesai : 12
+Jumlah data yang masuk : 390
+Baris selesai : 13
+Jumlah data yang masuk : 391
+Baris selesai : 14
+Jumlah data yang masuk : 392
+Baris selesai : 15
+Jumlah data yang masuk : 393
+Baris selesai : 16
+Jumlah data yang masuk : 394
+Baris selesai : 17
+Jumlah data yang masuk : 395
+Baris selesai : 18
+Jumlah data yang masuk : 396
+Baris selesai : 19
+Jumlah data yang masuk : 397
+Baris selesai : 20
+Jumlah data yang masuk : 398
+=================== Row Finish:83 ===================
+
+ID Data di proses:84
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 399
+=================== Row Finish:84 ===================
+
+ID Data di proses:85
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 400
+=================== Row Finish:85 ===================
+
+ID Data di proses:86
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 401
+=================== Row Finish:86 ===================
+
+ID Data di proses:87
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 402
+=================== Row Finish:87 ===================
+
+ID Data di proses:88
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 403
+Baris selesai : 2
+Jumlah data yang masuk : 404
+Baris selesai : 3
+Jumlah data yang masuk : 405
+Baris selesai : 4
+Jumlah data yang masuk : 406
+Baris selesai : 5
+Jumlah data yang masuk : 407
+Baris selesai : 6
+Jumlah data yang masuk : 408
+Baris selesai : 7
+Jumlah data yang masuk : 409
+Baris selesai : 8
+Jumlah data yang masuk : 410
+Baris selesai : 9
+Jumlah data yang masuk : 411
+Baris selesai : 10
+Jumlah data yang masuk : 412
+Baris selesai : 11
+Jumlah data yang masuk : 413
+Baris selesai : 12
+Jumlah data yang masuk : 414
+Baris selesai : 13
+Jumlah data yang masuk : 415
+Baris selesai : 14
+Jumlah data yang masuk : 416
+Baris selesai : 15
+Jumlah data yang masuk : 417
+Baris selesai : 16
+Jumlah data yang masuk : 418
+Baris selesai : 17
+Jumlah data yang masuk : 419
+Baris selesai : 18
+Jumlah data yang masuk : 420
+Baris selesai : 19
+Jumlah data yang masuk : 421
+Baris selesai : 20
+Jumlah data yang masuk : 422
+Baris selesai : 21
+Jumlah data yang masuk : 423
+Baris selesai : 22
+Jumlah data yang masuk : 424
+Baris selesai : 23
+Jumlah data yang masuk : 425
+Baris selesai : 24
+Jumlah data yang masuk : 426
+=================== Row Finish:88 ===================
+
+ID Data di proses:89
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 427
+=================== Row Finish:89 ===================
+
+ID Data di proses:90
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 428
+Baris selesai : 2
+Jumlah data yang masuk : 429
+=================== Row Finish:90 ===================
+
+ID Data di proses:91
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 430
+Baris selesai : 2
+Jumlah data yang masuk : 431
+Baris selesai : 3
+Jumlah data yang masuk : 432
+Baris selesai : 4
+Jumlah data yang masuk : 433
+Baris selesai : 5
+Jumlah data yang masuk : 434
+Baris selesai : 6
+Jumlah data yang masuk : 435
+=================== Row Finish:91 ===================
+
+ID Data di proses:92
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 436
+Baris selesai : 2
+Jumlah data yang masuk : 437
+Baris selesai : 3
+Jumlah data yang masuk : 438
+Baris selesai : 4
+Jumlah data yang masuk : 439
+=================== Row Finish:92 ===================
+
+ID Data di proses:93
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 440
+Baris selesai : 2
+Jumlah data yang masuk : 441
+=================== Row Finish:93 ===================
+
+ID Data di proses:94
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 442
+Baris selesai : 2
+Jumlah data yang masuk : 443
+Baris selesai : 3
+Jumlah data yang masuk : 444
+=================== Row Finish:94 ===================
+
+ID Data di proses:95
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 445
+Baris selesai : 2
+Jumlah data yang masuk : 446
+Baris selesai : 3
+Jumlah data yang masuk : 447
+=================== Row Finish:95 ===================
+
+ID Data di proses:96
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 448
+Baris selesai : 2
+Jumlah data yang masuk : 449
+Baris selesai : 3
+Jumlah data yang masuk : 450
+=================== Row Finish:96 ===================
+
+ID Data di proses:97
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 451
+=================== Row Finish:97 ===================
+
+ID Data di proses:98
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 452
+Baris selesai : 2
+Jumlah data yang masuk : 453
+Baris selesai : 3
+Jumlah data yang masuk : 454
+=================== Row Finish:98 ===================
+
+ID Data di proses:99
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 455
+=================== Row Finish:99 ===================
+
+ID Data di proses:100
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 456
+=================== Row Finish:100 ===================
+
+ID Data di proses:101
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 457
+Baris selesai : 2
+Jumlah data yang masuk : 458
+Baris selesai : 3
+Jumlah data yang masuk : 459
+Baris selesai : 4
+Jumlah data yang masuk : 460
+=================== Row Finish:101 ===================
+
+ID Data di proses:102
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 461
+=================== Row Finish:102 ===================
+
+ID Data di proses:103
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 462
+Baris selesai : 2
+Jumlah data yang masuk : 463
+Baris selesai : 3
+Jumlah data yang masuk : 464
+Baris selesai : 4
+Jumlah data yang masuk : 465
+=================== Row Finish:103 ===================
+
+ID Data di proses:104
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 466
+=================== Row Finish:104 ===================
+
+ID Data di proses:105
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 467
+=================== Row Finish:105 ===================
+
+ID Data di proses:106
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 468
+=================== Row Finish:106 ===================
+
+ID Data di proses:107
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 469
+Baris selesai : 2
+Jumlah data yang masuk : 470
+Baris selesai : 3
+Jumlah data yang masuk : 471
+Baris selesai : 4
+Jumlah data yang masuk : 472
+=================== Row Finish:107 ===================
+
+ID Data di proses:108
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 473
+=================== Row Finish:108 ===================
+
+ID Data di proses:109
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 474
+=================== Row Finish:109 ===================
+
+ID Data di proses:110
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 475
+=================== Row Finish:110 ===================
+
+ID Data di proses:111
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 476
+=================== Row Finish:111 ===================
+
+ID Data di proses:112
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 477
+Baris selesai : 2
+Jumlah data yang masuk : 478
+Baris selesai : 3
+Jumlah data yang masuk : 479
+Baris selesai : 4
+Jumlah data yang masuk : 480
+Baris selesai : 5
+Jumlah data yang masuk : 481
+Baris selesai : 6
+Jumlah data yang masuk : 482
+Baris selesai : 7
+Jumlah data yang masuk : 483
+Baris selesai : 8
+Jumlah data yang masuk : 484
+Baris selesai : 9
+Jumlah data yang masuk : 485
+Baris selesai : 10
+Jumlah data yang masuk : 486
+Baris selesai : 11
+Jumlah data yang masuk : 487
+Baris selesai : 12
+Jumlah data yang masuk : 488
+Baris selesai : 13
+Jumlah data yang masuk : 489
+Baris selesai : 14
+Jumlah data yang masuk : 490
+Baris selesai : 15
+Jumlah data yang masuk : 491
+Baris selesai : 16
+Jumlah data yang masuk : 492
+Baris selesai : 17
+Jumlah data yang masuk : 493
+Baris selesai : 18
+Jumlah data yang masuk : 494
+Baris selesai : 19
+Jumlah data yang masuk : 495
+Baris selesai : 20
+Jumlah data yang masuk : 496
+=================== Row Finish:112 ===================
+
+ID Data di proses:113
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 497
+=================== Row Finish:113 ===================
+
+ID Data di proses:114
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 498
+=================== Row Finish:114 ===================
+
+ID Data di proses:115
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 499
+=================== Row Finish:115 ===================
+
+ID Data di proses:116
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 500
+=================== Row Finish:116 ===================
+
+ID Data di proses:117
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 501
+Baris selesai : 2
+Jumlah data yang masuk : 502
+Baris selesai : 3
+Jumlah data yang masuk : 503
+Baris selesai : 4
+Jumlah data yang masuk : 504
+Baris selesai : 5
+Jumlah data yang masuk : 505
+Baris selesai : 6
+Jumlah data yang masuk : 506
+Baris selesai : 7
+Jumlah data yang masuk : 507
+Baris selesai : 8
+Jumlah data yang masuk : 508
+Baris selesai : 9
+Jumlah data yang masuk : 509
+Baris selesai : 10
+Jumlah data yang masuk : 510
+Baris selesai : 11
+Jumlah data yang masuk : 511
+Baris selesai : 12
+Jumlah data yang masuk : 512
+Baris selesai : 13
+Jumlah data yang masuk : 513
+Baris selesai : 14
+Jumlah data yang masuk : 514
+Baris selesai : 15
+Jumlah data yang masuk : 515
+Baris selesai : 16
+Jumlah data yang masuk : 516
+Baris selesai : 17
+Jumlah data yang masuk : 517
+Baris selesai : 18
+Jumlah data yang masuk : 518
+Baris selesai : 19
+Jumlah data yang masuk : 519
+Baris selesai : 20
+Jumlah data yang masuk : 520
+Baris selesai : 21
+Jumlah data yang masuk : 521
+Baris selesai : 22
+Jumlah data yang masuk : 522
+Baris selesai : 23
+Jumlah data yang masuk : 523
+Baris selesai : 24
+Jumlah data yang masuk : 524
+=================== Row Finish:117 ===================
+
+ID Data di proses:118
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 525
+=================== Row Finish:118 ===================
+
+ID Data di proses:119
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 526
+Baris selesai : 2
+Jumlah data yang masuk : 527
+=================== Row Finish:119 ===================
+
+ID Data di proses:120
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 528
+Baris selesai : 2
+Jumlah data yang masuk : 529
+Baris selesai : 3
+Jumlah data yang masuk : 530
+Baris selesai : 4
+Jumlah data yang masuk : 531
+Baris selesai : 5
+Jumlah data yang masuk : 532
+Baris selesai : 6
+Jumlah data yang masuk : 533
+=================== Row Finish:120 ===================
+
+ID Data di proses:121
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 534
+Baris selesai : 2
+Jumlah data yang masuk : 535
+Baris selesai : 3
+Jumlah data yang masuk : 536
+Baris selesai : 4
+Jumlah data yang masuk : 537
+=================== Row Finish:121 ===================
+
+ID Data di proses:122
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 538
+Baris selesai : 2
+Jumlah data yang masuk : 539
+=================== Row Finish:122 ===================
+
+ID Data di proses:123
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 540
+Baris selesai : 2
+Jumlah data yang masuk : 541
+Baris selesai : 3
+Jumlah data yang masuk : 542
+=================== Row Finish:123 ===================
+
+ID Data di proses:124
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 543
+Baris selesai : 2
+Jumlah data yang masuk : 544
+Baris selesai : 3
+Jumlah data yang masuk : 545
+=================== Row Finish:124 ===================
+
+ID Data di proses:125
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 546
+Baris selesai : 2
+Jumlah data yang masuk : 547
+Baris selesai : 3
+Jumlah data yang masuk : 548
+=================== Row Finish:125 ===================
+
+ID Data di proses:126
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 549
+=================== Row Finish:126 ===================
+
+ID Data di proses:127
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 550
+Baris selesai : 2
+Jumlah data yang masuk : 551
+Baris selesai : 3
+Jumlah data yang masuk : 552
+=================== Row Finish:127 ===================
+
+ID Data di proses:128
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 553
+=================== Row Finish:128 ===================
+
+ID Data di proses:129
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 554
+=================== Row Finish:129 ===================
+
+ID Data di proses:130
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 555
+Baris selesai : 2
+Jumlah data yang masuk : 556
+Baris selesai : 3
+Jumlah data yang masuk : 557
+Baris selesai : 4
+Jumlah data yang masuk : 558
+=================== Row Finish:130 ===================
+
+ID Data di proses:131
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 559
+=================== Row Finish:131 ===================
+
+ID Data di proses:132
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 560
+Baris selesai : 2
+Jumlah data yang masuk : 561
+Baris selesai : 3
+Jumlah data yang masuk : 562
+Baris selesai : 4
+Jumlah data yang masuk : 563
+=================== Row Finish:132 ===================
+
+ID Data di proses:133
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 564
+=================== Row Finish:133 ===================
+
+ID Data di proses:134
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 565
+=================== Row Finish:134 ===================
+
+ID Data di proses:135
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 566
+=================== Row Finish:135 ===================
+
+ID Data di proses:136
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 567
+Baris selesai : 2
+Jumlah data yang masuk : 568
+Baris selesai : 3
+Jumlah data yang masuk : 569
+Baris selesai : 4
+Jumlah data yang masuk : 570
+=================== Row Finish:136 ===================
+
+ID Data di proses:137
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 571
+=================== Row Finish:137 ===================
+
+ID Data di proses:138
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 572
+=================== Row Finish:138 ===================
+
+ID Data di proses:139
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 573
+=================== Row Finish:139 ===================
+
+ID Data di proses:140
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 574
+=================== Row Finish:140 ===================
+
+ID Data di proses:141
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 575
+Baris selesai : 2
+Jumlah data yang masuk : 576
+Baris selesai : 3
+Jumlah data yang masuk : 577
+Baris selesai : 4
+Jumlah data yang masuk : 578
+Baris selesai : 5
+Jumlah data yang masuk : 579
+Baris selesai : 6
+Jumlah data yang masuk : 580
+Baris selesai : 7
+Jumlah data yang masuk : 581
+Baris selesai : 8
+Jumlah data yang masuk : 582
+Baris selesai : 9
+Jumlah data yang masuk : 583
+Baris selesai : 10
+Jumlah data yang masuk : 584
+Baris selesai : 11
+Jumlah data yang masuk : 585
+Baris selesai : 12
+Jumlah data yang masuk : 586
+Baris selesai : 13
+Jumlah data yang masuk : 587
+Baris selesai : 14
+Jumlah data yang masuk : 588
+Baris selesai : 15
+Jumlah data yang masuk : 589
+Baris selesai : 16
+Jumlah data yang masuk : 590
+Baris selesai : 17
+Jumlah data yang masuk : 591
+Baris selesai : 18
+Jumlah data yang masuk : 592
+Baris selesai : 19
+Jumlah data yang masuk : 593
+Baris selesai : 20
+Jumlah data yang masuk : 594
+=================== Row Finish:141 ===================
+
+ID Data di proses:142
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 595
+=================== Row Finish:142 ===================
+
+ID Data di proses:143
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 596
+=================== Row Finish:143 ===================
+
+ID Data di proses:144
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 597
+=================== Row Finish:144 ===================
+
+ID Data di proses:145
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 598
+=================== Row Finish:145 ===================
+
+ID Data di proses:146
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 599
+Baris selesai : 2
+Jumlah data yang masuk : 600
+Baris selesai : 3
+Jumlah data yang masuk : 601
+Baris selesai : 4
+Jumlah data yang masuk : 602
+Baris selesai : 5
+Jumlah data yang masuk : 603
+Baris selesai : 6
+Jumlah data yang masuk : 604
+Baris selesai : 7
+Jumlah data yang masuk : 605
+Baris selesai : 8
+Jumlah data yang masuk : 606
+Baris selesai : 9
+Jumlah data yang masuk : 607
+Baris selesai : 10
+Jumlah data yang masuk : 608
+Baris selesai : 11
+Jumlah data yang masuk : 609
+Baris selesai : 12
+Jumlah data yang masuk : 610
+Baris selesai : 13
+Jumlah data yang masuk : 611
+Baris selesai : 14
+Jumlah data yang masuk : 612
+Baris selesai : 15
+Jumlah data yang masuk : 613
+Baris selesai : 16
+Jumlah data yang masuk : 614
+Baris selesai : 17
+Jumlah data yang masuk : 615
+Baris selesai : 18
+Jumlah data yang masuk : 616
+Baris selesai : 19
+Jumlah data yang masuk : 617
+Baris selesai : 20
+Jumlah data yang masuk : 618
+Baris selesai : 21
+Jumlah data yang masuk : 619
+Baris selesai : 22
+Jumlah data yang masuk : 620
+Baris selesai : 23
+Jumlah data yang masuk : 621
+Baris selesai : 24
+Jumlah data yang masuk : 622
+=================== Row Finish:146 ===================
+
+ID Data di proses:147
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 623
+=================== Row Finish:147 ===================
+
+ID Data di proses:148
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 624
+Baris selesai : 2
+Jumlah data yang masuk : 625
+=================== Row Finish:148 ===================
+
+ID Data di proses:149
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 626
+Baris selesai : 2
+Jumlah data yang masuk : 627
+Baris selesai : 3
+Jumlah data yang masuk : 628
+Baris selesai : 4
+Jumlah data yang masuk : 629
+Baris selesai : 5
+Jumlah data yang masuk : 630
+Baris selesai : 6
+Jumlah data yang masuk : 631
+=================== Row Finish:149 ===================
+
+ID Data di proses:150
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 632
+Baris selesai : 2
+Jumlah data yang masuk : 633
+Baris selesai : 3
+Jumlah data yang masuk : 634
+Baris selesai : 4
+Jumlah data yang masuk : 635
+=================== Row Finish:150 ===================
+
+ID Data di proses:151
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 636
+Baris selesai : 2
+Jumlah data yang masuk : 637
+=================== Row Finish:151 ===================
+
+ID Data di proses:152
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 638
+Baris selesai : 2
+Jumlah data yang masuk : 639
+Baris selesai : 3
+Jumlah data yang masuk : 640
+=================== Row Finish:152 ===================
+
+ID Data di proses:153
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 641
+Baris selesai : 2
+Jumlah data yang masuk : 642
+Baris selesai : 3
+Jumlah data yang masuk : 643
+=================== Row Finish:153 ===================
+
+ID Data di proses:154
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 644
+Baris selesai : 2
+Jumlah data yang masuk : 645
+Baris selesai : 3
+Jumlah data yang masuk : 646
+=================== Row Finish:154 ===================
+
+ID Data di proses:155
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 647
+=================== Row Finish:155 ===================
+
+ID Data di proses:156
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 648
+Baris selesai : 2
+Jumlah data yang masuk : 649
+Baris selesai : 3
+Jumlah data yang masuk : 650
+=================== Row Finish:156 ===================
+
+ID Data di proses:157
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 651
+=================== Row Finish:157 ===================
+
+ID Data di proses:158
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 652
+=================== Row Finish:158 ===================
+
+ID Data di proses:159
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 653
+Baris selesai : 2
+Jumlah data yang masuk : 654
+Baris selesai : 3
+Jumlah data yang masuk : 655
+Baris selesai : 4
+Jumlah data yang masuk : 656
+=================== Row Finish:159 ===================
+
+ID Data di proses:160
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 657
+=================== Row Finish:160 ===================
+
+ID Data di proses:161
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 658
+Baris selesai : 2
+Jumlah data yang masuk : 659
+Baris selesai : 3
+Jumlah data yang masuk : 660
+Baris selesai : 4
+Jumlah data yang masuk : 661
+=================== Row Finish:161 ===================
+
+ID Data di proses:162
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 662
+=================== Row Finish:162 ===================
+
+ID Data di proses:163
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 663
+=================== Row Finish:163 ===================
+
+ID Data di proses:164
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 664
+=================== Row Finish:164 ===================
+
+ID Data di proses:165
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 665
+Baris selesai : 2
+Jumlah data yang masuk : 666
+Baris selesai : 3
+Jumlah data yang masuk : 667
+Baris selesai : 4
+Jumlah data yang masuk : 668
+=================== Row Finish:165 ===================
+
+ID Data di proses:166
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 669
+=================== Row Finish:166 ===================
+
+ID Data di proses:167
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 670
+=================== Row Finish:167 ===================
+
+ID Data di proses:168
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 671
+=================== Row Finish:168 ===================
+
+ID Data di proses:169
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 672
+=================== Row Finish:169 ===================
+
+ID Data di proses:170
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 673
+Baris selesai : 2
+Jumlah data yang masuk : 674
+Baris selesai : 3
+Jumlah data yang masuk : 675
+Baris selesai : 4
+Jumlah data yang masuk : 676
+Baris selesai : 5
+Jumlah data yang masuk : 677
+Baris selesai : 6
+Jumlah data yang masuk : 678
+Baris selesai : 7
+Jumlah data yang masuk : 679
+Baris selesai : 8
+Jumlah data yang masuk : 680
+Baris selesai : 9
+Jumlah data yang masuk : 681
+Baris selesai : 10
+Jumlah data yang masuk : 682
+Baris selesai : 11
+Jumlah data yang masuk : 683
+Baris selesai : 12
+Jumlah data yang masuk : 684
+Baris selesai : 13
+Jumlah data yang masuk : 685
+Baris selesai : 14
+Jumlah data yang masuk : 686
+Baris selesai : 15
+Jumlah data yang masuk : 687
+Baris selesai : 16
+Jumlah data yang masuk : 688
+Baris selesai : 17
+Jumlah data yang masuk : 689
+Baris selesai : 18
+Jumlah data yang masuk : 690
+Baris selesai : 19
+Jumlah data yang masuk : 691
+Baris selesai : 20
+Jumlah data yang masuk : 692
+=================== Row Finish:170 ===================
+
+ID Data di proses:171
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 693
+=================== Row Finish:171 ===================
+
+ID Data di proses:172
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 694
+=================== Row Finish:172 ===================
+
+ID Data di proses:173
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 695
+=================== Row Finish:173 ===================
+
+ID Data di proses:174
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 696
+=================== Row Finish:174 ===================
+
+ID Data di proses:175
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 697
+Baris selesai : 2
+Jumlah data yang masuk : 698
+Baris selesai : 3
+Jumlah data yang masuk : 699
+Baris selesai : 4
+Jumlah data yang masuk : 700
+Baris selesai : 5
+Jumlah data yang masuk : 701
+Baris selesai : 6
+Jumlah data yang masuk : 702
+Baris selesai : 7
+Jumlah data yang masuk : 703
+Baris selesai : 8
+Jumlah data yang masuk : 704
+Baris selesai : 9
+Jumlah data yang masuk : 705
+Baris selesai : 10
+Jumlah data yang masuk : 706
+Baris selesai : 11
+Jumlah data yang masuk : 707
+Baris selesai : 12
+Jumlah data yang masuk : 708
+Baris selesai : 13
+Jumlah data yang masuk : 709
+Baris selesai : 14
+Jumlah data yang masuk : 710
+Baris selesai : 15
+Jumlah data yang masuk : 711
+Baris selesai : 16
+Jumlah data yang masuk : 712
+Baris selesai : 17
+Jumlah data yang masuk : 713
+Baris selesai : 18
+Jumlah data yang masuk : 714
+Baris selesai : 19
+Jumlah data yang masuk : 715
+Baris selesai : 20
+Jumlah data yang masuk : 716
+Baris selesai : 21
+Jumlah data yang masuk : 717
+Baris selesai : 22
+Jumlah data yang masuk : 718
+Baris selesai : 23
+Jumlah data yang masuk : 719
+Baris selesai : 24
+Jumlah data yang masuk : 720
+=================== Row Finish:175 ===================
+
+ID Data di proses:176
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 721
+=================== Row Finish:176 ===================
+
+ID Data di proses:177
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 722
+Baris selesai : 2
+Jumlah data yang masuk : 723
+=================== Row Finish:177 ===================
+
+ID Data di proses:178
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 724
+Baris selesai : 2
+Jumlah data yang masuk : 725
+Baris selesai : 3
+Jumlah data yang masuk : 726
+Baris selesai : 4
+Jumlah data yang masuk : 727
+Baris selesai : 5
+Jumlah data yang masuk : 728
+Baris selesai : 6
+Jumlah data yang masuk : 729
+=================== Row Finish:178 ===================
+
+ID Data di proses:179
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 730
+Baris selesai : 2
+Jumlah data yang masuk : 731
+Baris selesai : 3
+Jumlah data yang masuk : 732
+Baris selesai : 4
+Jumlah data yang masuk : 733
+=================== Row Finish:179 ===================
+
+ID Data di proses:180
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 734
+Baris selesai : 2
+Jumlah data yang masuk : 735
+=================== Row Finish:180 ===================
+
+ID Data di proses:181
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 736
+Baris selesai : 2
+Jumlah data yang masuk : 737
+Baris selesai : 3
+Jumlah data yang masuk : 738
+=================== Row Finish:181 ===================
+
+ID Data di proses:182
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 739
+Baris selesai : 2
+Jumlah data yang masuk : 740
+Baris selesai : 3
+Jumlah data yang masuk : 741
+=================== Row Finish:182 ===================
+
+ID Data di proses:183
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 742
+Baris selesai : 2
+Jumlah data yang masuk : 743
+Baris selesai : 3
+Jumlah data yang masuk : 744
+=================== Row Finish:183 ===================
+
+ID Data di proses:184
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 745
+=================== Row Finish:184 ===================
+
+ID Data di proses:185
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 746
+Baris selesai : 2
+Jumlah data yang masuk : 747
+Baris selesai : 3
+Jumlah data yang masuk : 748
+=================== Row Finish:185 ===================
+
+ID Data di proses:186
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 749
+=================== Row Finish:186 ===================
+
+ID Data di proses:187
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 750
+=================== Row Finish:187 ===================
+
+ID Data di proses:188
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 751
+Baris selesai : 2
+Jumlah data yang masuk : 752
+Baris selesai : 3
+Jumlah data yang masuk : 753
+Baris selesai : 4
+Jumlah data yang masuk : 754
+=================== Row Finish:188 ===================
+
+ID Data di proses:189
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 755
+=================== Row Finish:189 ===================
+
+ID Data di proses:190
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 756
+Baris selesai : 2
+Jumlah data yang masuk : 757
+Baris selesai : 3
+Jumlah data yang masuk : 758
+Baris selesai : 4
+Jumlah data yang masuk : 759
+=================== Row Finish:190 ===================
+
+ID Data di proses:191
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 760
+=================== Row Finish:191 ===================
+
+ID Data di proses:192
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 761
+=================== Row Finish:192 ===================
+
+ID Data di proses:193
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 762
+=================== Row Finish:193 ===================
+
+ID Data di proses:194
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 763
+Baris selesai : 2
+Jumlah data yang masuk : 764
+Baris selesai : 3
+Jumlah data yang masuk : 765
+Baris selesai : 4
+Jumlah data yang masuk : 766
+=================== Row Finish:194 ===================
+
+ID Data di proses:195
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 767
+=================== Row Finish:195 ===================
+
+ID Data di proses:196
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 768
+=================== Row Finish:196 ===================
+
+ID Data di proses:197
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 769
+=================== Row Finish:197 ===================
+
+ID Data di proses:198
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 770
+=================== Row Finish:198 ===================
+
+ID Data di proses:199
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 771
+Baris selesai : 2
+Jumlah data yang masuk : 772
+Baris selesai : 3
+Jumlah data yang masuk : 773
+Baris selesai : 4
+Jumlah data yang masuk : 774
+Baris selesai : 5
+Jumlah data yang masuk : 775
+Baris selesai : 6
+Jumlah data yang masuk : 776
+Baris selesai : 7
+Jumlah data yang masuk : 777
+Baris selesai : 8
+Jumlah data yang masuk : 778
+Baris selesai : 9
+Jumlah data yang masuk : 779
+Baris selesai : 10
+Jumlah data yang masuk : 780
+Baris selesai : 11
+Jumlah data yang masuk : 781
+Baris selesai : 12
+Jumlah data yang masuk : 782
+Baris selesai : 13
+Jumlah data yang masuk : 783
+Baris selesai : 14
+Jumlah data yang masuk : 784
+Baris selesai : 15
+Jumlah data yang masuk : 785
+Baris selesai : 16
+Jumlah data yang masuk : 786
+Baris selesai : 17
+Jumlah data yang masuk : 787
+Baris selesai : 18
+Jumlah data yang masuk : 788
+Baris selesai : 19
+Jumlah data yang masuk : 789
+Baris selesai : 20
+Jumlah data yang masuk : 790
+=================== Row Finish:199 ===================
+
+ID Data di proses:200
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 791
+=================== Row Finish:200 ===================
+
+ID Data di proses:201
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 792
+=================== Row Finish:201 ===================
+
+ID Data di proses:202
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 793
+=================== Row Finish:202 ===================
+
+ID Data di proses:203
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 794
+=================== Row Finish:203 ===================
+
+ID Data di proses:204
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 795
+Baris selesai : 2
+Jumlah data yang masuk : 796
+Baris selesai : 3
+Jumlah data yang masuk : 797
+Baris selesai : 4
+Jumlah data yang masuk : 798
+Baris selesai : 5
+Jumlah data yang masuk : 799
+Baris selesai : 6
+Jumlah data yang masuk : 800
+Baris selesai : 7
+Jumlah data yang masuk : 801
+Baris selesai : 8
+Jumlah data yang masuk : 802
+Baris selesai : 9
+Jumlah data yang masuk : 803
+Baris selesai : 10
+Jumlah data yang masuk : 804
+Baris selesai : 11
+Jumlah data yang masuk : 805
+Baris selesai : 12
+Jumlah data yang masuk : 806
+Baris selesai : 13
+Jumlah data yang masuk : 807
+Baris selesai : 14
+Jumlah data yang masuk : 808
+Baris selesai : 15
+Jumlah data yang masuk : 809
+Baris selesai : 16
+Jumlah data yang masuk : 810
+Baris selesai : 17
+Jumlah data yang masuk : 811
+Baris selesai : 18
+Jumlah data yang masuk : 812
+Baris selesai : 19
+Jumlah data yang masuk : 813
+Baris selesai : 20
+Jumlah data yang masuk : 814
+Baris selesai : 21
+Jumlah data yang masuk : 815
+Baris selesai : 22
+Jumlah data yang masuk : 816
+Baris selesai : 23
+Jumlah data yang masuk : 817
+Baris selesai : 24
+Jumlah data yang masuk : 818
+=================== Row Finish:204 ===================
+
+ID Data di proses:205
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 819
+=================== Row Finish:205 ===================
+
+ID Data di proses:206
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 820
+Baris selesai : 2
+Jumlah data yang masuk : 821
+=================== Row Finish:206 ===================
+
+ID Data di proses:207
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 822
+Baris selesai : 2
+Jumlah data yang masuk : 823
+Baris selesai : 3
+Jumlah data yang masuk : 824
+Baris selesai : 4
+Jumlah data yang masuk : 825
+Baris selesai : 5
+Jumlah data yang masuk : 826
+Baris selesai : 6
+Jumlah data yang masuk : 827
+=================== Row Finish:207 ===================
+
+ID Data di proses:208
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 828
+Baris selesai : 2
+Jumlah data yang masuk : 829
+Baris selesai : 3
+Jumlah data yang masuk : 830
+Baris selesai : 4
+Jumlah data yang masuk : 831
+=================== Row Finish:208 ===================
+
+ID Data di proses:209
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 832
+Baris selesai : 2
+Jumlah data yang masuk : 833
+=================== Row Finish:209 ===================
+
+ID Data di proses:210
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 834
+Baris selesai : 2
+Jumlah data yang masuk : 835
+Baris selesai : 3
+Jumlah data yang masuk : 836
+=================== Row Finish:210 ===================
+
+ID Data di proses:211
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 837
+Baris selesai : 2
+Jumlah data yang masuk : 838
+Baris selesai : 3
+Jumlah data yang masuk : 839
+=================== Row Finish:211 ===================
+
+ID Data di proses:212
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 840
+Baris selesai : 2
+Jumlah data yang masuk : 841
+Baris selesai : 3
+Jumlah data yang masuk : 842
+=================== Row Finish:212 ===================
+
+ID Data di proses:213
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 843
+=================== Row Finish:213 ===================
+
+ID Data di proses:214
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 844
+Baris selesai : 2
+Jumlah data yang masuk : 845
+Baris selesai : 3
+Jumlah data yang masuk : 846
+=================== Row Finish:214 ===================
+
+ID Data di proses:215
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 847
+=================== Row Finish:215 ===================
+
+ID Data di proses:216
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 848
+=================== Row Finish:216 ===================
+
+ID Data di proses:217
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 849
+Baris selesai : 2
+Jumlah data yang masuk : 850
+Baris selesai : 3
+Jumlah data yang masuk : 851
+Baris selesai : 4
+Jumlah data yang masuk : 852
+=================== Row Finish:217 ===================
+
+ID Data di proses:218
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 853
+=================== Row Finish:218 ===================
+
+ID Data di proses:219
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 854
+Baris selesai : 2
+Jumlah data yang masuk : 855
+Baris selesai : 3
+Jumlah data yang masuk : 856
+Baris selesai : 4
+Jumlah data yang masuk : 857
+=================== Row Finish:219 ===================
+
+ID Data di proses:220
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 858
+=================== Row Finish:220 ===================
+
+ID Data di proses:221
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 859
+=================== Row Finish:221 ===================
+
+ID Data di proses:222
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 860
+=================== Row Finish:222 ===================
+
+ID Data di proses:223
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 861
+Baris selesai : 2
+Jumlah data yang masuk : 862
+Baris selesai : 3
+Jumlah data yang masuk : 863
+Baris selesai : 4
+Jumlah data yang masuk : 864
+=================== Row Finish:223 ===================
+
+ID Data di proses:224
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 865
+=================== Row Finish:224 ===================
+
+ID Data di proses:225
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 866
+=================== Row Finish:225 ===================
+
+ID Data di proses:226
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 867
+=================== Row Finish:226 ===================
+
+ID Data di proses:227
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 868
+=================== Row Finish:227 ===================
+
+ID Data di proses:228
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 869
+Baris selesai : 2
+Jumlah data yang masuk : 870
+Baris selesai : 3
+Jumlah data yang masuk : 871
+Baris selesai : 4
+Jumlah data yang masuk : 872
+Baris selesai : 5
+Jumlah data yang masuk : 873
+Baris selesai : 6
+Jumlah data yang masuk : 874
+Baris selesai : 7
+Jumlah data yang masuk : 875
+Baris selesai : 8
+Jumlah data yang masuk : 876
+Baris selesai : 9
+Jumlah data yang masuk : 877
+Baris selesai : 10
+Jumlah data yang masuk : 878
+Baris selesai : 11
+Jumlah data yang masuk : 879
+Baris selesai : 12
+Jumlah data yang masuk : 880
+Baris selesai : 13
+Jumlah data yang masuk : 881
+Baris selesai : 14
+Jumlah data yang masuk : 882
+Baris selesai : 15
+Jumlah data yang masuk : 883
+Baris selesai : 16
+Jumlah data yang masuk : 884
+Baris selesai : 17
+Jumlah data yang masuk : 885
+Baris selesai : 18
+Jumlah data yang masuk : 886
+Baris selesai : 19
+Jumlah data yang masuk : 887
+Baris selesai : 20
+Jumlah data yang masuk : 888
+=================== Row Finish:228 ===================
+
+ID Data di proses:229
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 889
+=================== Row Finish:229 ===================
+
+ID Data di proses:230
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 890
+=================== Row Finish:230 ===================
+
+ID Data di proses:231
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 891
+=================== Row Finish:231 ===================
+
+ID Data di proses:232
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 892
+=================== Row Finish:232 ===================
+
+ID Data di proses:233
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 893
+Baris selesai : 2
+Jumlah data yang masuk : 894
+Baris selesai : 3
+Jumlah data yang masuk : 895
+Baris selesai : 4
+Jumlah data yang masuk : 896
+Baris selesai : 5
+Jumlah data yang masuk : 897
+Baris selesai : 6
+Jumlah data yang masuk : 898
+Baris selesai : 7
+Jumlah data yang masuk : 899
+Baris selesai : 8
+Jumlah data yang masuk : 900
+Baris selesai : 9
+Jumlah data yang masuk : 901
+Baris selesai : 10
+Jumlah data yang masuk : 902
+Baris selesai : 11
+Jumlah data yang masuk : 903
+Baris selesai : 12
+Jumlah data yang masuk : 904
+Baris selesai : 13
+Jumlah data yang masuk : 905
+Baris selesai : 14
+Jumlah data yang masuk : 906
+Baris selesai : 15
+Jumlah data yang masuk : 907
+Baris selesai : 16
+Jumlah data yang masuk : 908
+Baris selesai : 17
+Jumlah data yang masuk : 909
+Baris selesai : 18
+Jumlah data yang masuk : 910
+Baris selesai : 19
+Jumlah data yang masuk : 911
+Baris selesai : 20
+Jumlah data yang masuk : 912
+Baris selesai : 21
+Jumlah data yang masuk : 913
+Baris selesai : 22
+Jumlah data yang masuk : 914
+Baris selesai : 23
+Jumlah data yang masuk : 915
+Baris selesai : 24
+Jumlah data yang masuk : 916
+=================== Row Finish:233 ===================
+
+ID Data di proses:234
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 917
+=================== Row Finish:234 ===================
+
+ID Data di proses:235
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 918
+Baris selesai : 2
+Jumlah data yang masuk : 919
+=================== Row Finish:235 ===================
+
+ID Data di proses:236
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 920
+Baris selesai : 2
+Jumlah data yang masuk : 921
+Baris selesai : 3
+Jumlah data yang masuk : 922
+Baris selesai : 4
+Jumlah data yang masuk : 923
+Baris selesai : 5
+Jumlah data yang masuk : 924
+Baris selesai : 6
+Jumlah data yang masuk : 925
+=================== Row Finish:236 ===================
+
+ID Data di proses:237
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 926
+Baris selesai : 2
+Jumlah data yang masuk : 927
+Baris selesai : 3
+Jumlah data yang masuk : 928
+Baris selesai : 4
+Jumlah data yang masuk : 929
+=================== Row Finish:237 ===================
+
+ID Data di proses:238
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 930
+Baris selesai : 2
+Jumlah data yang masuk : 931
+=================== Row Finish:238 ===================
+
+ID Data di proses:239
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 932
+Baris selesai : 2
+Jumlah data yang masuk : 933
+Baris selesai : 3
+Jumlah data yang masuk : 934
+=================== Row Finish:239 ===================
+
+ID Data di proses:240
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 935
+Baris selesai : 2
+Jumlah data yang masuk : 936
+Baris selesai : 3
+Jumlah data yang masuk : 937
+=================== Row Finish:240 ===================
+
+ID Data di proses:241
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 938
+Baris selesai : 2
+Jumlah data yang masuk : 939
+Baris selesai : 3
+Jumlah data yang masuk : 940
+=================== Row Finish:241 ===================
+
+ID Data di proses:242
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 941
+=================== Row Finish:242 ===================
+
+ID Data di proses:243
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 942
+Baris selesai : 2
+Jumlah data yang masuk : 943
+Baris selesai : 3
+Jumlah data yang masuk : 944
+=================== Row Finish:243 ===================
+
+ID Data di proses:244
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 945
+=================== Row Finish:244 ===================
+
+ID Data di proses:245
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 946
+=================== Row Finish:245 ===================
+
+ID Data di proses:246
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 947
+Baris selesai : 2
+Jumlah data yang masuk : 948
+Baris selesai : 3
+Jumlah data yang masuk : 949
+Baris selesai : 4
+Jumlah data yang masuk : 950
+=================== Row Finish:246 ===================
+
+ID Data di proses:247
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 951
+=================== Row Finish:247 ===================
+
+ID Data di proses:248
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 952
+Baris selesai : 2
+Jumlah data yang masuk : 953
+Baris selesai : 3
+Jumlah data yang masuk : 954
+Baris selesai : 4
+Jumlah data yang masuk : 955
+=================== Row Finish:248 ===================
+
+ID Data di proses:249
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 956
+=================== Row Finish:249 ===================
+
+ID Data di proses:250
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 957
+=================== Row Finish:250 ===================
+
+ID Data di proses:251
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 958
+=================== Row Finish:251 ===================
+
+ID Data di proses:252
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 959
+Baris selesai : 2
+Jumlah data yang masuk : 960
+Baris selesai : 3
+Jumlah data yang masuk : 961
+Baris selesai : 4
+Jumlah data yang masuk : 962
+=================== Row Finish:252 ===================
+
+ID Data di proses:253
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 963
+=================== Row Finish:253 ===================
+
+ID Data di proses:254
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 964
+=================== Row Finish:254 ===================
+
+ID Data di proses:255
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 965
+=================== Row Finish:255 ===================
+
+ID Data di proses:256
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 966
+=================== Row Finish:256 ===================
+
+ID Data di proses:257
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 967
+Baris selesai : 2
+Jumlah data yang masuk : 968
+Baris selesai : 3
+Jumlah data yang masuk : 969
+Baris selesai : 4
+Jumlah data yang masuk : 970
+Baris selesai : 5
+Jumlah data yang masuk : 971
+Baris selesai : 6
+Jumlah data yang masuk : 972
+Baris selesai : 7
+Jumlah data yang masuk : 973
+Baris selesai : 8
+Jumlah data yang masuk : 974
+Baris selesai : 9
+Jumlah data yang masuk : 975
+Baris selesai : 10
+Jumlah data yang masuk : 976
+Baris selesai : 11
+Jumlah data yang masuk : 977
+Baris selesai : 12
+Jumlah data yang masuk : 978
+Baris selesai : 13
+Jumlah data yang masuk : 979
+Baris selesai : 14
+Jumlah data yang masuk : 980
+Baris selesai : 15
+Jumlah data yang masuk : 981
+Baris selesai : 16
+Jumlah data yang masuk : 982
+Baris selesai : 17
+Jumlah data yang masuk : 983
+Baris selesai : 18
+Jumlah data yang masuk : 984
+Baris selesai : 19
+Jumlah data yang masuk : 985
+Baris selesai : 20
+Jumlah data yang masuk : 986
+=================== Row Finish:257 ===================
+
+ID Data di proses:258
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 987
+=================== Row Finish:258 ===================
+
+ID Data di proses:259
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 988
+=================== Row Finish:259 ===================
+
+ID Data di proses:260
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 989
+=================== Row Finish:260 ===================
+
+ID Data di proses:261
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 990
+=================== Row Finish:261 ===================
+
+ID Data di proses:262
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 991
+Baris selesai : 2
+Jumlah data yang masuk : 992
+Baris selesai : 3
+Jumlah data yang masuk : 993
+Baris selesai : 4
+Jumlah data yang masuk : 994
+Baris selesai : 5
+Jumlah data yang masuk : 995
+Baris selesai : 6
+Jumlah data yang masuk : 996
+Baris selesai : 7
+Jumlah data yang masuk : 997
+Baris selesai : 8
+Jumlah data yang masuk : 998
+Baris selesai : 9
+Jumlah data yang masuk : 999
+Baris selesai : 10
+Jumlah data yang masuk : 1000
+Baris selesai : 11
+Jumlah data yang masuk : 1001
+Baris selesai : 12
+Jumlah data yang masuk : 1002
+Baris selesai : 13
+Jumlah data yang masuk : 1003
+Baris selesai : 14
+Jumlah data yang masuk : 1004
+Baris selesai : 15
+Jumlah data yang masuk : 1005
+Baris selesai : 16
+Jumlah data yang masuk : 1006
+Baris selesai : 17
+Jumlah data yang masuk : 1007
+Baris selesai : 18
+Jumlah data yang masuk : 1008
+Baris selesai : 19
+Jumlah data yang masuk : 1009
+Baris selesai : 20
+Jumlah data yang masuk : 1010
+Baris selesai : 21
+Jumlah data yang masuk : 1011
+Baris selesai : 22
+Jumlah data yang masuk : 1012
+Baris selesai : 23
+Jumlah data yang masuk : 1013
+Baris selesai : 24
+Jumlah data yang masuk : 1014
+=================== Row Finish:262 ===================
+
+ID Data di proses:263
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1015
+=================== Row Finish:263 ===================
+
+ID Data di proses:264
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1016
+Baris selesai : 2
+Jumlah data yang masuk : 1017
+=================== Row Finish:264 ===================
+
+ID Data di proses:265
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 1018
+Baris selesai : 2
+Jumlah data yang masuk : 1019
+Baris selesai : 3
+Jumlah data yang masuk : 1020
+Baris selesai : 4
+Jumlah data yang masuk : 1021
+Baris selesai : 5
+Jumlah data yang masuk : 1022
+Baris selesai : 6
+Jumlah data yang masuk : 1023
+=================== Row Finish:265 ===================
+
+ID Data di proses:266
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1024
+Baris selesai : 2
+Jumlah data yang masuk : 1025
+Baris selesai : 3
+Jumlah data yang masuk : 1026
+Baris selesai : 4
+Jumlah data yang masuk : 1027
+=================== Row Finish:266 ===================
+
+ID Data di proses:267
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1028
+Baris selesai : 2
+Jumlah data yang masuk : 1029
+=================== Row Finish:267 ===================
+
+ID Data di proses:268
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1030
+Baris selesai : 2
+Jumlah data yang masuk : 1031
+Baris selesai : 3
+Jumlah data yang masuk : 1032
+=================== Row Finish:268 ===================
+
+ID Data di proses:269
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1033
+Baris selesai : 2
+Jumlah data yang masuk : 1034
+Baris selesai : 3
+Jumlah data yang masuk : 1035
+=================== Row Finish:269 ===================
+
+ID Data di proses:270
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1036
+Baris selesai : 2
+Jumlah data yang masuk : 1037
+Baris selesai : 3
+Jumlah data yang masuk : 1038
+=================== Row Finish:270 ===================
+
+ID Data di proses:271
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1039
+=================== Row Finish:271 ===================
+
+ID Data di proses:272
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1040
+Baris selesai : 2
+Jumlah data yang masuk : 1041
+Baris selesai : 3
+Jumlah data yang masuk : 1042
+=================== Row Finish:272 ===================
+
+ID Data di proses:273
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1043
+=================== Row Finish:273 ===================
+
+ID Data di proses:274
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1044
+=================== Row Finish:274 ===================
+
+ID Data di proses:275
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1045
+Baris selesai : 2
+Jumlah data yang masuk : 1046
+Baris selesai : 3
+Jumlah data yang masuk : 1047
+Baris selesai : 4
+Jumlah data yang masuk : 1048
+=================== Row Finish:275 ===================
+
+ID Data di proses:276
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1049
+=================== Row Finish:276 ===================
+
+ID Data di proses:277
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1050
+Baris selesai : 2
+Jumlah data yang masuk : 1051
+Baris selesai : 3
+Jumlah data yang masuk : 1052
+Baris selesai : 4
+Jumlah data yang masuk : 1053
+=================== Row Finish:277 ===================
+
+ID Data di proses:278
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1054
+=================== Row Finish:278 ===================
+
+ID Data di proses:279
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1055
+=================== Row Finish:279 ===================
+
+ID Data di proses:280
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1056
+=================== Row Finish:280 ===================
+
+ID Data di proses:281
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1057
+Baris selesai : 2
+Jumlah data yang masuk : 1058
+Baris selesai : 3
+Jumlah data yang masuk : 1059
+Baris selesai : 4
+Jumlah data yang masuk : 1060
+=================== Row Finish:281 ===================
+
+ID Data di proses:282
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1061
+=================== Row Finish:282 ===================
+
+ID Data di proses:283
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1062
+=================== Row Finish:283 ===================
+
+ID Data di proses:284
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1063
+=================== Row Finish:284 ===================
+
+ID Data di proses:285
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1064
+=================== Row Finish:285 ===================
+
+ID Data di proses:286
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 1065
+Baris selesai : 2
+Jumlah data yang masuk : 1066
+Baris selesai : 3
+Jumlah data yang masuk : 1067
+Baris selesai : 4
+Jumlah data yang masuk : 1068
+Baris selesai : 5
+Jumlah data yang masuk : 1069
+Baris selesai : 6
+Jumlah data yang masuk : 1070
+Baris selesai : 7
+Jumlah data yang masuk : 1071
+Baris selesai : 8
+Jumlah data yang masuk : 1072
+Baris selesai : 9
+Jumlah data yang masuk : 1073
+Baris selesai : 10
+Jumlah data yang masuk : 1074
+Baris selesai : 11
+Jumlah data yang masuk : 1075
+Baris selesai : 12
+Jumlah data yang masuk : 1076
+Baris selesai : 13
+Jumlah data yang masuk : 1077
+Baris selesai : 14
+Jumlah data yang masuk : 1078
+Baris selesai : 15
+Jumlah data yang masuk : 1079
+Baris selesai : 16
+Jumlah data yang masuk : 1080
+Baris selesai : 17
+Jumlah data yang masuk : 1081
+Baris selesai : 18
+Jumlah data yang masuk : 1082
+Baris selesai : 19
+Jumlah data yang masuk : 1083
+Baris selesai : 20
+Jumlah data yang masuk : 1084
+=================== Row Finish:286 ===================
+
+ID Data di proses:287
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1085
+=================== Row Finish:287 ===================
+
+ID Data di proses:288
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1086
+=================== Row Finish:288 ===================
+
+ID Data di proses:289
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1087
+=================== Row Finish:289 ===================
+
+ID Data di proses:290
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1088
+=================== Row Finish:290 ===================
+
+ID Data di proses:291
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 1089
+Baris selesai : 2
+Jumlah data yang masuk : 1090
+Baris selesai : 3
+Jumlah data yang masuk : 1091
+Baris selesai : 4
+Jumlah data yang masuk : 1092
+Baris selesai : 5
+Jumlah data yang masuk : 1093
+Baris selesai : 6
+Jumlah data yang masuk : 1094
+Baris selesai : 7
+Jumlah data yang masuk : 1095
+Baris selesai : 8
+Jumlah data yang masuk : 1096
+Baris selesai : 9
+Jumlah data yang masuk : 1097
+Baris selesai : 10
+Jumlah data yang masuk : 1098
+Baris selesai : 11
+Jumlah data yang masuk : 1099
+Baris selesai : 12
+Jumlah data yang masuk : 1100
+Baris selesai : 13
+Jumlah data yang masuk : 1101
+Baris selesai : 14
+Jumlah data yang masuk : 1102
+Baris selesai : 15
+Jumlah data yang masuk : 1103
+Baris selesai : 16
+Jumlah data yang masuk : 1104
+Baris selesai : 17
+Jumlah data yang masuk : 1105
+Baris selesai : 18
+Jumlah data yang masuk : 1106
+Baris selesai : 19
+Jumlah data yang masuk : 1107
+Baris selesai : 20
+Jumlah data yang masuk : 1108
+Baris selesai : 21
+Jumlah data yang masuk : 1109
+Baris selesai : 22
+Jumlah data yang masuk : 1110
+Baris selesai : 23
+Jumlah data yang masuk : 1111
+Baris selesai : 24
+Jumlah data yang masuk : 1112
+=================== Row Finish:291 ===================
+
+ID Data di proses:292
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1113
+=================== Row Finish:292 ===================
+
+ID Data di proses:293
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1114
+Baris selesai : 2
+Jumlah data yang masuk : 1115
+=================== Row Finish:293 ===================
+
+ID Data di proses:294
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 1116
+Baris selesai : 2
+Jumlah data yang masuk : 1117
+Baris selesai : 3
+Jumlah data yang masuk : 1118
+Baris selesai : 4
+Jumlah data yang masuk : 1119
+Baris selesai : 5
+Jumlah data yang masuk : 1120
+Baris selesai : 6
+Jumlah data yang masuk : 1121
+=================== Row Finish:294 ===================
+
+ID Data di proses:295
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1122
+Baris selesai : 2
+Jumlah data yang masuk : 1123
+Baris selesai : 3
+Jumlah data yang masuk : 1124
+Baris selesai : 4
+Jumlah data yang masuk : 1125
+=================== Row Finish:295 ===================
+
+ID Data di proses:296
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1126
+Baris selesai : 2
+Jumlah data yang masuk : 1127
+=================== Row Finish:296 ===================
+
+ID Data di proses:297
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1128
+Baris selesai : 2
+Jumlah data yang masuk : 1129
+Baris selesai : 3
+Jumlah data yang masuk : 1130
+=================== Row Finish:297 ===================
+
+ID Data di proses:298
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1131
+Baris selesai : 2
+Jumlah data yang masuk : 1132
+Baris selesai : 3
+Jumlah data yang masuk : 1133
+=================== Row Finish:298 ===================
+
+ID Data di proses:299
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1134
+Baris selesai : 2
+Jumlah data yang masuk : 1135
+Baris selesai : 3
+Jumlah data yang masuk : 1136
+=================== Row Finish:299 ===================
+
+ID Data di proses:300
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1137
+=================== Row Finish:300 ===================
+
+ID Data di proses:301
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1138
+Baris selesai : 2
+Jumlah data yang masuk : 1139
+Baris selesai : 3
+Jumlah data yang masuk : 1140
+=================== Row Finish:301 ===================
+
+ID Data di proses:302
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1141
+=================== Row Finish:302 ===================
+
+ID Data di proses:303
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1142
+=================== Row Finish:303 ===================
+
+ID Data di proses:304
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1143
+Baris selesai : 2
+Jumlah data yang masuk : 1144
+Baris selesai : 3
+Jumlah data yang masuk : 1145
+Baris selesai : 4
+Jumlah data yang masuk : 1146
+=================== Row Finish:304 ===================
+
+ID Data di proses:305
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1147
+=================== Row Finish:305 ===================
+
+ID Data di proses:306
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1148
+Baris selesai : 2
+Jumlah data yang masuk : 1149
+Baris selesai : 3
+Jumlah data yang masuk : 1150
+Baris selesai : 4
+Jumlah data yang masuk : 1151
+=================== Row Finish:306 ===================
+
+ID Data di proses:307
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1152
+=================== Row Finish:307 ===================
+
+ID Data di proses:308
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1153
+=================== Row Finish:308 ===================
+
+ID Data di proses:309
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1154
+=================== Row Finish:309 ===================
+
+ID Data di proses:310
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1155
+Baris selesai : 2
+Jumlah data yang masuk : 1156
+Baris selesai : 3
+Jumlah data yang masuk : 1157
+Baris selesai : 4
+Jumlah data yang masuk : 1158
+=================== Row Finish:310 ===================
+
+ID Data di proses:311
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1159
+=================== Row Finish:311 ===================
+
+ID Data di proses:312
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1160
+=================== Row Finish:312 ===================
+
+ID Data di proses:313
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1161
+=================== Row Finish:313 ===================
+
+ID Data di proses:314
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1162
+=================== Row Finish:314 ===================
+
+ID Data di proses:315
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 1163
+Baris selesai : 2
+Jumlah data yang masuk : 1164
+Baris selesai : 3
+Jumlah data yang masuk : 1165
+Baris selesai : 4
+Jumlah data yang masuk : 1166
+Baris selesai : 5
+Jumlah data yang masuk : 1167
+Baris selesai : 6
+Jumlah data yang masuk : 1168
+Baris selesai : 7
+Jumlah data yang masuk : 1169
+Baris selesai : 8
+Jumlah data yang masuk : 1170
+Baris selesai : 9
+Jumlah data yang masuk : 1171
+Baris selesai : 10
+Jumlah data yang masuk : 1172
+Baris selesai : 11
+Jumlah data yang masuk : 1173
+Baris selesai : 12
+Jumlah data yang masuk : 1174
+Baris selesai : 13
+Jumlah data yang masuk : 1175
+Baris selesai : 14
+Jumlah data yang masuk : 1176
+Baris selesai : 15
+Jumlah data yang masuk : 1177
+Baris selesai : 16
+Jumlah data yang masuk : 1178
+Baris selesai : 17
+Jumlah data yang masuk : 1179
+Baris selesai : 18
+Jumlah data yang masuk : 1180
+Baris selesai : 19
+Jumlah data yang masuk : 1181
+Baris selesai : 20
+Jumlah data yang masuk : 1182
+=================== Row Finish:315 ===================
+
+ID Data di proses:316
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1183
+=================== Row Finish:316 ===================
+
+ID Data di proses:317
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1184
+=================== Row Finish:317 ===================
+
+ID Data di proses:318
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1185
+=================== Row Finish:318 ===================
+
+ID Data di proses:319
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1186
+=================== Row Finish:319 ===================
+
+ID Data di proses:320
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 1187
+Baris selesai : 2
+Jumlah data yang masuk : 1188
+Baris selesai : 3
+Jumlah data yang masuk : 1189
+Baris selesai : 4
+Jumlah data yang masuk : 1190
+Baris selesai : 5
+Jumlah data yang masuk : 1191
+Baris selesai : 6
+Jumlah data yang masuk : 1192
+Baris selesai : 7
+Jumlah data yang masuk : 1193
+Baris selesai : 8
+Jumlah data yang masuk : 1194
+Baris selesai : 9
+Jumlah data yang masuk : 1195
+Baris selesai : 10
+Jumlah data yang masuk : 1196
+Baris selesai : 11
+Jumlah data yang masuk : 1197
+Baris selesai : 12
+Jumlah data yang masuk : 1198
+Baris selesai : 13
+Jumlah data yang masuk : 1199
+Baris selesai : 14
+Jumlah data yang masuk : 1200
+Baris selesai : 15
+Jumlah data yang masuk : 1201
+Baris selesai : 16
+Jumlah data yang masuk : 1202
+Baris selesai : 17
+Jumlah data yang masuk : 1203
+Baris selesai : 18
+Jumlah data yang masuk : 1204
+Baris selesai : 19
+Jumlah data yang masuk : 1205
+Baris selesai : 20
+Jumlah data yang masuk : 1206
+Baris selesai : 21
+Jumlah data yang masuk : 1207
+Baris selesai : 22
+Jumlah data yang masuk : 1208
+Baris selesai : 23
+Jumlah data yang masuk : 1209
+Baris selesai : 24
+Jumlah data yang masuk : 1210
+=================== Row Finish:320 ===================
+
+ID Data di proses:321
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1211
+=================== Row Finish:321 ===================
+
+ID Data di proses:322
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1212
+Baris selesai : 2
+Jumlah data yang masuk : 1213
+=================== Row Finish:322 ===================
+
+ID Data di proses:323
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 1214
+Baris selesai : 2
+Jumlah data yang masuk : 1215
+Baris selesai : 3
+Jumlah data yang masuk : 1216
+Baris selesai : 4
+Jumlah data yang masuk : 1217
+Baris selesai : 5
+Jumlah data yang masuk : 1218
+Baris selesai : 6
+Jumlah data yang masuk : 1219
+=================== Row Finish:323 ===================
+
+ID Data di proses:324
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1220
+Baris selesai : 2
+Jumlah data yang masuk : 1221
+Baris selesai : 3
+Jumlah data yang masuk : 1222
+Baris selesai : 4
+Jumlah data yang masuk : 1223
+=================== Row Finish:324 ===================
+
+ID Data di proses:325
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1224
+Baris selesai : 2
+Jumlah data yang masuk : 1225
+=================== Row Finish:325 ===================
+
+ID Data di proses:326
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1226
+Baris selesai : 2
+Jumlah data yang masuk : 1227
+Baris selesai : 3
+Jumlah data yang masuk : 1228
+=================== Row Finish:326 ===================
+
+ID Data di proses:327
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1229
+Baris selesai : 2
+Jumlah data yang masuk : 1230
+Baris selesai : 3
+Jumlah data yang masuk : 1231
+=================== Row Finish:327 ===================
+
+ID Data di proses:328
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1232
+Baris selesai : 2
+Jumlah data yang masuk : 1233
+Baris selesai : 3
+Jumlah data yang masuk : 1234
+=================== Row Finish:328 ===================
+
+ID Data di proses:329
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1235
+=================== Row Finish:329 ===================
+
+ID Data di proses:330
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1236
+Baris selesai : 2
+Jumlah data yang masuk : 1237
+Baris selesai : 3
+Jumlah data yang masuk : 1238
+=================== Row Finish:330 ===================
+
+ID Data di proses:331
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1239
+=================== Row Finish:331 ===================
+
+ID Data di proses:332
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1240
+=================== Row Finish:332 ===================
+
+ID Data di proses:333
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1241
+Baris selesai : 2
+Jumlah data yang masuk : 1242
+Baris selesai : 3
+Jumlah data yang masuk : 1243
+Baris selesai : 4
+Jumlah data yang masuk : 1244
+=================== Row Finish:333 ===================
+
+ID Data di proses:334
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1245
+=================== Row Finish:334 ===================
+
+ID Data di proses:335
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1246
+Baris selesai : 2
+Jumlah data yang masuk : 1247
+Baris selesai : 3
+Jumlah data yang masuk : 1248
+Baris selesai : 4
+Jumlah data yang masuk : 1249
+=================== Row Finish:335 ===================
+
+ID Data di proses:336
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1250
+=================== Row Finish:336 ===================
+
+ID Data di proses:337
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1251
+=================== Row Finish:337 ===================
+
+ID Data di proses:338
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1252
+=================== Row Finish:338 ===================
+
+ID Data di proses:339
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1253
+Baris selesai : 2
+Jumlah data yang masuk : 1254
+Baris selesai : 3
+Jumlah data yang masuk : 1255
+Baris selesai : 4
+Jumlah data yang masuk : 1256
+=================== Row Finish:339 ===================
+
+ID Data di proses:340
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1257
+=================== Row Finish:340 ===================
+
+ID Data di proses:341
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1258
+=================== Row Finish:341 ===================
+
+ID Data di proses:342
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1259
+=================== Row Finish:342 ===================
+
+ID Data di proses:343
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1260
+=================== Row Finish:343 ===================
+
+ID Data di proses:344
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 1261
+Baris selesai : 2
+Jumlah data yang masuk : 1262
+Baris selesai : 3
+Jumlah data yang masuk : 1263
+Baris selesai : 4
+Jumlah data yang masuk : 1264
+Baris selesai : 5
+Jumlah data yang masuk : 1265
+Baris selesai : 6
+Jumlah data yang masuk : 1266
+Baris selesai : 7
+Jumlah data yang masuk : 1267
+Baris selesai : 8
+Jumlah data yang masuk : 1268
+Baris selesai : 9
+Jumlah data yang masuk : 1269
+Baris selesai : 10
+Jumlah data yang masuk : 1270
+Baris selesai : 11
+Jumlah data yang masuk : 1271
+Baris selesai : 12
+Jumlah data yang masuk : 1272
+Baris selesai : 13
+Jumlah data yang masuk : 1273
+Baris selesai : 14
+Jumlah data yang masuk : 1274
+Baris selesai : 15
+Jumlah data yang masuk : 1275
+Baris selesai : 16
+Jumlah data yang masuk : 1276
+Baris selesai : 17
+Jumlah data yang masuk : 1277
+Baris selesai : 18
+Jumlah data yang masuk : 1278
+Baris selesai : 19
+Jumlah data yang masuk : 1279
+Baris selesai : 20
+Jumlah data yang masuk : 1280
+=================== Row Finish:344 ===================
+
+ID Data di proses:345
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1281
+=================== Row Finish:345 ===================
+
+ID Data di proses:346
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1282
+=================== Row Finish:346 ===================
+
+ID Data di proses:347
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1283
+=================== Row Finish:347 ===================
+
+ID Data di proses:348
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1284
+=================== Row Finish:348 ===================
+
+ID Data di proses:349
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 1285
+Baris selesai : 2
+Jumlah data yang masuk : 1286
+Baris selesai : 3
+Jumlah data yang masuk : 1287
+Baris selesai : 4
+Jumlah data yang masuk : 1288
+Baris selesai : 5
+Jumlah data yang masuk : 1289
+Baris selesai : 6
+Jumlah data yang masuk : 1290
+Baris selesai : 7
+Jumlah data yang masuk : 1291
+Baris selesai : 8
+Jumlah data yang masuk : 1292
+Baris selesai : 9
+Jumlah data yang masuk : 1293
+Baris selesai : 10
+Jumlah data yang masuk : 1294
+Baris selesai : 11
+Jumlah data yang masuk : 1295
+Baris selesai : 12
+Jumlah data yang masuk : 1296
+Baris selesai : 13
+Jumlah data yang masuk : 1297
+Baris selesai : 14
+Jumlah data yang masuk : 1298
+Baris selesai : 15
+Jumlah data yang masuk : 1299
+Baris selesai : 16
+Jumlah data yang masuk : 1300
+Baris selesai : 17
+Jumlah data yang masuk : 1301
+Baris selesai : 18
+Jumlah data yang masuk : 1302
+Baris selesai : 19
+Jumlah data yang masuk : 1303
+Baris selesai : 20
+Jumlah data yang masuk : 1304
+Baris selesai : 21
+Jumlah data yang masuk : 1305
+Baris selesai : 22
+Jumlah data yang masuk : 1306
+Baris selesai : 23
+Jumlah data yang masuk : 1307
+Baris selesai : 24
+Jumlah data yang masuk : 1308
+=================== Row Finish:349 ===================
+
+ID Data di proses:350
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1309
+=================== Row Finish:350 ===================
+
+ID Data di proses:351
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1310
+Baris selesai : 2
+Jumlah data yang masuk : 1311
+=================== Row Finish:351 ===================
+
+ID Data di proses:352
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 1312
+Baris selesai : 2
+Jumlah data yang masuk : 1313
+Baris selesai : 3
+Jumlah data yang masuk : 1314
+Baris selesai : 4
+Jumlah data yang masuk : 1315
+Baris selesai : 5
+Jumlah data yang masuk : 1316
+Baris selesai : 6
+Jumlah data yang masuk : 1317
+=================== Row Finish:352 ===================
+
+ID Data di proses:353
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1318
+Baris selesai : 2
+Jumlah data yang masuk : 1319
+Baris selesai : 3
+Jumlah data yang masuk : 1320
+Baris selesai : 4
+Jumlah data yang masuk : 1321
+=================== Row Finish:353 ===================
+
+ID Data di proses:354
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1322
+Baris selesai : 2
+Jumlah data yang masuk : 1323
+=================== Row Finish:354 ===================
+
+ID Data di proses:355
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1324
+Baris selesai : 2
+Jumlah data yang masuk : 1325
+Baris selesai : 3
+Jumlah data yang masuk : 1326
+=================== Row Finish:355 ===================
+
+ID Data di proses:356
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1327
+Baris selesai : 2
+Jumlah data yang masuk : 1328
+Baris selesai : 3
+Jumlah data yang masuk : 1329
+=================== Row Finish:356 ===================
+
+ID Data di proses:357
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1330
+Baris selesai : 2
+Jumlah data yang masuk : 1331
+Baris selesai : 3
+Jumlah data yang masuk : 1332
+=================== Row Finish:357 ===================
+
+ID Data di proses:358
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1333
+=================== Row Finish:358 ===================
+
+ID Data di proses:359
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1334
+Baris selesai : 2
+Jumlah data yang masuk : 1335
+Baris selesai : 3
+Jumlah data yang masuk : 1336
+=================== Row Finish:359 ===================
+
+ID Data di proses:360
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1337
+=================== Row Finish:360 ===================
+
+ID Data di proses:361
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1338
+=================== Row Finish:361 ===================
+
+ID Data di proses:362
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1339
+Baris selesai : 2
+Jumlah data yang masuk : 1340
+Baris selesai : 3
+Jumlah data yang masuk : 1341
+Baris selesai : 4
+Jumlah data yang masuk : 1342
+=================== Row Finish:362 ===================
+
+ID Data di proses:363
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1343
+=================== Row Finish:363 ===================
+
+ID Data di proses:364
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1344
+Baris selesai : 2
+Jumlah data yang masuk : 1345
+Baris selesai : 3
+Jumlah data yang masuk : 1346
+Baris selesai : 4
+Jumlah data yang masuk : 1347
+=================== Row Finish:364 ===================
+
+ID Data di proses:365
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1348
+=================== Row Finish:365 ===================
+
+ID Data di proses:366
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1349
+=================== Row Finish:366 ===================
+
+ID Data di proses:367
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1350
+=================== Row Finish:367 ===================
+
+ID Data di proses:368
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1351
+Baris selesai : 2
+Jumlah data yang masuk : 1352
+Baris selesai : 3
+Jumlah data yang masuk : 1353
+Baris selesai : 4
+Jumlah data yang masuk : 1354
+=================== Row Finish:368 ===================
+
+ID Data di proses:369
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1355
+=================== Row Finish:369 ===================
+
+ID Data di proses:370
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1356
+=================== Row Finish:370 ===================
+
+ID Data di proses:371
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1357
+=================== Row Finish:371 ===================
+
+ID Data di proses:372
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1358
+=================== Row Finish:372 ===================
+
+ID Data di proses:373
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 1359
+Baris selesai : 2
+Jumlah data yang masuk : 1360
+Baris selesai : 3
+Jumlah data yang masuk : 1361
+Baris selesai : 4
+Jumlah data yang masuk : 1362
+Baris selesai : 5
+Jumlah data yang masuk : 1363
+Baris selesai : 6
+Jumlah data yang masuk : 1364
+Baris selesai : 7
+Jumlah data yang masuk : 1365
+Baris selesai : 8
+Jumlah data yang masuk : 1366
+Baris selesai : 9
+Jumlah data yang masuk : 1367
+Baris selesai : 10
+Jumlah data yang masuk : 1368
+Baris selesai : 11
+Jumlah data yang masuk : 1369
+Baris selesai : 12
+Jumlah data yang masuk : 1370
+Baris selesai : 13
+Jumlah data yang masuk : 1371
+Baris selesai : 14
+Jumlah data yang masuk : 1372
+Baris selesai : 15
+Jumlah data yang masuk : 1373
+Baris selesai : 16
+Jumlah data yang masuk : 1374
+Baris selesai : 17
+Jumlah data yang masuk : 1375
+Baris selesai : 18
+Jumlah data yang masuk : 1376
+Baris selesai : 19
+Jumlah data yang masuk : 1377
+Baris selesai : 20
+Jumlah data yang masuk : 1378
+=================== Row Finish:373 ===================
+
+ID Data di proses:374
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1379
+=================== Row Finish:374 ===================
+
+ID Data di proses:375
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1380
+=================== Row Finish:375 ===================
+
+ID Data di proses:376
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1381
+=================== Row Finish:376 ===================
+
+ID Data di proses:377
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1382
+=================== Row Finish:377 ===================
+
+ID Data di proses:378
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 1383
+Baris selesai : 2
+Jumlah data yang masuk : 1384
+Baris selesai : 3
+Jumlah data yang masuk : 1385
+Baris selesai : 4
+Jumlah data yang masuk : 1386
+Baris selesai : 5
+Jumlah data yang masuk : 1387
+Baris selesai : 6
+Jumlah data yang masuk : 1388
+Baris selesai : 7
+Jumlah data yang masuk : 1389
+Baris selesai : 8
+Jumlah data yang masuk : 1390
+Baris selesai : 9
+Jumlah data yang masuk : 1391
+Baris selesai : 10
+Jumlah data yang masuk : 1392
+Baris selesai : 11
+Jumlah data yang masuk : 1393
+Baris selesai : 12
+Jumlah data yang masuk : 1394
+Baris selesai : 13
+Jumlah data yang masuk : 1395
+Baris selesai : 14
+Jumlah data yang masuk : 1396
+Baris selesai : 15
+Jumlah data yang masuk : 1397
+Baris selesai : 16
+Jumlah data yang masuk : 1398
+Baris selesai : 17
+Jumlah data yang masuk : 1399
+Baris selesai : 18
+Jumlah data yang masuk : 1400
+Baris selesai : 19
+Jumlah data yang masuk : 1401
+Baris selesai : 20
+Jumlah data yang masuk : 1402
+Baris selesai : 21
+Jumlah data yang masuk : 1403
+Baris selesai : 22
+Jumlah data yang masuk : 1404
+Baris selesai : 23
+Jumlah data yang masuk : 1405
+Baris selesai : 24
+Jumlah data yang masuk : 1406
+=================== Row Finish:378 ===================
+
+ID Data di proses:379
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1407
+=================== Row Finish:379 ===================
+
+ID Data di proses:380
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1408
+Baris selesai : 2
+Jumlah data yang masuk : 1409
+=================== Row Finish:380 ===================
+
+ID Data di proses:381
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 1410
+Baris selesai : 2
+Jumlah data yang masuk : 1411
+Baris selesai : 3
+Jumlah data yang masuk : 1412
+Baris selesai : 4
+Jumlah data yang masuk : 1413
+Baris selesai : 5
+Jumlah data yang masuk : 1414
+Baris selesai : 6
+Jumlah data yang masuk : 1415
+=================== Row Finish:381 ===================
+
+ID Data di proses:382
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1416
+Baris selesai : 2
+Jumlah data yang masuk : 1417
+Baris selesai : 3
+Jumlah data yang masuk : 1418
+Baris selesai : 4
+Jumlah data yang masuk : 1419
+=================== Row Finish:382 ===================
+
+ID Data di proses:383
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1420
+Baris selesai : 2
+Jumlah data yang masuk : 1421
+=================== Row Finish:383 ===================
+
+ID Data di proses:384
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1422
+Baris selesai : 2
+Jumlah data yang masuk : 1423
+Baris selesai : 3
+Jumlah data yang masuk : 1424
+=================== Row Finish:384 ===================
+
+ID Data di proses:385
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1425
+Baris selesai : 2
+Jumlah data yang masuk : 1426
+Baris selesai : 3
+Jumlah data yang masuk : 1427
+=================== Row Finish:385 ===================
+
+ID Data di proses:386
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1428
+Baris selesai : 2
+Jumlah data yang masuk : 1429
+Baris selesai : 3
+Jumlah data yang masuk : 1430
+=================== Row Finish:386 ===================
+
+ID Data di proses:387
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1431
+=================== Row Finish:387 ===================
+
+ID Data di proses:388
+Jumlah Data:3
+Baris selesai : 1
+Jumlah data yang masuk : 1432
+Baris selesai : 2
+Jumlah data yang masuk : 1433
+Baris selesai : 3
+Jumlah data yang masuk : 1434
+=================== Row Finish:388 ===================
+
+ID Data di proses:389
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1435
+=================== Row Finish:389 ===================
+
+ID Data di proses:390
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1436
+=================== Row Finish:390 ===================
+
+ID Data di proses:391
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1437
+Baris selesai : 2
+Jumlah data yang masuk : 1438
+Baris selesai : 3
+Jumlah data yang masuk : 1439
+Baris selesai : 4
+Jumlah data yang masuk : 1440
+=================== Row Finish:391 ===================
+
+ID Data di proses:392
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1441
+=================== Row Finish:392 ===================
+
+ID Data di proses:393
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1442
+Baris selesai : 2
+Jumlah data yang masuk : 1443
+Baris selesai : 3
+Jumlah data yang masuk : 1444
+Baris selesai : 4
+Jumlah data yang masuk : 1445
+=================== Row Finish:393 ===================
+
+ID Data di proses:394
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1446
+=================== Row Finish:394 ===================
+
+ID Data di proses:395
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1447
+=================== Row Finish:395 ===================
+
+ID Data di proses:396
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1448
+=================== Row Finish:396 ===================
+
+ID Data di proses:397
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1449
+Baris selesai : 2
+Jumlah data yang masuk : 1450
+Baris selesai : 3
+Jumlah data yang masuk : 1451
+Baris selesai : 4
+Jumlah data yang masuk : 1452
+=================== Row Finish:397 ===================
+
+ID Data di proses:398
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1453
+=================== Row Finish:398 ===================
+
+ID Data di proses:399
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1454
+=================== Row Finish:399 ===================
+
+ID Data di proses:400
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1455
+=================== Row Finish:400 ===================
+
+ID Data di proses:401
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1456
+=================== Row Finish:401 ===================
+
+ID Data di proses:402
+Jumlah Data:20
+Baris selesai : 1
+Jumlah data yang masuk : 1457
+Baris selesai : 2
+Jumlah data yang masuk : 1458
+Baris selesai : 3
+Jumlah data yang masuk : 1459
+Baris selesai : 4
+Jumlah data yang masuk : 1460
+Baris selesai : 5
+Jumlah data yang masuk : 1461
+Baris selesai : 6
+Jumlah data yang masuk : 1462
+Baris selesai : 7
+Jumlah data yang masuk : 1463
+Baris selesai : 8
+Jumlah data yang masuk : 1464
+Baris selesai : 9
+Jumlah data yang masuk : 1465
+Baris selesai : 10
+Jumlah data yang masuk : 1466
+Baris selesai : 11
+Jumlah data yang masuk : 1467
+Baris selesai : 12
+Jumlah data yang masuk : 1468
+Baris selesai : 13
+Jumlah data yang masuk : 1469
+Baris selesai : 14
+Jumlah data yang masuk : 1470
+Baris selesai : 15
+Jumlah data yang masuk : 1471
+Baris selesai : 16
+Jumlah data yang masuk : 1472
+Baris selesai : 17
+Jumlah data yang masuk : 1473
+Baris selesai : 18
+Jumlah data yang masuk : 1474
+Baris selesai : 19
+Jumlah data yang masuk : 1475
+Baris selesai : 20
+Jumlah data yang masuk : 1476
+=================== Row Finish:402 ===================
+
+ID Data di proses:403
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1477
+=================== Row Finish:403 ===================
+
+ID Data di proses:404
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1478
+=================== Row Finish:404 ===================
+
+ID Data di proses:405
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1479
+=================== Row Finish:405 ===================
+
+ID Data di proses:406
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1480
+=================== Row Finish:406 ===================
+
+ID Data di proses:407
+Jumlah Data:24
+Baris selesai : 1
+Jumlah data yang masuk : 1481
+Baris selesai : 2
+Jumlah data yang masuk : 1482
+Baris selesai : 3
+Jumlah data yang masuk : 1483
+Baris selesai : 4
+Jumlah data yang masuk : 1484
+Baris selesai : 5
+Jumlah data yang masuk : 1485
+Baris selesai : 6
+Jumlah data yang masuk : 1486
+Baris selesai : 7
+Jumlah data yang masuk : 1487
+Baris selesai : 8
+Jumlah data yang masuk : 1488
+Baris selesai : 9
+Jumlah data yang masuk : 1489
+Baris selesai : 10
+Jumlah data yang masuk : 1490
+Baris selesai : 11
+Jumlah data yang masuk : 1491
+Baris selesai : 12
+Jumlah data yang masuk : 1492
+Baris selesai : 13
+Jumlah data yang masuk : 1493
+Baris selesai : 14
+Jumlah data yang masuk : 1494
+Baris selesai : 15
+Jumlah data yang masuk : 1495
+Baris selesai : 16
+Jumlah data yang masuk : 1496
+Baris selesai : 17
+Jumlah data yang masuk : 1497
+Baris selesai : 18
+Jumlah data yang masuk : 1498
+Baris selesai : 19
+Jumlah data yang masuk : 1499
+Baris selesai : 20
+Jumlah data yang masuk : 1500
+Baris selesai : 21
+Jumlah data yang masuk : 1501
+Baris selesai : 22
+Jumlah data yang masuk : 1502
+Baris selesai : 23
+Jumlah data yang masuk : 1503
+Baris selesai : 24
+Jumlah data yang masuk : 1504
+=================== Row Finish:407 ===================
+
+ID Data di proses:408
+Jumlah Data:1
+Baris selesai : 1
+Jumlah data yang masuk : 1505
+=================== Row Finish:408 ===================
+
+ID Data di proses:409
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1506
+Baris selesai : 2
+Jumlah data yang masuk : 1507
+=================== Row Finish:409 ===================
+
+ID Data di proses:410
+Jumlah Data:6
+Baris selesai : 1
+Jumlah data yang masuk : 1508
+Baris selesai : 2
+Jumlah data yang masuk : 1509
+Baris selesai : 3
+Jumlah data yang masuk : 1510
+Baris selesai : 4
+Jumlah data yang masuk : 1511
+Baris selesai : 5
+Jumlah data yang masuk : 1512
+Baris selesai : 6
+Jumlah data yang masuk : 1513
+=================== Row Finish:410 ===================
+
+ID Data di proses:411
+Jumlah Data:4
+Baris selesai : 1
+Jumlah data yang masuk : 1514
+Baris selesai : 2
+Jumlah data yang masuk : 1515
+Baris selesai : 3
+Jumlah data yang masuk : 1516
+Baris selesai : 4
+Jumlah data yang masuk : 1517
+=================== Row Finish:411 ===================
+
+ID Data di proses:412
+Jumlah Data:2
+Baris selesai : 1
+Jumlah data yang masuk : 1518
+Baris selesai : 2
+Jumlah data yang masuk : 1519
+=================== Row Finish:412 ===================
+
+Updating table kontrak
+Updating log import
+=================== Process Complete. Thank you ===================
+

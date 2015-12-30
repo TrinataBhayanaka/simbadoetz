@@ -44,11 +44,6 @@ $menu_id = 10;
 	// $(document).ajaxStart(function() { Pace.restart(); });
 	$body = $("body");
 	$(document).ready(function() { 
-		var total = $("#totalRB").val();
-		var spk = $("#spk").val();
-		if(total == spk){
-			$("#submit").attr('disabled','disabled');
-		}
 		var bar = $('.bar');
 		var percent = $('.percent');
 		var status = $('#status');
@@ -74,7 +69,7 @@ $menu_id = 10;
 		    },
 			complete: function(xhr) {
 				var chgform = $("#jenisaset").val();
-				window.location.replace("<?=$url_rewrite?>/module/perolehan/import/"+chgform+".php?id=<?=$_GET['id']?>");
+				window.location.replace("<?=$url_rewrite?>/module/inventarisasi/import/"+chgform+".php?id=0");
 			}
 	    }); 
 	});
@@ -108,47 +103,16 @@ $menu_id = 10;
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Perolehan Aset</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Kontrak</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Rincian Barang</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li><a href="#">Inventarisasi</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li class="active">Import xls</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Rincian Barang</div>
+				<div class="title">Import Inventarisasi</div>
 				<div class="subtitle">Import Data xls</div>
 			</div>		
 
 		<section class="formLegend">
-			
-		<div class="detailLeft">
-						
-						<ul>
-							<li>
-								<span class="labelInfo">No. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['noKontrak']?>" disabled/>
-							</li>
-							<li>
-								<span class="labelInfo">Tgl. Kontrak</span>
-								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
-							</li>
-						</ul>
-							
-					</div>
-			<div class="detailRight">
-						
-						<ul>
-							<li>
-								<span class="labelInfo">Nilai SPK</span>
-								<input type="text" id="spk" value="<?=number_format($kontrak[0]['nilai'])?>" disabled/>
-							</li>
-							<li>
-								<span  class="labelInfo">Total Rincian Barang</span>
-								<input type="text" id="totalRB" value="<?=isset($sumTotal) ? number_format($sumTotal['total']) : '0'?>" disabled/>
-							</li>
-						</ul>
-							
-					</div>
 			
 			<div style="height:5px;width:100%;clear:both"></div>
 			
@@ -161,45 +125,25 @@ $menu_id = 10;
 				</ul>	
 			</div>
 
+			<div class="detailRight">
+				<ul>
+					<li>
+						<a href="import/history.php" class="btn btn-primary btn-small"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Riwayat Import</a>
+				&nbsp;
+					</li>
+				</ul>	
+			</div>
+
 			<div style="height:5px;width:100%;clear:both"></div>
 
-		<?php
-			if(!empty($logImport)){
-		?>
-			<div class="search-options clearfix">
-    			<strong style="margin-right:20px;">Status Import Terakhir</strong>
-    			<hr style="padding:0px;margin:0px">
-				<table border='0' width="100%" style="font-size:12">
-					<tr>
-						<th>Nomor Kontrak</th>
-						<th>Nama File</th>
-						<th>Total Perolehan</th>
-						<th>User</th>
-						<th>Tanggal</th>
-						<th>Status</th>
-					</tr>
-					<tr>
-						<td align="center"><?=$logImport['noKontrak']?></td>
-						<td align="center"><?=$logImport['desc']?></td>
-						<td align="center"><?=number_format($logImport['totalPerolehan'])?></td>
-						<td align="center"><?=$logImport['user']?></td>
-						<td align="center"><?=$logImport['create_date']?></td>
-						<td align="center"><?=($logImport['status'] == 0) ? 'Sedang di proses' : 'Selesai'?></td>
-					</tr>	
-				</table>	
-
-			</div><!-- /search-option -->
-			<?php
-				}
-			?>
 			<div class="well span9">
 				<h4>Note Import Data</h4>
 				<ol>
 					<li>1. Pastikan urutan kolom sudah sesuai dengan template yang diberikan, sesuai dengan jenis barang.</li>
-					<li>2. Isi terlebih dahulu nilai sp2d dan penunjang.</li>
-					<li>3. Jumlah total keseluruhan aset sudah pasti benar.</li>
-					<li>4. Kolom tanggal pembelian di isi dengan format : yyyy-mm-dd.</li>
-					<li>5. Kolom nilai perolehan dan totalnya dilarang mencantumkan nilai sen atau koma dibelakangnya.</li>
+					<li>2. Jumlah total keseluruhan aset sudah pasti benar.</li>
+					<li>3. Kolom tanggal pembelian di isi dengan format : yyyy-mm-dd.</li>
+					<li>4. Kolom nilai perolehan dan totalnya dilarang mencantumkan nilai sen atau koma dibelakangnya.</li>
+					<li>5. Pastikan 1 file xls hanya terdiri dari aset dari tahun pembelian yang sama.</li>
 				</ol>
 			</div>
 
@@ -239,7 +183,6 @@ $menu_id = 10;
 						</div>
 						<!-- hidden -->
 						<input type="hidden" name="kontrakid" value="<?=$kontrak[0]['id']?>">
-						<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
 						<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
 						<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 				</form>

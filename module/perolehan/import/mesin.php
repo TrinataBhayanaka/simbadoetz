@@ -48,6 +48,7 @@ $menu_id = 10;
                     "aoColumnDefs": [
                          { "aTargets": [2] }
                     ],
+                    "aLengthMenu": [[25, 50, 100, 500], [25, 50, 100, 500]],
                     "aoColumns":[
                          {"bSortable": false},
                          {"bSortable": false,"sClass": "checkbox-column" },
