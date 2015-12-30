@@ -66,8 +66,8 @@ $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperole
 $serviceJson=json_encode($resultParamGol);
 //retrieve html
 $html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca);
-$count = count($html);
-	/*for ($i = 0; $i < $count; $i++) {
+/*$count = count($html);
+	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}

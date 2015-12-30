@@ -51,7 +51,8 @@ include"$path/menu.php";
                          <li><span class="span2">Kode Satker Baru</span>
                               <select name="kode_baru1">
                                    <?php
-                                   for ($i=1;$i<=30;$i++){
+
+                                   for ($i=1;$i<=150;$i++){
                                         
                                         $tampil=sprintf("%02d",$i);
                                         echo "<option value=\"$tampil\">$tampil</option>";
@@ -60,7 +61,7 @@ include"$path/menu.php";
                               </select>
                                <select name="kode_baru2">
                                    <?php
-                                   for ($i=1;$i<=30;$i++){
+                                   for ($i=1;$i<=150;$i++){
                                           
                                         $tampil=sprintf("%02d",$i);
                                         echo "<option value=\"$tampil\">$tampil</option>";
@@ -71,7 +72,7 @@ include"$path/menu.php";
                               </select>
                                <select name="kode_baru3">
                                    <?php
-                                   for ($i=1;$i<=30;$i++){
+                                   for ($i=1;$i<=150;$i++){
                                             
                                         $tampil=sprintf("%02d",$i);
                                         echo "<option value=\"$tampil\">$tampil</option>";
@@ -82,7 +83,7 @@ include"$path/menu.php";
                               </select>
                                <select name="kode_baru4">
                                    <?php
-                                   for ($i=1;$i<=30;$i++){
+                                   for ($i=1;$i<=150;$i++){
                                            
                                         $tampil=sprintf("%02d",$i);
                                         echo "<option value=\"$tampil\">$tampil</option>";                                   }

@@ -10,7 +10,8 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	$data = $LAYANAN->retrieve_history_aset($_GET);	
+	$data = $LAYANAN->retrieve_history_aset($_GET);
+	// pr($data);	
 	if (!$data){
 		?>
 		<script>
@@ -87,6 +88,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<th>Tanggal</th>
 						<th>Keterangan</th>
 						<th>SKPD</th>
+						<th>Nilai Perolehan</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -102,7 +104,8 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<td><?=$i?></td>
 						<td><?=$value['changeDate']?></td>
 						<td><?=$value['Nm_Riwayat']?></td>
-						<td class="center"><?=$value['NamaSatker'][0]['NamaSatker']?></td>
+						<td class="center"><?=$value['kodeSatker']?></td>
+						<td class="center"><?=number_format($value['NilaiPerolehan'])?></td>
 						<td class="center">
 						<?php
 							// if($kontrak[0]['n_status'] != 1){

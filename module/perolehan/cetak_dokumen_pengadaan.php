@@ -47,8 +47,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							e.preventDefault();
 						}
 					});*/
-					$("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset").mask('9999-99-99');
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset,#tglPerolehanAwalRekapNeraca,#tglPerolehanAkhirRekapNeraca").mask('9999-99-99');
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset,#tglPerolehanAwalRekapNeraca,#tglPerolehanAkhirRekapNeraca" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
 					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd").mask('9999-01-01');	
 					$("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-31');	
@@ -69,11 +69,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#lainnya" data-toggle="tab">Daftar Aset Lainnya</a></li>
 						<li><a href="#NonAset" data-toggle="tab">Daftar Barang Non Aset</a></li>
 						<li><a href="#neraca" data-toggle="tab">Rekapitulasi Barang Ke Neraca</a></li>
+						<li><a href="#rekapneraca" data-toggle="tab">Rekapitulasi Rincian Barang Ke Neraca</a></li>
 						<li><a href="#rekapskpd" data-toggle="tab">Rekapitulasi Barang Per SKPD</a></li>
 						<li><a href="#rekapupb" data-toggle="tab">Rekapitulasi Barang Per UPB</a></li>
 						<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>
 						<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>
-						<li><a href="#laprekapmutasiskpd" data-toggle="tab">Rekap Mutasi Barang</a></li>
+						<!--<li><a href="#laprekapmutasiskpd" data-toggle="tab">Rekap Mutasi Barang</a></li>-->
 						<li><a href="#lapdaftarpengadaan" data-toggle="tab">Laporan Daftar Pengadaan</a></li>    
 					  </ul>
 					  
@@ -534,6 +535,69 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</form>
 						</div>
 						
+						<div class="tab-pane" id="rekapneraca">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Rincian Barang Ke Neraca</div>
+						</div>
+						 <form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapRincianNeraca.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca" value="" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirRekapNeraca" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Jenis Aset</span>
+								<select name="tipeAset" id="tipeAset" style="width:170px">
+									<option value="all">Semua Aset</option>
+									<option value="tanah">Tanah</option>
+									<option value="mesin">Mesin</option>
+									<option value="bangunan">Bangunan</option>
+									<option value="jaringan">Jaringan</option>
+									<option value="asetlain">Aset Lain</option>
+									<option value="kdp">KDP</option>
+								</select>
+							</li>
+							<li>
+								<span class="span2">Level</span>
+								<select name="levelAset" id="levelAset" style="width:170px">
+									<option value="1">Semua Level</option>
+									<option value="2">Golongan</option>
+									<option value="3">Bidang</option>
+									<option value="4">Kelompok</option>
+									<option value="5">Sub Kelompok</option>
+									<option value="6">Sub Sub Kelompok</option>
+								</select>
+							</li>
+							<?php //selectAllSatker('kodeSatker8','255',true,false); 
+				
+								selectAllSatker('kodeSatker18','255',true,false,false,true);
+							
+							?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+						</div>
+						
+						
 						<div class="tab-pane" id="rekapskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Barang Per SKPD</div>
@@ -712,7 +776,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</form>
                         </div>
                         
-						<div class="tab-pane" id="laprekapmutasiskpd">
+						<!--<div class="tab-pane" id="laprekapmutasiskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekap Mutasi Barang</div>
 						</div>
@@ -738,7 +802,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<?php 
 					
-								selectAllSatker('kodeSatker15','255',true,false,false,true);
+								//selectAllSatker('kodeSatker15','255',true,false,false,true);
 							?>
 							<br>
 							<li>
@@ -748,7 +812,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 						</ul>
 						</form>
-                        </div>
+                        </div>-->
 
 
 						

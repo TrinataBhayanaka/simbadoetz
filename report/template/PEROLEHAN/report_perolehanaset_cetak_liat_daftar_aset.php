@@ -44,7 +44,7 @@ if($status != ''){
 	if($status == 0){
 		$query_status="(Status_Validasi_Barang IS NULL OR Status_Validasi_Barang = '{$status}') AND";
 	}elseif($status == 1){
-		$query_status="Status_Validasi_Barang = '{$status}' AND";
+		$query_status="Status_Validasi_Barang = '{$status}' AND StatusValidasi = '{$status}' AND";
 	}
 }else{
 	$query_status="";
@@ -64,7 +64,8 @@ for ($i = 0; $i < $count; $i++){
 	
 	$query = "SELECT noKontrak,noRegister,kodeKelompok,kodeSatker,Info,TglPerolehan,TglPembukuan,Tahun,NilaiPerolehan,Status_Validasi_Barang 
 			  from aset where {$query_noKontrak} {$query_tahun} {$query_satker} {$query_status} {$query_kodekelompok} order by kodeKelompok,noRegister asc";
-	// echo $query; 
+	echo $query; 
+	exit;
 	$exe = mysql_query($query);
 	while ($data = mysql_fetch_object($exe))
 	{

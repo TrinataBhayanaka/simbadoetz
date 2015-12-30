@@ -356,7 +356,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 'table'=>'penggunaan AS p, Penggunaanaset AS pa',
                 'field'=>'p.*',
                 'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID ",
-                'limit' => '100',
+                // 'limit' => '100',
                 'joinmethod' => "LEFT JOIN",
                 'join' => "p.Penggunaan_ID = pa.Penggunaan_ID"
                 );
