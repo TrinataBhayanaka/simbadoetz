@@ -2541,6 +2541,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         global $url_rewrite;
         // pr($data);exit;
+        if($data['kodeKelompok'] == ""){
+            echo "<script>alert('Jenis barang tidak ditemukan. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
+
+            exit;
+        }
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
         if(isset($data['tglPerolehan'])) {$tblAset['TglPerolehan'] = $data['tglPerolehan'];$tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));}
         if(isset($data['tglPembukuan'])) $tblAset['TglPembukuan'] = $data['tglPembukuan'];

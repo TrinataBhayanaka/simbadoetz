@@ -103,7 +103,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,$dataArr['aset']['Tahun']."_".$dataArr['aset']['kodeRuangan'],'disabled');?>
 						</ul>
 						<ul>
-							<?php selectAset('kodeKelompok','255',true,$dataArr['aset']['kodeKelompok'],'disabled'); ?>
+							<?php selectAset('kodeKelompok','255',true,$dataArr['aset']['kodeKelompok'],'disabled required'); ?>
 						</ul>		
 						<ul>
 							<!-- <li>
