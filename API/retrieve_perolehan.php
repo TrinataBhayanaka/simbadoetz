@@ -27,9 +27,6 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = 'XLSIMP'";
 		  $execquery = $this->query($sql);
 
-		  $sql = "DELETE FROM log_import WHERE user = '{$_SESSION['ses_uname']}' AND noKontrak = '{$post['noKontrak']}'";
-		  $execquery = $this->query($sql);
-
 		$sql = "INSERT INTO log_import (`noKontrak`, `desc`, `totalPerolehan`, `user`, `status`) VALUES ('{$post['noKontrak']}','{$files['myFile']['name']}',0,'{$_SESSION['ses_uname']}',0)";
 		$exec = $this->query($sql);
 		$data = new Spreadsheet_Excel_Reader($files['myFile']['tmp_name']);
@@ -140,8 +137,6 @@ class RETRIEVE_PEROLEHAN extends RETRIEVE{
 		  $sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = 'XLSIMPB'";
 		  $execquery = $this->query($sql);
 
-		  $sql = "DELETE FROM log_import WHERE user = '{$_SESSION['ses_uname']}' AND noKontrak = '{$post['noKontrak']}'";
-		  $execquery = $this->query($sql);
 
 		$sql = "INSERT INTO log_import (`noKontrak`, `desc`, `totalPerolehan`, `user`, `status`) VALUES ('{$post['noKontrak']}','{$files['myFile']['name']}',0,'{$_SESSION['ses_uname']}',0)";
 		$exec = $this->query($sql);
