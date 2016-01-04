@@ -292,7 +292,6 @@ function store_aset($data,$link,$totaldata)
                 $tblKib['Status_Validasi_Barang'] = 1;
                 $tblKib['StatusTampil'] = 1;
                 $tblKib['GUID'] = $data['GUID'];
-
             }
             
             // echo "Inserting to KIB\n";
@@ -384,7 +383,7 @@ function store_aset($data,$link,$totaldata)
                   $kib['TglPerubahan'] = $kib['TglPerolehan'];    
                   $kib['changeDate'] = date("Y-m-d");
                   $kib['action'] = 'posting';
-                  $kib['operator'] = 1;
+                  $kib['operator'] = $data['UserNm'];
                   $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
                   if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
 

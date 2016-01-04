@@ -125,6 +125,31 @@ function store_aset($data,$link,$totaldata)
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['GUID'] = $data['GUID'];
+
+        //Penyusutan
+        $tb = '2015';
+        $ta = $tblAset['Tahun'];
+        $na = $tblAset['NilaiPerolehan'];
+        $kd_aset = explode('.', $tblAset['kodeKelompok']);
+        $sql = "SELECT masa_manfaat FROM ref_masamanfaat WHERE kd_aset1 = '{$kd_aset[0]}' AND kd_aset2 = '{$kd_aset[1]}' AND kd_aset3 = '{$kd_aset[2]}'";
+        echo $sql;
+        $result = $link->query($sql);
+        while($row = mysqli_fetch_assoc($result)) {
+          $mm = $row['masa_manfaat'];
+        }
+
+        $range = $tb - $ta;
+        $pp = $na/$mm['masa_manfaat'];
+        $ap = $pp * $range;
+        $nb = $na - $ap;
+
+        $tblAset['MasaManfaat'] = $mm['masa_manfaat'];
+        $tblAset['AkumulasiPenyusutan'] = $ap;
+        $tblAset['PenyusutanPertaun'] = $pp;
+        $tblAset['NilaiBuku'] = $nb;
+        $tblAset['UmurEkonomis'] = $mm['masa_manfaat'] - $range;
+        $tblAset['TahunPenyusutan'] = '2014';
+
         if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
         }else {
@@ -300,6 +325,13 @@ function store_aset($data,$link,$totaldata)
                 $tblKib['StatusTampil'] = 1;
                 $tblKib['GUID'] = $data['GUID'];
 
+                $tblKib['MasaManfaat'] = $mm['masa_manfaat'];
+                $tblKib['AkumulasiPenyusutan'] = $ap;
+                $tblKib['PenyusutanPertaun'] = $pp;
+                $tblKib['NilaiBuku'] = $nb;
+                $tblKib['UmurEkonomis'] = $mm['masa_manfaat'] - $range;
+                $tblKib['TahunPenyusutan'] = '2014';
+
             }
             
             // echo "Inserting to KIB\n";
@@ -438,6 +470,52 @@ function store_aset($data,$link,$totaldata)
 
                         $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})" or die("Error in the consult.." . mysqli_error($link));
                        	$exec = $link->query($sql);
+
+
+                echo "Creating Log for penyusutan";
+                    //First Log
+                    $kib['MasaManfaat'] = 0;
+                    $kib['AkumulasiPenyusutan'] = 0;
+                    $kib['PenyusutanPertaun'] = 0;
+                    $kib['NilaiBuku'] = 0;
+                    $kib['UmurEkonomis'] = $mm['masa_manfaat'];
+                    $kib['TahunPenyusutan'] = '2014';
+                    $kib['Kd_Riwayat'] = 50;
+
+                    unset($tmpField);
+                    unset($tmpValue);
+                    foreach ($kib as $key => $val) {
+                      $tmpField[] = $key;
+                      $tmpValue[] = "'".$val."'";
+                    }
+                     
+                    $fileldImp = implode(',', $tmpField);
+                    $dataImp = implode(',', $tmpValue);
+
+                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})" or die("Error in the consult.." . mysqli_error($link));
+                    $exec = $link->query($sql); 
+
+                    //Second Log
+                    $kib['MasaManfaat'] = $mm['masa_manfaat'];
+                    $kib['AkumulasiPenyusutan'] = $ap;
+                    $kib['PenyusutanPertaun'] = $pp;
+                    $kib['NilaiBuku'] = $nb;
+                    $kib['UmurEkonomis'] = $mm['masa_manfaat'] - $range;
+                    $kib['TahunPenyusutan'] = '2014';
+                    $kib['Kd_Riwayat'] = 50;
+
+                    unset($tmpField);
+                    unset($tmpValue);
+                    foreach ($kib as $key => $val) {
+                      $tmpField[] = $key;
+                      $tmpValue[] = "'".$val."'";
+                    }
+                     
+                    $fileldImp = implode(',', $tmpField);
+                    $dataImp = implode(',', $tmpValue);
+
+                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})" or die("Error in the consult.." . mysqli_error($link));
+                    $exec = $link->query($sql);
 
                        	echo "Baris selesai : ".$xlsxount."\n";
                        	echo "Jumlah data yang masuk : ".$totaldata."\n";
