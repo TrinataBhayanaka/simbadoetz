@@ -54,7 +54,7 @@ $dataArr = $RETRIEVE_INVENTARISASI->getImportLog($_SESSION['ses_uname']);
 									<th>No</th>
 									<th>No. Kontrak</th>
 									<th>Nama File</th>
-									<th>Total Perolehan</th>
+									<!-- <th>Total Perolehan</th> -->
 									<th>Username</th>
 									<th>Tanggal</th>
 									<th>Status</th>
@@ -71,7 +71,7 @@ $dataArr = $RETRIEVE_INVENTARISASI->getImportLog($_SESSION['ses_uname']);
 									<td><?=$i++?></td>
 									<td><?=$value['noKontrak']?></td>
 									<td><?=$value['desc']?></td>
-									<td><?=$value['totalPerolehan']?></td>
+									<!-- <td><?=$value['totalPerolehan']?></td> -->
 									<td><?=$value['user']?></td>
 									<td><?=$value['create_date']?></td>
 									<td align="center"><?=($value['status']==0)? "<span class='label label-Warning'>Dalam proses</span>" : "<span class='label label-Success'>Selesai</span>" ?></td>
