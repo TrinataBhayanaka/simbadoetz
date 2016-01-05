@@ -64,7 +64,7 @@ if($kib == 'B'){
                                                        a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
                                                        a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
                                                        a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, 
-                                                       if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun,a.TahunPenyusutan) 
+                                                       if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun),a.TahunPenyusutan 
                                                  from log_mesin a
                                                  inner join mesin t on t.Aset_ID=a.Aset_ID
                                                  inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
@@ -120,7 +120,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                                        a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
                                                        a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
                                                        a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, 
-                                                       if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun,a.TahunPenyusutan) 
+                                                       if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun),a.TahunPenyusutan 
                                                  from log_mesin a
                                                  inner join mesin t on t.Aset_ID=a.Aset_ID
                                                  inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
@@ -184,7 +184,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                                   a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
                                                   a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
                                                   a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, 
-                                                  if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun,a.TahunPenyusutan)  
+                                                  if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun),a.TahunPenyusutan  
                                             from log_bangunan a
                                             inner join bangunan t on t.Aset_ID=a.Aset_ID
                                             inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
@@ -243,7 +243,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                                   a.CaraPerolehan, a.TglPakai, a.Konstruksi, a.Beton, a.JumlahLantai, a.LuasLantai, a.Dinding, a.Lantai, a.LangitLangit, a.Atap, 
                                                   a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
                                                   a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, 
-                                                  if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun,a.TahunPenyusutan)  
+                                                  if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun) ,a.TahunPenyusutan 
                                             from log_bangunan a
                                             inner join bangunan t on t.Aset_ID=a.Aset_ID
                                             inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
@@ -306,7 +306,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                             a.kodeKA, a.kodeRuangan, a.Status_Validasi_Barang, a.StatusTampil, a.Tahun, if(a.NilaiPerolehan_Awal!=0,a.NilaiPerolehan_Awal,a.NilaiPerolehan), a.Alamat, a.Info, 
                                             a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Konstruksi, a.Panjang, a.Lebar, a.NoDokumen, a.TglDokumen, a.StatusTanah, 
                                             a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
-                                            if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun,a.TahunPenyusutan)  
+                                            if(a.AkumulasiPenyusutan_Awal is not null,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun,a.TahunPenyusutan_Awal is not null,a.PenyusutanPerTahun,a.TahunPenyusutan_Awal,a.PenyusutanPerTahun),a.TahunPenyusutan  
                                       from log_jaringan a
                                       inner join jaringan t on t.Aset_ID=a.Aset_ID
                                       inner join jaringan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
