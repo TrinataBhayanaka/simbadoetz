@@ -2541,11 +2541,19 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         global $url_rewrite;
         // pr($data);exit;
-        if($data['kodeKelompok'] == ""){
+        $check = explode(".", $data['kodeKelompok']);
+        if($data['kodeKelompok'] == "" || $data['kodeKelompok'] == null){
             echo "<script>alert('Jenis barang tidak ditemukan. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
 
             exit;
         }
+
+        if($check[0] == '' || $check[0] == null){
+            echo "<script>alert('Jenis barang tidak ditemukan. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
+
+            exit;            
+        }
+
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
         if(isset($data['tglPerolehan'])) {$tblAset['TglPerolehan'] = $data['tglPerolehan'];$tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));}
         if(isset($data['tglPembukuan'])) $tblAset['TglPembukuan'] = $data['tglPembukuan'];
@@ -2627,71 +2635,71 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         
             if($data['TipeAset']=="A"){
                 if ($data['flagupd']) {
-                    $tblKib['HakTanah'] = $data['HakTanah'];
-                    $tblKib['LuasTotal'] = $data['LuasTotal'];
-                    $tblKib['NoSertifikat'] = $data['NoSertifikat'];
-                    $tblKib['TglSertifikat'] = $data['TglSertifikat'];
-                    $tblKib['Penggunaan'] = $data['Penggunaan'];
+                    $tblKib['HakTanah'] = addslashes($data['HakTanah']);
+                    $tblKib['LuasTotal'] = addslashes($data['LuasTotal']);
+                    $tblKib['NoSertifikat'] = addslashes($data['NoSertifikat']);
+                    $tblKib['TglSertifikat'] = addslashes($data['TglSertifikat']);
+                    $tblKib['Penggunaan'] = addslashes($data['Penggunaan']);
                 }
                 $tabel = "tanah";
                 $logtabel = "log_tanah";
                 $idkey = "Tanah_ID";
             } elseif ($data['TipeAset']=="B") {
                 if ($data['flagupd']) {
-                    $tblKib['Pabrik'] = $data['Pabrik'];
-                    $tblKib['Merk'] = $data['Merk'];
-                    $tblKib['Model'] = $data['Model'];
-                    $tblKib['Ukuran'] = $data['Ukuran'];
-                    $tblKib['NoMesin'] = $data['NoMesin'];
-                    $tblKib['NoBPKB'] = $data['NoBPKB'];
-                    $tblKib['NoSeri'] = $data['NoSeri'];
-                    $tblKib['Material'] = $data['Material'];
-                    $tblKib['NoRangka'] = $data['NoRangka'];
+                    $tblKib['Pabrik'] = addslashes($data['Pabrik']);
+                    $tblKib['Merk'] = addslashes($data['Merk']);
+                    $tblKib['Model'] = addslashes($data['Model']);
+                    $tblKib['Ukuran'] = addslashes($data['Ukuran']);
+                    $tblKib['NoMesin'] = addslashes($data['NoMesin']);
+                    $tblKib['NoBPKB'] = addslashes($data['NoBPKB']);
+                    $tblKib['NoSeri'] = addslashes($data['NoSeri']);
+                    $tblKib['Material'] = addslashes($data['Material']);
+                    $tblKib['NoRangka'] = addslashes($data['NoRangka']);
                 }
                 $tabel = "mesin";
                 $logtabel = "log_mesin";
                 $idkey = "Mesin_ID";
             } elseif ($data['TipeAset']=="C") {
                 if ($data['flagupd']) {
-                    $tblKib['JumlahLantai'] = $data['JumlahLantai'];
-                    $tblKib['LuasLantai'] = $data['LuasLantai'];
-                    $tblKib['Beton'] = $data['Beton'];
-                    $tblKib['NoSurat'] = $data['NoSurat'];
-                    $tblKib['tglSurat'] = $data['tglSurat'];
+                    $tblKib['JumlahLantai'] = addslashes($data['JumlahLantai']);
+                    $tblKib['LuasLantai'] = addslashes($data['LuasLantai']);
+                    $tblKib['Beton'] = addslashes($data['Beton']);
+                    $tblKib['NoSurat'] = addslashes($data['NoSurat']);
+                    $tblKib['tglSurat'] = addslashes($data['tglSurat']);
                 }
                 $tabel = "bangunan";
                 $logtabel = "log_bangunan";
                 $idkey = "Bangunan_ID";
             } elseif ($data['TipeAset']=="D") {
                 if ($data['flagupd']) {
-                    $tblKib['Panjang'] = $data['Panjang'];
-                    $tblKib['Lebar'] = $data['Lebar'];
-                    $tblKib['LuasJaringan'] = $data['LuasJaringan'];
-                    $tblKib['Konstruksi'] = $data['Konstruksi'];
-                    $tblKib['NoDokumen'] = $data['NoDokumen'];
-                    $tblKib['tglDokumen'] = $data['tglDokumen'];
+                    $tblKib['Panjang'] = addslashes($data['Panjang']);
+                    $tblKib['Lebar'] = addslashes($data['Lebar']);
+                    $tblKib['LuasJaringan'] = addslashes($data['LuasJaringan']);
+                    $tblKib['Konstruksi'] = addslashes($data['Konstruksi']);
+                    $tblKib['NoDokumen'] = addslashes($data['NoDokumen']);
+                    $tblKib['tglDokumen'] = addslashes($data['tglDokumen']);
                 }
                 $tabel = "jaringan";
                 $logtabel = "log_jaringan";
                 $idkey = "Jaringan_ID";
             } elseif ($data['TipeAset']=="E") {
                 if ($data['flagupd']) {
-                    $tblKib['Judul'] = $data['Judul'];
-                    $tblKib['Pengarang'] = $data['Pengarang'];
-                    $tblKib['Penerbit'] = $data['Penerbit'];
-                    $tblKib['Spesifikasi'] = $data['Spesifikasi'];
-                    $tblKib['AsalDaerah'] = $data['AsalDaerah'];
-                    $tblKib['Material'] = $data['Material'];
-                    $tblKib['Ukuran'] = $data['Ukuran'];
+                    $tblKib['Judul'] = addslashes($data['Judul']);
+                    $tblKib['Pengarang'] = addslashes($data['Pengarang']);
+                    $tblKib['Penerbit'] = addslashes($data['Penerbit']);
+                    $tblKib['Spesifikasi'] = addslashes($data['Spesifikasi']);
+                    $tblKib['AsalDaerah'] = addslashes($data['AsalDaerah']);
+                    $tblKib['Material'] = addslashes($data['Material']);
+                    $tblKib['Ukuran'] = addslashes($data['Ukuran']);
                 }
                 $tabel = "asetlain";
                 $logtabel = "log_asetlain";
                 $idkey = "AsetLain_ID";
             } elseif ($data['TipeAset']=="F") {
                 if ($data['flagupd']) {
-                    $tblKib['JumlahLantai'] = $data['JumlahLantai'];
-                    $tblKib['LuasLantai'] = $data['LuasLantai'];
-                    $tblKib['Beton'] = $data['Beton'];
+                    $tblKib['JumlahLantai'] = addslashes($data['JumlahLantai']);
+                    $tblKib['LuasLantai'] = addslashes($data['LuasLantai']);
+                    $tblKib['Beton'] = addslashes($data['Beton']);
                 }
                 $tabel = "kdp";
                 $logtabel = "log_kdp";
