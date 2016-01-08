@@ -260,7 +260,8 @@ $param_tgl = $tglakhirperolehan ;
 		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
-					 and kodeLokasi like '12%'
+					 and kodeLokasi like '12%' 
+					 and kondisi != '3'					 
 					 and $paramSatker";
 		 
 		 if($gol == 'jaringan_ori'){
@@ -465,6 +466,7 @@ if($gol == 'mesin_ori'){
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%'
+					 and kondisi != '3'
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori'){
@@ -555,6 +557,7 @@ if($gol == 'mesin_ori'){
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%'
+					 and kondisi != '3'
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori'){
@@ -647,6 +650,7 @@ if($gol == 'mesin_ori'){
 				 and TglPerolehan <= '$param_tgl' 
 				 and TglPembukuan <='$param_tgl' 
 				 and kodeLokasi like '12%'
+				 and kondisi != '3'
 				 and $paramSatker";
 				 
 	 if($gol == 'jaringan_ori'){
@@ -736,6 +740,7 @@ if($gol == 'mesin_ori'){
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%'
+					 and kondisi != '3'
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori'){
