@@ -2541,18 +2541,23 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
         global $url_rewrite;
         // pr($data);exit;
-        $check = explode(".", $data['kodeKelompok']);
-        if($data['kodeKelompok'] == "" || $data['kodeKelompok'] == null){
-            echo "<script>alert('Jenis barang tidak ditemukan. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
-
-            exit;
+        $banding_kelompok="";
+        $banding_kelompok=$data['kodeKelompok'];
+        if($banding_kelompok==""||$banding_kelompok==null){
+            $banding_kelompok=$data['old_kelompok'];
         }
+        if($banding_kelompok==""||$banding_kelompok==null){
+            echo "<script>alert('Jenis barang tidak ditemukan. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
+            exit;
 
+        }
+        $check = explode(".", $banding_kelompok);
         if($check[0] == '' || $check[0] == null){
             echo "<script>alert('Jenis barang tidak ditemukan. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/koreksi/koreksi_data_aset.php\">";
 
             exit;            
         }
+
 
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
         if(isset($data['tglPerolehan'])) {$tblAset['TglPerolehan'] = $data['tglPerolehan'];$tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));}
