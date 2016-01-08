@@ -376,8 +376,8 @@ class DB
 	        			$insert_id = $this->insert_id();
 
 	        			$sqlu = "UPDATE log_{$value} SET TglPembukuan = '{$tglProses}' WHERE log_id = {$insert_id} LIMIT 1";
-	        			logFile($sqlu);
-	        			$result = $this->query($sqlu);
+	        			//logFile($sqlu);
+	        			//$result = $this->query($sqlu);
 	        		}
 	        		usleep(100);
 	        		if ($action==28){
