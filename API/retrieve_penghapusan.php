@@ -256,7 +256,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 	public function retrieve_usulan_penghapusan_pmd($data,$debug=false)
     {
             
-        // ////pr($data);
+        // pr($data);exit;
         $jenisaset = $data['jenisaset'];
         // $jenisaset = explode(',', $data['jenisaset']);
         //////////////////////////////////////////////pr($jenisaset);
