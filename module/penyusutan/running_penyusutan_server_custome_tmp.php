@@ -45,7 +45,7 @@ if($kib == 'B'){
                                                   a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
                                                   a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
                                                   a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
-                                            from mesin a where a.TglPerolehan <= '$newTahun-12-31'  and a.kodeSatker='$kodeSatker'";
+                                            from mesin a where a.TglPerolehan <= '$newTahun-12-31'  and a.kodeSatker like '$kodeSatker%'z";
     $ExeQuery = $DBVAR->query($queryKib) or die($DBVAR->error());
     
     $queryAlter = "ALTER table aset_tmp add primary key(Mesin_ID)";
@@ -68,7 +68,7 @@ if($kib == 'B'){
                                                  from log_mesin a
                                                  inner join mesin t on t.Aset_ID=a.Aset_ID
                                                  inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                                 where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp'"
+                                                 where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp'"
             . "              order by a.log_id desc";
          $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
      
@@ -90,7 +90,7 @@ view_mutasi_mesin a inner join mesin t
 on t.Aset_ID=a.Aset_ID inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID 
 and t.Aset_ID is not null and t.Aset_ID != 0
  where a.TglPerolehan <='$newTahun-12-31' AND a.TglSKKDH >'$newTahun-12-31' AND "
-                 . "a.TglPembukuan <='$newTahun-12-31' AND a.SatkerTujuan = '$kodeSatker' "
+                 . "a.TglPembukuan <='$newTahun-12-31' AND a.SatkerTujuan like '$kodeSatker%' "
                  . "order by a.TglSKKDH desc;";
          $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
          
@@ -101,7 +101,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                                   a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
                                                   a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
                                                   a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
-                                            from mesin a where  a.kodeSatker='$kodeSatker' and  a.TglPerolehan <= '$newTahun-12-31' ";
+                                            from mesin a where  a.kodeSatker like '$kodeSatker%' and  a.TglPerolehan <= '$newTahun-12-31' ";
     $ExeQuery = $DBVAR->query($queryKib) or die($DBVAR->error());
     
         $queryAlter = "ALTER table aset_tmp2 add primary key(Mesin_ID)";
@@ -124,7 +124,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                                  from log_mesin a
                                                  inner join mesin t on t.Aset_ID=a.Aset_ID
                                                  inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                                 where (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and  a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp'"
+                                                 where (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and  a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp'"
             . "                          order by a.log_id desc";
          $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
     
@@ -146,7 +146,7 @@ view_mutasi_mesin a inner join mesin t
 on t.Aset_ID=a.Aset_ID inner join mesin t_2 on t_2.Aset_ID=t.Aset_ID 
 and t.Aset_ID is not null and t.Aset_ID != 0
  where a.TglPerolehan <='$newTahun-12-31' AND a.TglSKKDH >'$newTahun-12-31' AND "
-                 . "a.TglPembukuan <='$newTahun-12-31' AND a.SatkerTujuan = '$kodeSatker' "
+                 . "a.TglPembukuan <='$newTahun-12-31' AND a.SatkerTujuan like '$kodeSatker%' "
                  . "order by a.TglSKKDH desc;";
          $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
     
@@ -164,7 +164,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                                        a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
                                                        a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
                                                  from bangunan a
-                                                 where  a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31'";
+                                                 where  a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31'";
       $ExeQuery = $DBVAR->query($queryKib) or die($DBVAR->error());
       
           $queryAlter = "ALTER table aset_tmp add primary key(Bangunan_ID)";
@@ -188,7 +188,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
                                             from log_bangunan a
                                             inner join bangunan t on t.Aset_ID=a.Aset_ID
                                             inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
+                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
               . ""
               . "    order by a.log_id desc";
         
@@ -212,7 +212,7 @@ a.NilaiBuku, a.PenyusutanPerTahun
 from view_mutasi_bangunan a inner join bangunan t on t.Aset_ID=a.Aset_ID 
 inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0 
 where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.TglPembukuan <='$newTahun-12-31' "
-              . "AND a.SatkerTujuan = '$kodeSatker' order by a.TglSKKDH desc";
+              . "AND a.SatkerTujuan like '$kodeSatker%' order by a.TglSKKDH desc";
         $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error()); 
       //untuk tabel temp selanjutnya
         
@@ -223,7 +223,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                                        a.NoSurat, a.TglSurat, a.NoIMB, a.TglIMB, a.StatusTanah, a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.Tmp_Tingkat, a.Tmp_Beton, a.Tmp_Luas, 
                                                        a.KelompokTanah_ID, a.GUID, a.TglPembangunan, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
                                                  from bangunan a
-                                                 where  a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31'";
+                                                 where  a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31'";
       $ExeQuery = $DBVAR->query($queryKib) or die($DBVAR->error());
       
                 $queryAlter = "ALTER table aset_tmp2 add primary key(Bangunan_ID)";
@@ -247,7 +247,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                             from log_bangunan a
                                             inner join bangunan t on t.Aset_ID=a.Aset_ID
                                             inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
+                                            where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
               . "   order by a.log_id desc";
         $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
         
@@ -269,7 +269,7 @@ a.NilaiBuku, a.PenyusutanPerTahun
 from view_mutasi_bangunan a inner join bangunan t on t.Aset_ID=a.Aset_ID 
 inner join bangunan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0 
 where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.TglPembukuan <='$newTahun-12-31' "
-              . "AND a.SatkerTujuan = '$kodeSatker' order by a.TglSKKDH desc";
+              . "AND a.SatkerTujuan like '$kodeSatker%' order by a.TglSKKDH desc";
         $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error()); 
 
 	$flagKelompok = '03';
@@ -286,7 +286,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                                  a.NoSertifikat, a.TglSertifikat, a.Tanah_ID, a.KelompokTanah_ID, a.GUID, a.TanggalPemakaian, a.LuasJaringan, a.MasaManfaat, 
                                                  a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun  
                                            from jaringan a
-                                           where  a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31'";
+                                           where  a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31'";
             $ExeQuery = $DBVAR->query($queryKib) or die($DBVAR->error());
             
                 $queryAlter = "ALTER table aset_tmp add primary key(Jaringan_ID)";
@@ -310,7 +310,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$newTahun-12-31' AND a.
                                       from log_jaringan a
                                       inner join jaringan t on t.Aset_ID=a.Aset_ID
                                       inner join jaringan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0
-                                      where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker='$kodeSatker' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
+                                      where  (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0')  and a.kodeSatker like '$kodeSatker%' and a.TglPerolehan <= '$newTahun-12-31' and a.TglPerubahan>'$TglPerubahan_temp' "
               . "             order by a.log_id desc";
       $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
       
@@ -331,7 +331,7 @@ a.PenyusutanPerTahun from view_mutasi_jaringan a
 inner join jaringan t on t.Aset_ID=a.Aset_ID 
 inner join jaringan t_2 on t_2.Aset_ID=t.Aset_ID and t.Aset_ID is not null and t.Aset_ID != 0 
 where a.TglPerolehan <='$newTahun-12-31' AND a.TglSKKDH >'$newTahun-12-31' AND "
-              . "a.TglPembukuan <='$newTahun-12-31' AND a.SatkerTujuan = '$kodeSatker' order by a.TglSKKDH desc";
+              . "a.TglPembukuan <='$newTahun-12-31' AND a.SatkerTujuan like '$kodeSatker%' order by a.TglSKKDH desc";
       $ExeQuery = $DBVAR->query($queryLog) or die($DBVAR->error());
       
 	$flagKelompok = '04';
@@ -345,12 +345,12 @@ if($tahun == 2014){
 $sWhere=" WHERE $status 
     ((a.AkumulasiPenyusutan IS NULL AND a.PenyusutanPerTahun IS NULL) or (a.AkumulasiPenyusutan =0 AND a.PenyusutanPerTahun =0) )
      
-			  AND a.kodeSatker='$kodeSatker' AND a.kodeKelompok like '$flagKelompok%' ";
+			  AND a.kodeSatker like '$kodeSatker%' AND a.kodeKelompok like '$flagKelompok%' ";
 // echo "tahun = 2015";			  
 }elseif($tahun >= 2015){
 // echo "tahun > 2015";
 $sWhere=" WHERE $status a.AkumulasiPenyusutan IS NOT NULL AND a.PenyusutanPerTahun IS NOT NULL  
-			  AND a.kodeSatker='$kodeSatker' AND a.kodeKelompok like '$flagKelompok%'";
+			  AND a.kodeSatker like '$kodeSatker%' AND a.kodeKelompok like '$flagKelompok%'";
 }		 
 
 //untuk tanggal perubahan reset log andreas

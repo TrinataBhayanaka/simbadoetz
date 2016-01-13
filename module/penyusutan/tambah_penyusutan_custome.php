@@ -90,7 +90,7 @@ $(document).ready(function() {
 			&nbsp; --></p>	
                   <form name="lda_filter" action="<?php echo "$url_rewrite/module/penyusutan/proses_daftar_custome.php"; ?>" method="post" >
                        <ul>
-					   <?=selectSatker('kodeSatker',$width='205',$br=true,false);?>
+					   <?=selectAllSatker('kodeSatker','255',true,false,false,true);//selectSatker('kodeSatker',$width='205',$br=true,false);?>
 						<li>&nbsp;</li>
 						<li>
 							<span class="span2">Tipe Aset</span>
