@@ -45,7 +45,7 @@ if($kib == 'B'){
                                                   a.AsalUsul, a.kondisi, a.CaraPerolehan, a.Merk, a.Model, a.Ukuran, a.Silinder, a.MerkMesin, a.JumlahMesin,a.Material, a.NoSeri,
                                                   a.NoRangka, a.NoMesin, a.NoSTNK, a.TglSTNK, a.NoBPKB, a.TglBPKB, a.NoDokumen, a.TglDokumen, a.Pabrik, a.TahunBuat, a.BahanBakar, 
                                                   a.NegaraAsal, a.NegaraRakit, a.Kapasitas, a.Bobot, a.GUID, a.MasaManfaat, a.AkumulasiPenyusutan, a.NilaiBuku, a.PenyusutanPerTahun 
-                                            from mesin a where a.TglPerolehan <= '$newTahun-12-31'  and a.kodeSatker like '$kodeSatker%'z";
+                                            from mesin a where a.TglPerolehan <= '$newTahun-12-31'  and a.kodeSatker like '$kodeSatker%'";
     $ExeQuery = $DBVAR->query($queryKib) or die($DBVAR->error());
     
     $queryAlter = "ALTER table aset_tmp add primary key(Mesin_ID)";
