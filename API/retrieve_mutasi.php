@@ -660,16 +660,17 @@ class RETRIEVE_MUTASI extends RETRIEVE{
     function store_validasi_Mutasi($data, $debug=false)
     {
 
-        $this->db->autocommit(0);
-        $this->db->begin();
+        
         $jenisaset = $this->getJenisAset($data['aset_id']);
 
-        // pr($data);
+        // pr($jenisaset);exit;
         if ($jenisaset){
 
             $sleep = 1;
             foreach ($jenisaset as $key => $value) {
-            
+                
+                $this->db->autocommit(0);
+                $this->db->begin();
                 $table = $this->getTableKibAlias($value);
 
                 // cek dulu jika kapitalisasi atau aset baru
@@ -689,24 +690,22 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                 $resultAwal = $this->db->lazyQuery($sql,$debug);
-
-
+                
                 $getLokasiTujuan = $this->get_satker_tujuan($data['Mutasi_ID'], $data['aset_id'][$key]);
 
                 $dataSatkerAwalKib = $this->getSatkerData($resultAwal[0]['kodeSatker']);
 
                 logFile(serialize($res));
                 if ($res){
+                    /* 
+                        cek apakah aset id tujuan ada atau tidak
+                        Jika ada maka lakukan kapitalisasi nilai ke aset id tujuan
+                    */
+
+                    $NilaiPerolehan = 0;
 
                     if ($res[0]['Aset_ID_Tujuan']>0){
-                        // kapitalisasi data
                         
-                        // $this->db->logIt(
-                        //                 $tabel=array($table['listTableOri']), 
-                        //                 $Aset_ID=$data['aset_id'][$key], 
-                        //                 $kd_riwayat=28);
-                        
-                        // exit;
                         // ambil nilai perolehan aset tujuan
                         $sql = array(
                                 'table'=>"{$table['listTableOri']}",
@@ -716,11 +715,13 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                         $result2 = $this->db->lazyQuery($sql,$debug);
 
-                        // echo '1';
                         $NilaiPerolehan = ($resultAwal[0]['NilaiPerolehan'] + $result2[0]['NilaiPerolehan']);
-  $olah_tgl =  $_POST['TglSKKDH'];
+                        $olah_tgl =  $_POST['TglSKKDH'];
+                        
+                        // log aset id tujuan sebelum dilakukan penambahan nilai
                         $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$res[0]['Aset_ID_Tujuan'], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Aset Penambahan kapitalisasi Mutasi",0);
 
+                        
                         logFile('Nilai Perolehan awal : '.serialize($resultAwal));
                         logFile('Nilai Perolehan tujuan : '.serialize($result2));
                         logFile('Nilai Perolehan gabungan : '.$NilaiPerolehan);
@@ -773,7 +774,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             return false;
                         }
                         
-                        
+                        $this->db->commit();
 
                     }else{
                         // ubah data baru
@@ -849,10 +850,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             logFile('gagal log data mutasi aset '.$data['aset_id'][$key]);
                         } 
 
+                        $this->db->commit();
                     }  
-                }
                 
 
+                }
                 
                 $sql = array(
                         'table'=>"mutasiaset",
@@ -868,8 +870,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     sleep(1);
                     $sleep = 1;
                 }
-            } 
-            
+            }
+            // end looping (foreach)
 
             $sql = array(
                     'table'=>"mutasiaset",
@@ -889,11 +891,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             }
             // exit;
             logFile('Commit transaction mutasi');
-            $this->db->commit();
+            // $this->db->commit();
             return true;   
         }
         
-        $this->db->rollback();
+        // $this->db->rollback();
         return false;
 
         
