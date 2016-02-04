@@ -429,6 +429,12 @@ class DB
 	        if ($mergeField){
 	        	foreach ($mergeField as $key => $val) {
 	        		$tmpField[] = $key;
+                                if($key=="StatusValidasi")
+                                    $val="1";
+                                elseif($key=="Status_Validasi_Barang")
+                                    $val="1";
+                                elseif($key=="StatusTampil")
+                                    $val="1";
 	        		$tmpValue[] = "'".$val."'";
 
 	        		// if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";
