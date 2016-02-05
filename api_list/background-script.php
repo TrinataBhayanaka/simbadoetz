@@ -50,7 +50,7 @@ class BackgroundScript extends DB{
 
 			            $res2 = $this->db->lazyQuery($sql2,$debug,2); 
 			    		
-			    		logFile("Insert data {$i}");
+			    		logFile("Update data Penggunaan_ID = {$value['Penggunaan_ID']}, Aset_ID = {$value['Aset_ID']}, kodeSatker = {$value['kodeSatker']}");
 			    		echo "insert data ke - $i \n";
 
 			    		$i++;
