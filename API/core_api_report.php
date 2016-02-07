@@ -2454,7 +2454,7 @@ class core_api_report extends DB {
 													//Buku Inventaris Gabungan SKPD
 													
 													if($parameter_sql!="" ){
-														pr($parameter_sql);
+														// pr($parameter_sql);
 														$kel = explode('like ',$query_kelompok_fix);
 														$temp_kel = str_replace("'", "", $kel[1]);
 														$temp_kel = str_replace("%", "", $temp_kel);
@@ -2468,7 +2468,7 @@ class core_api_report extends DB {
 																$param[]="T.".$pecah[$q];
 															}
 															$newparameter_sql = implode('AND ', $param);
-															$query = "select SUM(T.NilaiPerolehan) as Nilai, GROUP_CONCAT(T.noRegister) as noReg,T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+															$query = "select SUM(T.NilaiPerolehan) as Nilai, GROUP_CONCAT(T.noRegister) as noReg,T.kodeSatker,T.kodeKelompok,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.kondisi,
 																			K.Kode, K.Uraian
 																		from 
 																			tanahView as T,kelompok as K
@@ -2491,7 +2491,7 @@ class core_api_report extends DB {
 															$newparameter_sql = implode('AND ', $param);
 															$query = "select SUM(M.NilaiPerolehan) as Nilai, GROUP_CONCAT(M.noRegister) as noReg,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
-																			M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+																			M.Silinder,M.kodeLokasi, M.kondisi,K.Kode, K.Uraian
 																		from 
 																			mesin_ori as M,kelompok as K 
 																		where 

@@ -40,6 +40,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     $NilaiPerolehan = ceil($data['NilaiPerolehan'] + $bop);
     $satuan = ceil(intval($data['Satuan']) + ($bop/$data['Kuantitas']));
 
+    $tglKontrak=$noKontrak['tglKontrak'];
     $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
     $updateKapital = mysql_query("UPDATE kapitalisasi SET n_status = '1', nilai = if(nilai is null,0,nilai)+{$bop}  WHERE idKontrak = '{$noKontrak['id']}' AND asetKapitalisasi = '{$data['Aset_ID']}'");
   }  
@@ -61,7 +62,7 @@ foreach ($kapital as $key => $value) {
           $kib = $dataAset;
       }    
   $kib['changeDate'] = date("Y-m-d");
-  $kib['TglPerubahan'] = $kib['TglPerolehan'];
+  $kib['TglPerubahan'] = $tglKontrak;//$kib['TglPerolehan'];
   $kib['action'] = 3;
   $kib['operator'] = $_SESSION['ses_uoperatorid'];
   $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'] - $value['nilai'];
