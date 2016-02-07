@@ -1701,6 +1701,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['GUID'] = $data['GUID'];
 
             }
+            if(substr($tblKib['kodeKelompok'], 0, 5) == "07.24")
+            {
+                $tblKib['StatusValidasi'] = 1;
+                $tblKib['Status_Validasi_Barang'] = 1;
+                $tblKib['kondisi'] = 3;
+                $tblKib['kodeKA'] = 1;
+            }
             
             unset($tmpfield2);
             unset($tmpvalue2);
@@ -2001,12 +2008,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
     {
         global $url_rewrite;
         unset($data['Aset_ID']);
-        // pr($aset);exit;
+        // pr($data);exit;
         $kodeSatker = explode(".",$data['kodeSatker']);
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         $tblAset['kodeSatker'] = $data['kodeSatker'];
-        $tblAset['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($data['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+        $tahun = explode("-", $data['TglPerolehan']);
+        $tblAset['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tahun[0],-2).".".$kodeSatker[2].".".$kodeSatker[3];
         $tblAset['noKontrak'] = $data['noKontrak'];
+        $tblAset['Tahun'] = $tahun[0];
         $tblAset['TglPerolehan'] = $data['TglPerolehan'];
         $tblAset['NilaiPerolehan'] = $data['NilaiPerolehan'];
         $tblAset['kondisi'] = $data['kondisi'];
@@ -2015,10 +2024,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Info'] = $data['Info'];
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
-        $tblAset['Tahun'] = $data['Tahun'];
         $tblAset['TipeAset'] = $data['TipeAset'];
-        $tblAset['kodeKA'] = 0;
-
+        $tblAset['kodeKA'] = 1;
+        
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
                 $tmpvalue[] = "'$val'";
@@ -2152,17 +2160,17 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
 
-            $query_id = mysql_query("SELECT {$idkey} FROM {$tabel} ORDER BY {$idkey} DESC LIMIT 1");
+            $query_id = mysql_query("SELECT Aset_ID FROM {$tabel} ORDER BY {$idkey} DESC LIMIT 1");
             
             while ($row = mysql_fetch_assoc($query_id)){
-                 $logAset[$idkey] = $row[$idkey];
+                 $logAset['Aset_ID'] = $row['Aset_ID'];
             }
 
         }  
 
         $kapital['idKontrak'] = $aset['id'];
         $kapital['Aset_ID'] = $aset['idaset'];
-        $kapital['asetKapitalisasi'] = $logdata['Aset_ID'];
+        $kapital['asetKapitalisasi'] = $logAset['Aset_ID'];
         $kapital['noRegister'] = $aset['noreg'];
         $kapital['nilai'] = $tblAset['NilaiPerolehan'];
         $kapital['tipeAset'] = $aset['tipeaset'];

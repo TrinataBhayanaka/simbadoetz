@@ -37,7 +37,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
     $NilaiPerolehan = ceil($data['NilaiPerolehan'] + $bop);
     $satuan = ceil(intval($data['Satuan']) + ($bop/$data['Kuantitas']));
-
+    // pr($satuan);exit;
     $updateAset = mysql_query("UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}' WHERE Aset_ID = '{$data['Aset_ID']}'");
     $updateKapital = mysql_query("UPDATE kapitalisasi SET n_status = '1', nilai = if(nilai is null,0,nilai)+{$bop}  WHERE idKontrak = '{$noKontrak['id']}' AND asetKapitalisasi = '{$data['Aset_ID']}'");
   }  
@@ -49,9 +49,69 @@ while ($dataKapital = mysql_fetch_assoc($sql)){
         }
 
 foreach ($kapital as $key => $value) {
-  $sql = mysql_query("UPDATE bangunan SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']}, StatusTampil = '1' WHERE Aset_ID = '{$value['asetKapitalisasi']}' AND noRegister = '{$value['noRegister']}'");
-  $sql = mysql_query("UPDATE aset SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']}, StatusTampil = '1' WHERE Aset_ID = '{$value['asetKapitalisasi']}' AND noRegister = '{$value['noRegister']}'");
+  $sqlkib = "SELECT * FROM {$value['tipeAset']} WHERE Aset_ID = '{$value['Aset_ID']}'";
+  $sqlquery = mysql_query($sqlkib);
+  while ($dataAset = mysql_fetch_assoc($sqlquery)){
+          $kib = $dataAset;
+      }  
+  $sql = mysql_query("UPDATE bangunan SET NilaiPerolehan = NilaiPerolehan + {$kib['NilaiPerolehan']}, StatusTampil = '1' WHERE Aset_ID = '{$value['asetKapitalisasi']}' AND noRegister = '{$value['noRegister']}'");
+  $sql = mysql_query("UPDATE aset SET NilaiPerolehan = NilaiPerolehan + {$kib['NilaiPerolehan']}, Satuan = Satuan + {$kib['NilaiPerolehan']} WHERE Aset_ID = '{$value['asetKapitalisasi']}' AND noRegister = '{$value['noRegister']}'");
   $sql = mysql_query("UPDATE kdp SET StatusTampil = '0' WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+
+  //log
+  $sqlkib = "SELECT * FROM {$value['tipeAset']} WHERE Aset_ID = '{$value['Aset_ID']}'";
+  $sqlquery = mysql_query($sqlkib);
+  while ($dataAset = mysql_fetch_assoc($sqlquery)){
+          $kib = $dataAset;
+      }    
+  $kib['changeDate'] = date("Y-m-d");
+  $kib['TglPerubahan'] = $kib['TglPerolehan'];
+  $kib['action'] = "Penghapusan KDP";
+  $kib['operator'] = $_SESSION['ses_uoperatorid'];
+  $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'] + $value['nilai'];
+  $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
+  $kib['Kd_Riwayat'] = 35;    
+  
+  
+        unset($tmpField);
+        unset($tmpValue);
+        foreach ($kib as $key => $val) {
+          $tmpField[] = $key;
+          $tmpValue[] = "'".$val."'";
+        }
+         
+        $fileldImp = implode(',', $tmpField);
+        $dataImp = implode(',', $tmpValue);
+
+        $sql = mysql_query("INSERT INTO log_kdp ({$fileldImp}) VALUES ({$dataImp})");
+
+
+  $sqlkib = "SELECT * FROM bangunan WHERE Aset_ID = '{$value['asetKapitalisasi']}'";
+  $sqlquery = mysql_query($sqlkib);
+  while ($dataAset = mysql_fetch_assoc($sqlquery)){
+          $kib = $dataAset;
+      }    
+  $kib['changeDate'] = date("Y-m-d");
+  $kib['TglPerubahan'] = $kib['TglPerolehan'];
+  $kib['action'] = "Ubah Status";
+  $kib['operator'] = $_SESSION['ses_uoperatorid'];
+  $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'] - $value['nilai'];
+  $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
+  $kib['Kd_Riwayat'] = 36;    
+  
+  
+        unset($tmpField);
+        unset($tmpValue);
+        foreach ($kib as $key => $val) {
+          $tmpField[] = $key;
+          $tmpValue[] = "'".$val."'";
+        }
+         
+        $fileldImp = implode(',', $tmpField);
+        $dataImp = implode(',', $tmpValue);
+
+        $sql = mysql_query("INSERT INTO log_bangunan ({$fileldImp}) VALUES ({$dataImp})");
+
 }
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;

@@ -345,7 +345,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Jumlah</span>
-								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=($kontrak[0]['tipeAset'] == 3)? 1 : ''?>" onchange="return totalHrg()" required/>
+								<input type="text" class="span3" name="Kuantitas" id="jumlah" value="<?=($kontrak[0]['tipeAset'] == 3)? 1 : ''?>" onchange="return totalHrg()" required <?=($_GET['tipeaset'] == 'kdp')? readonly : ''?>/>
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
