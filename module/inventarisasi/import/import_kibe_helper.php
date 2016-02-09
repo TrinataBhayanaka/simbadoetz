@@ -8,9 +8,6 @@ include "../../../config/database.php";
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
-$sql = "DELETE FROM apl_userasetlist WHERE aset_action = 'XLSIMP'";
-$result = $link->query($sql);
-
 $query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
 while($row = mysqli_fetch_assoc($result)) {
@@ -89,6 +86,9 @@ foreach ($cleardata as $key => $val) {
 echo "Updating log import\n";
 $sql = "UPDATE log_import SET totalPerolehan = '{$sum['sumnilai']}', status = 1 WHERE noKontrak = '{$datatmp['noKontrak']}'";
 $exec = $link->query($sql);
+
+$sql = "DELETE FROM apl_userasetlist WHERE aset_action = 'XLSIMP'";
+$result = $link->query($sql);
 // echo "Commit data\n";
 // $command = "COMMIT;";
 // $exec = $link->query($command);
