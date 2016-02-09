@@ -16,16 +16,19 @@ $menu_id = 10;
 	<!-- SQL Sementara -->
 	<?php
 
-	if(isset($_GET['del'])){
-		$data[0] = $_GET;
-		$delArr = $DELETE->delete_aset($data);
-	}
-		
 	$idKontrak = $_GET['id'];
 	$sql = mysql_query("SELECT * FROM kontrak WHERE id='{$idKontrak}'");
 		while ($dataKontrak = mysql_fetch_assoc($sql)){
 				$kontrak[] = $dataKontrak;
 			}
+
+	if($kontrak[0]['n_status'] != 1)
+	{
+		if(isset($_GET['del'])){
+			$data[0] = $_GET;
+			$delArr = $DELETE->delete_aset($data);
+		}
+	}
 
 	//get data
 	$RKsql = mysql_query("SELECT Aset_ID,kodeLokasi, kodeKelompok,TipeAset,noRegister, Info, NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
