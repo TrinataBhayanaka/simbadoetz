@@ -17,7 +17,7 @@ $menu_id = 10;
 			exit;
 		}
 
-	 $sql = mysql_query("SELECT * FROM aset WHERE kodeKelompok = '{$_GET['idKel']}' AND kodeLokasi = '{$_GET['idLok']}'");
+	 $sql = mysql_query("SELECT * FROM aset WHERE kodeKelompok = '{$_GET['idKel']}' AND kodeLokasi = '{$_GET['idLok']}' and noKontrak='{$kontrak[0]['noKontrak']}' ");
 	    while ($dataAset = mysql_fetch_assoc($sql)){
 	        $aset[] = $dataAset;
 	    } 
