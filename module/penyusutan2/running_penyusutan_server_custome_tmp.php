@@ -681,8 +681,12 @@ for($i=0;$i<2;$i++){
                  $Tahun = $Data['Tahun'];
                  $nb_buku_log=$Data_Log->NilaiBuku;
                  $MasaManfaat=$Data_Log->MasaManfaat;
-                 $UmurEkonomis=$Data_Log->UmurEkonomis;
-                 $AkumulasiPenyusutan=$Data_Log->AkumulasiPenyusutan;
+                 //ambil dari log
+                 //$UmurEkonomis=$Data_Log->UmurEkonomis;
+                 //$AkumulasiPenyusutan=$Data_Log->AkumulasiPenyusutan;
+                 //ambil dari tabel live
+                list($AkumulasiPenyusutan,$UmurEkonomis)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                 
                  $TahunPenyusutan=$Data_Log->TahunPenyusutan;
                  $kodeKelompok_log = $Data['kodeKelompok'];
                  $tmp_kode_log = explode(".", $kodeKelompok_log);
@@ -803,6 +807,7 @@ for($i=0;$i<2;$i++){
                      }else if($kd_riwayat==7||$kd_riwayat==21){
                          $PenyusutanPerTahun=$NP/$MasaManfaat;
                          $rentang_tahun_penyusutan = ($newTahun-$Tahun)+1;
+                         //list($AkumulasiPenyusutan,$UmurEkonomis)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
                          $AkumulasiPenyusutan=$rentang_tahun_penyusutan*$PenyusutanPerTahun;
                          $NilaiBuku=$NP-$AkumulasiPenyusutan;
                          $Sisa_Masa_Manfaat=$MasaManfaat-$rentang_tahun_penyusutan;
@@ -1120,5 +1125,16 @@ function catatan_hasil_penyusutan($data,$DBVAR){
             . " VALUES (NULL, '$Aset_ID', '$kodeKelompok', '$kodeSatker', '$Tahun', '$NilaiPerolehan', "
             . "     '$MasaManfaat', '$NilaiBuku', '$info', $log_id, '$perhitugan', '$TahunPenyusutan', '$changeDate',1);";
     $exeQueryLog = $DBVAR->query($query) or die($DBVAR->error());;
+}
+
+function get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR){
+      $query= "SELECT AkumulasiPenyusutan,UmurEkonomis FROM aset WHERE Aset_ID = '$Aset_ID' limit 1";
+      $hasil= $DBVAR->query($query);
+      $data= $DBVAR->fetch_array($hasil);
+      $Akumulasi=$data['AkumulasiPenyusutan'];
+      $UmurEkonomis=$data['UmurEkonomis'];
+
+      
+      return array($Akumulasi,$UmurEkonomis);
 }
 ?>
