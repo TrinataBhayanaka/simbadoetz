@@ -56,7 +56,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     logFile($updateAset);
     if(!$execquery){
       $DBVAR->rollback();
-      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+      echo "<script>alert('ERROR #001 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
       exit;
     }  
     if($data['TipeAset']=="A"){
@@ -82,7 +82,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       logFile($sql);
       if(!$execquery){
         $DBVAR->rollback();
-        echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+        echo "<script>alert('ERROR #002 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
         exit;
       } 
       //log
@@ -114,7 +114,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
               logFile($sql);
             if(!$execquery){
               $DBVAR->rollback();
-              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";              
+              echo "<script>alert('ERROR #003 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";              
               exit;
             }   
            
