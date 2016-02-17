@@ -287,7 +287,7 @@ $menu_id = 10;
 							<?php echo number_format($nilai[NilaiPerolehan],4);?>
 						</td>
 						<td>
-							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+							<a target="_blank" href="<?php echo $url_rewrite;?>/module/penghapusan/datacekpenghapusan.php?fleg=<?php echo $nilai[Aset_ID]?>" class="btn btn-warning">cek data</a>
 						</td>
 						<td>
 							<?php
