@@ -91,7 +91,8 @@ class report_engine_daftar extends report_engine {
                          <td style=\"width:5%;text-align:center;font-weight:bold;\">No<br/> Urut </td>
                          <td style=\"width:20%;text-align:center;font-weight:bold;\">Nama Barang</td>
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Kode Lokasi <br/>Kode Barang</td>
-                         <td style=\"width:20%;text-align:center;font-weight:bold;\">Nama Unit</td>
+                         <td style=\"width:15%;text-align:center;font-weight:bold;\">Nama Unit</td>
+                         <td style=\"width:5%;text-align:center;font-weight:bold;\">Tahun</td>
                          <td style=\"width:10%;text-align:center;font-weight:bold;\">Kondisi</td>
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Nilai</td>
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Keterangan</td>
@@ -113,6 +114,7 @@ class report_engine_daftar extends report_engine {
                          <td style=\"width:20%\">{$value[Kelompok]}</td>
                          <td style=\"width:15%;text-align:center\">{$value[kodeLokasi]}<br/>{$value[kodeKelompok]}.{$kodeNoReg}</td>
                          <td style=\"width:20%;text-align:center\">{$NamaSatker}</td>
+                         <td style=\"width:20%;text-align:center\">{$value[Tahun]}</td>
                          <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
                          <td style=\"width:15%;text-align:right\">{$perolehan}</td>
                          <td style=\"width:15%\">{$value[Info]}</td>
@@ -127,6 +129,7 @@ class report_engine_daftar extends report_engine {
                          <td colspan=\"5\" style=\"text-align:right\">Jumlah</td>
                     
                          <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
+                         <td style=\"width:15%\"></td>
                          <td style=\"width:15%\"></td>
                </tr>
              </tbody></table>";
