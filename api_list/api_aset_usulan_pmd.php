@@ -126,7 +126,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-pr($dataParam);
+// pr($dataParam);
 // list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
 
 $dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam); 
