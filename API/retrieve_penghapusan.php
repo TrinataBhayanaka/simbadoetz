@@ -10477,7 +10477,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 // pr($post);
 
             if($post){
-                echo "<script>alert('masuk');</script>";
+                // echo "<script>alert('masuk');</script>";
                  $sqlAsetP = array(
                         'table'=>'ASET',
                         'field'=>"Dihapus=0,StatusValidasi=1,Status_Validasi_Barang=1,fixPenggunaan=1",
