@@ -8,7 +8,7 @@ $menu_id = 10;
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
-// ////pr($get_data_filter);
+// //////pr($get_data_filter);
 ?>
 
 <?php
@@ -20,12 +20,12 @@ $menu_id = 10;
 	<!-- SQL Sementara -->
 	<?php
 	// if($_SESSION['filterAsetUsulan'])
-	// ////pr($_SESSION['filterAsetUsulan']);
+	// //////pr($_SESSION['filterAsetUsulan']);
 	
-	// pr($_POST);
+	// //pr($_POST);
 	if ($_POST['submit']){
 		// unset($_SESSION['ses_mutasi_filter']);
-		// pr($_POST);
+		// //pr($_POST);
 		$_SESSION['filterAsetUsulan'] = $_POST;
 
 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
@@ -37,11 +37,11 @@ $menu_id = 10;
 		
 	}else{
 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-		// pr($data_post);
+		// //pr($data_post);
 		$datapost=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
 		$CountData=count($datapost);
-		// pr($CountData);
+		// //pr($CountData);
 	}
 	// $POST=$_SESSION['filterAsetUsulan'];
 
@@ -51,15 +51,15 @@ $menu_id = 10;
 		
 		
 // 		$POST=$_SESSION['filterAsetUsulan'];
-// 		// pr($POST);
+// 		// //pr($POST);
 // 		$POST['page'] = intval($_GET['pid']);
-// 		// pr($POST);
+// 		// //pr($POST);
 // 		$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($POST);
 // 		// $_SESSION['filterAsetUsulan']=$data;
 // 		// $data=$_SESSION['filterAsetUsulan'];
-// 		// // ////pr($_SESSION['reviewAsetUsulan']);
+// 		// // //////pr($_SESSION['reviewAsetUsulan']);
 // 		// unset($_SESSION['reviewAsetUsulan']);
-// // pr($data);
+// // //pr($data);
 
 		// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 
@@ -80,14 +80,14 @@ $menu_id = 10;
 // 		// $dataSESSION=$_SESSION['filterAsetUsulan'];
 
 // 		$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-// 		// pr($data_post);
+// 		// //pr($data_post);
 // 		$DataPost['penghapusanfilter']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 
 // 		// $DataPost['penghapusanfilter']=$DataPost;
 // 		if($DataPost){
-// 			// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+// 			// //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
 // 			foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-// 				// ////pr($valueSESSION['Aset_ID']);
+// 				// //////pr($valueSESSION['Aset_ID']);
 // 				if(!in_array($valueSESSION['Aset_ID'], $DataPost['penghapusanfilter'])){
 // 					// echo "stringnot";
 // 					$data[]=$valueSESSION;
@@ -99,24 +99,24 @@ $menu_id = 10;
 // 			}
 		
 // 		}
-// 		// ////pr($data);
+// 		// //////pr($data);
 
 // 	}
 	$POST = $_SESSION['filterAsetUsulan'];
 	
 	$POST['page'] = intval($_GET['pid']);
-	// pr($POST);
+	// //pr($POST);
 	  $par_data_table="bup_tahun={$POST['bup_tahun']}&bup_nokontrak={$POST['bup_nokontrak']}&jenisaset={$POST['jenisaset'][0]}&kodeSatker={$POST['kodeSatker']}&kodepemilik={$POST['kodepemilik']}&kodeKelompok={$POST['kodeKelompok']}&page={$POST['page']}";
-// pr($par_data_table);
-	// pr($data);
-	// pr($_SESSION);
+// //pr($par_data_table);
+	// //pr($data);
+	// //pr($_SESSION);
 	if($_POST['kodeSatker']){
 		$_SESSION['kdSatkerFilterPMD']=$_POST['kodeSatker'];
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
 	}else{
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
 	}
-	// //pr($kdSatkerFilter);
+	// ////pr($kdSatkerFilter);
 	if(isset($_GET['flegAset'])){
 		$flegAset=$_GET['flegAset'];
 	}else{
@@ -222,7 +222,7 @@ $menu_id = 10;
                          {"bSortable": true}],
                     "sPaginationType": "full_numbers",
 
-                    "bProcessing": true,
+                    "b//processing": true,
                     "bServerSide": true,
                     "sAjaxSource": "<?=$url_rewrite?>/api_list/api_aset_usulan_pmd.php?<?php echo $par_data_table?>"
                }

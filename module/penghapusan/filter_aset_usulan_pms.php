@@ -86,7 +86,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 
 						<span class="span2">Kode Pemilik</span>
 						<select id="kodepemilik" name="kodepemilik" style="width:255px" class="full">
-							<option value="0">0 Pemerintah Pusat</option>
+							<option value="00">00 Pemerintah Pusat</option>
 							<option value="11">11 Pemerintah Provinsi</option>
 							<option value="12" selected>12 Pemerintah Kabupaten/Kota</option>
 							<option value="13">13 Pemerintah Provinsi Lain</option>
