@@ -96,6 +96,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       $kib['action'] = 'posting';
       $kib['operator'] = $_SESSION['ses_uoperatorid'];
       $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
+      $kib['Info'] = addslashes($kib['Info']);
       if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
 
      
