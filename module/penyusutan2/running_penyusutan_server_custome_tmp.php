@@ -713,7 +713,17 @@ for($i=0;$i<2;$i++){
                      
                      
                  }
-                  
+                 if($kib=="B" && $selisih<300000 )
+                 {
+                     echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan mesin\n";
+                     $kd_riwayat=7;
+                 }
+                 if($kib=="C" && $selisih<100000000 )
+                 {
+                     echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan bangunan\n";
+                     $kd_riwayat=7;
+                 }
+                 
                   if($kd_riwayat==2||$kd_riwayat==28){
                         $NilaiYgDisusutkan=$nb_buku_log+$selisih;
                         $penambahan_masa_manfaat=  overhaul($tmp_kode_log[0], $tmp_kode_log[1], $tmp_kode_log[2],$selisih, $DBVAR);
