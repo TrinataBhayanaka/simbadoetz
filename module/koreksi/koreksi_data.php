@@ -470,6 +470,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 
 	function initKondisi(){	
 			$(".rubahaset").removeAttr('readonly');
+			$(".rubahaset").removeAttr('disabled');
 			var kode = $('#kodeKelompok').val();
 			var gol = kode.split(".");
 			
@@ -570,6 +571,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".well h2").html("Rubah Data");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", false);
 			$(".rubahaset").removeAttr('readonly');
+			$(".rubahaset").removeAttr('disabled');
 			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan data rincian aset.");
 		} else if ($("#"+item).attr('id') == "kapital") {
 			$("textarea").attr('readonly','readonly');
