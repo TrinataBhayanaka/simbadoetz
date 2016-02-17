@@ -126,7 +126,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-//pr($dataParam);
+pr($dataParam);
 // list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
 
 $dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam); 
@@ -216,7 +216,7 @@ foreach ($data as $key => $value)
                              $row[]=$checkbox;
                              $row[]=$value['noRegister'] ;
                              $row[]=$value['noKontrak'];
-                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
+                             $row[]="{$value[kodeLokasi]}<br/>[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
                              $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                              $row[]=$TglPerolehan;
                              $row[]=number_format($value[NilaiPerolehan],4);
