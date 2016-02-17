@@ -27,7 +27,7 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="ast.Aset_ID";
-$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+$aColumns = array('ast.Aset_ID','ast.kodeLokasi','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -217,7 +217,7 @@ foreach ($data as $key => $value)
                              $row[]=$checkbox;
                              $row[]=$value['noRegister'] ;
                              $row[]=$value['noKontrak'];
-                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
+                             $row[]="{$value[kodeLokasi]}<br/>[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
                              $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                              $row[]=$TglPerolehan;
                              $row[]=number_format($value[NilaiPerolehan],4);
