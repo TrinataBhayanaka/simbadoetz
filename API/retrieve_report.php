@@ -104,8 +104,9 @@ class RETRIEVE_REPORT extends DB {
                   . "    from aset A  left join kelompok K on K.Kode=A.kodeKelompok "
                   . "where A.kodeSatker like '$skpd%' and A.TglPerolehan>='$tglPerolehanAwal'"
                               . " and TglPerolehan<='$tglPerolehanAkhir'  and A.noKontrak is not null and A.StatusValidasi=1 "
-                              . " group by A.kodeSatker,A.kodeKelompok";
-         // echo $query;
+                              . " group by A.kodeSatker,A.kodeKelompok,A.noKontrak";
+         //echo $query;
+         //exit();
           $result = $this->query($query) or die($this->error());
           $check = $this->num_rows($result);
           while ($data = $this->fetch_array($result)) {
