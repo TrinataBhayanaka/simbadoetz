@@ -96,7 +96,8 @@ class report_engine_daftar extends report_engine {
                          <td style=\"width:5%;text-align:center;font-weight:bold;\">Tahun</td>
                          <td style=\"width:10%;text-align:center;font-weight:bold;\">Kondisi</td>
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Akumulasi <br/>Penyusutan</td>
-                         <td style=\"width:15%;text-align:center;font-weight:bold;\">Nilai</td>
+                         <td style=\"width:15%;text-align:center;font-weight:bold;\">Nilai <br/>Buku</td>
+                         <td style=\"width:15%;text-align:center;font-weight:bold;\">Nilai<br/>Perolehan</td>
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Keterangan</td>
                </tr>
              </thead>
@@ -133,7 +134,7 @@ class report_engine_daftar extends report_engine {
                $perolehanTotal = number_format($perolehanTotal, 2, ",", ".");
                $akumalasiTotal = number_format($akumalasiTotal, 2, ",", ".");
                $nilaiBukuTotal = number_format($nilaiBukuTotal, 2, ",", ".");
-               
+
                $body.="<tbody>
                <tr>
                          <td colspan=\"7\" style=\"text-align:right\">Jumlah</td>
