@@ -28908,7 +28908,7 @@ if($dataArr!="")
 			$NamaKlmpk = $this->get_NamaKelompok($row->kodeKelompok);
 			
 			if($row->SatkerTujuan == $skpd){
-				$NamaSatker = $this->get_NamaSatker($row->SatkerTujuan);
+				$NamaSatker = $this->get_NamaSatker($row->SatkerAwal);
 				//mutasi tambah
 				$nilaiPrlhn_tambah = $row->NilaiPerolehan;
 				$nilaiPrlhnFix_tambah = number_format($nilaiPrlhn_tambah,2,",",".");
@@ -28920,7 +28920,7 @@ if($dataArr!="")
 				$perolehanSubTotal_kurang = $perolehanSubTotal_kurang + $nilaiPrlhn_kurang;			
 			
 			}else {
-				$NamaSatker = $this->get_NamaSatker($row->SatkerAwal);
+				$NamaSatker = $this->get_NamaSatker($row->SatkerTujuan);
 				//mutasi tambah
 				$nilaiPrlhn_tambah = 0;
 				$nilaiPrlhnFix_tambah = number_format($nilaiPrlhn_tambah,2,",",".");
