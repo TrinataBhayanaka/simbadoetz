@@ -120,21 +120,26 @@ class report_engine_daftar extends report_engine {
                          <td style=\"width:20%;text-align:center\">{$value[Tahun]}</td>
                          <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
                          <td style=\"width:15%;text-align:right\">{$value[AkumulasiPenyusutan]}</td>
+                         <td style=\"width:15%;text-align:right\">{$value[NilaiBuku]}</td>
                          <td style=\"width:15%;text-align:right\">{$perolehan}</td>
                          <td style=\"width:15%\">{$value[Info]}</td>
                </tr>
              </tbody>";
                     $perolehanTotal+=$value[NilaiPerolehan];
+                    $akumalasiTotal+=$value[AkumulasiPenyusutan];
+                    $nilaiBukuTotal+=$value[NilaiBuku];
                     $no++;
                }
                $perolehanTotal = number_format($perolehanTotal, 2, ",", ".");
+               $akumalasiTotal = number_format($akumalasiTotal, 2, ",", ".");
+               $nilaiBukuTotal = number_format($nilaiBukuTotal, 2, ",", ".");
+               
                $body.="<tbody>
                <tr>
-                         <td colspan=\"6\" style=\"text-align:right\">Jumlah</td>
-                    
-                         <td style=\"width:15%\"></td>
-                         <td style=\"width:15%\"></td>
+                         <td colspan=\"7\" style=\"text-align:right\">Jumlah</td>
                          <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
+                         <td style=\"width:20%;text-align:right\">{$akumalasiTotal}</td>
+                         <td style=\"width:20%;text-align:right\">{$nilaiBukuTotal}</td>
                          <td style=\"width:15%\"></td>
                </tr>
              </tbody></table>";
