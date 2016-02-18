@@ -25,11 +25,22 @@ class DB
 	  //echo $this->path;
 	}
 	
+	function open_connection_log()
+	{
+		global $CONFIG;
+
+		$link=@mysql_connect($CONFIG['default']['db_host_log'],$CONFIG['default']['db_user_log'],$CONFIG['default']['db_pass_log'])  
+		or die ("Koneksi Database log gagal"); 
+		@mysql_select_db($CONFIG['default']['db_name_log']);
+		return $link;
+	}
 	
-	
-	public function query($data)
+	public function query($data, $db=0)
 	{
 		
+		if ($db==1){
+			$this->open_connection_log();
+		}
 		$this->query = mysql_query($data);// or die (mysql_error());
 		logFile($data,'Log-query-'.date('Y-m-d'));
 		return $this->query;
