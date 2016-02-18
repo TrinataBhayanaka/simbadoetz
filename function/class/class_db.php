@@ -155,9 +155,10 @@ class DB
 	}
 	
 	function commit($dbuse=0)
-	{
+	{   
 		$command = "COMMIT;";
 		$result = $this->query($command) or die ($this->error('commit failed'));
+                $this->autocommit(1);
 		// mysql_commit();
 	}
 	
@@ -165,6 +166,7 @@ class DB
 	{
 		$command = "ROLLBACK;";
 		$result = $this->query($command) or die ($this->error('rollback failed'));
+                $this->autocommit(1);
 		// if (!$this->link){
 			// $this->link = $this->open_connection(0);
 		// }
@@ -376,8 +378,8 @@ class DB
 	        			$insert_id = $this->insert_id();
 
 	        			$sqlu = "UPDATE log_{$value} SET TglPembukuan = '{$tglProses}' WHERE log_id = {$insert_id} LIMIT 1";
-	        			logFile($sqlu);
-	        			$result = $this->query($sqlu);
+	        			//logFile($sqlu);
+	        			//$result = $this->query($sqlu);
 	        		}
 	        		usleep(100);
 	        		if ($action==28){
@@ -429,6 +431,12 @@ class DB
 	        if ($mergeField){
 	        	foreach ($mergeField as $key => $val) {
 	        		$tmpField[] = $key;
+                                if($key=="StatusValidasi")
+                                    $val="1";
+                                elseif($key=="Status_Validasi_Barang")
+                                    $val="1";
+                                elseif($key=="StatusTampil")
+                                    $val="1";
 	        		$tmpValue[] = "'".$val."'";
 
 	        		// if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";

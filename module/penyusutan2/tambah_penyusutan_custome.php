@@ -50,7 +50,7 @@ $(document).ready(function() {
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Tambah Penyusutan Aset <?=$tahun?></div>
+				<div class="title">Tambah Penyusutan Aset <?=$TAHUN_AKTIF?></div>
 				<div class="subtitle">Daftar Aset</div>
 			</div>	
 			<?php
@@ -88,7 +88,7 @@ $(document).ready(function() {
 			&nbsp;
 			<!-- <a class="btn btn-danger btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Kontrak Simral</a>
 			&nbsp; --></p>	
-                  <form name="lda_filter" action="<?php echo "$url_rewrite/module/penyusutan/proses_daftar_custome.php"; ?>" method="post" >
+                  <form name="lda_filter" action="<?php echo "$url_rewrite/module/penyusutan2/proses_daftar_custome.php"; ?>" method="post" >
                        <ul>
 					   <?=selectAllSatker('kodeSatker','255',true,false,false,true);//selectSatker('kodeSatker',$width='205',$br=true,false);?>
 						<li>&nbsp;</li>
@@ -110,20 +110,13 @@ $(document).ready(function() {
 ?>
 							</select>
 						</li>
-						<!--<li>
-							<span class="span2">Penyusutan</span>
-							<select name="flagPnystn" style="width:260px" id="jenisaset">
-								<option value="1" selected>Penyusutan Tahun Pertama (<?=date('Y')?>)</option>
-								<option value="2" >Penyusutan Tahun Selanjutnya</option>
-							</select>
-						</li>--> 
+						
 						<li>
-							<span class="span2">Tahun Penyusutan</span>
+							<span class="span2">Tahun Penyusutan Berjalan</span>
 							<!--<input type="text" name="tahun" id = "tahun" readonly value="<?=date('Y')?>">-->
 							<select name="tahun"  required="1" id="tahun">
 								 <option value="">Pilih Tahun</option>
-								 <option value="2014">2014(Restatement)</option>
-								<!-- <option value="<?=date('Y')?>">2015</option>-->
+								<option value="<?=$TAHUN_AKTIF?>"><?=$TAHUN_AKTIF?></option>-->
 								
 							</select>
 							<input type="hidden" name="UserNm"  value="<?=$Session['ses_satkerid']?>">
