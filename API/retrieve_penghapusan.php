@@ -10315,7 +10315,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         }
 	  function getTableKibAlias($type=1)
         {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kdp');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
@@ -10363,7 +10363,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         function getTableKibAliasFull($type=1)
         {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kdp');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
