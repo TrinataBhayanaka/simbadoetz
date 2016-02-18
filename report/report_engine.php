@@ -28361,6 +28361,8 @@ $body="
 					}elseif($row->Kd_Riwayat == '28'){
 						
 						$kuantitas = 1;
+						
+						//tambah
 						$jmlTambah = 1;
 						//get value nilaiperolehan from Aset_ID_Penambahan
 						$addValueKptls = $this->get_NP_Aset_ID_Penambahan($row->Aset_ID_Penambahan,$row->log_id);
@@ -28423,6 +28425,56 @@ $body="
 							$jmlHasilMutasi = 0;	
 							$nilaiPerolehanHasilMutasi = 0;
 							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+					}elseif($row->Kd_Riwayat == '30' && $row->StatusValidasi == '1' && $row->Status_Validasi_Barang == '1' && $row->StatusTampil == '1'){
+							//echo "reklas kurang";
+							// pr('reklas kurang');
+							
+							//reklas kurang
+							$kuantitas = 1;	
+							$nilaiAwalPrlhn = $row->NilaiPerolehan;
+							$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+							
+							//mutasi tambah
+							$valAdd = 0;
+							$jmlTambah = 0;
+							$nilaiPrlhnMutasiTambah = $valAdd;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+							
+							//mutasi kurang
+							$valSubst = $row->NilaiPerolehan;
+							$jmlKurang = 1;
+							$nilaiPrlhnMutasiKurang = $valSubst;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+							
+							//jumlah akhir
+							$jmlHasilMutasi = 0;	
+							$nilaiPerolehanHasilMutasi = 0;
+							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+							
+					}elseif($row->Kd_Riwayat == '30' && $row->StatusValidasi == '0' && $row->Status_Validasi_Barang == '0' && $row->StatusTampil == '0'){
+						//reklas tambah
+						// pr('reklas tambah');
+						$kuantitas = 0;	
+						$nilaiAwalPrlhn = 0 ;
+						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+						
+						//mutasi tambah
+						$valAdd = $row->NilaiPerolehan;
+						$jmlTambah =  1;
+						$nilaiPrlhnMutasiTambah = $valAdd;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						
+						//mutasi kurang
+						$valSubst = 0;
+						$jmlKurang = 0;
+						$nilaiPrlhnMutasiKurang = $valSubst;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
+						//jumlah akhir
+						$jmlHasilMutasi = 1;	
+						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiTambah + $nilaiPrlhnMutasiKurang;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+					
 					}else{
 						// echo "OTHER";
 						$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
