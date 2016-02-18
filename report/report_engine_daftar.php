@@ -138,9 +138,9 @@ class report_engine_daftar extends report_engine {
                $body.="<tbody>
                <tr>
                          <td colspan=\"7\" style=\"text-align:right\">Jumlah</td>
-                         <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
                          <td style=\"width:20%;text-align:right\">{$akumalasiTotal}</td>
                          <td style=\"width:20%;text-align:right\">{$nilaiBukuTotal}</td>
+                         <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
                          <td style=\"width:15%\"></td>
                </tr>
              </tbody></table>";
