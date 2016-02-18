@@ -2570,7 +2570,12 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['kodeSatker'])) {$tblAset['kodeSatker'] = $data['kodeSatker'];$kodeSatker = explode(".",$data['kodeSatker']);}
         if(isset($data['tglPerolehan'])) {$tblAset['TglPerolehan'] = $data['tglPerolehan'];$tblAset['Tahun'] = date('Y', strtotime($data['tglPerolehan']));}
         if(isset($data['tglPembukuan'])) $tblAset['TglPembukuan'] = $data['tglPembukuan'];
-        if(isset($data['kodepemilik'])) $tblAset['kodeLokasi'] = $data['kodepemilik'].".11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tblAset['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+        if(isset($data['kodepemilik'])) {
+            $tblAset['kodeLokasi'] = $data['kodepemilik'].".11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($tblAset['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+            $sql = "SELECT MAX(noRegister) AS lastreg FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}'";
+            $noreg = $this->fetch($sql);
+            $tblAset['noRegister'] = intval($noreg['lastreg'])+1;
+        }
         if(isset($data['NilaiPerolehan'])) $tblAset['NilaiPerolehan'] = $data['Satuan'];
         if(isset($data['kodeKelompok'])) {
             if($data['old_kelompok'] != $data['kodeKelompok']){
@@ -2752,7 +2757,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['StatusTampil'] = 1;               
             }
             if(isset($data['kodeSatker'])) $tblKib['kodeSatker'] = $data['kodeSatker'];
-            if(isset($data['kodepemilik'])) $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
+            if(isset($data['kodepemilik'])) {
+                $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
+                $tblKib['noRegister'] = $tblAset['noRegister'];
+            }
             if(isset($tblAset['TglPerolehan'])) $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
             if(isset($tblAset['TglPembukuan'])) $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
             if(isset($data['Satuan'])) $tblKib['NilaiPerolehan'] = $data['Satuan'];
