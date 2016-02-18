@@ -1046,20 +1046,26 @@ foreach ($dataArr as $asetID => $value)
 		//skenario log tanah
 		//1 - Nilai awal
 		if($AsetId != ''){
-			$html ="<h5>1. NILAI ASET AWAL</h5>";
+			$modif_tgl_perolehan = explode ('-',$row->TglPerolehan);
+			$tglPerolehan = $modif_tgl_perolehan[2].'/'.$modif_tgl_perolehan[1].'/'.$modif_tgl_perolehan[0];
+			$modif_tgl_pembukuan = explode ('-',$row->TglPembukuan);
+			$tglPembukuan = $modif_tgl_pembukuan[2].'/'.$modif_tgl_pembukuan[1].'/'.$modif_tgl_pembukuan[0];
+			$html ="<h5>1. NILAI ASET</h5>";
 			$html.="<table style=\"font-size:; text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 					<tr>
 						  <td style=\"width: 30px; font-weight: ; text-align: center;\">No</td>
-						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal Perolehan</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal Pembukuan</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Uraian</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan</td>
 						</tr>";
 			$no=1;
-				$info = "Nilai Perolehan Awal";
+				// $info = "Nilai Perolehan";
 				$html.="<tr>
 						  <td style=\"width: ; text-align: center;\">$no</td>
-						  <td style=\"text-align: center;width: ;\">$row->TglPerolehan&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">$info&nbsp;</td>
+						  <td style=\"text-align: center;width: ;\">$tglPerolehan&nbsp;</td>
+						  <td style=\"text-align: center;width: ;\">$tglPembukuan&nbsp;</td>
+						  <td style=\"width: ; text-align: ;\">$row->Info&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">".number_format($row->NilaiPerolehan,2,",",".")."&nbsp;</td>
 						</tr>"; 
 				
@@ -1069,18 +1075,20 @@ foreach ($dataArr as $asetID => $value)
 			// echo $html;  
 		
 		}else{
-			$html ="<h5>1. NILAI ASET AWAL</h5>";
+			$html ="<h5>1. NILAI ASET </h5>";
 			$html.="<table style=\"font-size:; text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 					<tr>
 						  <td style=\"width: 30px; font-weight: ; text-align: center;\">No</td>
-						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal Perolehan</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal Pembukuan</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Uraian</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan</td>
 						</tr>";
 			$no=1;
-				$info = "Nilai Perolehan Awal";
+				$info = "Nilai Perolehan";
 				$html.="<tr>
 						  <td style=\"width: ; text-align: center;\">&nbsp;</td>
+						  <td style=\"text-align: center;width: \">&nbsp;</td>
 						  <td style=\"text-align: center;width: \">&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">&nbsp;</td>
@@ -1105,19 +1113,21 @@ foreach ($dataArr as $asetID => $value)
 		// pr($ceckKapt);
 		// pr($ceckkrksNilai);
 		if($ceckkrksNilai){	
+			$modif_tgl_perubahan = explode ('-',$row->TglPerubahan);
+			$tglPerubahanKoreksiNilai = $modif_tgl_perubahan[2].'/'.$modif_tgl_perubahan[1].'/'.$modif_tgl_perubahan[0];
 			$htmlKrks ="<h5>2. KOREKSI NILAI</h5>";
 			$htmlKrks.="<table style=\"font-size:; text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 					<tr>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">No</td>
-						  <td style=\"text-align: center; font-weight: ; width: ; \">Tanggal</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; \">Tanggal Transaksi</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">No Dokumen</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Uraian</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Awal Perolehan</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Info Riwayat</td>
-						  <td style=\"width: ; font-weight: ; text-align: center;\">Masa Manfaat</td>
-						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Sisa</td>
 						</tr>";
+			/*<td style=\"width: ; font-weight: ; text-align: center;\">Masa Manfaat</td>
+						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Sisa</td>*/		
 			$noKrks=1;
 			foreach ($ceckkrksNilai as $datakrksNilai){
 				
@@ -1126,16 +1136,16 @@ foreach ($dataArr as $asetID => $value)
 				}
 				$htmlKrks.="<tr>
 						  <td style=\"width: ; text-align: center;\">$noKrks</td>
-						  <td style=\"text-align: center;width: ;\">$datakrksNilai->TglPerubahan&nbsp;</td>
+						  <td style=\"text-align: center;width: ;\">$tglPerubahanKoreksiNilai&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$datakrksNilai->No_Dokumen&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$datakrksNilai->GUID&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">".number_format($datakrksNilai->NilaiPerolehan,2,",",".")."&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">".number_format($datakrksNilai->NilaiPerolehan_Awal,2,",",".")."&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$Inforwyt&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">$datakrksNilai->MasaManfaat&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">$datakrksNilai->NilaiBuku &nbsp;</td>
+						  
 						</tr>"; 
-				
+			/*<td style=\"width: ; text-align: ;\">$datakrksNilai->MasaManfaat&nbsp;</td>
+						  <td style=\"width: ; text-align: ;\">$datakrksNilai->NilaiBuku &nbsp;</td>*/	
 			$noKrks++;
 			}
 			$htmlKrks.="</table>";
@@ -1147,15 +1157,15 @@ foreach ($dataArr as $asetID => $value)
 			$htmlKrks.="<table style=\"font-size:; text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 					<tr>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">No</td>
-						  <td style=\"text-align: center; font-weight: ; width: ; \">Tanggal</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; \">Tanggal Transaksi</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">No Dokumen</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Uraian</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan</td>
-						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Awal Perolehan</td>
+						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan Awal</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Info Riwayat</td>
-						  <td style=\"width: ; font-weight: ; text-align: center;\">Masa Manfaat</td>
-						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Sisa</td>
 						</tr>";
+			/*<td style=\"width: ; font-weight: ; text-align: center;\">Masa Manfaat</td>
+						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Sisa</td>*/			
 			$htmlKrks.="<tr>
 						  <td style=\"width: ; text-align: center;\">&nbsp;</td>
 						  <td style=\"text-align: center;width: ;\">&nbsp;</td>
@@ -1164,10 +1174,11 @@ foreach ($dataArr as $asetID => $value)
 						  <td style=\"width: ; text-align: right;\">&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">&nbsp;</td>
+						  
 						</tr>"; 
 			$htmlKrks.="</table>";
+			/*<td style=\"width: ; text-align: ;\">&nbsp;</td>
+						  <td style=\"width: ; text-align: ;\">&nbsp;</td>*/
 			// $htmlKrks.="<br>";
 			// $hasil_html[]=$htmlNk;
 			// echo $htmlKrks;  
@@ -1188,19 +1199,22 @@ foreach ($dataArr as $asetID => $value)
 		}
 		// pr($ceckKapt);
 		if($ceckKapt){	
+			$modif_tgl_perubahan = explode ('-',$row->TglPerubahan);
+			$tglPerubahanKapitalisasi = $modif_tgl_perubahan[2].'/'.$modif_tgl_perubahan[1].'/'.$modif_tgl_perubahan[0];
 			$htmlNk ="<h5>3. NILAI KAPITALISASI</h5>";
 			$htmlNk.="<table style=\"font-size:; text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 					<tr>
 						  <td style=\"width: 30px; font-weight: ; text-align: center;\">No</td>
-						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal Transaksi</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">No Dokumen</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Uraian</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan</td>
-						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Awal<br> Perolehan</td>
+						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan Awal</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Info Riwayat</td>
-						  <td style=\"width: ; font-weight: 10%; text-align: center;\">Masa Manfaat</td>
-						  <td style=\"width: ; font-weight: 25%; text-align: center;\">Nilai Sisa</td>
+						  
 						</tr>";
+			/*<td style=\"width: ; font-weight: 10%; text-align: center;\">Masa Manfaat</td>
+						  <td style=\"width: ; font-weight: 25%; text-align: center;\">Nilai Sisa</td>*/			
 			$nokptls=1;
 			foreach ($ceckKapt as $dataKap){
 				
@@ -1214,15 +1228,16 @@ foreach ($dataArr as $asetID => $value)
 				}*/
 				$htmlNk.="<tr>
 						  <td style=\"width: ; text-align: center;\">$nokptls</td>
-						  <td style=\"text-align: center;width: ;\">$dataKap->TglPerubahan&nbsp;</td>
+						  <td style=\"text-align: center;width: ;\">$tglPerubahanKapitalisasi&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$dataKap->No_Dokumen&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$dataKap->GUID&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">".number_format($dataKap->NilaiPerolehan,2,",",".")."&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">".number_format($dataKap->NilaiPerolehan_Awal,2,",",".")."&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$Inforwyt&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">$dataKap->MasaManfaat&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">$dataKap->NilaiBuku&nbsp;</td>
+						  
 						</tr>"; 
+			 /*<td style=\"width: ; text-align: ;\">$dataKap->MasaManfaat&nbsp;</td>
+						  <td style=\"width: ; text-align: ;\">$dataKap->NilaiBuku&nbsp;</td>*/			
 				
 			$nokptls++;
 			}
@@ -1235,15 +1250,16 @@ foreach ($dataArr as $asetID => $value)
 			$htmlNk.="<table style=\"font-size:; text-align: left; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
 					<tr>
 						  <td style=\"width: 30px; font-weight: ; text-align: center;\">No</td>
-						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal</td>
+						  <td style=\"text-align: center; font-weight: ; width: ; text-align: center;\">Tanggal Transaksi</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">No Dokumen</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Uraian</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan</td>
-						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Awal<br> Perolehan</td>
+						  <td style=\"width: ; font-weight: ; text-align: center;\">Nilai Perolehan Awal</td>
 						  <td style=\"width: ; font-weight: ; text-align: center;\">Info Riwayat</td>
-						  <td style=\"width: ; font-weight: 10%; text-align: center;\">Masa Manfaat</td>
-						  <td style=\"width: ; font-weight: 25%; text-align: center;\">Nilai Sisa</td>
+						 
 						</tr>";	
+			/* <td style=\"width: ; font-weight: 10%; text-align: center;\">Masa Manfaat</td>
+						  <td style=\"width: ; font-weight: 25%; text-align: center;\">Nilai Sisa</td>*/			
 			$htmlNk.="<tr>
 						  <td style=\"width: ; text-align: center;\">&nbsp;</td>
 						  <td style=\"text-align: center;width: ;\">&nbsp;</td>
@@ -1252,9 +1268,10 @@ foreach ($dataArr as $asetID => $value)
 						  <td style=\"width: ; text-align: right;\">&nbsp;</td>
 						  <td style=\"width: ; text-align: right;\">&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">&nbsp;</td>
-						  <td style=\"width: ; text-align: ;\">&nbsp;</td>
+						 
 						</tr>"; 
+			/* <td style=\"width: ; text-align: ;\">&nbsp;</td>
+						  <td style=\"width: ; text-align: ;\">&nbsp;</td>*/			
 						
 			$htmlNk.="</table>";
 			$htmlNk.="<br><br><br><br>";
@@ -1296,7 +1313,7 @@ foreach ($dataArr as $asetID => $value)
 								<td style=\"font-weight: ; text-align: center; width: 360px;\" colspan=\"5\" rowspan=\"1\">Nomor</td>
 							</tr>
 							<tr>
-								<td style=\"font-weight: ; text-align: center; width: 85px;\" colspan=\"1\" rowspan=\"1\">Tanggal</td>
+								<td style=\"font-weight: ; text-align: center; width: 85px;\" colspan=\"1\" rowspan=\"1\">Tanggal <br>Transaksi</td>
 								<td style=\"font-weight: ; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"1\">No Dokumen</td>
 								<td style=\"font-weight: ; text-align: center; width: 72px;\">Pabrik</td>
 								<td style=\"font-weight: ; text-align: center; width: 72px;\">Rangka</td>
@@ -1310,7 +1327,7 @@ foreach ($dataArr as $asetID => $value)
 								<td style=\"width: ; text-align: ;\">&nbsp;</td>
 								<td style=\"width: ; text-align: ;\">&nbsp;</td>
 								<td style=\"width: ; text-align: center;\">$kondisi&nbsp;</td>
-								<td style=\"width: ; text-align: ;\">$row->kodeRuangan&nbsp;</td>
+								<td style=\"width: ; text-align: ;\">&nbsp;</td>
 								<td style=\"width: ; text-align: ;\">$row->Merk&nbsp;</td>
 								<td style=\"width: ; text-align: ;\">$row->Ukuran&nbsp;</td>
 								<td style=\"width: ; text-align: ;\">$row->Material&nbsp;</td>
@@ -1339,9 +1356,11 @@ foreach ($dataArr as $asetID => $value)
 				}elseif($dataChangeDoc->kondisi == 3){
 					$kondisi = "Rusak Berat";
 				}
+				$modif_tgl_perubahan = explode ('-',$row->TglPerubahan);
+				$tglPerubahanKoreksi = $modif_tgl_perubahan[2].'/'.$modif_tgl_perubahan[1].'/'.$modif_tgl_perubahan[0];
 				$htmlChangeDoc.="<tr>
 						  <td style=\"width: ; text-align: center;\">$noChangeDoc</td>
-						  <td style=\"text-align: center; width: ;\">$dataChangeDoc->TglPerubahan&nbsp;</td>
+						  <td style=\"text-align: center; width: ;\">$tglPerubahanKoreksi&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$dataChangeDoc->No_Dokumen&nbsp;</td>
 						  <td style=\"width: ; text-align: ;\">$Inforwyt&nbsp;</td>
 						  <td style=\"width: ; text-align: center;\">$kondisi&nbsp;</td>
@@ -1377,7 +1396,7 @@ foreach ($dataArr as $asetID => $value)
 								<td style=\"font-weight: ; text-align: center; width: 360px;\" colspan=\"5\" rowspan=\"1\">Nomor</td>
 							</tr>
 							<tr>
-								<td style=\"font-weight: ; text-align: center; width: 85px;\" colspan=\"1\" rowspan=\"1\">Tanggal</td>
+								<td style=\"font-weight: ; text-align: center; width: 85px;\" colspan=\"1\" rowspan=\"1\">Tanggal <br>Transaksi</td>
 								<td style=\"font-weight: ; text-align: center; width: 80px;\" colspan=\"1\" rowspan=\"1\">No Dokumen</td>
 								<td style=\"font-weight: ; text-align: center; width: 72px;\">Pabrik</td>
 								<td style=\"font-weight: ; text-align: center; width: 72px;\">Rangka</td>
@@ -1412,7 +1431,7 @@ foreach ($dataArr as $asetID => $value)
 			//cek koderiawayat  
 			//3 	Pindah SKPD
 		//jika ada nilainya foreach aja dgn tampilan html
-		$kdRwyt_4 = '3';
+		/*$kdRwyt_4 = '3';
 		if($AsetId != '' && $AsetId != 0){
 			$ceckChangeSkpd = $this->AddValue($AsetId,$Satker,$param,$kdRwyt_4);
 		}
@@ -1487,7 +1506,7 @@ foreach ($dataArr as $asetID => $value)
 			// $htmlChangeSkpd.="<br>";
 			// $hasil_html[]=$htmlNk;
 			// echo $htmlChangeSkpd; 			
-		}
+		}*/
 		// exit;
 		//6- Status Pemanfaatan
 			//cek koderiawayat  
@@ -1498,7 +1517,7 @@ foreach ($dataArr as $asetID => $value)
 			//13 Bangun Guna Serah
 			
 		//jika ada nilainya foreach aja dgn tampilan html
-		$kdRwyt_5 = "9,10,11,12,13";
+		/*$kdRwyt_5 = "9,10,11,12,13";
 		if($AsetId != '' && $AsetId != 0){
 			$ceckChangePemanfaatan = $this->AddValue($AsetId,$Satker,$param,$kdRwyt_5);
 		}
@@ -1586,7 +1605,7 @@ foreach ($dataArr as $asetID => $value)
 			// $htmlPmft.="<br>";
 			// $hasil_html[]=$htmlNk;
 			// echo $htmlChangePemanfaatan; 
-		}
+		}*/
 		
 		$hasil_html[]=$head.$html.$htmlKrks.$htmlNk.$htmlChangeDoc.$htmlChangeSkpd.$htmlPmft; 
 	}
@@ -28340,7 +28359,7 @@ $body="
 						
 						
 					}elseif($row->Kd_Riwayat == '28'){
-						$LastSatker = $row->SatkerTujuan;
+						/*$LastSatker = $row->SatkerTujuan;
 						$FirstSatker = $skpdfiltr;
 						
 						$kuantitas = 1;
@@ -28371,6 +28390,41 @@ $body="
 							$jmlHasilMutasi = 0;	
 							$nilaiPerolehanHasilMutasi = 0;
 							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+						}*/
+						
+						$kuantitas = 1;
+						$nilaiAwalPrlhn = $row->NilaiPerolehan_Awal;
+						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+						if($Aset_ID_Penambahan == 0){
+						//berkurang
+							$jmlTambah = 0;
+							$nilaiPrlhnMutasiTambah = 0;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+							//kurang
+							$jmlKurang = 1;
+							$nilaiPrlhnMutasiKurang = $row->NilaiPerolehan;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+							
+							$jmlHasilMutasi = 0;	
+							$nilaiPerolehanHasilMutasi = 0;
+							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+							
+						}elseif($Aset_ID_Penambahan != 0){
+						//bertambah
+							$jmlTambah = 1;
+							$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+							//kurang
+							$jmlKurang = 0;
+							$nilaiPrlhnMutasiKurang = 0;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+							
+							//get value nilaiperolehan from Aset_ID_Penambahan
+							$addValueKptls = $this->get_NP_Aset_ID_Penambahan($row->Aset_ID_Penambahan);
+							
+							$jmlHasilMutasi = 1;	
+							$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $addValueKptls + $nilaiPrlhnMutasiTambah;
+							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");	
 						}
 						
 						
@@ -28852,8 +28906,9 @@ if($dataArr!="")
 				$ketKondisi = "";
 			} 
 			$NamaKlmpk = $this->get_NamaKelompok($row->kodeKelompok);
-			$NamaSatker = $this->get_NamaSatker($row->kodeSatker);
+			
 			if($row->SatkerTujuan == $skpd){
+				$NamaSatker = $this->get_NamaSatker($row->SatkerTujuan);
 				//mutasi tambah
 				$nilaiPrlhn_tambah = $row->NilaiPerolehan;
 				$nilaiPrlhnFix_tambah = number_format($nilaiPrlhn_tambah,2,",",".");
@@ -28865,6 +28920,7 @@ if($dataArr!="")
 				$perolehanSubTotal_kurang = $perolehanSubTotal_kurang + $nilaiPrlhn_kurang;			
 			
 			}else {
+				$NamaSatker = $this->get_NamaSatker($row->SatkerAwal);
 				//mutasi tambah
 				$nilaiPrlhn_tambah = 0;
 				$nilaiPrlhnFix_tambah = number_format($nilaiPrlhn_tambah,2,",",".");
@@ -37443,6 +37499,18 @@ return $hasil_html;
 			}
 		}
 	return $NamaRwyt;
+	}
+	//buat kapitalisasi
+	public function get_NP_Aset_ID_Penambahan($Aset_ID_Penambahan){
+		$queryNpKp = "select NilaiPerolehan from aset where Aset_ID ='$Aset_ID_Penambahan' ";
+		
+		$resulNpKp=$this->retrieve_query($queryNpKp);
+		if($resulNpKp!=""){
+			foreach($resulNpKp as $valueNpKp){
+				$NPKptls=$valueNpKp->NilaiPerolehan;
+			}
+		}
+	return $NPKptls;
 	}
 	
 	public function get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){

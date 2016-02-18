@@ -64,8 +64,8 @@ for ($i = 0; $i < $count; $i++){
 	
 	$query = "SELECT noKontrak,noRegister,kodeKelompok,kodeSatker,Info,TglPerolehan,TglPembukuan,Tahun,NilaiPerolehan,Status_Validasi_Barang 
 			  from aset where {$query_noKontrak} {$query_tahun} {$query_satker} {$query_status} {$query_kodekelompok} order by kodeKelompok,noRegister asc";
-	echo $query; 
-	exit;
+	// echo $query; 
+	// exit;
 	$exe = mysql_query($query);
 	while ($data = mysql_fetch_object($exe))
 	{

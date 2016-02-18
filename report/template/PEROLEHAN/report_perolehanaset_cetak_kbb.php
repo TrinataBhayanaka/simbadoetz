@@ -50,8 +50,9 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-// pr($query);
+pr($query);
 $hit = count($query);
+// exit;
 if($kb == 'KB-B'){
 	$flag = 'B';
 }
@@ -73,11 +74,11 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 //retrieve html
 $html=$REPORT->retrieve_html_kb_b($resQuery,$gambar,$skpd_id);
 // exit;
-/*$count = count($html);
+$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
-	}*/
-// exit;
+	}
+exit;
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
