@@ -21,7 +21,7 @@ class BackgroundScript extends DB{
 	            'table'=>"tmp_penggunaanaset",
 	            'field'=>"*",
 	            'condition'=>" 1 ",
-	            'limit'=>10
+	            // 'limit'=>10
 	            );
 
 	    $res = $this->db->lazyQuery($sql,$debug);
