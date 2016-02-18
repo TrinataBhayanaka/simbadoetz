@@ -723,8 +723,12 @@ for($i=0;$i<2;$i++){
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan bangunan\n";
                      $kd_riwayat=7;
                  }
-                 
-                  if($kd_riwayat==2||$kd_riwayat==28){
+                 if($kd_riwayat==28){
+                     echo "Transfer kapitalisasi dijadikan sebagai transaksi koreksi \n";
+                     $kd_riwayat=7;
+                     
+                 }
+                  if($kd_riwayat==2){
                         $NilaiYgDisusutkan=$nb_buku_log+$selisih;
                         $penambahan_masa_manfaat=  overhaul($tmp_kode_log[0], $tmp_kode_log[1], $tmp_kode_log[2],$selisih, $DBVAR);
                         $Umur_Ekonomis_Final=$UmurEkonomis+$penambahan_masa_manfaat;
