@@ -69,13 +69,13 @@ if($tglcetak != ''){
 // pr($result);
 // exit;
 $html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak,$thnPejabat);
-/*$count = count($html);
+$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
-exit;*/
+exit;
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
