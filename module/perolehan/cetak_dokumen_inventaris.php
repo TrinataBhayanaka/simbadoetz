@@ -813,7 +813,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 									</div>
 								</div>
 							</li>
-							<li>
+							<!--<li>
 								<span class="span2">Kelompok</span>
 								<div class="input-append">
 										<input type="text" name="lda_kelompok4" id="lda_kelompok4" class="span5" readonly="readonly" value="" placeholder="(Semua Kelompok)">
@@ -821,15 +821,17 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 										<div class="inner" style="display:none;">
 										
 											<?php
-												$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
+												/*$alamat_simpul_kelompok="$url_rewrite/function/dropdown/radio_simpul_kelompok.php";
 												$alamat_search_kelompok="$url_rewrite/function/dropdown/radio_search_kelompok.php";
 												js_radiokelompok($alamat_simpul_kelompok, $alamat_search_kelompok,"lda_kelompok4","kelompok_id4",'kelompok4','ldakelompokfilter4');
 												$style="style=\"width:525px; height:220px; overflow:auto; border: 1px solid #dddddd;\"";
-												radiokelompok($style,"kelompok_id4",'kelompok4','ldakelompokfilter4');
+												radiokelompok($style,"kelompok_id4",'kelompok4','ldakelompokfilter4');*/
 											?>
 										</div>
 								</div>
-							</li>
+							</li>-->
+							<?php selectAset('kelompok_id4','235',true,false); ?>
+							<li>&nbsp;</li>
 							<?php selectAllSatker('kodeSatker10','255',true,false,false,true); ?>
 							<br />
 							<li>

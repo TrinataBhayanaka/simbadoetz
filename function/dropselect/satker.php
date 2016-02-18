@@ -553,7 +553,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 		}
 	</style>
 	<li>
-		<span class="<?=$span?>">Tahun Pembelian</span><?=$enter?>
+		<span class="<?=$span?>">Tahun Ruangan</span><?=$enter?>
 		<input type="text" name="tahun" class="span1 full" id="tahunRuangan" onchange="return newruangan();" <?=$status?>/><br>
 		<span class="<?=$span?>">Kode Ruangan</span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return editruang();"/>&nbsp;
