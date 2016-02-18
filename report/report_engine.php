@@ -28855,6 +28855,8 @@ if($dataArr!="")
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi Barang (B,KB,RB)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Akumulasi <br/> Penyusutan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Nilai <br/> Buku</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Berkurang<br/><hr>Bertambah</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">SKPD</td>
             </tr>
@@ -28886,6 +28888,8 @@ if($dataArr!="")
                 <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
                 <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
                 <td style=\"text-align:center; font-weight: bold; width: 72px;\">11</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">12</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">13</td>
             </tr>	
 		</thead>";
     }
@@ -28936,6 +28940,15 @@ if($dataArr!="")
 			$perolehanTotal_kurang = $perolehanTotal_kurang + $nilaiPrlhn_kurang;			
 			$perolehanTotal_tambah = $perolehanTotal_tambah + $nilaiPrlhn_tambah;	
 			
+			//get NIlai Buku dan AkumulasiPenyusutan
+			$GetNb_AP = $this->get_NbAP($row->Aset_ID);
+			$AkumulasiPenyusutan = number_format($GetNb_AP->AkumulasiPenyusutan,2,",",".");
+			if($GetNb_AP->NilaiBuku){
+				$NilaiBuku = number_format($GetNb_AP->NilaiBuku,2,",",".");
+			}else{
+				$NilaiBuku = number_format($row->NilaiPerolehan,2,",",".");
+			}
+			
             $body.="
                 <tr>
                     <td style=\"text-align:center;  width: 47px;\">$no</td>
@@ -28946,7 +28959,9 @@ if($dataArr!="")
 					<td style=\"text-align:center;  width: 120px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 					<td style=\"text-align:center;  width: 70px;\">$row->Material</td>
 					<td style=\"text-align:center;  width: 70px;\">$ketKondisi</td>
-					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix_kurang<br/><hr>$nilaiPrlhnFix_tambah</td>
+					<td style=\"text-align:right;  width: 70px;\">$AkumulasiPenyusutan</td>
+					<td style=\"text-align:right;  width: 70px;\">$NilaiBuku</td>
+					<td style=\"text-align:right;  width: 70px;\">$nilaiPrlhnFix_kurang<br/><hr>$nilaiPrlhnFix_tambah</td>
 					<td style=\"text-align:center;  width: 72px;\">$row->kodeSatker</td>
 					<td style=\"text-align:center;  width: 200px;\">$NamaSatker</td>
                 </tr>";
@@ -37476,6 +37491,20 @@ return $hasil_html;
 	
 	}
 	
+	public function get_NbAP($AsetId){
+		$query = "select AkumulasiPenyusutan, NilaiBuku from aset where Aset_ID ='$AsetId'";
+		
+		$result=$this->retrieve_query($query);
+		if($result !=""){
+			foreach($result as $valNbAP){
+				$Nilai=$valNbAP;
+			}
+		}
+	return $Nilai;
+	
+	}
+	
+	
 	public function get_NamaKelompok($kode){
 		$queryklmpk = "select Uraian from kelompok where kode ='$kode' ";
 		
@@ -38126,6 +38155,8 @@ return $hasil_html;
 		return $NamaRwyt;
 	}
      
+	 
+	 
 	public function format_tanggal_db3($tgl){
 	//30/06/2012
 		$temp=explode("-",$tgl);
