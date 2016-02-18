@@ -46,7 +46,7 @@ class RETRIEVE_REPORT extends DB {
      }
 
      public function daftar_barang_berdasarkan_sk_penghapusan($no_sk) {
-          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from penghapusanaset PA left join penghapusan P on 
+          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.NilaiBuku,A.Tahun,A.AkumulasiPenyusutan,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from penghapusanaset PA left join penghapusan P on 
 				P.Penghapusan_ID=PA.Penghapusan_ID 
                                                        left join Aset A on PA.Aset_ID=A.Aset_ID
                                                        where P.Penghapusan_ID='$no_sk' ";
@@ -72,7 +72,7 @@ class RETRIEVE_REPORT extends DB {
           return $dataArr;
      }
       public function daftar_barang_berdasarkan_usulan_penghapusan($no_usulan) {
-          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from usulanaset US left join usulan U on 
+          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.NilaiBuku,A.Tahun,A.AkumulasiPenyusutan,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from usulanaset US left join usulan U on 
         U.Usulan_ID=US.Usulan_ID 
                                                        left join Aset A on US.Aset_ID=A.Aset_ID
                                                        where U.Usulan_ID='$no_usulan' ";

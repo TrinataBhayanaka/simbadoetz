@@ -10,7 +10,7 @@ $id=$_SESSION['user_id'];//Nanti diganti
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-#This code provided by:
+#This code //provided by:
 #Andreas Hadiyono (andre.hadiyono@gmail.com)
 #Gunadarma University
 
@@ -27,7 +27,7 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="ast.Aset_ID";
-$aColumns = array('ast.Aset_ID','ast.Aset_ID','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+$aColumns = array('ast.Aset_ID','ast.kodeLokasi','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -43,7 +43,7 @@ $dataParam['page']=$_GET['page'];
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
-////pr($data);
+//////pr($data);
 //exit;
 $sLimit = "";
 if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
@@ -116,7 +116,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
                left join universitas U on U.kodeUniversitas=M.universitas_iduniversitas
                left join status S on S.idstatus=I.status_idstatus 
                left join jurusan J on J.idjurusan=M.jurusan_idjurusan 
-               left join prodi F on F.idprodi=M.prodi_idprodi
+               left join //prodi F on F.id//prodi=M.//prodi_id//prodi
                 $sWhere
 	$sOrder
 	$sLimit";*/
@@ -126,11 +126,11 @@ for ($i = 0; $i < count($aColumns); $i++) {
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
-//pr($dataParam);
+// //pr($dataParam);
 // list($dataSESSION,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam);	
 
 $dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($dataParam); 
-//pr($dataSESSION);
+////pr($dataSESSION);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
 
@@ -153,7 +153,7 @@ $sQuery = "
 //echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
-////pr($aResultTotal );
+//////pr($aResultTotal );
 $iTotal = $aResultTotal[0];
 
 
@@ -167,7 +167,7 @@ $output = array(
     "aaData" => array()
 );
 
-/////pr($output);
+///////pr($output);
 //exit;
 
 $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
@@ -175,9 +175,9 @@ $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 $POST['penghapusanfilter']=$POST;
     if($POST){
-      // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+      // ////////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-        // //////pr($valueSESSION['Aset_ID']);
+        // ////////pr($valueSESSION['Aset_ID']);
         if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
           // echo "stringnot";
           $data[]=$valueSESSION;
@@ -195,7 +195,7 @@ $no=$_GET['iDisplayStart']+1;
 					{
 foreach ($data as $key => $value)
 						{
-							// //pr($get_data_filter);
+							// ////pr($get_data_filter);
               $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[kodeSatker]);
 							if($value[kondisi]==2){
 								$kondisi="Rusak Ringan";
@@ -204,9 +204,9 @@ foreach ($data as $key => $value)
 							}elseif($value[kondisi]==1){
 								$kondisi="Baik";
 							}
-							// //pr($value[TglPerolehan]);
+							// ////pr($value[TglPerolehan]);
 							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-							// //pr($TglPerolehanTmp);
+							// ////pr($TglPerolehanTmp);
 							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
                                           
                              $row = array();
@@ -216,7 +216,7 @@ foreach ($data as $key => $value)
                              $row[]=$checkbox;
                              $row[]=$value['noRegister'] ;
                              $row[]=$value['noKontrak'];
-                             $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
+                             $row[]="{$value[kodeLokasi]}<br/>[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
                              $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                              $row[]=$TglPerolehan;
                              $row[]=number_format($value[NilaiPerolehan],4);

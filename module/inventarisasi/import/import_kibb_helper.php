@@ -93,6 +93,9 @@ echo "Updating log import\n";
 $sql = "UPDATE log_import SET totalPerolehan = '{$sum['sumnilai']}', status = 1 WHERE noKontrak = '{$datatmp['noKontrak']}'";
 $exec = $link->query($sql);
 
+$sql = "DELETE FROM apl_userasetlist WHERE aset_action = 'XLSIMPB'";
+$result = $link->query($sql);
+
 // echo "Commit data\n";
 // $command = "COMMIT;";
 // $exec = $link->query($command);

@@ -166,9 +166,10 @@ class DB
 	}
 	
 	function commit($dbuse=0)
-	{
+	{   
 		$command = "COMMIT;";
 		$result = $this->query($command) or die ($this->error('commit failed'));
+                $this->autocommit(1);
 		// mysql_commit();
 	}
 	
@@ -176,6 +177,7 @@ class DB
 	{
 		$command = "ROLLBACK;";
 		$result = $this->query($command) or die ($this->error('rollback failed'));
+                $this->autocommit(1);
 		// if (!$this->link){
 			// $this->link = $this->open_connection(0);
 		// }
