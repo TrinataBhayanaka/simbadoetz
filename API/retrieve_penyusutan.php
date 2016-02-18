@@ -62,6 +62,41 @@ class RETRIEVE_PENYUSUTAN extends RETRIEVE{
                }
 			   return $dataArr;
           }
+          
+            public function getDataPenyusutan_berjalan($id=NULL){
+               if ($id!="")
+                         $par="where id='$id'";
+               $query="select * from penyusutan_tahun_berjalan $par";
+			   $result = $this->query($query) or die($this->error());
+                 while ($data = $this->fetch_array($result))
+               {
+                       $dataArr[] = $data;
+               }
+			   return $dataArr;
+                 
+          }
+          public function getStatusPenyusutansatker_berjalan($par=NULL){
+				// pr($par);
+               if ($par!=""){
+                 $count =explode('.',$par);
+				 $hit = count($count);
+				 if($hit == 4){
+					 $par="where KodeSatker='$par'";
+				 }else{
+					 $par = "where KodeSatker like '$par%'";
+				 }
+			   }else{
+				$par = '';
+			   }		 
+               $query="select * from penyusutan_tahun_berjalan $par";
+               
+			   $result = $this->query($query) or die(mysql_error());//die($this->error());
+                 while ($data = $this->fetch_array($result))
+               {
+                       $dataArr[] = $data;
+               }
+			   return $dataArr;
+          }
 		  
 		   public function getNamaSatkercustome($kodeSatker){
 		   // pr($kodeSatker);
