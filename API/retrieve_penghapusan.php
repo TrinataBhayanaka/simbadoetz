@@ -10406,6 +10406,122 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         return $data;
         }
+
+        function cekdataPenghapusan($asetid,$post=false,$debug=false){
+            // pr($asetid);
+            // pr($post);
+            $sqlAset = array(
+                    'table'=>"Aset",
+                    'field'=>"Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,kondisi,Dihapus,NotUse,Tahun,StatusValidasi,Status_Validasi_Barang,TipeAset,fixPenggunaan",
+                    'condition' => "Aset_ID={$asetid}",
+                    );
+            $resAset = $this->db->lazyQuery($sqlAset,$debug);
+
+         $TableAbjadlist = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+
+         $table = $this->getTableKibAlias($TableAbjadlist[$resAset[0][TipeAset]]);
+// pr($table);
+                $tablelog="log_".$table[listTableOri];
+            $sqlKIB = array(
+                    'table'=>"{$table[listTableOri]}",
+                    'field'=>"Mesin_ID,Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,StatusValidasi,Status_Validasi_Barang,StatusTampil",
+                    'condition' => "Aset_ID={$asetid}",
+                    );
+            $resKIB = $this->db->lazyQuery($sqlKIB,$debug);
+
+            $sqlLOG= array(
+                    'table'=>"{$tablelog}",
+                    'field'=>"Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,StatusValidasi,Status_Validasi_Barang,changeDate,TglPerubahan,Kd_Riwayat,No_Dokumen",
+                    'condition' => "Aset_ID={$asetid} AND Kd_Riwayat='26'",
+                    );
+            $resLOG = $this->db->lazyQuery($sqlLOG,$debug);
+
+
+            $sqlHapusAset= array(
+                    'table'=>"penghapusanaset",
+                    'field'=>"*",
+                    'condition' => "Aset_ID={$asetid}",
+                    );
+            $resHapusAset = $this->db->lazyQuery($sqlHapusAset,$debug);
+// pr($resHapusAset);
+            // $sqlHapus= array(
+            //         'table'=>"penghapusan",
+            //         'field'=>"*",
+            //         'condition' => "Penghapusan_ID={$resHapusAset[0]['Penghapusan_ID']}",
+            //         );
+            // $resHapus = $this->db->lazyQuery($sqlHapus,$debug);
+
+            $sqlUsulAset= array(
+                    'table'=>"usulanaset",
+                    'field'=>"*",
+                    'condition' => "Aset_ID={$asetid}",
+                    );
+            $resUsulAset = $this->db->lazyQuery($sqlUsulAset,$debug);
+
+            // $sqlUsul= array(
+            //         'table'=>"usulan",
+            //         'field'=>"*",
+            //         'condition' => "Usulan_ID={$resHapus[0]['Usulan_ID']}",
+            //         );
+            // $resUsul = $this->db->lazyQuery($sqlUsul,$debug);
+
+
+            $data['ASET']=$resAset;
+            $data['KIB']=$resKIB;
+            $data['LOG']=$resLOG;
+            $data['PenghapusanAset']=$resHapusAset;
+            $data['Penghapusan']=$resHapus;
+            $data['Usulanaset']=$resUsulAset;
+            $data['Usulan']=$resUsul;
+
+// pr($post);
+
+            if($post){
+                // echo "<script>alert('masuk');</script>";
+                 $sqlAsetP = array(
+                        'table'=>'ASET',
+                        'field'=>"Dihapus=0,StatusValidasi=1,Status_Validasi_Barang=1,fixPenggunaan=1",
+                        'condition' => "Aset_ID='{$post[asetidpost]}'",
+                        );
+
+                $resAsetP = $this->db->lazyQuery($sqlAsetP,$debug,2);
+                $tableKIB=$table[listTableOri];
+                 $sqlKibP = array(
+                        'table'=>"{$tableKIB}",
+                        'field'=>"StatusValidasi=1,Status_Validasi_Barang=1,StatusTampil=1",
+                        'condition' => "Aset_ID='{$post[asetidpost]}'",
+                        );
+
+                $resKibP = $this->db->lazyQuery($sqlKibP,$debug,2);
+                $tablelog="log_".$table[listTableOri];
+                 $sqlLOGP = array(
+                        'table'=>"{$tablelog}",
+                        'field'=>"TglPerubahan='0000-00-00 00:00:00'",
+                        'condition' => "Aset_ID='{$post[asetidpost]}' AND Kd_Riwayat='26' ORDER BY log_id DESC LIMIT 1",
+                        );
+// pr($sqlLOGP);
+                $resLOGP = $this->db->lazyQuery($sqlLOGP,$debug,2);
+
+
+                 $sqlUsulAP = array(
+                        'table'=>'Usulanaset',
+                        'field'=>"StatusKonfirmasi='2'",
+                        'condition' => "Aset_ID='{$post[asetidpost]}' ",
+                        );
+
+                $resUsulAP = $this->db->lazyQuery($sqlUsulAP,$debug,2);
+
+                $query2="DELETE FROM penghapusanaset WHERE Aset_ID='{$post[asetidpost]}' ";
+
+                $exec2=$this->query($query2) or die($this->error());
+
+            }
+
+
+
+            return $data;
+
+        }
     
 }
 ?>
