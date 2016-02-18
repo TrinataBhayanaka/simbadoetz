@@ -335,7 +335,7 @@ $menu_id = 10;
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="TglPerolehan" id="tglPerolehan" required/>
+										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="TglPerolehan" value="<?=($kontrak[0]['tipeAset'] == '3')? $aset[0]['TglPerolehan'] : ''?>" required <?=($kontrak[0]['tipeAset'] == '3')? readonly : ''?>/>
 									</div>
 								</div>
 							</li>

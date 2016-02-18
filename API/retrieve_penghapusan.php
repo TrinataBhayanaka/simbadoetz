@@ -10315,7 +10315,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         }
 	  function getTableKibAlias($type=1)
         {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kdp');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
@@ -10324,7 +10324,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS kdp');
 
         $listTableField = array(
                         1=>'t.NoSertifikat',
@@ -10332,14 +10332,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         3=>'b.TglPakai',
                         4=>'j.Konstruksi,j.NoDokumen',
                         5=>'al.Pengarang,al.Penerbit,al.TahunTerbit,al.ISBN',
-                        6=>'k.NoSertifikat,k.TglSertifikat');
+                        6=>'kdp.NoSertifikat,kdp.TglSertifikat');
         $listTable = array(
                         1=>'tanah AS t',
                         2=>'mesin AS m',
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS kdp');
 
 
         $FieltableGeneral="{$listTableAlias[$type]}.Aset_ID,{$listTableAlias[$type]}.kodeKelompok,{$listTableAlias[$type]}.kodeSatker,{$listTableAlias[$type]}.kodeLokasi,{$listTableAlias[$type]}.noRegister,{$listTableAlias[$type]}.TglPerolehan,{$listTableAlias[$type]}.TglPembukuan,{$listTableAlias[$type]}.Status_Validasi_Barang,{$listTableAlias[$type]}.StatusTampil,{$listTableAlias[$type]}.Tahun,{$listTableAlias[$type]}.NilaiPerolehan,{$listTableAlias[$type]}.Alamat,{$listTableAlias[$type]}.Info,{$listTableAlias[$type]}.AsalUsul,{$listTableAlias[$type]}.kondisi,{$listTableAlias[$type]}.CaraPerolehan";
@@ -10363,7 +10363,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
         function getTableKibAliasFull($type=1)
         {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kdp');
         $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
 
         $listTable = array(
@@ -10372,7 +10372,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS kdp');
 
         $listTableField = array(
                         1=>'t.kodeLokasi,t.LuasTotal,t.LuasBangunan,t.LuasSekitar,t.LuasKosong,t.HakTanah,t.NoSertifikat,t.TglSertifikat',
@@ -10380,14 +10380,14 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         3=>'b.kodeLokasi,b.TglPakai,b.Konstruksi,b.Beton,b.JumlahLantai,b.LuasLantai,b.Dinding,b.Lantai,b.LangitLangit,b.Atap',
                         4=>'j.kodeLokasi,j.Konstruksi,j.Panjang,j.Lebar,j.NoDokumen,j.TglDokumen,j.StatusTanah,j.NoSertifikat,j.TglSertifikat,j.LuasJaringan',
                         5=>'al.kodeLokasi,al.Judul,al.AsalDaerah,al.Pengarang,al.Penerbit,al.Spesifikasi,al.TahunTerbit,al.ISBN,al.Material,al.Ukuran',
-                        6=>'k.kodeLokasi,k.Konstruksi,k.Beton,k.JumlahLantai,k.LuasLantai,k.TglMulai,k.StatusTanah,k.NoSertifikat,k.TglSertifikat');
+                        6=>'kdp.kodeLokasi,kdp.Konstruksi,kdp.Beton,kdp.JumlahLantai,kdp.LuasLantai,kdp.TglMulai,kdp.StatusTanah,kdp.NoSertifikat,kdp.TglSertifikat');
         $listTable = array(
                         1=>'tanah AS t',
                         2=>'mesin AS m',
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS kdp');
 
         $listTableOri = array(
                         1=>'tanah',
