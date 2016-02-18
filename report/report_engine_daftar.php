@@ -94,6 +94,7 @@ class report_engine_daftar extends report_engine {
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Nama Unit</td>
                          <td style=\"width:5%;text-align:center;font-weight:bold;\">Tahun</td>
                          <td style=\"width:10%;text-align:center;font-weight:bold;\">Kondisi</td>
+                         <td style=\"width:15%;text-align:center;font-weight:bold;\">Akumulasi <br/>Penyusutan</td>
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Nilai</td>
                          <td style=\"width:15%;text-align:center;font-weight:bold;\">Keterangan</td>
                </tr>
@@ -116,6 +117,7 @@ class report_engine_daftar extends report_engine {
                          <td style=\"width:20%;text-align:center\">{$NamaSatker}</td>
                          <td style=\"width:20%;text-align:center\">{$value[Tahun]}</td>
                          <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
+                         <td style=\"width:15%;text-align:right\">{$value[AkumulasiPenyusutan]}</td>
                          <td style=\"width:15%;text-align:right\">{$perolehan}</td>
                          <td style=\"width:15%\">{$value[Info]}</td>
                </tr>
@@ -128,8 +130,9 @@ class report_engine_daftar extends report_engine {
                <tr>
                          <td colspan=\"5\" style=\"text-align:right\">Jumlah</td>
                     
-                         <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
                          <td style=\"width:15%\"></td>
+                         <td style=\"width:15%\"></td>
+                         <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
                          <td style=\"width:15%\"></td>
                </tr>
              </tbody></table>";
