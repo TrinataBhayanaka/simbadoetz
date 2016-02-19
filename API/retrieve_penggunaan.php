@@ -488,17 +488,20 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
                 $res[] = $this->db->lazyQuery($sql,$debug);
             }    
-
+           
             if ($res){
                 foreach ($res as $key => $value) {
-                    
-                    foreach ($value as $keys => $val) {
-                        
-                        $asetidKib[$val['Aset_ID']] = $val;
+                    if ($value){
+                        foreach ($value as $keys => $val) {
+                            
+                            $asetidKib[$val['Aset_ID']] = $val;
+                        }
                     }
+                    
                 }
             }
 
+            if (!$asetidKib) return false;
             $tmpAsetid = array_keys($asetidKib);
 
             $implode = implode(',', $tipeAset);

@@ -28359,74 +28359,27 @@ $body="
 						
 						
 					}elseif($row->Kd_Riwayat == '28'){
-						/*$LastSatker = $row->SatkerTujuan;
-						$FirstSatker = $skpdfiltr;
 						
 						$kuantitas = 1;
-						// $nilaiAwalPerolehan = number_format($row->NilaiPerolehan_Awal,2,",",".");
-						$nilaiAwalPrlhn = $row->NilaiPerolehan_Awal;
-						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
-						if($LastSatker == $FirstSatker){
-							$jmlTambah = 1;
-							$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-							//kurang
-							$jmlKurang = 0;
-							$nilaiPrlhnMutasiKurang = 0;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							$ket = "tidak sama";
-							$jmlHasilMutasi = 1;	
-							$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $nilaiPrlhnMutasiTambah;
-							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
-						}else{
-							$jmlTambah = 0;
-							$nilaiPrlhnMutasiTambah = 0;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-							//kurang
-							$jmlKurang = 1;
-							$nilaiPrlhnMutasiKurang = $row->NilaiPerolehan;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							$ket = "sama";
-							$jmlHasilMutasi = 0;	
-							$nilaiPerolehanHasilMutasi = 0;
-							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
-						}*/
 						
-						$kuantitas = 1;
-						$nilaiAwalPrlhn = $row->NilaiPerolehan_Awal;
-						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
-						if($Aset_ID_Penambahan == 0){
-						//berkurang
-							$jmlTambah = 0;
-							$nilaiPrlhnMutasiTambah = 0;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-							//kurang
-							$jmlKurang = 1;
-							$nilaiPrlhnMutasiKurang = $row->NilaiPerolehan;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							
-							$jmlHasilMutasi = 0;	
-							$nilaiPerolehanHasilMutasi = 0;
-							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
-							
-						}elseif($Aset_ID_Penambahan != 0){
-						//bertambah
-							$jmlTambah = 1;
-							$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan;
-							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
-							//kurang
-							$jmlKurang = 0;
-							$nilaiPrlhnMutasiKurang = 0;
-							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
-							
-							//get value nilaiperolehan from Aset_ID_Penambahan
-							$addValueKptls = $this->get_NP_Aset_ID_Penambahan($row->Aset_ID_Penambahan);
-							
-							$jmlHasilMutasi = 1;	
-							$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiKurang + $addValueKptls + $nilaiPrlhnMutasiTambah;
-							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");	
-						}
+						//tambah
+						$jmlTambah = 1;
+						//get value nilaiperolehan from Aset_ID_Penambahan
+						$addValueKptls = $this->get_NP_Aset_ID_Penambahan($row->Aset_ID_Penambahan,$row->log_id);
 						
+						$nilaiAwalPrlhn = $addValueKptls;
+						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+						
+						$nilaiPrlhnMutasiTambah = $row->NilaiPerolehan;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						//kurang
+						$jmlKurang = 0;
+						$nilaiPrlhnMutasiKurang = 0;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
+						$jmlHasilMutasi = 1;	
+						$nilaiPerolehanHasilMutasi = $nilaiAwalPrlhn + $nilaiPrlhnMutasiTambah;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 						
 					}elseif($row->Kd_Riwayat == '26'){
 						// echo "MASUK PEMUSNAHAN PENGHAPUSAN";
@@ -28472,6 +28425,56 @@ $body="
 							$jmlHasilMutasi = 0;	
 							$nilaiPerolehanHasilMutasi = 0;
 							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+					}elseif($row->Kd_Riwayat == '30' && $row->StatusValidasi == '1' && $row->Status_Validasi_Barang == '1' && $row->StatusTampil == '1'){
+							//echo "reklas kurang";
+							// pr('reklas kurang');
+							
+							//reklas kurang
+							$kuantitas = 1;	
+							$nilaiAwalPrlhn = $row->NilaiPerolehan;
+							$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+							
+							//mutasi tambah
+							$valAdd = 0;
+							$jmlTambah = 0;
+							$nilaiPrlhnMutasiTambah = $valAdd;
+							$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+							
+							//mutasi kurang
+							$valSubst = $row->NilaiPerolehan;
+							$jmlKurang = 1;
+							$nilaiPrlhnMutasiKurang = $valSubst;
+							$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+							
+							//jumlah akhir
+							$jmlHasilMutasi = 0;	
+							$nilaiPerolehanHasilMutasi = 0;
+							$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+							
+					}elseif($row->Kd_Riwayat == '30' && $row->StatusValidasi == '0' && $row->Status_Validasi_Barang == '0' && $row->StatusTampil == '0'){
+						//reklas tambah
+						// pr('reklas tambah');
+						$kuantitas = 0;	
+						$nilaiAwalPrlhn = 0 ;
+						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+						
+						//mutasi tambah
+						$valAdd = $row->NilaiPerolehan;
+						$jmlTambah =  1;
+						$nilaiPrlhnMutasiTambah = $valAdd;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						
+						//mutasi kurang
+						$valSubst = 0;
+						$jmlKurang = 0;
+						$nilaiPrlhnMutasiKurang = $valSubst;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
+						//jumlah akhir
+						$jmlHasilMutasi = 1;	
+						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiTambah + $nilaiPrlhnMutasiKurang;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+					
 					}else{
 						// echo "OTHER";
 						$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
@@ -28855,6 +28858,8 @@ if($dataArr!="")
                 <td colspan=\"3\" rowspan=\"1\" style=\"text-align:center; font-weight: bold; width: 283px;\">Spesifikasi Barang</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 70px;\">Bahan</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi Barang (B,KB,RB)</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Akumulasi <br/> Penyusutan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Nilai <br/> Buku</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Berkurang<br/><hr>Bertambah</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">SKPD</td>
             </tr>
@@ -28886,6 +28891,8 @@ if($dataArr!="")
                 <td style=\"text-align:center; font-weight: bold; width: 70px;\">9</td>
                 <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
                 <td style=\"text-align:center; font-weight: bold; width: 72px;\">11</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">12</td>
+                <td style=\"text-align:center; font-weight: bold; width: 72px;\">13</td>
             </tr>	
 		</thead>";
     }
@@ -28936,6 +28943,15 @@ if($dataArr!="")
 			$perolehanTotal_kurang = $perolehanTotal_kurang + $nilaiPrlhn_kurang;			
 			$perolehanTotal_tambah = $perolehanTotal_tambah + $nilaiPrlhn_tambah;	
 			
+			//get NIlai Buku dan AkumulasiPenyusutan
+			$GetNb_AP = $this->get_NbAP($row->Aset_ID);
+			$AkumulasiPenyusutan = number_format($GetNb_AP->AkumulasiPenyusutan,2,",",".");
+			if($GetNb_AP->NilaiBuku){
+				$NilaiBuku = number_format($GetNb_AP->NilaiBuku,2,",",".");
+			}else{
+				$NilaiBuku = number_format($row->NilaiPerolehan,2,",",".");
+			}
+			
             $body.="
                 <tr>
                     <td style=\"text-align:center;  width: 47px;\">$no</td>
@@ -28946,7 +28962,9 @@ if($dataArr!="")
 					<td style=\"text-align:center;  width: 120px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 					<td style=\"text-align:center;  width: 70px;\">$row->Material</td>
 					<td style=\"text-align:center;  width: 70px;\">$ketKondisi</td>
-					<td style=\"text-align:center;  width: 70px;\">$nilaiPrlhnFix_kurang<br/><hr>$nilaiPrlhnFix_tambah</td>
+					<td style=\"text-align:right;  width: 70px;\">$AkumulasiPenyusutan</td>
+					<td style=\"text-align:right;  width: 70px;\">$NilaiBuku</td>
+					<td style=\"text-align:right;  width: 70px;\">$nilaiPrlhnFix_kurang<br/><hr>$nilaiPrlhnFix_tambah</td>
 					<td style=\"text-align:center;  width: 72px;\">$row->kodeSatker</td>
 					<td style=\"text-align:center;  width: 200px;\">$NamaSatker</td>
                 </tr>";
@@ -37476,6 +37494,20 @@ return $hasil_html;
 	
 	}
 	
+	public function get_NbAP($AsetId){
+		$query = "select AkumulasiPenyusutan, NilaiBuku from aset where Aset_ID ='$AsetId'";
+		
+		$result=$this->retrieve_query($query);
+		if($result !=""){
+			foreach($result as $valNbAP){
+				$Nilai=$valNbAP;
+			}
+		}
+	return $Nilai;
+	
+	}
+	
+	
 	public function get_NamaKelompok($kode){
 		$queryklmpk = "select Uraian from kelompok where kode ='$kode' ";
 		
@@ -37501,9 +37533,34 @@ return $hasil_html;
 	return $NamaRwyt;
 	}
 	//buat kapitalisasi
-	public function get_NP_Aset_ID_Penambahan($Aset_ID_Penambahan){
-		$queryNpKp = "select NilaiPerolehan from aset where Aset_ID ='$Aset_ID_Penambahan' ";
+	public function get_NP_Aset_ID_Penambahan($Aset_ID_Penambahan,$log_id){
 		
+		$queryceckTipe = "select TipeAset from aset where Aset_ID = '{$Aset_ID_Penambahan}'";
+		// pr($queryceckTipe);
+		$resulTipe= $this->retrieve_query($queryceckTipe);
+		if($resulTipe){
+			foreach($resulTipe as $valueTipe){
+				$TipeAset=$valueTipe->TipeAset;
+			}
+		}
+		if($TipeAset == 'A'){
+			$tabel = 'log_tanah';
+		}elseif($TipeAset == 'B'){
+			$tabel = 'log_mesin';
+		}elseif($TipeAset == 'C'){
+			$tabel = 'log_bangunan';
+		}elseif($TipeAset == 'D'){
+			$tabel = 'log_jaringan';
+		}elseif($TipeAset == 'E'){
+			$tabel = 'log_asetlain';
+		}elseif($TipeAset == 'F'){
+			$tabel = 'log_kdp';
+		}
+		
+		$queryNpKp = "select NilaiPerolehan from {$tabel} where Aset_ID ='$Aset_ID_Penambahan' and Kd_Riwayat = '28' 
+					  and action like 'Aset Penambahan kapitalisasi Mutasi%' 
+					  and log_id < {$log_id} order by log_id desc limit 1";
+		// pr($queryNpKp);
 		$resulNpKp=$this->retrieve_query($queryNpKp);
 		if($resulNpKp!=""){
 			foreach($resulNpKp as $valueNpKp){
@@ -38126,6 +38183,8 @@ return $hasil_html;
 		return $NamaRwyt;
 	}
      
+	 
+	 
 	public function format_tanggal_db3($tgl){
 	//30/06/2012
 		$temp=explode("-",$tgl);
