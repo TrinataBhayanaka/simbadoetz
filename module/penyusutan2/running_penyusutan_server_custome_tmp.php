@@ -716,21 +716,22 @@ for($i=0;$i<2;$i++){
                  if($kib=="B" && $selisih<300000 )
                  {
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan mesin\n";
-                     $kd_riwayat=7;
+                     $kd_riwayat=21;
                  }
-                 if($kib=="C" && $selisih<100000000 )
+                 if($kib=="C" && $selisih<10000000 )
                  {
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan bangunan\n";
-                     $kd_riwayat=7;
+                     $kd_riwayat=21;
                  }
                  if($kd_riwayat==28){
                      echo "Transfer kapitalisasi dijadikan sebagai transaksi koreksi \n";
-                     $kd_riwayat=7;
+                     $kd_riwayat=21;
                      
                  }
                   if($kd_riwayat==2){
                         $NilaiYgDisusutkan=$nb_buku_log+$selisih;
-                        $penambahan_masa_manfaat=  overhaul($tmp_kode_log[0], $tmp_kode_log[1], $tmp_kode_log[2],$selisih, $DBVAR);
+                        $persen=($selisih/$Nilai_Perolehan_awal_log)*100;
+                        $penambahan_masa_manfaat=  overhaul($tmp_kode_log[0], $tmp_kode_log[1], $tmp_kode_log[2],$persen, $DBVAR);
                         $Umur_Ekonomis_Final=$UmurEkonomis+$penambahan_masa_manfaat;
                         $MasaManfaat_Final=$MasaManfaat+$penambahan_masa_manfaat;
                         if($Umur_Ekonomis_Final>$MasaManfaat){
@@ -819,9 +820,11 @@ for($i=0;$i<2;$i++){
                          //akhir update log penyusutan
                          
                      }else if($kd_riwayat==7||$kd_riwayat==21){
+                         
+                         list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                       
                          $PenyusutanPerTahun=$NP/$MasaManfaat;
                          $rentang_tahun_penyusutan = ($newTahun-$Tahun)+1;
-                       //  list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
                          $AkumulasiPenyusutan=$rentang_tahun_penyusutan*$PenyusutanPerTahun;
                          $NilaiBuku=$NP-$AkumulasiPenyusutan;
                          $Sisa_Masa_Manfaat=$MasaManfaat-$rentang_tahun_penyusutan;
@@ -865,6 +868,7 @@ for($i=0;$i<2;$i++){
                               echo "Aset_ID=$Aset_ID\n"
                                       . "kodeKelompok \t=$kodeKelompok_log \n"
                                       . "NilaiPerolehan \t=$NP \n"
+                                      . "NilaiPerolehan Awal \t=$Nilai_Perolehan_awal_log\n"
                                       . "TahunPerolehan \t=$Tahun\n"
                                       . "MasaManfaat \t=$MasaManfaat\n"
                                       . "AkumulasiPenyusutan \t=$AkumulasiPenyusutan_hasil\n"
@@ -1009,9 +1013,12 @@ function cek_masamanfaat($kd_aset1, $kd_aset2, $kd_aset3, $DBVAR) {
     return $masa_manfaat;
 }
 function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
+    $kd_aset1=intval($kd_aset1);
+    $kd_aset2=intval($kd_aset2);
+    $kd_aset3=intval($kd_aset3);
     $query = "select * from re_masamanfaat_tahun_berjalan where kd_aset1='$kd_aset1' "
             . " and kd_aset2='$kd_aset2' and kd_aset3='$kd_aset3' ";
-    //echo $query;
+    echo "$query\n\n";
     $result = $DBVAR->query($query) or die($query);
     while ($row = $DBVAR->fetch_object($result)) {
         $masa_manfaat = $row->masa_manfaat;
@@ -1028,34 +1035,34 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
     //echo "<pre> ";
    // print($prosentase3);
     if($prosentase4!=0){
-      //  echo "masuk11";
+        echo " masuk 11 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
       if($persen >$prosentase4){
-          //echo "0 =4";
+          echo "0 =4";
           $hasil=$penambahan4;
       }else if($persen>$prosentase2 && $persen <=$prosentase3) {
-          //echo "0 =3";
+          echo "0 =3";
           $hasil=$penambahan3;
       }
       else if($persen>$prosentase1 && $persen <=$prosentase2) {
-           //echo "0 =2";
+          echo "0 =2";
           $hasil=$penambahan2;
       }
       else if($persen<=$prosentase1) {
-          // echo "0 =1";
+          echo "0 =1";
           $hasil=$penambahan1;
       }
     }else{
-      //  echo " $prosentase1 $prosentase2 $prosentase3 $prosentase4 ";
+       echo " masuk 22 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
          if($persen >$prosentase3){
-              //echo "1 =3";
+              echo "1 =3";
               
           $hasil=$penambahan3;
       }else if($persen>$prosentase1 && $persen <=$prosentase2) {
-         // echo "1 =2 ";
+         echo "1 =2 ";
           $hasil=$penambahan2;
       }
     else if($persen<=$prosentase1 ) {
-          //echo "1 = 5 ";
+          echo "1 = 5 ";
           $hasil=$penambahan1;
       }
         

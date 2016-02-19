@@ -188,6 +188,8 @@ $head = "
 		</head>
                ";
 
+               $tmp_kode_satker="";
+               $count=0;
                foreach ($dataArr as $key => $value) {
                     $perolehan = number_format($value[NilaiPerolehan], 2, ",", ".");
                     $uraian = $value[Uraian];
@@ -202,8 +204,16 @@ $head = "
                     $Total = number_format($value[Total], 2, ",", ".");
                     $kodeSatker = $value[kodeSatker];
                     $Satker = $value[Satker];
-                    list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($kodeSatker,"1");
+                    if($count==0)
+                    {
+                      $tmp_kode_satker=$kodeSatker;
+                      list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($kodeSatker,"1");
                     
+                    }
+                    if($count!=0||$tmp_kode_satker!=$kodeSatker){
+                        list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($kodeSatker,"1");
+                    }
+                    $count++;
                     $footer="<br/><br/><table>
                                         <tr>
                                         <td style='width:70%;'></td>

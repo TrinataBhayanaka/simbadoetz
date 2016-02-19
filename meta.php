@@ -36,6 +36,7 @@ if ($u_sess) $isLogin = true;
 		<script src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.js"></script>
 		<script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite/"; ?>js/pace.min.js"></script>
 		 <script>
+
 			$(function() {
 			$( "#datepicker" ).datepicker({ 
 				format: 'yyyy-mm-dd',
@@ -69,8 +70,9 @@ if ($u_sess) $isLogin = true;
 			});
 			initTableCheckable ();
 
-			 $('[data-toggle="popover"]').popover();
 			});
+			
+
 		</script>
 		<script type="text/javascript" charset="utf-8">
 			function updDataCheckbox(item){
@@ -163,6 +165,7 @@ if ($u_sess) $isLogin = true;
 				
 
 			} );
+
 		</script>
 		
 		<!--<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr.js"></script>             
@@ -281,6 +284,7 @@ if ($u_sess) $isLogin = true;
 		});
 
 		});
+		
 </script>
 </head>
 <body>
