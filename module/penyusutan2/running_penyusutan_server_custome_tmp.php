@@ -868,6 +868,7 @@ for($i=0;$i<2;$i++){
                               echo "Aset_ID=$Aset_ID\n"
                                       . "kodeKelompok \t=$kodeKelompok_log \n"
                                       . "NilaiPerolehan \t=$NP \n"
+                                      . "NilaiPerolehan Awal \t=$Nilai_Perolehan_awal_log\n"
                                       . "TahunPerolehan \t=$Tahun\n"
                                       . "MasaManfaat \t=$MasaManfaat\n"
                                       . "AkumulasiPenyusutan \t=$AkumulasiPenyusutan_hasil\n"
