@@ -101,12 +101,15 @@ class RETRIEVE_REPORT extends DB {
      public function daftar_pengadaan_berdasarkan_skpd($skpd,$tglPerolehanAwal,$tglPerolehanAkhir){
           $query="select K.Uraian, A.info,A.kodeKelompok,A.kodeSatker, A.noKontrak,"
                   . "  Sum(NilaiPerolehan) as Total,Sum(Kuantitas) as Jumlah,NilaiPerolehan as Satuan"
-                  . "    from aset A  left join kelompok K on K.Kode=A.kodeKelompok "
+                  . "    from aset A  left join kelompok K on K.Kode=A.kodeKelompok"
+                  . "  left join kontrak Kon on Kon.noKontrak=A.noKontrak "
                   . "where A.kodeSatker like '$skpd%' and A.TglPerolehan>='$tglPerolehanAwal'"
-                              . " and TglPerolehan<='$tglPerolehanAkhir'  and A.noKontrak is not null and A.StatusValidasi=1 "
+                              . " and TglPerolehan<='$tglPerolehanAkhir'  "
+                  . "  and kon.tglKontrak>='$tglPerolehanAwal' and kon.tglKontrak<='$tglPerolehanAkhir'"
+                  . "  and A.noKontrak is not null and A.StatusValidasi=1 "
                               . " group by A.kodeSatker,A.kodeKelompok,A.noKontrak";
-         //echo $query;
-         //exit();
+        //echo $query;
+        //exit();
           $result = $this->query($query) or die($this->error());
           $check = $this->num_rows($result);
           while ($data = $this->fetch_array($result)) {
