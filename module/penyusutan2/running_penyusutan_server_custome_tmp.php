@@ -824,7 +824,7 @@ for($i=0;$i<2;$i++){
                          
                          list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
                        
-                         $PenyusutanPerTahun=$NP/$MasaManfaat;
+                         $PenyusutanPerTahun=round($NP/$MasaManfaat);
                          $rentang_tahun_penyusutan = ($newTahun-$Tahun)+1;
                          $AkumulasiPenyusutan=$rentang_tahun_penyusutan*$PenyusutanPerTahun;
                          $NilaiBuku=$NP-$AkumulasiPenyusutan;
