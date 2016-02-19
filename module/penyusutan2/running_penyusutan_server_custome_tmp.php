@@ -1031,7 +1031,7 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
     //echo "<pre> ";
    // print($prosentase3);
     if($prosentase4!=0){
-        echo "masuk11\n";
+        echo " masuk 11 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
       if($persen >$prosentase4){
           echo "0 =4";
           $hasil=$penambahan4;
@@ -1048,7 +1048,7 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
           $hasil=$penambahan1;
       }
     }else{
-       echo " masuk 22$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
+       echo " masuk 22 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
          if($persen >$prosentase3){
               echo "1 =3";
               
