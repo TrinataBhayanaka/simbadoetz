@@ -1031,34 +1031,34 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
     //echo "<pre> ";
    // print($prosentase3);
     if($prosentase4!=0){
-      //  echo "masuk11";
+        echo "masuk11\n";
       if($persen >$prosentase4){
-          //echo "0 =4";
+          echo "0 =4";
           $hasil=$penambahan4;
       }else if($persen>$prosentase2 && $persen <=$prosentase3) {
-          //echo "0 =3";
+          echo "0 =3";
           $hasil=$penambahan3;
       }
       else if($persen>$prosentase1 && $persen <=$prosentase2) {
-           //echo "0 =2";
+          echo "0 =2";
           $hasil=$penambahan2;
       }
       else if($persen<=$prosentase1) {
-          // echo "0 =1";
+          echo "0 =1";
           $hasil=$penambahan1;
       }
     }else{
-      //  echo " $prosentase1 $prosentase2 $prosentase3 $prosentase4 ";
+       echo " masuk 22$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
          if($persen >$prosentase3){
-              //echo "1 =3";
+              echo "1 =3";
               
           $hasil=$penambahan3;
       }else if($persen>$prosentase1 && $persen <=$prosentase2) {
-         // echo "1 =2 ";
+         echo "1 =2 ";
           $hasil=$penambahan2;
       }
     else if($persen<=$prosentase1 ) {
-          //echo "1 = 5 ";
+          echo "1 = 5 ";
           $hasil=$penambahan1;
       }
         
