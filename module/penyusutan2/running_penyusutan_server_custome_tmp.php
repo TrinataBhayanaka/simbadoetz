@@ -778,7 +778,7 @@ for($i=0;$i<2;$i++){
                                             WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan_temp' ";
                             $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());;
                          //update log penyusutan
-                         log_penyusutan($Aset_ID, $tableKib, 50,$newTahun, $data_log, $DBVAR);
+                         log_penyusutan($Aset_ID, $tableKib, 51,$newTahun, $data_log, $DBVAR);
                          
                          echo "Kapitalisasi\n Aset_ID=$Aset_ID\n"
                                  . "kodeKelompok \t=$kodeKelompok_log \n"
@@ -864,7 +864,7 @@ for($i=0;$i<2;$i++){
                                                WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan_temp' ";
                                $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());;
                             //update log penyusutan
-                            log_penyusutan($Aset_ID, $tableKib, 50,$newTahun, $data_log, $DBVAR);
+                            log_penyusutan($Aset_ID, $tableKib, 52,$newTahun, $data_log, $DBVAR);
                             //akhir update log penyusutan
                               echo "Aset_ID=$Aset_ID\n"
                                       . "kodeKelompok \t=$kodeKelompok_log \n"

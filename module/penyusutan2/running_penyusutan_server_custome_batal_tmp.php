@@ -585,7 +585,7 @@ while($Data = $DBVAR->fetch_array($ExeQuery)){
 				}
 				$action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
 				// $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
-				$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50')  and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' ";
+				$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50','51','52')  and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' ";
 				$exeQueryLog = $DBVAR->query($QueryLog);
                                 
                                 $QueryKib	  = "UPDATE $tableLog SET MasaManfaat = '{$MasaManfaat_Awal}',
