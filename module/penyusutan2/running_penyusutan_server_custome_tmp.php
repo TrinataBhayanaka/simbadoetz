@@ -718,7 +718,7 @@ for($i=0;$i<2;$i++){
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan mesin\n";
                      $kd_riwayat=21;
                  }
-                 if($kib=="C" && $selisih<100000000 )
+                 if($kib=="C" && $selisih<10000000 )
                  {
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan bangunan\n";
                      $kd_riwayat=21;
