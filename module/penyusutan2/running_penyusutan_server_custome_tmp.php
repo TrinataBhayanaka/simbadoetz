@@ -1014,7 +1014,7 @@ function cek_masamanfaat($kd_aset1, $kd_aset2, $kd_aset3, $DBVAR) {
 function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
     $query = "select * from re_masamanfaat_tahun_berjalan where kd_aset1='$kd_aset1' "
             . " and kd_aset2='$kd_aset2' and kd_aset3='$kd_aset3' ";
-    //echo $query;
+    echo "$query\n\n";
     $result = $DBVAR->query($query) or die($query);
     while ($row = $DBVAR->fetch_object($result)) {
         $masa_manfaat = $row->masa_manfaat;
