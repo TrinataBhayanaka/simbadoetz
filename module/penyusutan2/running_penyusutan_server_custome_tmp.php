@@ -730,6 +730,7 @@ for($i=0;$i<2;$i++){
                  }
                   if($kd_riwayat==2){
                         $NilaiYgDisusutkan=$nb_buku_log+$selisih;
+                        $persen=($selisih/$Nilai_Perolehan_awal_log)*100;
                         $penambahan_masa_manfaat=  overhaul($tmp_kode_log[0], $tmp_kode_log[1], $tmp_kode_log[2],$selisih, $DBVAR);
                         $Umur_Ekonomis_Final=$UmurEkonomis+$penambahan_masa_manfaat;
                         $MasaManfaat_Final=$MasaManfaat+$penambahan_masa_manfaat;
