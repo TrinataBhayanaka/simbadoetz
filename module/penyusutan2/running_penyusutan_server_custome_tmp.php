@@ -1090,6 +1090,7 @@ function log_penyusutan($Aset_ID,$tableKib,$Kd_Riwayat,$tahun,$Data,$DBVAR){
 	$sign = "'"; 
         $AddField = "action,changeDate,TglPerubahan,Kd_Riwayat,NilaiPerolehan_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,PenyusutanPerTahun_Awal";
         $action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
+        $TglPerubahan="$tahun-12-31";
         $changeDate = date('Y-m-d');
         $NilaiPerolehan_Awal = $Data['NilaiPerolehan_Awal'];
         if($NilaiPerolehan_Awal ==""||$NilaiPerolehan_Awal ==0){
