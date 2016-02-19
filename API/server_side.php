@@ -17,10 +17,6 @@ class ServerSide{
 
 		$API = $this->loadAPI($data['APIHelper']);
 
-		// $dataParam['jenisaset'][0]=$data['jenisaset'];
-		// if($data['jenisaset']=="2")$merk="m.Merk";
-		// else $merk="";
-
 		$aColumns = $data['searchField'];
 
 		/* Indexed column (used for fast and accurate table cardinality) */
@@ -36,21 +32,11 @@ class ServerSide{
 			}
 		}
 
-		// pr($data);
-		// $dataParam['nokontrak'] =$data['nokontrak'];
-		// $dataParam['jenisaset'] =$data['jenisaset'];
-		// $dataParam['kodeSatker'] =$data['kodeSatker'];
-		// $dataParam['statusaset'] =$data['statusaset'];
-		// $dataParam['kd_tahun'] =$data['kd_tahun'];
-		// $dataParam['page'] =$data['page'];
-		// pr($dataParam['page']);
-
 		$sLimit = "";
 		if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
 		     $sLimit = " " . intval($_GET['iDisplayStart']) . ", " .
 		             intval($_GET['iDisplayLength']);
 		}
-
 
 		// Ordering
 		 
@@ -262,7 +248,7 @@ class ServerSide{
 				
 				case 'detail':
 					return "<a href=$data[url]>
-						   <input type='button' name='Lanjut' class='btn' value='Lihat Histori' >
+						   <input type='button' name='Lanjut' class='btn' value='Lihat Riwayat' >
 						</a>";
 					break;
 				default:
