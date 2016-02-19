@@ -716,16 +716,16 @@ for($i=0;$i<2;$i++){
                  if($kib=="B" && $selisih<300000 )
                  {
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan mesin\n";
-                     $kd_riwayat=7;
+                     $kd_riwayat=21;
                  }
                  if($kib=="C" && $selisih<100000000 )
                  {
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan bangunan\n";
-                     $kd_riwayat=7;
+                     $kd_riwayat=21;
                  }
                  if($kd_riwayat==28){
                      echo "Transfer kapitalisasi dijadikan sebagai transaksi koreksi \n";
-                     $kd_riwayat=7;
+                     $kd_riwayat=21;
                      
                  }
                   if($kd_riwayat==2){
@@ -819,9 +819,11 @@ for($i=0;$i<2;$i++){
                          //akhir update log penyusutan
                          
                      }else if($kd_riwayat==7||$kd_riwayat==21){
+                         
+                         list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                       
                          $PenyusutanPerTahun=$NP/$MasaManfaat;
                          $rentang_tahun_penyusutan = ($newTahun-$Tahun)+1;
-                       //  list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
                          $AkumulasiPenyusutan=$rentang_tahun_penyusutan*$PenyusutanPerTahun;
                          $NilaiBuku=$NP-$AkumulasiPenyusutan;
                          $Sisa_Masa_Manfaat=$MasaManfaat-$rentang_tahun_penyusutan;
