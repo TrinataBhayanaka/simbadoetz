@@ -8602,7 +8602,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $res1 = $this->db->lazyQuery($sql1,$debug,2);
 
                             foreach ($Aset_IDtmp as $key => $value) {
-                                    logFile('log data penghapusan, Aset_ID ='.$key);
+                                    logFile('log data penghapusan, Aset_ID ='.$key,'penghapusan.txt');
                                     $this->db->logItHPS($tabel=array($value), $Aset_ID=$key, 26,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus]);
                                 }
                     
@@ -8731,7 +8731,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $res1 = $this->db->lazyQuery($sql1,$debug,2);
 
                             foreach ($Aset_IDtmp as $key => $value) {
-                                    logFile('log data penghapusan, Aset_ID ='.$key);
+                                    logFile('log data penghapusan, Aset_ID ='.$key,'penghapusan.txt');
                                     $this->db->logItHPS($tabel=array($value), $Aset_ID=$key, 27,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus]);
                                 }
                     
@@ -8866,7 +8866,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 // //////////////////////////////////////pr($sql1);
                                 $res1As = $this->db->lazyQuery($sql1As,$debug,2);
 
-                                     logFile('log data penghapusan, Aset_ID ='.$asetid[Aset_ID]);
+                                     logFile('log data penghapusan, Aset_ID ='.$asetid[Aset_ID],'penghapusan.txt');
                                     $this->db->logItHPS($tabel=array($tabel), $Aset_ID=$asetid[Aset_ID], 7,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus],$aset_idNilai);
 
                                  $sqlUsulan_valid = array(
@@ -9188,7 +9188,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
 
                                  foreach ($asetid9 as $key => $value) {
-                                    logFile('log data penghapusan, Aset_ID ='.$key);
+                                    logFile('log data penghapusan, Aset_ID ='.$key,'penghapusan.txt');
                                     $this->db->logItHPS($tabel=array($value), $Aset_ID=$key, 7,$resHPS[0][NoSKHapus],$resHPS[0][TglHapus],$asetid[nilaiPerolehan]);
                                 }
 

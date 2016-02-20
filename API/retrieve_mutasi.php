@@ -1100,7 +1100,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             'table'=>"mutasiaset AS ma",
             'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, (SELECT NamaSatker FROM satker WHERE kode = ma.SatkerAwal LIMIT 1) AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
             'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID DESC",
-            'limit'=>"{$paging}, 100",
+            //'limit'=>"{$paging}, 100",
             );
 
         $result = $this->db->lazyQuery($sqlSelect,$debug);
