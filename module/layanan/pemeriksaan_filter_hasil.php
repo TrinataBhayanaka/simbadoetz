@@ -123,7 +123,7 @@ $par_data_table= "data=".encode($dataParam);
 			<div class="detailRight">
 				<ul>
 					<li>
-						<a href="<?php echo "$url_rewrite/module/layanan/lihat_aset_filter.php?pid=1"; ?>">
+						<a href="<?php echo "$url_rewrite/module/layanan/pemeriksaan_filter.php"; ?>">
 						   <input type="button" name="Lanjut" class="btn" value="Kembali ke halaman utama : Cari aset" >
 						</a>
 					</li>
