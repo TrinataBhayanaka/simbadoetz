@@ -21,6 +21,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 		<?php
 	}
 	// pr($data);
+	$rollbackID = array(28,21,1);
 ?>
 	
 	<!-- End Sql -->
@@ -40,7 +41,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 
 		<section class="formLegend">
 			
-		<?php $HELPER_FILTER->back($url_rewrite.'/module/layanan/lihat_aset_daftar.php')?>
+		<?php $HELPER_FILTER->back($url_rewrite.'/module/layanan/pemeriksaan_filter_hasil.php?pid=1')?>
 
 			<div class="detailLeft">
 				<ul>
@@ -113,8 +114,10 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<td><?=$value['TglPerubahan']?></td>
 						<td><?=$value['Info']?></td>
 						<td>
+							<?php if (in_array($value['Kd_Riwayat'], $rollbackID)):?>
 							<!-- <a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=2"?>'><input class="btn btn-warning" type="button" value="Edit"></a> -->
 							<a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}"?>'><input class="btn btn-danger" type="button" value="Rollback"></a>
+							<?php endif;?>
 						</td>
 					</tr>
 				<?php
