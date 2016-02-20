@@ -81,7 +81,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 								  <li role="presentation" id="kapital"><a href="javascript:void(0)" onclick="return option('kapital');">Kapitalisasi</a></li>
 								  <li role="presentation" id="nilai"><a href="javascript:void(0)" onclick="return option('nilai');">Koreksi Nilai</a></li>
 								  <li role="presentation" id="kondisi"><a href="javascript:void(0)" onclick="return option('kondisi');">Rubah Kondisi</a></li>
-								  <li role="presentation" id="koreksi"><a href="javascript:void(0)" onclick="return option('koreksi');">Koreksi Aset</a></li>
+								  <li role="presentation" id="koreksi"><a href="javascript:void(0)" onclick="return option('koreksi');">Reklas</a></li>
 								</ul>
 							</span>
 						</li>
@@ -610,7 +610,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$("#rubahkondisi,#koreksinilai,#ubahkapitalisasi,#rubahdata").attr('disabled','disabled');
 			$(".well h2").html("Koreksi Aset");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", true);
-			$(".well p").html("Koreksi data aset yang digunakan khusus untuk melakukan perubahan seluruh data aset.");
+			$(".well p").html("Koreksi data aset khusus untuk melakukan <b>Reklasifikasi</b> barang. Pergunakan menu ini khusus hanya untuk melakukan reklas, jika bukan dilarang menggunakan menu ini!!");
 		}
 	}
 </script>

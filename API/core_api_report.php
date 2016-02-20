@@ -1134,7 +1134,7 @@ class core_api_report extends DB {
 												from 
 													tanahView as T,kelompok as K
 												where
-													T.kodeKelompok=K.Kode  and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
+													T.kodeKelompok=K.Kode  
 													and $parameter_sql
 												group by T.Aset_ID
 												order by 
@@ -1150,7 +1150,7 @@ class core_api_report extends DB {
 													mesin_ori as M,kelompok as K 
 												where 
 													M.kodeKelompok=K.Kode  
-													 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and $parameter_sql
+													and $parameter_sql
 												order by 
 													M.Aset_ID,M.kodeKelompok,M.kodeSatker $limit";
 										
@@ -1165,7 +1165,7 @@ class core_api_report extends DB {
 											bangunan_ori as B,kelompok as K  
 											where
 											B.kodeKelompok = K.Kode 
-											 and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 
+											 
 											and $parameter_sql
 											order by
 												B.Aset_ID,B.kodeKelompok,B.kodeSatker $limit";
@@ -1180,7 +1180,7 @@ class core_api_report extends DB {
 											jaringan_ori as J,kelompok as K  
 											where
 											J.kodeKelompok = K.Kode 
-											 and J.Status_Validasi_Barang =1 and J.StatusTampil =1 
+											 
 											and $parameter_sql
 											order by 
 												J.Aset_ID,J.kodeKelompok,J.kodeSatker $limit";
@@ -1195,7 +1195,7 @@ class core_api_report extends DB {
 											asetlain_ori as AL,kelompok as K  
 											where
 											AL.kodeKelompok = K.Kode 
-											 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 
+											 
 											and $parameter_sql
 											order by 
 												AL.Aset_ID,AL.kodeKelompok,AL.kodeSatker $limit";
@@ -1210,7 +1210,7 @@ class core_api_report extends DB {
 											kdp_ori as KDPA,kelompok as K  
 											where
 											KDPA.kodeKelompok = K.Kode  
-											 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+											 
 											and $parameter_sql
 											order by 
 												KDPA.Aset_ID,KDPA.kodeKelompok,KDPA.kodeSatker $limit";
@@ -4924,9 +4924,9 @@ class core_api_report extends DB {
 										and (a.NilaiPerolehan < 10000000)
 										group by a.kodeKelompok";
 						}
-						echo $queryok ; 	
-						echo "<br>";
-						echo "<br>";
+						// echo $queryok ; 	
+						// echo "<br>";
+						// echo "<br>";
 						// exit;
 						
 						
@@ -6073,8 +6073,8 @@ class core_api_report extends DB {
 		//reklas (berkurang)
 		$paramlogReklasKurang = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						   AND l.Kd_Riwayat = '30'  and l.$paramSatker 
-						   and t.StatusValidasi = 0 and t.Status_Validasi_Barang = 0 and t.StatusTampil = 0
-						  order by l.Aset_ID ASC";
+						   and t.StatusValidasi = 1 and t.Status_Validasi_Barang = 1 and t.StatusTampil = 1
+						   order by l.Aset_ID ASC";
 		
 		$log_tanah_reklas_kurang ="select l.* from log_tanah as l 
 							inner join tanah as t on t.Aset_ID = l.Aset_ID
@@ -6103,7 +6103,7 @@ class core_api_report extends DB {
 		//reklas (bertambah)			
 		$paramlogReklasTambah = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						   AND l.Kd_Riwayat = '30'  and l.$paramSatker 
-						   and t.StatusValidasi = 1 and t.Status_Validasi_Barang = 1 and t.StatusTampil = 1
+						   and t.StatusValidasi = 0 and t.Status_Validasi_Barang = 0 and t.StatusTampil = 0
 						  order by l.Aset_ID ASC";
 		
 		$log_tanah_reklas_tambah ="select l.* from log_tanah as l 

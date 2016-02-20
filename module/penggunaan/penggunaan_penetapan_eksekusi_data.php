@@ -177,10 +177,10 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 						<input type='hidden' name='penggu_satker_aset[]' value='$nilai[kodeSatker]?>'>
 						<div class="row">
 							<div class="span12">
-								<input type='text' value='<?=$nilai[Pemilik]?>' size='1px' style='text-align:center' readonly = 'readonly'> - 
-								<input type='text' value='<?=$nilai[kodeSatker]?>' size='10px' style='text-align:center' readonly = 'readonly'> - 
-								<input type='text' value='<?=$nilai[Kode]?>' size='20px' style='text-align:center' readonly = 'readonly'> - 
-								<input type='text' value='<?=$nilai[Ruangan]?>' size='5px' style='text-align:center' readonly = 'readonly'>
+								<input type='text' value="<?php echo $nilai[Pemilik]?>" size='1px' style='text-align:center' readonly = 'readonly'> - 
+								<input type='text' value="<?php echo $nilai[kodeSatker]?>" size='10px' style='text-align:center' readonly = 'readonly'> - 
+								<input type='text' value="<?php echo $nilai[Kode]?>" size='20px' style='text-align:center' readonly = 'readonly'> - 
+								<input type='text' value="<?php echo $nilai[Ruangan]?>" size='5px' style='text-align:center' readonly = 'readonly'>
 								<input type='hidden' name='fromsatker' value='<?=$nilai[OrigSatker_ID]?>' size='5px' style='text-align:center' readonly = 'readonly'>
 							</div>
 						</div>
