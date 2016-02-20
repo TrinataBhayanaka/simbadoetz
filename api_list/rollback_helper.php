@@ -57,6 +57,10 @@ class ROLLBACK extends DB{
         $Aset_ID = $resAset[0]['Aset_ID'];
         // rollback nilai perolehan
 
+
+        $this->db->autocommit(0);
+        $this->db->begin();
+
         $sql1 = array(
                 'table'=>"{$table['listTableOri']}",
                 'field'=>"kondisi = '{$kondisiSebelum}'",
@@ -78,9 +82,15 @@ class ROLLBACK extends DB{
                 $data['logid'] = array($resAset[0]['log_id']);
                 $data['idaset'] =  array($Aset_ID);
                 $deleteLog = $this->move_data_aset($data);
-                if ($deleteLog) return true;
+                if ($deleteLog){
+                    logFile('1 - 4 commit', 'rollback.txt');
+                    $this->db->commit();
+                    return true;
+                } 
             } 
         }
+        logFile('1 - 4 rollback', 'rollback.txt');
+        $this->db->rollback();
         
     }
 
@@ -100,9 +110,12 @@ class ROLLBACK extends DB{
                     ); 
         $resAset = $this->db->lazyQuery($sqlA,$debug);
         logFile('21 - 1', 'rollback.txt');
-        $NilaiPerolehanSebelum = $resAset[0]['NilaiPerolehan'];
+        $NilaiPerolehanSebelum = $resAset[0]['NilaiPerolehan_Awal'];
         $Aset_ID = $resAset[0]['Aset_ID'];
         // rollback nilai perolehan
+
+        $this->db->autocommit(0);
+        $this->db->begin();
 
         $sql1 = array(
                 'table'=>"{$table['listTableOri']}",
@@ -125,9 +138,17 @@ class ROLLBACK extends DB{
                 $data['logid'] = array($resAset[0]['log_id']);
                 $data['idaset'] =  array($Aset_ID);
                 $deleteLog = $this->move_data_aset($data);
-                if ($deleteLog) return true;
+                if ($deleteLog){
+
+                    logFile('21 - 4 commit', 'rollback.txt');
+                    $this->db->commit();
+                    return true;
+                } 
             } 
         }
+
+        logFile('21 - 4 rollback', 'rollback.txt');
+        $this->db->rollback();
         
     }
 
@@ -165,6 +186,10 @@ class ROLLBACK extends DB{
         logFile('28 - 2', 'rollback.txt');
         // update (kurangin) nilai perolehan di aset yang ditambah
         $NilaiPerolehanSebelum = $resBertambah[0]['NilaiPerolehan'];
+        
+        $this->db->autocommit(0);
+        $this->db->begin();
+        
         $sql1 = array(
                 'table'=>"{$table['listTableOri']}",
                 'field'=>"NilaiPerolehan = '{$NilaiPerolehanSebelum}'",
@@ -186,14 +211,21 @@ class ROLLBACK extends DB{
         $paramUsul['mutasiid'] = $resHpsUsulan[0]['Mutasi_ID'];
 
         $hpsUsulan = $this->hapusUsulanMutasi($paramUsul);
-
+        
         if ($hpsUsulan){
             // $data['idaset'] =  array(7502);
             $data['logid'] = array($resAset[0]['log_id'], $resBertambah[0]['log_id']);
             $data['idaset'] =  array($asetMenambah, $asetBertambah);
             $deleteLog = $this->move_data_aset($data);
-            if ($deleteLog) return true;
+            if ($deleteLog){
+                logFile('28 - 100 commit', 'rollback.txt');
+                $this->db->commit();
+                return true;
+            } 
         } 
+
+        logFile('28 - 0 rollback', 'rollback.txt');
+        $this->db->rollback();
         return false;
     }
 
@@ -215,7 +247,7 @@ class ROLLBACK extends DB{
                 );
 
         $result = $DBVAR->lazyQuery($sqlSelect,$debug);
-        logFile('5', 'rollback.txt');
+        logFile('28 - 5', 'rollback.txt');
         if ($result[0]['total']<0){
             return false;
         }else{
@@ -227,7 +259,7 @@ class ROLLBACK extends DB{
                         );
 
             $result = $DBVAR->lazyQuery($sqlSelect,$debug);
-            logFile('6', 'rollback.txt');
+            logFile('28 - 6', 'rollback.txt');
             if ($result){
 
                 foreach ($result as $key => $value) {
@@ -239,7 +271,7 @@ class ROLLBACK extends DB{
                         'condition'=>"Aset_ID = {$value['Aset_ID']}",
                         );
                     $getKib[] = $DBVAR->lazyQuery($sqlSelect,$debug);
-                    logFile('7', 'rollback.txt');
+                    logFile('28 - 7', 'rollback.txt');
                 }
 
                 foreach ($getKib as $key => $value) {
@@ -262,7 +294,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result1 = $DBVAR->lazyQuery($updateKib,$debug,2);
-                    logFile('8', 'rollback.txt');
+                    logFile('28 - 8', 'rollback.txt');
                     $updateAset = array(
                             'table'=>"aset",
                             'field'=>"StatusValidasi = 1, NotUse = 1, Status_Validasi_Barang = 1",
@@ -270,7 +302,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result1 = $DBVAR->lazyQuery($updateAset,$debug,2);
-                    logFile('9', 'rollback.txt');
+                    logFile('28 - 9', 'rollback.txt');
                     $sqlSelect = array(
                             'table'=>"mutasiaset",
                             'field'=>"Status = 3",
@@ -278,7 +310,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result = $DBVAR->lazyQuery($sqlSelect,$debug,2);
-                    logFile('10', 'rollback.txt');
+                    logFile('28 - 10', 'rollback.txt');
                     $sql = array(
                             'table'=>"penggunaanaset",
                             'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
@@ -286,7 +318,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result = $DBVAR->lazyQuery($sql,$debug,2);
-                    logFile('11', 'rollback.txt');
+                    logFile('28 - 11', 'rollback.txt');
                 }
                 
                 // $aset_id = implode(',', $Aset_ID);
@@ -300,7 +332,7 @@ class ROLLBACK extends DB{
                         'limit' => '1',
                         );
                 $res = $DBVAR->lazyQuery($sql,$debug,2);
-                logFile('12', 'rollback.txt');
+                logFile('28 - 12', 'rollback.txt');
                 if ($res) return true;
 
             }else{
@@ -312,7 +344,7 @@ class ROLLBACK extends DB{
                         'limit' => '1',
                         );
                 $res = $DBVAR->lazyQuery($sql,$debug,2);
-                logFile('13', 'rollback.txt');
+                logFile('28 - 13', 'rollback.txt');
                 if ($res) return true;
             }
             
@@ -329,6 +361,7 @@ class ROLLBACK extends DB{
 
         if (is_array($arrAset)){
 
+            $isError = array();
             foreach ($arrAset as $key => $Aset_ID) {
 
                 $act = $data['act']; /*  1 = edit, 2 = hapus */
@@ -372,11 +405,14 @@ class ROLLBACK extends DB{
                         $res = $this->db->query($del);
                         logFile('del log data', 'rollback.txt');
                         // if ($res) return true;
+                        if (!$res)$isError[] = 1;
                     }
                 }
 
                 usleep(100);
             }
+
+            if (count($isError) < 1) return true;
         }        
 
         return false;
