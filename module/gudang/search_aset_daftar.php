@@ -88,7 +88,7 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 						<th>Kode Lokasi</th>
 						<th>No. Registrasi</th>
 						<th>Jumlah</th>
-						<th>Detail</th>
+						<th>Nilai</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -109,9 +109,7 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 								<input type="number" class="span1" id="max_<?=$i?>" value="<?=$value['max']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" onchange="getminmax(this);">
 							</td>
 							<td><?=$value['kuantitas']?></td>
-							<td class="text-center"><a href="<?=$url_rewrite?>/module/gudang/search_aset_detail.php?th=<?=$value['Tahun']?>&kel=<?=$value['kodeKelompok']?>&lok=<?=$value['kodeLokasi']?>&tbl=<?=$value['tabel']?>">
-								<button type="button" class="btn btn-info btn-small"><i class="fa fa-eye"></i> Lihat Detail</button>
-							</a></td>
+							<td class="text-center"><?=number_format($value['NilaiPerolehan'])?></td>
 						</tr>
 				<?php
 						$i++;

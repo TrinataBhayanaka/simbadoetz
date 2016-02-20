@@ -112,7 +112,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
                 <span  class="span2">&nbsp;</span>
 				<div class="checkbox">
 					<label>
-						<input type="radio" required name="tipeAset" value="2" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "2") ? 'checked' : '') : '' ?>/>&nbsp;Kapitalisasi
+						<input type="radio" class="add-popover" data-toggle="popover" data-html="true" data-trigger="focus" data-placement="left" data-original-title="<label style='color:red'>Peringatan Kapitalisasi!!</label>" data-content="Khusus untuk jenis barang : <br> <b>Mesin</b> : Minimal <u>Rp. 300.000</u> <br> <b>Bangunan</b> : Minimal <u>Rp. 10.000.000</u> " required name="tipeAset" value="2" <?=(isset($kontrak)) ? (($kontrak[0]['tipeAset']== "2") ? 'checked' : '') : '' ?>/>&nbsp;Kapitalisasi
 					</label>
 				</div>
 			</li>

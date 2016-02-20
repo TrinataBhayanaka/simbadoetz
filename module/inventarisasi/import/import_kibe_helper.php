@@ -109,6 +109,7 @@ function store_aset($data,$link,$totaldata)
         $tblAset['noKontrak'] = $data['noKontrak'];
         $tblAset['TglPerolehan'] = $data['TglPerolehan'];
         $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        $tblAset['NilaiBuku'] = $data['Satuan'];
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
@@ -278,6 +279,7 @@ function store_aset($data,$link,$totaldata)
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
             $tblKib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+            $tblKib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
             $tblKib['kondisi'] = $data['kondisi'];
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
@@ -324,6 +326,7 @@ function store_aset($data,$link,$totaldata)
                 $kib['kodeLokasi'] = $tblAset['kodeLokasi'];
                 $kib['TglPerolehan'] = $data['TglPerolehan'];
                 $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $kib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
                 $kib['noKontrak'] = $data['noKontrak'];
                 $kib['kondisi'] = $data['kondisi'];
                 $kib['Info'] = $data['Info'];
@@ -354,6 +357,7 @@ function store_aset($data,$link,$totaldata)
                 $kib['Status_Validasi_Barang'] = 1;
                 $kib['Tahun'] = $tblAset['Tahun'];
                 $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $kib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
                 $kib['Alamat'] = $data['Alamat'];
                 $kib['Info'] = $data['Info'];
                 $kib['AsalUsul'] = $data['AsalUsul'];
