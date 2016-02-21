@@ -14,7 +14,7 @@ if ($data){
 	if ($_GET['tabel']==1){
 
 		$kondisi = $data['kib'][0]['kondisi'];
-		$disable_kondisi = "";
+		$disable_kondisi = "disabled";
 
 		$kodeKA = $data['kib'][0]['kodeKA'];
 		$disable_kodeKA = "";
@@ -23,10 +23,10 @@ if ($data){
 		$disable_TglPembukuan = "";
 
 		$TglPerubahan = $data['kib'][0]['TglPerubahan'];
-		$disable_TglPerubahan = "disabled";
+		$disable_TglPerubahan = "";
 
 		$NilaiPerolehan = $data['kib'][0]['NilaiPerolehan'];
-		$disable_NilaiPerolehan = "";
+		$disable_NilaiPerolehan = "disabled";
 
 		$NilaiPerolehan_Awal = $data['kib'][0]['NilaiPerolehan_Awal'];
 		$disable_NilaiPerolehan_Awal = "disabled";
@@ -43,9 +43,10 @@ if ($data){
 		$Status_Validasi_Barang = $data['kib'][0]['Status_Validasi_Barang'];
 		$disable_Status_Validasi_Barang = "";
 
+		$dataParam = urlencode(serialize(array('Aset_ID'=>$data['log'][0]['Aset_ID'], 'TipeAset'=>$data['aset'][0]['TipeAset'])));
 	}else{
 		$kondisi = $data['log'][0]['kondisi'];
-		$disable_kondisi = "";
+		$disable_kondisi = "disabled";
 
 		$kodeKA = $data['log'][0]['kodeKA'];
 		$disable_kodeKA = "";
@@ -57,10 +58,10 @@ if ($data){
 		$disable_TglPerubahan = "";
 
 		$NilaiPerolehan = $data['log'][0]['NilaiPerolehan'];
-		$disable_NilaiPerolehan = "";
+		$disable_NilaiPerolehan = "disabled";
 
 		$NilaiPerolehan_Awal = $data['log'][0]['NilaiPerolehan_Awal'];
-		$disable_NilaiPerolehan_Awal = "";
+		$disable_NilaiPerolehan_Awal = "disabled";
 
 		$Info = $data['log'][0]['Info'];
 		$disable_Info = "";
@@ -73,13 +74,13 @@ if ($data){
 
 		$Status_Validasi_Barang = $data['log'][0]['Status_Validasi_Barang'];
 		$disable_Status_Validasi_Barang = "disabled";
+
+		$dataParam = urlencode(serialize(array('log_id'=>$data['log'][0]['log_id'], 'Aset_ID'=>$data['log'][0]['Aset_ID'], 'TipeAset'=>$data['aset'][0]['TipeAset'])));
 	}
 }
 
 
-if (isset($_POST)){
 
-}
 ?>
 
 <?php
@@ -136,20 +137,20 @@ if (isset($_POST)){
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Kode KA</span>
-								<input type="text" class="span3" name="kodeKA" value="<?=$kodeKA?>" <?=$disable_kodeKA?> required/>
+								<input id="kodeKA" type="text" class="span3" name="kodeKA" value="<?=$kodeKA?>" <?=$disable_kodeKA?> required onblur="ajaxPemeriksaan('kodeKA',this.value)" data-param="<?php echo $dataParam?>"/>
 							</li>
 							<li>
 								<span class="span2">Tanggal Pembukuan</span>
-								<input type="text" class="span3" name="TglPembukuan" value="<?=$TglPembukuan?>" <?=$disable_TglPembukuan?> required/>
+								<input id="TglPembukuan" type="text" class="span3" name="TglPembukuan" value="<?=$TglPembukuan?>" <?=$disable_TglPembukuan?> required onblur="ajaxPemeriksaan('TglPembukuan',this.value)" data-param="<?php echo $dataParam?>"/>
 							</li>
 							<li>
 								<span class="span2">Tanggal Perubahan</span>
-								<input type="text" class="span3" name="TglPerubahan" value="<?=$TglPerubahan?>" <?=$disable_TglPerubahan?> required/>
+								<input id="TglPerubahan" type="text" class="span3" name="TglPerubahan" value="<?=$TglPerubahan?>" <?=$disable_TglPerubahan?> required onblur="ajaxPemeriksaan('TglPerubahan',this.value)" data-param="<?php echo $dataParam?>"/>
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan</span>
 								<input type="text" class="span3" name="NilaiPerolehan" data-a-sign="Rp " data-a-dec="," data-a-sep="." id="total" value="<?=$NilaiPerolehan?>" <?=$disable_NilaiPerolehan?> onkeyup="return getCurrency(this);"/>
-								<input type="text" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
+								<input type="hidden" name="NilaiPerolehan" id="nilaiPerolehan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
 							</li>
 							<li>
 								<span class="span2">Nilai Perolehan Awal</span>
@@ -158,11 +159,11 @@ if (isset($_POST)){
 							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3" <?=$disable_Info?>><?=$Info?></textarea>
+								<textarea id="Info" name="Info" class="span3" <?=$disable_Info?> onblur="ajaxPemeriksaan('Info',this.value)" data-param="<?php echo $dataParam?>"><?=$Info?></textarea>
 							</li>
 							<li>
 								<span class="span2">Status Tampil</span>
-								<select  name="StatusTampil" style="width:255px" <?=$disable_StatusTampil?>>
+								<select id="StatusTampil" name="StatusTampil" style="width:255px" <?=$disable_StatusTampil?> onchange="ajaxPemeriksaan('StatusTampil',this.value)" data-param="<?php echo $dataParam?>">
 									<option value="0" <?php if ($StatusTampil == 0) echo 'selected';?>>Tidak Tampil</option>
 									<option value="1" <?php if ($StatusTampil == 1) echo 'selected';?>>Tampil</option>
 									<option value="2" <?php if ($StatusTampil == 2) echo 'selected';?>>Non Aktif</option>
@@ -171,7 +172,7 @@ if (isset($_POST)){
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Status Validasi</span>
-								<select  name="StatusValidasi" style="width:255px" <?=$disable_StatusValidasi?>>
+								<select id="StatusValidasi" name="StatusValidasi" style="width:255px" <?=$disable_StatusValidasi?> onchange="ajaxPemeriksaan('StatusValidasi',this.value)" data-param="<?php echo $dataParam?>">
 									<option value="0" <?php if ($StatusValidasi == 0) echo 'selected';?>>Belum Validasi</option>
 									<option value="1" <?php if ($StatusValidasi == 1) echo 'selected';?>>Sudah validasi</option>
 									<option value="2" <?php if ($StatusValidasi == 2) echo 'selected';?>>Non Aktif</option>
@@ -180,7 +181,7 @@ if (isset($_POST)){
 							<li>&nbsp;</li>
 							<li>
 								<span class="span2">Status validasi Barang</span>
-								<select  name="Status_Validasi_Barang" style="width:255px" <?=$disable_Status_Validasi_Barang?>>
+								<select id="Status_Validasi_Barang" name="Status_Validasi_Barang" style="width:255px" <?=$disable_Status_Validasi_Barang?> onchange="ajaxPemeriksaan('Status_Validasi_Barang',this.value)" data-param="<?php echo $dataParam?>">
 									<option value="0" <?php if ($Status_Validasi_Barang == 0) echo 'selected';?>>Belum Validasi Distribusi</option>
 									<option value="1" <?php if ($Status_Validasi_Barang == 1) echo 'selected';?>>Sudah validasi</option>
 									<option value="2" <?php if ($Status_Validasi_Barang == 2) echo 'selected';?>>Non Aktif</option>
@@ -191,13 +192,13 @@ if (isset($_POST)){
 					</div>
 					
 		<div style="height:5px;width:100%;clear:both"></div>		
-		<ul>
+		<!-- <ul>
 			<li>
 				<span class="span2">
 				  <button class="btn" type="reset">Reset</button>
 				  <button type="submit" id="submit" class="btn btn-primary">Simpan</button></span>
 			</li>
-		</ul>
+		</ul> -->
 					
 			
 		</form>
