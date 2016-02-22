@@ -297,7 +297,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*',
                 'condition' => "p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID",
-                'limit' => '100',
+                // 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'
                 );
@@ -319,7 +319,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p, kelompok AS k',
                 'field'=>'p.*, a.*, k.Uraian',
                 'condition' => "p.FixPenggunaan = 0 $filter",
-                'limit' => '100',
+                // 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, a.kodeKelompok = k.kode'
                 );

@@ -224,7 +224,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
             'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
             'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak}",
-            'limit'=>'100',
+            // 'limit'=>'100',
             'joinmethod' => 'LEFT JOIN',
             'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
             );
@@ -385,7 +385,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             'table'=>"mutasiaset AS ma",
             'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, (SELECT NamaSatker FROM satker WHERE kode = ma.SatkerAwal LIMIT 1) AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
             'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID DESC",
-            'limit'=>"{$paging}, 100",
+            // 'limit'=>"{$paging}, 100",
             );
 
         $result = $this->db->lazyQuery($sqlSelect,$debug);
@@ -1198,7 +1198,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 'table'=>"mutasi AS m, satker AS s",
                 'field'=>"m.*, s.NamaSatker, s.kode",
                 'condition'=>"m.Mutasi_ID = {$data[id]} GROUP BY m.Mutasi_ID",
-                'limit'=>'100',
+                // 'limit'=>'100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => "m.SatkerTujuan = s.kode"
                 );
@@ -1211,7 +1211,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
                         'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, a.TipeAset, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
                         'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal} GROUP BY ma.Aset_ID",
-                        'limit'=>'100',
+                        // 'limit'=>'100',
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
                         );
@@ -1231,7 +1231,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             'table'=>"{$listTable}",
                             'field'=>"*",
                             'condition'=>"Aset_ID = {$value['Aset_ID']}",
-                            'limit'=>'100',
+                            // 'limit'=>'100',
                             );
 
                     $resultKib = $this->db->lazyQuery($sqlkib,$debug);
@@ -1372,7 +1372,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 'table'=>"mutasi AS m, satker AS s",
                 'field'=>"m.*, s.NamaSatker, s.kode",
                 'condition'=>"m.Mutasi_ID = {$data[id]} GROUP BY m.Mutasi_ID",
-                'limit'=>'100',
+                // 'limit'=>'100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => "m.SatkerTujuan = s.kode"
                 );
