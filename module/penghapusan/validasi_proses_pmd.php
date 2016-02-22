@@ -22,8 +22,8 @@ $parameter=array('submit'=>$submit, 'ses_uid'=>$ses_uid);
         $POST['ValidasiPenghapusan']=$POST_data;
 		// pr($_POST);
   //       pr($POST);
-        // exit;
-		$data = $PENGHAPUSAN->update_validasi_penghapusan_pmd($POST);
+  //       exit;
+		$data = $PENGHAPUSAN->update_validasi_penghapusan_pmd($_POST);
 
         if($data_post){
          $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("VLDUSPMD");

@@ -150,7 +150,10 @@ $menu_id = 10;
 			<div style="height:5px;width:100%;clear:both"></div>
 		
 			<div id="demo">
-			
+			<form method="post" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses_psb.php">
+				<input type="hidden" name="ValidasiPenghapusan[]" value="<?=$data[0]['Penghapusan_ID']?>" >
+				<input type="submit" class="btn btn-info" value="Validasi Penetapan Penghapusan">
+			</form>
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>

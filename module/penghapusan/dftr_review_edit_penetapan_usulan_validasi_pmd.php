@@ -185,7 +185,10 @@ $menu_id = 10;
 			<div style="height:5px;width:100%;clear:both"></div>
 		
 			<div id="demo">
-			
+			<form method="post" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses_pmd.php">
+				<input type="hidden" name="ValidasiPenghapusan[]" value="<?=$data[0]['Penghapusan_ID']?>" >
+				<input type="submit" class="btn btn-info" value="Validasi Penetapan Penghapusan">
+			</form>
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="rvw_penetapan_usulan_pmd_table">
 				<thead>
 					<tr>
