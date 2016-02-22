@@ -99,7 +99,7 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 						foreach ($get_data_filter as $key => $value) {
 				?>
 						<tr class="gradeA">
-							<td class="checkbox-column"><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" value="<?=$value['tabel']?>_<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$value['min']?>-<?=$value['max']?>" onchange="return AreAnyCheckboxesChecked();"></td>
+							<td class="checkbox-column"><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" value="<?=$value['tabel']?>_<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$value['min']?>-<?=$value['max']?>_<?=$value['NilaiPerolehan']?>" onchange="return AreAnyCheckboxesChecked();"></td>
 							<td><?=$value['Tahun']?></td>
 							<td><?=$value['kodeKelompok']?></td>
 							<td><?=$value['uraian']?></td>
