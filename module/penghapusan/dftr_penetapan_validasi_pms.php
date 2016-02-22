@@ -93,11 +93,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<?php
 							if($_SESSION['ses_ujabatan']==1){
 						?>
-					<tr>
+				<!-- 	<tr>
 						<td colspan="8" align="Left">
 								<span><button type="submit" name="submit" id="submit" value="tetapkan" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Barang</button></span>
 						</td>
-					</tr>
+					</tr> -->
 					<?php
 						}
 					?>
@@ -107,7 +107,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							if($_SESSION['ses_ujabatan']==1){
 						?>
 						<th class="checkbox-column">
-							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
+							&nbsp;<!-- <input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"> -->
 						</th>
 						<?php
 							}
