@@ -15,14 +15,14 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 	
 	$data = $ROLLBACK->gotoRollbackData($_GET);	
 
-	// vd($data);exit;
+	// vd($data);
 	if ($data){
 
 		?>
 		<script>
 		alert('Proses Berhasil');
-		document.location='<?php echo "$url_rewrite/module/layanan/detail_aset.php?id={$_GET['idaset']}&jenisaset={$_GET['jenisaset']}"; ?>';
-        
+		// document.location='<?php echo "$url_rewrite/module/layanan/detail_aset.php?id={$_GET['idaset']}&jenisaset={$_GET['jenisaset']}"; ?>';
+        window.history.back();
         </script>
 		<?php
 		

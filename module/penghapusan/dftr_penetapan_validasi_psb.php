@@ -93,11 +93,11 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 					<?php
 							if($_SESSION['ses_ujabatan']==1){
 						?>
-					<tr>
+					<!-- <tr>
 						<td colspan="8" align="Left">
 								<span><button type="submit" name="submit" id="submit" value="tetapkan" class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Barang</button></span>
 						</td>
-					</tr>
+					</tr> -->
 					<?php
 						}
 					?>
@@ -107,7 +107,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							if($_SESSION['ses_ujabatan']==1){
 						?>
 						<th class="checkbox-column">
-							<input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();">
+						&nbsp;	<!-- <input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"> -->
 						</th>
 						<?php
 							}
@@ -142,7 +142,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 							if($_SESSION['ses_ujabatan']==1){
 						?>
 						<td class="checkbox-column">
-							<input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" >
+							&nbsp;<!-- <input type="checkbox" class="icheck-input checkbox" onchange="return AreAnyCheckboxesChecked();" name="ValidasiPenghapusan[]" value="<?php echo $row[Penghapusan_ID];?>" > -->
 							
 						</td>
 						<?php
@@ -170,7 +170,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 						<td><?php echo "$row[AlasanHapus]";?></td>
 						<td align="center">	
 						 <!--<a href="<?php echo "$url_rewrite/report/template/PENGHAPUSAN/";?>tes_class_penetapan_aset_yang_dihapuskan.php?menu_id=39&mode=1&id=<?php echo "$row[Penghapusan_ID]";?>" target="_blank">Cetak</a> ||--> 
-						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_validasi_psb.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;
+						<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_validasi_psb.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-warning"><i class="fa fa-check"></i> Lakukan Validasi</a>&nbsp;
 						<!-- <a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>penetapan_penghapusan_daftar_hapus_psb.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-danger"> <i class="fa fa-trash"></i>
  Hapus</a>   -->
 						</td>

@@ -608,7 +608,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 			$(".ubahkondisi").removeAttr('disabled');
 			$(".koreksi,.full,#pindahruang,#flagupd").removeAttr('disabled');
 			$("#rubahkondisi,#koreksinilai,#ubahkapitalisasi,#rubahdata").attr('disabled','disabled');
-			$(".well h2").html("Koreksi Aset");
+			$(".well h2").html("Reklas");
 			$("#kodeKelompok,#kodeSatker,#kodeRuangan").select2("enable", true);
 			$(".well p").html("Koreksi data aset khusus untuk melakukan <b>Reklasifikasi</b> barang. Pergunakan menu ini khusus hanya untuk melakukan reklas, jika bukan dilarang menggunakan menu ini!!");
 		}

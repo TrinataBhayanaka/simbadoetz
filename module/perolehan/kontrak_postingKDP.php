@@ -19,7 +19,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     $sumsp2d = $dataSP2D;
   }
 
-  $sql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$noKontrak[noKontrak]}'");
+  $sql = mysql_query("SELECT * FROM aset WHERE noKontrak = '{$noKontrak[noKontrak]}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
   while ($dataAset = mysql_fetch_assoc($sql)){
               $aset[] = $dataAset;
           }

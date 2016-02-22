@@ -150,7 +150,16 @@ $menu_id = 10;
 			<div style="height:5px;width:100%;clear:both"></div>
 		
 			<div id="demo">
-			
+			<?php 
+				if($data['dataRow'][0]['Status']==0){
+			?>
+			<form method="post" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>validasi_proses_psb.php">
+				<input type="hidden" name="ValidasiPenghapusan[]" value="<?=$data['dataRow'][0]['Penghapusan_ID']?>" >
+				<input type="submit" class="btn btn-info" value="Validasi Penetapan Penghapusan">
+			</form>
+			<?php
+				}
+			?>
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="example">
 				<thead>
 					<tr>

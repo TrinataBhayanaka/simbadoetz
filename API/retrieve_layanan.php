@@ -235,6 +235,16 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 
             foreach ($resLog as $key => $value) {
 
+                $sqlAwal = array(
+                        'table'=>"aset a, kelompok AS k",
+                        'field'=>"a.kodeSatker, k.Uraian",
+                        'condition' => "a.Aset_ID = '{$resLog[0]['Aset_ID_Penambahan']}'",
+                        'limit' => '1',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.kodeKelompok = k.Kode"
+                        );
+
+                $resLog[$key]['data_awal'] = $this->db->lazyQuery($sqlAwal,$debug);
                 $sql = array(
                         'table'=>"satker AS s",
                         'field'=>"s.NamaSatker",

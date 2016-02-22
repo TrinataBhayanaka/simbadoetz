@@ -98,6 +98,7 @@ $menu_id = 10;
 						<th>Kode Lokasi</th>
 						<th>No. Registrasi</th>
 						<th>Jumlah</th>
+						<th>Nilai</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
@@ -116,6 +117,7 @@ $menu_id = 10;
 						<td class="center"><?=$value['kodeLokasi']?></td>
 						<td class="center"><?=$value['noReg_awal']?> s/d <?=$value['noReg_akhir']?></td>
 						<td class="center"><?=1+$value['noReg_akhir']-$value['noReg_awal']?></td>
+						<td><?=$value['NilaiPerolehan']?></td>
 						<td class="center">
 						<?php
 							if($transfer[0]['n_status'] != 1){

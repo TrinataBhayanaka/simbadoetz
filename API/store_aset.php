@@ -1526,6 +1526,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['noKontrak'] = $data['noKontrak'];
         $tblAset['TglPerolehan'] = $data['TglPerolehan'];
         $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        $tblAset['NilaiBuku'] = $data['Satuan'];
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
@@ -1686,6 +1687,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
             $tblKib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+            $tblKib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
             $tblKib['kondisi'] = $data['kondisi'];
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
@@ -2237,7 +2239,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         unset($data['example_length']);
         // pr($data);exit;
         foreach ($data['aset'] as $key => $value) {
-            list($dataArr['tipeaset'],$dataArr['kodeKelompok'],$dataArr['kodeLokasi'],$noReg) = explode("_", $value);
+            list($dataArr['tipeaset'],$dataArr['kodeKelompok'],$dataArr['kodeLokasi'],$noReg,$dataArr['NilaiPerolehan']) = explode("_", $value);
             list($dataArr['noReg_awal'],$dataArr['noReg_akhir']) = explode("-", $noReg);
             $dataArr['transfer_id'] = $get['id'];
             $dataArr['n_status'] = 0;
@@ -2257,7 +2259,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             // pr($query);
             $result=  $this->query($query) or die($this->error());
 
-            $sqlupd = "UPDATE {$dataArr['tipeaset']} SET Status_Validasi_Barang = '0' WHERE kodeKelompok = '{$dataArr['kodeKelompok']}' AND kodeLokasi = '{$dataArr['kodeLokasi']}' AND noRegister BETWEEN {$dataArr['noReg_awal']} AND {$dataArr['noReg_akhir']}";
+            $sqlupd = "UPDATE {$dataArr['tipeaset']} SET Status_Validasi_Barang = '0' WHERE kodeKelompok = '{$dataArr['kodeKelompok']}' AND kodeLokasi = '{$dataArr['kodeLokasi']}' AND noRegister BETWEEN {$dataArr['noReg_awal']} AND {$dataArr['noReg_akhir']} AND NilaiPerolehan = '{$dataArr['NilaiPerolehan']}'";
             // pr($sqlupd);
             $result=  $this->query($sqlupd) or die($this->error());
         }
@@ -2292,11 +2294,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     $tglDist = $row['tglDistribusi'];
                 } 
 
-                $sqlupd = "UPDATE {$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']}";
+                $sqlupd = "UPDATE {$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}'";
                 // pr($sqlupd);exit;
                 $result=  $this->query($sqlupd) or die($this->error());
 
-                $sqlupd = "UPDATE aset SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']}";
+                $sqlupd = "UPDATE aset SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}'";
                 // pr($sqlupd);exit;
                 $result=  $this->query($sqlupd) or die($this->error());
             }
@@ -2321,6 +2323,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['TglPerolehan'] = $data['tglPerolehan'];
         $tblAset['TglPembukuan'] = $data['tglPembukuan'];
         $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        $tblAset['NilaiBuku'] = $data['Satuan'];
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['AsalUsul'] = $data['AsalUsul'];
         $tblAset['Kuantitas'] = 1;
@@ -2464,6 +2467,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['TglPerolehan'] = $tblAset['TglPerolehan'];
             $tblKib['TglPembukuan'] = $tblAset['TglPembukuan'];
             $tblKib['NilaiPerolehan'] = $data['Satuan'];
+            $tblKib['NilaiBuku'] = $data['Satuan'];
             $tblKib['StatusTampil'] = 1;
             $tblKib['StatusValidasi'] = 1;
             $tblKib['kondisi'] = $data['kondisi'];

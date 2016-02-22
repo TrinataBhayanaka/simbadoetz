@@ -17,17 +17,139 @@ class ROLLBACK extends DB{
         switch ($kd_riwayat) {
             case '28':
                 $run = $this->mtsKapitalisasi($data);
-                if ($run){
-
-                } return true;
+                if ($run)return true;
                 break;
-            
+
+            case '21':
+                $run = $this->koreksiNilai($data);
+                if ($run)return true;
+                break;
+
+            case '1':
+                $run = $this->ubahKondisi($data);
+                if ($run)return true;
+                break;
             default:
-                # code...
+                return false;
                 break;
         }
 
         return false;
+    }
+
+    function ubahKondisi($data=array(), $debug=false)
+    {
+        $log_id = $data['logid'];
+        $jenisaset = $data['jenisaset'];
+        
+        $arrayTable = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
+        $table = $this->getTableKibAlias($arrayTable[$jenisaset]);
+        
+        $sqlA = array(
+                    'table'=>"log_{$table['listTable']}",
+                    'field'=>"*",
+                    'condition' => "log_id = {$log_id} ",
+                    'limit' => 1
+                    ); 
+        $resAset = $this->db->lazyQuery($sqlA,$debug);
+        logFile('1 - 1', 'rollback.txt');
+        $kondisiSebelum = $resAset[0]['kondisi'];
+        $Aset_ID = $resAset[0]['Aset_ID'];
+        // rollback nilai perolehan
+
+
+        $this->db->autocommit(0);
+        $this->db->begin();
+
+        $sql1 = array(
+                'table'=>"{$table['listTableOri']}",
+                'field'=>"kondisi = '{$kondisiSebelum}'",
+                'condition' => "Aset_ID = '{$Aset_ID}'",
+                'limit' => 1
+                );
+        $res1 = $this->db->lazyQuery($sql1,$debug,2);
+        logFile('1 - 2', 'rollback.txt');
+        if ($res1){
+            $sql2 = array(
+                    'table'=>"aset",
+                    'field'=>"kondisi = '{$kondisiSebelum}'",
+                    'condition' => "Aset_ID = '{$Aset_ID}'",
+                    'limit' => 1
+                    );
+            $res2 = $this->db->lazyQuery($sql2,$debug,2);
+            logFile('1 - 3', 'rollback.txt');
+            if ($res2){
+                $data['logid'] = array($resAset[0]['log_id']);
+                $data['idaset'] =  array($Aset_ID);
+                $deleteLog = $this->move_data_aset($data);
+                if ($deleteLog){
+                    logFile('1 - 4 commit', 'rollback.txt');
+                    $this->db->commit();
+                    return true;
+                } 
+            } 
+        }
+        logFile('1 - 4 rollback', 'rollback.txt');
+        $this->db->rollback();
+        
+    }
+
+    function koreksiNilai($data=array(), $debug=false)
+    {
+        $log_id = $data['logid'];
+        $jenisaset = $data['jenisaset'];
+        
+        $arrayTable = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
+        $table = $this->getTableKibAlias($arrayTable[$jenisaset]);
+        
+        $sqlA = array(
+                    'table'=>"log_{$table['listTable']}",
+                    'field'=>"*",
+                    'condition' => "log_id = {$log_id} ",
+                    'limit' => 1
+                    ); 
+        $resAset = $this->db->lazyQuery($sqlA,$debug);
+        logFile('21 - 1', 'rollback.txt');
+        $NilaiPerolehanSebelum = $resAset[0]['NilaiPerolehan_Awal'];
+        $Aset_ID = $resAset[0]['Aset_ID'];
+        // rollback nilai perolehan
+
+        $this->db->autocommit(0);
+        $this->db->begin();
+
+        $sql1 = array(
+                'table'=>"{$table['listTableOri']}",
+                'field'=>"NilaiPerolehan = '{$NilaiPerolehanSebelum}'",
+                'condition' => "Aset_ID = '{$Aset_ID}'",
+                'limit' => 1
+                );
+        $res1 = $this->db->lazyQuery($sql1,$debug,2);
+        logFile('21 - 2', 'rollback.txt');
+        if ($res1){
+            $sql2 = array(
+                    'table'=>"aset",
+                    'field'=>"NilaiPerolehan = '{$NilaiPerolehanSebelum}'",
+                    'condition' => "Aset_ID = '{$Aset_ID}'",
+                    'limit' => 1
+                    );
+            $res2 = $this->db->lazyQuery($sql2,$debug,2);
+            logFile('21 - 3', 'rollback.txt');
+            if ($res2){
+                $data['logid'] = array($resAset[0]['log_id']);
+                $data['idaset'] =  array($Aset_ID);
+                $deleteLog = $this->move_data_aset($data);
+                if ($deleteLog){
+
+                    logFile('21 - 4 commit', 'rollback.txt');
+                    $this->db->commit();
+                    return true;
+                } 
+            } 
+        }
+
+        logFile('21 - 4 rollback', 'rollback.txt');
+        $this->db->rollback();
+        
     }
 
     function mtsKapitalisasi($data=array(), $debug=false)
@@ -50,7 +172,7 @@ class ROLLBACK extends DB{
                     ); 
         $resAset = $this->db->lazyQuery($sqlA,$debug);
         
-        logFile('1', 'rollback.txt');
+        logFile('28 - 1', 'rollback.txt');
         $asetMenambah = $resAset[0]['Aset_ID'];
         $asetBertambah = $resAset[0]['Aset_ID_Penambahan'];
 
@@ -61,9 +183,13 @@ class ROLLBACK extends DB{
                     'limit' => 1
                     ); 
         $resBertambah = $this->db->lazyQuery($sqlB,$debug);
-        logFile('2', 'rollback.txt');
+        logFile('28 - 2', 'rollback.txt');
         // update (kurangin) nilai perolehan di aset yang ditambah
         $NilaiPerolehanSebelum = $resBertambah[0]['NilaiPerolehan'];
+        
+        $this->db->autocommit(0);
+        $this->db->begin();
+        
         $sql1 = array(
                 'table'=>"{$table['listTableOri']}",
                 'field'=>"NilaiPerolehan = '{$NilaiPerolehanSebelum}'",
@@ -71,7 +197,7 @@ class ROLLBACK extends DB{
                 'limit' => 1
                 );
         $res1 = $this->db->lazyQuery($sql1,$debug,2);
-        logFile('3', 'rollback.txt');
+        logFile('28 - 3', 'rollback.txt');
         // hapus usulan mutasi
         $sqlUsulan = array(
                     'table'=>"mutasiaset",
@@ -80,18 +206,26 @@ class ROLLBACK extends DB{
                     'limit' => 1
                     ); 
         $resHpsUsulan = $this->db->lazyQuery($sqlUsulan,$debug);
-        logFile('4', 'rollback.txt');
+        logFile('28 - 4', 'rollback.txt');
         $paramUsul['kodeSatker'] = $resAset[0]['kodeSatker'];
         $paramUsul['mutasiid'] = $resHpsUsulan[0]['Mutasi_ID'];
 
         $hpsUsulan = $this->hapusUsulanMutasi($paramUsul);
-
+        
         if ($hpsUsulan){
             // $data['idaset'] =  array(7502);
+            $data['logid'] = array($resAset[0]['log_id'], $resBertambah[0]['log_id']);
             $data['idaset'] =  array($asetMenambah, $asetBertambah);
             $deleteLog = $this->move_data_aset($data);
-            if ($deleteLog) return true;
+            if ($deleteLog){
+                logFile('28 - 100 commit', 'rollback.txt');
+                $this->db->commit();
+                return true;
+            } 
         } 
+
+        logFile('28 - 0 rollback', 'rollback.txt');
+        $this->db->rollback();
         return false;
     }
 
@@ -113,7 +247,7 @@ class ROLLBACK extends DB{
                 );
 
         $result = $DBVAR->lazyQuery($sqlSelect,$debug);
-        logFile('5', 'rollback.txt');
+        logFile('28 - 5', 'rollback.txt');
         if ($result[0]['total']<0){
             return false;
         }else{
@@ -125,7 +259,7 @@ class ROLLBACK extends DB{
                         );
 
             $result = $DBVAR->lazyQuery($sqlSelect,$debug);
-            logFile('6', 'rollback.txt');
+            logFile('28 - 6', 'rollback.txt');
             if ($result){
 
                 foreach ($result as $key => $value) {
@@ -137,7 +271,7 @@ class ROLLBACK extends DB{
                         'condition'=>"Aset_ID = {$value['Aset_ID']}",
                         );
                     $getKib[] = $DBVAR->lazyQuery($sqlSelect,$debug);
-                    logFile('7', 'rollback.txt');
+                    logFile('28 - 7', 'rollback.txt');
                 }
 
                 foreach ($getKib as $key => $value) {
@@ -160,7 +294,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result1 = $DBVAR->lazyQuery($updateKib,$debug,2);
-                    logFile('8', 'rollback.txt');
+                    logFile('28 - 8', 'rollback.txt');
                     $updateAset = array(
                             'table'=>"aset",
                             'field'=>"StatusValidasi = 1, NotUse = 1, Status_Validasi_Barang = 1",
@@ -168,7 +302,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result1 = $DBVAR->lazyQuery($updateAset,$debug,2);
-                    logFile('9', 'rollback.txt');
+                    logFile('28 - 9', 'rollback.txt');
                     $sqlSelect = array(
                             'table'=>"mutasiaset",
                             'field'=>"Status = 3",
@@ -176,7 +310,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result = $DBVAR->lazyQuery($sqlSelect,$debug,2);
-                    logFile('10', 'rollback.txt');
+                    logFile('28 - 10', 'rollback.txt');
                     $sql = array(
                             'table'=>"penggunaanaset",
                             'field'=>"StatusMutasi = 0, Mutasi_ID = 0",
@@ -184,7 +318,7 @@ class ROLLBACK extends DB{
                             );
 
                     $result = $DBVAR->lazyQuery($sql,$debug,2);
-                    logFile('11', 'rollback.txt');
+                    logFile('28 - 11', 'rollback.txt');
                 }
                 
                 // $aset_id = implode(',', $Aset_ID);
@@ -198,7 +332,7 @@ class ROLLBACK extends DB{
                         'limit' => '1',
                         );
                 $res = $DBVAR->lazyQuery($sql,$debug,2);
-                logFile('12', 'rollback.txt');
+                logFile('28 - 12', 'rollback.txt');
                 if ($res) return true;
 
             }else{
@@ -210,7 +344,7 @@ class ROLLBACK extends DB{
                         'limit' => '1',
                         );
                 $res = $DBVAR->lazyQuery($sql,$debug,2);
-                logFile('13', 'rollback.txt');
+                logFile('28 - 13', 'rollback.txt');
                 if ($res) return true;
             }
             
@@ -227,6 +361,7 @@ class ROLLBACK extends DB{
 
         if (is_array($arrAset)){
 
+            $isError = array();
             foreach ($arrAset as $key => $Aset_ID) {
 
                 $act = $data['act']; /*  1 = edit, 2 = hapus */
@@ -238,7 +373,7 @@ class ROLLBACK extends DB{
                 if ($getTableParam == 2){
                     $prefix .= "log_";
                     $primaryField = "log_id";
-                    $primaryValue = $data['logid'];
+                    $primaryValue = $data['logid'][$key];
                     $filter .= " AND Aset_ID = {$Aset_ID}";
                 }else{
                     $primaryField = "Aset_ID";
@@ -268,12 +403,16 @@ class ROLLBACK extends DB{
                         $del = "DELETE FROM {$CONFIG['default']['db_name']}.{$prefix}{$table['listTableOri']} WHERE {$primaryField} = {$primaryValue} {$filter} LIMIT 1";
                         // pr($del);
                         $res = $this->db->query($del);
+                        logFile('del log data', 'rollback.txt');
                         // if ($res) return true;
+                        if (!$res)$isError[] = 1;
                     }
                 }
 
                 usleep(100);
             }
+
+            if (count($isError) < 1) return true;
         }        
 
         return false;
@@ -339,16 +478,5 @@ class ROLLBACK extends DB{
     }
     
 }
-
-/*
-    skenario rollback mutasi kapitalisasi
-
-    1. ambil data penggunaanaset berdasarkan id penggunaan yang dilewatkan
-    2. ambil data kode satker tujuan di kib berdasarkan aset yang ada di penggunanaset
-    3. insert data mutasi
-    4. lakukan proses mutasi
-*/
-
-
 
 ?>
