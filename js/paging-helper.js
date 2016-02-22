@@ -370,3 +370,12 @@ function log(){
 	alert('ada');
 }
 
+function confirmBox(txt)
+{
+	var r = confirm(txt);
+	if (r == true) {
+	    // execute function  
+	} else {
+	    return false;
+	}
+}
