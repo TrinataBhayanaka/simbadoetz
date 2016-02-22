@@ -309,10 +309,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             $dataArr[]=$asetid[Aset_ID];
                         }
                         $aset_id=implode(', ',array_values($dataArr));
-                        $condition="ast.Aset_ID NOT IN ($aset_id) AND ast.fixPenggunaan=1 AND (ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
+                        $condition="ast.Aset_ID NOT IN ($aset_id) AND ast.fixPenggunaan=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
+                        // $condition="ast.Aset_ID NOT IN ($aset_id) AND ast.fixPenggunaan=1 AND (ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
                         
                     }else{
-                        $condition="ast.fixPenggunaan=1 AND (ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
+                        $condition="ast.fixPenggunaan=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
                     }
                     // //////////////////////////////////////////////////////pr($aset_id);
                     // //////////////////////////////////////////////////////pr($sql1);
