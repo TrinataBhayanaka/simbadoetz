@@ -10425,7 +10425,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $tablelog="log_".$table[listTableOri];
             $sqlKIB = array(
                     'table'=>"{$table[listTableOri]}",
-                    'field'=>"Mesin_ID,Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,StatusValidasi,Status_Validasi_Barang,StatusTampil",
+                    'field'=>"Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,StatusValidasi,Status_Validasi_Barang,StatusTampil",
                     'condition' => "Aset_ID={$asetid}",
                     );
             $resKIB = $this->db->lazyQuery($sqlKIB,$debug);
