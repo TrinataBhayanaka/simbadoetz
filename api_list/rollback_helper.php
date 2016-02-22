@@ -30,7 +30,7 @@ class ROLLBACK extends DB{
                 if ($run)return true;
                 break;
             default:
-                # code...
+                return false;
                 break;
         }
 

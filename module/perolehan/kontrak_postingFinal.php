@@ -61,64 +61,77 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     }  
     if($data['TipeAset']=="A"){
           $tabel = "tanah";
+          $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="B") {
           $tabel = "mesin";
+          $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="C") {
           $tabel = "bangunan";
+          $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="D") {
           $tabel = "jaringan";
+          $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="E") {
           $tabel = "asetlain";
+          $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="F") {
           $tabel = "kdp";
+          $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="G") {
-          $DBVAR->commit();
-          echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
-          exit;
-      }
+          // $DBVAR->commit();
+          // echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+          // exit;
+          $tabel = "aset";
+          $tampil = "";
+      } elseif ($data['TipeAset']=="H") {
+          $tabel = "aset";
+          $tampil = "";
+      } 
 
-      $sql = "UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = '1', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
+      $sql = "UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}' {$tampil}, StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
       $execquery = mysql_query($sql);
       logFile($sql);
       if(!$execquery){
         $DBVAR->rollback();
         echo "<script>alert('ERROR #002 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
         exit;
-      } 
-      //log
-      $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
-      $sqlquery = mysql_query($sqlkib);
-      while ($dataAset = mysql_fetch_assoc($sqlquery)){
-              $kib = $dataAset;
-          }
-      $kib['TglPerubahan'] = $kib['TglPerolehan'];    
-      $kib['changeDate'] = date("Y-m-d");
-      $kib['action'] = 'posting';
-      $kib['operator'] = $_SESSION['ses_uoperatorid'];
-      $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
-      $kib['Info'] = addslashes($kib['Info']);
-      if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
+      }
 
-     
-            unset($tmpField);
-            unset($tmpValue);
-            foreach ($kib as $key => $val) {
-              $tmpField[] = $key;
-              $tmpValue[] = "'".$val."'";
+      if($tabel != "aset"){ 
+        //log
+        $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$data['Aset_ID']}'";
+        $sqlquery = mysql_query($sqlkib);
+        while ($dataAset = mysql_fetch_assoc($sqlquery)){
+                $kib = $dataAset;
             }
-             
-            $fileldImp = implode(',', $tmpField);
-            $dataImp = implode(',', $tmpValue);
+        $kib['TglPerubahan'] = $kib['TglPerolehan'];    
+        $kib['changeDate'] = date("Y-m-d");
+        $kib['action'] = 'posting';
+        $kib['operator'] = $_SESSION['ses_uoperatorid'];
+        $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
+        $kib['Info'] = addslashes($kib['Info']);
+        if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
 
-            $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
-            $execquery = mysql_query($sql);
-              logFile($sql);
-            if(!$execquery){
-              $DBVAR->rollback();
-              echo "<script>alert('ERROR #003 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";              
-              exit;
-            }   
-           
+       
+              unset($tmpField);
+              unset($tmpValue);
+              foreach ($kib as $key => $val) {
+                $tmpField[] = $key;
+                $tmpValue[] = "'".$val."'";
+              }
+               
+              $fileldImp = implode(',', $tmpField);
+              $dataImp = implode(',', $tmpValue);
+
+              $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})";
+              $execquery = mysql_query($sql);
+                logFile($sql);
+              if(!$execquery){
+                $DBVAR->rollback();
+                echo "<script>alert('ERROR #003 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";              
+                exit;
+              }   
+      } 
            
   }
   // exit;

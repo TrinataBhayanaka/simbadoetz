@@ -343,6 +343,30 @@ function dTableParam(idTable, urlApi, total)
 
 }
 
+function ajaxPemeriksaan(field, value)
+{
+
+	var encode = $('#'+field).attr('data-param');
+	// console.log(encode);
+	$.post(
+		basedomain+'/function/phpajax/ajax.php', 
+		{
+			field:field, 
+			value:value, 
+			pemeriksaan:1, 
+			encode:encode, 
+			}, 
+		function(data){
+			if (data.status==true){
+				alert('update berhasil');
+			}else{
+				alert('update gagal');
+			}
+			location.reload(); 
+		}, "JSON")
+}
+
 function log(){
 	alert('ada');
 }
+

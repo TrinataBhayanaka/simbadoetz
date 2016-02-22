@@ -526,10 +526,84 @@ function ubahPassword($data,$debug=false)
     }
  }
 
+/* pemeriksaan */
 
- 
+$param = $_POST['pemeriksaan'];
 
- 
+if ($param == '1'){
+
+	$data = ajaxPemeriksaan($_POST);
+	if ($data){
+		print json_encode(array('status'=>true));
+	}else{
+		print json_encode(array('status'=>false));
+	}
+	exit;
+}
+
+function ajaxPemeriksaan($data)
+{
+	// pr($data);
+	global $DBVAR;
+
+	$decode = unserialize(urldecode($_POST['encode']));
+	// pr($decode);
+	$listTableOri = array(
+                        'A'=>'tanah',
+                        'B'=>'mesin',
+                        'C'=>'bangunan',
+                        'D'=>'jaringan',
+                        'E'=>'asetlain',
+                        'F'=>'kdp',
+                        'G'=>'aset');
+
+	$fromTable = $data['fromtable'];
+	$tableName = $listTableOri[$decode['TipeAset']];
+	$field = $data['field'];
+	$value = $data['value'];
+	$log_id = intval($decode['log_id']);
+	$Aset_ID = $decode['Aset_ID'];
+
+	if ($log_id > 1){
+		$query1 = "UPDATE log_{$tableName} SET {$field} = '{$value}' WHERE log_id = '$log_id' AND Aset_ID = '{$Aset_ID}' LIMIT 1";
+    	$result1 = $DBVAR->query($query1) or die ($DBVAR->error());
+    	if ($result1) return true;
+    }else{
+
+    	$inAset =  array('StatusValidasi', 
+    					'Status_Validasi_Barang',
+    					'kodeKA',
+    					'kondisi',
+    					'TglPembukuan',
+    					'TglPerubahan',
+    					'Info');
+    	if (in_array($field, $inAset)){
+    		$query1 = "UPDATE aset SET {$field} = '{$value}' WHERE Aset_ID = '{$Aset_ID}' LIMIT 1";
+			// pr($query1);
+			$result1 = $DBVAR->query($query1) or die ($DBVAR->error());
+    	}
+		
+		
+		$inKIB =  array('StatusTampil', 
+						'StatusValidasi', 
+						'Status_Validasi_Barang',
+						'kodeKA',
+						'kondisi',
+						'TglPembukuan',
+						'TglPerubahan',
+						'Info',
+						'TglPerubahan');
+		if (in_array($field, $inKIB)){
+			$query2 = "UPDATE {$tableName} SET {$field} = '{$value}' WHERE Aset_ID = '{$Aset_ID}' LIMIT 1";
+			// pr($query2);
+			$result2 = $DBVAR->query($query2) or die ($DBVAR->error());
+		}
+		
+		return true;
+	}
+
+    return false;
+}
  
  
 ?>

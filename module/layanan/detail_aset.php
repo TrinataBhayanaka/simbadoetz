@@ -20,7 +20,12 @@ $LAYANAN = new RETRIEVE_LAYANAN;
         </script>
 		<?php
 	}
-	// pr($data);
+	
+	$allowUser = array(1,350);
+	$operator = $_SESSION['ses_uoperatorid'];
+	$rollbackID = array(28,21,1);
+	if (in_array($operator, $allowUser)) $allow = true;
+	else $allow = false;
 ?>
 	
 	<!-- End Sql -->
@@ -40,7 +45,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 
 		<section class="formLegend">
 			
-		<?php $HELPER_FILTER->back($url_rewrite.'/module/layanan/lihat_aset_daftar.php')?>
+		<?php $HELPER_FILTER->back($url_rewrite.'/module/layanan/pemeriksaan_filter_hasil.php?pid=1')?>
 
 			<div class="detailLeft">
 				<ul>
@@ -113,8 +118,10 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<td><?=$value['TglPerubahan']?></td>
 						<td><?=$value['Info']?></td>
 						<td>
-							<!-- <a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=2"?>'><input class="btn btn-warning" type="button" value="Edit"></a> -->
-							<a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}"?>'><input class="btn btn-danger" type="button" value="Rollback"></a>
+							<?php if (in_array($value['Kd_Riwayat'], $rollbackID)):?>
+							<?php if ($allow):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=2"?>'><input class="btn btn-warning" type="button" value="Edit"></a><?php endif;?>
+							<?php if ($key==0):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}"?>'><input class="btn btn-danger" type="button" value="Rollback"></a><?php endif;?>
+							<?php endif;?>
 						</td>
 					</tr>
 				<?php
@@ -149,7 +156,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<th>Tanggal Perolehan</th>
 						<th>Tanggal Pembukuan</th>
 						<th>Info</th>
-						<!-- <th>Aksi</th> -->
+						<?php if ($allow):?><th>Aksi</th><?php endif;?>
 					</tr>
 				</thead>
 				<tbody>
@@ -172,9 +179,11 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<td class="center"><?=$value['TglPerolehan']?></td>
 						<td class="center"><?=$value['TglPembukuan']?></td>
 						<td><?=$value['Info']?></td>
-						<!-- <td>
+						<?php if ($allow):?>
+						<td>
 							<a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=1"?>'><input class="btn btn-warning" type="button" value="Edit"></a>
-						</td> -->
+						</td>
+						<?php endif;?>
 					</tr>
 				<?php
 						$i++;
