@@ -43,11 +43,8 @@ $sTable = "kontrak";
 $kodeSatker 		= $_GET['kodeSatker'];
 $jabatan			= $_GET['jabatan'];
 
-if($jabatan != 1){
-	$condtn = "kodeSatker LIKE '$kodeSatker' ";
-} else {
 	if($kodeSatker != "") $condtn = "kodeSatker LIKE '$kodeSatker' "; else $condtn = "1";
-}
+
 
 
 // echo $tahun;
