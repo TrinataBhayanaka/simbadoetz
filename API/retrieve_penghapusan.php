@@ -10411,6 +10411,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         function cekdataPenghapusan($asetid,$post=false,$debug=false){
             // pr($asetid);
             // pr($post);
+            $get=$_GET['Kd_Riwayat'];
+            $filterTmbh="";
+            if($get){
+                $filterTmbh .=" AND Kd_Riwayat={$get}";
+            }
+        pr($filterTmbh);
             $sqlAset = array(
                     'table'=>"Aset",
                     'field'=>"Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,kondisi,Dihapus,NotUse,Tahun,StatusValidasi,Status_Validasi_Barang,TipeAset,fixPenggunaan",
@@ -10516,7 +10522,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $resUsulAP = $this->db->lazyQuery($sqlUsulAP,$debug,2);
 
                 $query2="DELETE FROM penghapusanaset WHERE Aset_ID='{$post[asetidpost]}' ";
-
+                
                 $exec2=$this->query($query2) or die($this->error());
 
             }
