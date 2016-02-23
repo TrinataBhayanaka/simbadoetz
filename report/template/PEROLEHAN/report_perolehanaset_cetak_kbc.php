@@ -51,12 +51,13 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
+
 $hit = count($query);
 if($kb == 'KB-C'){
 	$flag = 'C';
 }
 
-$TypeRprtr = '';
+$TypeRprtr = 'kartu';
 $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
@@ -72,7 +73,7 @@ $resQuery=$REPORT->kartuBarang($query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 // exit;
 //retrieve html
-$html=$REPORT->retrieve_html_kb_c($resQuery,$gambar,$skpd_id);
+$html=$REPORT->retrieve_html_kb_rev_general($resQuery,$gambar,$skpd_id,$tglakhirperolehan,$flag);
 // exit;
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

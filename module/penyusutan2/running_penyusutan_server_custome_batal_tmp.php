@@ -11,33 +11,32 @@
 error_reporting(0);
 include "../../config/config.php";
 
-$kib 	= $argv[1];
-$tahun 	= $argv[2];
-$kodeSatker=$argv[3];
-$id=$argv[4];
+$kib = $argv[1];
+$tahun = $argv[2];
+$kodeSatker = $argv[3];
+$id = $argv[4];
 
-/*if($tahun == 2014 || $tahun == 2015){
-	$newTahun = '2014';
-}else{
-	$newTahun = $tahun - 1; 
-}*/
-$newTahun = $tahun ; 
+/* if($tahun == 2014 || $tahun == 2015){
+  $newTahun = '2014';
+  }else{
+  $newTahun = $tahun - 1;
+  } */
+$newTahun = $tahun;
 
-$aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.Info','a.NilaiPerolehan','a.noRegister','a.PenyusutanPerTahun','a.AkumulasiPenyusutan','a.TipeAset','a.kodeSatker','a.Status_Validasi_Barang');
+$aColumns = array('a.Aset_ID', 'a.kodeKelompok', 'k.Uraian', 'a.Tahun', 'a.Info', 'a.NilaiPerolehan', 'a.noRegister', 'a.PenyusutanPerTahun', 'a.AkumulasiPenyusutan', 'a.TipeAset', 'a.kodeSatker', 'a.Status_Validasi_Barang');
 $fieldCustom = str_replace(" , ", " ", implode(", ", $aColumns));
 $sTable = "aset_tmp as a";
 $sTable2 = "aset_tmp2 as a";
 $sTable_inner_join_kelompok = "kelompok as k";
-$cond_kelompok ="k.Kode = a.kodeKelompok ";
+$cond_kelompok = "k.Kode = a.kodeKelompok ";
 $status = "a.Status_Validasi_Barang = 1 AND";
 
- if($tahun == 2014){
-    $plus_tahun=$tahun+1;
-    $TglPerubahan_temp = $plus_tahun."-01"."-01";
-  } 
-     else
-     $TglPerubahan_temp = $tahun."-12"."-31";
-     
+if ($tahun == 2014) {
+    $plus_tahun = $tahun + 1;
+    $TglPerubahan_temp = $plus_tahun . "-01" . "-01";
+} else
+    $TglPerubahan_temp = $tahun . "-12" . "-31";
+
 if ($kib == 'B') {
     $queryKib = "create temporary table aset_tmp as
                                       select a.Mesin_ID,a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TglPerolehan, a.TglPembukuan, a.kodeData, a.kodeKA, 'TipeAset',
@@ -345,18 +344,17 @@ where a.TglPerolehan <='$TglPerubahan_temp' AND a.TglSKKDH >'$TglPerubahan_temp'
 
 
 //untuk tanggal perubahan reset log andreas
-                                                                      if($tahun == 2014){
-                                                                           $plus_tahun=$tahun+1;
-                                                                     $TglPerubahan = $plus_tahun."-01"."-01";
-                                                                      } 
-                                                                     else
-                                                                           $TglPerubahan = $tahun."-12"."-31";
+if ($tahun == 2014) {
+    $plus_tahun = $tahun + 1;
+    $TglPerubahan = $plus_tahun . "-01" . "-01";
+} else
+    $TglPerubahan = $tahun . "-12" . "-31";
 
-$sWhere=" WHERE $status a.AkumulasiPenyusutan IS NOT NULL AND a.PenyusutanPerTahun IS NOT NULL  
+$sWhere = " WHERE $status a.AkumulasiPenyusutan IS NOT NULL AND a.PenyusutanPerTahun IS NOT NULL  
 			  AND a.kodeSatker like '$kodeSatker%' and TahunPenyusutan='$newTahun' AND a.kodeKelompok like '$flagKelompok%'";
 
-if($kib == 'B' || $kib == 'C'){ 				   
-$sQuery = "
+if ($kib == 'B' || $kib == 'C') {
+    $sQuery = "
 		SELECT $fieldCustom
 			FROM   $sTable 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
@@ -367,281 +365,302 @@ $sQuery = "
 			FROM   $sTable2 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 			$sWhere
-			$AddCondtn_2 ";	
-}elseif($kib == 'D'){
-$sQuery = "
+			$AddCondtn_2 ";
+} elseif ($kib == 'D') {
+    $sQuery = "
 		SELECT $fieldCustom
 			FROM   $sTable 
 			INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 			$sWhere
 			$AddCondtn_1";
-}	
+}
 //echo "masukk";
 // $time_start = microtime_float();
 //select Tgl Penyusutan
 $ExeQuery = $DBVAR->query($sQuery) or die($DBVAR->error());
 echo "Penyusutan tahun berjalan $kodeSatker \n"
-        . "Aset_ID \t kodeKelompok  \t NilaiPerolehan \t Tahun \t masa_manfaat \t AkumulasiPenyusutan \t NilaiBuku  \t penyusutan_per_tahun \n";
+ . "Aset_ID \t kodeKelompok  \t NilaiPerolehan \t Tahun \t masa_manfaat \t AkumulasiPenyusutan \t NilaiBuku  \t penyusutan_per_tahun \n";
 
-while($Data = $DBVAR->fetch_array($ExeQuery)){
-		$Aset_ID = $Data['Aset_ID'];
-		
-		//proses perhitungan penyusutan
-		$kodeKelompok=$Data['kodeKelompok'];
-        $tmp_kode= explode(".", $kodeKelompok);
-		$NilaiPerolehan=$Data['NilaiPerolehan'];
-        $Tahun=$Data['Tahun'];
-  
-          
-          switch ($Data['TipeAset']) {
-              case 'B':
-                  $tableKib="mesin";
-                  $tableLog="log_mesin";
-                  break;
-              case 'C':
-                  $tableKib="bangunan";
-                  $tableLog="log_bangunan";
-                  break;
-              case 'D':
-                  $tableKib="jaringan";
-                  $tableLog="log_jaringan";
-                  break;
+while ($Data = $DBVAR->fetch_array($ExeQuery)) {
+    $Aset_ID = $Data['Aset_ID'];
 
-              default:
-                  break;
-          }
-          
-		//cek untuk rollback
-			//$ceck = $tahun - 2015;
-			
-			if($tahun == 2014){
-			//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
-			$QueryAset	  = "UPDATE aset SET MasaManfaat = NULL,
+    //proses perhitungan penyusutan
+    $kodeKelompok = $Data['kodeKelompok'];
+    $tmp_kode = explode(".", $kodeKelompok);
+    $NilaiPerolehan = $Data['NilaiPerolehan'];
+    $Tahun = $Data['Tahun'];
+
+
+    switch ($Data['TipeAset']) {
+        case 'B':
+            $tableKib = "mesin";
+            $tableLog = "log_mesin";
+            break;
+        case 'C':
+            $tableKib = "bangunan";
+            $tableLog = "log_bangunan";
+            break;
+        case 'D':
+            $tableKib = "jaringan";
+            $tableLog = "log_jaringan";
+            break;
+
+        default:
+            break;
+    }
+
+    //cek untuk rollback
+    //$ceck = $tahun - 2015;
+
+    if ($tahun == 2014) {
+        //update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
+        $QueryAset = "UPDATE aset SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTaun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                      TahunPenyusutan=NULL
 							WHERE Aset_ID = '$Aset_ID'";
-			$ExeQueryAset = $DBVAR->query($QueryAset);
-			//untuk log txt
-			echo "$Aset_ID \t $kodeKelompok \t $NilaiPerolehan \t $Tahun \t $masa_manfaat \t $AkumulasiPenyusutan \t $NilaiBuku  \t $penyusutan_per_tahun \n";
-			//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat,NilaiBuku
-			if($Data['TipeAset'] == 'B'){
-				$tableKib = 'mesin';
-				$tableLog = 'log_mesin';
-				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+        $ExeQueryAset = $DBVAR->query($QueryAset);
+        //untuk log txt
+        echo "$Aset_ID \t $kodeKelompok \t $NilaiPerolehan \t $Tahun \t $masa_manfaat \t $AkumulasiPenyusutan \t $NilaiBuku  \t $penyusutan_per_tahun \n";
+        //update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat,NilaiBuku
+        if ($Data['TipeAset'] == 'B') {
+            $tableKib = 'mesin';
+            $tableLog = 'log_mesin';
+            $QueryKib = "UPDATE $tableKib SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID'";
-				$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-				
-				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
-				$QueryKib	  = "UPDATE $tableLog SET MasaManfaat = NULL,
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+
+            //update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
+            $QueryKib = "UPDATE $tableLog SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
-				$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-				
-			}elseif($Data['TipeAset'] == 'C'){
-				$tableKib = 'bangunan';
-				$tableLog = 'log_bangunan';
-				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        } elseif ($Data['TipeAset'] == 'C') {
+            $tableKib = 'bangunan';
+            $tableLog = 'log_bangunan';
+            $QueryKib = "UPDATE $tableKib SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID'";
-				$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
 
-				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
-				$QueryKib	  = "UPDATE $tableLog SET MasaManfaat = NULL,
+            //update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
+            $QueryKib = "UPDATE $tableLog SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
-				$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-
-				
-			}elseif($Data['TipeAset'] == 'D'){
-				$tableKib = 'jaringan';
-				$tableLog = 'log_jaringan';
-				$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = NULL,
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        } elseif ($Data['TipeAset'] == 'D') {
+            $tableKib = 'jaringan';
+            $tableLog = 'log_jaringan';
+            $QueryKib = "UPDATE $tableKib SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID'";
-				$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
 
 
-				//update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
-				$QueryKib	  = "UPDATE $tableLog SET MasaManfaat = NULL,
+            //update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
+            $QueryKib = "UPDATE $tableLog SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
 								WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
-				$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        }
 
-			}
 
-		
-			$action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
-			
-			//insert log
-			// $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
-			$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50') and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}'";
-			$exeQueryLog = $DBVAR->query($QueryLog);
-                  
-                  //update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
-						$QueryKib	  = "UPDATE $tableLog SET MasaManfaat = NULL,
+        $action = "Penyusutan_" . $tahun . "_" . $Data['kodeSatker'];
+
+        //insert log
+        // $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
+        $QueryLog = "DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50') and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}'";
+        $exeQueryLog = $DBVAR->query($QueryLog);
+
+        //update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
+        $QueryKib = "UPDATE $tableLog SET MasaManfaat = NULL,
 											 AkumulasiPenyusutan = NULL,	
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
 										WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
-						$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-		}elseif($tahun >= 2015){
-                    $tahun_sblm=$tahun-1;
-				$QueryLogSelect = "select kodeKelompok,PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,"
-                                        . "MasaManfaat,UmurEkonomis,NilaiBuku,AkumulasiPenyusutan,PenyusutanPerTahun "
-                                        . " from $tableLog where Aset_ID = {$Aset_ID} "
-                                . " and TahunPenyusutan='$tahun_sblm' and Kd_Riwayat=50 order by log_id desc limit 1";
-				$exeQueryLogSelect = $DBVAR->query($QueryLogSelect) or die($DBVAR->error());
-				$resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
-			
-				$AkumulasiPenyusutan_Awal = $resultQueryLogSelect['AkumulasiPenyusutan'];
-				$NilaiBuku_Awal = $resultQueryLogSelect['NilaiBuku'];
-				$PenyusutanPerTahun_Awal = $resultQueryLogSelect['PenyusutanPerTahun'];
-				$MasaManfaat_Awal = $resultQueryLogSelect['MasaManfaat'];
-				$UmurEkonomis = $resultQueryLogSelect['UmurEkonomis'];
-			        $kodeKelompok= $resultQueryLogSelect['kodeKelompok'];
-                                if($AkumulasiPenyusutan_Awal==""||$AkumulasiPenyusutan_Awal==0){
-                                    $TahunPenyusutan=",TahunPenyusutan='' ";
-                                }else{
-                                     $TahunPenyusutan=",TahunPenyusutan='$tahun_sblm'";
-                                }
-                                echo "$Aset_ID \t $kodeKelompok \t $NilaiPerolehan \t $Tahun \t $MasaManfaat_Awal \t $AkumulasiPenyusutan_Awal \t $NilaiBuku_Awal  \t $PenyusutanPerTahun_Awal  $UmurEkonomis $TahunPenyusutan\n";
-			
-				//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
-				$QueryAset	  = "UPDATE aset SET MasaManfaat = '{$MasaManfaat_Awal}',
+        $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+    } elseif ($tahun >= 2015) {
+        $tahun_sblm = $tahun - 1;
+        $QueryLogSelect = "select kodeKelompok,PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,"
+                . "MasaManfaat,UmurEkonomis,NilaiBuku,AkumulasiPenyusutan,PenyusutanPerTahun "
+                . " from $tableLog where Aset_ID = {$Aset_ID} "
+                . " and TahunPenyusutan='$tahun_sblm' and Kd_Riwayat=50 order by log_id desc limit 1";
+        $exeQueryLogSelect = $DBVAR->query($QueryLogSelect) or die($DBVAR->error());
+        $resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
+
+        $AkumulasiPenyusutan_Awal = $resultQueryLogSelect['AkumulasiPenyusutan'];
+        $NilaiBuku_Awal = $resultQueryLogSelect['NilaiBuku'];
+        $PenyusutanPerTahun_Awal = $resultQueryLogSelect['PenyusutanPerTahun'];
+        $MasaManfaat_Awal = $resultQueryLogSelect['MasaManfaat'];
+        $UmurEkonomis = $resultQueryLogSelect['UmurEkonomis'];
+        $kodeKelompok = $resultQueryLogSelect['kodeKelompok'];
+
+        $AkumulasiPenyusutan_Awal2 = $resultQueryLogSelect['AkumulasiPenyusutan_Awal'];
+        $NilaiBuku_Awal2 = $resultQueryLogSelect['NilaiBuku_Awal'];
+        $PenyusutanPerTahun_Awal2 = $resultQueryLogSelect['PenyusutanPerTahun_Awal'];
+
+        if ($AkumulasiPenyusutan_Awal == "" || $AkumulasiPenyusutan_Awal == 0) {
+            $TahunPenyusutan = ",TahunPenyusutan='' ";
+        } else {
+            $TahunPenyusutan = ",TahunPenyusutan='$tahun_sblm'";
+        }
+        echo "$Aset_ID \t $kodeKelompok \t $NilaiPerolehan \t $Tahun \t $MasaManfaat_Awal \t $AkumulasiPenyusutan_Awal \t $NilaiBuku_Awal  \t $PenyusutanPerTahun_Awal  $UmurEkonomis $TahunPenyusutan\n";
+
+        //update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat
+        $QueryAset = "UPDATE aset SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTaun = '{$PenyusutanPerTahun_Awal}',
 												 NilaiBuku = '{$NilaiBuku_Awal}',
 												 UmurEkonomis = '{$UmurEkonomis}'
                                                                                                  $TahunPenyusutan     
 								WHERE Aset_ID = '$Aset_ID'";
-				$ExeQueryAset = $DBVAR->query($QueryAset) or die($DBVAR->error());
-				
-				//update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat,NilaiBuku
-				if($Data['TipeAset'] == 'B'){
-					$tableKib = 'mesin';
-					$tableLog = 'log_mesin';
-					$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
+        $ExeQueryAset = $DBVAR->query($QueryAset) or die($DBVAR->error());
+
+        //update AkumulasiPenyusutan,penyusutan_per_tahun,MasaManfaat,NilaiBuku
+        if ($Data['TipeAset'] == 'B') {
+            $tableKib = 'mesin';
+            $tableLog = 'log_mesin';
+            $QueryKib = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
 												 NilaiBuku = '{$NilaiBuku_Awal}',
 												 UmurEkonomis = '{$UmurEkonomis}' 
                                                                                                  $TahunPenyusutan    
 									WHERE Aset_ID = '{$Aset_ID}'";
-					$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-					
-				}elseif($Data['TipeAset'] == 'C'){
-					$tableKib = 'bangunan';
-					$tableLog = 'log_bangunan';
-					$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        } elseif ($Data['TipeAset'] == 'C') {
+            $tableKib = 'bangunan';
+            $tableLog = 'log_bangunan';
+            $QueryKib = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
 												 NilaiBuku = '{$NilaiBuku_Awal}',
 												 UmurEkonomis = '{$UmurEkonomis}' 
                                                                                                   $TahunPenyusutan    
 									WHERE Aset_ID = '{$Aset_ID}'";
-					$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-					
-				}elseif($Data['TipeAset'] == 'D'){
-					$tableKib = 'jaringan';
-					$tableLog = 'log_jaringan';
-					$QueryKib	  = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        } elseif ($Data['TipeAset'] == 'D') {
+            $tableKib = 'jaringan';
+            $tableLog = 'log_jaringan';
+            $QueryKib = "UPDATE $tableKib SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
 												 NilaiBuku = '{$NilaiBuku_Awal}',
 												 UmurEkonomis = '{$UmurEkonomis}' 
                                                                                                     $TahunPenyusutan 
 									WHERE Aset_ID = '{$Aset_ID}'";
-					$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-				}
-				$action = "Penyusutan_".$tahun."_".$Data['kodeSatker'];
-				// $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
-				$QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50','51','52')  and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' ";
-				$exeQueryLog = $DBVAR->query($QueryLog);
-                                
-                                $QueryKib	  = "UPDATE $tableLog SET MasaManfaat = '{$MasaManfaat_Awal}',
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        }
+        $action = "Penyusutan_" . $tahun . "_" . $Data['kodeSatker'];
+        // $QueryLog ="DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat = '50' and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' and YEAR(TglPerubahan) = {$tahun}";
+        $QueryLog = "DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50','51','52')  and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' ";
+        $exeQueryLog = $DBVAR->query($QueryLog);
+
+        $QueryKib = "UPDATE $tableLog SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
 												 NilaiBuku = '{$NilaiBuku_Awal}',
+                                                                                                 AkumulasiPenyusutan_Awal = '{$AkumulasiPenyusutan_Awal2}',	
+												 PenyusutanPerTahun_Awal = '{$PenyusutanPerTahun_Awal2}',
+												 NilaiBuku_Awal = '{$NilaiBuku_Awal2}',   
 												 UmurEkonomis = '{$UmurEkonomis}' 
                                                                                                   $TahunPenyusutan 
                                                                                                      
 										WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
-						$ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-		
-			}
-		
-		
-		}
-		
-	
-		// exit;
-	
-	 
-    //update table status untuk penyusutan
-     $query="update penyusutan_tahun_berjalan  set StatusRunning=0 where id=$id";
-     $DBVAR->query($query) or die($DBVAR->error());
-    
-    function cek_masamanfaat($kd_aset1,$kd_aset2,$kd_aset3,$DBVAR){
-         $query="select * from ref_masamanfaat where kd_aset1='$kd_aset1' "
-                 . " and kd_aset2='$kd_aset2' and kd_aset3='$kd_aset3' ";
-            $result=$DBVAR->query($query) or die($DBVAR->error());
-          while($row=$DBVAR->fetch_object($result)){
-               $masa_manfaat=$row->masa_manfaat;
-          }
-          return $masa_manfaat;
+        $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        //untuk mengecek bila ada trasaksi
+        $TglPerubahan_awal = $tahun . "-01" . "-01";
+        $query_perubahan = "select kd_riwayat,log_id,kodeKelompok,kodeSatker,Aset_ID,NilaiPerolehan,NilaiPerolehan_Awal,Tahun,Kd_Riwayat,"
+                . "(NilaiPerolehan-NilaiPerolehan_Awal) as selisih,AkumulasiPenyusutan,NilaiBuku,MasaManfaat,UmurEkonomis,TahunPenyusutan "
+                . " from $tableLog where TglPerubahan>'$TglPerubahan_awal' and kd_riwayat in (2,21,28,7) "
+                . "and Aset_ID='$Aset_ID' order by log_id asc";
+        $count = 0;
+        $qlog = $DBVAR->query($query_perubahan) or die($DBVAR->error());
+        $kapitalisasi = 0;
+        while ($Data_Log = $DBVAR->fetch_object($qlog)) {
+            $log_id = $Data_Log->log_id;
+
+            $QueryKib = "UPDATE $tableLog SET MasaManfaat = '{$MasaManfaat_Awal}',
+                                            AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
+                                            PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
+                                            NilaiBuku = '{$NilaiBuku_Awal}',
+                                            AkumulasiPenyusutan_Awal = '{$AkumulasiPenyusutan_Awal2}',	
+                                            PenyusutanPerTahun_Awal = '{$PenyusutanPerTahun_Awal2}',
+                                            NilaiBuku_Awal = '{$NilaiBuku_Awal2}',   												 
+                                            UmurEkonomis = '{$UmurEkonomis}' 
+                                            $TahunPenyusutan 
+                                            WHERE Aset_ID = '$Aset_ID' and log_id='$log_id' ";
+            $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        }
     }
-	
-    function microtime_float()
-{
-    list($usec, $sec) = explode(" ", microtime());
-    return ((float)$usec + (float)$sec);
 }
-    
-function delete_catatan_penyusutan($action,$kodeSatker,$tableKIB,$DBVAR){
+
+
+// exit;
+//update table status untuk penyusutan
+$query = "update penyusutan_tahun_berjalan  set StatusRunning=0 where id=$id";
+$DBVAR->query($query) or die($DBVAR->error());
+
+function cek_masamanfaat($kd_aset1, $kd_aset2, $kd_aset3, $DBVAR) {
+    $query = "select * from ref_masamanfaat where kd_aset1='$kd_aset1' "
+            . " and kd_aset2='$kd_aset2' and kd_aset3='$kd_aset3' ";
+    $result = $DBVAR->query($query) or die($DBVAR->error());
+    while ($row = $DBVAR->fetch_object($result)) {
+        $masa_manfaat = $row->masa_manfaat;
+    }
+    return $masa_manfaat;
+}
+
+function microtime_float() {
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float) $usec + (float) $sec);
+}
+
+function delete_catatan_penyusutan($action, $kodeSatker, $tableKIB, $DBVAR) {
     switch ($tableKIB) {
         case "B":
-            $kodeKelompok="kodeKelompok like '02%'";
+            $kodeKelompok = "kodeKelompok like '02%'";
             break;
         case "C":
-            $kodeKelompok="kodeKelompok like '03%'";
+            $kodeKelompok = "kodeKelompok like '03%'";
             break;
         case "D":
-            $kodeKelompok="kodeKelompok like '04%'";
+            $kodeKelompok = "kodeKelompok like '04%'";
             break;
         default:
             break;
     }
-    $query="update log_penyusutan set StatusTampil=0 where kodeSatker='$kodeSatker' and $kodeKelompok and action='$action' ";
+    $query = "update log_penyusutan set StatusTampil=0 where kodeSatker='$kodeSatker' and $kodeKelompok and action='$action' ";
     $ExeQueryKib = $DBVAR->query($query) or die($DBVAR->error());
 }
+
 ?>

@@ -796,7 +796,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>&nbsp;
 							</li>
 							<li>
-								<span class="span2">Tanggal Awal</span>
+								<span class="span2">Tanggal Perolehan</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
@@ -805,7 +805,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 								</div>
 							</li>
 							<li>
-								<span class="span2">Tanggal Akhir</span>
+								<span class="span2">Tanggal Perubahan</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
