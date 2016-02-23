@@ -27,24 +27,24 @@ $id=$_SESSION['user_id'];//Nanti diganti
  // echo "masuk aja dulu";
  // pr($_GET);
  // exit;
-$aColumns = array('id','noKontrak','kodeSatker','tglKontrak',
-				 'tipeAset','tipe_kontrak','nilai','n_status');
+$aColumns = array('k.id','k.noKontrak','k.kodeSatker','s.NamaSatker','k.tglKontrak',
+				 'k.tipeAset','k.tipe_kontrak','k.nilai','k.n_status');
 $test = count($aColumns);
   
 // echo $aColumns; 
 /* Indexed column (used for fast and accurate table cardinality) */
-$sIndexColumn = "id";
+$sIndexColumn = "k.id";
 
 /* DB table to use */
-$sTable = "kontrak";
-// $sTable_inner_join_kelompok = "satker as k";
-// $cond_kelompok ="k.kode = a.kodeSatker AND Kd_Ruang IS NULL";
+$sTable = "kontrak as k";
+$sTable_inner_join_satker = "satker as s";
+$cond_satker ="s.kode = k.kodeSatker AND s.Kd_Ruang IS NULL";
 
 $kodeSatker 		= $_GET['kodeSatker'];
 $jabatan			= $_GET['jabatan'];
 
 
-	if($kodeSatker != "") $condtn = "kodeSatker LIKE '$kodeSatker%' "; else $condtn = "1";
+	if($kodeSatker != "") $condtn = "k.kodeSatker LIKE '$kodeSatker%' "; else $condtn = "1";
 
 
 
@@ -94,7 +94,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY tglKontrak";
+          $sOrder = "ORDER BY k.tglKontrak";
           // $sOrder = "";
      }
 }
@@ -116,13 +116,14 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
           }
      }
      $sWhere = substr_replace($sWhere, "", -3);
-     $sWhere .= ')';
+     if($condtn == "1") $condtn = "";
+     $sWhere .= $condtn.')';
 } else {
 	$sWhere = "WHERE ".$condtn;
 }
 
 /* Individual column filtering */
-for ($i = 0; $i < count($aColumns); $i++) {
+/*for ($i = 0; $i < count($aColumns); $i++) {
      if (isset($_GET['bSearchable_' . $i]) && $_GET['bSearchable_' . $i] == "true" && $_GET['sSearch_' . $i] != '') {
           if ($sWhere == "") {
         //       $sWhere = "WHERE ";
@@ -132,7 +133,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
           }
           $sWhere .= "`" . $aColumns[$i] . "` LIKE '%" . mysql_real_escape_string($_GET['sSearch_' . $i]) . "%' ";
      }
-}
+}*/
 
 // if($sWhere != "") $where = "WHERE ".$sWhere; else $where = "";
 /*
@@ -142,11 +143,12 @@ for ($i = 0; $i < count($aColumns); $i++) {
 
 $sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
-		FROM   {$sTable} 
+		FROM   {$sTable} INNER JOIN $sTable_inner_join_satker ON $cond_satker
 		{$sWhere}
 		{$sOrder}
 		{$sLimit}
 		";
+// echo $sWhere;
 // echo $sQuery;
 
 // $rResult = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
@@ -167,9 +169,9 @@ $iFilteredTotal = $aResultFilterTotal[0];
 /* Total data set length */
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable $sWhere";
+		FROM   $sTable INNER JOIN $sTable_inner_join_satker ON $cond_satker $sWhere";
 
-	// 	echo $sQuery;
+		// echo $sQuery;
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
 $iTotal = $aResultTotal[0];
@@ -189,16 +191,12 @@ $no=$_GET['iDisplayStart']+1;
 
 	
 		$data=$rResultGetDataApluserlist;
-	
-	
+
 if (!empty($data)){
 	foreach ($data as $key => $aRow)
 	{
 		$row = array();
-		$sql = "SELECT NamaSatker FROM satker WHERE kode = '{$aRow['kodeSatker']}' AND Kd_Ruang IS NULL";
-		$exec = $DBVAR->query($sql) or fatal_error('MySQL Error: ' . mysql_errno());
-		$NamaSatker = $DBVAR->fetch_array($exec);
-		
+		$tes = $aRow['NamaSatker'];
 		$noKontrak = $aRow['noKontrak'];
 		$tglKontrak = $aRow['tglKontrak'];
 		$nilai = $aRow['nilai'];
@@ -230,7 +228,7 @@ if (!empty($data)){
 		
 		
 		  $row[] ="<center>".$no."</center>";
-		  $row[] =$NamaSatker['NamaSatker'];
+		  $row[] =$tes;
 		  $row[] =$noKontrak;
 		  $row[] =$tglKontrak;
 		  $row[] =$jenisKontrak;
