@@ -44,9 +44,9 @@ $kodeSatker 		= $_GET['kodeSatker'];
 $jabatan			= $_GET['jabatan'];
 
 if($jabatan != 1){
-	$condtn = "kodeSatker LIKE '$kodeSatker' AND ";
+	$condtn = "kodeSatker LIKE '$kodeSatker' ";
 } else {
-	if($kodeSatker != "") $condtn = "kodeSatker LIKE '$kodeSatker' AND "; else $condtn = "";
+	if($kodeSatker != "") $condtn = "kodeSatker LIKE '$kodeSatker' "; else $condtn = "";
 }
 
 
@@ -119,6 +119,8 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
      }
      $sWhere = substr_replace($sWhere, "", -3);
      $sWhere .= ')';
+}else {
+	$sWhere = "WHERE ".$condtn;
 }
 
 /* Individual column filtering */
