@@ -106,6 +106,8 @@ class report_engine_daftar extends report_engine {
 
                foreach ($dataArr as $key => $value) {
                     $perolehan = number_format($value[NilaiPerolehan], 2, ",", ".");
+                    $AkumulasiPenyusutan=number_format($value[AkumulasiPenyusutan], 2, ",", ".");
+                    $NilaiBuku=number_format($value[NilaiBuku], 2, ",", ".");
                     // pr($value['noRegister']);
                     $Satker=$this->getNamaSatker($value['kodeSatker']);
                     $NamaSatker=$Satker[0]->NamaSatker;
@@ -120,8 +122,8 @@ class report_engine_daftar extends report_engine {
                          <td style=\"width:20%;text-align:center\">{$NamaSatker}</td>
                          <td style=\"width:20%;text-align:center\">{$value[Tahun]}</td>
                          <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
-                         <td style=\"width:15%;text-align:right\">{$value[AkumulasiPenyusutan]}</td>
-                         <td style=\"width:15%;text-align:right\">{$value[NilaiBuku]}</td>
+                         <td style=\"width:15%;text-align:right\">{$AkumulasiPenyusutan}</td>
+                         <td style=\"width:15%;text-align:right\">{$NilaiBuku}</td>
                          <td style=\"width:15%;text-align:right\">{$perolehan}</td>
                          <td style=\"width:15%\">{$value[Info]}</td>
                </tr>
