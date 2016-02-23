@@ -44,7 +44,7 @@ $menu_id = 10;
 		    }
 		  }		
 		//sum total 
-		$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}'");
+		$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak[0]['noKontrak']}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
 		while ($sum = mysql_fetch_array($sqlsum)){
 					$sumTotal = $sum;
 				}

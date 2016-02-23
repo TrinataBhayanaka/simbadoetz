@@ -11,6 +11,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 	include"$path/menu.php";
 	
 	$data = $LAYANAN->retrieve_detail_aset($_GET);
+	// pr($data);
 	if (!$data){
 		?>
 		<script>
@@ -84,7 +85,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 				<thead>
 					<tr>
 						<th>Aset ID</th>
-						<th>Tanggal</th>
+						<th>Informasi Tambahan</th>
 						<th>Keterangan Log</th>
 						<th>Nilai Perolehan Awal</th>
 						<th>Nilai Perolehan</th>
@@ -107,7 +108,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 				?>
 					<tr class="gradeA">
 						<td><?=$value['Aset_ID']?></td>
-						<td><?=$value['changeDate']?></td>
+						<td><?=$value['data_awal'][0]['kodeSatker']. " - " .$value['data_awal'][0]['Uraian']?></td>
 						<td><?="[Kode ". $value['Kd_Riwayat'] .'] - '. $value['Nm_Riwayat']?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan_Awal'])?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan'])?></td>
@@ -120,7 +121,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<td>
 							<?php if (in_array($value['Kd_Riwayat'], $rollbackID)):?>
 							<?php if ($allow):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=2"?>'><input class="btn btn-warning" type="button" value="Edit"></a><?php endif;?>
-							<?php if ($key==0):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}"?>'><input class="btn btn-danger" type="button" value="Rollback"></a><?php endif;?>
+							<?php if ($key==0):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}"?>' onclick="return confirmBox('Rollback Data ?')"><input class="btn btn-danger" type="button" value="Rollback"></a><?php endif;?>
 							<?php endif;?>
 						</td>
 					</tr>
