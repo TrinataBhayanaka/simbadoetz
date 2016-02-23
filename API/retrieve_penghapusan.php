@@ -10423,6 +10423,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
          $table = $this->getTableKibAlias($TableAbjadlist[$resAset[0][TipeAset]]);
 // pr($table);
                 $tablelog="log_".$table[listTableOri];
+                pr($table);
+                pr($tablelog);
             $sqlKIB = array(
                     'table'=>"{$table[listTableOri]}",
                     'field'=>"Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,StatusValidasi,Status_Validasi_Barang,StatusTampil",
@@ -10433,7 +10435,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $sqlLOG= array(
                     'table'=>"{$tablelog}",
                     'field'=>"Aset_ID,noRegister,kodeKelompok,kodeSatker,kodeLokasi,TglPerolehan,NilaiPerolehan,StatusValidasi,Status_Validasi_Barang,changeDate,TglPerubahan,Kd_Riwayat,No_Dokumen",
-                    'condition' => "Aset_ID={$asetid} AND Kd_Riwayat='26'",
+                    'condition' => "Aset_ID={$asetid}",
+                    // 'condition' => "Aset_ID={$asetid} AND Kd_Riwayat='26'",
                     );
             $resLOG = $this->db->lazyQuery($sqlLOG,$debug);
 
