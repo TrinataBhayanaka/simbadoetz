@@ -20,6 +20,11 @@ class ROLLBACK extends DB{
                 if ($run)return true;
                 break;
 
+            case '3':
+                $run = $this->transfer($data);
+                if ($run)return true;
+                break;
+
             case '21':
                 $run = $this->koreksiNilai($data);
                 if ($run)return true;
@@ -34,6 +39,84 @@ class ROLLBACK extends DB{
                 break;
         }
 
+        return false;
+    }
+
+    function transfer($data=array(), $debug=false)
+    {
+        // get param from url
+        $log_id = $data['logid'];
+        $jenisaset = $data['jenisaset'];
+        $Aset_ID = $data['idaset'];
+        $satker = $data['kodeSatker'];
+        // get data log id in log table
+
+        $arrayTable = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
+        $table = $this->getTableKibAlias($arrayTable[$jenisaset]);
+        
+        $sqlMutasiAset = array(
+                    'table'=>"mutasiaset",
+                    'field'=>"*",
+                    'condition' => "Aset_ID = {$Aset_ID} AND SatkerTujuan = '{$satker}' AND Status = 1 AND Aset_ID_Tujuan = 0 ORDER BY Mutasi_ID DESC",
+                    'limit' => 1
+                    ); 
+        $ressqlMutasiAset = $this->db->lazyQuery($sqlMutasiAset,$debug);
+        if (!$ressqlMutasiAset) return false;
+
+        $sqlA = array(
+                    'table'=>"log_{$table['listTable']}",
+                    'field'=>"*",
+                    'condition' => "Aset_ID = {$Aset_ID} AND Kd_Riwayat = '3' AND kodeSatker IN ('{$satker}', '{$ressqlMutasiAset[0]['SatkerAwal']}')",
+                    // 'limit' => 1
+                    ); 
+        $resAset = $this->db->lazyQuery($sqlA,$debug);
+        if (count($resAset) < 2) return false;
+        // pr($resAset);exit;
+        logFile('3 - 1', 'rollback.txt');
+        
+        // $this->db->autocommit(0);
+        // $this->db->begin();
+        
+        $sqlKib = array(
+                'table'=>"{$table['listTable']}",
+                'field'=>"kodeSatker='{$resAset[0]['kodeSatker']}', kodeLokasi = '{$resAset[0]['kodeLokasi']}', noRegister='{$resAset[0]['noRegister']}', StatusValidasi = '{$resAset[0]['StatusValidasi']}', Status_Validasi_Barang = '{$resAset[0]['Status_Validasi_Barang']}', StatusTampil = '{$resAset[0]['StatusTampil']}', TglPembukuan = '{$resAset[0]['TglPembukuan']}', Info = '{$resAset[0]['Info']}'",
+                'condition'=>"Aset_ID='{$Aset_ID}'",
+                'limit'=> 1
+                );
+
+        $resKib = $this->db->lazyQuery($sqlKib,$debug,2);
+        logFile('3 - 2', 'rollback.txt');
+        $sql2 = array(
+                'table'=>"aset",
+                'field'=>"kodeSatker='{$resAset[0]['kodeSatker']}', kodeLokasi = '{$resAset[0]['kodeLokasi']}', noRegister='{$resAset[0]['noRegister']}',StatusValidasi = '{$resAset[0]['StatusValidasi']}', Status_Validasi_Barang = '{$resAset[0]['Status_Validasi_Barang']}', NotUse = '{$resAset[0]['NotUse']}', fixPenggunaan = '{$resAset[0]['fixPenggunaan']}', statusPemanfaatan = '{$resAset[0]['statusPemanfaatan']}', TglPembukuan = '{$resAset[0]['TglPembukuan']}', Info = '{$resAset[0]['Info']}'",
+                'condition'=>"Aset_ID='{$Aset_ID}'",
+                'limit'=> 1
+                );
+
+        $resSql2 = $this->db->lazyQuery($sql2,$debug,2); 
+        logFile('3 - 3', 'rollback.txt');
+        // hapus usulan mutasi
+        
+        logFile('3 - 4', 'rollback.txt');
+        $paramUsul['kodeSatker'] = $resAset[0]['kodeSatker'];
+        $paramUsul['mutasiid'] = $ressqlMutasiAset[0]['Mutasi_ID'];
+
+        $hpsUsulan = $this->hapusUsulanMutasi($paramUsul);
+        
+        if ($hpsUsulan){
+            // $data['idaset'] =  array(7502);
+            $data['logid'] = array($resAset[0]['log_id'], $resAset[1]['log_id']);
+            $data['idaset'] =  array($Aset_ID, $Aset_ID);
+            $deleteLog = $this->move_data_aset($data);
+            if ($deleteLog){
+                logFile('3 - 100 commit', 'rollback.txt');
+                // $this->db->commit();
+                return true;
+            } 
+        } 
+
+        logFile('3 - 0 rollback', 'rollback.txt');
+        // $this->db->rollback();
         return false;
     }
 
@@ -157,7 +240,7 @@ class ROLLBACK extends DB{
         // get param from url
         $log_id = $data['logid'];
         $jenisaset = $data['jenisaset'];
-        $Aset_ID = $data['Aset_ID'];
+        $Aset_ID = $data['idaset'];
 
         // get data log id in log table
 
