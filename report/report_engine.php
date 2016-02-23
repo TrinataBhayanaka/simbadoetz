@@ -29181,7 +29181,7 @@ $body="
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Keterangan</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Awal</td>
-                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Mutasi</td>
+                <td colspan=\"4\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Mutasi</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Akhir</td>
             </tr>
 			
@@ -29194,12 +29194,15 @@ $body="
                 <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 120px;\">No.Sertifikat<br>No. pabrik<br>No.Chasis Mesin</td>
                 <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Barang</td>
                 <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Harga</td>
-                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Berkurang<br/><hr>Bertambah</td>
+                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Berkurang</td>
+                <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Bertambah</td>
 				<td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Barang</td>
                 <td colspan=\"1\" rowspan=\"2\" style=\"text-align:center; font-weight: bold;\">Harga</td>
                 
 			</tr>
 			<tr>
+				<td style=\"text-align:center; font-weight: bold;\">Barang</td>
+                <td style=\"text-align:center; font-weight: bold;\">Harga</td>
 				<td style=\"text-align:center; font-weight: bold;\">Barang</td>
                 <td style=\"text-align:center; font-weight: bold;\">Harga</td>
 			</tr>
@@ -29222,6 +29225,8 @@ $body="
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">16</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">17</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">18</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">19</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">20</td>
             </tr></thead>";
 																					  
 		}
@@ -29530,15 +29535,19 @@ $body="
 									<td style=\"width: 60px; text-align:center;\">$Ket_Riwayat $flag</td>
 									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
 									<td style=\"width: 80px; text-align:right;\">$nilaiAwalPerolehan</td>
-									<td style=\"width: 71px; text-align:center;\">$jmlKurang<br/><hr>$jmlTambah</td>
-									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnMutasiKurangFix<br/><hr>$nilaiPrlhnMutasiTambahFix</td>
+									<td style=\"width: 71px; text-align:center;\">$jmlKurang</td>
+									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnMutasiKurangFix</td>
+									<td style=\"width: 71px; text-align:center;\">$jmlTambah</td>
+									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnMutasiTambahFix</td>
 									<td style=\"width: 71px; text-align:center;\">$jmlHasilMutasi</td>
 									<td style=\"width: 80px; text-align:right;\">$nilaiPerolehanHasilMutasiFix</td>
 								</tr>";
                                                             
                              $no++;
-	   }
-                                            
+	   }						//$jmlTambah $nilaiPrlhnMutasiTambahFix
+                               /* <td style=\"width: 71px; text-align:center;\">$jmlKurang<br/><hr>$jmlTambah</td>
+									<td style=\"width: 80px; text-align:right;\">$nilaiPrlhnMutasiKurangFix<br/><hr>$nilaiPrlhnMutasiTambahFix</td>*/
+									            
                     // $printbarang=  number_format($barangTotal);
 						$printperolehanTotal=  number_format($perolehanTotal,2,",",".");
                         $printperolehanTotalKurang=  number_format($perolehanTotalKurang,2,",",".");
@@ -29550,8 +29559,11 @@ $body="
 							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
 							<td style=\"text-align: right;\">$printperolehanTotal</td>
                             <td>&nbsp;</td>
-                            <td>$printperolehanTotalKurang<br/><hr>$printperolehanTotalTambah</td>
-                            <td colspan=\"2\" style=\"text-align: right;\">$printperolehanTotalMutasi</td>
+                            <td  style=\"text-align: right;\">$printperolehanTotalKurang</td>
+							<td>&nbsp;</td>
+                            <td  style=\"text-align: right;\">$printperolehanTotalTambah</td>
+							<td>&nbsp;</td>
+                            <td style=\"text-align: right;\">$printperolehanTotalMutasi</td>
 						</tr></table>"; 
 						
 											  $foot="<table border=\"0\">
