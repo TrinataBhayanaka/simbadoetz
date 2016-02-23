@@ -199,7 +199,7 @@ $menu_id = 10;
 							if($kontrak[0]['n_status'] != 1){
 								if($edit == 1){
 						?>
-						<a href="kontrak_rincianubah.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>&tbl=<?=$value['TipeAset']?>" class="btn btn-warning btn-small" ><i class="icon-pencil icon-white"></i>&nbsp;Edit</a>
+						<!-- <a href="kontrak_rincianubah.php?kdkel=<?=$value['kodeKelompok']?>&kdlok=<?=$value['kodeLokasi']?>&tmpthis=<?=$_GET['id']?>&tbl=<?=$value['TipeAset']?>" class="btn btn-warning btn-small" ><i class="icon-pencil icon-white"></i>&nbsp;Edit</a> -->
 						
 						<?php } ?>
 

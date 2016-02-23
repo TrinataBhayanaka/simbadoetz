@@ -5946,7 +5946,7 @@ class core_api_report extends DB {
 		*/
 		//l.TglPembukuan >='$tglawalperolehan' AND l.TglPembukuan <='$tglakhirperolehan' AND
 		$paramLog 		= "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
-						   AND l.Kd_Riwayat in (0) and l.Kd_Riwayat != 77 and l.$paramSatker order by l.Aset_ID ASC";
+						   AND l.Kd_Riwayat in (0,2,7,21,26,27) and l.Kd_Riwayat != 77 and l.$paramSatker order by l.Aset_ID ASC";
 						   
 				   
 		//l.Kd_Riwayat in (0,2,7,21,26,27)
