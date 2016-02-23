@@ -116,8 +116,8 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
           }
      }
      $sWhere = substr_replace($sWhere, "", -3);
-     if($condtn == "1") $condtn = "";
-     $sWhere .= $condtn.')';
+     if($condtn == "1") $condtn = ""; else $condtn = ' AND '.$condtn;
+     $sWhere .= ')'.$condtn;
 } else {
 	$sWhere = "WHERE ".$condtn;
 }
