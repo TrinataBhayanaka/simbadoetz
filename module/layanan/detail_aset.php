@@ -24,7 +24,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 	
 	$allowUser = array(1,350);
 	$operator = $_SESSION['ses_uoperatorid'];
-	$rollbackID = array(28,21,1);
+	$rollbackID = array(28,21,1,3);
 	if (in_array($operator, $allowUser)) $allow = true;
 	else $allow = false;
 ?>
@@ -121,7 +121,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<td>
 							<?php if (in_array($value['Kd_Riwayat'], $rollbackID)):?>
 							<?php if ($allow):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=2"?>'><input class="btn btn-warning" type="button" value="Edit"></a><?php endif;?>
-							<?php if ($key==0):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}"?>' onclick="return confirmBox('Rollback Data ?')"><input class="btn btn-danger" type="button" value="Rollback"></a><?php endif;?>
+							<?php if ($key==0):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}&kodeSatker={$value['kodeSatker']}"?>' onclick="return confirmBox('Rollback Data ?')"><input class="btn btn-danger" type="button" value="Rollback"></a><?php endif;?>
 							<?php endif;?>
 						</td>
 					</tr>

@@ -17,7 +17,7 @@ $data=$PENGHAPUSAN->cekdataPenghapusan($asetid);
 pr($data);
 
 ?>
-<form method="POST" action="<?php echo $url_rewrite;?>/module/penghapusan/datacekpenghapusan.php?fleg=<?php echo $asetid;?>">
+<form method="POST" action="<?php echo $url_rewrite;?>/module/penghapusan/datacekpenghapusan.php?fleg=<?php echo $asetid;?>&Kd_Riwayat=<?php echo $_GET['Kd_Riwayat'];?>">
 
 <input type="text" name="asetidpost" value="<?php echo $asetid;?>" readonly/>
 <table border="1">
