@@ -2674,6 +2674,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     $tblKib['Ukuran'] = addslashes($data['Ukuran']);
                     $tblKib['NoMesin'] = addslashes($data['NoMesin']);
                     $tblKib['NoBPKB'] = addslashes($data['NoBPKB']);
+                    $tblKib['NoSTNK'] = addslashes($data['NoSTNK']);
                     $tblKib['NoSeri'] = addslashes($data['NoSeri']);
                     $tblKib['Material'] = addslashes($data['Material']);
                     $tblKib['NoRangka'] = addslashes($data['NoRangka']);
