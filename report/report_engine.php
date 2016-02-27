@@ -28960,7 +28960,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 }	
 	
 //mutasi
-    public function  retrieve_html_laporan_mutasi($dataArr,$skpdfiltr,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak,$thnPejabat){
+    public function  retrieve_html_laporan_mutasi($dataArr,$skpdfiltr,$gambar,$tglawal,$tglakhir,$tanggalCetak,$thnPejabat){
          
 if($dataArr!="")
 {
@@ -29089,7 +29089,8 @@ $body="
                  <td style=\"width: 10%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>
                  <td style=\"width: 90%; text-align: center;\">
                     <h3>LAPORAN MUTASI BARANG</h3>
-                </td>
+					<h4>Periode $tglawal s/d $tglakhir</h4>
+				</td>
             </tr>
         </thead>
         </table>
@@ -29930,13 +29931,23 @@ if($dataArr!="")
 			$perolehanTotal_tambah = $perolehanTotal_tambah + $nilaiPrlhn_tambah;	
 			
 			//get NIlai Buku dan AkumulasiPenyusutan
-			$GetNb_AP = $this->get_NbAP($row->Aset_ID);
+			/*$GetNb_AP = $this->get_NbAP($row->Aset_ID);
 			$AkumulasiPenyusutan = number_format($GetNb_AP->AkumulasiPenyusutan,2,",",".");
 			if($GetNb_AP->NilaiBuku){
 				$NilaiBuku = number_format($GetNb_AP->NilaiBuku,2,",",".");
 			}else{
 				$NilaiBuku = number_format($row->NilaiPerolehan,2,",",".");
+			}*/
+			$GetNb_AP = $row->AkumulasiPenyusutan;
+			if($GetNb_AP != 0 || $GetNb_AP != ''){
+				$NilaiBuku = $row->NilaiBuku;
+				$NilaiBukuFix = number_format($row->NilaiBuku,2,",",".");
+			}else{
+				$NilaiBuku = $row->NilaiPerolehan;
+				$NilaiBukuFix = number_format($row->NilaiPerolehan,2,",",".");
 			}
+			$AkumulasiPenyusutan = number_format($row->AkumulasiPenyusutan,2,",",".");
+			$totalNilaiBuku = $totalNilaiBuku + $NilaiBuku;
 			
             $body.="
                 <tr>
@@ -29949,7 +29960,7 @@ if($dataArr!="")
 					<td style=\"text-align:center;  width: 70px;\">$row->Material</td>
 					<td style=\"text-align:center;  width: 70px;\">$ketKondisi</td>
 					<td style=\"text-align:right;  width: 70px;\">$AkumulasiPenyusutan</td>
-					<td style=\"text-align:right;  width: 70px;\">$NilaiBuku</td>
+					<td style=\"text-align:right;  width: 70px;\">$NilaiBukuFix</td>
 					<td style=\"text-align:right;  width: 70px;\">$nilaiPrlhnFix_kurang<br/><hr>$nilaiPrlhnFix_tambah</td>
 					<td style=\"text-align:center;  width: 72px;\">$row->kodeSatker</td>
 					<td style=\"text-align:center;  width: 200px;\">$NamaSatker</td>
@@ -29964,8 +29975,10 @@ if($dataArr!="")
             // $printbarang=  number_format($barangTotal);
             $printperolehanTotal_berkurang=  number_format($perolehanTotal_kurang,2,",",".");
             $printperolehanTotal_bertambah=  number_format($perolehanTotal_tambah,2,",",".");
+            $printperolehanNilaiBuku=  number_format($totalNilaiBuku,2,",",".");
             $tabletotal="<tr>
-                            <td colspan=\"8\" style=\"font-weight: bold; text-align: center;\">Jumlah</td>
+                            <td colspan=\"9\" style=\"font-weight: bold; text-align: center;\">Jumlah</td>
+                            <td style=\"text-align: right; font-weight: bold;\">$printperolehanNilaiBuku</td>
                             <td style=\"text-align: right; font-weight: bold;\">$printperolehanTotal_berkurang<br><hr>$printperolehanTotal_bertambah</td>
                             <td  colspan=\"2\">&nbsp;</td>
                         </tr>
