@@ -297,7 +297,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p',
                 'field'=>'p.*',
                 'condition' => "p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID",
-                'limit' => '100',
+                // 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID'
                 );
@@ -319,7 +319,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                 'table'=>'penggunaanaset AS pa, aset AS a, penggunaan AS p, kelompok AS k',
                 'field'=>'p.*, a.*, k.Uraian',
                 'condition' => "p.FixPenggunaan = 0 $filter",
-                'limit' => '100',
+                // 'limit' => '100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => 'pa.Aset_ID=a.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, a.kodeKelompok = k.kode'
                 );
@@ -355,8 +355,8 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $sql = array(
                 'table'=>'penggunaan AS p, Penggunaanaset AS pa',
                 'field'=>'p.*',
-                'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL $filter group by p.Penggunaan_ID ",
-                'limit' => '100',
+                'condition' => "p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL AND p.NoSKKDH NOT LIKE '%Migrasi%' $filter group by p.Penggunaan_ID ",
+                // 'limit' => '100',
                 'joinmethod' => "LEFT JOIN",
                 'join' => "p.Penggunaan_ID = pa.Penggunaan_ID"
                 );
@@ -488,17 +488,20 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
 
                 $res[] = $this->db->lazyQuery($sql,$debug);
             }    
-
+           
             if ($res){
                 foreach ($res as $key => $value) {
-                    
-                    foreach ($value as $keys => $val) {
-                        
-                        $asetidKib[$val['Aset_ID']] = $val;
+                    if ($value){
+                        foreach ($value as $keys => $val) {
+                            
+                            $asetidKib[$val['Aset_ID']] = $val;
+                        }
                     }
+                    
                 }
             }
 
+            if (!$asetidKib) return false;
             $tmpAsetid = array_keys($asetidKib);
 
             $implode = implode(',', $tipeAset);

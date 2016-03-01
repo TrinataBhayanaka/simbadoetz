@@ -33,12 +33,22 @@ $menu_id = 10;
 		while ($sum = mysql_fetch_array($sqlsum)){
 					$sumTotal = $sum;
 				}
+
+		$sqlImport = mysql_query("SELECT * FROM log_import WHERE noKontrak = '{$kontrak[0]['noKontrak']}' ORDER BY create_date DESC LIMIT 1");
+		while ($import = mysql_fetch_assoc($sqlImport)){
+					$logImport = $import;
+				}
 	?>
 	<!-- End Sql -->
 	<script>
 	// $(document).ajaxStart(function() { Pace.restart(); });
 	$body = $("body");
 	$(document).ready(function() { 
+		var total = $("#totalRB").val();
+		var spk = $("#spk").val();
+		if(total == spk){
+			$("#submit").attr('disabled','disabled');
+		}
 		var bar = $('.bar');
 		var percent = $('.percent');
 		var status = $('#status');
@@ -150,48 +160,90 @@ $menu_id = 10;
 					</li>
 				</ul>	
 			</div>
-			
+
+			<div style="height:5px;width:100%;clear:both"></div>
+
+		<?php
+			if(!empty($logImport)){
+		?>
+			<div class="search-options clearfix">
+    			<strong style="margin-right:20px;">Status Import Terakhir</strong>
+    			<hr style="padding:0px;margin:0px">
+				<table border='0' width="100%" style="font-size:12">
+					<tr>
+						<th>Nomor Kontrak</th>
+						<th>Nama File</th>
+						<th>Total Perolehan</th>
+						<th>User</th>
+						<th>Tanggal</th>
+						<th>Status</th>
+					</tr>
+					<tr>
+						<td align="center"><?=$logImport['noKontrak']?></td>
+						<td align="center"><?=$logImport['desc']?></td>
+						<td align="center"><?=number_format($logImport['totalPerolehan'])?></td>
+						<td align="center"><?=$logImport['user']?></td>
+						<td align="center"><?=$logImport['create_date']?></td>
+						<td align="center"><?=($logImport['status'] == 0) ? 'Sedang di proses' : 'Selesai'?></td>
+					</tr>	
+				</table>	
+
+			</div><!-- /search-option -->
+			<?php
+				}
+			?>
+			<div class="well span9">
+				<h4>Note Import Data</h4>
+				<ol>
+					<li>1. Pastikan urutan kolom sudah sesuai dengan template yang diberikan, sesuai dengan jenis barang.</li>
+					<li>2. Isi terlebih dahulu nilai sp2d dan penunjang.</li>
+					<li>3. Jumlah total keseluruhan aset sudah pasti benar.</li>
+					<li>4. Kolom tanggal pembelian di isi dengan format : yyyy-mm-dd.</li>
+					<li>5. Kolom nilai perolehan dan totalnya dilarang mencantumkan nilai sen atau koma dibelakangnya.</li>
+				</ol>
+			</div>
+
 			<div>
-			<form method="POST" enctype="multipart/form-data" id="myForm" action="import/mesin.php">
-				 <div class="formKontrak">
-				 		<ul>
-							<?=selectSatker('kodeSatker','255',true,false,'required');?>
-						</ul>
-				 		<ul>
-							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
-						</ul>
-						<ul>
-							<li>
-								<span class="span2">Jenis Aset</span>
-								<select id="jenisaset" name="jenisaset" style="width:255px" onchange="return chgForm();">
-									<!-- <option value="a">KIB A - Tanah</option> -->
-									<option value="mesin">KIB B - Mesin</option>
-									<!-- <option value="c">KIB C - Mesin</option> -->
-									<!-- <option value="d">KIB D - Jaringan</option> -->
-									<option value="asetlain">KIB E - Aset Tetap Lain</option>
-									<!-- <option value="f">KIB F - KDP</option> -->
-								</select>
-							</li>
-						</ul>
-						<ul>
-							<li>
-								<span class="span2">Upload File</span>
-								<input type="file" class="span3" name="myFile"/>
-							</li>
-							<li>
-								<span class="span2">
-								  <button type="submit" id="submit" class="btn btn-primary load-one-item">Upload</button></span>
-							</li>
-						</ul>
-							
-					</div>
-					<!-- hidden -->
-					<input type="hidden" name="kontrakid" value="<?=$kontrak[0]['id']?>">
-					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
-					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
-					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
-		</form>
-		</div> 
+				<form method="POST" enctype="multipart/form-data" id="myForm" action="import/mesin.php">
+					 <div class="formKontrak">
+					 		<ul>
+								<?=selectSatker('kodeSatker','255',true,false,'required');?>
+							</ul>
+					 		<ul>
+								<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
+							</ul>
+							<ul>
+								<li>
+									<span class="span2">Jenis Aset</span>
+									<select id="jenisaset" name="jenisaset" style="width:255px" onchange="return chgForm();">
+										<!-- <option value="a">KIB A - Tanah</option> -->
+										<option value="mesin">KIB B - Mesin</option>
+										<!-- <option value="c">KIB C - Mesin</option> -->
+										<!-- <option value="d">KIB D - Jaringan</option> -->
+										<option value="asetlain">KIB E - Aset Tetap Lain</option>
+										<!-- <option value="f">KIB F - KDP</option> -->
+									</select>
+								</li>
+							</ul>
+							<ul>
+								<li>
+									<span class="span2">Upload File</span>
+									<input type="file" class="span3" name="myFile"/>
+								</li>
+								<li>
+									<span class="span2">
+									  <button type="submit" id="submit" class="btn btn-primary load-one-item">Upload</button></span>
+								</li>
+							</ul>
+								
+						</div>
+						<!-- hidden -->
+						<input type="hidden" name="kontrakid" value="<?=$kontrak[0]['id']?>">
+						<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
+						<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
+						<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
+				</form>
+			</div> 
 		</section> 
 		     
 	</section>
@@ -201,12 +253,12 @@ $menu_id = 10;
    with position:fixed. Width, height, top and left speak
    speak for themselves. Background we set to 80% white with
    our animation centered, and no-repeating */
-	.modal {
+	.modalload {
 	    display:    none;
 	    position:   fixed;
 	    z-index:    1000;
 	    top:        0;
-	    left:       21.5%;
+	    left:       0;
 	    height:     100%;
 	    width:      100%;
 	    background: rgba( 0, 0, 0, .8 ) 
@@ -223,11 +275,11 @@ $menu_id = 10;
 
 	/* Anytime the body has the loading class, our
 	   modal element will be visible */
-	body.loading .modal {
+	body.loading .modalload {
 	    display: block;
 	}
 	</style>
-	<div class="modal"></div>
+	<div class="modalload"></div>
 <?php
 	include"$path/footer.php";
 ?>
@@ -309,6 +361,7 @@ $menu_id = 10;
 			alert("Total rincian barang melebihi nilai SPK");
 			return false;	
 		}
+
 	});
 
 		function totalHrg(){	

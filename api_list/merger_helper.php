@@ -13,7 +13,7 @@ class MERGER extends DB{
         $this->db = new DB;
 	}
 
-	
+
 	function dataAset($oldSatker, $newSatker, $debug=false)
     {
 
@@ -31,7 +31,7 @@ class MERGER extends DB{
         $sql = array(
                 'table'=>"aset AS a",
                 'field'=>"a.Aset_ID, a.kodeKelompok, a.kodeSatker, a.kodeLokasi, a.noRegister, a.TipeAset, a.Tahun",
-                'condition'=>"a.kodeSatker = '{$oldSatker}'",
+                'condition'=>"a.kodeSatker = '{$oldSatker}' AND a.TipeAset !=''",
                 // 'limit'=>2,
                 );
 
@@ -41,7 +41,8 @@ class MERGER extends DB{
 
             foreach ($aset as $key => $value) {
 
-                $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+                $value['TipeAset'] = trim($value['TipeAset']);
+                $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6, 'H'=>8);
 
                 $sql = array(
                         'table'=>"aset AS a, satker AS s",
@@ -81,11 +82,14 @@ class MERGER extends DB{
 
             $totalAset = count($aset);
             $dataevent = serialize($data);
+
+            $shufle = str_shuffle('ABCDEFGHIJKLMNOPQR');
+            logFile($dataevent, $shufle);
             $date = date('Y-m-d H:i:s');
             $sql = array(
                     'table'=>"tmp_merger",
                     'field'=>"Aset, event, target, data, create_date",
-                    'value'=>"{$totalAset}, '$oldSatker', '{$newSatker}', '$dataevent','$date'",
+                    'value'=>"{$totalAset}, '$oldSatker', '{$newSatker}', '$shufle','$date'",
                     );
             usleep(100);
             $res = $this->db->lazyQuery($sql,$debug,1);
@@ -97,7 +101,7 @@ class MERGER extends DB{
 
     function updateData($id, $debug=false)
     {
-        
+        global $path;
         
         $sql = array(
                 'table'=>"tmp_merger",
@@ -108,9 +112,15 @@ class MERGER extends DB{
 
         $aset = $this->db->lazyQuery($sql,$debug);
         if ($aset){
+            // pr($aset);
+
+            
             foreach ($aset as $key => $value) {
                 
-                $unserial = unserialize($value['data']);
+                $getFile = openFile($path.'/log/'.$aset[0]['data']);
+            
+                $unserial = unserialize($getFile);
+                // print($unserial);
                 if ($unserial){
 
                     $count = 1;
@@ -121,6 +131,7 @@ class MERGER extends DB{
 
                     // $this->db->begin();
                     $errorReport = array();
+
                     foreach ($unserial as $key => $val) {
                         
                         $table = $this->getTableKibAlias($val['TipeAset']);
@@ -138,8 +149,12 @@ class MERGER extends DB{
                         
                             $updateTblAset = $this->updateTblAset($val);
                             if (!$updateTblAset)$errorReport[] = 1;
-                            $updateTblKib = $this->updateTblKib($val);
-                            if (!$updateTblKib)$errorReport[] = 1;
+                            
+                            if ($val['TipeAset']!=8){
+                                $updateTblKib = $this->updateTblKib($val);
+                                if (!$updateTblKib)$errorReport[] = 1;
+                            }
+                            
                             // $updateTblLogKib = $this->updateTblLogKib($val);
                             // if (!$updateTblLogKib)$errorReport[] = 1;
                             $updateMutasi = $this->updateMutasi($val);
@@ -370,8 +385,8 @@ class MERGER extends DB{
 
     function getTableKibAlias($type=1)
     {
-        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k');
-        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'k',8=>'a');
+        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F',8=>'H');
 
         $listTable = array(
                         1=>'tanah AS t',
@@ -379,7 +394,8 @@ class MERGER extends DB{
                         3=>'bangunan AS b',
                         4=>'jaringan AS j',
                         5=>'asetlain AS al',
-                        6=>'kdp AS k');
+                        6=>'kdp AS k',
+                        8=>'aset AS a');
 
         $listTableOri = array(
                         1=>'tanah',
@@ -387,7 +403,8 @@ class MERGER extends DB{
                         3=>'bangunan',
                         4=>'jaringan',
                         5=>'asetlain',
-                        6=>'kdp');
+                        6=>'kdp',
+                        8=>'aset');
 
         $data['listTable'] = $listTable[$type];
         $data['listTableAlias'] = $listTableAlias[$type];
@@ -430,6 +447,7 @@ if ($action==2){
     echo "start transaction update";
     
     $getAset = $run->updateData($oldSatker);
+
 }
 
 

@@ -1,0 +1,8 @@
+a:5:{s:4:"name";s:10:"grafik.jpg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/php0fP3bz";s:5:"error";i:0;s:4:"size";i:176253;}
+a:5:{s:4:"name";s:10:"head_1.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/phpruj86J";s:5:"error";i:0;s:4:"size";i:5449;}
+a:5:{s:4:"name";s:10:"profil.jpg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpaasd2U";s:5:"error";i:0;s:4:"size";i:66406;}
+a:5:{s:4:"name";s:15:"icon-music.jpeg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/php3kpkX5";s:5:"error";i:0;s:4:"size";i:4266;}
+a:5:{s:4:"name";s:21:"cover-album-thama.jpg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpaVWrSg";s:5:"error";i:0;s:4:"size";i:599615;}
+a:5:{s:4:"name";s:10:"bpom-4.jpg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpDopMNr";s:5:"error";i:0;s:4:"size";i:344749;}
+a:5:{s:4:"name";s:10:"bpom-3.jpg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpSeneJC";s:5:"error";i:0;s:4:"size";i:260643;}
+a:5:{s:4:"name";s:21:"cover-album-thama.jpg";s:4:"type";s:10:"image/jpeg";s:8:"tmp_name";s:14:"/tmp/phpwsoorK";s:5:"error";i:0;s:4:"size";i:599615;}

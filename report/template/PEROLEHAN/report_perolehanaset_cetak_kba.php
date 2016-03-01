@@ -55,7 +55,7 @@ $hit = count($query);
 if($kb == 'KB-A'){
 	$flag = 'A';
 }
-$TypeRprtr = '';
+$TypeRprtr = 'kartu';
 $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
@@ -71,12 +71,12 @@ $resQuery=$REPORT->kartuBarang($query);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 // exit;
 //retrieve html
-$html=$REPORT->retrieve_html_kb_a($resQuery,$gambar,$skpd_id);
+$html=$REPORT->retrieve_html_kb_rev_general($resQuery,$gambar,$skpd_id,$tglakhirperolehan,$flag);
 // exit;
-$count = count($html);
+/*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
-	}
+	}*/
 // exit;
 if($tipe==1){
 $REPORT->show_status_download_kib();

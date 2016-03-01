@@ -224,7 +224,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             'table'=>"aset AS a, penggunaanaset AS pa, penggunaan AS p, {$listTable}, kelompok AS k, satker AS s",
             'field'=>"DISTINCT(a.Aset_ID), {$listTableAlias}.*, k.Uraian, a.noKontrak, s.NamaSatker",
             'condition'=>"a.TipeAset = '{$listTableAbjad}' AND pa.Status = 1 AND p.FixPenggunaan = 1 AND p.Status = 1 AND pa.StatusMenganggur = 0 AND pa.StatusMutasi = 0 {$filterkontrak}",
-            'limit'=>'100',
+            // 'limit'=>'100',
             'joinmethod' => 'LEFT JOIN',
             'join' => "a.Aset_ID = pa.Aset_ID, pa.Penggunaan_ID = p.Penggunaan_ID, pa.Aset_ID = {$listTableAlias}.Aset_ID, {$listTableAlias}.kodeKelompok = k.Kode, a.kodeSatker = s.kode"
             );
@@ -385,7 +385,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             'table'=>"mutasiaset AS ma",
             'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, (SELECT NamaSatker FROM satker WHERE kode = ma.SatkerAwal LIMIT 1) AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
             'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID DESC",
-            'limit'=>"{$paging}, 100",
+            // 'limit'=>"{$paging}, 100",
             );
 
         $result = $this->db->lazyQuery($sqlSelect,$debug);
@@ -660,16 +660,17 @@ class RETRIEVE_MUTASI extends RETRIEVE{
     function store_validasi_Mutasi($data, $debug=false)
     {
 
-        $this->db->autocommit(0);
-        $this->db->begin();
+        
         $jenisaset = $this->getJenisAset($data['aset_id']);
 
-        // pr($data);
+        // pr($jenisaset);exit;
         if ($jenisaset){
 
             $sleep = 1;
             foreach ($jenisaset as $key => $value) {
-            
+                
+                $this->db->autocommit(0);
+                $this->db->begin();
                 $table = $this->getTableKibAlias($value);
 
                 // cek dulu jika kapitalisasi atau aset baru
@@ -689,24 +690,22 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         );
 
                 $resultAwal = $this->db->lazyQuery($sql,$debug);
-
-
+                
                 $getLokasiTujuan = $this->get_satker_tujuan($data['Mutasi_ID'], $data['aset_id'][$key]);
 
                 $dataSatkerAwalKib = $this->getSatkerData($resultAwal[0]['kodeSatker']);
 
                 logFile(serialize($res));
                 if ($res){
+                    /* 
+                        cek apakah aset id tujuan ada atau tidak
+                        Jika ada maka lakukan kapitalisasi nilai ke aset id tujuan
+                    */
+
+                    $NilaiPerolehan = 0;
 
                     if ($res[0]['Aset_ID_Tujuan']>0){
-                        // kapitalisasi data
                         
-                        // $this->db->logIt(
-                        //                 $tabel=array($table['listTableOri']), 
-                        //                 $Aset_ID=$data['aset_id'][$key], 
-                        //                 $kd_riwayat=28);
-                        
-                        // exit;
                         // ambil nilai perolehan aset tujuan
                         $sql = array(
                                 'table'=>"{$table['listTableOri']}",
@@ -716,11 +715,13 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                         $result2 = $this->db->lazyQuery($sql,$debug);
 
-                        // echo '1';
                         $NilaiPerolehan = ($resultAwal[0]['NilaiPerolehan'] + $result2[0]['NilaiPerolehan']);
-
+                        $olah_tgl =  $_POST['TglSKKDH'];
+                        
+                        // log aset id tujuan sebelum dilakukan penambahan nilai
                         $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$res[0]['Aset_ID_Tujuan'], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Aset Penambahan kapitalisasi Mutasi",0);
 
+                        
                         logFile('Nilai Perolehan awal : '.serialize($resultAwal));
                         logFile('Nilai Perolehan tujuan : '.serialize($result2));
                         logFile('Nilai Perolehan gabungan : '.$NilaiPerolehan);
@@ -773,7 +774,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             return false;
                         }
                         
-                        
+                        $this->db->commit();
 
                     }else{
                         // ubah data baru
@@ -849,10 +850,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             logFile('gagal log data mutasi aset '.$data['aset_id'][$key]);
                         } 
 
+                        $this->db->commit();
                     }  
-                }
                 
 
+                }
                 
                 $sql = array(
                         'table'=>"mutasiaset",
@@ -868,8 +870,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                     sleep(1);
                     $sleep = 1;
                 }
-            } 
-            
+            }
+            // end looping (foreach)
 
             $sql = array(
                     'table'=>"mutasiaset",
@@ -889,11 +891,11 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             }
             // exit;
             logFile('Commit transaction mutasi');
-            $this->db->commit();
+            // $this->db->commit();
             return true;   
         }
         
-        $this->db->rollback();
+        // $this->db->rollback();
         return false;
 
         
@@ -1098,7 +1100,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
             'table'=>"mutasiaset AS ma",
             'field'=>"ma.Mutasi_ID, ma.SatkerAwal, ma.NamaSatkerAwal, (SELECT NamaSatker FROM satker WHERE kode = ma.SatkerAwal LIMIT 1) AS NamaSatkerAwalAset, COUNT(ma.Aset_ID) AS Jumlah",
             'condition'=>"ma.SatkerTujuan !='' {$filter} GROUP BY ma.Mutasi_ID ORDER BY ma.Mutasi_ID DESC",
-            'limit'=>"{$paging}, 100",
+            //'limit'=>"{$paging}, 100",
             );
 
         $result = $this->db->lazyQuery($sqlSelect,$debug);
@@ -1196,7 +1198,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 'table'=>"mutasi AS m, satker AS s",
                 'field'=>"m.*, s.NamaSatker, s.kode",
                 'condition'=>"m.Mutasi_ID = {$data[id]} GROUP BY m.Mutasi_ID",
-                'limit'=>'100',
+                // 'limit'=>'100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => "m.SatkerTujuan = s.kode"
                 );
@@ -1209,7 +1211,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         'table'=>"mutasiaset AS ma, satker AS s, aset AS a, kelompok AS k",
                         'field'=>"ma.*, s.NamaSatker AS NamaSatkerTujuan, s.kode, a.noKontrak, a.noRegister, a.NilaiPerolehan, a.Tahun, a.kodeKelompok, a.kodeLokasi, a.TipeAset, k.Uraian, k.kode, (SELECT NamaSatker FROM satker WHERE kode=ma.SatkerAwal LIMIT 1) AS satkerAwalAset",
                         'condition'=>"ma.Mutasi_ID = {$value[Mutasi_ID]} {$satkerAwal} GROUP BY ma.Aset_ID",
-                        'limit'=>'100',
+                        // 'limit'=>'100',
                         'joinmethod' => 'LEFT JOIN',
                         'join' => "ma.SatkerTujuan = s.kode, ma.Aset_ID = a.Aset_ID, a.kodeKelompok = k.kode"
                         );
@@ -1229,7 +1231,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             'table'=>"{$listTable}",
                             'field'=>"*",
                             'condition'=>"Aset_ID = {$value['Aset_ID']}",
-                            'limit'=>'100',
+                            // 'limit'=>'100',
                             );
 
                     $resultKib = $this->db->lazyQuery($sqlkib,$debug);
@@ -1370,7 +1372,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 'table'=>"mutasi AS m, satker AS s",
                 'field'=>"m.*, s.NamaSatker, s.kode",
                 'condition'=>"m.Mutasi_ID = {$data[id]} GROUP BY m.Mutasi_ID",
-                'limit'=>'100',
+                // 'limit'=>'100',
                 'joinmethod' => 'LEFT JOIN',
                 'join' => "m.SatkerTujuan = s.kode"
                 );

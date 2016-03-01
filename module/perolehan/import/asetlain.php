@@ -20,6 +20,7 @@ if(isset($_GET['id'])){
 
 } else{
 	$dataArr = $RETRIEVE_PEROLEHAN->importing_xls2html($_FILES,$_POST);
+
 }
 
 ?>
@@ -43,6 +44,7 @@ if(isset($_GET['id'])){
                     "aoColumnDefs": [
                          { "aTargets": [2] }
                     ],
+                    "aLengthMenu": [[25, 50, 100, 500], [25, 50, 100, 500]],
                     "aoColumns":[
                          {"bSortable": false},
                          {"bSortable": false,"sClass": "checkbox-column" },

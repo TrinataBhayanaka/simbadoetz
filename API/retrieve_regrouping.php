@@ -41,7 +41,7 @@ class RETRIEVE_REGROUPING extends RETRIEVE{
     if ($aset){
 
       $kodeSatkerTmp = unserialize($aset[0]['data']);
-      $kodeSatker = $kodeSatkerTmp[0]['kodeSatker'];
+      $kodeSatker = $aset[0]['target'];
       // pr($kodeSatker);
       $sql = array(
               'table'=>"satker",
@@ -87,10 +87,10 @@ class RETRIEVE_REGROUPING extends RETRIEVE{
     $aset = $this->lazyQuery($sql,$debug);
 
     if ($aset){
-
+      // pr($aset);
       foreach ($aset as $key => $value) {
           $kodeSatkerTmp = unserialize($value['data']);
-          $kodeSatker = $kodeSatkerTmp[0]['kodeSatker'];
+          $kodeSatker = $value['target'];
           // pr($kodeSatker);
           $sql = array(
                   'table'=>"satker",

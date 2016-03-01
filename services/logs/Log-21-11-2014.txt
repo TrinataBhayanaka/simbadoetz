@@ -1,0 +1,12 @@
+a:2:{s:5:"email";s:20:"iswandizen@gmail.com";s:5:"token";s:30:"DolabgR1LtvQcUIiSkKGCBe4rOh6XT";}
+ready to send mail
+status send = 1
+Array
+czo5NjoiYToyOntzOjU6ImVtYWlsIjtzOjIwOiJpc3dhbmRpemVuQGdtYWlsLmNvbSI7czo1OiJ0b2tlbiI7czozMDoiRG9sYWJnUjFMdHZRY1VJaVNrS0dDQmU0ck9oNlhUIjt9Ijs=
+account user iswandizen@gmail.com created
+a:5:{s:4:"name";s:39:"Screenshot from 2014-09-05 09:01:49.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/phpolPhE3";s:5:"error";i:0;s:4:"size";i:725221;}
+a:5:{s:4:"name";s:39:"Screenshot from 2014-09-05 09:01:49.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/phpRK7HNn";s:5:"error";i:0;s:4:"size";i:725221;}
+a:5:{s:4:"name";s:39:"Screenshot from 2014-09-05 09:01:49.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/php0udlXH";s:5:"error";i:0;s:4:"size";i:725221;}
+a:5:{s:4:"name";s:39:"Screenshot from 2014-09-05 09:01:49.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/phpdHk961";s:5:"error";i:0;s:4:"size";i:725221;}
+a:5:{s:4:"name";s:39:"Screenshot from 2014-09-05 09:01:49.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/phpoM5chm";s:5:"error";i:0;s:4:"size";i:725221;}
+a:5:{s:4:"name";s:39:"Screenshot from 2014-09-05 09:01:49.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/phpr2psrG";s:5:"error";i:0;s:4:"size";i:725221;}

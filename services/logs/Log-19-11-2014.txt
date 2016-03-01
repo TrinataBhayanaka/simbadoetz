@@ -1,0 +1,40 @@
+ready to send mail
+status send = 1
+ready to send mail
+status send = 1
+czo5MjoiYToyOntzOjU6ImVtYWlsIjtzOjE2OiJvdmFuODlAZ21haWwuY29tIjtzOjU6InRva2VuIjtzOjMwOiJxMXR3QVpGVG95OGtLM2dOREMyV2ZsYkw2NVBPaWUiO30iOw==
+ready to send mail
+
+czo5NzoiYToyOntzOjU6ImVtYWlsIjtzOjIxOiJzdWJtaXQub3ZhbkBnbWFpbC5jb20iO3M6NToidG9rZW4iO3M6MzA6IlBvMUJyYUg2djVLbnlEUTdwZXNPSVZYSlk5V1VaZiI7fSI7
+ready to send mail
+
+a:2:{s:5:"email";s:16:"ovan89@gmail.com";s:5:"token";s:30:"fqnlDL8pg67iBZNhrIU3es2TYxSjVd";}
+ready to send mail
+
+a:2:{s:5:"email";s:21:"submit.ovan@gmail.com";s:5:"token";s:30:"iByaNs4l6L7uoMzvSPAWwrjJCT1X0e";}
+ready to send mail
+
+a:2:{s:5:"email";s:16:"ovan89@gmail.com";s:5:"token";s:30:"6b7tj5Eydz3kmWgR1lC8osNhcM9GOn";}
+ready to send mail
+status send = 1
+Array
+a:2:{s:5:"email";s:16:"ovan89@gmail.com";s:5:"token";s:30:"4TMjRNntiwec05UIVr9zSGHOQYsJCx";}
+ready to send mail
+
+a:2:{s:5:"email";s:21:"submit.ovan@gmail.com";s:5:"token";s:30:"6EgmYqlnBVJASUzMTd1509Q7wpLvWH";}
+ready to send mail
+status send = 1
+Array
+a:2:{s:5:"email";s:21:"submit.ovan@gmail.com";s:5:"token";s:30:"gCYeF4zUSurGcswyKjo2bfx0vZia86";}
+ready to send mail
+status send = 1
+Array
+a:2:{s:5:"email";s:16:"ovan89@gmail.com";s:5:"token";s:30:"I8HJoFA7VTUDR6ujipyvtXZKG3z5kC";}
+ready to send mail
+status send = 1
+Array
+czo5MjoiYToyOntzOjU6ImVtYWlsIjtzOjE2OiJvdmFuODlAZ21haWwuY29tIjtzOjU6InRva2VuIjtzOjMwOiJJOEhKb0ZBN1ZUVURSNnVqaXB5dnRYWktHM3o1a0MiO30iOw==
+a:2:{s:5:"email";s:16:"ovan89@gmail.com";s:5:"token";s:30:"dhUtXRxoGyFveqV0mM6uLWInjcNr8B";}
+ready to send mail
+status send = 1
+Array

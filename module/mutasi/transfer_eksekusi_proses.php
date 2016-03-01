@@ -31,12 +31,15 @@ if (!$tanggal){
 }
 
 if ($_POST['Mutasi_ID']){
+    $DBVAR->log(6, $_POST);
     $data = $MUTASI->update_usulan_mutasi_barang($_POST);
+    
     if ($data) redirect("$url_rewrite/module/mutasi/daftar_usulan_mutasi.php?pid=1");
 }else{
     if ($panjang > 0){
-
+        $DBVAR->log(6, $_POST);
         $data = $MUTASI->store_usulan_mutasi_barang($_POST);
+        
         if ($data){
             echo "<script>alert('Data Berhasil Disimpan'); document.location='$url_rewrite/module/mutasi/transfer_hasil_filter.php?pid=1';</script>";
 

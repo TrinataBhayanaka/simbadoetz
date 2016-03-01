@@ -145,8 +145,118 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 			<div class="subtitle">Filter Data</div>
 		</div>
 		<section class="formLegend">
-			
 			<form name="form" method="POST" action="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_eksekusi_data_proses.php" onsubmit="return validasiTanggal()">
+			<h4>Daftar aset yang akan dibuatkan penetapan penggunaan :</h4>
+			<div class="accordion-demo"> 
+
+				<?php
+					// $id =0;
+					$no = 1;
+					// pr($data);
+					foreach ($data as $keys => $nilai)
+					{
+						
+						if ($nilai['AsetOpr'] == 0)
+						$select="selected='selected'";
+						if ($nilai['AsetOpr'] ==1)
+						$select2="selected='selected'";
+
+						if($nilai['SumberAset'] =='sp2d')
+						$pilih="selected='selected'";
+						if($nilai['SumberAset'] =='hibah')
+						$pilih2="selected='selected'";
+						if ($nilai['Aset_ID'] !='')
+						{
+				?>
+				<div class="accordion_in">
+					<div class="acc_head"><?=$no?>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<?=$nilai[noRegister]?> - <?=$nilai[kodeSatker]?>
+					</div>
+					<div class="acc_content">
+						<input type='hidden' name='penggu_nama_aset[]' value='<?=$nilai[Aset_ID]?>'>
+						<input type='hidden' name='penggu_satker_aset[]' value='$nilai[kodeSatker]?>'>
+						<div class="row">
+							<div class="span12">
+								<input type='text' value="<?php echo $nilai[Pemilik]?>" size='1px' style='text-align:center' readonly = 'readonly'> - 
+								<input type='text' value="<?php echo $nilai[kodeSatker]?>" size='10px' style='text-align:center' readonly = 'readonly'> - 
+								<input type='text' value="<?php echo $nilai[Kode]?>" size='20px' style='text-align:center' readonly = 'readonly'> - 
+								<input type='text' value="<?php echo $nilai[Ruangan]?>" size='5px' style='text-align:center' readonly = 'readonly'>
+								<input type='hidden' name='fromsatker' value='<?=$nilai[OrigSatker_ID]?>' size='5px' style='text-align:center' readonly = 'readonly'>
+							</div>
+						</div>
+						<div class="row">
+							<ul>
+								<li>
+									<span class="span2">Nama Aset</span>
+									<input type="text" style="width:180px;" readonly value="<?=$nilai[NamaAset]?>">
+								</li>
+								<li>
+									<span class="span2">Satuan Kerja</span>
+									<input type="text" style="width:180px;" readonly value="<?=$nilai[NamaSatker]?>">
+								</li>
+								<li>
+									<span class="span2">Jenis barang</span>
+									<input type="text" style="width:180px;" readonly value="<?=$nilai[Uraian]?>">
+								</li>
+							</ul>
+						</div>
+						<h5>Informasi Tambahan</h5>
+						<div class="row">
+							<ul>
+								<li>
+									<span class="span2">Nomor Kontrak</span>
+									<input type="text" style="width:180px;" readonly value="<?=$nilai[NoKontrak]?>">
+								</li>
+								<li>
+									<span class="span2">Operasional/Program</span>
+									
+									<select style='width:130px' readonly>
+										<option value=''></option>
+										<option value='0' <?=$select?>>Program</option>
+										<option value='1' <?=$select2?>>Operasional</option>
+									</select>
+								</li>
+								<li>
+									<span class="span2">Kuantitas</span>
+									<input type='text' readonly='readonly' style='width:40px; text-align:right' value='<?=$nilai[Kuantitas]?>'>
+									Satuan
+									<input type='text' readonly='readonly' style='width:130px' value='<?=$nilai[Satuan]?>'>
+								</li>
+								<li>
+									<span class="span2">Cara Perolehan</span>
+
+									<select style='width:130px' readonly>
+										<option value='-'>-</option>
+										<option value='sp2d' <?=$pilih?>>Pengadaan</option>
+										<option value='hibah' <?=$pilih2?>>Hibah</option>
+									</select>
+								</li>
+								<li>
+									<span class="span2">Tanggal Perolehan</span>
+
+									<input type='text' readonly='readonly' style='width:130px' value='<?=$nilai[TglPerolehan]?>'>
+								</li>
+								<li>
+									<span class="span2">Alamat</span>
+
+									<textarea readonly><?=$nilai[Alamat]?></textarea>
+								</li>
+								<li>
+									<span class="span2">Lokasi</span>
+
+									<input type='text' readonly='readonly' style='width:100px' value='<?=$nilai[NamaLokasi]?>'>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<?php
+					$no++;
+					}
+				}			
+				?>
+
+			</div>
 			<table width="100%">
                                     <tr>
                                         <td style="border: 1px solid #004933; height:25px; padding:2px; font-weight:bold;"><u style="font-weight:bold;">Daftar aset yang akan dibuatkan penetapan penggunaan :</u></td>

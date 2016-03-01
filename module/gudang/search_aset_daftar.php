@@ -82,11 +82,13 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 				<thead>
 					<tr>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>Tahun</th>
 						<th>Kode Kelompok</th>
 						<th>Nama Barang</th>
 						<th>Kode Lokasi</th>
 						<th>No. Registrasi</th>
 						<th>Jumlah</th>
+						<th>Nilai</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -97,7 +99,8 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 						foreach ($get_data_filter as $key => $value) {
 				?>
 						<tr class="gradeA">
-							<td class="checkbox-column"><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" value="<?=$value['tabel']?>_<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$value['min']?>-<?=$value['max']?>" onchange="return AreAnyCheckboxesChecked();"></td>
+							<td class="checkbox-column"><input type="checkbox" id="check_<?=$i?>" class="icheck-input" name="aset[]" value="<?=$value['tabel']?>_<?=$value['kodeKelompok']?>_<?=$value['kodeLokasi']?>_<?=$value['min']?>-<?=$value['max']?>_<?=$value['NilaiPerolehan']?>" onchange="return AreAnyCheckboxesChecked();"></td>
+							<td><?=$value['Tahun']?></td>
 							<td><?=$value['kodeKelompok']?></td>
 							<td><?=$value['uraian']?></td>
 							<td><?=$value['kodeLokasi']?></td>
@@ -106,6 +109,7 @@ $get_data_filter = $RETRIEVE->retrieve_searchAsetDist($_POST,$_SESSION['ses_satk
 								<input type="number" class="span1" id="max_<?=$i?>" value="<?=$value['max']?>" min="<?=$value['min']?>" max="<?=$value['max']?>" onchange="getminmax(this);">
 							</td>
 							<td><?=$value['kuantitas']?></td>
+							<td class="text-center"><?=number_format($value['NilaiPerolehan'])?></td>
 						</tr>
 				<?php
 						$i++;

@@ -25,13 +25,24 @@ class DB
 	  //echo $this->path;
 	}
 	
+	function open_connection_log()
+	{
+		global $CONFIG;
+
+		$link=@mysql_connect($CONFIG['default']['db_host_log'],$CONFIG['default']['db_user_log'],$CONFIG['default']['db_pass_log'])  
+		or die ("Koneksi Database log gagal"); 
+		@mysql_select_db($CONFIG['default']['db_name_log']);
+		return $link;
+	}
 	
-	
-	public function query($data)
+	public function query($data, $db=0)
 	{
 		
+		if ($db==1){
+			$this->open_connection_log();
+		}
 		$this->query = mysql_query($data);// or die (mysql_error());
-		//logFile($data,'Log-query '.date('Y-m-d'));
+		logFile($data,'Log-query-'.date('Y-m-d'));
 		return $this->query;
 	}
 	
@@ -155,9 +166,10 @@ class DB
 	}
 	
 	function commit($dbuse=0)
-	{
+	{   
 		$command = "COMMIT;";
 		$result = $this->query($command) or die ($this->error('commit failed'));
+                $this->autocommit(1);
 		// mysql_commit();
 	}
 	
@@ -165,6 +177,7 @@ class DB
 	{
 		$command = "ROLLBACK;";
 		$result = $this->query($command) or die ($this->error('rollback failed'));
+                $this->autocommit(1);
 		// if (!$this->link){
 			// $this->link = $this->open_connection(0);
 		// }
@@ -376,8 +389,8 @@ class DB
 	        			$insert_id = $this->insert_id();
 
 	        			$sqlu = "UPDATE log_{$value} SET TglPembukuan = '{$tglProses}' WHERE log_id = {$insert_id} LIMIT 1";
-	        			logFile($sqlu);
-	        			$result = $this->query($sqlu);
+	        			//logFile($sqlu);
+	        			//$result = $this->query($sqlu);
 	        		}
 	        		usleep(100);
 	        		if ($action==28){
@@ -429,6 +442,12 @@ class DB
 	        if ($mergeField){
 	        	foreach ($mergeField as $key => $val) {
 	        		$tmpField[] = $key;
+                                if($key=="StatusValidasi")
+                                    $val="1";
+                                elseif($key=="Status_Validasi_Barang")
+                                    $val="1";
+                                elseif($key=="StatusTampil")
+                                    $val="1";
 	        		$tmpValue[] = "'".$val."'";
 
 	        		// if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";
@@ -660,6 +679,22 @@ class DB
 		$sql['field'] = "COUNT(1) AS total";		
 		$res = $this->lazyQuery($sql,$debug);
 		return $res;
+	}
+
+	function log($activity_id=1, $desc=array(), $debug=false)
+	{	
+		$activity_desc = "";
+		if ($desc) $activity_desc = serialize($desc);
+		$user_id = $_SESSION['ses_uoperatorid'];
+		$datetimes = date('Y-m-d H:i:s'); 
+        $source = $_SERVER['REMOTE_ADDR'];
+
+		$sql = array(
+	            'table'=>'activity_log',
+	            'field'=>"user_id, activity_id, activity_desc, source, datetimes",
+	            'value' => "{$user_id}, '{$activity_id}','{$activity_desc}', '{$source}', '{$datetimes}'",
+	            );
+        $res = $this->lazyQuery($sql,$debug,1);
 	}
 }
 ?>

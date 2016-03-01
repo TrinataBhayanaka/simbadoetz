@@ -93,7 +93,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$ses
 		<script type="text/javascript">
 			$(document).on('submit',function(){
 				if($("#<?=$name?>").val() == ""){
-					alert("Kode Satker tidak boleh kosong");
+						alert("Kode Satker tidak boleh kosong");
 					return false;
 				}
 			})
@@ -214,10 +214,19 @@ function selectAset($name,$size=300,$br=false,$upd=false,$status=false){
 				}	
 
 	} );
+	
+	function tesst()
+	{
+		var kode = $("#<?=$name?>").val();
+		$.post('<?=$url_rewrite?>/function/api/asetget.php', {term:kode}, function(data){
+			$('#info').data('popover').options.content = '<p><b>Golongan</b> : '+data[0]['Golongan']+'<br><b>Bidang</b> : '+data[0]['Bidang']+'<br><b>Kelompok</b> : '+data[0]['Kelompok']+'<br><b>Sub</b> : '+data[0]['Sub']+'<br><b>Sub Sub</b> : '+data[0]['SubSub']+' </p>';	
+		}, "JSON")
+	}
 	</script>
 	<li>
 		<span class="<?=$span?>">Jenis Aset </span><?=$enter?>
-		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
+		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return tesst()"/>
+		<button type="button" id="info" class="btn btn-info btn-active-success add-popover" data-toggle="popover" data-html="true" data-trigger="focus" data-placement="right" data-original-title="Detail Jenis Aset" data-content="Silahkan pilih terlebih dahulu"><i class="fa fa-search"></i> Info</button>
 	</li>
 	
 	
@@ -544,7 +553,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 		}
 	</style>
 	<li>
-		<span class="<?=$span?>">Tahun Pembelian</span><?=$enter?>
+		<span class="<?=$span?>">Tahun Ruangan</span><?=$enter?>
 		<input type="text" name="tahun" class="span1 full" id="tahunRuangan" onchange="return newruangan();" <?=$status?>/><br>
 		<span class="<?=$span?>">Kode Ruangan</span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return editruang();"/>&nbsp;

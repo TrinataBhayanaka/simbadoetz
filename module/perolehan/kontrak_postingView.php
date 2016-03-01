@@ -18,6 +18,26 @@ $menu_id = 1;
 			}
 
 	//getdata
+	if($kontrak['tipeAset'] != 1)
+	{
+
+		$sql = "SELECT * FROM kapitalisasi WHERE idKontrak = '{$_GET['id']}'";
+		$kap = $DBVAR->fetch($sql);
+
+		$sql = mysql_query("SELECT * FROM {$kap['tipeAset']} WHERE Aset_ID = '{$kap['Aset_ID']}' AND noRegister = '{$kap['noRegister']}' LIMIT 1");
+		while ($dataAset = mysql_fetch_assoc($sql)){
+            $aset[] = $dataAset;
+        }
+        if($aset){
+	        foreach ($aset as $key => $value) {
+	            $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
+	            while ($uraian = mysql_fetch_array($sqlnmBrg)){
+	                    $tmp = $uraian;
+	                    $aset[$key]['uraian'] = $tmp['Uraian'];
+	                }
+	        }
+	    }
+	}
 	$RKsql = mysql_query("SELECT Aset_ID, noRegister, Satuan, kodeLokasi, kodeKelompok, NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
@@ -143,7 +163,11 @@ $menu_id = 1;
 						<ul>
 							<li>
 								<span  class="labelInfo">Total Rincian Barang</span>
+								<?php if($kontrak['tipeAset'] == 1 || $kontrak['tipeAset'] == 2){ ?>
 								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']-$sumsp2d['total']) : '0'?>" disabled/>
+								<?php } else { ?>
+								<input type="text" value="<?=isset($sumTotal) ? number_format($sumTotal['total']-$sumsp2d['total']-$aset[0]['NilaiPerolehan']) : '0'?>" disabled/>
+								<?php } ?>
 							</li>
 							<li>
 								<span  class="labelInfo">Total Penunjang</span>
@@ -151,7 +175,11 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span class="labelInfo">Total Perolehan</span>
+								<?php if($kontrak['tipeAset'] == 1 || $kontrak['tipeAset'] == 2){ ?>
 								<input type="text" value="<?=number_format($sumTotal['total']-$sumsp2d['total']+$sumsp2d['total'])?>" disabled/>
+								<?php } else { ?>
+								<input type="text" value="<?=number_format($sumTotal['total']-$sumsp2d['total']+$sumsp2d['total']-$aset[0]['NilaiPerolehan'])?>" disabled/>
+								<?php } ?>
 							</li>
 						</ul>
 							
@@ -162,23 +190,6 @@ $menu_id = 1;
 			<?php
 				if($kontrak['tipeAset'] != 1)
 				{
-
-					$sql = "SELECT * FROM kapitalisasi WHERE idKontrak = '{$_GET['id']}'";
-					$kap = $DBVAR->fetch($sql);
-
-					$sql = mysql_query("SELECT * FROM {$kap['tipeAset']} WHERE Aset_ID = '{$kap['Aset_ID']}' AND noRegister = '{$kap['noRegister']}' LIMIT 1");
-					while ($dataAset = mysql_fetch_assoc($sql)){
-	                    $aset[] = $dataAset;
-	                }
-	                if($aset){
-				        foreach ($aset as $key => $value) {
-				            $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");
-				            while ($uraian = mysql_fetch_array($sqlnmBrg)){
-				                    $tmp = $uraian;
-				                    $aset[$key]['uraian'] = $tmp['Uraian'];
-				                }
-				        }
-				    }
 	        ?>
 	        		<div class="search-options clearfix">
 	        			<strong style="margin-right:20px;"><?=($kontrak['tipeAset'] == 2)? 'Kapitalisasi Aset' : 'Rubah Status'?></strong>
@@ -199,8 +210,24 @@ $menu_id = 1;
 								<td align="center"><?=$aset[0]['kodeSatker']?></td>
 								<td align="center"><?=$aset[0]['kodeLokasi']?></td>
 								<td align="center"><?=$aset[0]['noRegister']?></td>
-								<td align="center"><?=number_format($aset[0]['NilaiPerolehan']-$sumTotal['total'])?></td>
-								<td align="center"><?=number_format($aset[0]['NilaiPerolehan'])?></td>
+								<td align="center">
+									<?php
+										if($kontrak['tipeAset'] == 3) {
+											echo number_format($sumTotal['total']-$kontrak['nilai']);
+										} else {
+											echo number_format($aset[0]['NilaiPerolehan']-$sumTotal['total']);
+										}
+									?>
+								</td>
+								<td align="center">
+								<?php
+									if($kontrak['tipeAset'] == 3) {
+										echo number_format($sumTotal['total']);
+									} else {
+										echo number_format($aset[0]['NilaiPerolehan']);
+									}
+								?>
+								</td>
 							</tr>	
 						</table>	
 
@@ -261,9 +288,24 @@ $menu_id = 1;
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
 						<td><?=$value['noRegister']?></td>
-						<td><?=number_format($satuan)?></td>
+						<td>
+						<?php
+							if($kontrak['tipeAset'] == 3) {
+								echo number_format($aset[0]['NilaiPerolehan']);
+							} else {
+								echo number_format($satuan);
+							} 
+						?>
+						</td>
 						<td><?=number_format($bop)?></td>
-						<td><?=number_format($satuan+$bop)?></td>
+						<td>
+						<?php
+							if($kontrak['tipeAset'] == 3) {
+								echo number_format($aset[0]['NilaiPerolehan']+$bop);
+							} else {
+								echo number_format($satuan+$bop);
+							} 
+						?></td>
 						
 					</tr>
 				<?php

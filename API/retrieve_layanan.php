@@ -12,8 +12,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
 	public function retrieve_layanan_aset_daftar($data,$debug=false)
     {
 
-        // pr($data);
-       	$kd_idaset = $data['kd_idaset'];
+        $kd_idaset = $data['kd_idaset'];
        	$kd_namaaset = $data['kd_namaaset'];
        	$kd_nokontrak = $data['kd_nokontrak'];
        	$kd_tahun = $data['kd_tahun'];
@@ -23,9 +22,7 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
        	$jenisaset = $data['jenisaset'];
        	$statusaset = $data['statusaset'];
        	
-       	// pr($data);
-
-        $kondisi= trim($data['condition']);
+       	$kondisi= trim($data['condition']);
         if($kondisi!="")$kondisi=" and $kondisi";
         $limit= $data['limit'];
         $order= $data['order'];
@@ -39,8 +36,6 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 $listTableAlias = $getTable['listTableAlias'];
                 
                 $filter = "";
-                //if ($kd_idaset) $filter .= " AND a.kodeSatker = '{$kd_idaset}' ";
-                //if ($kd_namaaset) $filter .= " AND a.kodeSatker = '{$kd_namaaset}' ";
                 if ($kd_nokontrak) $filter .= " AND a.noKontrak = '{$kd_nokontrak}' ";
                 if ($kd_tahun) $filter .= " AND {$listTableAlias}.Tahun LIKE '{$kd_tahun}%' ";
                 if ($kelompok_id) $filter .= " AND {$listTableAlias}.kodeKelompok = '{$kelompok_id}' ";
@@ -51,12 +46,6 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                 if ($statusaset==22) $filter .= " AND {$listTableAlias}.Status_Validasi_Barang = '{$statusaset}' AND a.fixPenggunaan = 1";
                 if ($statusaset==23) $filter .= " AND {$listTableAlias}.Status_Validasi_Barang = '{$statusaset}' AND a.statusPemanfaatan = 1";
 
-
-                // $tabeltmp = $_SESSION['penggunaan_validasi']['jenisaset'];
-                // $getTable = $this->getTableKibAlias($tabeltmp);
-                // $tabel = $getTable['listTableAbjad'];
-
-                // pr($data);exit;
                 $TipeAset = 
                 $sql = array(
                         'table'=>"{$listTable}, aset AS a, kelompok AS k, satker AS s",
@@ -94,16 +83,59 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
                     }
                     
                 }
-                // pr($newData);
                 if ($newData) return $newData;
             }
             
 
         }
        	
-        
         return false;
 
+    }
+
+    public function retrieve_pemeriksaan_filter($data,$debug=false)
+    {
+
+        $Tahun = $data['Tahun'];
+        $kodeKelompok = $data['kodeKelompok'];
+        $kodeSatker = $data['kodeSatker'];
+        $noRegister = $data['noRegister'];
+        
+        $kondisi= trim($data['condition']);
+        if($kondisi!="")$kondisi=" and $kondisi";
+        $limit= $data['limit'];
+        $order= $data['order'];
+
+        $filter = "";
+        if ($kodeKelompok) $filter .= " AND a.kodeKelompok = '{$kodeKelompok}'";
+        if ($kodeSatker) $filter .= " AND a.kodeSatker = '{$kodeSatker}'";
+        if ($noRegister) $filter .= " AND a.noRegister <= '{$noRegister}'";
+        
+        if ($Tahun){
+
+            $sql = array(
+                    'table'=>"aset AS a, kelompok AS k, satker AS s",
+                    'field'=>'SQL_CALC_FOUND_ROWS a.*, k.Uraian, s.NamaSatker',
+                    'condition' => "a.Tahun = '{$Tahun}' {$filter} {$kondisi} GROUP BY a.Aset_ID {$order}",
+                    'limit' => "{$limit}",
+                    'joinmethod' => 'LEFT JOIN',
+                    'join' => "a.kodeKelompok = k.Kode, a.kodeSatker = s.Kode"
+                    );
+
+            $res = $this->db->lazyQuery($sql,$debug);
+            
+            if ($res){
+
+                foreach ($res as $k => $val) {
+                    if ($val['NilaiPerolehan']) $res[$k]['NilaiPerolehan'] = number_format($val['NilaiPerolehan']);
+                }
+
+                return $res;
+            }
+            
+        }
+        
+        return false;
 
     }
 
@@ -154,6 +186,84 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
         return false;
     }
 
+    function retrieve_detail_aset($data,$debug=false)
+    {
+
+        $jenisaset = $data['jenisaset'];
+        $Aset_ID = $data['id'];
+        
+        $listTableAbjad = array('A'=>1,'B'=>2,'C'=>3,'D'=>4,'E'=>5,'F'=>6);
+
+        // pr($data);
+        $filter = "";
+        if ($data['logid']) $filter .= " AND log_id = '{$data['logid']}'";
+
+        $getTable = $this->getTableKibAlias($listTableAbjad[$jenisaset]);
+        $listTable = $getTable['listTable'];
+        $listTableAlias = $getTable['listTableAlias'];
+
+        if ($Aset_ID) $filter .= " AND {$listTableAlias}.Aset_ID = '{$Aset_ID}' ";
+
+        $sqlAset = array(
+                'table'=>"aset AS a",
+                'field'=>"*",
+                'condition' => "a.Aset_ID = {$Aset_ID} ",
+                );
+
+        $resAset = $this->db->lazyQuery($sqlAset,$debug);
+
+        $sqlKib = array(
+                'table'=>"{$listTable}",
+                'field'=>"*",
+                'condition' => "{$listTableAlias}.Aset_ID = {$Aset_ID} ",
+                );
+
+        $resKib = $this->db->lazyQuery($sqlKib,$debug);
+        
+        $sql = array(
+                'table'=>"log_{$listTable}, kelompok AS k, ref_riwayat AS r",
+                'field'=>"{$listTableAlias}.*, k.Uraian, r.Nm_Riwayat",
+                'condition' => "1  {$filter} ORDER BY log_id DESC",
+                'limit' => '100',
+                'joinmethod' => 'LEFT JOIN',
+                'join' => "{$listTableAlias}.kodeKelompok = k.Kode, {$listTableAlias}.Kd_Riwayat=r.Kd_Riwayat"
+                );
+
+        $resLog = $this->db->lazyQuery($sql,$debug);
+       
+        if ($resLog){
+
+            foreach ($resLog as $key => $value) {
+
+                $sqlAwal = array(
+                        'table'=>"aset a, kelompok AS k",
+                        'field'=>"a.kodeSatker, k.Uraian",
+                        'condition' => "a.Aset_ID = '{$resLog[0]['Aset_ID_Penambahan']}'",
+                        'limit' => '1',
+                        'joinmethod' => 'LEFT JOIN',
+                        'join' => "a.kodeKelompok = k.Kode"
+                        );
+
+                $resLog[$key]['data_awal'] = $this->db->lazyQuery($sqlAwal,$debug);
+                $sql = array(
+                        'table'=>"satker AS s",
+                        'field'=>"s.NamaSatker",
+                        'condition' => "s.kode = '{$value['kodeSatker']}' AND s.Kd_Ruang IS NULL",
+                        'limit' => '100',
+                        );
+
+                $resLog[$key]['NamaSatker'] = $this->db->lazyQuery($sql,$debug);
+            }
+
+            
+        } 
+
+        $res['aset'] = $resAset;
+        $res['kib'] = $resKib;
+        $res['log'] = $resLog;
+        return $res;
+    }
+
     function remove_data_aset($data,$debug=false)
     {
 
@@ -198,6 +308,94 @@ class RETRIEVE_LAYANAN extends RETRIEVE{
             return true;
         }
         
+        return false;
+    }
+
+    function move_data_aset($data,$debug=false)
+    {
+
+        $Aset_ID = $data['idaset'];
+        $act = $data['act']; /*  1 = edit, 2 = hapus */
+        $getTableParam = $data['tabel']; /*  1 = kib, 2 = log */
+        
+        $prefix = "";
+        $filter = "";
+        if ($getTableParam != 2) return false;
+        if ($getTableParam == 2){
+            $prefix .= "log_";
+            $primaryField = "log_id";
+            $primaryValue = $data['logid'];
+            $filter .= " AND Aset_ID = {$Aset_ID}";
+        }else{
+            $primaryField = "Aset_ID";
+            $primaryValue = $Aset_ID;
+        } 
+
+        $arrayTable = array('A'=>1, 'B'=>2, 'C'=>3, 'D'=>4, 'E'=>5, 'F'=>6);
+        $table = $this->getTableKibAlias($arrayTable[$data['jenisaset']]);
+        $sqlAset = array(
+                'table'=>"{$prefix}{$table['listTable']}",
+                'field'=>"*",
+                'condition' => "{$table['listTableAlias']}.Aset_ID = {$Aset_ID} ",
+                'limit' => 1
+                );
+
+        $resAset = $this->db->lazyQuery($sqlAset,$debug);
+        if ($resAset){
+            $param['data'] = $resAset[0];
+            $param['table'] = $prefix . $table['listTableReal'];
+            $param['action'] = $act;
+
+            $duplicate = $this->duplicate($param);
+            if ($duplicate){
+
+                $del = "DELETE FROM {$prefix}{$table['listTableReal']} WHERE {$primaryField} = {$primaryValue} {$filter} LIMIT 1";
+                // $res = $this->db->query($del,1);
+                // if ($res) return true;
+            }
+        }
+        
+        return false;
+    }
+
+    function duplicate($data, $debug=false)
+    {
+        
+        if ($data['data']){
+            foreach ($data['data'] as $key => $value) {
+                $field[] = "`" . $key . "`";
+                $val[] = "'" . $value . "'";
+            }
+
+            $impF = implode(',', $field);
+            $impV = implode(',', $val);
+
+            $sql = "INSERT INTO {$data['table']} ({$impF}) VALUES ({$impV})";
+            $res = $this->db->query($sql,1);
+
+            $sql1 = "INSERT INTO activity (operatorID, asetID, createDate, action, `table`) 
+                    VALUES ('{$_SESSION['ses_uoperatorid']}', '{$data['data']['Aset_ID']}', NOW(), '{$data['action']}', '{$data['table']}')";
+            $res1 = $this->db->query($sql1,1);
+
+            if ($res1) return true;
+        }
+
+        return false;
+    }
+
+    function getTableData($table=false, $cond=false, $debug=false)
+    {
+        $filter = "";
+        if ($cond) $filter .= " {$cond} ";
+
+        $sqlAset = array(
+                'table'=>"{$table}",
+                'field'=>"*",
+                'condition' => " 1 {$filter} ",
+                );
+
+        $resAset = $this->db->lazyQuery($sqlAset,$debug);
+        if ($resAset) return $resAset;
         return false;
     }
 

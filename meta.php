@@ -6,7 +6,7 @@ if ($u_sess) $isLogin = true;
 
 <html>
 <head>
-	<title> SIMBADA PEKALONGAN </title>
+	<title> <?=$title?></title>
 	<link rel="shortcut icon" href="<?php echo "$url_rewrite/"; ?>favicon.png" type="image/x-icon" />
 	<!--<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>-->
     <link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/font-awesome.min.css"/>
@@ -18,6 +18,7 @@ if ($u_sess) $isLogin = true;
          <link href="<?php echo "$url_rewrite/"; ?>js/select2/select2.css" rel="stylesheet"/>
          <link href="<?php echo "$url_rewrite/"; ?>js/nprogress/nprogress.css" rel="stylesheet"/>
          <link href="<?php echo "$url_rewrite/"; ?>js/datepicker/css/datepicker.css" rel="stylesheet"/>
+         <link href="<?php echo "$url_rewrite/"; ?>css/smk-accordion.css" rel="stylesheet"/>
          <!-- <link href="<?php echo "$url_rewrite/"; ?>js/pace/style-flash.css" rel="stylesheet"/> -->
 		<style type="text/css" title="currentStyle">
 			@import '<?php echo "$url_rewrite/"; ?>css/demo_table_simbada.css';
@@ -35,6 +36,7 @@ if ($u_sess) $isLogin = true;
 		<script src="<?php echo "$url_rewrite/"; ?>js/jquery-ui.js"></script>
 		<script type="text/javascript" language="javascript" src="<?php echo "$url_rewrite/"; ?>js/pace.min.js"></script>
 		 <script>
+
 			$(function() {
 			$( "#datepicker" ).datepicker({ 
 				format: 'yyyy-mm-dd',
@@ -67,7 +69,10 @@ if ($u_sess) $isLogin = true;
 				forceParse:true
 			});
 			initTableCheckable ();
+
 			});
+			
+
 		</script>
 		<script type="text/javascript" charset="utf-8">
 			function updDataCheckbox(item){
@@ -160,6 +165,7 @@ if ($u_sess) $isLogin = true;
 				
 
 			} );
+
 		</script>
 		
 		<!--<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/addtr.js"></script>             
@@ -193,6 +199,7 @@ if ($u_sess) $isLogin = true;
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/nprogress/nprogress.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/jquery.form.js"></script>
 	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/datepicker/js/bootstrap-datepicker.js"></script>
+	  <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/smk-accordion.js"></script>
 	  <!--<script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/pace/pace.min.js"></script>-->
 	   <script>
 	function change_pemilik() 
@@ -266,5 +273,18 @@ if ($u_sess) $isLogin = true;
 	
     </script> 
      <script type="text/javascript" src="<?php echo "$url_rewrite/"; ?>js/paging-helper.js"></script>
+     <script type="text/javascript">
+		jQuery(document).ready(function($){
+
+		$(".accordion-demo").smk_Accordion({
+		showIcon: true, // Show the expand/collapse icons.
+		animation: true, // Expand/collapse sections with slide aniamtion.
+		closeAble: true, // Closeable section.
+		slideSpeed: 200 // the speed of slide animation.
+		});
+
+		});
+		
+</script>
 </head>
 <body>

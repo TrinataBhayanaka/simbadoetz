@@ -604,7 +604,7 @@ class DELETE extends DB
         // pr($data);
 
         foreach ($data as $key => $val) {
-            $query = "DELETE FROM aset WHERE Aset_ID = '{$val['Aset_ID']}'";
+            $query = "UPDATE aset SET StatusValidasi = 9, Status_Validasi_Barang = 9 WHERE Aset_ID = '{$val['Aset_ID']}'";
             $result = $this->query($query) or die ($this->error());
             // pr($query);
             if($val['TipeAset']=="A"){
@@ -636,7 +636,7 @@ class DELETE extends DB
                 exit;
             }
 
-            $query = "DELETE FROM {$tabel} WHERE Aset_ID = '{$val['Aset_ID']}'";
+            $query = "UPDATE {$tabel} SET StatusTampil = 9, StatusValidasi = 9, Status_Validasi_Barang = 9 WHERE Aset_ID = '{$val['Aset_ID']}'";
             $result = $this->query($query) or die ($this->error());
             // pr($query);
             //kapitalisasi and kdp

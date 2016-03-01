@@ -9,7 +9,6 @@
 
 defined('_SIMBADA_V1_') or die ('FORBIDDEN ACCESS');
 
-//$getUrl = array('a' => array('t','d','h','1','2','3','4','5','6','7','8'));
 
 if (isset($_POST['k_j_simpan']))
 {
@@ -17,14 +16,9 @@ if (isset($_POST['k_j_simpan']))
 	
 	$showMenu = implode (',', $dataArr['menu']);
 	
-	//echo '<pre>';
-	//print_r($query);
-	//echo '</pre>';
 	$queryshowMenu = "UPDATE Operator SET Hak_Akses = '".$showMenu. "' WHERE OperatorID = ".$dataArr['userID'] ;
-	//print_r($queryshowMenu);
 	
 	$data = "Hak_Akses = '$showMenu'";
-	//$param = array("Operator", $data, "OperatorID = $dataArr[userID]");
 	$resultshowMenu = $DBVAR->query($queryshowMenu) or die ($DBVAR->error());
 	if ($resultshowMenu)
 	{
@@ -38,7 +32,6 @@ if (isset($_POST['k_j_simpan']))
 
 if (isset($_POST['Simpan']))
 {
-//echo '<script type=text/javascript>alert("Akun Berhasil Dibuat");</script>';
 	
 	$UserNm = $_POST['UserNm'];
 	$Passwd = md5($_POST['Passwd']);
@@ -48,8 +41,6 @@ if (isset($_POST['Simpan']))
     $SKPD_ID=    intval($_POST['skpd_id']);
 	$JabatanOperator = $_POST['JabatanOperator'];
 	
-
-	// pr($_POST);exit;
 	if (isset($_POST['AksesAdmin']))
 	{
 		
@@ -63,14 +54,12 @@ if (isset($_POST['Simpan']))
 		{
 			$messg = "Maaf, Jabatan tidak diizinkan untuk mengakses halaman admin";
 			exit ($USERAUTH->show_warning_html($messg));
-			//echo '<script type=text/javascript>alert("Maaf, Jabatan tidak diizinkan mengakses halaman admin"); history.back()</script>';
 		}
 	}
 	else
 	{
 		$AksesAdmin = 0;
 	}
-	//exit;
 	$var = $DBVAR->query("SELECT * FROM tbl_user_group WHERE groupID = $JabatanOperator");
 	
 	if ($var)
@@ -78,13 +67,11 @@ if (isset($_POST['Simpan']))
 		$result = $DBVAR->fetch_object($var);
 		
 		$menuAkese = $result->groupShowMenu;
-		//print_r($menuAkese);
 	}
 	
 	$query = "INSERT IGNORE INTO Operator VALUES (
 		  null, '$UserNm', '$Passwd', '$NamaOperator','$JabatanOperator', '$NIPOperator', '$AksesAdmin', '$SKPD_ID', '$menuAkese')";
 	
-	// pr($query);exit;
 	$result = $DBVAR->query($query) or die ($DBVAR->error());
 	if ($result)
 	{
@@ -98,7 +85,6 @@ if (isset($_POST['Simpan']))
 
 if (isset($_POST['Hapus']))
 {
-//echo '<script type=text/javascript>confirm("Hapus Akun ?");</script>';
 
 	$query = "DELETE FROM Operator WHERE OperatorID =".$_POST['Satker_ID']."";
 	$result = mysql_query($query) or die (mysql_error());
@@ -114,7 +100,6 @@ if (isset($_POST['Hapus']))
 
 if (isset($_POST['Update']))
 {
-//echo '<script type=text/javascript>alert("Akun Berhasil Diupdate");</script>';
 
 	$JabatanOperator = $_POST['JabatanOperator'];
 	if (isset($_POST['AksesAdmin']))
@@ -130,7 +115,6 @@ if (isset($_POST['Update']))
 		{
 			$messg = "Maaf, Jabatan tidak diizinkan untuk mengakses halaman admin";
 			exit ($USERAUTH->show_warning_html($messg));
-			//echo '<script type=text/javascript>alert("Maaf, Jabatan tidak diizinkan mengakses halaman admin"); history.back()</script>';
 		}
 	}
 	else
@@ -150,9 +134,6 @@ if (isset($_POST['Update']))
                              
                                                WHERE 
 				OperatorID = '".$_POST['Satker_ID']."'";
-	//echo $query;
-	
-	//exit;
 	$result = mysql_query($query) or die (mysql_error());
 	if ($result)
 	{
@@ -183,20 +164,11 @@ if (isset($_POST['resetUser'])){
 $shufle = str_shuffle('bhsyd18743');
 
 $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
-//print_r($menu_enable);
 
 ?>
 
 <link rel="stylesheet" href="css/demo_page.css" />
 <link rel="stylesheet" href="css/demo_table.css" />
-<!--
-<link rel="stylesheet" href="css/jquery.treeview1.css" />
-<script src="js/jquery.cookie1.js" type="text/javascript"></script>
-<script src="js/jquery.treeview1.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/treeView1.js"></script>
-
-<script type="text/javascript" language="javascript" src="js/jquery1.js"></script>
--->
 
 <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
 
@@ -244,21 +216,19 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 						</thead>
 						<tbody>
 							
-						
-
                     <?php
 
-                        $query = "SELECT s.NamaSatker, o.Satker_ID, o.JabatanOperator FROM Operator AS o
-                        			LEFT JOIN satker AS s ON o.Satker_ID = s.Satker_ID
-
-                        			GROUP BY o.Satker_ID
-                        			ORDER BY s.NamaSatker ASC ";
+                        $query = "SELECT if ((o.Satker_ID = 0 OR o.Satker_ID IS NULL) AND o.JabatanOperator = 1, 'ADMINISTRATOR', s.NamaSatker) AS NamaSatker, o.Satker_ID, o.JabatanOperator, o.NamaOperator, o.OperatorID FROM Operator AS o
+                        			LEFT JOIN satker AS s ON o.Satker_ID = s.Satker_ID where 1 
+                        			ORDER BY o.Satker_ID ASC  ";
+                        // pr($query);
                         $result = mysql_query($query) or die (mysql_error());
                         $sumRec = mysql_num_rows($result);
                         if( $sumRec ) {
 
                         	$dataArr = $DBVAR->fetch($query,1);
-                        	foreach ($dataArr as $key => $value) {
+                        	// pr($dataArr);
+                        	/*foreach ($dataArr as $key => $value) {
                         		$Satker_ID = intval($value['Satker_ID']);
                         		if ($Satker_ID>0){
                         			$sql = "SELECT NamaOperator, OperatorID FROM Operator WHERE Satker_ID = $Satker_ID";
@@ -269,56 +239,27 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
                         		}
                         		$dataArr[$key]['operator'] = $DBVAR->fetch($sql,1);
                             		
-                        	}
-                            // while( $data = mysql_fetch_assoc($result) ) {
-
-                            	// $dataArr[] = $data;
-
-                            // }
+                        	}*/
                         }
 
-                        // pr($dataArr);
                         if ($dataArr){
-                        	//echo '<ul id="red" class="treeview-red">';
                         	foreach ($dataArr as $key => $value) {
                         		?>
 
                         			
-                        				<?php foreach ($value['operator'] as $val): ?>
+                        				<?php //foreach ($value['operator'] as $val): ?>
 										<tr>
-										<td><?= ($value['NamaSatker']=="" && $value['JabatanOperator']==1) ? 'Administrator' : $value['NamaSatker'];?></td>
-										<td><a  href="?page=3&p=d&a=<?php echo $val['OperatorID']; ?>"><span><?=$val['NamaOperator']?></span></a></td>
+										<td><?= ($value['NamaSatker']=="") ? 'Unknown' : $value['NamaSatker'];?></td>
+										<td><a  href="?page=3&p=d&a=<?php echo $value['OperatorID']; ?>"><span><?=$value['NamaOperator']?></span></a></td>
 										</tr>
-									<?php endforeach;?>
+									<?php //endforeach;?>
 									
 
 									
                         		<?php
                         	}
-                        	//echo '</ul>';
                         }
-                        // pr($dataArr);
                     ?>
-
-                    
-
-                            <?php
-                            /*
-                                $query = "SELECT * FROM Operator ORDER BY OperatorID ASC";
-                                $result = mysql_query($query) or die (mysql_error());
-                                $sumRec = mysql_num_rows($result);
-                                if( $sumRec ) {
-                                    while( $data = mysql_fetch_array($result) ) {
-                            ?>
-                    <div class="<?php if (isset($_GET['a'])){if ($_GET['a']== $data['OperatorID']) echo 'datalist_inlist_selected';} ?>" >
-                        <a class="datalist_inlist" href="?page=3&p=d&a=<?php echo $data['OperatorID']; ?>"><?=$data['NamaOperator'];?></a>
-                    </div>
-                            <?
-                                }
-
-                            } */
-                            ?>
-
                         </tbody>
                         <tfoot>
 							<tr>
@@ -351,14 +292,10 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 						case 'd':
 						
 						$query = "SELECT * FROM Operator WHERE OperatorID=".$_GET['a'];
-						// pr($query);
 						$result = mysql_query($query) or die (mysql_error());
 						if (mysql_num_rows($result))
 						{
 							$dataVal = mysql_fetch_array($result);
-							
-							// pr($dataVal);
-							//fetch data dari tabel Operator
 							$UserNm = $dataVal['UserNm']; 
 							$NamaOperator = $dataVal['NamaOperator']; 
 							$NIPOperator = $dataVal['NIPOperator'];
@@ -368,7 +305,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
                                                                                     
 	                         $SKPD_ID = $dataVal['Satker_ID'];
 	                         $query_data="select NamaSatker from Satker WHERE Satker_ID='$SKPD_ID'";
-	                         // pr($query_data);
 	                         $result_data = mysql_query($query_data) or die (mysql_error());
 	                         $uraian="";
 	                         if (mysql_num_rows($result_data))
@@ -377,7 +313,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 	                              $uraian=$dataSatker ['NamaSatker'];
 	                         }
                                                                                 
-							//echo $JabatanOperator;
 							
 						}else{
 							$UserNm = ''; 
@@ -388,7 +323,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 							$Satker_ID = '';
 						}
 						
-						// pr($Satker_ID);
 						if (isset($_GET['a']))
 						{
 							if (isset($_GET['i']))
@@ -403,11 +337,9 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								$Satker_ID = '';
 								$disabled = '';
 								$uraian="";
-								//$text = 'Read Only: <u>Jabatan udah digunakan pada tabel Operator.</u><br><br>';
 								$buttonNameLeft = 'Simpan';
 								$buttonNameRight = 'Batal';
 								
-								//$link = "window.location.href='?page=3&p=d&a=$_GET[a]&e=$shufle'";
 								$linkButtonLeft = "";
 								$linkButtonRight = '';
 								$buttonLeftdisabled = '';
@@ -422,14 +354,11 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								$NamaOperator = $dataVal['NamaOperator'];
 								$NIPOperator = $NIPOperator;
 								$JabatanOperator = $JabatanOperator;
-								//$AksesAdmin = '';
 								$Satker_ID = '';
 								$disabled = '';
-								//$text = 'Read Only: <u>Jabatan udah digunakan pada tabel Operator.</u><br><br>';
 								$buttonNameLeft = 'Update';
 								$buttonNameRight = 'Batal';
 								
-								//$link = "window.location.href='?page=3&p=d&a=$_GET[a]&e=$shufle'";
 								$linkButtonLeft = "";
 								$linkButtonRight = "window.location.href='?page=3&p=d&a=$_GET[a]'";
 								$buttonLeftdisabled = '';
@@ -453,7 +382,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								$buttonNameLeft = 'Edit';
 								$buttonNameRight = 'Hapus';
 								
-								//$link = "window.location.href='?page=3&p=d&a=$_GET[a]&e=$shufle'";
 								$linkButtonLeft = "window.location.href='?page=3&p=d&a=$_GET[a]&e=$shufle'";
 								$linkButtonRight = "window.confirm('Hapus User ?');";
 								
@@ -465,11 +393,8 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								if ($user_ses['ses_ajabatan'] == 1)
 								{
 									
-									//$buttonLeftdisabled = '';
-									//$buttonRightdisabled = 'disabled';
 									if ($user_ses['ses_aoperatorid'] == $_GET['a'])
 									{
-										//echo 'ada';
 										$buttonLeftdisabled = '';
 										$buttonRightdisabled = 'disabled';
 										
@@ -485,7 +410,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 									
 									if ($user_ses['ses_aoperatorid'] == $_GET['a'])
 									{
-										//echo 'ada';
 										$buttonLeftdisabled = '';
 										$buttonRightdisabled = 'disabled';
 										
@@ -500,27 +424,11 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								
 								$combobox_disable = 'disabled';
 								$checkbox_disable = 'disabled';
-								/*
-								if ($UserNm == 'admin')
-								{
-								$blok = 'disabled="disabled"';
-								}
-								else if ($UserNm == 'guest')
-								{
-								$blok = 'disabled="disabled"';
-								}
-								else
-								{
-									$blok = 'disabled="disabled"';
-								}
-								*/
 								
 							}
 							
 
 						}
-							// pr($SKPD_ID);
-							// pr($Satker_ID);					
 						?>  	 	 	
 						User ID <br><input type='text' name='UserNm' value="<?=$UserNm; ?>" size='50' <?=$disabled; ?> required="required"/><br> 
 						Enter New Password<br> <input type= 'password' name='Passwd' value="" <?=$disabled; ?> required="required"><br> 
@@ -540,7 +448,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								}
 							</style>
 							<?php
-								//include "$path/function/dropdown/radio_function_skpd.php";
 								$alamat_simpul_skpd="$url_rewrite/function/dropdown/radio_simpul_skpd.php";
 								$alamat_search_skpd="$url_rewrite/function/dropdown/radio_search_skpd.php";
 								js_radioskpd($alamat_simpul_skpd, $alamat_search_skpd,"skb_add_skpd","skpd_id",'skpd','skbskpdadd');
@@ -548,8 +455,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								radioskpd($style2,"skpd_id",'skpd','skbskpdadd|'.$Satker_ID);
 							?>
 						</div>	
-						<!-- radioskpd($style2,"skpd_id",'skpd','sk|'.$row->ToSatker_ID); -->
-						<?php //include 'js_dropdown_user.php'; ?>
 						
 						<br>
 						<select name="JabatanOperator" <?=$combobox_disable; ?> >
@@ -563,22 +468,7 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 							{
 								$query = "SELECT groupID, groupDesc FROM tbl_user_group WHERE groupID <> 1 ORDER BY groupID ASC";
 							}
-							/*
-							if (isset($_GET['i']))
-							{
-								
-								$query = "SELECT groupID, groupDesc FROM tbl_user_group where groupDesc not like 'Administrator' ORDER BY groupID ASC";
-							
-							}else if (isset($_GET['e'])){
-								//$query = "SELECT groupID, groupDesc FROM tbl_user_group ORDER BY groupID ASC";
-								$query = "SELECT groupID, groupDesc FROM tbl_user_group where groupDesc not like 'Administrator' ORDER BY groupID ASC";
-							
-							}
-							else
-							{
-								$query = "SELECT groupID, groupDesc FROM tbl_user_group ORDER BY groupID ASC";
-								
-							}*/
+
 							$result = $DBVAR->query($query) or die ($DBVAR->error());
 							$sumRec = $DBVAR->num_rows($result);
 							if( $sumRec ) {
@@ -606,14 +496,12 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 							echo "<table border='0' width='100%'>";
 							
 								$queryOperator = " SELECT * FROM Operator WHERE OperatorID = '$_GET[a]'";
-								//print_r($queryGroup);
 								$resultOperator = $DBVAR->query($queryOperator) or die ($DBVAR->error());
 								
 								$sumRec = $DBVAR->num_rows($resultOperator);
 								if ($sumRec)
 								{  
 									$dataOperator = $DBVAR->fetch_object($resultOperator);
-									//$dataMenuParentArr = $DBVar->get_menu_admin(array('menuID' => $dataGroup->groupListMenu));
 									
 									$dataArr['user']['Hak_Akses'] = $dataOperator->Hak_Akses;
 									$dataOperatorID = $dataOperator->JabatanOperator;
@@ -623,24 +511,18 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 								$accessMenu = explode(',',$dataArr['user']['Hak_Akses']);
 								
 								$queryDisable = " SELECT groupShowMenu FROM tbl_user_group WHERE groupID = $dataOperatorID";
-								//print_r($queryDisable);
 								$resultDisable = $DBVAR->query($queryDisable) or die ($DBVAR->error());
 								$sumRecDisable = $DBVAR->num_rows($resultDisable);
 								if ($sumRecDisable)
 								{  
 									$dataGroup = $DBVAR->fetch_object($resultDisable);
-									//$dataMenuParentArr = $DBVar->get_menu_admin(array('menuID' => $dataGroup->groupListMenu));
 									$dataArr['group']['groupShowMenu'] = $dataGroup->groupShowMenu;									
 								}
 								$showMenu = explode(',',$dataArr['group']['groupShowMenu']);
 								
-								//print_r($dataArr['group']['groupShowMenu']);
-								
 								$queryParent = "SELECT * FROM tbl_user_menu_parent";
 								
 								$resultParent = $DBVAR->query($queryParent);
-								
-								
 								
 								while ($dataParent = $DBVAR->fetch_array($resultParent))
 								{
@@ -657,7 +539,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 									
 									while ($dataMenu = $DBVAR->fetch_array($resultMenu))
 									{
-										//if (!in_array($dataMenu['menuID'],$showMenu)) $data [] = $dataMenu['menuID'];
 										
 										?>
 										<tr>
@@ -672,8 +553,6 @@ $menu_enable = $RETRIEVE_ADMIN->retrieve_menu_enable('1');
 										<?php
 										$no++;
 									}
-									
-									//print_r($data);
 									
 								}
 								

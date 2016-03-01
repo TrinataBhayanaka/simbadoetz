@@ -1,0 +1,1 @@
+a:5:{s:4:"name";s:39:"Screenshot from 2014-11-25 12:12:55.png";s:4:"type";s:9:"image/png";s:8:"tmp_name";s:14:"/tmp/phpL1WOAo";s:5:"error";i:0;s:4:"size";i:645056;}

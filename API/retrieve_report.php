@@ -46,7 +46,7 @@ class RETRIEVE_REPORT extends DB {
      }
 
      public function daftar_barang_berdasarkan_sk_penghapusan($no_sk) {
-          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from penghapusanaset PA left join penghapusan P on 
+          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.NilaiBuku,A.Tahun,A.AkumulasiPenyusutan,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from penghapusanaset PA left join penghapusan P on 
 				P.Penghapusan_ID=PA.Penghapusan_ID 
                                                        left join Aset A on PA.Aset_ID=A.Aset_ID
                                                        where P.Penghapusan_ID='$no_sk' ";
@@ -72,7 +72,7 @@ class RETRIEVE_REPORT extends DB {
           return $dataArr;
      }
       public function daftar_barang_berdasarkan_usulan_penghapusan($no_usulan) {
-          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from usulanaset US left join usulan U on 
+          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.NilaiBuku,A.Tahun,A.AkumulasiPenyusutan,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister  from usulanaset US left join usulan U on 
         U.Usulan_ID=US.Usulan_ID 
                                                        left join Aset A on US.Aset_ID=A.Aset_ID
                                                        where U.Usulan_ID='$no_usulan' ";
@@ -101,11 +101,15 @@ class RETRIEVE_REPORT extends DB {
      public function daftar_pengadaan_berdasarkan_skpd($skpd,$tglPerolehanAwal,$tglPerolehanAkhir){
           $query="select K.Uraian, A.info,A.kodeKelompok,A.kodeSatker, A.noKontrak,"
                   . "  Sum(NilaiPerolehan) as Total,Sum(Kuantitas) as Jumlah,NilaiPerolehan as Satuan"
-                  . "    from aset A  left join kelompok K on K.Kode=A.kodeKelompok "
+                  . "    from aset A  left join kelompok K on K.Kode=A.kodeKelompok"
+                  . "  left join kontrak Kon on Kon.noKontrak=A.noKontrak "
                   . "where A.kodeSatker like '$skpd%' and A.TglPerolehan>='$tglPerolehanAwal'"
-                              . " and TglPerolehan<='$tglPerolehanAkhir'  and A.noKontrak is not null and A.StatusValidasi=1 "
-                              . " group by A.kodeSatker,A.kodeKelompok";
-         // echo $query;
+                              . " and TglPerolehan<='$tglPerolehanAkhir'  "
+                  . "  and kon.tglKontrak>='$tglPerolehanAwal' and kon.tglKontrak<='$tglPerolehanAkhir'"
+                  . "  and A.noKontrak is not null and A.StatusValidasi=1 "
+                              . " group by A.kodeSatker,A.kodeKelompok,A.noKontrak";
+        //echo $query;
+        //exit();
           $result = $this->query($query) or die($this->error());
           $check = $this->num_rows($result);
           while ($data = $this->fetch_array($result)) {

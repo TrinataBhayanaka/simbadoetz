@@ -38,9 +38,12 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 	include"$path/header.php";
 	include"$path/menu.php";
 	
+	if ($_POST){
+		$_SESSION['penggunaan_filter'] = $_POST;
+		$dataPost = $_POST;
+	}else $dataPost = $_SESSION['penggunaan_filter'];
 
-
-	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($_POST);
+	$data = $PENGGUNAAN->retrieve_daftar_penetapan_penggunaan($dataPost);
 
 ?>
 
@@ -59,7 +62,13 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 		<section class="formLegend">
 			
 			<div class="detailLeft">
-					<span class="label label-success">Filter data: Tidak ada filter (View seluruh data)</span>
+					<ul>
+							<li>
+								<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_filter2.php" class="btn btn-success">
+									   Tambah Data
+								 </a>
+							</li>
+					</ul>
 			</div>
 		
 			<div class="detailRight" align="right">
@@ -106,20 +115,15 @@ $PENGGUNAAN = new RETRIEVE_PENGGUNAAN;
 								<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_filter.php" class="btn">
 								Kembali ke Form Filter</a>
 							</li>
-							<li>
-								<a href="<?php echo "$url_rewrite/module/penggunaan/"; ?>penggunaan_penetapan_filter2.php" class="btn">
-									   Tambah Data
-								 </a>
-							</li>
-							<li>
+							<!-- <li> -->
 								<input type="hidden" class="hiddenpid" value="<?php echo @$_GET['pid']?>">
 								<input type="hidden" class="hiddenrecord" value="<?php echo @$_SESSION['parameter_sql_total']?>">
-								   <ul class="pager">
+								   <!-- <ul class="pager">
 										<li><a href="#" class="buttonprev" >Previous</a></li>
 										<li>Page</li>
 										<li><a href="#" class="buttonnext">Next</a></li>
-									</ul>
-							</li>
+									</ul> -->
+							<!-- </li> -->
 						</ul>
 							
 					</div>

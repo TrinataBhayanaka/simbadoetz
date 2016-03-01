@@ -23,6 +23,9 @@ $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
+
+$ex = explode('-',$tglakhirperolehan);
+$tahun_neraca = $ex[0];
 $REPORT=new report_engine();
 
 
@@ -60,16 +63,20 @@ $resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperole
 // pr($resultParamGol);
 // exit;	
 
+$serviceJson=json_encode($resultParamGol);
 //retrieve html
-$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
-$count = count($html);
-	/*for ($i = 0; $i < $count; $i++) {
+$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca);
+/*$count = count($html);
+	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
 exit;*/
 
-if($tipe!="2"){
+if($tipe=="3"){
+	echo $serviceJson;
+	exit;
+}elseif($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
