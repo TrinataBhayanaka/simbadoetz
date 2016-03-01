@@ -16,3 +16,7 @@ config/config.php
 db/*
 htacess-ovan
 module/regrouping/log/*
+/img/
+/page_admin/css/
+services/cache/*
+services/logs/*
