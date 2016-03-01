@@ -264,7 +264,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">No. STNK</span>
-								<input type="text" class="span3" name="NoSeri" value="<?=$dataArr['kib']['NoSTNK']?>" disabled/>
+								<input type="text" class="span3" name="NoSTNK" value="<?=$dataArr['kib']['NoSTNK']?>" disabled/>
 							</li>
 							<li>
 								<span class="span2">No. BPKB</span>
