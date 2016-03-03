@@ -82,7 +82,7 @@ include "../../config/config.php";
 				$tmpVal[] = $sign.addslashes($val).$sign;
 			}
 		}
-		
+		pr($tmpVal);
 		$implodeField = implode (',',$tmpField);
 		$implodeVal = implode (',',$tmpVal);
 		
