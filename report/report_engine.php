@@ -24304,7 +24304,7 @@ $footer ="
 					$AkumulasiPenyusutan = $row->Ap;
 					$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan,2,",",".");
 					if ($kondisi == '1' ||  $kondisi == '2') {
-						if($row->Nb){
+						if($AkumulasiPenyusutan != 0 || $AkumulasiPenyusutan != ''){
 							// echo "NilaiBuku";
 							$NilaiBuku = $row->Nb;
 							$NilaiBukuFix = number_format($row->Nb,2,",",".");
