@@ -337,18 +337,23 @@ class core_api_report extends DB {
 				}
 				// echo "param =".$param;
 				// exit;
-				
-				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id =="" && $kelompok == ""){
+				// pr($tahun);
+				// exit;
+				// if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id =="" && $kelompok == ""){
+				if($tahun !='' && $skpd_id =="" && $kelompok == ""){
 					// echo "sini";
-					$query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
+					// $query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
+					$query_tahun = " $param.Tahun = '$tahun' ";
 					// $query_tgl_akhir = " $param.TglPerolehan <= '$tglakhirperolehan' ";
 					$query_no_reg = "$param.noRegister BETWEEN '$noregAwal' AND '$noregAkhir' ";
 			
 				}	
-				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id !="" && $kelompok != ""){
-					$query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
+				// if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id !="" && $kelompok != ""){
+				if($tahun !='' && $skpd_id !="" && $kelompok != ""){
+					// $query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
 					// $query_tgl_akhir = " $param.TglPerolehan <= '$tglakhirperolehan' ";
 					// $query_satker_fix = " $param.kodeSatker LIKE '$skpd_id%'";
+					$query_tahun = " $param.Tahun = '$tahun' ";
 					
 					$splitKodeSatker = explode ('.',$skpd_id);
 					if(count($splitKodeSatker) == 4){	
@@ -358,47 +363,27 @@ class core_api_report extends DB {
 					}
 	
 					$query_satker_fix = $paramSatker;
-					
-					/*$IDkelompok = "$kelompok";
-					$query_change_satker="SELECT Kode FROM Kelompok as K
-											WHERE Kelompok_ID = $IDkelompok";
-					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
-					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
-						$dataRow2Kel[]=$proses_kode_kel['Kode'];
-					}
-					if($dataRow2Kel!=""){
-						$query_kelompok_fix =" $param.kodeKelompok = '".$dataRow2Kel[0]."'";
-					}*/
-					$query_kelompok_fix =" kodeKelompok like '".$kelompok."%'";
+					$query_kelompok_fix =" $param.kodeKelompok like '".$kelompok."%'";
 					
 					$query_no_reg = "$param.noRegister BETWEEN '$noregAwal' AND '$noregAkhir' ";
 			
 				}
-				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id =="" && $kelompok != ""){
-					$query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
+				// if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id =="" && $kelompok != ""){
+				if($tahun !='' && $skpd_id =="" && $kelompok != ""){
+					// $query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
 					// $query_tgl_akhir = " $param.TglPerolehan <= '$tglakhirperolehan' ";
+					$query_tahun = " $param.Tahun = '$tahun' ";
 					
-					// if($kelompok != ""){
-					/*$IDkelompok = "$kelompok";
-					$query_change_satker="SELECT Kode FROM Kelompok as K
-											WHERE Kelompok_ID = $IDkelompok";
-					$exec_query_change_satker=$this->query($query_change_satker) or die($this->error());
-					while($proses_kode_kel=$this->fetch_array($exec_query_change_satker)){
-						$dataRow2Kel[]=$proses_kode_kel['Kode'];
-					}
-					if($dataRow2Kel!=""){
-						$query_kelompok_fix ="$param.kodeKelompok = '".$dataRow2Kel[0]."'";
-					}*/
-					
-					$query_kelompok_fix =" kodeKelompok like '".$kelompok."%'";
-					
+					$query_kelompok_fix =" $param.kodeKelompok like '".$kelompok."%'";
 					$query_no_reg = "$param.noRegister BETWEEN '$noregAwal' AND '$noregAkhir' ";
 			
 				}
-				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id !="" && $kelompok == ""){
-					$query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
+				// if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id !="" && $kelompok == ""){
+				if($tahun !='' && $skpd_id !="" && $kelompok == ""){
+					// $query_tgl_awal = " $param.TglPerolehan = '$tglawalperolehan' ";
 					// $query_tgl_akhir = " $param.TglPerolehan <= '$tglakhirperolehan' ";
 					// $query_satker_fix = " $param.kodeSatker LIKE '$skpd_id%'";
+					$query_tahun = " $param.Tahun = '$tahun' ";
 					$splitKodeSatker = explode ('.',$skpd_id);
 					if(count($splitKodeSatker) == 4){	
 						$paramSatker = " $param.kodeSatker = '$skpd_id'";
@@ -965,24 +950,19 @@ class core_api_report extends DB {
 				$parameter_sql=$query_tgl_awal;
 			}
 			
+			if($tglakhirperolehan!="" && $tglawalperolehan !=""){
+				$parameter_sql=$parameter_sql." AND ".$query_tgl_akhir;
+			}
+			
 			if($kb != ''){
-				//echo "masukk 2";
-				if($tglakhirperolehan!="" && $tglawalperolehan !=""){
-					//echo "masukk  3";
-					$parameter_sql=$parameter_sql;
+				if($noregAkhir!="" && $noregAwal !=""){
+					$parameter_sql=$query_no_reg;
 				}
 			}else{
-				
-				if($tglakhirperolehan!="" && $tglawalperolehan !=""){
-					// echo "masukk  6";
-					$parameter_sql=$parameter_sql." AND ".$query_tgl_akhir;
+				if($noregAkhir!="" && $noregAwal !=""){
+					$parameter_sql=$parameter_sql." AND ".$query_no_reg;
 				}
 			}
-			// echo $parameter_sql;
-			if($noregAkhir!="" && $noregAwal !=""){
-				$parameter_sql=$parameter_sql." AND ".$query_no_reg;
-            }
-			
 			if($skpd_id!="" && $parameter_sql!=""){
 				$parameter_sql=$parameter_sql." AND ".$query_satker_fix;
             }
