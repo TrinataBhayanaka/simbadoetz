@@ -669,6 +669,7 @@ for($i=0;$i<2;$i++){
                      . "(NilaiPerolehan-NilaiPerolehan_Awal) as selisih,AkumulasiPenyusutan,"
                      . "PenyusutanPerTahun,NilaiBuku,MasaManfaat,UmurEkonomis,TahunPenyusutan "
                      . " from $tableLog where TglPerubahan>'$TglPerubahan_awal' and kd_riwayat in (2,21,28,7) "
+                     . " "
                      . "and Aset_ID='$Aset_ID' order by log_id asc";
              $count=0;
              $qlog=$DBVAR->query($query_perubahan) or die($DBVAR->error());
@@ -720,19 +721,28 @@ for($i=0;$i<2;$i++){
                      
                      
                  }
+                 $status_perubahan_kap=0;
                  if($kib=="B" && $selisih<300000 )
                  {
+                     if($kd_riwayat==28)
+                          $status_perubahan_kap=1;
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan mesin\n";
                      $kd_riwayat=21;
+                     
+                    
                  }
                  if($kib=="C" && $selisih<10000000 )
                  {
+                      if($kd_riwayat==28)
+                          $status_perubahan_kap=1;
                      echo "Kapitalisasi di koreksi menjadi koreksi untuk golongan bangunan\n";
                      $kd_riwayat=21;
+                     
                  }
                  if($kd_riwayat==28){
                      echo "Transfer kapitalisasi dijadikan sebagai transaksi koreksi \n";
                      $kd_riwayat=21;
+                     $status_perubahan_kap=1;
                      
                  }
                   if($kd_riwayat==2){
@@ -859,7 +869,9 @@ for($i=0;$i<2;$i++){
                      }else if($kd_riwayat==7||$kd_riwayat==21){
                          
                          list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
-                       
+                         if($status_perubahan_kap==1)
+                             $NP=get_data_np_transfer($Aset_ID,$log_id,$table_log,$DBVAR);
+                         
                          $PenyusutanPerTahun=round($NP/$MasaManfaat);
                          $rentang_tahun_penyusutan = ($newTahun-$Tahun)+1;
                          $AkumulasiPenyusutan=$rentang_tahun_penyusutan*$PenyusutanPerTahun;
@@ -1221,5 +1233,20 @@ function get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR){
       $UmurEkonomis=$data['UmurEkonomis'];
       $MasaManfaat=$data['MasaManfaat'];
       return array($Akumulasi,$UmurEkonomis,$MasaManfaat);
+}
+
+function get_data_np_transfer($Aset_ID,$log_id,$table_log,$DBVAR){
+    $query_1="select NilaiPerolehan from $table_log where Aset_ID='$Aset_ID' and log_id > $log_id limit 1";
+    $hasil= $DBVAR->query($query);
+    $data= $DBVAR->fetch_array($hasil);
+    $NP=0;
+    $NP=$data['NilaiPerolehan'];
+    if($NP==""||$NP=="0"){
+        $query_1="select NilaiPerolehan from aset where Aset_ID='$Aset_ID'  limit 1";
+        $hasil= $DBVAR->query($query_1);
+        $data= $DBVAR->fetch_array($hasil); 
+        $NP=$data['NilaiPerolehan'];
+    }
+    return $NP;
 }
 ?>
