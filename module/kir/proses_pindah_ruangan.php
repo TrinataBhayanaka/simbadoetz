@@ -79,7 +79,8 @@ include "../../config/config.php";
 		foreach ($resultqueryKibSelect as $key => $val) {
             $tmpField[] = $key;
 			if ($val ==''){
-				$tmpVal[] = $sign."NULL".$sign;
+				// $tmpVal[] = $sign.NULL.$sign;
+				$tmpVal[] = $sign.$sign;
 			}else{
 				$tmpVal[] = $sign.addslashes($val).$sign;
 			}
@@ -99,8 +100,8 @@ include "../../config/config.php";
 		$QueryLog  = "INSERT INTO $tableLog ($implodeField,$AddField)
 					VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
 	
-		// pr($QueryLog);
 		$exeQueryLog = $DBVAR->query($QueryLog);
+		
 	}
 	
 	if($data_post){

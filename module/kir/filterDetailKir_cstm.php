@@ -21,7 +21,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	   $("#Tahun_aw,#Tahun_ak,#register_aw,#register_ak").mask("9999");
 	   $("select").select2();
 	   $( "#tglPerubahan").mask('9999-99-99');
-	 $( "#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	 //$( "#tglPerubahan" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	  // $( "#tglPerubahan" ).datepicker({ format: 'yyyy-mm-dd',autoclose:true,clearBtn:true,forceParse:true });
+			
 	});
 	function check(){
 		var satker = document.getElementById("kodeRuang");
@@ -127,7 +129,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<span class="span2">Tgl Perubahan</span>
 					<!--<div class="input-prepend"><span class="add-on"><i class="fa fa-calendar"></i></span>-->
 							<!--<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required/>--> 
-							<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="" required> 
+							<input type="text" class="span2 full" name="tglPerubahan" id="datepicker2" value="" required> 
 						<!--</div>-->
 				</li>
 				<li>

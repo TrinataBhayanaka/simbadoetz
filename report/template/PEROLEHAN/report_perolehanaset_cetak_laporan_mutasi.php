@@ -64,11 +64,14 @@ if($tglcetak != ''){
 	$tanggalCetak = format_tanggal($tglcetak);
 	$thnPejabat =substr($tglcetak,0,4);	
 }
-
+if($tglawalperolehan != '' && $tglakhirperolehan){
+	$tanggalAwal = format_tanggal($tglawalperolehan);	
+	$tanggalAkhir = format_tanggal($tglakhirperolehan);	
+}
 
 // pr($result);
 // exit;
-$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tglawalperolehan,$tglakhirperolehan,$tanggalCetak,$thnPejabat);
+$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {
