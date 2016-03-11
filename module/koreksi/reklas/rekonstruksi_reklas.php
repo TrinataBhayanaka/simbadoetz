@@ -22,7 +22,27 @@ function insert($data,$table,$link)
     $query = "INSERT INTO {$table} ({$field}) VALUES ($value)";
 
     $result = $link->query($query);
-    echo $query;
+    echo "Inserting data to table {$table} \n";
+    echo $query."\n";
+    echo "=========== Done ============\n";
+
+    return true;
+}
+
+function updateTgl($id,$table,$idname,$link)
+{
+	$query = "SELECT TglPerubahan FROM log_{$table} WHERE {$idname} = {$id} AND TglPerubahan != '0000-00-00' AND kd_riwayat = '30'";
+	$result = $link->query($query); 
+
+	while($row = mysqli_fetch_assoc($result)) {
+	  $newTgl = $row;
+	}
+
+	$sql = "UPDATE log_{$table} SET TglPerubahan = {$newTgl['TglPerubahan']} WHERE {$idname} = {$id} AND TglPerubahan == '0000-00-00' AND kd_riwayat = '30'";
+	$result = $link->query($query);
+
+	echo "Updating old TglPerubahan \n";
+    echo $sql."\n";
 
     return true;
 }
@@ -60,6 +80,7 @@ foreach ($asetlist as $key => $value) {
 	$value['Status_Validasi_Barang'] = 0;
 	$value['StatusTampil'] = 0;
 	$fixArr = array_intersect_key($value,$columlist);
+	updateTgl($value[$idname],$tabel,$idname,$link);
 	insert($fixArr,$tabel,$link);
 }
 
