@@ -7,7 +7,8 @@ include "../../report_engine.php";
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-$tglawalperolehan = $_REQUEST['tglPerolehan_awal_kb'];
+// $tglawalperolehan = $_REQUEST['tglPerolehan_awal_kb'];
+$tahun = $_REQUEST['tahun_kb'];
 $tglakhirperolehan = $_REQUEST['tglPerolehan_akhir_kb'];
 $tglcetak = $_REQUEST['tglCetakKb'];
 $skpd_id = $_REQUEST['kodeSatker10'];
@@ -22,7 +23,7 @@ $data=array(
     "modul"=>$modul,
     "mode"=>$mode,
     "kb"=>$kb,
-    "tglawalperolehan"=>$tglawalperolehan,
+    "tahun"=>$tahun,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "skpd_id"=>$skpd_id,
     "kelompok"=>$kelompok,
@@ -34,7 +35,7 @@ $data=array(
 // print_r($_POST);
 // exit;
 
-$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&kelompok=$kelompok&tglawalperolehan=$tglawalperolehan&tglakhirperolehan=$tglakhirperolehan&kb=$kb&tglcetak=$tglcetak&noregAwal=$noregAwal&noregAkhir=$noregAkhir&tipe_file=$tipe";
+$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&kelompok=$kelompok&tahun=$tahun&tglakhirperolehan=$tglakhirperolehan&kb=$kb&tglcetak=$tglcetak&noregAwal=$noregAwal&noregAkhir=$noregAkhir&tipe_file=$tipe";
 // echo $paramater_url;
 if(isset($kb))
 {
