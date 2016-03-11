@@ -150,17 +150,15 @@ function store_aset($data,$link,$totaldata)
             $tblAset['TahunPenyusutan'] = '2014';
         }
 
-        if(intval($tblAset['Tahun']) < 2008){
-            $tblAset['kodeKA'] = 1;
-        }else {
+       
             if($data['TipeAset'] == 'B'){
-                if($tblAset['NilaiPerolehan'] < 300000){
+                if($tblAset['NilaiPerolehan'] < 1000000){
                     $tblAset['kodeKA'] = 0;
                 } else {
                     $tblAset['kodeKA'] = 1;
                 }
             } elseif ($data['TipeAset'] == 'C') {
-                if($tblAset['NilaiPerolehan'] < 10000000){
+                if($tblAset['NilaiPerolehan'] < 20000000){
                     $tblAset['kodeKA'] = 0;
                 } else {
                     $tblAset['kodeKA'] = 1;
@@ -168,7 +166,7 @@ function store_aset($data,$link,$totaldata)
             } else {
             	$tblAset['kodeKA'] = 0;
             }
-        }
+        
         $tblAset['AsalUsul'] = $data['AsalUsul'];
 
         if(isset($data['xls'])) {

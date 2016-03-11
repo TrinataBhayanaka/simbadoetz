@@ -8,13 +8,13 @@ include "../../../config/database.php";
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
-$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMPC' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
 while($row = mysqli_fetch_assoc($result)) {
   $asetlist = $row;
 } 
 
-$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_asetlain";
+$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_bangunan";
 $sumall = $link->query($sql);
 while($row = mysqli_fetch_assoc($sumall)) {
   $sum = $row;
@@ -37,7 +37,7 @@ foreach ($cleardata as $key => $val) {
 	$counter++;
 	$tmp = explode("|", $val);
 
-	$sql = "SELECT * FROM tmp_asetlain WHERE temp_AsetLain_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
+	$sql = "SELECT * FROM tmp_bangunan WHERE temp_Bangunan_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
 	$result = $link->query($sql); 
 
 	while($row = mysqli_fetch_assoc($result)) {
@@ -49,14 +49,13 @@ foreach ($cleardata as $key => $val) {
 
 	$data['kodeSatker'] = $datatmp['kodeSatker'];
 	$data['kodeRuangan'] = $datatmp['kodeRuangan'];
-	$data['kodeKelompok'] = $datatmp['kodeKelompok'];
-	$data['Judul'] = addslashes($datatmp['Judul']);
-	$data['Pengarang'] = addslashes($datatmp['Pengarang']);
-	$data['Penerbit'] = addslashes($datatmp['Penerbit']);
-	$data['Spesifikasi'] = $datatmp['Spesifikasi'];
-	$data['AsalDaerah'] = $datatmp['AsalDaerah'];
-	$data['Material'] = $datatmp['Material'];
-	$data['Ukuran'] = $datatmp['Ukuran'];
+    $data['kodeKelompok'] = $datatmp['kodeKelompok'];
+    $data['kondisi'] = $datatmp['kondisi'];
+    $data['JumlahLantai'] = $datatmp['JumlahLantai'];
+    $data['Beton'] = $datatmp['Beton'];
+    $data['LuasLantai'] = $datatmp['LuasLantai'];
+    $data['NoSurat'] = $datatmp['NoSurat'];
+	$data['TglSurat'] = $datatmp['TglSurat'];
 	$data['TglPerolehan'] = $datatmp['TglPerolehan'];
 	$data['Alamat'] = $datatmp['Alamat'];
 	$data['Kuantitas'] = $datatmp['Jumlah'];
@@ -66,7 +65,6 @@ foreach ($cleardata as $key => $val) {
 	$data['Info'] = "[importing-" .$sum['sumnilai']. "]" . $datatmp['Info'];
 	$data['id'] = $argv[2];
 	$data['noKontrak'] = $datatmp['noKontrak'];
-	$data['kondisi'] = 1;
 	$data['UserNm'] = $argv[1];
 	$data['Tahun'] = $datatmp['Tahun'];
 	$data['TipeAset'] = $datatmp['TipeAset'];
@@ -341,7 +339,7 @@ function store_aset($data,$link,$totaldata)
                 $kib['UserNm'] = $data['UserNm'];
                 $kib['TipeAset'] = $data['TipeAset'];
                 $kib['kodeRuangan'] = $data['kodeRuangan'];
-            } elseif ($data['TipeAset']=="E") {
+            } elseif ($data['TipeAset']=="C") {
                 $kib['Aset_ID'] = $tblKib['Aset_ID'];
                 $kib['kodeKelompok'] = $data['kodeKelompok'];
                 $kib['kodeSatker'] = $data['kodeSatker'];
@@ -360,15 +358,14 @@ function store_aset($data,$link,$totaldata)
                 $kib['Info'] = $data['Info'];
                 $kib['AsalUsul'] = $data['AsalUsul'];
                 $kib['kondisi'] = $data['kondisi'];
-                $kib['Judul'] = $data['Judul'];
-                $kib['Pengarang'] = $data['Pengarang'];
-                $kib['Penerbit'] = $data['Penerbit'];
-                $kib['Spesifikasi'] = $data['Spesifikasi'];
-                $kib['AsalDaerah'] = $data['AsalDaerah'];
-                $kib['Material'] = $data['Material'];
-                $kib['Ukuran'] = $data['Ukuran'];
+                $kib['JumlahLantai'] = $data['JumlahLantai'];
+                $kib['LuasLantai'] = $data['LuasLantai'];
+                $kib['Beton'] = $data['Beton'];
+                $kib['NoSurat'] = $data['NoSurat'];
+                $kib['TglSurat'] = $data['TglSurat'];
                 $kib['StatusTampil'] = 1;
                 $kib['GUID'] = $data['GUID'];
+
             }
 
             if(isset($data['xls'])){

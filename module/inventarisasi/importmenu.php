@@ -148,7 +148,7 @@ $menu_id = 10;
 			</div>
 
 			<div>
-				<form method="POST" enctype="multipart/form-data" id="myForm" action="import/mesin.php">
+				<form method="POST" enctype="multipart/form-data" id="myForm" action="import/tanah.php">
 					 <div class="formKontrak">
 					 		<ul>
 								<?=selectSatker('kodeSatker','255',true,false,'required');?>
@@ -160,12 +160,12 @@ $menu_id = 10;
 								<li>
 									<span class="span2">Jenis Aset</span>
 									<select id="jenisaset" name="jenisaset" style="width:255px" onchange="return chgForm();">
-										<!-- <option value="a">KIB A - Tanah</option> -->
+										<option value="tanah">KIB A - Tanah</option>
 										<option value="mesin">KIB B - Mesin</option>
-										<!-- <option value="c">KIB C - Mesin</option> -->
-										<!-- <option value="d">KIB D - Jaringan</option> -->
+										<option value="bangunan">KIB C - Bangunan</option>
+										<option value="jaringan">KIB D - Jaringan</option>
 										<option value="asetlain">KIB E - Aset Tetap Lain</option>
-										<!-- <option value="f">KIB F - KDP</option> -->
+										<option value="kdp">KIB F - KDP</option>
 									</select>
 								</li>
 							</ul>

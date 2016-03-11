@@ -8,13 +8,13 @@ include "../../../config/database.php";
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
-$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMPA' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
 while($row = mysqli_fetch_assoc($result)) {
   $asetlist = $row;
 } 
 
-$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_asetlain";
+$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_tanah";
 $sumall = $link->query($sql);
 while($row = mysqli_fetch_assoc($sumall)) {
   $sum = $row;
@@ -37,7 +37,7 @@ foreach ($cleardata as $key => $val) {
 	$counter++;
 	$tmp = explode("|", $val);
 
-	$sql = "SELECT * FROM tmp_asetlain WHERE temp_AsetLain_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
+	$sql = "SELECT * FROM tmp_tanah WHERE temp_Tanah_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
 	$result = $link->query($sql); 
 
 	while($row = mysqli_fetch_assoc($result)) {
@@ -50,13 +50,11 @@ foreach ($cleardata as $key => $val) {
 	$data['kodeSatker'] = $datatmp['kodeSatker'];
 	$data['kodeRuangan'] = $datatmp['kodeRuangan'];
 	$data['kodeKelompok'] = $datatmp['kodeKelompok'];
-	$data['Judul'] = addslashes($datatmp['Judul']);
-	$data['Pengarang'] = addslashes($datatmp['Pengarang']);
-	$data['Penerbit'] = addslashes($datatmp['Penerbit']);
-	$data['Spesifikasi'] = $datatmp['Spesifikasi'];
-	$data['AsalDaerah'] = $datatmp['AsalDaerah'];
-	$data['Material'] = $datatmp['Material'];
-	$data['Ukuran'] = $datatmp['Ukuran'];
+    $data['LuasTotal'] = $datatmp['LuasTotal'];
+    $data['NoSertifikat'] = addslashes($datatmp['NoSertifikat']);
+    $data['TglSertifikat'] = $datatmp['TglSertifikat'];
+    $data['Penggunaan'] = $datatmp['Penggunaan'];
+
 	$data['TglPerolehan'] = $datatmp['TglPerolehan'];
 	$data['Alamat'] = $datatmp['Alamat'];
 	$data['Kuantitas'] = $datatmp['Jumlah'];
@@ -87,7 +85,7 @@ echo "Updating log import\n";
 $sql = "UPDATE log_import SET totalPerolehan = '{$sum['sumnilai']}', status = 1 WHERE noKontrak = '{$datatmp['noKontrak']}'";
 $exec = $link->query($sql);
 
-$sql = "DELETE FROM apl_userasetlist WHERE aset_action = 'XLSIMP'";
+$sql = "DELETE FROM apl_userasetlist WHERE aset_action = 'XLSIMPA'";
 $result = $link->query($sql);
 // echo "Commit data\n";
 // $command = "COMMIT;";
@@ -203,7 +201,7 @@ function store_aset($data,$link,$totaldata)
 			// }
 
             if($data['TipeAset']=="A"){
-                $tblKib['HakTanah'] = $data['HakTanah'];
+                // $tblKib['HakTanah'] = $data['HakTanah'];
                 $tblKib['LuasTotal'] = $data['LuasTotal'];
                 $tblKib['NoSertifikat'] = $data['NoSertifikat'];
                 $tblKib['TglSertifikat'] = $data['TglSertifikat'];
@@ -341,7 +339,7 @@ function store_aset($data,$link,$totaldata)
                 $kib['UserNm'] = $data['UserNm'];
                 $kib['TipeAset'] = $data['TipeAset'];
                 $kib['kodeRuangan'] = $data['kodeRuangan'];
-            } elseif ($data['TipeAset']=="E") {
+            } elseif ($data['TipeAset']=="A") {
                 $kib['Aset_ID'] = $tblKib['Aset_ID'];
                 $kib['kodeKelompok'] = $data['kodeKelompok'];
                 $kib['kodeSatker'] = $data['kodeSatker'];
@@ -360,13 +358,10 @@ function store_aset($data,$link,$totaldata)
                 $kib['Info'] = $data['Info'];
                 $kib['AsalUsul'] = $data['AsalUsul'];
                 $kib['kondisi'] = $data['kondisi'];
-                $kib['Judul'] = $data['Judul'];
-                $kib['Pengarang'] = $data['Pengarang'];
-                $kib['Penerbit'] = $data['Penerbit'];
-                $kib['Spesifikasi'] = $data['Spesifikasi'];
-                $kib['AsalDaerah'] = $data['AsalDaerah'];
-                $kib['Material'] = $data['Material'];
-                $kib['Ukuran'] = $data['Ukuran'];
+                $kib['LuasTotal'] = $data['LuasTotal'];
+                $kib['NoSertifikat'] = $data['NoSertifikat'];
+                $kib['TglSertifikat'] = $data['TglSertifikat'];
+                $kib['Penggunaan'] = $data['Penggunaan'];
                 $kib['StatusTampil'] = 1;
                 $kib['GUID'] = $data['GUID'];
             }
