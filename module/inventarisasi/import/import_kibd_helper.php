@@ -1,23 +1,20 @@
 <?php
 
 include "../../../config/database.php";
-
 // $CONFIG['default']['db_host'] = 'localhost';
 // $CONFIG['default']['db_user'] = 'root';
 // $CONFIG['default']['db_pass'] = 'root123root';
 // $CONFIG['default']['db_name'] = 'simbada_2014';
 
-
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
-$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMPB' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMPD' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
-
 while($row = mysqli_fetch_assoc($result)) {
   $asetlist = $row;
 } 
 
-$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_mesin";
+$sql = "SELECT SUM(NilaiTotal) as sumnilai FROM tmp_jaringan";
 $sumall = $link->query($sql);
 while($row = mysqli_fetch_assoc($sumall)) {
   $sum = $row;
@@ -40,7 +37,7 @@ foreach ($cleardata as $key => $val) {
 	$counter++;
 	$tmp = explode("|", $val);
 
-	$sql = "SELECT * FROM tmp_mesin WHERE tmp_Mesin_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
+	$sql = "SELECT * FROM tmp_jaringan WHERE temp_Jaringan_ID = '{$tmp[0]}'" or die("Error in the consult.." . mysqli_error($link));
 	$result = $link->query($sql); 
 
 	while($row = mysqli_fetch_assoc($result)) {
@@ -49,19 +46,16 @@ foreach ($cleardata as $key => $val) {
 
 	echo "ID Data di proses:".$tmp[0]."\n";
 	echo "Jumlah Data:".$datatmp['Jumlah']."\n";
-    
+
 	$data['kodeSatker'] = $datatmp['kodeSatker'];
-    $data['kodeRuangan'] = $datatmp['kodeRuangan'];
+	$data['kodeRuangan'] = $datatmp['kodeRuangan'];
     $data['kodeKelompok'] = $datatmp['kodeKelompok'];
-    $data['Merk'] = $datatmp['Merk'];
-    $data['Model'] = $datatmp['Model'];
-    $data['Ukuran'] = $datatmp['Ukuran'];
-    $data['Pabrik'] = $datatmp['Pabrik'];
-    $data['NoMesin'] = $datatmp['NoMesin'];
-    $data['NoBPKB'] = $datatmp['NoBPKB'];
-    $data['Material'] = $datatmp['Material'];
-    $data['NoRangka'] = $datatmp['NoRangka'];
-    $data['NoSeri'] = $datatmp['NoSeri'];
+    $data['kondisi'] = $datatmp['kondisi'];
+    $data['Panjang'] = $datatmp['Panjang'];
+    $data['Lebar'] = $datatmp['Lebar'];
+    $data['NoDokumen'] = $datatmp['NoDokumen'];
+    $data['TglDokumen'] = $datatmp['TglDokumen'];
+    $data['LuasJaringan'] = $datatmp['LuasJaringan'];
 	$data['TglPerolehan'] = $datatmp['TglPerolehan'];
 	$data['Alamat'] = $datatmp['Alamat'];
 	$data['Kuantitas'] = $datatmp['Jumlah'];
@@ -71,14 +65,12 @@ foreach ($cleardata as $key => $val) {
 	$data['Info'] = "[importing-" .$sum['sumnilai']. "]" . $datatmp['Info'];
 	$data['id'] = $argv[2];
 	$data['noKontrak'] = $datatmp['noKontrak'];
-	$data['kondisi'] = 1;
 	$data['UserNm'] = $argv[1];
 	$data['Tahun'] = $datatmp['Tahun'];
 	$data['TipeAset'] = $datatmp['TipeAset'];
 	$data['AsalUsul'] = 'Pembelian';
 	$data['GUID'] = $datatmp['GUID'];
 	$data['xls'] = 1;
-
 
 	$totaldata = store_aset($data,$link,$totaldata);
 	echo "=================== Row Finish:".$counter." ===================\n\n";
@@ -89,14 +81,12 @@ foreach ($cleardata as $key => $val) {
 
 }
 
-echo "Updating table kontrak\n";
-$sql = "UPDATE kontrak SET n_status = '1' WHERE id = '{$argv[2]}'" or die("Error in the consult.." . mysqli_error($link));
-$exec = $link->query($sql);
-
 echo "Updating log import\n";
 $sql = "UPDATE log_import SET totalPerolehan = '{$sum['sumnilai']}', status = 1 WHERE noKontrak = '{$datatmp['noKontrak']}'";
 $exec = $link->query($sql);
 
+$sql = "DELETE FROM apl_userasetlist WHERE aset_action = 'XLSIMP'";
+$result = $link->query($sql);
 // echo "Commit data\n";
 // $command = "COMMIT;";
 // $exec = $link->query($command);
@@ -117,6 +107,7 @@ function store_aset($data,$link,$totaldata)
         $tblAset['noKontrak'] = $data['noKontrak'];
         $tblAset['TglPerolehan'] = $data['TglPerolehan'];
         $tblAset['NilaiPerolehan'] = $data['Satuan'];
+        $tblAset['NilaiBuku'] = $data['Satuan'];
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
@@ -125,43 +116,15 @@ function store_aset($data,$link,$totaldata)
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['GUID'] = $data['GUID'];
-
-        //Penyusutan
-        $kd_aset = explode('.', $tblAset['kodeKelompok']);
-        if($kd_aset[0] == '02'){
-            $tb = '2015';
-            $ta = $tblAset['Tahun'];
-            $na = $tblAset['NilaiPerolehan'];
-            $sql = "SELECT masa_manfaat FROM ref_masamanfaat WHERE kd_aset1 = '{$kd_aset[0]}' AND kd_aset2 = '{$kd_aset[1]}' AND kd_aset3 = '{$kd_aset[2]}'";
-            $result = $link->query($sql);
-            while($row = mysqli_fetch_assoc($result)) {
-              $mm = $row['masa_manfaat'];
-            }
-
-            $range = $tb - $ta;
-            $pp = $na/$mm;
-            $ap = $pp * $range;
-            $nb = $na - $ap;
-
-            $tblAset['MasaManfaat'] = $mm;
-            $tblAset['AkumulasiPenyusutan'] = $ap;
-            $tblAset['PenyusutanPertaun'] = $pp;
-            $tblAset['NilaiBuku'] = $nb;
-            $tblAset['UmurEkonomis'] = $mm - $range;
-            $tblAset['TahunPenyusutan'] = '2014';
-        }
-
-        if(intval($tblAset['Tahun']) < 2008){
-            $tblAset['kodeKA'] = 1;
-        }else {
+        
             if($data['TipeAset'] == 'B'){
-                if($tblAset['NilaiPerolehan'] < 300000){
+                if($tblAset['NilaiPerolehan'] < 1000000){
                     $tblAset['kodeKA'] = 0;
                 } else {
                     $tblAset['kodeKA'] = 1;
                 }
             } elseif ($data['TipeAset'] == 'C') {
-                if($tblAset['NilaiPerolehan'] < 10000000){
+                if($tblAset['NilaiPerolehan'] < 20000000){
                     $tblAset['kodeKA'] = 0;
                 } else {
                     $tblAset['kodeKA'] = 1;
@@ -169,7 +132,7 @@ function store_aset($data,$link,$totaldata)
             } else {
             	$tblAset['kodeKA'] = 0;
             }
-        }
+        
         $tblAset['AsalUsul'] = $data['AsalUsul'];
 
         if(isset($data['xls'])) {
@@ -272,7 +235,7 @@ function store_aset($data,$link,$totaldata)
                 $tblKib['Panjang'] = $data['Panjang'];
                 $tblKib['Lebar'] = $data['Lebar'];
                 $tblKib['LuasJaringan'] = $data['LuasJaringan'];
-                $tblKib['Konstruksi'] = $data['Konstruksi'];
+                // $tblKib['Konstruksi'] = $data['Konstruksi'];
                 $tblKib['NoDokumen'] = $data['NoDokumen'];
                 $tblKib['tglDokumen'] = $data['TglDokumen'];
                 $tabel = "jaringan";
@@ -312,6 +275,7 @@ function store_aset($data,$link,$totaldata)
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
             $tblKib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+            $tblKib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
             $tblKib['kondisi'] = $data['kondisi'];
             $tblKib['Info'] = $data['Info'];
             $tblKib['Alamat'] = $data['Alamat'];
@@ -325,16 +289,6 @@ function store_aset($data,$link,$totaldata)
                 $tblKib['Status_Validasi_Barang'] = 1;
                 $tblKib['StatusTampil'] = 1;
                 $tblKib['GUID'] = $data['GUID'];
-
-                if($kd_aset[0] == '02'){
-                    $tblKib['MasaManfaat'] = $mm;
-                    $tblKib['AkumulasiPenyusutan'] = $ap;
-                    $tblKib['PenyusutanPerTahun'] = $pp;
-                    $tblKib['NilaiBuku'] = $nb;
-                    $tblKib['UmurEkonomis'] = $mm - $range;
-                    $tblKib['TahunPenyusutan'] = '2014';
-                }
-
             }
             
             // echo "Inserting to KIB\n";
@@ -368,6 +322,7 @@ function store_aset($data,$link,$totaldata)
                 $kib['kodeLokasi'] = $tblAset['kodeLokasi'];
                 $kib['TglPerolehan'] = $data['TglPerolehan'];
                 $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $kib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
                 $kib['noKontrak'] = $data['noKontrak'];
                 $kib['kondisi'] = $data['kondisi'];
                 $kib['Info'] = $data['Info'];
@@ -384,7 +339,7 @@ function store_aset($data,$link,$totaldata)
                 $kib['UserNm'] = $data['UserNm'];
                 $kib['TipeAset'] = $data['TipeAset'];
                 $kib['kodeRuangan'] = $data['kodeRuangan'];
-            } elseif ($data['TipeAset']=="E") {
+            } elseif ($data['TipeAset']=="D") {
                 $kib['Aset_ID'] = $tblKib['Aset_ID'];
                 $kib['kodeKelompok'] = $data['kodeKelompok'];
                 $kib['kodeSatker'] = $data['kodeSatker'];
@@ -398,48 +353,19 @@ function store_aset($data,$link,$totaldata)
                 $kib['Status_Validasi_Barang'] = 1;
                 $kib['Tahun'] = $tblAset['Tahun'];
                 $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $kib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
                 $kib['Alamat'] = $data['Alamat'];
                 $kib['Info'] = $data['Info'];
                 $kib['AsalUsul'] = $data['AsalUsul'];
                 $kib['kondisi'] = $data['kondisi'];
-                $kib['Judul'] = $data['Judul'];
-                $kib['Pengarang'] = $data['Pengarang'];
-                $kib['Penerbit'] = $data['Penerbit'];
-                $kib['Spesifikasi'] = $data['Spesifikasi'];
-                $kib['AsalDaerah'] = $data['AsalDaerah'];
-                $kib['Material'] = $data['Material'];
-                $kib['Ukuran'] = $data['Ukuran'];
+                $kib['Panjang'] = $data['Panjang'];
+                $kib['Lebar'] = $data['Lebar'];
+                $kib['LuasJaringan'] = $data['LuasJaringan'];
+                $kib['NoDokumen'] = $data['NoDokumen'];
+                $kib['TglDokumen'] = $data['TglDokumen'];
                 $kib['StatusTampil'] = 1;
                 $kib['GUID'] = $data['GUID'];
-            } elseif ($data['TipeAset']=="B") {
-                $kib['Aset_ID'] = $tblKib['Aset_ID'];
-                $kib['kodeKelompok'] = $data['kodeKelompok'];
-                $kib['kodeSatker'] = $data['kodeSatker'];
-                $kib['kodeLokasi'] = $tblAset['kodeLokasi'];
-                $kib['noRegister'] = $tblAset['noRegister'];
-                $kib['TglPerolehan'] = $data['TglPerolehan'];
-                $kib['TglPembukuan'] = $data['TglPerolehan'];
-                $kib['kodeKA'] = $tblAset['kodeKA'];
-                $kib['kodeRuangan'] = $data['kodeRuangan'];
-                $kib['StatusValidasi'] = 1;
-                $kib['Status_Validasi_Barang'] = 1;
-                $kib['Tahun'] = $tblAset['Tahun'];
-                $kib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
-                $kib['Alamat'] = $data['Alamat'];
-                $kib['Info'] = $data['Info'];
-                $kib['AsalUsul'] = $data['AsalUsul'];
-                $kib['kondisi'] = $data['kondisi'];
-                $kib['Merk'] = $data['Merk'];
-                $kib['Model'] = $data['Model'];
-                $kib['Ukuran'] = $data['Ukuran'];
-                $kib['Pabrik'] = $data['Pabrik'];
-                $kib['NoMesin'] = $data['NoMesin'];
-                $kib['NoBPKB'] = $data['NoBPKB'];
-                $kib['Material'] = $data['Material'];
-                $kib['NoRangka'] = $data['NoRangka'];
-                $kib['NoSeri'] = $data['NoSeri'];
-                $kib['StatusTampil'] = 1;
-                $kib['GUID'] = $data['GUID'];
+
             }
 
             if(isset($data['xls'])){
@@ -473,54 +399,6 @@ function store_aset($data,$link,$totaldata)
 
                         $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})" or die("Error in the consult.." . mysqli_error($link));
                        	$exec = $link->query($sql);
-
-                if($kd_aset[0] == '02'){
-                    echo "Creating Log for penyusutan";
-                    //First Log
-                    $kib['MasaManfaat'] = 0;
-                    $kib['AkumulasiPenyusutan'] = 0;
-                    $kib['PenyusutanPerTahun'] = 0;
-                    $kib['NilaiBuku'] = 0;
-                    $kib['UmurEkonomis'] = $mm;
-                    $kib['TahunPenyusutan'] = '2014';
-                    $kib['Kd_Riwayat'] = 50;
-
-                    unset($tmpField);
-                    unset($tmpValue);
-                    foreach ($kib as $key => $val) {
-                      $tmpField[] = $key;
-                      $tmpValue[] = "'".$val."'";
-                    }
-                     
-                    $fileldImp = implode(',', $tmpField);
-                    $dataImp = implode(',', $tmpValue);
-
-                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})" or die("Error in the consult.." . mysqli_error($link));
-                    $exec = $link->query($sql); 
-
-                    //Second Log
-                    $kib['MasaManfaat'] = $mm;
-                    $kib['AkumulasiPenyusutan'] = $ap;
-                    $kib['PenyusutanPerTahun'] = $pp;
-                    $kib['NilaiBuku'] = $nb;
-                    $kib['UmurEkonomis'] = $mm - $range;
-                    $kib['TahunPenyusutan'] = '2014';
-                    $kib['Kd_Riwayat'] = 50;
-
-                    unset($tmpField);
-                    unset($tmpValue);
-                    foreach ($kib as $key => $val) {
-                      $tmpField[] = $key;
-                      $tmpValue[] = "'".$val."'";
-                    }
-                     
-                    $fileldImp = implode(',', $tmpField);
-                    $dataImp = implode(',', $tmpValue);
-
-                    $sql = "INSERT INTO log_{$tabel} ({$fileldImp}) VALUES ({$dataImp})" or die("Error in the consult.." . mysqli_error($link));
-                    $exec = $link->query($sql);  
-                }
-                
 
                        	echo "Baris selesai : ".$xlsxount."\n";
                        	echo "Jumlah data yang masuk : ".$totaldata."\n";

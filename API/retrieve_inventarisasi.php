@@ -583,6 +583,107 @@ class RETRIEVE_INVENTARISASI extends RETRIEVE{
         
     }
 
+    public function importing_xls2html_tanah($files,$post)
+    {
+        global $url_rewrite;
+        // pr($post);exit;
+        $this->begin();
+
+        //delete old data
+          $sql = "DELETE FROM tmp_tanah WHERE UserNm = '{$_SESSION['ses_uoperatorid']}'";
+          $execquery = $this->query($sql);
+
+          $sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = 'XLSIMPA'";
+          $execquery = $this->query($sql);
+
+        $sql = "INSERT INTO log_import (`noKontrak`, `desc`, `totalPerolehan`, `user`, `status`) VALUES ('{$post['noKontrak']}','{$files['myFile']['name']}',0,'{$_SESSION['ses_uname']}',0)";
+        $exec = $this->query($sql);
+        $data = new Spreadsheet_Excel_Reader($files['myFile']['tmp_name']);
+        
+        // membaca jumlah baris dari data excel
+        $baris = $data->rowcount($sheet_index=0);
+
+        $no = 0;
+        $counttosleep = 0;
+        for ($i=10; $i<=$baris; $i++)
+        {
+            if($data->val($i,11) != "" || $data->val($i,11) != 0){
+                  $counttosleep++;
+                  if($counttosleep == 201 ){
+                    $counttosleep = 1;
+                    sleep(1);
+                  } 
+                  $xlsdata[$no]['kodeSatker'] = $post['kodeSatker'];
+                  $kodeSatker = explode(".",$post['kodeSatker']);
+                  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 10);
+                  // $myDateTime = DateTime::createFromFormat('Y-m-d', $tgl);
+                  // $xlsdata[$no]['TglPerolehan'] = $myDateTime->format('Y-m-d');
+                  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
+                  $xlsdata[$no]['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];      
+                  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 3);
+                  $kib = explode(".", $xlsdata[$no]['kodeKelompok']);
+                  if($kib[0] == "01"){
+                    $xlsdata[$no]['TipeAset'] = 'A';
+                  } elseif ($kib[0] == "08") {
+                    $xlsdata[$no]['TipeAset'] = 'H';
+                  }
+                  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 3)}' LIMIT 1");
+                    while ($namaaset = mysql_fetch_assoc($sql)){
+                            $uraian = $namaaset['uraian'];
+                        }   
+                  $xlsdata[$no]['uraian'] = $uraian;
+
+                  $xlsdata[$no]['noKontrak'] = $post['noKontrak'];
+                  $xlsdata[$no]['GUID'] = $data->val($i,14);
+                  $xlsdata[$no]['Info'] = $data->val($i,13);
+                  $xlsdata[$no]['kodeRuangan'] = $post['kodeRuangan'];
+                  $xlsdata[$no]['LuasTotal'] = $data->val($i,4);
+                  $xlsdata[$no]['NoSertifikat'] = $data->val($i,6);
+                  $xlsdata[$no]['TglSertifikat'] = $data->val($i,5);
+                  $xlsdata[$no]['Penggunaan'] = $data->val($i,7);
+                  $xlsdata[$no]['Alamat'] = str_replace("'","",$data->val($i,8));
+                  $xlsdata[$no]['Jumlah'] = $data->val($i,9);
+                  $xlsdata[$no]['UserNm'] = $_SESSION['ses_uoperatorid'];
+                  $xlsdata[$no]['Sess'] = $baris-9;
+
+                  $wordRM = array(","," ",".","*");
+                  $nilaiTrim = str_replace($wordRM,"",$data->val($i,11));
+
+                  $xlsdata[$no]['NilaiPerolehan'] = $nilaiTrim;
+                  $xlsdata[$no]['NilaiTotal'] = $nilaiTrim*$data->val($i,9);
+
+                  if($xlsdata[$no]['NilaiPerolehan'] == '' || $xlsdata[$no]['NilaiPerolehan'] == 0){
+                    $xlsdata[$no]['other'] = "hidden"; $xlsdata[$no]['style'] = "disabled";
+                  } else $xlsdata[$no]['other'] = "checkbox";
+
+                  unset($tmpfield); unset($tmpvalue);
+
+                    foreach ($xlsdata[$no] as $key => $val) {
+                        $tmpfield[] = $key;
+                        $tmpvalue[] = "'$val'";
+                    }
+                    $field = implode(',', $tmpfield);
+                    $value = implode(',', $tmpvalue);
+
+                    $query = "INSERT INTO tmp_tanah ({$field}) VALUES ({$value})";
+                   
+                    $execquery = $this->query($query);
+                    logFile($query);
+                    if(!$execquery){
+                      $this->rollback();
+                      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/importmenu.php\">";
+                      exit;
+                    }
+
+                  $no++;
+            }
+        }
+        $this->commit();
+        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/import/tanah.php\">";
+        
+        exit;
+
+    }
 
     public function importing_xls2html($files,$post)
     {
@@ -684,6 +785,214 @@ class RETRIEVE_INVENTARISASI extends RETRIEVE{
         }
         $this->commit();
         echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/import/asetlain.php\">";
+        
+        exit;
+
+    }
+
+    public function importing_xls2html_bangunan($files,$post)
+    {
+        global $url_rewrite;
+        // pr($post);exit;
+        $this->begin();
+
+        //delete old data
+          $sql = "DELETE FROM tmp_bangunan WHERE UserNm = '{$_SESSION['ses_uoperatorid']}'";
+          $execquery = $this->query($sql);
+
+          $sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = 'XLSIMPC'";
+          $execquery = $this->query($sql);
+
+        $sql = "INSERT INTO log_import (`noKontrak`, `desc`, `totalPerolehan`, `user`, `status`) VALUES ('{$post['noKontrak']}','{$files['myFile']['name']}',0,'{$_SESSION['ses_uname']}',0)";
+        $exec = $this->query($sql);
+        $data = new Spreadsheet_Excel_Reader($files['myFile']['tmp_name']);
+        
+        // membaca jumlah baris dari data excel
+        $baris = $data->rowcount($sheet_index=0);
+
+        $no = 0;
+        $counttosleep = 0;
+        for ($i=10; $i<=$baris; $i++)
+        {
+            if($data->val($i,13) != "" || $data->val($i,13) != 0){
+                  $counttosleep++;
+                  if($counttosleep == 201 ){
+                    $counttosleep = 1;
+                    sleep(1);
+                  } 
+                  $xlsdata[$no]['kodeSatker'] = $post['kodeSatker'];
+                  $kodeSatker = explode(".",$post['kodeSatker']);
+                  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 12);
+                  // $myDateTime = DateTime::createFromFormat('Y-m-d', $tgl);
+                  // $xlsdata[$no]['TglPerolehan'] = $myDateTime->format('Y-m-d');
+                  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
+                  $xlsdata[$no]['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];      
+                  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 3);
+                  $kib = explode(".", $xlsdata[$no]['kodeKelompok']);
+                  if($kib[0] == "03"){
+                    $xlsdata[$no]['TipeAset'] = 'C';
+                  } elseif ($kib[0] == "08") {
+                    $xlsdata[$no]['TipeAset'] = 'H';
+                  }
+                  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 3)}' LIMIT 1");
+                    while ($namaaset = mysql_fetch_assoc($sql)){
+                            $uraian = $namaaset['uraian'];
+                        }   
+                  $xlsdata[$no]['uraian'] = $uraian;
+
+                  $xlsdata[$no]['noKontrak'] = $post['noKontrak'];
+                  $xlsdata[$no]['GUID'] = $data->val($i,16);
+                  $xlsdata[$no]['Info'] = $data->val($i,15);
+                  $xlsdata[$no]['kodeRuangan'] = $post['kodeRuangan'];
+                  $xlsdata[$no]['kondisi'] = $data->val($i,4);
+                  $xlsdata[$no]['Beton'] = $data->val($i,6);
+                  $xlsdata[$no]['JumlahLantai'] = $data->val($i,5);
+                  $xlsdata[$no]['LuasLantai'] = $data->val($i,7);
+                  $xlsdata[$no]['NoSurat'] = $data->val($i,8);
+                  $xlsdata[$no]['TglSurat'] = $data->val($i,9);
+                  $xlsdata[$no]['Alamat'] = str_replace("'","",$data->val($i,10));
+                  $xlsdata[$no]['Jumlah'] = $data->val($i,11);
+                  $xlsdata[$no]['UserNm'] = $_SESSION['ses_uoperatorid'];
+                  $xlsdata[$no]['Sess'] = $baris-9;
+
+                  $wordRM = array(","," ",".","*");
+                  $nilaiTrim = str_replace($wordRM,"",$data->val($i,13));
+
+                  $xlsdata[$no]['NilaiPerolehan'] = $nilaiTrim;
+                  $xlsdata[$no]['NilaiTotal'] = $nilaiTrim*$data->val($i,11);
+
+                  if($xlsdata[$no]['NilaiPerolehan'] == '' || $xlsdata[$no]['NilaiPerolehan'] == 0){
+                    $xlsdata[$no]['other'] = "hidden"; $xlsdata[$no]['style'] = "disabled";
+                  } else $xlsdata[$no]['other'] = "checkbox";
+
+                  unset($tmpfield); unset($tmpvalue);
+
+                    foreach ($xlsdata[$no] as $key => $val) {
+                        $tmpfield[] = $key;
+                        $tmpvalue[] = "'$val'";
+                    }
+                    $field = implode(',', $tmpfield);
+                    $value = implode(',', $tmpvalue);
+
+                    $query = "INSERT INTO tmp_bangunan ({$field}) VALUES ({$value})";
+                   
+                    $execquery = $this->query($query);
+                    logFile($query);
+                    if(!$execquery){
+                      $this->rollback();
+                      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/importmenu.php\">";
+                      exit;
+                    }
+
+                  $no++;
+            }
+        }
+        $this->commit();
+        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/import/bangunan.php\">";
+        
+        exit;
+
+    }
+
+    public function importing_xls2html_jaringan($files,$post)
+    {
+        global $url_rewrite;
+        // pr($post);exit;
+        $this->begin();
+
+        //delete old data
+          $sql = "DELETE FROM tmp_jaringan WHERE UserNm = '{$_SESSION['ses_uoperatorid']}'";
+          $execquery = $this->query($sql);
+
+          $sql = "DELETE FROM apl_userasetlist WHERE UserNm = '{$_SESSION['ses_uoperatorid']}' AND aset_action = 'XLSIMPD'";
+          $execquery = $this->query($sql);
+
+        $sql = "INSERT INTO log_import (`noKontrak`, `desc`, `totalPerolehan`, `user`, `status`) VALUES ('{$post['noKontrak']}','{$files['myFile']['name']}',0,'{$_SESSION['ses_uname']}',0)";
+        $exec = $this->query($sql);
+        $data = new Spreadsheet_Excel_Reader($files['myFile']['tmp_name']);
+        
+        // membaca jumlah baris dari data excel
+        $baris = $data->rowcount($sheet_index=0);
+
+        $no = 0;
+        $counttosleep = 0;
+        for ($i=10; $i<=$baris; $i++)
+        {
+            if($data->val($i,13) != "" || $data->val($i,13) != 0){
+                  $counttosleep++;
+                  if($counttosleep == 201 ){
+                    $counttosleep = 1;
+                    sleep(1);
+                  } 
+                  $xlsdata[$no]['kodeSatker'] = $post['kodeSatker'];
+                  $kodeSatker = explode(".",$post['kodeSatker']);
+                  $xlsdata[$no]['TglPerolehan'] = $data->val($i, 12);
+                  // $myDateTime = DateTime::createFromFormat('Y-m-d', $tgl);
+                  // $xlsdata[$no]['TglPerolehan'] = $myDateTime->format('Y-m-d');
+                  $xlsdata[$no]['Tahun'] = substr($xlsdata[$no]['TglPerolehan'], 0,4);
+                  $xlsdata[$no]['kodeLokasi'] = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($xlsdata[$no]['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];      
+                  $xlsdata[$no]['kodeKelompok'] = $data->val($i, 3);
+                  $kib = explode(".", $xlsdata[$no]['kodeKelompok']);
+                  if($kib[0] == "04"){
+                    $xlsdata[$no]['TipeAset'] = 'D';
+                  } elseif ($kib[0] == "08") {
+                    $xlsdata[$no]['TipeAset'] = 'H';
+                  }
+                  $sql = mysql_query("SELECT uraian FROM kelompok WHERE kode='{$data->val($i, 3)}' LIMIT 1");
+                    while ($namaaset = mysql_fetch_assoc($sql)){
+                            $uraian = $namaaset['uraian'];
+                        }   
+                  $xlsdata[$no]['uraian'] = $uraian;
+
+                  $xlsdata[$no]['noKontrak'] = $post['noKontrak'];
+                  $xlsdata[$no]['GUID'] = $data->val($i,16);
+                  $xlsdata[$no]['Info'] = $data->val($i,15);
+                  $xlsdata[$no]['kodeRuangan'] = $post['kodeRuangan'];
+                  $xlsdata[$no]['kondisi'] = $data->val($i,4);
+                  $xlsdata[$no]['Panjang'] = $data->val($i,6);
+                  $xlsdata[$no]['Lebar'] = $data->val($i,5);
+                  $xlsdata[$no]['LuasJaringan'] = $data->val($i,7);
+                  $xlsdata[$no]['NoDokumen'] = $data->val($i,8);
+                  $xlsdata[$no]['TglDokumen'] = $data->val($i,9);
+                  $xlsdata[$no]['Alamat'] = str_replace("'","",$data->val($i,10));
+                  $xlsdata[$no]['Jumlah'] = $data->val($i,11);
+                  $xlsdata[$no]['UserNm'] = $_SESSION['ses_uoperatorid'];
+                  $xlsdata[$no]['Sess'] = $baris-9;
+
+                  $wordRM = array(","," ",".","*");
+                  $nilaiTrim = str_replace($wordRM,"",$data->val($i,13));
+
+                  $xlsdata[$no]['NilaiPerolehan'] = $nilaiTrim;
+                  $xlsdata[$no]['NilaiTotal'] = $nilaiTrim*$data->val($i,11);
+
+                  if($xlsdata[$no]['NilaiPerolehan'] == '' || $xlsdata[$no]['NilaiPerolehan'] == 0){
+                    $xlsdata[$no]['other'] = "hidden"; $xlsdata[$no]['style'] = "disabled";
+                  } else $xlsdata[$no]['other'] = "checkbox";
+
+                  unset($tmpfield); unset($tmpvalue);
+
+                    foreach ($xlsdata[$no] as $key => $val) {
+                        $tmpfield[] = $key;
+                        $tmpvalue[] = "'$val'";
+                    }
+                    $field = implode(',', $tmpfield);
+                    $value = implode(',', $tmpvalue);
+
+                    $query = "INSERT INTO tmp_jaringan ({$field}) VALUES ({$value})";
+                   
+                    $execquery = $this->query($query);
+                    logFile($query);
+                    if(!$execquery){
+                      $this->rollback();
+                      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/importmenu.php\">";
+                      exit;
+                    }
+
+                  $no++;
+            }
+        }
+        $this->commit();
+        echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/inventarisasi/import/jaringan.php\">";
         
         exit;
 
