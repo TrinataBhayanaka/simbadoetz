@@ -204,6 +204,7 @@ $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin
 		<td colspan='5' style=\" text-align: center; font-weight: bold; width: \">1 Januari $tahun_neraca</td>
                 <td colspan='2' style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan</td>
                 <td colspan='2' style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
+                <td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Beban Penyusutan Tahun Berjalan</td>
                 <td colspan='5' style=\" text-align: center; font-weight: bold; width: \">31 Desember $tahun_neraca</td>
                 
 	</tr>
@@ -237,6 +238,17 @@ $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin
 		   <td style=\" text-align: center; font-weight: bold; width: \">9</td>
 		   <td style=\" text-align: center; font-weight: bold; width: \">10</td>
 		   <td style=\" text-align: center; font-weight: bold; width: \">11</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">12</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">13</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">14</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">15</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">16</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">17</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">18</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">19</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">20</td>
+                   <td style=\" text-align: center; font-weight: bold; width: \">21</td>
+                   
 	</tr>";	
 foreach ($data as $gol) {
 $param_satker = $skpd_id;
@@ -310,12 +322,13 @@ $param_tgl = $tglakhirperolehan ;
 $resultparentGol = mysql_query($sql) or die(mysql_error());
 $data=array();
 
-				$jml_total=0;
+		/*		$jml_total=0;
                 $np_total=0;
                 $pp_total=0;
                 $ap_total=0;
                 $nb_total=0;
-               
+                $bp_total=0;
+                
                 $mutasi_nilai_tambah=0;
                 $mutasi_nilai_kurang=0;
                 
@@ -332,7 +345,7 @@ $data=array();
                 $np_total_akhir=0;
                 $pp_total_akhir=0;
                 $ap_total_akhir=0;
-                $nb_total_akhir=0;
+                $nb_total_akhir=0;*/
 
      while ($data_gol = mysql_fetch_array($resultparentGol)) {
 		$kode_golongan = $data_gol[Golongan];
@@ -365,7 +378,7 @@ $data=array();
 						$gol[nb_akhir]=$gol[nilai_akhir];
 		    
                         $jml_total = $jml_total + $gol[jml];
-						$np_total = $np_total + $gol[nilai];
+			$np_total = $np_total + $gol[nilai];
 			
                          $mutasi_nilai_tambah+=$gol[mutasi_nilai_tambah];
                          $mutasi_nilai_kurang+=$gol[mutasi_nilai_kurang];
@@ -375,7 +388,11 @@ $data=array();
 
                          $mutasi_ap_tambah+=$gol[mutasi_ap_tambah];
                          $mutasi_ap_kurang+=$gol[mutasi_ap_kurang];
-
+                         
+                         $bp=0;
+                         $bp=$gol[mutasi_ap_tambah]-$gol[mutasi_ap_kurang];
+                         $bp_total+=$bp;
+                         
                          $mutasi_nb_tambah+=$gol[mutasi_nb_tambah];
                          $mutasi_nb_kurang+=$gol[mutasi_nb_kurang];
                         
@@ -408,6 +425,8 @@ $data=array();
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[mutasi_nilai_tambah],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[mutasi_ap_kurang],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[mutasi_ap_tambah],2,",",".")."</td>
+                                        
+                                         <td style=\"font-weight: bold; text-align: right;\">".number_format($bp,2,",",".")."</td>
 					
                                         <td style=\"text-align: center; font-weight: bold;\">{$gol[jml_akhir]}</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nilai_akhir],2,",",".")."</td>
@@ -421,6 +440,9 @@ $data=array();
 			   if($bidang[ap]==""||$bidang[ap]==0)
 					$bidang[nb]=$bidang[nilai];
 
+                           $bp_bidang=0;
+                           $bp_bidang=$bidang[mutasi_ap_tambah]-$bidang[mutasi_ap_kurang];  
+                           
 				if($bidang[ap_akhir]==""||$bidang[ap_akhir]==0)
 					$bidang[nb_akhir]=$bidang[nilai_akhir];
 					$body.="<tr>
@@ -440,7 +462,9 @@ $data=array();
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[mutasi_nilai_tambah],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[mutasi_ap_kurang],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[mutasi_ap_tambah],2,",",".")."</td>
-					
+				
+                                <td style=\"text-align: center; font-weight: bold;\">".number_format($bp_bidang,2,",",".")."</td>
+                                
                                 <td style=\"text-align: center; font-weight: bold;\">{$bidang[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nilai_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[pp_akhir],2,",",".")."</td>
@@ -455,6 +479,9 @@ $data=array();
 					if($Kelompok[ap_akhir]==""||$Kelompok[ap_akhir]==0)
 							$Kelompok[nb_akhir]=$Kelompok[nilai_akhir];	
 
+                                        $bp_kelompok=0;
+                                        $bp_kelompok=$Kelompok[mutasi_ap_tambah]-$Kelompok[mutasi_ap_kurang];
+                                        
 					$body.="<tr>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
@@ -472,6 +499,8 @@ $data=array();
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[mutasi_ap_kurang],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[mutasi_ap_tambah],2,",",".")."</td>
 					
+                                <td style=\"text-align: center; font-weight: bold;\">".number_format($bp_kelompok,2,",",".")."</td>
+
                                 <td style=\"text-align: center; font-weight: bold;\">{$Kelompok[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[nilai_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[pp_akhir],2,",",".")."</td>
@@ -487,6 +516,8 @@ $data=array();
 						if($Sub[ap_akhir]==""||$Sub[ap_akhir]==0)
 							$Sub[nb_akhir]=$Sub[nilai_akhir];
 
+                                                $bp_sub=0;
+                                                $bp_sub=$Sub[mutasi_ap_tambah]-$Sub[mutasi_ap_kurang];
 							$body.="<tr>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
@@ -504,7 +535,9 @@ $data=array();
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[mutasi_nilai_tambah],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[mutasi_ap_kurang],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[mutasi_ap_tambah],2,",",".")."</td>
-					
+				
+                                <td style=\"text-align: center; font-weight: bold;\">".number_format($bp_sub,2,",",".")."</td>
+                                    
                                 <td style=\"text-align: center; font-weight: bold;\">{$Sub[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[nilai_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[pp_akhir],2,",",".")."</td>
@@ -519,6 +552,10 @@ $data=array();
 
 							if($SubSub[ap_akhir]==""||$SubSub[ap_akhir]==0)
 								$SubSub[nb_akhir]=$SubSub[nilai_akhir];
+                                                        
+                                                        $bp_subsub=0;
+                                                        $bp_subsub=$SubSub[mutasi_ap_tambah]-$SubSub[mutasi_ap_kurang];
+                                                        
 								$body.="<tr>
 											<td>&nbsp;</td>
 											<td>&nbsp;</td>
@@ -536,7 +573,10 @@ $data=array();
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[mutasi_nilai_tambah],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[mutasi_ap_kurang],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[mutasi_ap_tambah],2,",",".")."</td>
-					
+				
+                                <td style=\"font-weight: bold; text-align: right;\">".number_format($bp_subsub,2,",",".")."</td>
+    
+
                                 <td style=\"text-align: center; font-weight: bold;\">{$SubSub[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[nilai_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[pp_akhir],2,",",".")."</td>
@@ -568,6 +608,8 @@ $data=array();
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($mutasi_ap_kurang,2,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($mutasi_ap_tambah,2,",",".")."</td>
 
+                                <td style=\"text-align: center; font-weight: bold;\">".number_format($bp_total,2,",",".")."</td>
+    
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($jml_total_akhir,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($np_total_akhir,2,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($pp_total_akhir,2,",",".")."</td>
@@ -947,7 +989,7 @@ foreach ($data_awal_alone as $tipe => $value) {
     $data_awal[$tipe]['mutasi_ap_tambah']=0;
     $data_awal[$tipe]['mutasi_pp_tambah']=0;
     $data_awal[$tipe]['mutasi_nb_tambah']=0;
-    
+   /* 
     $data_awal[$tipe]['mutasi_nilai_kurang']=0;
     $data_awal[$tipe]['mutasi_jml_kurang']=0;
     $data_awal[$tipe]['mutasi_ap_kurang']=0;
@@ -958,7 +1000,20 @@ foreach ($data_awal_alone as $tipe => $value) {
     $data_awal[$tipe]['jml_akhir']=$value['jml'];
     $data_awal[$tipe]['ap_akhir']=$value['AP'];
     $data_awal[$tipe]['pp_akhir']=$value['PP'];
-    $data_awal[$tipe]['nb_akhir']=$value['NB'];
+    $data_awal[$tipe]['nb_akhir']=$value['NB'];*/
+    
+    $data_awal[$tipe]['mutasi_nilai_kurang']=$value['nilai'];
+    $data_awal[$tipe]['mutasi_jml_kurang']=$value['jml'];
+    $data_awal[$tipe]['mutasi_ap_kurang']=$value['AP'];
+    $data_awal[$tipe]['mutasi_pp_kurang']=$value['PP'];
+    $data_awal[$tipe]['mutasi_nb_kurang']=$value['NB'];
+    
+    $data_awal[$tipe]['nilai_akhir']=0;
+    $data_awal[$tipe]['jml_akhir']=0;
+    $data_awal[$tipe]['ap_akhir']=0;
+    $data_awal[$tipe]['pp_akhir']=0;
+    $data_awal[$tipe]['nb_akhir']=0;
+    
     
 }
 
