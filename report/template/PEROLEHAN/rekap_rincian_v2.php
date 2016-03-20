@@ -331,7 +331,8 @@ $param_tgl = $tglakhirperolehan ;
                          $mutasi_ap_kurang+=$gol[mutasi_ap_kurang];
                          
                          $bp=0;
-                         $bp=$gol[mutasi_ap_tambah]-$gol[mutasi_ap_kurang];
+                         //$bp=$gol[ap_akhir]-$gol[ap_awal]-$gol[mutasi_ap_tambah]+$gol[mutasi_ap_kurang];
+                         $bp=$gol[bp];
                          $bp_total+=$bp;
                          
                          $mutasi_nb_tambah+=$gol[mutasi_nb_tambah];
@@ -382,7 +383,8 @@ $param_tgl = $tglakhirperolehan ;
 					$bidang[nb]=$bidang[nilai];
 
                            $bp_bidang=0;
-                           $bp_bidang=$bidang[mutasi_ap_tambah]-$bidang[mutasi_ap_kurang];  
+                          // $bp_bidang=$bidang[ap_akhir]-$bidang[ap_awal]-$bidang[mutasi_ap_tambah]+$bidang[mutasi_ap_kurang];
+                            $bp_bidang=$bidang[bp];
                            
 				if($bidang[ap_akhir]==""||$bidang[ap_akhir]==0)
 					$bidang[nb_akhir]=$bidang[nilai_akhir];
@@ -421,7 +423,8 @@ $param_tgl = $tglakhirperolehan ;
 							$Kelompok[nb_akhir]=$Kelompok[nilai_akhir];	
 
                                         $bp_kelompok=0;
-                                        $bp_kelompok=$Kelompok[mutasi_ap_tambah]-$Kelompok[mutasi_ap_kurang];
+                                        //$bp_kelompok=$Kelompok[ap_akhir]-$Kelompok[ap_awal]-$Kelompok[mutasi_ap_tambah]+$Kelompok[mutasi_ap_kurang];
+                                        $bp_kelompok=$Kelompok[bp];
                                         
 					$body.="<tr>
 								<td>&nbsp;</td>
@@ -458,7 +461,9 @@ $param_tgl = $tglakhirperolehan ;
 							$Sub[nb_akhir]=$Sub[nilai_akhir];
 
                                                 $bp_sub=0;
-                                                $bp_sub=$Sub[mutasi_ap_tambah]-$Sub[mutasi_ap_kurang];
+                                                //$bp_sub=$Sub[ap_akhir]-$Sub[ap_awal]-$Sub[mutasi_ap_tambah]+$Sub[mutasi_ap_kurang];
+                                                $bp_sub=$Sub[bp];
+                                                
 							$body.="<tr>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
@@ -495,7 +500,9 @@ $param_tgl = $tglakhirperolehan ;
 								$SubSub[nb_akhir]=$SubSub[nilai_akhir];
                                                         
                                                         $bp_subsub=0;
-                                                        $bp_subsub=$SubSub[mutasi_ap_tambah]-$SubSub[mutasi_ap_kurang];
+                                                        //$bp_subsub=$SubSub[ap_akhir]-$SubSub[ap_awal]-$SubSub[mutasi_ap_tambah]+$SubSub[mutasi_ap_kurang];
+                                                       $bp_subsub=$SubSub[bp];
+                                                        //$SubSub[mutasi_ap_tambah]-$SubSub[mutasi_ap_kurang];
                                                         
 								$body.="<tr>
 											<td>&nbsp;</td>
@@ -860,6 +867,8 @@ foreach ($result as $key =>$value){
     $selisih_pp_tambah=0;
     $selisih_pp_kurang=0;
     
+    
+    
     if($selisih_nilai<0)
         $selisih_nilai_kurang=abs($selisih_nilai);
     else $selisih_nilai_tambah=$selisih_nilai;
@@ -868,9 +877,19 @@ foreach ($result as $key =>$value){
         $selisih_jml_kurang=abs($selisih_jml);
     else $selisih_jml_tambah=$selisih_jml;
     
-    if($selisih_ap<0)
-        $selisih_ap_kurang=abs($selisih_ap);
-    else $selisih_ap_tambah=$selisih_ap;
+    
+    if($data_akhir[$tipe]['nilai']!=0 && $data_awal[$tipe]['nilai']!=0 && $selisih_nilai!=0){
+        if($selisih_ap<0)
+           $selisih_ap_kurang=abs($selisih_ap);
+       else $selisih_ap_tambah=$selisih_ap;
+    }
+    
+    if($data_akhir[$tipe]['AP']==""||$data_akhir[$tipe]['AP']==0)
+       $selisih_ap_kurang=abs($selisih_ap);
+   else if($data_awal[$tipe]['AP']==""||$data_awal[$tipe]['AP']==0)
+       $selisih_ap_tambah=$selisih_ap;
+   
+    $data_gabungan[$tipe]['bp']=$selisih_ap-$selisih_ap_tambah+$selisih_ap_kurang;
     
     if($selisih_nb<0)
         $selisih_nb_kurang=abs($selisih_nb);
@@ -954,6 +973,8 @@ foreach ($data_awal_alone as $tipe => $value) {
     $data_awal[$tipe]['mutasi_pp_kurang']=$value['PP'];
     $data_awal[$tipe]['mutasi_nb_kurang']=$value['NB'];
     
+    $data_awal[$tipe]['bp']=0;
+     
     $data_awal[$tipe]['nilai_akhir']=0;
     $data_awal[$tipe]['jml_akhir']=0;
     $data_awal[$tipe]['ap_akhir']=0;
@@ -992,6 +1013,7 @@ foreach ($data_akhir_alone as $tipe => $value) {
     $data_akhir[$tipe]['mutasi_pp_kurang']=0;
     $data_akhir[$tipe]['mutasi_nb_kurang']=0;
     
+    $data_akhir[$tipe]['bp']=0;//$value['AP'];
     
     $data_akhir[$tipe]['nilai_akhir']=$value['nilai'];
     $data_akhir[$tipe]['jml_akhir']=$value['jml'];
@@ -1009,40 +1031,77 @@ $data_gabungan=  array_merge($data_awal,$data_gabungan,$data_akhir);
 
 //echo "array gabungan:<br/><pre>";
 //print_r($data_gabungan);//data-sub-sub
+//
+$data_level5=array();
+foreach ($data_gabungan as $key => $value) {
+    $tmp=  explode(".", $key);
+    $key_baru="{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}";
+    $URAIAN=  get_uraian($key_baru,5);
 
+    $data_level5[$key_baru]['Uraian']=$URAIAN;
+    $data_level5[$key_baru]['Kelompok']=$key_baru;
+    $data_level5[$key_baru]['nilai']+=$data_gabungan[$key]['nilai'];
+    $data_level5[$key_baru]['jml']+=$data_gabungan[$key]['jml'];
+    $data_level5[$key_baru]['ap']+=$data_gabungan[$key]['ap'];
+    $data_level5[$key_baru]['pp']+=$data_gabungan[$key]['pp'];
+    $data_level5[$key_baru]['nb']+=$data_gabungan[$key]['nb'];
+    $data_level5[$key_baru]['mutasi_jml_tambah']+=$data_gabungan[$key]['mutasi_jml_tambah'];
+    $data_level5[$key_baru]['mutasi_nilai_tambah']+=$data_gabungan[$key]['mutasi_nilai_tambah'];
+    $data_level5[$key_baru]['mutasi_ap_tambah']+=$data_gabungan[$key]['mutasi_ap_tambah'];
+    $data_level5[$key_baru]['mutasi_pp_tambah']+=$data_gabungan[$key]['mutasi_pp_tambah'];
+    $data_level5[$key_baru]['mutasi_nb_tambah']+=$data_gabungan[$key]['mutasi_nb_tambah'];
+    
+    $data_level5[$key_baru]['bp']+=$data_gabungan[$key]['bp'];
+    
+    $data_level5[$key_baru]['mutasi_jml_kurang']+=$data_gabungan[$key]['mutasi_jml_kurang'];
+    $data_level5[$key_baru]['mutasi_nilai_kurang']+=$data_gabungan[$key]['mutasi_nilai_kurang'];
+    $data_level5[$key_baru]['mutasi_ap_kurang']+=$data_gabungan[$key]['mutasi_ap_kurang'];
+    $data_level5[$key_baru]['mutasi_pp_kurang']+=$data_gabungan[$key]['mutasi_pp_kurang'];
+    $data_level5[$key_baru]['mutasi_nb_kurang']+=$data_gabungan[$key]['mutasi_nb_kurang'];
+    
+    $data_level5[$key_baru]['nilai_akhir']+=$data_gabungan[$key]['nilai_akhir'];
+    $data_level5[$key_baru]['jml_akhir']+=$data_gabungan[$key]['jml_akhir'];
+    $data_level5[$key_baru]['ap_akhir']+=$data_gabungan[$key]['ap_akhir'];
+    $data_level5[$key_baru]['pp_akhir']+=$data_gabungan[$key]['pp_akhir'];
+    $data_level5[$key_baru]['nb_akhir']+=$data_gabungan[$key]['nb_akhir'];
+    
+    
+}
+//$data_level5=$data_gabungan;
 $data_level4=array();
 //Buat array gabungan --> level 4
-foreach ($data_gabungan as $key => $value) {
+foreach ($data_level5 as $key => $value) {
     $tmp=  explode(".", $key);
     $key_baru="{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}";
     $URAIAN=  get_uraian($key_baru,4);
 
     $data_level4[$key_baru]['Uraian']=$URAIAN;
     $data_level4[$key_baru]['Kelompok']=$key_baru;
-    $data_level4[$key_baru]['nilai']+=$data_gabungan[$key]['nilai'];
-    $data_level4[$key_baru]['jml']+=$data_gabungan[$key]['jml'];
-    $data_level4[$key_baru]['ap']+=$data_gabungan[$key]['ap'];
-    $data_level4[$key_baru]['pp']+=$data_gabungan[$key]['pp'];
-    $data_level4[$key_baru]['nb']+=$data_gabungan[$key]['nb'];
-    $data_level4[$key_baru]['mutasi_jml_tambah']+=$data_gabungan[$key]['mutasi_jml_tambah'];
-    $data_level4[$key_baru]['mutasi_nilai_tambah']+=$data_gabungan[$key]['mutasi_nilai_tambah'];
-    $data_level4[$key_baru]['mutasi_ap_tambah']+=$data_gabungan[$key]['mutasi_ap_tambah'];
-    $data_level4[$key_baru]['mutasi_pp_tambah']+=$data_gabungan[$key]['mutasi_pp_tambah'];
-    $data_level4[$key_baru]['mutasi_nb_tambah']+=$data_gabungan[$key]['mutasi_nb_tambah'];
+    $data_level4[$key_baru]['nilai']+=$data_level5[$key]['nilai'];
+    $data_level4[$key_baru]['jml']+=$data_level5[$key]['jml'];
+    $data_level4[$key_baru]['ap']+=$data_level5[$key]['ap'];
+    $data_level4[$key_baru]['pp']+=$data_level5[$key]['pp'];
+    $data_level4[$key_baru]['nb']+=$data_level5[$key]['nb'];
+    $data_level4[$key_baru]['mutasi_jml_tambah']+=$data_level5[$key]['mutasi_jml_tambah'];
+    $data_level4[$key_baru]['mutasi_nilai_tambah']+=$data_level5[$key]['mutasi_nilai_tambah'];
+    $data_level4[$key_baru]['mutasi_ap_tambah']+=$data_level5[$key]['mutasi_ap_tambah'];
+    $data_level4[$key_baru]['mutasi_pp_tambah']+=$data_level5[$key]['mutasi_pp_tambah'];
+    $data_level4[$key_baru]['mutasi_nb_tambah']+=$data_level5[$key]['mutasi_nb_tambah'];
     
+    $data_level4[$key_baru]['bp']+=$data_level5[$key]['bp'];
     
-    $data_level4[$key_baru]['mutasi_jml_kurang']+=$data_gabungan[$key]['mutasi_jml_kurang'];
-    $data_level4[$key_baru]['mutasi_nilai_kurang']+=$data_gabungan[$key]['mutasi_nilai_kurang'];
-    $data_level4[$key_baru]['mutasi_ap_kurang']+=$data_gabungan[$key]['mutasi_ap_kurang'];
-    $data_level4[$key_baru]['mutasi_pp_kurang']+=$data_gabungan[$key]['mutasi_pp_kurang'];
-    $data_level4[$key_baru]['mutasi_nb_kurang']+=$data_gabungan[$key]['mutasi_nb_kurang'];
+    $data_level4[$key_baru]['mutasi_jml_kurang']+=$data_level5[$key]['mutasi_jml_kurang'];
+    $data_level4[$key_baru]['mutasi_nilai_kurang']+=$data_level5[$key]['mutasi_nilai_kurang'];
+    $data_level4[$key_baru]['mutasi_ap_kurang']+=$data_level5[$key]['mutasi_ap_kurang'];
+    $data_level4[$key_baru]['mutasi_pp_kurang']+=$data_level5[$key]['mutasi_pp_kurang'];
+    $data_level4[$key_baru]['mutasi_nb_kurang']+=$data_level5[$key]['mutasi_nb_kurang'];
     
-    $data_level4[$key_baru]['nilai_akhir']+=$data_gabungan[$key]['nilai_akhir'];
-    $data_level4[$key_baru]['jml_akhir']+=$data_gabungan[$key]['jml_akhir'];
-    $data_level4[$key_baru]['ap_akhir']+=$data_gabungan[$key]['ap_akhir'];
-    $data_level4[$key_baru]['pp_akhir']+=$data_gabungan[$key]['pp_akhir'];
-    $data_level4[$key_baru]['nb_akhir']+=$data_gabungan[$key]['nb_akhir'];
-    $data_level4[$key_baru]['SubSub'][$key]=$data_gabungan[$key];
+    $data_level4[$key_baru]['nilai_akhir']+=$data_level5[$key]['nilai_akhir'];
+    $data_level4[$key_baru]['jml_akhir']+=$data_level5[$key]['jml_akhir'];
+    $data_level4[$key_baru]['ap_akhir']+=$data_level5[$key]['ap_akhir'];
+    $data_level4[$key_baru]['pp_akhir']+=$data_level5[$key]['pp_akhir'];
+    $data_level4[$key_baru]['nb_akhir']+=$data_level5[$key]['nb_akhir'];
+    $data_level4[$key_baru]['SubSub'][$key]=$data_level5[$key];
     
 }
 
@@ -1070,6 +1129,8 @@ foreach ($data_level4 as $key => $value) {
     $data_level3[$key_baru]['mutasi_ap_tambah']+=$data_level4[$key]['mutasi_ap_tambah'];
     $data_level3[$key_baru]['mutasi_pp_tambah']+=$data_level4[$key]['mutasi_pp_tambah'];
     $data_level3[$key_baru]['mutasi_nb_tambah']+=$data_level4[$key]['mutasi_nb_tambah'];
+    
+    $data_level3[$key_baru]['bp']+=$data_level4[$key]['bp'];
     
     $data_level3[$key_baru]['mutasi_jml_kurang']+=$data_level4[$key]['mutasi_jml_kurang'];
     $data_level3[$key_baru]['mutasi_nilai_kurang']+=$data_level4[$key]['mutasi_nilai_kurang'];
@@ -1113,6 +1174,8 @@ foreach ($data_level3 as $key => $value) {
     $data_level2[$key_baru]['mutasi_pp_tambah']+=$data_level3[$key]['mutasi_pp_tambah'];
     $data_level2[$key_baru]['mutasi_nb_tambah']+=$data_level3[$key]['mutasi_nb_tambah'];
     
+    $data_level2[$key_baru]['bp']+=$data_level3[$key]['bp'];
+    
     $data_level2[$key_baru]['mutasi_jml_kurang']+=$data_level3[$key]['mutasi_jml_kurang'];
     $data_level2[$key_baru]['mutasi_nilai_kurang']+=$data_level3[$key]['mutasi_nilai_kurang'];
     $data_level2[$key_baru]['mutasi_ap_kurang']+=$data_level3[$key]['mutasi_ap_kurang'];
@@ -1153,7 +1216,9 @@ foreach ($data_level2 as $key => $value) {
     $data_level[$key_baru]['mutasi_pp_tambah']+=$data_level2[$key]['mutasi_pp_tambah'];
     $data_level[$key_baru]['mutasi_nb_tambah']+=$data_level2[$key]['mutasi_nb_tambah'];
     
-     $data_level[$key_baru]['mutasi_jml_kurang']+=$data_level2[$key]['mutasi_jml_kurang'];
+    $data_level[$key_baru]['bp']+=$data_level2[$key]['bp'];
+    
+    $data_level[$key_baru]['mutasi_jml_kurang']+=$data_level2[$key]['mutasi_jml_kurang'];
     $data_level[$key_baru]['mutasi_nilai_kurang']+=$data_level2[$key]['mutasi_nilai_kurang'];
     $data_level[$key_baru]['mutasi_ap_kurang']+=$data_level2[$key]['mutasi_ap_kurang'];
     $data_level[$key_baru]['mutasi_pp_kurang']+=$data_level2[$key]['mutasi_pp_kurang'];
@@ -1176,6 +1241,9 @@ return $data_level;
 
 function get_uraian($kode,$level){
     switch ($level) {
+         case 5:
+              $where="";
+            break;
         case 4:
             $where=" and SubSub is null";
             break;
