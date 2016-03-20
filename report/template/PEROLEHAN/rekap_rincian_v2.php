@@ -250,7 +250,7 @@ $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin
                    <td style=\" text-align: center; font-weight: bold; width: \">21</td>
                    
 	</tr>";	
-foreach ($data as $gol) {
+//foreach ($data as $gol) {
 $param_satker = $skpd_id;
 $splitKodeSatker = explode ('.',$param_satker);
 	if(count($splitKodeSatker) == 4){	
@@ -259,68 +259,8 @@ $splitKodeSatker = explode ('.',$param_satker);
 		$paramSatker = "kodeSatker like '$param_satker%'";
 	}
 $param_tgl = $tglakhirperolehan ;
-		if($gol == 'mesin_ori'){
-		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
-						( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
-						(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
-						and $paramSatker";
-	 
-		$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
-				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
-				Status_Validasi_barang,kodeSatker from $gol m
-				 where $param_where
-				group by golongan";
-	}elseif($gol == 'bangunan_ori'){
-		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
-						( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
-						(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
-						and $paramSatker";
-		 
-		$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
-				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
-				Status_Validasi_barang,kodeSatker from $gol m
-				 where $param_where
-				group by golongan";
-	}else{
-		if($gol!="tanahView")
-		  $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
-					 and TglPerolehan <= '$param_tgl' 
-					 and TglPembukuan <='$param_tgl' 
-					 and kodeLokasi like '12%' 
-					 and kondisi != '3'					 
-					 and $paramSatker";
-		else
-		    $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
-					 and TglPerolehan <= '$param_tgl' 
-					 and TglPembukuan <='$param_tgl' 
-					 and kodeLokasi like '12%' 
-					 and $paramSatker";
-		 
-		 if($gol == 'jaringan_ori'){
-			$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
-					sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-					sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
-					Status_Validasi_barang,kodeSatker from $gol m
-					where $param_where
-					group by golongan";
-		 }else{
-			$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
-					sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
-					Status_Validasi_barang,kodeSatker from $gol m
-					where $param_where
-					group by golongan";
-		 }
-	}
 
-        $q_gol_final=$gol;
-$resultparentGol = mysql_query($sql) or die(mysql_error());
-$data=array();
+        
 
 		/*		$jml_total=0;
                 $np_total=0;
@@ -347,8 +287,9 @@ $data=array();
                 $ap_total_akhir=0;
                 $nb_total_akhir=0;*/
 
-     while ($data_gol = mysql_fetch_array($resultparentGol)) {
-		$kode_golongan = $data_gol[Golongan];
+     foreach ($data as $gol) {
+            $q_gol_final=$gol;
+		$kode_golongan = $data_gol;
 		$ps = $param_satker;
 		$pt =$param_tgl;
 		$paramLevelGol = $levelAset;
@@ -590,10 +531,11 @@ $data=array();
 			
 			}
 		}
+                $i++;
 	
 	}
 	
-	$i++;
+	
 	if($i == $hit_loop){
 		$foot="<tr>
 				<td colspan = \"6\" style=\"text-align: center; font-weight: bold;\">Total</td>
@@ -623,7 +565,7 @@ $data=array();
 	$html =$head.$body.$foot;
 	
   
-}
+//}
 
 function subsub_awal($kode,$gol,$ps,$pt) {
 $param_satker = $ps;
@@ -642,7 +584,7 @@ if($gol == 'mesin_ori'){
  
       $sql = "select  kodeKelompok as kelompok,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
-               PenyusutanPerTahun as PP,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
                (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -659,7 +601,7 @@ if($gol == 'mesin_ori'){
 	 
 	$sql = "select  kodeKelompok as kelompok,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
-               PenyusutanPerTahun as PP,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
                (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -686,7 +628,7 @@ if($gol == 'mesin_ori'){
 	 if($gol == 'jaringan_ori'){
 		$sql = "select  kodeKelompok as kelompok,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
-               PenyusutanPerTahun as PP,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
                (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -696,7 +638,7 @@ if($gol == 'mesin_ori'){
                  $param_where    
                order by kelompok asc";
 	 }else{
-		$sql = "select  kodeKelompok as kelompok,
+		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
               (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -735,7 +677,7 @@ if($gol == 'mesin_ori'){
  
       $sql = "select  kodeKelompok as kelompok,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
-               PenyusutanPerTahun as PP,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
                (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -753,7 +695,7 @@ if($gol == 'mesin_ori'){
 	 
 	$sql = "select  kodeKelompok as kelompok,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
-               PenyusutanPerTahun as PP,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
                (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -781,7 +723,7 @@ if($gol == 'mesin_ori'){
              $gol="jaringan";
 		$sql = "select  kodeKelompok as kelompok,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
-               PenyusutanPerTahun as PP,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
                (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -797,7 +739,7 @@ if($gol == 'mesin_ori'){
                  $gol="tanah";
              else  $gol="asetlain";
              
-		$sql = "select  kodeKelompok as kelompok,
+		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -869,26 +811,26 @@ function group_data($data_awal_perolehan,$data_akhir_perolehan){
 
 foreach($data_awal_perolehan as $arg)
 {
-    $data_awal[$arg['kelompok']]['Kelompok']= $arg['Kelompok'];
-    $data_awal[$arg['kelompok']]['Uraian']= $arg['Uraian'];
-    $data_awal[$arg['kelompok']]['nilai']+= $arg['nilai'];
-    $data_awal[$arg['kelompok']]['PP']+= $arg['PP'];
-    $data_awal[$arg['kelompok']]['AP']+= $arg['AP'];
-    $data_awal[$arg['kelompok']]['NB']+= $arg['NB'];
-    $data_awal[$arg['kelompok']]['jml']+= 1;
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['Kelompok']= $arg['Kelompok'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['Uraian']= $arg['Uraian'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['nilai']+= $arg['nilai'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['PP']+= $arg['PP'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['AP']+= $arg['AP'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['NB']+= $arg['NB'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['jml']+= 1;
 }
 
  $data_akhir = array();
 
 foreach($data_akhir_perolehan as $arg)
 {
-    $data_akhir[$arg['kelompok']]['Kelompok']+= $arg['Kelompok'];
-    $data_akhir[$arg['kelompok']]['Uraian']+= $arg['Uraian'];
-    $data_akhir[$arg['kelompok']]['nilai']+= $arg['nilai'];
-    $data_akhir[$arg['kelompok']]['PP']+= $arg['PP'];
-    $data_akhir[$arg['kelompok']]['AP']+= $arg['AP'];
-    $data_akhir[$arg['kelompok']]['NB']+= $arg['NB'];
-    $data_akhir[$arg['kelompok']]['jml']+= 1;
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['Kelompok']+= $arg['Kelompok'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['Uraian']+= $arg['Uraian'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['nilai']+= $arg['nilai'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['PP']+= $arg['PP'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['AP']+= $arg['AP'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['NB']+= $arg['NB'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister']]['jml']+= 1;
 }
    
     
@@ -902,6 +844,10 @@ foreach ($result as $key =>$value){
     $selisih_ap=$data_akhir[$tipe]['AP']-$data_awal[$tipe]['AP'];
     $selisih_pp=$data_akhir[$tipe]['PP']-$data_awal[$tipe]['PP'];
     $selisih_nb=$data_akhir[$tipe]['NB']-$data_awal[$tipe]['NB'];
+    
+    
+    
+    
     
     $selisih_nilai_tambah=0;
     $selisih_nilai_kurang=0;
@@ -1056,6 +1002,9 @@ foreach ($data_akhir_alone as $tipe => $value) {
     
 }
 
+/*echo "array akhir:<br/><pre>";
+print_r($data_akhir);//data-sub-sub
+exit;*/
 $data_gabungan=  array_merge($data_awal,$data_gabungan,$data_akhir);
 
 //echo "array gabungan:<br/><pre>";
@@ -1066,7 +1015,7 @@ $data_level4=array();
 foreach ($data_gabungan as $key => $value) {
     $tmp=  explode(".", $key);
     $key_baru="{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}";
-    $URAIAN=  get_uraian($key_baru);
+    $URAIAN=  get_uraian($key_baru,4);
 
     $data_level4[$key_baru]['Uraian']=$URAIAN;
     $data_level4[$key_baru]['Kelompok']=$key_baru;
@@ -1106,7 +1055,7 @@ $data_level3=array();
 foreach ($data_level4 as $key => $value) {
     $tmp=  explode(".", $key);
     $key_baru="{$tmp[0]}.{$tmp[1]}.{$tmp[2]}";
-     $URAIAN=  get_uraian($key_baru);
+     $URAIAN=  get_uraian($key_baru,3);
 
     $data_level3[$key_baru]['Uraian']=$URAIAN;
     $data_level3[$key_baru]['Kelompok']=$key_baru;
@@ -1148,6 +1097,8 @@ $data_level2=array();
 foreach ($data_level3 as $key => $value) {
     $tmp=  explode(".", $key);
     $key_baru="{$tmp[0]}.{$tmp[1]}";
+     $URAIAN=  get_uraian($key_baru,2);
+     
     $data_level2[$key_baru]['Uraian']=$URAIAN;
     $data_level2[$key_baru]['Kelompok']=$key_baru;
     $data_level2[$key_baru]['nilai']+=$data_level3[$key]['nilai'];
@@ -1185,8 +1136,9 @@ $data_level=array();
 //Buat array gabungan --> level 1
 foreach ($data_level2 as $key => $value) {
     $tmp=  explode(".", $key);
-    $key_baru="{$tmp[0]}"
-    ;
+    $key_baru="{$tmp[0]}";
+     $URAIAN=  get_uraian($key_baru,1);
+     
     $data_level[$key_baru]['Uraian']=$URAIAN;
     $data_level[$key_baru]['Kelompok']=$key_baru;
     $data_level[$key_baru]['nilai']+=$data_level2[$key]['nilai'];
@@ -1222,8 +1174,25 @@ foreach ($data_level2 as $key => $value) {
 return $data_level;
 }
 
-function get_uraian($kode){
-    $query="select Uraian from kelompok where Kode like '$kode%' limit 1";
+function get_uraian($kode,$level){
+    switch ($level) {
+        case 4:
+            $where=" and SubSub is null";
+            break;
+         case 3:
+            $where=" and sub is null and SubSub is null";
+            break;
+         case 2:
+            $where=" and kelompok is null and sub is null and SubSub is null";
+            break;
+         case 1:
+              $where=" and bidang is null and kelompok is null and sub is null and SubSub is null";
+            break;
+
+        default:
+            break;
+    }
+    $query="select Uraian from kelompok where Kode like '$kode%' $where limit 1";
     $result=  mysql_query($query) or die(mysql_error());
     while($row=  mysql_fetch_array($result)){
         $Uraian=$row[Uraian];
