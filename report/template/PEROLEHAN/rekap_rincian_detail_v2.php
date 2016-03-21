@@ -949,6 +949,7 @@ foreach($data_awal_perolehan as $arg)
     
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['TahunPenyusutan']= $arg['TahunPenyusutan'];
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Aset_ID']= $arg['Aset_ID'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Tahun']= $arg['Tahun'];
     
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']= $arg['Uraian'];
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['nilai']+= $arg['nilai'];
@@ -966,6 +967,7 @@ foreach($data_akhir_perolehan as $arg)
     
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['TahunPenyusutan']= $arg['TahunPenyusutan'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Aset_ID']= $arg['Aset_ID'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Tahun']= $arg['Tahun'];
     
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']= $arg['Uraian'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['nilai']+= $arg['nilai'];
@@ -1145,11 +1147,25 @@ foreach ($data_akhir_alone as $tipe => $value) {
     $Aset_ID=$value['Aset_ID'];
     $TahunPenyusutan=$value['TahunPenyusutan'];
     $kelompok=$value['Kelompok'];
+    $Tahun=$value['Tahun'];
     
-    $akumulasi_sblm=get_akumulasi_sblm($Aset_ID, $TahunPenyusutan, $kelompok);
-    
-    $bp=$value['AP']-$akumulasi_sblm;
-    
+    if($Tahun==$TahunPenyusutan){
+        //pengadaan di tahun berjalan
+        $akumulasi_sblm=0;
+        $bp=$value['AP'];
+    }
+    else{
+        //transfer dari tempat lain
+        $akumulasi_sblm=get_akumulasi_sblm($Aset_ID, $TahunPenyusutan, $kelompok);
+        $bp=$value['AP']-$akumulasi_sblm;
+        //bila tidak penyusutan lagi
+        if($bp==$value['AP'])
+        {
+            $bp=0;
+            $akumulasi_sblm=$value['AP'];
+        } 
+    }
+       
     $data_akhir[$tipe]['Kelompok']=$tipe;
     $data_akhir[$tipe]['Uraian']=$value['Uraian'];
     
@@ -1160,7 +1176,7 @@ foreach ($data_akhir_alone as $tipe => $value) {
     $data_akhir[$tipe]['nb']=0;
     $data_akhir[$tipe]['mutasi_jml_tambah']=$value['jml'];
     $data_akhir[$tipe]['mutasi_nilai_tambah']=$value['nilai'];
-    $data_akhir[$tipe]['mutasi_ap_tambah']=$value['AP'];
+    $data_akhir[$tipe]['mutasi_ap_tambah']=$akumulasi_sblm;//$value['AP'];
     $data_akhir[$tipe]['mutasi_pp_tambah']=$value['PP'];
     $data_akhir[$tipe]['mutasi_nb_tambah']=$value['NB'];
     
@@ -1492,8 +1508,8 @@ function get_akumulasi_sblm($Aset_ID,$TahunPenyusutan,$kelompok){
     $query="select AkumulasiPenyusutan from $nama_log where "
             . "kd_riwayat in(50,51,52) and TahunPenyusutan='$Tahun' "
             . " and Aset_ID='$Aset_ID' ";
-    echo "$query";
-    exit();
+    //echo "$query";
+    //exit();
     $result=  mysql_query($query) or die(mysql_error());
     $AkumulasiPenyusutan=0;
     while($row=  mysql_fetch_array($result)){
