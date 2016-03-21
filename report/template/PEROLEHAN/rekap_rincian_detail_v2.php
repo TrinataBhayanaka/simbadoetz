@@ -1492,6 +1492,8 @@ function get_akumulasi_sblm($Aset_ID,$TahunPenyusutan,$kelompok){
     $query="select AkumulasiPenyusutan from $nama_log where "
             . "kd_riwayat in(50,51,52) and TahunPenyusutan='$Tahun' "
             . " and Aset_ID='$Aset_ID' ";
+    echo "$query";
+    exit();
     $result=  mysql_query($query) or die(mysql_error());
     $AkumulasiPenyusutan=0;
     while($row=  mysql_fetch_array($result)){
