@@ -979,6 +979,7 @@ $data_hapus_tmp = array();
 
 foreach($data_hapus_awal as $arg)
 {
+   
     $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']+= $arg['kelompok'];
     $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']+= $arg['Uraian'];
     $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['nilai']+= $arg['nilai'];
