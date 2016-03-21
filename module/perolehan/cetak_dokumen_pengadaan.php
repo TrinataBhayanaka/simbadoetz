@@ -47,10 +47,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							e.preventDefault();
 						}
 					});*/
-					$("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset,#tglPerolehanAwalRekapNeraca,#tglPerolehanAkhirRekapNeraca").mask('9999-99-99');
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset,#tglPerolehanAwalRekapNeraca,#tglPerolehanAkhirRekapNeraca" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset").mask('9999-99-99');
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
-					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd").mask('9999-01-01');	
+					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAwalRekapNeraca,#tglPerolehanAwalRekapNeraca1,#tglPerolehanAkhirRekapNeraca,#tglPerolehanAkhirRekapNeraca1").mask('9999-01-01');	
 					$("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-31');	
 					
 				});
@@ -879,7 +879,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca" value="" />
+										<input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca" value="" readonly="1" />
 									</div>
 								</div>
 							</li>
@@ -933,7 +933,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                                                 
                                                 <div class="tab-pane" id="rekapdetailrincianbarangmutasi">
 						<div class="breadcrumb">
-							<div class="titleTab">Rekapitulasi Rincian Barang Mutasi</div>
+							<div class="titleTab">Rekapitulasi Detail Rincian Barang Mutasi (sampai ke no-register)</div>
 						</div>
 						<form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapdetailrincianbarangmutasi.php"; ?>">
 						<ul>
@@ -942,7 +942,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca" value="" />
+                                                                                <input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca1" value="" readonly="1"/>
 									</div>
 								</div>
 							</li>
@@ -951,7 +951,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirRekapNeraca" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirRekapNeraca1" value="" required/>
 									</div>
 								</div>
 							</li>

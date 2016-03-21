@@ -161,6 +161,9 @@ if($tipeAset == 'all'){
 	$data = array('kdp_ori');
 }
 //$data = array('tanahView');
+
+//print_r($data);
+//exit();
 $hit_loop = count($data);
 $i = 0;
 $head ="<head>
@@ -299,8 +302,9 @@ $param_tgl = $tglakhirperolehan ;
 		}*/
                 $data_awal=  subsub_awal($kode_golongan, $q_gol_final, $ps, $pt);
                 $data_akhir=  subsub($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31");
+                $data_hilang=subsub_hapus($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31",$pt);
 		//exit();
-                $hasil=  group_data($data_awal, $data_akhir);
+                $hasil=  group_data($data_awal, $data_akhir,$data_hilang);
                //echo "<pre>";
                //print_r($hasil);
               // exit();
@@ -767,6 +771,129 @@ if($gol == 'mesin_ori'){
      return $data;
 }
 
+
+function subsub_hapus($kode,$gol,$ps,$pt,$tgl_pem) {
+$param_satker = $ps;
+$splitKodeSatker = explode ('.',$param_satker);
+if(count($splitKodeSatker) == 4){	
+	$paramSatker = "m.kodeSatker = '$param_satker'";
+}else{
+	$paramSatker = "m.kodeSatker like '$param_satker%'";
+}
+$param_tgl = $pt;   
+if($gol == 'mesin_ori'){
+    $gol="mesin";
+    //cek kapitalisasi
+    $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
+
+    $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi != '3'  and 
+				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
+				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl'  and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan >=300000 or m.kodeKa=1)))
+				 and $paramSatker";
+        
+     
+        
+        
+      $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,
+               l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+               m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
+               m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
+               (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from $gol m 
+                   inner join log_$gol as l on  l.Aset_ID=m.Aset_ID and l.TglPerubahan > '$tgl_pem' and l.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
+                where m.kodeKelompok like '$kode_sub%' and
+                 $param_where $kapitalisasi_kondisi   
+               order by kelompok asc";
+}elseif($gol == 'bangunan_ori'){
+    $gol="bangunan";
+     //cek kapitalisasi
+    $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
+
+	$param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi != '3'  and 
+				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
+				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan >=10000000  or m.kodeKa=1)))
+				 and $paramSatker";
+	 
+	$sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,
+               l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+               m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
+               m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
+               (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from $gol m 
+                    inner join log_$gol as l on  l.Aset_ID=m.Aset_ID and l.TglPerubahan > '$tgl_pem' and l.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
+                where m.kodeKelompok like '$kode_sub%' and
+                 $param_where   $kapitalisasi_kondisi 
+               order by kelompok asc";
+}else{
+	if($gol!="tanahView")
+		  $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1  
+					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and l.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
+					 and m.TglPembukuan <='$param_tgl' 
+					 and m.kodeLokasi like '12%' 
+					 and m.kondisi != '3'					 
+					 and $paramSatker";
+		else
+		    $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1  
+					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and l.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
+					 and m.TglPembukuan <='$param_tgl' 
+					 and m.kodeLokasi like '12%' 
+					 and $paramSatker";
+	 
+	 if($gol == 'jaringan_ori'){
+             
+             $gol="jaringan";
+              //cek kapitalisasi
+    $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
+
+		$sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,
+               l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+               m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
+               m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
+               (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from $gol m 
+                    inner join log_$gol as l on  l.Aset_ID=m.Aset_ID and l.TglPerubahan > '$tgl_pem' and l.kd_riwayat=3  and `action` like 'Sukses Mutasi%' 
+                where m.kodeKelompok like '$kode_sub%' and
+                 $param_where    $kapitalisasi_kondisi
+               order by kelompok asc";
+	 }else{
+             if($gol=="kdp_ori")
+                 $gol="kdp";
+             else if($gol=="tanahView")
+                 $gol="tanah";
+             else  $gol="asetlain";
+             
+                 //cek kapitalisasi
+    $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
+
+		$sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,
+                    m.Aset_ID,
+               m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+                (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from $gol m 
+                   inner join log_$gol as l on  l.Aset_ID=m.Aset_ID and l.TglPerubahan > '$tgl_pem' and l.kd_riwayat=3  and `action` like 'Sukses Mutasi%' 
+                where m.kodeKelompok like '$kode_sub%' and
+                 $param_where    $kapitalisasi_kondisi
+               order by kelompok asc";
+	 }
+}
+	 
+//echo "$gol == $sql";
+     $resultparentSubSub = mysql_query($sql) or die(mysql_error());
+     $data = array();
+     while ($data_subsub = mysql_fetch_array($resultparentSubSub,MYSQL_ASSOC)) {
+          $data[] = $data_subsub;
+     }
+     return $data;
+}
+
 // exit;
 if($tipe=="3"){
 	echo $serviceJson;
@@ -796,22 +923,22 @@ $count = count($html);
 		 }
 	}
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Rekapitulasi Rincian Barang Ke Neraca_$waktu.pdf";
+$namafile="$path/report/output/Rekapitulasi Rincian Mutasi Barang Ke Neraca_$skpd_id-$tahun_neraca-$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Rekapitulasi Rincian Barang Ke Neraca_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Rekapitulasi Rincian Mutasi Barang Ke Neraca_$skpd_id-$tahun_neraca$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Rekapitulasi_Rincian_barang_ke_neraca_$waktu.xls";
+	$filename ="Rekapitulasi Rincian Mutasi Barang Ke Neraca_$skpd_id-$tahun_neraca-$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	echo $html; 
 }
 
-function group_data($data_awal_perolehan,$data_akhir_perolehan){
+function group_data($data_awal_perolehan,$data_akhir_perolehan,$data_hapus_awal){
     
     
  $data_awal = array();
@@ -838,6 +965,19 @@ foreach($data_akhir_perolehan as $arg)
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['AP']+= $arg['AP'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['NB']+= $arg['NB'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['jml']+= 1;
+}
+
+$data_hapus_tmp = array();
+
+foreach($data_hapus_awal as $arg)
+{
+    $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']+= $arg['Kelompok'];
+    $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']+= $arg['Uraian'];
+    $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['nilai']+= $arg['nilai'];
+    $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['PP']+= $arg['PP'];
+    $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['AP']+= $arg['AP'];
+    $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['NB']+= $arg['NB'];
+    $data_hapus_tmp[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['jml']+= 1;
 }
    
     
@@ -1024,10 +1164,45 @@ foreach ($data_akhir_alone as $tipe => $value) {
     
 }
 
+$data_hapus=array();
+foreach ($data_hapus_tmp as $tipe => $value) {
+     $data_hapus[$tipe]['Kelompok']=$tipe;
+    $data_hapus[$tipe]['Uraian']=$value['Uraian'];
+    
+    $data_hapus[$tipe]['nilai']=0;
+    $data_hapus[$tipe]['jml']=0;
+    $data_hapus[$tipe]['ap']=0;
+    $data_hapus[$tipe]['pp']=0;
+    $data_hapus[$tipe]['nb']=0;
+    $data_hapus[$tipe]['mutasi_jml_tambah']=$value['jml'];
+    $data_hapus[$tipe]['mutasi_nilai_tambah']=$value['nilai'];
+    $data_hapus[$tipe]['mutasi_ap_tambah']=$value['AP'];
+    $data_hapus[$tipe]['mutasi_pp_tambah']=$value['PP'];
+    $data_hapus[$tipe]['mutasi_nb_tambah']=$value['NB'];
+    
+    $data_hapus[$tipe]['mutasi_jml_kurang']=$value['jml'];
+    $data_hapus[$tipe]['mutasi_nilai_kurang']=$value['nilai'];
+    $data_hapus[$tipe]['mutasi_ap_kurang']=$value['AP'];
+    $data_hapus[$tipe]['mutasi_pp_kurang']=$value['PP'];
+    $data_hapus[$tipe]['mutasi_nb_kurang']=$value['NB'];
+    
+    $data_hapus[$tipe]['bp']=0;//$value['AP'];
+    
+    $data_hapus[$tipe]['nilai_akhir']=0;
+    $data_hapus[$tipe]['jml_akhir']=0;
+    $data_hapus[$tipe]['ap_akhir']=0;
+    $data_hapus[$tipe]['pp_akhir']=0;
+    $data_hapus[$tipe]['nb_akhir']=0;
+    
+    
+}
+
+
+
 /*echo "array akhir:<br/><pre>";
 print_r($data_akhir);//data-sub-sub
 exit;*/
-$data_gabungan=  array_merge($data_awal,$data_gabungan,$data_akhir);
+$data_gabungan=  array_merge($data_awal,$data_gabungan,$data_akhir,$data_hapus);
 
 //echo "array gabungan:<br/><pre>";
 //print_r($data_gabungan);//data-sub-sub
