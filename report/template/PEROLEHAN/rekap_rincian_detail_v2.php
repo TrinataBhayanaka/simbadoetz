@@ -1462,6 +1462,8 @@ function get_uraian($kode,$level){
 
 function get_akumulasi_sblm($Aset_ID,$TahunPenyusutan,$kelompok){
     $gol=  explode(".", $kelompok);
+    echo "$gol";
+    exit();
     switch ($gol[0]) {
         case "01":
             $nama_log="log_tanah";
