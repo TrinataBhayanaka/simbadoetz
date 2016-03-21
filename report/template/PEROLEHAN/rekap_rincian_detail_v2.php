@@ -1466,22 +1466,22 @@ function get_akumulasi_sblm($Aset_ID,$TahunPenyusutan,$kelompok){
     print_r($gol);
     exit();
     switch ($gol[0]) {
-        case "01":
+        case "1":
             $nama_log="log_tanah";
             break;
-        case "02":
+        case "2":
             $nama_log="log_mesin";
             break;
-        case "03":
+        case "3":
             $nama_log="log_banguna";
             break;
-        case "04":
+        case "4":
             $nama_log="log_jairngan";
             break;
-        case "05":
+        case "5":
             $nama_log="log_asetlain";
             break;
-        case "06":
+        case "6":
             $nama_log="log_kdp";
             break;
 
