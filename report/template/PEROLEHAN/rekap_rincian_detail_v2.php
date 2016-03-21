@@ -967,7 +967,7 @@ foreach($data_akhir_perolehan as $arg)
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['TahunPenyusutan']= $arg['TahunPenyusutan'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Aset_ID']= $arg['Aset_ID'];
     
-    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']+= $arg['Uraian'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']= $arg['Uraian'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['nilai']+= $arg['nilai'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['PP']+= $arg['PP'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['AP']+= $arg['AP'];
