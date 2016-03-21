@@ -1148,6 +1148,7 @@ foreach ($data_akhir_alone as $tipe => $value) {
     $TahunPenyusutan=$value['TahunPenyusutan'];
     $kelompok=$value['Kelompok'];
     $Tahun=$value['Tahun'];
+    $akumulasi_sblm=get_akumulasi_sblm($Aset_ID, $TahunPenyusutan, $kelompok);
     
     if($Tahun==$TahunPenyusutan){
         //pengadaan di tahun berjalan
@@ -1156,7 +1157,11 @@ foreach ($data_akhir_alone as $tipe => $value) {
     }
     else{
         //transfer dari tempat lain
-        $akumulasi_sblm=get_akumulasi_sblm($Aset_ID, $TahunPenyusutan, $kelompok);
+        if($akumulasi_sblm==0){
+            //barang inventarisasi
+             $bp=$value['AP'];
+             $akumulasi_sblm=0;
+        }
         $bp=$value['AP']-$akumulasi_sblm;
         //bila tidak penyusutan lagi
         if($bp==$value['AP'])
