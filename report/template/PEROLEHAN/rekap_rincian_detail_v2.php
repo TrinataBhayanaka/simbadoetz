@@ -593,7 +593,7 @@ if($gol == 'mesin_ori'){
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
  
-      $sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
+      $sql = "select  kodeKelompok as kelompok,Aset_ID,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -610,7 +610,7 @@ if($gol == 'mesin_ori'){
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
-	$sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
+	$sql = "select  kodeKelompok as kelompok,Aset_ID,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -637,7 +637,7 @@ if($gol == 'mesin_ori'){
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori'){
-		$sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
+		$sql = "select  kodeKelompok as kelompok,Aset_ID,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -649,7 +649,7 @@ if($gol == 'mesin_ori'){
                  $param_where    
                order by kelompok asc";
 	 }else{
-		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TahunPenyusutan,
+		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
               (select Uraian from kelompok 
                where kode= kodeKelompok 
