@@ -750,7 +750,7 @@ if($gol == 'mesin_ori'){
                  $gol="tanah";
              else  $gol="asetlain";
              
-		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TahunPenyusutan,
+		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -872,7 +872,7 @@ if($gol == 'mesin_ori'){
     $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
 		$sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,
-                    m.Aset_ID,m.TahunPenyusutan,
+                    m.Aset_ID,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
                where kode= m.kodeKelompok 
