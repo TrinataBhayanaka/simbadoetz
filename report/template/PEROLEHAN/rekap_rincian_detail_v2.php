@@ -1476,7 +1476,7 @@ function get_akumulasi_sblm($Aset_ID,$TahunPenyusutan,$kelompok){
             $nama_log="log_bangunan";
             break;
         case "4":
-            $nama_log="log_jairngan";
+            $nama_log="log_jaringan";
             break;
         case "5":
             $nama_log="log_asetlain";
