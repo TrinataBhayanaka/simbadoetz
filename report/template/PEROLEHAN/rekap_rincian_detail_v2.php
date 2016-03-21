@@ -593,7 +593,7 @@ if($gol == 'mesin_ori'){
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
  
-      $sql = "select  kodeKelompok as kelompok,Aset_ID,
+      $sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -610,7 +610,7 @@ if($gol == 'mesin_ori'){
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
-	$sql = "select  kodeKelompok as kelompok,Aset_ID,
+	$sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -637,7 +637,7 @@ if($gol == 'mesin_ori'){
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori'){
-		$sql = "select  kodeKelompok as kelompok,Aset_ID,
+		$sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -649,7 +649,7 @@ if($gol == 'mesin_ori'){
                  $param_where    
                order by kelompok asc";
 	 }else{
-		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,
+		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
               (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -686,7 +686,7 @@ if($gol == 'mesin_ori'){
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
  
-      $sql = "select  kodeKelompok as kelompok,Aset_ID,
+      $sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -704,7 +704,7 @@ if($gol == 'mesin_ori'){
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
-	$sql = "select  kodeKelompok as kelompok,Aset_ID,
+	$sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -732,7 +732,7 @@ if($gol == 'mesin_ori'){
 	 
 	 if($gol == 'jaringan_ori'){
              $gol="jaringan";
-		$sql = "select  kodeKelompok as kelompok,Aset_ID,
+		$sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -750,7 +750,7 @@ if($gol == 'mesin_ori'){
                  $gol="tanah";
              else  $gol="asetlain";
              
-		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,
+		$sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TahunPenyusutan,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -794,7 +794,7 @@ if($gol == 'mesin_ori'){
      
         
         
-      $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,
+      $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
                l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -816,7 +816,7 @@ if($gol == 'mesin_ori'){
 				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan >=10000000  or m.kodeKa=1)))
 				 and $paramSatker";
 	 
-	$sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,
+	$sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
                l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -849,7 +849,7 @@ if($gol == 'mesin_ori'){
               //cek kapitalisasi
     $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
-		$sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,
+		$sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
                l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -872,7 +872,7 @@ if($gol == 'mesin_ori'){
     $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
 		$sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,
-                    m.Aset_ID,
+                    m.Aset_ID,m.TahunPenyusutan,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
                where kode= m.kodeKelompok 
@@ -946,6 +946,10 @@ function group_data($data_awal_perolehan,$data_akhir_perolehan,$data_hapus_awal)
 foreach($data_awal_perolehan as $arg)
 {
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']= $arg['Kelompok'];
+    
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']= $arg['TahunPenyusutan'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']= $arg['Aset_ID'];
+    
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']= $arg['Uraian'];
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['nilai']+= $arg['nilai'];
     $data_awal[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['PP']+= $arg['PP'];
@@ -959,6 +963,10 @@ foreach($data_awal_perolehan as $arg)
 foreach($data_akhir_perolehan as $arg)
 {
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']+= $arg['Kelompok'];
+    
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']= $arg['TahunPenyusutan'];
+    $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Kelompok']= $arg['Aset_ID'];
+    
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['Uraian']+= $arg['Uraian'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['nilai']+= $arg['nilai'];
     $data_akhir[$arg['kelompok'].'.'.$arg['Tahun'].'-'.$arg['noRegister'].'-'.$arg['Aset_ID']]['PP']+= $arg['PP'];
@@ -1133,7 +1141,16 @@ $data_akhir_alone=array_diff_assoc($data_akhir,$data_gabungan);
 
 $data_akhir=array();
 foreach ($data_akhir_alone as $tipe => $value) {
-     $data_akhir[$tipe]['Kelompok']=$tipe;
+    
+    $Aset_ID=$value['Aset_ID'];
+    $TahunPenyusutan=$value['TahunPenyusutan'];
+    $kelompok=$value['Kelompok'];
+    
+    $akumulasi_sblm=get_akumulasi_sblm($Aset_ID, $TahunPenyusutan, $kelompok);
+    
+    $bp=$value['AP']-$akumulasi_sblm;
+    
+    $data_akhir[$tipe]['Kelompok']=$tipe;
     $data_akhir[$tipe]['Uraian']=$value['Uraian'];
     
     $data_akhir[$tipe]['nilai']=0;
@@ -1153,7 +1170,7 @@ foreach ($data_akhir_alone as $tipe => $value) {
     $data_akhir[$tipe]['mutasi_pp_kurang']=0;
     $data_akhir[$tipe]['mutasi_nb_kurang']=0;
     
-    $data_akhir[$tipe]['bp']=0;//$value['AP'];
+    $data_akhir[$tipe]['bp']=$bp;//$value['AP'];
     
     $data_akhir[$tipe]['nilai_akhir']=$value['nilai'];
     $data_akhir[$tipe]['jml_akhir']=$value['jml'];
@@ -1441,5 +1458,42 @@ function get_uraian($kode,$level){
         $Uraian=$row[Uraian];
     }
     return $Uraian;
+}
+
+function get_akumulasi_sblm($Aset_ID,$TahunPenyusutan,$kelompok){
+    $gol=  explode(".", $kelompok);
+    switch ($gol) {
+        case "01":
+            $nama_log="log_tanah";
+            break;
+        case "02":
+            $nama_log="log_mesin";
+            break;
+        case "03":
+            $nama_log="log_banguna";
+            break;
+        case "04":
+            $nama_log="log_jairngan";
+            break;
+        case "05":
+            $nama_log="log_asetlain";
+            break;
+        case "06":
+            $nama_log="log_kdp";
+            break;
+
+        default:
+            break;
+    }
+    $Tahun=$TahunPenyusutan-1;
+    $query="select AkumulasiPenyusutan from $nama_log where "
+            . "kd_riwayat in(50,51,52) and TahunPenyusutan='$Tahun' "
+            . " and Aset_ID='$Aset_ID' ";
+    $result=  mysql_query($query) or die(mysql_error());
+    $AkumulasiPenyusutan=0;
+    while($row=  mysql_fetch_array($result)){
+        $AkumulasiPenyusutan=$row[AkumulasiPenyusutan];
+    }
+    return $AkumulasiPenyusutan;
 }
 ?>
