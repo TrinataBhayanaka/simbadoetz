@@ -923,16 +923,16 @@ $count = count($html);
 		 }
 	}
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Rekapitulasi Detail Rincian Mutasi Barang Ke Neraca_$skpd_id-$tahun_neraca-$waktu.pdf";
+$namafile="$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca-$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Rekapitulasi Rincian Mutasi Barang Ke Neraca_$skpd_id-$tahun_neraca$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Rekapitulasi-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Rekapitulasi Detail Rincian Mutasi Barang Ke Neraca_$skpd_id-$tahun_neraca-$waktu.xls";
+	$filename ="Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca-$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	echo $html; 

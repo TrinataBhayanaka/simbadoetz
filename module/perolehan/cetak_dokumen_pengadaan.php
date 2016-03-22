@@ -48,7 +48,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						}
 					});*/
 					$("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset").mask('9999-99-99');
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset,#tglPerolehanAwalRekapNeraca3,#tglPerolehanAkhirRekapNeraca3" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
 					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAwalRekapNeraca,#tglPerolehanAwalRekapNeraca1,#tglPerolehanAkhirRekapNeraca,#tglPerolehanAkhirRekapNeraca1").mask('9999-01-01');	
 					$("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-31');	
@@ -549,7 +549,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca" value="" />
+										<input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca3" value="" />
 									</div>
 								</div>
 							</li>
@@ -558,7 +558,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirRekapNeraca" value="" required/>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirRekapNeraca3" value="" required/>
 									</div>
 								</div>
 							</li>
@@ -906,7 +906,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<span class="span2">Level</span>
-								<select name="levelAset" id="levelAset" style="width:170px">
+								<select disabled="1"  name="levelAset" id="levelAset" style="width:170px">
 									<option value="1">Semua Level</option>
 									<option value="2">Golongan</option>
 									<option value="3">Bidang</option>
@@ -969,7 +969,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<span class="span2">Level</span>
-								<select name="levelAset" id="levelAset" style="width:170px">
+                                                                <select disabled="1" name="levelAset" id="levelAset" style="width:170px">
 									<option value="1">Semua Level</option>
 									<option value="2">Golongan</option>
 									<option value="3">Bidang</option>
