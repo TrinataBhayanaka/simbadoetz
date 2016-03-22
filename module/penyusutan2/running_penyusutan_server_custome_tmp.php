@@ -751,12 +751,23 @@ for($i=0;$i<2;$i++){
                         $penambahan_masa_manfaat=  overhaul($tmp_kode_log[0], $tmp_kode_log[1], $tmp_kode_log[2],$persen, $DBVAR);
                         $Umur_Ekonomis_Final=$UmurEkonomis+$penambahan_masa_manfaat;
                        
+                        $batas_akhir=cek_masamanfaat($tmp_kode_log[0], $tmp_kode_log[1], $tmp_kode_log[2],$DBVAR);
+                     
+                        
                         if($kapitalisasi>=1)
                         {
                          $MasaManfaat_Final=$MasaManfaat+$penambahan_masa_manfaat-1;   
+                            if($MasaManfaat_Final>$batas_akhir)
+                              {    $MasaManfaat_Final=$batas_akhir;
+                              
+                              }
                         }
                         else{
                             $MasaManfaat_Final=$MasaManfaat+$penambahan_masa_manfaat;
+                              if($MasaManfaat_Final>$batas_akhir)
+                              {    $MasaManfaat_Final=$batas_akhir;
+                              
+                              }
                         }
                         if($Umur_Ekonomis_Final>$MasaManfaat){
                             $Umur_Ekonomis_Final=$MasaManfaat;
