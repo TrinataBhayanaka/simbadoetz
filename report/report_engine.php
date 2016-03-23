@@ -29263,7 +29263,7 @@ $body="
 
                                              //udah dites
 					// $barangTotal = $barangTotal + $row->Kuantitas;
-					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan_Awal;
+					// $perolehanTotal = $perolehanTotal + $row->NilaiPerolehan_Awal;
 					// $perolehan = number_format($row->NilaiPerolehan);
 					
 					// $konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
