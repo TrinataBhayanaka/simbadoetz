@@ -5353,8 +5353,8 @@ if($skpd_id != ''){
 			$TotalNilaiPPFix=number_format($TotalNilai[2],2,",",".");
 			//nilai akumulasi penyusutan
 			$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
-			// if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
-			if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			// if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
 			}else{
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[0],2,",",".");
@@ -5377,7 +5377,8 @@ if($skpd_id != ''){
 			$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
 			
 			// $TotalNilaiNilaiBukuFix=number_format(0,2,",",".");
-			if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			// if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
 			}else{
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[0],2,",",".");
@@ -5392,8 +5393,8 @@ if($skpd_id != ''){
 			$totalALLPP = $totalALLPP + $TotalNilai[2];
 			$totalALLAP = $totalALLAP + $TotalNilai[3];
 			//cek jika nilai buku 0 diganti sama nilai perolehan
-			// if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
-			if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			// if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[4];
 			}else{
 				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[0];
@@ -5418,7 +5419,8 @@ if($skpd_id != ''){
 			  $totalALLAP = $TotalNilai[3];
 			 
 			 //cek jika nilai buku 0 diganti sama nilai perolehan (pengecualian aset lain)
-			  if($TotalNilai[3] != 0 || $TotalNilai[3] != ''){
+			  // if($TotalNilai[3] != 0 || $TotalNilai[3] != ''){
+			  if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$totalALLNilaiBuku = $TotalNilai[4];
 			  }else{
 				$totalALLNilaiBuku = $TotalNilai[0];
@@ -5683,8 +5685,8 @@ if($skpd_id != ''){
 			$TotalNilaiPPFix=number_format($TotalNilai[2],2,",",".");
 			//nilai akumulasi penyusutan
 			$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
-			// if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
-			if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			// if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
 			}else{
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[0],2,",",".");
@@ -5707,7 +5709,8 @@ if($skpd_id != ''){
 			$TotalNilaiAPFix=number_format($TotalNilai[3],2,",",".");
 			
 			// $TotalNilaiNilaiBukuFix=number_format(0,2,",",".");
-			if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			// if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[4],2,",",".");
 			}else{
 				$TotalNilaiNilaiBukuFix=number_format($TotalNilai[0],2,",",".");
@@ -5722,8 +5725,8 @@ if($skpd_id != ''){
 			$totalALLPP = $totalALLPP + $TotalNilai[2];
 			$totalALLAP = $totalALLAP + $TotalNilai[3];
 			//cek jika nilai buku 0 diganti sama nilai perolehan
-			// if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
-			if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
+			// if($TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[4];
 			}else{
 				$totalALLNilaiBuku = $totalALLNilaiBuku + $TotalNilai[0];
@@ -5748,7 +5751,8 @@ if($skpd_id != ''){
 			  $totalALLAP = $TotalNilai[3];
 			 
 			 //cek jika nilai buku 0 diganti sama nilai perolehan (pengecualian aset lain)
-			  if($TotalNilai[3] != 0 || $TotalNilai[3] != ''){
+			  // if($TotalNilai[3] != 0 || $TotalNilai[3] != ''){
+			  if($TotalNilai[4] != 0 || $TotalNilai[4] != ''||$TotalNilai[3]!=""||$TotalNilai[3]!=0){
 				$totalALLNilaiBuku = $TotalNilai[4];
 			  }else{
 				$totalALLNilaiBuku = $TotalNilai[0];
