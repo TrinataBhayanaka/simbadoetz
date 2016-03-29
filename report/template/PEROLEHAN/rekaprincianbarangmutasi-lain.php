@@ -5,7 +5,7 @@ include "../../report_engine.php";
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
-$skpd_id = $_REQUEST['kodeSatkerRincian19'];
+$skpd_id = $_REQUEST['kodeSatkerRincian19lain'];
 $tipeAset = $_REQUEST['tipeAset'];
 $levelAset = $_REQUEST['levelAset'];
 $tglawalperolehan = $_REQUEST['tglPerolehanAwalRekapNeraca'];

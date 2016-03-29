@@ -146,7 +146,7 @@ if($hit == 1){
 // exit;
 //start
 if($tipeAset == 'all'){
-	$data = array('tanahView','mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
+	$data = array('mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
 }elseif($tipeAset == 'tanah'){
 	$data = array('tanahView');
 }elseif($tipeAset == 'mesin'){
@@ -589,8 +589,8 @@ if(count($splitKodeSatker) == 4){
 $param_tgl = $pt;   
 if($gol == 'mesin_ori'){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi ='3'  and 
-				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=0) or 
-				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan <300000 or kodeKa=0)))
+				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
+				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
  
       $sql = "select  kodeKelompok as kelompok,Aset_ID,
@@ -606,8 +606,8 @@ if($gol == 'mesin_ori'){
                order by kelompok asc";
 }elseif($gol == 'bangunan_ori'){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi ='3'  and 
-				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=0) or 
-				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan <10000000  or kodeKa=0)))
+				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
+				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
 	$sql = "select  kodeKelompok as kelompok,Aset_ID,
@@ -682,8 +682,8 @@ $param_tgl = $pt;
 if($gol == 'mesin_ori'){
     $gol="mesin";
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi ='3'  and 
-				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=0) or 
-				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan <300000 or kodeKa=0)))
+				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
+				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
  
       $sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
@@ -700,8 +700,8 @@ if($gol == 'mesin_ori'){
 }elseif($gol == 'bangunan_ori'){
     $gol="bangunan";
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi ='3'  and 
-				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=0) or 
-				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan <10000000  or kodeKa=0)))
+				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
+				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
 	$sql = "select  kodeKelompok as kelompok,Aset_ID,TahunPenyusutan,
@@ -787,8 +787,8 @@ if($gol == 'mesin_ori'){
     $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
     $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi ='3'  and 
-				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=0) or 
-				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl'  and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan <300000 or m.kodeKa=0)))
+				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
+				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl'  and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan >=300000 or m.kodeKa=1)))
 				 and $paramSatker";
         
      
@@ -812,8 +812,8 @@ if($gol == 'mesin_ori'){
     $kapitalisasi_kondisi=" and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
 	$param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi ='3'  and 
-				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=0) or 
-				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan <10000000  or m.kodeKa=0)))
+				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
+				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan >=10000000  or m.kodeKa=1)))
 				 and $paramSatker";
 	 
 	$sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
@@ -923,16 +923,16 @@ $count = count($html);
 		 }
 	}
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca-$waktu.pdf";
+$namafile="$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_as-lain-$skpd_id-$tahun_neraca-$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Rekapitulasi-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Rekapitulasi-Rincian-Mutasi-Barang-Ke-Neraca_as-lain-$skpd_id-$tahun_neraca$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca-$waktu.xls";
+	$filename ="Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_as-lain-$skpd_id-$tahun_neraca-$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	echo $html; 
