@@ -78,6 +78,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#lapdaftarpengadaan" data-toggle="tab">Laporan Daftar Pengadaan</a></li>    
 					  <li><a href="#rekaprincianbarangmutasi" data-toggle="tab">Rekapitulasi Rincian Mutasi Barang </a></li>
                                           <li><a href="#rekapdetailrincianbarangmutasi" data-toggle="tab">Rekapitulasi Detail Rincian Mutasi Barang </a></li>
+                                          <li><a href="#rekaprincianbarangmutasi-lain" data-toggle="tab">Rekapitulasi Rincian Mutasi Barang As.Lain</a></li>
+                                          <li><a href="#rekapdetailrincianbarangmutasi-lain" data-toggle="tab">Rekapitulasi Detail Rincian Mutasi Barang As.Lain</a></li>
 
 					  </ul>
 					  
@@ -981,6 +983,133 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							<?php //selectAllSatker('kodeSatker8','255',true,false); 
 				
 								selectAllSatker('kodeSatkerRincian20','255',true,false,false,true);
+							
+							?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>                                         
+                                          
+                                     </div>
+                                                
+                                                
+                                                 <div class="tab-pane" id="rekaprincianbarangmutasi-lain">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Rincian Barang Mutasi-Aset LAIN</div>
+						</div>
+						<form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekaprincianbarangmutasi-lain.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca" value="" readonly="1" />
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirRekapNeraca" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Jenis Aset</span>
+								<select name="tipeAset" id="tipeAset" style="width:170px">
+									<option value="all">Semua Aset</option>
+									<option value="tanah">Tanah</option>
+									<option value="mesin">Mesin</option>
+									<option value="bangunan">Bangunan</option>
+									<option value="jaringan">Jaringan</option>
+									<option value="asetlain">Aset Lain</option>
+									<option value="kdp">KDP</option>
+								</select>
+							</li>
+							<li>
+								<span class="span2">Level</span>
+								<select disabled="1"  name="levelAset" id="levelAset" style="width:170px">
+									<option value="1">Semua Level</option>
+									<option value="2">Golongan</option>
+									<option value="3">Bidang</option>
+									<option value="4">Kelompok</option>
+									<option value="5">Sub Kelompok</option>
+									<option value="6">Sub Sub Kelompok</option>
+								</select>
+							</li>
+							<?php //selectAllSatker('kodeSatker8','255',true,false); 
+				
+								selectAllSatker('kodeSatkerRincian19lain','255',true,false,false,true);
+							
+							?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>                                         
+                                          
+                                     </div>
+                                                
+                                                <div class="tab-pane" id="rekapdetailrincianbarangmutasi-lain">
+						<div class="breadcrumb">
+							<div class="titleTab">Rekapitulasi Detail Rincian Barang Mutasi (sampai ke no-register)-Aset Lain</div>
+						</div>
+						<form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/rekapdetailrincianbarangmutasi-lain.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+                                                                                <input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalRekapNeraca1" value="" readonly="1"/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirRekapNeraca1" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Jenis Aset</span>
+								<select name="tipeAset" id="tipeAset" style="width:170px">
+									<option value="all">Semua Aset</option>
+									<option value="tanah">Tanah</option>
+									<option value="mesin">Mesin</option>
+									<option value="bangunan">Bangunan</option>
+									<option value="jaringan">Jaringan</option>
+									<option value="asetlain">Aset Lain</option>
+									<option value="kdp">KDP</option>
+								</select>
+							</li>
+							<li>
+								<span class="span2">Level</span>
+                                                                <select disabled="1" name="levelAset" id="levelAset" style="width:170px">
+									<option value="1">Semua Level</option>
+									<option value="2">Golongan</option>
+									<option value="3">Bidang</option>
+									<option value="4">Kelompok</option>
+									<option value="5">Sub Kelompok</option>
+									<option value="6">Sub Sub Kelompok</option>
+								</select>
+							</li>
+							<?php //selectAllSatker('kodeSatker8','255',true,false); 
+				
+								selectAllSatker('kodeSatkerRincian20lain','255',true,false,false,true);
 							
 							?>
 							<br>
