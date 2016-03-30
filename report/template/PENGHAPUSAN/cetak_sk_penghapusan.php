@@ -33,11 +33,12 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 $TitleSk="KEPUTUSAN PENGHAPUSAN";
 $data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_sk_penghapusan($id);
 // pr($data);
-$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk);
+// exit;
+$html=$REPORT_DAFTAR->retrieve_daftar_sk_rev_v2($data, $gambar, $sk,$tanggalCetak,$TitleSk);
 // pr($html);
 // exit;
 if($tipe!="2"){
-$REPORT_DAFTAR->show_status_download();
+$REPORT_DAFTAR->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;

@@ -16,9 +16,12 @@ $sk = $_GET['noUsul'];
 $tglHapus = $_GET['tglHapus'];
 $tipe=$_GET['tipe_file'];
 //mendeklarasikan report_engine. FILE utama untuk reporting
+// echo "taiiaaa";
+// exit;
+
+
 $REPORT_DAFTAR = new report_engine_daftar();
 // pr($_GET);
-
 
 
 if($tglHapus != ''){
@@ -28,15 +31,17 @@ if($tglHapus != ''){
 	$tanggalCetak = format_tanggal($tglcetak);	
 }
 $gambar = $FILE_GAMBAR_KABUPATEN;
-
+// pr($gambar);
+// exit;
 $TitleSk="PERMOHONAN USULAN";
 $data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_usulan_penghapusan($id);
 // pr($data);
-$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk);
+// exit;
+$html=$REPORT_DAFTAR->retrieve_daftar_sk_rev($data, $gambar, $sk,$tanggalCetak,$TitleSk,$tipe);
 // pr($html);
 // exit;
 if($tipe!="2"){
-$REPORT_DAFTAR->show_status_download();
+$REPORT_DAFTAR->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
