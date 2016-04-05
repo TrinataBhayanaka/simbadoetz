@@ -11,17 +11,14 @@ define('_MPDF_URI', "$url_rewrite/function/mpdf/");  // must be  a relative or a
 include ('../../../function/tanggal/tanggal.php');
 include "../../report_engine_daftar.php";
 require_once('../../../function/mpdf/mpdf.php');
-$id = $_GET['idusulan'];
-$sk = $_GET['noUsul'];
+$id = $_GET['idpenetapan'];
+$sk = $_GET['sk'];
 $tglHapus = $_GET['tglHapus'];
 $tipe=$_GET['tipe_file'];
 //mendeklarasikan report_engine. FILE utama untuk reporting
-// echo "taiiaaa";
-// exit;
-
-
 $REPORT_DAFTAR = new report_engine_daftar();
 // pr($_GET);
+
 
 
 if($tglHapus != ''){
@@ -31,13 +28,13 @@ if($tglHapus != ''){
 	$tanggalCetak = format_tanggal($tglcetak);	
 }
 $gambar = $FILE_GAMBAR_KABUPATEN;
-// pr($gambar);
-// exit;
-$TitleSk="PERMOHONAN USULAN";
-$data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_usulan_penghapusan($id);
+
+
+$TitleSk="KEPUTUSAN PENGHAPUSAN";
+$data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_sk_penghapusan($id);
 // pr($data);
 // exit;
-$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk,$tipe);
+$html=$REPORT_DAFTAR->retrieve_daftar_sk_rev_v2($data, $gambar, $sk,$tanggalCetak,$TitleSk);
 // pr($html);
 // exit;
 if($tipe!="2"){
@@ -65,9 +62,9 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/usulan_sk_penghapusan_barang_$waktu.pdf";
+$namafile="$path/report/output/sk_penghapusan_barang_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/usulan_sk_penghapusan_barang_$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/sk_penghapusan_barang_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
@@ -75,7 +72,7 @@ else
 {
 	
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="usulan_sk_penghapusan_barang_$waktu.xls";
+	$filename ="sk_penghapusan_barang_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

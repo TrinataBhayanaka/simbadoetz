@@ -11,7 +11,414 @@
 include "$path/report/report_engine.php";
 // pr($path);
 class report_engine_daftar extends report_engine {
+	
+	 public function retrieve_daftar_sk_rev_v2($dataArr, $gambar, $sk, $tanggalCetak,$TitleSk,$tipe){
+			 if ($dataArr != "") {
+				// echo "masukkkk";
+               $no = 1;
+               $skpdeh = "";
+               $thn = "";
+               $status_print = 0;
+               $perolehanTotal = 0;
+//pr($data);
 
+               $head = "
+				 <html>
+				 <head>
+					   <style>
+						  table
+							{
+								font-size:10pt;
+								font-family:Arial;
+								border-collapse: collapse;											
+								border-spacing:0;
+								}
+							 h3   
+							{
+							font-family:Arial;	
+							font-size:13pt;
+							color:#000;
+							}
+							p
+							{
+							font-size:10pt;
+							font-family:Arial;
+							font-weight:bold;
+							}
+					</style>
+				</head>
+						   ";
+			
+			/*if($tipe == 1){
+				$gmbr = "<td style=\"width: 5%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>";
+		   }elseif($tipe == 2){
+				$gmbr = "<td style=\"width: 5%;\"></td>";
+		   }*/
+			$body = "
+				<body>
+				<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+					<tr>
+					  <td style=\"width: 5%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
+					   <td colspan=\"2\" style=\";width: 95%; text-align: center;\">
+							<h3>LAMPIRAN {$TitleSk}</h3>
+							<h3>PEMERINTAH $this->NAMA_KABUPATEN</h3>
+					   </td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;</td>
+						<td style=\"width: 50%;text-align:right\">&nbsp;</td>
+						 <td>&nbsp;</td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;</td>
+						<td style=\"width: 20%;text-align:right\">&nbsp;</td>
+							 <td align=\"right\">
+								  <table style=\"font-weight:bold;\">
+									   <tr>
+											<td align=\"left\">Nomor</td>
+											<td> : </td>
+											<td align=\"left\">$sk</td>
+									   </tr>
+									   <tr>
+											<td align=\"left\">Tanggal</td>
+											<td> : </td>
+											<td align=\"left\">$tanggalCetak</td>
+									   </tr>
+								  </table>
+							 </td>
+				  </tr>
+			 </table>";
+             $body.="<table  style=\"width: 100%; height: ; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+				<thead>
+					<tr>
+						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">No</td>
+						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Kode Barang </td>
+						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Nama Barang</td>
+						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AWAL</td>
+						<td colspan=\"4\" rowspan=\"\" style=\"text-align:center; font-weight: bold; width: ;\">MUTASI</td>
+						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AKHIR</td>
+						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 72px;\">PENYUSUTAN</td>
+					</tr>
+					<tr>
+						<td colspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">ASET</td>
+						<td colspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">PENYUSUTAN</td>
+					</tr>
+					<tr>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Penyusutan Per Tahun</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Umur Ekonomis</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Tahun<br/>Penyusutan</td>
+					</tr>
+					<tr>
+						<td style=\"text-align:center; font-weight: bold;\">1</td>
+						<td style=\"text-align:center; font-weight: bold;\">2</td>
+						<td style=\"text-align:center; font-weight: bold;\">3</td>
+						<td style=\"text-align:center; font-weight: bold;\">4</td>
+						<td style=\"text-align:center; font-weight: bold;\">5</td>
+						<td style=\"text-align:center; font-weight: bold;\">6</td>
+						<td style=\"text-align:center; font-weight: bold;\">7</td>
+						<td style=\"text-align:center; font-weight: bold;\">8</td>
+						<td style=\"text-align:center; font-weight: bold;\">9</td>
+						<td style=\"text-align:center; font-weight: bold;\">10</td>
+						<td style=\"text-align:center; font-weight: bold;\">11</td>
+						<td style=\"text-align:center; font-weight: bold;\">12</td>
+						<td style=\"text-align:center; font-weight: bold;\">13</td>
+						<td style=\"text-align:center; font-weight: bold;\">14</td>
+						<td style=\"text-align:center; font-weight: bold;\">15</td>
+						<td style=\"text-align:center; font-weight: bold;\">16</td>
+						</tr>
+				 </thead>"; 
+			  
+			  
+               foreach ($dataArr as $key => $value) {
+					//get data log
+					// pr($value);
+					$DataLog = $this->getDataLog($value['Penghapusan_ID'],$value['Aset_ID'],$value['kodeKelompok']);
+					// pr($DataLog);
+					
+					//SALDO AWAL 
+					$nilaiAwalPerolehanFix = number_format($DataLog->NilaiPerolehan_Awal, 2, ",", ".");
+                    $AkumulasiPenyusutanFix = number_format($DataLog->AkumulasiPenyusutan_Awal, 2, ",", ".");
+					$NilaiBukuFix = number_format($DataLog->NilaiBuku_Awal, 2, ",", ".");
+					
+					//MUTASI ASET
+					$nilaiPrlhnMutasiTambahFix = number_format(0, 2, ",", ".");
+					$KoreksiPengurangan = $DataLog->NilaiPerolehan_Awal - $DataLog->NilaiPerolehan;
+					$nilaiPrlhnMutasiKurangFix = number_format($KoreksiPengurangan, 2, ",", ".");
+					
+					//MUTASI PENYUSUTAN
+					$penyusutanBertambahFix = number_format(0, 2, ",", ".");
+					$KoreksiPenguranganPeyusutan = $DataLog->AkumulasiPenyusutan_Awal - $DataLog->AkumulasiPenyusutan;
+					$penyusutanBerkurangFix = number_format($KoreksiPenguranganPeyusutan, 2, ",", ".");
+					
+					//SALDO AKHIR
+					$nilaiPerolehanHasilMutasiFix = number_format($DataLog->NilaiPerolehan, 2, ",", ".");
+					$AkumulasiPenyusutanHasilMutasiFix = number_format($DataLog->AkumulasiPenyusutan, 2, ",", ".");
+					$nilaibukuHasilMutasiFix = number_format($DataLog->NilaiBuku, 2, ",", ".");
+					
+					//Penyusutan
+					$PenyusutanPerTahunFix = number_format($DataLog->PenyusutanPerTahun, 2, ",", ".");
+					$umurEkonomis = $DataLog->UmurEkonomis;
+					$tahun_pnystn = $DataLog->TahunPenyusutan;
+					
+					$body.="<tr>
+						<td style=\"text-align:center;\">{$no}</td>
+						<td style=\"text-align:center;\">{$value[kodeKelompok]}</td>
+						<td style=\"text-align:center;\">{$value[Kelompok]}</td>
+						<td style=\"text-align:right;\">{$nilaiAwalPerolehanFix}</td>
+						<td style=\"text-align:right;\">{$AkumulasiPenyusutanFix}</td>
+						<td style=\"text-align:right;\">{$NilaiBukuFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiTambahFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiKurangFix}</td>
+						<td style=\"text-align:right;\">{$penyusutanBertambahFix}</td>
+						<td style=\"text-align:right;\">{$penyusutanBerkurangFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPerolehanHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$AkumulasiPenyusutanHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$nilaibukuHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>
+						<td style=\"text-align:center;\">{$umurEkonomis}</td>
+						<td style=\"text-align:center;\">{$tahun_pnystn}</td>
+					  </tr>";
+			 
+                    $perolehanTotal+=$value[NilaiPerolehan];
+                    $akumalasiTotal+=$DataLog->AkumulasiPenyusutan;
+                    $nilaiBukuTotal+=$DataLog->NilaiBuku;
+                    $no++;
+               }
+               $perolehanTotal = number_format($perolehanTotal, 2, ",", ".");
+               $akumalasiTotal = number_format($akumalasiTotal, 2, ",", ".");
+               $nilaiBukuTotal = number_format($nilaiBukuTotal, 2, ",", ".");
+
+               $body.="<tr>
+                         <td colspan=\"10\" style=\"text-align:center\">Total</td>
+                         <td style=\"text-align:right\">{$perolehanTotal}</td>
+                         <td style=\"text-align:right\">{$akumalasiTotal}</td>
+                         <td style=\"text-align:right\">{$nilaiBukuTotal}</td>
+                         <td style=\"\">&nbsp;</td>
+                         <td style=\"\">&nbsp;</td>
+                         <td style=\"\">&nbsp;</td>
+					</tr>
+			   </table>";
+
+               $html[] = $head . $body;
+          }
+
+          return $html;
+	 }
+
+	 public function retrieve_daftar_sk_rev($dataArr, $gambar, $sk, $tanggalCetak,$TitleSk,$tipe){
+			 if ($dataArr != "") {
+				// echo "masukkkk";
+               $no = 1;
+               $skpdeh = "";
+               $thn = "";
+               $status_print = 0;
+               $perolehanTotal = 0;
+//pr($data);
+
+               $head = "
+				 <html>
+				 <head>
+					   <style>
+						  table
+							{
+								font-size:10pt;
+								font-family:Arial;
+								border-collapse: collapse;											
+								border-spacing:0;
+								}
+							 h3   
+							{
+							font-family:Arial;	
+							font-size:13pt;
+							color:#000;
+							}
+							p
+							{
+							font-size:10pt;
+							font-family:Arial;
+							font-weight:bold;
+							}
+					</style>
+				</head>
+						   ";
+			
+			/*if($tipe == 1){
+				$gmbr = "<td style=\"width: 5%;\"><img style=\"width: 80px; height: 85px;\" alt=\"\" src=\"$gambar\"></td>";
+		   }elseif($tipe == 2){
+				$gmbr = "<td style=\"width: 5%;\"></td>";
+		   }*/
+			$body = "
+				<body>
+				<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+					<tr>
+					  <td style=\"width: 5%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
+					   <td colspan=\"2\" style=\";width: 95%; text-align: center;\">
+							<h3>LAMPIRAN {$TitleSk}</h3>
+							<h3>PEMERINTAH $this->NAMA_KABUPATEN</h3>
+					   </td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;</td>
+						<td style=\"width: 50%;text-align:right\">&nbsp;</td>
+						 <td>&nbsp;</td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;</td>
+						<td style=\"width: 20%;text-align:right\">&nbsp;</td>
+							 <td align=\"right\">
+								  <table style=\"font-weight:bold;\">
+									   <tr>
+											<td align=\"left\">Nomor</td>
+											<td> : </td>
+											<td align=\"left\">$sk</td>
+									   </tr>
+									   <tr>
+											<td align=\"left\">Tanggal</td>
+											<td> : </td>
+											<td align=\"left\">$tanggalCetak</td>
+									   </tr>
+								  </table>
+							 </td>
+				  </tr>
+			 </table>";
+             $body.="<table  style=\"width: 100%; height: ; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+				<thead>
+					<tr>
+						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">No</td>
+						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Kode Barang </td>
+						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Nama Barang</td>
+						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AWAL</td>
+						<td colspan=\"4\" rowspan=\"\" style=\"text-align:center; font-weight: bold; width: ;\">MUTASI</td>
+						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AKHIR</td>
+						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 72px;\">PENYUSUTAN</td>
+					</tr>
+					<tr>
+						<td colspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">ASET</td>
+						<td colspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">PENYUSUTAN</td>
+					</tr>
+					<tr>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Penyusutan Per Tahun</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Umur Ekonomis</td>
+						<td style=\"text-align:center; font-weight: bold; width: ;\">Tahun<br/>Penyusutan</td>
+					</tr>
+					<tr>
+						<td style=\"text-align:center; font-weight: bold;\">1</td>
+						<td style=\"text-align:center; font-weight: bold;\">2</td>
+						<td style=\"text-align:center; font-weight: bold;\">3</td>
+						<td style=\"text-align:center; font-weight: bold;\">4</td>
+						<td style=\"text-align:center; font-weight: bold;\">5</td>
+						<td style=\"text-align:center; font-weight: bold;\">6</td>
+						<td style=\"text-align:center; font-weight: bold;\">7</td>
+						<td style=\"text-align:center; font-weight: bold;\">8</td>
+						<td style=\"text-align:center; font-weight: bold;\">9</td>
+						<td style=\"text-align:center; font-weight: bold;\">10</td>
+						<td style=\"text-align:center; font-weight: bold;\">11</td>
+						<td style=\"text-align:center; font-weight: bold;\">12</td>
+						<td style=\"text-align:center; font-weight: bold;\">13</td>
+						<td style=\"text-align:center; font-weight: bold;\">14</td>
+						<td style=\"text-align:center; font-weight: bold;\">15</td>
+						<td style=\"text-align:center; font-weight: bold;\">16</td>
+						</tr>
+				 </thead>"; 
+			  
+			  
+               foreach ($dataArr as $key => $value) {
+					//get data log
+					// pr($value);
+					$DataLog = $this->getDataLog($value['Penetapan_ID'],$value['Aset_ID'],$value['kodeKelompok']);
+					// pr($DataLog);
+					
+					//SALDO AWAL 
+					$nilaiAwalPerolehanFix = number_format($value[NilaiPerolehanTmp], 2, ",", ".");
+                    $AkumulasiPenyusutanFix = number_format($DataLog->AkumulasiPenyusutan_Awal, 2, ",", ".");
+					$NilaiBukuFix = number_format($DataLog->NilaiBuku_Awal, 2, ",", ".");
+					
+					//MUTASI ASET
+					$nilaiPrlhnMutasiTambahFix = number_format(0, 2, ",", ".");
+					$KoreksiPengurangan = $value[NilaiPerolehanTmp] - $value[NilaiPerolehan];
+					$nilaiPrlhnMutasiKurangFix = number_format($KoreksiPengurangan, 2, ",", ".");
+					
+					//MUTASI PENYUSUTAN
+					$penyusutanBertambahFix = number_format(0, 2, ",", ".");
+					$KoreksiPenguranganPeyusutan = $DataLog->AkumulasiPenyusutan_Awal - $DataLog->AkumulasiPenyusutan;
+					$penyusutanBerkurangFix = number_format($KoreksiPenguranganPeyusutan, 2, ",", ".");
+					
+					//SALDO AKHIR
+					$nilaiPerolehanHasilMutasiFix = number_format($value[NilaiPerolehan], 2, ",", ".");
+					$AkumulasiPenyusutanHasilMutasiFix = number_format($DataLog->AkumulasiPenyusutan, 2, ",", ".");
+					$nilaibukuHasilMutasiFix = number_format($DataLog->NilaiBuku, 2, ",", ".");
+					
+					//Penyusutan
+					$PenyusutanPerTahunFix = number_format($DataLog->PenyusutanPerTahun, 2, ",", ".");
+					$umurEkonomis = $DataLog->UmurEkonomis;
+					$tahun_pnystn = $DataLog->TahunPenyusutan;
+					
+					$body.="<tr>
+						<td style=\"text-align:center;\">{$no}</td>
+						<td style=\"text-align:center;\">{$value[kodeKelompok]}</td>
+						<td style=\"text-align:center;\">{$value[Kelompok]}</td>
+						<td style=\"text-align:right;\">{$nilaiAwalPerolehanFix}</td>
+						<td style=\"text-align:right;\">{$AkumulasiPenyusutanFix}</td>
+						<td style=\"text-align:right;\">{$NilaiBukuFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiTambahFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiKurangFix}</td>
+						<td style=\"text-align:right;\">{$penyusutanBertambahFix}</td>
+						<td style=\"text-align:right;\">{$penyusutanBerkurangFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPerolehanHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$AkumulasiPenyusutanHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$nilaibukuHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>
+						<td style=\"text-align:center;\">{$umurEkonomis}</td>
+						<td style=\"text-align:center;\">{$tahun_pnystn}</td>
+					  </tr>";
+			 
+                    $perolehanTotal+=$value[NilaiPerolehan];
+                    $akumalasiTotal+=$DataLog->AkumulasiPenyusutan;
+                    $nilaiBukuTotal+=$DataLog->NilaiBuku;
+                    $no++;
+               }
+               $perolehanTotal = number_format($perolehanTotal, 2, ",", ".");
+               $akumalasiTotal = number_format($akumalasiTotal, 2, ",", ".");
+               $nilaiBukuTotal = number_format($nilaiBukuTotal, 2, ",", ".");
+
+               $body.="<tr>
+                         <td colspan=\"10\" style=\"text-align:center\">Total</td>
+                         <td style=\"text-align:right\">{$perolehanTotal}</td>
+                         <td style=\"text-align:right\">{$akumalasiTotal}</td>
+                         <td style=\"text-align:right\">{$nilaiBukuTotal}</td>
+                         <td style=\"\">&nbsp;</td>
+                         <td style=\"\">&nbsp;</td>
+                         <td style=\"\">&nbsp;</td>
+					</tr>
+			   </table>";
+
+               $html[] = $head . $body;
+          }
+
+          return $html;
+	 }
+
+	 
      public function retrieve_daftar_sk($dataArr, $gambar, $sk, $tanggalCetak,$TitleSk) {
           if ($dataArr != "") {
                
@@ -57,7 +464,7 @@ class report_engine_daftar extends report_engine {
                <td style=\"width: 10%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
                <td colspan=\"2\" style=\";width: 70%; text-align: center;\">
                     <h3>LAMPIRAN {$TitleSk}</h3>
-                    <h3>PEMERINTAH KOTA PEKALONGAN</h3>
+                    <h3>PEMERINTAH $this->NAMA_KABUPATEN </h3>
                </td>
           </tr>
           <tr>
@@ -481,7 +888,42 @@ public function get_jabatan($satker,$jabatan){
         if ($resSat) return $resSat;
         return false;
 
-    }
+    } 
+public function getDataLog($Penetapan_ID,$Aset_ID,$kodeKelompok){
+	$explode = explode('.',$kodeKelompok);
+	$tipeAset = $explode[0];
+	if($tipeAset == 01){
+		$table = 'log_tanah';
+	}elseif($tipeAset == 02){
+		$table = 'log_mesin';
+	}elseif($tipeAset == 03){
+		$table = 'log_bangunan';
+	}elseif($tipeAset == 04){	
+		$table = 'log_jaringan';
+	}elseif($tipeAset == 05){
+		$table = 'log_asetlain';
+	}elseif($tipeAset == 06){
+		$table = 'log_kdp';
+	}	
+	$sqlTglHapus = "select TglHapus from penghapusan where Penghapusan_ID= '{$Penetapan_ID}' limit 1";
+	// pr($sqlTglHapus);
+	$resultTglHapus=$this->retrieve_query($sqlTglHapus);	
+		foreach($resultTglHapus as $valHapus){
+			$TglHapus = $valHapus->TglHapus;
+		}
+		// pr($TglHapus);
+	$sqlGetLog = "select AkumulasiPenyusutan_Awal,AkumulasiPenyusutan,NilaiBuku_Awal,NilaiBuku,PenyusutanPerTahun_Awal,PenyusutanPerTahun,
+				  PenyusutanPerTahun,UmurEkonomis,TahunPenyusutan,NilaiPerolehan_Awal,NilaiPerolehan
+				  from {$table} where Aset_ID= '{$Aset_ID}' and Kd_Riwayat = 7 and TglPerubahan = '{$TglHapus}'";
+	$resultGetLog=$this->retrieve_query($sqlGetLog);	
+		foreach($resultGetLog as $valLog){
+			$DataLog = $valLog;
+		}
+	if ($resultGetLog) return $DataLog;
+        return false;	
+	}	
+	// pr($sqlGetLog);
+	
 }
 
 ?>

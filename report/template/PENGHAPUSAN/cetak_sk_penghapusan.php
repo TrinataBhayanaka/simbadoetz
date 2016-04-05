@@ -33,11 +33,12 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 $TitleSk="KEPUTUSAN PENGHAPUSAN";
 $data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_sk_penghapusan($id);
 // pr($data);
+// exit;
 $html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk);
 // pr($html);
 // exit;
 if($tipe!="2"){
-$REPORT_DAFTAR->show_status_download();
+$REPORT_DAFTAR->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
@@ -61,9 +62,9 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/sk_penghapusan_barang-$waktu.pdf";
+$namafile="$path/report/output/sk_penghapusan_barang_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/sk_penghapusan_barang-$waktu.pdf";
+$namafile_web="$url_rewrite/report/output/sk_penghapusan_barang_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
 }
@@ -71,7 +72,7 @@ else
 {
 	
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Kartu_Inventaris_Barang_B_$waktu.xls";
+	$filename ="sk_penghapusan_barang_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);

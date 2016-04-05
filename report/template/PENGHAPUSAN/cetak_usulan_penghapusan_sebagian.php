@@ -37,7 +37,7 @@ $TitleSk="PERMOHONAN USULAN";
 $data = $RETRIEVE_REPORT->daftar_barang_berdasarkan_usulan_penghapusan($id);
 // pr($data);
 // exit;
-$html=$REPORT_DAFTAR->retrieve_daftar_sk($data, $gambar, $sk,$tanggalCetak,$TitleSk,$tipe);
+$html=$REPORT_DAFTAR->retrieve_daftar_sk_rev($data, $gambar, $sk,$tanggalCetak,$TitleSk,$tipe);
 // pr($html);
 // exit;
 if($tipe!="2"){

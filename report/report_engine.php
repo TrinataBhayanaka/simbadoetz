@@ -28455,13 +28455,13 @@ foreach ($dataArr as $asetID => $value)
 						$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
 						
 						//SALDO AKHIR
-						$nilaiPerolehanHasilMutasi = $valRwyt->NilaiPerolehan_Awal - $nilaiPrlhnMutasiKurang;
+						$nilaiPerolehanHasilMutasi = $valRwyt->NilaiPerolehan;
 						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 						
-						$AkumulasiPenyusutanHasilMutasi = $AkumulasiPenyusutan -  $penyusutanBerkurang;
+						$AkumulasiPenyusutanHasilMutasi = $valRwyt->AkumulasiPenyusutan;
 						$AkumulasiPenyusutanHasilMutasiFix = number_format($AkumulasiPenyusutanHasilMutasi,2,",",".");
 						
-						$nilaibukuHasilMutasi = $nilaiPerolehanHasilMutasi - $AkumulasiPenyusutanHasilMutasi;
+						$nilaibukuHasilMutasi = $valRwyt->NilaiBuku;
 						$nilaibukuHasilMutasiFix = number_format($nilaibukuHasilMutasi,2,",",".");
 						
 						//PENYUSUTAN
