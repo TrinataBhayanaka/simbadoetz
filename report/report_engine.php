@@ -28263,6 +28263,7 @@ foreach ($dataArr as $asetID => $value)
 						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Transaksi</td>
 						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AWAL</td>
 						<td colspan=\"4\" rowspan=\"\" style=\"text-align:center; font-weight: bold; width: ;\">MUTASI</td>
+                                                <td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Beban Penyusutan</td>
 						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AKHIR</td>
 						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 72px;\">PENYUSUTAN</td>
 						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">KETERANGAN</td>
@@ -28309,16 +28310,33 @@ foreach ($dataArr as $asetID => $value)
 			//get data 	 
 			// $Satker, $tglakhirperolehan
 			$getdataRwyt = $this->getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param);
-			// pr($getdataRwyt);
+			 //pr($getdataRwyt);
+                        //exit();
 			foreach ($getdataRwyt as $valRwyt){
 				$tglFormat = $new_date = date('d-m-Y ', strtotime($valRwyt->TglPerubahan));
 				// pr($tglFormat);
+                                //perhitungan rentang waktu penyusutan
+                                $tahun_penyusutan=$valRwyt->TahunPenyusutan;
+                                
+                                $tgl_perubahan_sistem=$valRwyt->TglPerubahan;
+                                $tmp_tahun=explode("-",$tgl_perubahan_sistem);
+                                $tahun_penyusutan_log=$tmp_tahun[0];
+                                if($tahun_penyusutan_log==$tahun_penyusutan)
+                                    $tahun_penyusutan_log=$tahun_penyusutan_log-1;
+                                
+                                $tahun_perolehan=$valRwyt->Tahun;
+                                $rentang_penyusutan=$tahun_penyusutan_log-$tahun_perolehan+1;
+                                 $tmp_kode = explode(".", $kodeKelompok);
+                                $masa_manfaat = $this->cek_masamanfaat($tmp_kode[0], $tmp_kode[1], $tmp_kode[2]);
+                                         
+                                //akhir rentang waktu
 				$newtglFormat = str_replace("-","/",$tglFormat);
 				// pr($newtglFormat);
 				// exit;
 				$Riwayat = $this->get_NamaRiwayat($valRwyt->Kd_Riwayat);
 				$paramKd_Rwyt = $valRwyt->Kd_Riwayat;
-				
+				$kodeKelompok=$valRwyt->kodeKelompok;
+                               
 				//cek tgl u/info
 				/*$ex_tgl_filter = explode('-',$valRwyt->TglPerubahan);
 				$tahun = $ex_tgl_filter[0];
@@ -28399,6 +28417,11 @@ foreach ($dataArr as $asetID => $value)
 						$penyusutanBerkurangFix = number_format($penyusutanBerkurang,2,",",".");
 						
 						//MUTASI PENYUSUTAN (Bertambah)
+                                                   if($valSubstAp!=0 && $paramKd_Rwyt==21)//artinya ada penyusutan
+                                                {
+                                                    $valSubstAp=(abs($cekSelisih)/$masa_manfaat)*$rentang_penyusutan;
+                                                }
+						
 						$penyusutanBertambah = $valSubstAp;
 						$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
 						
@@ -28447,7 +28470,13 @@ foreach ($dataArr as $asetID => $value)
 						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
 						
 						//MUTASI PENYUSUTAN (Berkurang )
+                                                //revisi mutasi penyusutan berkurang
+                                                if($valSubstAp!=0)//artinya ada penyusutan
+                                                {
+                                                    $valSubstAp=(abs($cekSelisih)/$masa_manfaat)*$rentang_penyusutan;
+                                                }
 						$penyusutanBerkurang = $valSubstAp;
+                                                
 						$penyusutanBerkurangFix = number_format($penyusutanBerkurang,2,",",".");
 						
 						//MUTASI PENYUSUTAN (Bertambah)
@@ -28833,7 +28862,10 @@ foreach ($dataArr as $asetID => $value)
 						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiKurangFix}</td>
 						<td style=\"text-align:right;\">{$penyusutanBertambahFix}</td>
 						<td style=\"text-align:right;\">{$penyusutanBerkurangFix}</td>
-						<td style=\"text-align:right;\">{$nilaiPerolehanHasilMutasiFix}</td>
+                                                    
+                                                <td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>    
+						
+                                                <td style=\"text-align:right;\">{$nilaiPerolehanHasilMutasiFix}</td>
 						<td style=\"text-align:right;\">{$AkumulasiPenyusutanHasilMutasiFix}</td>
 						<td style=\"text-align:right;\">{$nilaibukuHasilMutasiFix}</td>
 						<td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>
@@ -38646,6 +38678,20 @@ return $hasil_html;
 		}
 	return $NamaRwyt;
 	}
+        //fungsi-cek masa manfaat penyusutan
+        
+   public     function cek_masamanfaat($kd_aset1, $kd_aset2, $kd_aset3) {
+    $query = "select * from ref_masamanfaat where kd_aset1='$kd_aset1' "
+            . " and kd_aset2='$kd_aset2' and kd_aset3='$kd_aset3' ";
+    $result =$this->retrieve_query($query);
+		if($result !=""){
+			foreach($result  as $row){
+				$masa_manfaat = $row->masa_manfaat;
+			}
+		}
+    return $masa_manfaat;
+}
+        
 	//buat kapitalisasi
 	public function get_NP_Aset_ID_Penambahan($Aset_ID_Penambahan,$log_id){
 		

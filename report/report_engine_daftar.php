@@ -223,6 +223,8 @@ class report_engine_daftar extends report_engine {
                $thn = "";
                $status_print = 0;
                $perolehanTotal = 0;
+               $bebanpenyusutan=0;
+               $penyusutan_berkurang=0;
 //pr($data);
 
                $head = "
@@ -299,6 +301,7 @@ class report_engine_daftar extends report_engine {
 						<td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Nama Barang</td>
 						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AWAL</td>
 						<td colspan=\"4\" rowspan=\"\" style=\"text-align:center; font-weight: bold; width: ;\">MUTASI</td>
+                                                <td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Beban Penyusutan</td>
 						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AKHIR</td>
 						<td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 72px;\">PENYUSUTAN</td>
 					</tr>
@@ -341,13 +344,29 @@ class report_engine_daftar extends report_engine {
 						</tr>
 				 </thead>"; 
 			  
-			  
+			 // pr($dataArr );
+                         
                foreach ($dataArr as $key => $value) {
 					//get data log
 					// pr($value);
 					$DataLog = $this->getDataLog($value['Penetapan_ID'],$value['Aset_ID'],$value['kodeKelompok']);
-					// pr($DataLog);
-					
+					//pr($DataLog);
+                                        // exit();
+					//perhitungan rentang waktu penyusutan
+                                $tahun_penyusutan=$DataLog->TahunPenyusutan;
+                                
+                                $tgl_perubahan_sistem=$DataLog->TglPerubahan;
+                                $tmp_tahun=explode("-",$tgl_perubahan_sistem);
+                                $tahun_penyusutan_log=$tmp_tahun[0];
+                                if($tahun_penyusutan_log==$tahun_penyusutan)
+                                    $tahun_penyusutan_log=$tahun_penyusutan_log-1;
+                                
+                                $tahun_perolehan=$DataLog->Tahun;
+                                $rentang_penyusutan=$tahun_penyusutan_log-$tahun_perolehan+1;
+                                $kodeKelompok=$DataLog->kodeKelompok;
+                                 $tmp_kode = explode(".", $kodeKelompok);
+                                $masa_manfaat = $this->cek_masamanfaat($tmp_kode[0], $tmp_kode[1], $tmp_kode[2]);
+                                         
 					//SALDO AWAL 
 					$nilaiAwalPerolehanFix = number_format($value[NilaiPerolehanTmp], 2, ",", ".");
                     $AkumulasiPenyusutanFix = number_format($DataLog->AkumulasiPenyusutan_Awal, 2, ",", ".");
@@ -360,7 +379,13 @@ class report_engine_daftar extends report_engine {
 					
 					//MUTASI PENYUSUTAN
 					$penyusutanBertambahFix = number_format(0, 2, ",", ".");
-					$KoreksiPenguranganPeyusutan = $DataLog->AkumulasiPenyusutan_Awal - $DataLog->AkumulasiPenyusutan;
+					$KoreksiPenguranganPeyusutan=(abs($KoreksiPengurangan)/$masa_manfaat)*$rentang_penyusutan;
+                                        
+                                        $penyusutan_berkurang+=$KoreksiPenguranganPeyusutan;
+                                        $bebanpenyusutan+=$DataLog->PenyusutanPerTahun;
+                                        // echo "$KoreksiPengurangan $KoreksiPenguranganPeyusutan";
+                                        //exit();
+                                        //$KoreksiPenguranganPeyusutan = $DataLog->AkumulasiPenyusutan_Awal - $DataLog->AkumulasiPenyusutan;
 					$penyusutanBerkurangFix = number_format($KoreksiPenguranganPeyusutan, 2, ",", ".");
 					
 					//SALDO AKHIR
@@ -384,6 +409,9 @@ class report_engine_daftar extends report_engine {
 						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiKurangFix}</td>
 						<td style=\"text-align:right;\">{$penyusutanBertambahFix}</td>
 						<td style=\"text-align:right;\">{$penyusutanBerkurangFix}</td>
+                                                
+                                                <td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>
+    
 						<td style=\"text-align:right;\">{$nilaiPerolehanHasilMutasiFix}</td>
 						<td style=\"text-align:right;\">{$AkumulasiPenyusutanHasilMutasiFix}</td>
 						<td style=\"text-align:right;\">{$nilaibukuHasilMutasiFix}</td>
@@ -395,14 +423,21 @@ class report_engine_daftar extends report_engine {
                     $perolehanTotal+=$value[NilaiPerolehan];
                     $akumalasiTotal+=$DataLog->AkumulasiPenyusutan;
                     $nilaiBukuTotal+=$DataLog->NilaiBuku;
+                    
+                    
                     $no++;
                }
+               $bebanpenyusutanPrint=number_format($bebanpenyusutan, 2, ",", ".");
+               $penyusutan_berkurangPrint=number_format($penyusutan_berkurang, 2, ",", ".");
+                       
                $perolehanTotal = number_format($perolehanTotal, 2, ",", ".");
                $akumalasiTotal = number_format($akumalasiTotal, 2, ",", ".");
                $nilaiBukuTotal = number_format($nilaiBukuTotal, 2, ",", ".");
 
                $body.="<tr>
-                         <td colspan=\"10\" style=\"text-align:center\">Total</td>
+                         <td colspan=\"9\" style=\"text-align:center\">Total</td>
+                         <td style=\"text-align:right\">{$penyusutan_berkurangPrint}</td>
+                         <td style=\"text-align:right\">{$bebanpenyusutanPrint}</td>
                          <td style=\"text-align:right\">{$perolehanTotal}</td>
                          <td style=\"text-align:right\">{$akumalasiTotal}</td>
                          <td style=\"text-align:right\">{$nilaiBukuTotal}</td>
@@ -912,7 +947,7 @@ public function getDataLog($Penetapan_ID,$Aset_ID,$kodeKelompok){
 			$TglHapus = $valHapus->TglHapus;
 		}
 		// pr($TglHapus);
-	$sqlGetLog = "select AkumulasiPenyusutan_Awal,AkumulasiPenyusutan,NilaiBuku_Awal,NilaiBuku,PenyusutanPerTahun_Awal,PenyusutanPerTahun,
+	$sqlGetLog = "select TglPerubahan,Tahun,kodeKelompok,AkumulasiPenyusutan_Awal,AkumulasiPenyusutan,NilaiBuku_Awal,NilaiBuku,PenyusutanPerTahun_Awal,PenyusutanPerTahun,
 				  PenyusutanPerTahun,UmurEkonomis,TahunPenyusutan,NilaiPerolehan_Awal,NilaiPerolehan
 				  from {$table} where Aset_ID= '{$Aset_ID}' and Kd_Riwayat = 7 and TglPerubahan = '{$TglHapus}'";
 	$resultGetLog=$this->retrieve_query($sqlGetLog);	
@@ -923,7 +958,20 @@ public function getDataLog($Penetapan_ID,$Aset_ID,$kodeKelompok){
         return false;	
 	}	
 	// pr($sqlGetLog);
+        
+           public     function cek_masamanfaat($kd_aset1, $kd_aset2, $kd_aset3) {
+    $query = "select * from ref_masamanfaat where kd_aset1='$kd_aset1' "
+            . " and kd_aset2='$kd_aset2' and kd_aset3='$kd_aset3' ";
+    $result =$this->retrieve_query($query);
+		if($result !=""){
+			foreach($result  as $row){
+				$masa_manfaat = $row->masa_manfaat;
+			}
+		}
+    return $masa_manfaat;
+}
 	
 }
+
 
 ?>
