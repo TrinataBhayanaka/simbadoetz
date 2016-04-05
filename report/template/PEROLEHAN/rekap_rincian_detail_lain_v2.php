@@ -146,7 +146,7 @@ if($hit == 1){
 // exit;
 //start
 if($tipeAset == 'all'){
-	$data = array('mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
+	$data = array('tanahView','mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
 }elseif($tipeAset == 'tanah'){
 	$data = array('tanahView');
 }elseif($tipeAset == 'mesin'){
