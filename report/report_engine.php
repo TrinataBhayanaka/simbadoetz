@@ -28420,7 +28420,7 @@ foreach ($dataArr as $asetID => $value)
                                                    if($valSubstAp!=0 && $paramKd_Rwyt==21)//artinya ada penyusutan
                                                 {
                                                     $valSubstAp=(abs($cekSelisih)/$masa_manfaat)*$rentang_penyusutan;
-                                                }
+                                                }else $valSubstAp=0;
 						
 						$penyusutanBertambah = $valSubstAp;
 						$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
