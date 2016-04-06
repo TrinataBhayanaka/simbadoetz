@@ -28310,8 +28310,8 @@ foreach ($dataArr as $asetID => $value)
 			//get data 	 
 			// $Satker, $tglakhirperolehan
 			$getdataRwyt = $this->getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param);
-			 //pr($getdataRwyt);
-                        //exit();
+			// pr($getdataRwyt);
+                       //exit();
 			foreach ($getdataRwyt as $valRwyt){
 				$tglFormat = $new_date = date('d-m-Y ', strtotime($valRwyt->TglPerubahan));
 				// pr($tglFormat);
@@ -28327,7 +28327,7 @@ foreach ($dataArr as $asetID => $value)
                                 $tahun_perolehan=$valRwyt->Tahun;
                                 $rentang_penyusutan=$tahun_penyusutan_log-$tahun_perolehan+1;
                                  $tmp_kode = explode(".", $kodeKelompok);
-                                $masa_manfaat = $this->cek_masamanfaat($tmp_kode[0], $tmp_kode[1], $tmp_kode[2]);
+                                $masa_manfaat = $valRwyt->MasaManfaat;//$this->cek_masamanfaat($tmp_kode[0], $tmp_kode[1], $tmp_kode[2]);
                                          
                                 //akhir rentang waktu
 				$newtglFormat = str_replace("-","/",$tglFormat);
