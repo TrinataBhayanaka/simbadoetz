@@ -1040,18 +1040,28 @@ foreach ($result as $key =>$value){
     $selisih_pp_kurang=0;*/
     if($data_akhir[$tipe][kodeSatker]==""){
         $data_selisih=$data_awal;
+         $selisih_nilai_tambah=0;
+         $selisih_nilai_kurang=$data_awal[$tipe]['nilai'];
+         $selisih_jml_tambah=0;
+         $selisih_jml_kurang=1;
+         $selisih_ap_tambah=0;
+         $selisih_ap_kurang=$data_awal[$tipe]['AP'];
+         $selisih_nb_tambah=0;
+         $selisih_nb_kurang=$data_awal[$tipe]['NB'];
+         $bp=0;
+        
     }else{
         $data_selisih=$data_akhir;
+        $kodesatker=$data_selisih[$tipe][kodeSatker];
+        $aset_id=$data_selisih[$tipe][Aset_ID];
+        $kodeKelompok=$data_selisih[$tipe]['kodeKelompok'];
+        $tglperolehan=$tgl_akhir;
+
+        $tglpembukuan=$data_selisih[$tipe]['TglPembukuan'];
+        list($bp,$selisih_nilai_tambah,$selisih_nilai_kurang,$selisih_ap_tambah,$selisih_ap_kurang)=
+                history_aset($kodesatker,$aset_id,$tglperolehan,$tgl_awal,$tglpembukuan,$kodeKelompok);
     }
     
-    $kodesatker=$data_selisih[$tipe][kodeSatker];
-    $aset_id=$data_selisih[$tipe][Aset_ID];
-    $kodeKelompok=$data_selisih[$tipe]['kodeKelompok'];
-    $tglperolehan=$tgl_akhir;
-    
-    $tglpembukuan=$data_selisih[$tipe]['TglPembukuan'];
-    list($bp,$selisih_nilai_tambah,$selisih_nilai_kurang,$selisih_ap_tambah,$selisih_ap_kurang)=
-            history_aset($kodesatker,$aset_id,$tglperolehan,$tgl_awal,$tglpembukuan,$kodeKelompok);
     
     /*if($selisih_nilai<0)
         $selisih_nilai_kurang=abs($selisih_nilai);
@@ -2339,7 +2349,7 @@ function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$tglawalperolehan,$para
 	*/
 	$paramLog = "l.TglPerubahan >'$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'  and l.TglPembukuan>='$tglpembukuan' 
 				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29) and l.Kd_Riwayat != 77 
-				 and l.Aset_ID = '{$AsetId}'
+				 and l.Aset_ID = '{$AsetId}' 
 				 order by l.Aset_ID ASC";
 					   
 	$log_data = "select l.* from {$tabel_log} as l 
