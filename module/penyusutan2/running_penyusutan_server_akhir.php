@@ -798,7 +798,7 @@ for($i=0;$i<2;$i++){
                                             WHERE Aset_ID = '$Aset_ID'";
                             $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());;
                             //akhir update aset dan update log untuk kapitalisasi
-                        
+                       // $data_log[]="";
                          //update log penyusutan
                          log_penyusutan($Aset_ID, $tableKib, 51,$newTahun, $data_log, $DBVAR);
                          
@@ -1049,7 +1049,7 @@ function log_penyusutan($Aset_ID,$tableKib,$Kd_Riwayat,$tahun,$Data,$DBVAR){
 	$implodeVal = implode (',',$tmpVal);
         
         $QueryLog ="INSERT INTO log_$tableKib ($implodeField,$AddField) VALUES"
-                . "      ($implodeVal,'$action','$changeDate','$TglPerubahan','$Kd_Riwayat','$NilaiPerolehan_Awal',$AkumulasiPenyusutan_Awal,"
+                . "      ($implodeVal,'$action','$changeDate','$TglPerubahan','$Kd_Riwayat','{$resultqueryKibSelect->NilaiPerolehan}',$AkumulasiPenyusutan_Awal,"
                 . "$NilaiBuku_Awal,$PenyusutanPerTahun_Awal)";
 	$exeQueryLog = $DBVAR->query($QueryLog) or die($DBVAR->error());;
         

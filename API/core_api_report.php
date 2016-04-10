@@ -9430,7 +9430,7 @@ class core_api_report extends DB {
 						inner join kelompok as K on T.kodeKelompok=K.Kode 
 						inner join aset as a on a.Aset_ID=T.Aset_ID and a.noKontrak is null and a.Status_Validasi_Barang = 1
 					where
-						and T.StatusTampil =1 and T.Status_Validasi_Barang =1 and T.Kd_Riwayat = 0 
+						 T.StatusTampil =1 and T.Status_Validasi_Barang =1 and T.Kd_Riwayat = 0 
 						and $newparameter_sql
 					order by 
 					T.kodeSatker,T.kodeKelompok,T.Tahun ";
