@@ -513,7 +513,8 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
         $QueryLogSelect = "select kodeKelompok,PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,"
                 . "MasaManfaat,UmurEkonomis,NilaiBuku,AkumulasiPenyusutan,PenyusutanPerTahun "
                 . " from $tableLog where Aset_ID = {$Aset_ID} "
-                . " and TahunPenyusutan='$tahun' and Kd_Riwayat=49 order by log_id desc limit 1";
+                . " and TahunPenyusutan='$tahun_sblm' and Kd_Riwayat=49 and `action` like  'Penyusutan_{$tahun}_{$kodeSatker}%' "
+                        . " order by log_id desc limit 1";
         $exeQueryLogSelect = $DBVAR->query($QueryLogSelect) or die($DBVAR->error());
         $resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
 

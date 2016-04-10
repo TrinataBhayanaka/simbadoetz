@@ -56,6 +56,7 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 					<th>Kelompok Aset</th>
 					<th>Tahun Berjalan</th>
 					<th>Status Running</th>
+                                        <th>Status Revisi</th>
 					<th>Aksi</th>
 				</tr>
 			</thead>
@@ -70,6 +71,9 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 				$text_status=array("0"=>"Belum disusutkan",
 							  "1"=>"Sedang disusutkan",
 							  "2"=>"Telah disusutkan");
+                                $text_revisi=array("0"=>"Belum revisi",
+							  "1"=>"Sedang revisi",
+							  "2"=>"Telah revisi");
 				$namaSatker = $PENYUSUTAN->getNamaSatkercustome($val[kodeSatker]);
 				/*$namaSatker = $PENYUSUTAN->getNamaSatkercustome($val[UserNm]);*/
 				if($namaSatker){
@@ -82,6 +86,7 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 				<td><?=$val['KelompokAset']?></td>
 				<td><?=$val['Tahun']?></td>
 				<td><?=$text_status[$val['StatusRunning']]?></td>
+                                <td><?=$text_revisi[$val['status_revisi']]?></td>
 				<td>
 			<?php
 			if($Session['ses_uaksesadmin'] == 1){
@@ -89,13 +94,19 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 				case 0:
 					// $tahun = date('Y');
 					// if($val['Tahun'] == $tahun){
-					echo "<a href=\"running_penyusutan_tmp.php?id={$val['id']}\" class=\"btn btn-warning\">Lakukan Penyusutan</a>";
+                                    if($val['status_revisi']=="2")
+                                            echo "<a href=\"running_penyusutan_tmp.php?id={$val['id']}\" class=\"btn btn-warning\">Lakukan Penyusutan Baru</a>";
+                                        else
+                                        echo "Harus revisi ";    
 					// }
 					break;
 				case 2:
 					// $tahun = date('Y');
 					// if($val['Tahun'] == $tahun){
-						echo "<a href=\"running_penyusutan_tmp_batal.php?id={$val['id']}\" class=\"btn btn-danger\">Batal Penyusutan</a>";
+                                    if($val['status_revisi']=="0")
+						echo "<a href=\"running_penyusutan_tmp_batal.php?id={$val['id']}\" class=\"btn btn-danger\">Batal Lama</a>";
+                                          else
+                                              echo "<a href=\"running_penyusutan_akhir_batal.php?id={$val['id']}\" class=\"btn btn-danger\">Batal Penyusutan Baru</a>";
 					// }
 					break;
 			default:
