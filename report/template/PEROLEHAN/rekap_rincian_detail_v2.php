@@ -1248,6 +1248,10 @@ foreach ($data_akhir_alone as $tipe => $value) {
     $tglpembukuan=$data_akhir[$tipe]['TglPembukuan'];    
     list($bp,$selisih_nilai_tambah,$selisih_nilai_kurang,$selisih_ap_tambah,$selisih_ap_kurang)=
             history_aset($kodesatker,$aset_id,$tglperolehan,$tgl_awal,$tglpembukuan,$kodeKelompok);
+    if($bp==0){
+        $selisih_jml_tambah=$value['jml'];
+        $selisih_ap_tambah=$value['AP'];
+    }
     
   /*  $data_akhir[$tipe]['mutasi_jml_tambah']=$value['jml'];
     $data_akhir[$tipe]['mutasi_nilai_tambah']=$value['nilai'];

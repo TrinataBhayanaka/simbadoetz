@@ -707,7 +707,7 @@ for($i=0;$i<2;$i++){
                 $NilaiBuku_Awal=$NilaiBuku_Awal_penyusutan;
               //pr($data_log);
                          //ambil dari tabel live
-                list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat,$NilaiBuku)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat,$NilaiBuku,$PenyusutanPerTahun_Awal)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
                  
                  $TahunPenyusutan=$Data_Log->TahunPenyusutan;
                  $kodeKelompok_log = $Data['kodeKelompok'];
@@ -843,6 +843,11 @@ for($i=0;$i<2;$i++){
                  $NilaiBuku_akhir=$NilaiBuku-$PenyusutanPerTahun;
                  $Sisa_Masa_Manfaat=$UmurEkonomis-$rentang_tahun_penyusutan;
                  
+                 if($PenyusutanPerTahun==0){
+                      list($a,$b,$c,$d,$PenyusutanPerTahun_Awal)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                        $PenyusutanPerTahun=$PenyusutanPerTahun_Awal;
+                 }
+                       
                   echo "----------------------------------------------\n"
                  . "Aset_ID \t=$Aset_ID\n"
                                        . "kodeKelompok \t=$kodeKelompok \n"
@@ -1079,14 +1084,15 @@ function catatan_hasil_penyusutan($data,$DBVAR){
 }
 
 function get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR){
-      $query= "SELECT AkumulasiPenyusutan,UmurEkonomis,MasaManfaat,NilaiBuku FROM aset WHERE Aset_ID = '$Aset_ID' limit 1";
+      $query= "SELECT AkumulasiPenyusutan,UmurEkonomis,MasaManfaat,NilaiBuku,PenyusutanPerTaun FROM aset WHERE Aset_ID = '$Aset_ID' limit 1";
       $hasil= $DBVAR->query($query);
       $data= $DBVAR->fetch_array($hasil);
       $Akumulasi=$data['AkumulasiPenyusutan'];
       $UmurEkonomis=$data['UmurEkonomis'];
       $MasaManfaat=$data['MasaManfaat'];
       $NilaiBuku=$data['NilaiBuku'];
-      return array($Akumulasi,$UmurEkonomis,$MasaManfaat,$NilaiBuku);
+      $PenyusutanPerTaun=$data['PenyusutanPerTaun'];
+      return array($Akumulasi,$UmurEkonomis,$MasaManfaat,$NilaiBuku,$PenyusutanPerTaun);
 }
 
 function get_data_np_transfer($Aset_ID,$log_id,$table_log,$DBVAR){
