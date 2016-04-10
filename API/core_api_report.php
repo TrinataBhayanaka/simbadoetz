@@ -9305,12 +9305,39 @@ class core_api_report extends DB {
 				$AllTableTemp = array($queryKibB,$queryAlterB,$queryLogB,$queryMutasiB,
 								$queryKibC,$queryAlterC,$queryLogC,$queryMutasiC);
 			}elseif($TypeRprtr == 'intra'){
-				$AllTableTemp = array($queryKibA,$queryAlterA,$queryLogA,$queryMutasiA,
+                            
+                               switch ($flag) {
+                                 case "tanah":
+                                     $AllTableTemp = array($queryKibA,$queryAlterA,$queryLogA,$queryMutasiA);
+                                     break;
+                                 case "mesin":
+                                     $AllTableTemp = array($queryKibB,$queryAlterB,$queryLogB,$queryMutasiB);
+                                     break;
+                                 case "bangunan":
+                                      $AllTableTemp = array($queryKibC,$queryAlterC,$queryLogC,$queryMutasiC);
+                                     break;
+                                 case "jaringan":
+                                      $AllTableTemp = array($queryKibD,$queryAlterD,$queryLogD,$queryMutasiD);
+                                     break;
+                                  case "asetlain":
+                                      $AllTableTemp = array($queryKibE,$queryAlterE,$queryLogE,$queryMutasiE);
+                                     break;
+                                 case "kdp":
+                                      $AllTableTemp = array($queryKibF,$queryAlterF,$queryLogF,$queryMutasiF);
+                                     break;
+                                
+
+                                 default:
+                                     $AllTableTemp = array($queryKibA,$queryAlterA,$queryLogA,$queryMutasiA,
 									$queryKibB,$queryAlterB,$queryLogB,$queryMutasiB,
 									$queryKibC,$queryAlterC,$queryLogC,$queryMutasiC,
 									$queryKibD,$queryAlterD,$queryLogD,$queryMutasiD,
 									$queryKibE,$queryAlterE,$queryLogE,$queryMutasiE,
 									$queryKibF,$queryAlterF,$queryLogF,$queryMutasiF);
+                                     break;
+                             }
+                          
+				
 			
 			}elseif($TypeRprtr == 'BIS' || $TypeRprtr == 'BISG' || $TypeRprtr == 'RBIS' || $TypeRprtr =='BISI' || $TypeRprtr =='RBISI'){
 				// echo "all ORI";

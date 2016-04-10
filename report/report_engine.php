@@ -28948,7 +28948,7 @@ foreach ($dataArr as $asetID => $value)
 						<td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>
 						<td style=\"text-align:center;\">{$umurEkonomis}</td>
 						<td style=\"text-align:center;\">{$tahun_pnystn}</td>
-						<td style=\"text-align:center;\">{$Info}</td>
+						<td style=\"text-align:center;\">{$valRwyt->kodeSatker}{$info}</td>
 					  </tr>";
 				}else{
 				$body.="<tr>
@@ -28970,7 +28970,7 @@ foreach ($dataArr as $asetID => $value)
 						<td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>
 						<td style=\"text-align:center;\">{$umurEkonomis}</td>
 						<td style=\"text-align:center;\">{$tahun_pnystn}</td>
-						<td style=\"text-align:center;\">{$Info}</td>
+						<td style=\"text-align:center;\">{$valRwyt->kodeSatker}{$info}</td>
 					  </tr>";
 				}	  
 			
