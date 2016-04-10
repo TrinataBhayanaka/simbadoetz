@@ -1,0 +1,9 @@
+select TglPerubahan,kodeKa,kd_riwayat,aset_id,kodeKelompok,NilaiPerolehan,NilaiPerolehan_awal,
+(NilaiPerolehan-NilaiPerolehan_awal) as selisihNp, 
+AkumulasiPenyusutan,AkumulasiPenyusutan_awal,(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) as selisihAk,
+ NilaiBuku,NilaiBuku_Awal, (NilaiBuku-NilaiBuku_awal) as selisihNB 
+from log_bangunan where  kd_riwayat in (2,21,28,7) and 
+tglperubahan>'2015-01-01' and
+
+kodeSatker='04.01.01.05'  
+ order by log_id asc
