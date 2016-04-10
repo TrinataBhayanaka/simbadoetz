@@ -28310,8 +28310,11 @@ foreach ($dataArr as $asetID => $value)
 			//get data 	 
 			// $Satker, $tglakhirperolehan
 			$getdataRwyt = $this->getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param);
-			// pr($getdataRwyt);
-                       //exit();
+			//echo "$skpd_id,$AsetId,$tglakhirperolehan,$param";
+			//pr($getdataRwyt);
+            //exit();
+                        $status_masuk_penyusutan=0;
+                        $flag_penyusutan=0;
 			foreach ($getdataRwyt as $valRwyt){
 				$tglFormat = $new_date = date('d-m-Y ', strtotime($valRwyt->TglPerubahan));
 				// pr($tglFormat);
@@ -28362,6 +28365,7 @@ foreach ($dataArr as $asetID => $value)
 					26 = Penghapusan Pemindahtanganan
 					27 = Penghapusan Pemusnahan
 					*/
+                                    $status_masuk_penyusutan=1;
 					$cekSelisih =($valRwyt->NilaiPerolehan - $valRwyt->NilaiPerolehan_Awal);  
 					if($cekSelisih >= 0){
 						//mutasi tambah
@@ -28851,7 +28855,94 @@ foreach ($dataArr as $asetID => $value)
 						
 						$umurEkonomis = $valRwyt->UmurEkonomis;
 				}
-				
+				//tambahan
+				elseif($paramKd_Rwyt == 50 && $status_masuk_penyusutan!=1){
+						$flag = "";
+						
+						if($flag_penyusutan==0)
+						{
+							$akumulasi_penyusutan_awal=0;
+							$nilai_buku_awal=$valRwyt->NilaiPerolehan;
+							$penyusutan_pertahun_awal=0;
+						}else{
+							$akumulasi_penyusutan_awal=$akumulasi_penyusutan_awal;
+							$nilai_buku_awal=$nilai_buku_awal;
+							$penyusutan_pertahun_awal=$penyusutan_pertahun_awal;
+						}
+						//SALDO AWAL
+						$nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
+						$nilaiAwalPerolehanFix=number_format($nilaiAwalPrlhn,2,",",".");
+						$AkumulasiPenyusutanFix=number_format($akumulasi_penyusutan_awal,2,",",".");
+						$NilaiBukuFix=number_format($nilai_buku_awal,2,",",".");
+
+						
+						//MUTASI ASET (Bertambah)
+						$nilaiPrlhnMutasiTambah = 0;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						
+						//MUTASI ASET (Berkurang)
+						$nilaiPrlhnMutasiKurang = 0;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
+						//MUTASI PENYUSUTAN (Berkurang)
+						$penyusutanBerkurang = 0;
+						$penyusutanBerkurangFix = number_format($penyusutanBerkurang,2,",",".");
+						
+						//MUTASI PENYUSUTAN (Bertambah)
+						$penyusutanBertambah = 0;
+						$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
+						
+
+						//SALDO AKHIR
+						$nilaiPerolehanHasilMutasi = $valRwyt->NilaiPerolehan;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+						
+						$AkumulasiPenyusutan_Akhir = $valRwyt->AkumulasiPenyusutan;
+
+						$beban_penyusutan=$AkumulasiPenyusutan_Akhir-$akumulasi_penyusutan_awal;
+						$beban_penyusutanFix = number_format($beban_penyusutan,2,",",".");
+
+
+						$AkumulasiPenyusutanHasilMutasi = $AkumulasiPenyusutan_Akhir;
+						$AkumulasiPenyusutanHasilMutasiFix = number_format($AkumulasiPenyusutanHasilMutasi,2,",",".");
+						
+						$nilaibukuHasilMutasi = $valRwyt->NilaiBuku;
+						$nilaibukuHasilMutasiFix = number_format($nilaibukuHasilMutasi,2,",",".");
+						
+						$nilai_buku_awal=$valRwyt->NilaiBuku;
+						$akumulasi_penyusutan_awal=$valRwyt->AkumulasiPenyusutan;
+						$penyusutan_pertahun_awal=$valRwyt->PenyusutanPerTahun;
+						//PENYUSUTAN
+						$PenyusutanPerTahun = $valRwyt->PenyusutanPerTahun;
+						$PenyusutanPerTahunFix = number_format($PenyusutanPerTahun,2,",",".");
+						
+						$umurEkonomis = $valRwyt->UmurEkonomis;
+						$flag_penyusutan++;
+				}
+
+				if($paramKd_Rwyt == 50 && $status_masuk_penyusutan!=1){
+					$body.="<tr>
+						<td style=\"text-align:center;\">{$newtglFormat}</td>
+						<td>$Riwayat $flag</td>
+						<td style=\"text-align:right;\">{$nilaiAwalPerolehanFix}</td>
+						<td style=\"text-align:right;\">{$AkumulasiPenyusutanFix}</td>
+						<td style=\"text-align:right;\">{$NilaiBukuFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiTambahFix}</td>
+						<td style=\"text-align:right;\">{$nilaiPrlhnMutasiKurangFix}</td>
+						<td style=\"text-align:right;\">{$penyusutanBertambahFix}</td>
+						<td style=\"text-align:right;\">{$penyusutanBerkurangFix}</td>
+                                                    
+                        <td style=\"text-align:right;\">{$beban_penyusutanFix}</td>    
+						
+                                                <td style=\"text-align:right;\">{$nilaiPerolehanHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$AkumulasiPenyusutanHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$nilaibukuHasilMutasiFix}</td>
+						<td style=\"text-align:right;\">{$PenyusutanPerTahunFix}</td>
+						<td style=\"text-align:center;\">{$umurEkonomis}</td>
+						<td style=\"text-align:center;\">{$tahun_pnystn}</td>
+						<td style=\"text-align:center;\">{$Info}</td>
+					  </tr>";
+				}else{
 				$body.="<tr>
 						<td style=\"text-align:center;\">{$newtglFormat}</td>
 						<td>$Riwayat $flag</td>
@@ -28873,6 +28964,7 @@ foreach ($dataArr as $asetID => $value)
 						<td style=\"text-align:center;\">{$tahun_pnystn}</td>
 						<td style=\"text-align:center;\">{$Info}</td>
 					  </tr>";
+				}	  
 			
 			}
 			$foot.="</table></body></html>";
@@ -28920,7 +29012,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 	27 = Penghapusan Pemusnahan
 	*/
 	$paramLog = "l.TglPerubahan <='$tglakhirperolehan' 
-				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28) and l.Kd_Riwayat != 77 
+				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}'
 				 order by l.Aset_ID ASC";
 					   
@@ -28928,7 +29020,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
 						where $paramLog";	
 						
-	// pr($log_data);	
+	 //pr($log_data);	
 	$splitKodeSatker = explode ('.',$skpd_id);
 	if(count($splitKodeSatker) == 4){	
 		$paramSatker = "kodeSatker = '$skpd_id'";
