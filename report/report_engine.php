@@ -5535,6 +5535,20 @@ foreach ($dataArr as $satker_id => $value)
 			if($kode_1_child == '07.01' || $kode_1_child == '07.21' || $kode_1_child == '07.22' || $kode_1_child == '07.23' || $kode_1_child == '07.24'){
 				//$nilaiNBFix = 0;// batal penyusutan
                             $batal_nb=0;
+                            /*
+                            $nilai_2 =$value[0][1];
+                            $ex_2 = explode("_",$nilai_2);
+			// pr($ex_2);
+				$jumlah_2 = $ex_2[0];
+				$nilai_2 = $ex_2[1];
+				//tambah penyusutan
+				$nilaiPP_2= $ex_2[2];
+				$nilaiAP_2= $ex_2[3];
+				$nilaiNB_2= $ex_2[4];	
+                           $nilaiPPFix= ($nilaiPP_1) + ($nilaiPP_2);
+                           $nilaiAPFix = ($nilaiAP_1) + ($nilaiAP_2);*/
+                           
+                           
                             if($nilaiNB_1 != 0 || $nilaiAPFix!=0){
 					$nilaiNBFix = $nilaiNB_1;
 				}else{

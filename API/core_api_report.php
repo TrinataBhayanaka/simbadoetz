@@ -5190,9 +5190,27 @@ class core_api_report extends DB {
 										$nilaiBK = $data3->NB;
 									}
 								}else{
-									$nilaiPP = 0;
+									/*$nilaiPP = 0;
 									$nilaiAP = 0;
-									$nilaiBK = 0;
+									$nilaiBK = 0;*/
+                                                                        //total nilai penyusutan pertahun
+									if($data3->NilaiPP == NULL ||$data3->NilaiPP == 0){
+										$nilaiPP = 0;
+									}else{
+										$nilaiPP = $data3->NilaiPP;
+									}
+									//total nilai akumulasi penyusutan
+									if($data3->NilaiAP == NULL ||$data3->NilaiAP==0){
+										$nilaiAP = 0;
+									}else{
+										$nilaiAP = $data3->NilaiAP;
+									}
+									//total nilai buku
+									if($data3->NB == NULL ||$data3->NB==0){
+										$nilaiBK = 0;
+									}else{
+										$nilaiBK = $data3->NB;
+									}
 								}
 								$datafix[] = $data3->jumlah."_".$nilaiPrlhn."_".$nilaiPP."_".$nilaiAP."_".$nilaiBK;
 								// $datafix[] = $data3->jumlah."_".$nilaiPrlhn;
