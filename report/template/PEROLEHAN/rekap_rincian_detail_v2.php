@@ -204,17 +204,17 @@ $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin
 	<tr>
 		<td rowspan='2' colspan='5' style=\" text-align: center; font-weight: bold; width: \">Kode</td>
 		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Uraian</td>
-		<td colspan='5' style=\" text-align: center; font-weight: bold; width: \">1 Januari $tahun_neraca</td>
+		<td colspan='4' style=\" text-align: center; font-weight: bold; width: \">1 Januari $tahun_neraca</td>
                 <td colspan='2' style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan</td>
                 <td colspan='2' style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
                 <td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Beban Penyusutan Tahun Berjalan</td>
-                <td colspan='5' style=\" text-align: center; font-weight: bold; width: \">31 Desember $tahun_neraca</td>
+                <td colspan='4' style=\" text-align: center; font-weight: bold; width: \">31 Desember $tahun_neraca</td>
                 
 	</tr>
         <tr>
             <td  style=\" text-align: center; font-weight: bold; width: \">Jumlah</td>
             <td  style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan</td>
-            <td  style=\" text-align: center; font-weight: bold; width: \">Penyusutan PerTahun</td>
+            
             <td  style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
             <td  style=\" text-align: center; font-weight: bold; width: \">Nilai Buku</td>
             
@@ -225,7 +225,7 @@ $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin
             
             <td  style=\" text-align: center; font-weight: bold; width: \">Jumlah</td>
             <td  style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan</td>
-            <td  style=\" text-align: center; font-weight: bold; width: \">Penyusutan PerTahun</td>
+          
             <td  style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
             <td  style=\" text-align: center; font-weight: bold; width: \">Nilai Buku</td>
         </tr>
@@ -248,9 +248,9 @@ $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin
                    <td style=\" text-align: center; font-weight: bold; width: \">16</td>
                    <td style=\" text-align: center; font-weight: bold; width: \">17</td>
                    <td style=\" text-align: center; font-weight: bold; width: \">18</td>
+                   
+                   
                    <td style=\" text-align: center; font-weight: bold; width: \">19</td>
-                   <td style=\" text-align: center; font-weight: bold; width: \">20</td>
-                   <td style=\" text-align: center; font-weight: bold; width: \">21</td>
                    
 	</tr>";	
 //foreach ($data as $gol) {
@@ -363,7 +363,7 @@ $param_tgl = $tglakhirperolehan ;
 					<td style=\"font-weight: bold;\">{$gol[Uraian]}</td>
 					<td style=\"text-align: center; font-weight: bold;\">{$gol[jml]}</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nilai],2,",",".")."</td>
-					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[pp],2,",",".")."</td>
+					
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[ap],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nb],2,",",".")."</td> 
                                         
@@ -376,7 +376,7 @@ $param_tgl = $tglakhirperolehan ;
 					
                                         <td style=\"text-align: center; font-weight: bold;\">{$gol[jml_akhir]}</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nilai_akhir],2,",",".")."</td>
-					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[pp_akhir],2,",",".")."</td>
+					
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[ap_akhir],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nb_akhir],2,",",".")."</td> 
 				</tr>";	
@@ -401,7 +401,7 @@ $param_tgl = $tglakhirperolehan ;
 								<td style=\"font-weight: bold;\">{$bidang[Uraian]}</td>
                                 <td style=\"text-align: center; font-weight: bold;\">{$bidang[jml]}</td>
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nilai],2,",",".")."</td>
-                                <td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[pp],2,",",".")."</td>
+ 
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[ap],2,",",".")."</td>
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nb],2,",",".")."</td>
                                     
@@ -414,7 +414,7 @@ $param_tgl = $tglakhirperolehan ;
                                 
                                 <td style=\"text-align: center; font-weight: bold;\">{$bidang[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nilai_akhir],2,",",".")."</td>
-				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[pp_akhir],2,",",".")."</td>
+				
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[ap_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nb_akhir],2,",",".")."</td> 
 							</tr>";	
@@ -439,7 +439,7 @@ $param_tgl = $tglakhirperolehan ;
 								<td>{$Kelompok[Uraian]}</td>
                                 <td style=\"text-align: center;\">{$Kelompok[jml]}</td>
 								<td style=\"text-align: right;\">".number_format($Kelompok[nilai],2,",",".")."</td>
-								<td style=\"text-align: right;\">".number_format($Kelompok[pp],2,",",".")."</td>
+								
 								<td style=\"text-align: right;\">".number_format($Kelompok[ap],2,",",".")."</td>
 								<td style=\"text-align: right;\">".number_format($Kelompok[nb],2,",",".")."</td>
 		   	        <td style=\"text-align: center; font-weight: bold;\">".number_format($Kelompok[mutasi_nilai_kurang],2,",",".")."</td>
@@ -451,7 +451,7 @@ $param_tgl = $tglakhirperolehan ;
 
                                 <td style=\"text-align: center; font-weight: bold;\">{$Kelompok[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[nilai_akhir],2,",",".")."</td>
-				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[pp_akhir],2,",",".")."</td>
+				
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[ap_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[nb_akhir],2,",",".")."</td> 
 						
@@ -477,7 +477,7 @@ $param_tgl = $tglakhirperolehan ;
 										<td>{$Sub[Uraian]}</td>
 										<td style=\"text-align: center;\">{$Sub[jml]}</td>
 										<td style=\"text-align: right;\">".number_format($Sub[nilai],2,",",".")."</td>
-										<td style=\"text-align: right;\">".number_format($Sub[pp],2,",",".")."</td>
+										
 										<td style=\"text-align: right;\">".number_format($Sub[ap],2,",",".")."</td>
 										<td style=\"text-align: right;\">".number_format($Sub[nb],2,",",".")."</td>
                                                                                     
@@ -490,7 +490,7 @@ $param_tgl = $tglakhirperolehan ;
                                     
                                 <td style=\"text-align: center; font-weight: bold;\">{$Sub[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[nilai_akhir],2,",",".")."</td>
-				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[pp_akhir],2,",",".")."</td>
+				
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[ap_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[nb_akhir],2,",",".")."</td> 
 
@@ -517,8 +517,7 @@ $param_tgl = $tglakhirperolehan ;
 											<td>{$SubSub[Uraian]}</td>
                                             <td style=\"text-align: center;\">{$SubSub[jml]}</td>
 											<td style=\"text-align: right;\">".number_format($SubSub[nilai],2,",",".")."</td>
-											<td style=\"text-align: right;\">".number_format($SubSub[pp],2,",",".")."</td>
-											<td style=\"text-align: right;\">".number_format($SubSub[ap],2,",",".")."</td>
+																						<td style=\"text-align: right;\">".number_format($SubSub[ap],2,",",".")."</td>
 											<td style=\"text-align: right;\">".number_format($SubSub[nb],2,",",".")."</td>
                                                                                             
 <td style=\"text-align: center; font-weight: bold;\">".number_format($SubSub[mutasi_nilai_kurang],2,",",".")."</td>
@@ -531,7 +530,7 @@ $param_tgl = $tglakhirperolehan ;
 
                                 <td style=\"text-align: center; font-weight: bold;\">{$SubSub[jml_akhir]}</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[nilai_akhir],2,",",".")."</td>
-				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[pp_akhir],2,",",".")."</td>
+				
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[ap_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[nb_akhir],2,",",".")."</td> 
 
@@ -552,7 +551,7 @@ $param_tgl = $tglakhirperolehan ;
 				<td colspan = \"6\" style=\"text-align: center; font-weight: bold;\">Total</td>
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($jml_total,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($np_total,2,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($pp_total,2,",",".")."</td>
+				
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($ap_total,2,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($nb_total,2,",",".")."</td>
 
@@ -565,7 +564,7 @@ $param_tgl = $tglakhirperolehan ;
     
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($jml_total_akhir,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($np_total_akhir,2,",",".")."</td>
-				<td style=\"text-align: right; font-weight: bold;\">".number_format($pp_total_akhir,2,",",".")."</td>
+				
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($ap_total_akhir,2,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($nb_total_akhir,2,",",".")."</td>
 			</tr>
