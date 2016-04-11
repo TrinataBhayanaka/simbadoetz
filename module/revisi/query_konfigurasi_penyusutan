@@ -1,0 +1,10 @@
+ALTER TABLE `penyusutan_tahun_berjalan` add  `status_revisi` INT(11) NULL DEFAULT '0';
+
+INSERT INTO `ref_riwayat` (`Kd_Riwayat`, `Nm_Riwayat`) VALUES ('50', 'Penyusutan restatement'), ('51', 'penyusutan tahun berjalan'); 
+INSERT INTO `ref_riwayat` (`Kd_Riwayat`, `Nm_Riwayat`) VALUES ('29', 'Kapitalisasi Via Transfer');
+
+update ref_riwayat set Nm_Riwayat='Koreksi Kapitalisasi' where Kd_Riwayat=28;
+
+INSERT INTO `tbl_user_menu_parent` (`menuParentID`, `menuParentDesc`, `menuOrder`) VALUES ('21', 'Revisi Log', '16');
+
+INSERT INTO `tbl_user_menu` (`menuID`, `menuDesc`, `menuParent`, `menuPath`, `menuStatus`, `menuAksesLogin`) VALUES ('72', 'Revisi', '21', 'revisi/revisi.php', '1', '1');

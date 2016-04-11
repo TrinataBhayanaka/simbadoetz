@@ -524,7 +524,7 @@ for ( $i=0;$i<2;$i++ ) {
                 $NILAI_PEROLEHAN_AKHIR=$Nilai_Perolehan_log+$selisih;
                 $NILAI_PEROLEHAN_AWAL=$Nilai_Perolehan_log;
                 $AKUMULASI_PENYUSUTAN_AKHIR=$AkumulasiPenyusutan_log;
-                $AKUMULASI_PENYUSUTAN_AWAL=$AkumulasiPenyusutan_awal_log;
+                $AKUMULASI_PENYUSUTAN_AWAL=$AkumulasiPenyusutan_log;
                 $NILAI_BUKU_AKHIR=$nb_akhir;
                 $NILAI_BUKU_AWAL=$nb_buku_log;
           }else{
