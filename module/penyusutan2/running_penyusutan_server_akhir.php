@@ -960,6 +960,7 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
         $penambahan3 = $row->penambahan3;
         $prosentase4= $row->prosentase4;
         $penambahan4= $row->penambahan4;
+        $prosentase5= $row->prosentase4;
         ;
     }
     //echo "<pre> ";
@@ -969,11 +970,11 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3,$persen, $DBVAR) {
       if($persen >$prosentase4){
         //  echo "0 =4";
           $hasil=$penambahan4;
-      }else if($persen>$prosentase2 && $persen <=$prosentase3) {
+      }else if($persen>$prosentase3 && $persen <=$prosentase4) {
          // echo "0 =3";
           $hasil=$penambahan3;
       }
-      else if($persen>$prosentase1 && $persen <=$prosentase2) {
+      else if($persen>$prosentase2 && $persen <=$prosentase3) {
          // echo "0 =2";
           $hasil=$penambahan2;
       }
