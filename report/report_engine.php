@@ -39230,7 +39230,7 @@ return $hasil_html;
 			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
 			";
 		}else{
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml FROM $paramGol
+			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,sum(PenyusutanPerTaun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) FROM $paramGol
 			WHERE $paramSatker and kondisi = '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
 			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
@@ -39272,9 +39272,14 @@ return $hasil_html;
 						$nilaiBK = $value->NB;
 					}
 				}else{
-					$nilaiPP = 0;
+					/*$nilaiPP = 0;
 					$nilaiAP = 0;
-					$nilaiBK = 0;
+					$nilaiBK = 0;*/
+                                    
+                                    $nilaiPP = $value->NilaiPP;
+					$nilaiAP = $value->NilaiAP;
+					$nilaiBK = $value->Nilai;
+                                      //  echo "$nilaiBK 11";
 				}
 				$NilaiFix += $Nilai;
 				$jmlFix += $jml;
