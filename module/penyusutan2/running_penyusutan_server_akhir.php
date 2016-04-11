@@ -735,7 +735,7 @@ for($i=0;$i<2;$i++){
                             $Umur_Ekonomis_Final=$MasaManfaat;
                         }
                         
-                        $PenyusutanPerTahun_hasil=$NilaiYgDisusutkan/$Umur_Ekonomis_Final;
+                        $PenyusutanPerTahun_hasil=round($NilaiYgDisusutkan/$Umur_Ekonomis_Final);
                         $AkumulasiPenyusutan_hasil=$AkumulasiPenyusutan+$PenyusutanPerTahun_hasil;
                         $NilaiBuku_hasil=$NilaiPerolehan-$AkumulasiPenyusutan_hasil;
                         $Sisa_Masa_Manfaat=$Umur_Ekonomis_Final-1;
@@ -835,7 +835,7 @@ for($i=0;$i<2;$i++){
                  //bila tidak ada transaksi
                  //$PenyusutanPerTahun=$NilaiPerolehan/$MasaManfaat;
                  list($a,$b,$c,$d,$PenyusutanPerTahun_Awal,$NilaiPerolehan)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
-                 $PenyusutanPerTahun=$NilaiPerolehan/$masa_manfaat;
+                 $PenyusutanPerTahun=round($NilaiPerolehan/$masa_manfaat);
                  $MasaManfaat=$masa_manfaat;
                  //$rentang_tahun_penyusutan = ($newTahun-$Tahun)+1;
                  $rentang_tahun_penyusutan =1;
