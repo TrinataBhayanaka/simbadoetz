@@ -1251,6 +1251,7 @@ foreach ($data_akhir_alone as $tipe => $value) {
     if($bp==0){
         $selisih_jml_tambah=$value['jml'];
         $selisih_ap_tambah=$value['AP'];
+        $selisih_nilai_tambah=$value['nilai'];
     }
     
   /*  $data_akhir[$tipe]['mutasi_jml_tambah']=$value['jml'];
@@ -1274,6 +1275,9 @@ foreach ($data_akhir_alone as $tipe => $value) {
      
    /* $data_gabungan[$tipe]['mutasi_pp_tambah']=$selisih_pp_tambah;
     $data_gabungan[$tipe]['mutasi_pp_kurang']=$selisih_pp_kurang;*/
+    
+    $data_akhir[$tipe]['mutasi_nilai_tambah']=$selisih_nilai_tambah;
+    $data_akhir[$tipe]['mutasi_nilai_kurang']=0;
     
     $data_akhir[$tipe]['mutasi_nb_tambah']=$selisih_nb_tambah;
     $data_akhir[$tipe]['mutasi_nb_kurang']=$selisih_nb_kurang;
