@@ -707,7 +707,7 @@ for($i=0;$i<2;$i++){
                 $NilaiBuku_Awal=$NilaiBuku_Awal_penyusutan;
               //pr($data_log);
                          //ambil dari tabel live
-                list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat,$NilaiBuku,$PenyusutanPerTahun_Awal)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                list($AkumulasiPenyusutan,$UmurEkonomis,$MasaManfaat,$NilaiBuku,$PenyusutanPerTahun_Awal,$NilaiPerolehan)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
                  
                  $TahunPenyusutan=$Data_Log->TahunPenyusutan;
                  $kodeKelompok_log = $Data['kodeKelompok'];
@@ -834,7 +834,8 @@ for($i=0;$i<2;$i++){
                  echo "tidak masuk log \n";
                  //bila tidak ada transaksi
                  //$PenyusutanPerTahun=$NilaiPerolehan/$MasaManfaat;
-                 $PenyusutanPerTahun=$NilaiBuku/$masa_manfaat;
+                 list($a,$b,$c,$d,$PenyusutanPerTahun_Awal,$NilaiPerolehan)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                 $PenyusutanPerTahun=$NilaiPerolehan/$masa_manfaat;
                  $MasaManfaat=$masa_manfaat;
                  //$rentang_tahun_penyusutan = ($newTahun-$Tahun)+1;
                  $rentang_tahun_penyusutan =1;
@@ -844,7 +845,7 @@ for($i=0;$i<2;$i++){
                  $Sisa_Masa_Manfaat=$UmurEkonomis-$rentang_tahun_penyusutan;
                  
                  if($PenyusutanPerTahun==0){
-                      list($a,$b,$c,$d,$PenyusutanPerTahun_Awal)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
+                      list($a,$b,$c,$d,$PenyusutanPerTahun_Awal,$NilaiPerolehan)= get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR);
                         $PenyusutanPerTahun=$PenyusutanPerTahun_Awal;
                  }
                        
@@ -1085,7 +1086,7 @@ function catatan_hasil_penyusutan($data,$DBVAR){
 }
 
 function get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR){
-      $query= "SELECT AkumulasiPenyusutan,UmurEkonomis,MasaManfaat,NilaiBuku,PenyusutanPerTaun FROM aset WHERE Aset_ID = '$Aset_ID' limit 1";
+      $query= "SELECT AkumulasiPenyusutan,UmurEkonomis,MasaManfaat,NilaiBuku,PenyusutanPerTaun,NilaiPerolehan FROM aset WHERE Aset_ID = '$Aset_ID' limit 1";
       $hasil= $DBVAR->query($query);
       $data= $DBVAR->fetch_array($hasil);
       $Akumulasi=$data['AkumulasiPenyusutan'];
@@ -1093,7 +1094,8 @@ function get_data_akumulasi_from_eksisting($Aset_ID,$DBVAR){
       $MasaManfaat=$data['MasaManfaat'];
       $NilaiBuku=$data['NilaiBuku'];
       $PenyusutanPerTaun=$data['PenyusutanPerTaun'];
-      return array($Akumulasi,$UmurEkonomis,$MasaManfaat,$NilaiBuku,$PenyusutanPerTaun);
+      $NilaiPerolehan=$data['NilaiPerolehan'];
+      return array($Akumulasi,$UmurEkonomis,$MasaManfaat,$NilaiBuku,$PenyusutanPerTaun,$NilaiPerolehan);
 }
 
 function get_data_np_transfer($Aset_ID,$log_id,$table_log,$DBVAR){
