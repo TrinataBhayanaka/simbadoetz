@@ -5501,10 +5501,18 @@ foreach ($dataArr as $satker_id => $value)
 			}else{
 				//$nilaiNBFix = 0;// batal penyusutan
                             $batal_nb=0;
-                               if($nilaiAPFix!=0)
+                              if($nilaiNB_1 != 0 && $nilaiNB_2 != 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}elseif($nilaiNB_1 != 0 && $nilaiNB_2 == 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}elseif($nilaiNB_1 == 0 && $nilaiNB_2 != 0){
+					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
+				}else{
+                                                                 if($nilaiAPFix!=0)
                                                                       $nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
                                                                  else
 					$nilaiNBFix = ($nilai_1) + ($nilai_2);
+				}
 			}
 			
 		}else{
