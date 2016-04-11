@@ -4894,7 +4894,7 @@ class core_api_report extends DB {
 										WHERE kdp.kodeKelompok =k.Kode and kdp.kodeKelompok like '$data%' and kdp.kodeSatker = '$Satker_ID' and kdp.TglPerolehan >= '$tglAwalDefault' and kdp.TglPerolehan <= '$tglAkhirDefault' and kdp.TglPembukuan >= '$tglAwalDefault' and kdp.TglPembukuan <= '$tglAkhirDefault' and kdp.Status_Validasi_Barang =1 and kdp.StatusTampil = 1 and kdp.kodeLokasi like '12%'
 										$KodeKa_kdp order by kdp.kodeKelompok ";
 						}elseif($paramGol == 'Lain'){
-							$queryok="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian 
+							$queryok="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian,a.PenyusutanPerTaun,a.AkumulasiPenyusutan,a.NilaiBuku  
 										FROM aset_lain_3 as a, kelompok as k 
 										WHERE a.kodeKelompok = k.Kode and a.kodeSatker LIKE '$Satker_ID' 
 										AND a.kondisi = 3 AND a.kodeKelompok like '$data%' and a.TglPerolehan >= '$tglAwalDefault' and a.TglPerolehan <= '$tglAkhirDefault' and a.TglPembukuan >= '$tglAwalDefault' and a.TglPembukuan <= '$tglAkhirDefault' and a.	Status_Validasi_Barang = 1 and a.kodeLokasi like '12%' 

@@ -7606,6 +7606,10 @@ $html = "<html>
           <td style=\"text-align: center; font-weight: bold; width: \">NAMA BARANG</td>
           <td style=\"text-align: center; font-weight: bold; width: \">JUMLAH</td>
           <td style=\"text-align: center; font-weight: bold; width: \">NILAI (Rp.)</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">AKUMULASI PENYUSUTAN</td>
+          <td style=\"text-align: center; font-weight: bold; width: \">NILAI BUKU</td>
+
+
         </tr>
         </thead>
         <tbody>";
@@ -7619,11 +7623,16 @@ foreach ($dataArr as $satker_id => $value)
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
+        $TotalPPFix=number_format($TotalNilai[2],2,",",".");
+        $TotalAPFix=number_format($TotalNilai[3],2,",",".");
+        $TotalNBFix=number_format($TotalNilai[2],2,",",".");
 	$html.="<tr>
 				<td style=\"text-align: center; font-weight: bold;\">$no</td>
 				<td style=\"text-align: left; font-weight: bold;\">$NamaSatker</td>
 				<td style=\"text-align: center; font-weight: bold;\">$TotalJmlFix</td>
 				<td style=\"text-align: right; font-weight: bold;\">$TotalNilaiFix</td>
+                                <td style=\"text-align: right; font-weight: bold;\">$TotalAPFix</td>
+                                    <td style=\"text-align: right; font-weight: bold;\">$TotalNBFix</td>
 			  </tr>";
     foreach ($value as $keys => $data)
     {	
@@ -7642,11 +7651,17 @@ foreach ($dataArr as $satker_id => $value)
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
                         <td style=\"text-align: center;\">&nbsp;$value->jml</td>
                         <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                            <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
+                                <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
                       </tr>";
                 $total += ($value->jml);
                 $total_perolehan += ($value->Nilai);
 				$total_kel += ($value->jml);
+                                $total_akm+=$value->AkumulasiPenyusutan;
+                                $total_nb +=$value->NilaiBuku;
                 $total_perolehan_kel += ($value->Nilai);
+                $total_akm_kel+=$value->AkumulasiPenyusutan;
+                $total_nb_kel +=$value->NilaiBuku;
 				// $tot_perkel=
         }
 		$html .="<tr>
@@ -7654,9 +7669,13 @@ foreach ($dataArr as $satker_id => $value)
 				<td style=\"text-align: left; font-weight: bold;\">&nbsp;&nbsp;&nbsp;Jumlah</td>
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($total_kel,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan_kel,2,",",".")."</td>
+                                    <td style=\"text-align: right; font-weight: bold;\">".number_format($total_akm_kel,2,",",".")."</td>
+                                        <td style=\"text-align: right; font-weight: bold;\">".number_format($total_nb_kel,2,",",".")."</td>
 			</tr>";
 		$total_kel = 0;
-		$total_perolehan_kel= 0;	
+		$total_perolehan_kel= 0;
+                $total_akm_kel=0;
+                $total_nb_kel =0;
     }
 	
 	$no++;	
@@ -7667,6 +7686,8 @@ $html .="
 				<td colspan = \"2\" style=\"text-align: center; font-weight: bold;\">TOTAL</td>
 				<td style=\"text-align: center; font-weight: bold;\">".number_format($total,0,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($total_perolehan,2,",",".")."</td>
+                                    <td style=\"text-align: right; font-weight: bold;\">".number_format($total_akm,2,",",".")."</td>
+                                        <td style=\"text-align: right; font-weight: bold;\">".number_format($total_nb,2,",",".")."</td>
 			</tr>
 			</table>
 			</tbody>
@@ -39045,7 +39066,9 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and (NilaiPerolehan < 10000000 ) and kodeLokasi like '12%' ";
 		}else{
-			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol
+			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml"
+                                . "sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku"
+                                . " FROM $paramGol
 			WHERE kodeSatker = '$satker_id' and kondisi = '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
 			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
