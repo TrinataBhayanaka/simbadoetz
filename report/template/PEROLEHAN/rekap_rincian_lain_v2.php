@@ -1624,7 +1624,7 @@ function history_aset($kodesatker,$aset_id,$tglakhirperolehan,$tglawalperolehan,
     
     $ex = explode('.',$kodeKelompok);
 		$param = $ex['0'];
-    
+    if($aset_id!=""){
     $getdataRwyt = getdataRwyt($kodesatker,$aset_id,$tglakhirperolehan,$tglawalperolehan,$param,$tglpembukuan);
 			//pr($getdataRwyt);
 
@@ -2315,7 +2315,8 @@ function history_aset($kodesatker,$aset_id,$tglakhirperolehan,$tglawalperolehan,
 			
 			}
                         
-     return array($BEBAN_PENYUSUTAN,$MUTASI_ASET_PENAMBAHAN,$MUTASI_ASET_KURANG,$MUTASI_AKM_PENAMBAHAN,$MUTASI_AKM_PENGURANG);
+    }
+    return array($BEBAN_PENYUSUTAN,$MUTASI_ASET_PENAMBAHAN,$MUTASI_ASET_KURANG,$MUTASI_AKM_PENAMBAHAN,$MUTASI_AKM_PENGURANG);
 }
 
 function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$tglawalperolehan,$param,$tglpembukuan){
