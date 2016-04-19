@@ -137,7 +137,7 @@ else if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset !=
 	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan'";
 }
 elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == '' ){
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok='$kodeKelompok' AND (a.kodeRuangan=0 or a.kodeRuangan is null)";
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok='$kodeKelompok' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null)";
 }
 elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
 	
@@ -145,7 +145,7 @@ elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != ''
 }
 elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
 	
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan=0 or a.kodeRuangan is null)";
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null)";
 }
 
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
