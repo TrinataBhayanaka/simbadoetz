@@ -2217,11 +2217,11 @@ function history_aset($kodesatker,$aset_id,$tglakhirperolehan,$tglawalperolehan,
 						$nilaiPrlhnMutasiKurangFix = ($nilaiPrlhnMutasiKurang);
 						
 						//MUTASI PENYUSUTAN (Berkurang)
-						$penyusutanBerkurang = 0;
+						$penyusutanBerkurang = $valRwyt->mutasi_ak_kurang;;
 						$penyusutanBerkurangFix = ($penyusutanBerkurang);
 						
 						//MUTASI PENYUSUTAN (Bertambah)
-						$penyusutanBertambah = 0;
+						$penyusutanBertambah = $valRwyt->mutasi_ak_tambah;
 						$penyusutanBertambahFix = ($penyusutanBertambah);
 						
 

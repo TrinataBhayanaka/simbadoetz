@@ -28947,11 +28947,11 @@ foreach ($dataArr as $asetID => $value)
 						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
 						
 						//MUTASI PENYUSUTAN (Berkurang)
-						$penyusutanBerkurang = 0;
+						$penyusutanBerkurang = $valRwyt->mutasi_ak_kurang;
 						$penyusutanBerkurangFix = number_format($penyusutanBerkurang,2,",",".");
 						
 						//MUTASI PENYUSUTAN (Bertambah)
-						$penyusutanBertambah = 0;
+						$penyusutanBertambah = $valRwyt->mutasi_ak_tambah;
 						$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
 						
 
