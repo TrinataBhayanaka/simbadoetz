@@ -1,0 +1,2185 @@
+Proses Geser Log-Pembangaunan
+!!!!!!!!Rekonstruksi Penghapusan !!!!! --> 7,49,50 
+!!!!!!!!Rekonstruksi Transfer !!!!! --> 3,49,50 
+<!-----------GESER LOG 203309------------->
+Aset_ID=203309 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 203309------------->
+
+<!-----------GESER LOG 203310------------->
+Aset_ID=203310 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 203310------------->
+
+<!-----------GESER LOG 203311------------->
+Aset_ID=203311 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 203311------------->
+
+<!-----------GESER LOG 203449------------->
+Aset_ID=203449 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 203449------------->
+
+<!-----------GESER LOG 203450------------->
+Aset_ID=203450 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 203450------------->
+
+<!-----------GESER LOG 203451------------->
+Aset_ID=203451 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 203451------------->
+
+<!-----------GESER LOG 203842------------->
+---update--log--3--Log ID lama==59423--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59423;
+
+---update--log--49--Log ID lama==60643--menjadi Log ID Baru=60643--
+update log_jaringan set log_id=59423 where log_id=60643;
+
+---update--log--50--Log ID lama==60644--menjadi Log ID Baru=60644--
+update log_jaringan set log_id=60643 where log_id=60644;
+
+---update--log--state pertama ke urutan terakhir--log_id=60644--
+update log_jaringan set log_id=60644 where log_id=104196;
+
+Close untuk 203842
+<!-----------Akhir GESER LOG 203842------------->
+
+<!-----------GESER LOG 203843------------->
+---update--log--3--Log ID lama==59424--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59424;
+
+---update--log--49--Log ID lama==60645--menjadi Log ID Baru=60645--
+update log_jaringan set log_id=59424 where log_id=60645;
+
+---update--log--50--Log ID lama==60646--menjadi Log ID Baru=60646--
+update log_jaringan set log_id=60645 where log_id=60646;
+
+---update--log--state pertama ke urutan terakhir--log_id=60646--
+update log_jaringan set log_id=60646 where log_id=104196;
+
+Close untuk 203843
+<!-----------Akhir GESER LOG 203843------------->
+
+<!-----------GESER LOG 203844------------->
+---update--log--3--Log ID lama==59415--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59415;
+
+---update--log--49--Log ID lama==60841--menjadi Log ID Baru=60841--
+update log_jaringan set log_id=59415 where log_id=60841;
+
+---update--log--50--Log ID lama==60842--menjadi Log ID Baru=60842--
+update log_jaringan set log_id=60841 where log_id=60842;
+
+---update--log--state pertama ke urutan terakhir--log_id=60842--
+update log_jaringan set log_id=60842 where log_id=104196;
+
+Close untuk 203844
+<!-----------Akhir GESER LOG 203844------------->
+
+<!-----------GESER LOG 203845------------->
+---update--log--3--Log ID lama==59416--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59416;
+
+---update--log--49--Log ID lama==60843--menjadi Log ID Baru=60843--
+update log_jaringan set log_id=59416 where log_id=60843;
+
+---update--log--50--Log ID lama==60844--menjadi Log ID Baru=60844--
+update log_jaringan set log_id=60843 where log_id=60844;
+
+---update--log--state pertama ke urutan terakhir--log_id=60844--
+update log_jaringan set log_id=60844 where log_id=104196;
+
+Close untuk 203845
+<!-----------Akhir GESER LOG 203845------------->
+
+<!-----------GESER LOG 203846------------->
+---update--log--3--Log ID lama==59417--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59417;
+
+---update--log--49--Log ID lama==60845--menjadi Log ID Baru=60845--
+update log_jaringan set log_id=59417 where log_id=60845;
+
+---update--log--50--Log ID lama==60846--menjadi Log ID Baru=60846--
+update log_jaringan set log_id=60845 where log_id=60846;
+
+---update--log--state pertama ke urutan terakhir--log_id=60846--
+update log_jaringan set log_id=60846 where log_id=104196;
+
+Close untuk 203846
+<!-----------Akhir GESER LOG 203846------------->
+
+<!-----------GESER LOG 203847------------->
+---update--log--3--Log ID lama==59418--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59418;
+
+---update--log--49--Log ID lama==60847--menjadi Log ID Baru=60847--
+update log_jaringan set log_id=59418 where log_id=60847;
+
+---update--log--50--Log ID lama==60848--menjadi Log ID Baru=60848--
+update log_jaringan set log_id=60847 where log_id=60848;
+
+---update--log--state pertama ke urutan terakhir--log_id=60848--
+update log_jaringan set log_id=60848 where log_id=104196;
+
+Close untuk 203847
+<!-----------Akhir GESER LOG 203847------------->
+
+<!-----------GESER LOG 203848------------->
+---update--log--3--Log ID lama==59419--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59419;
+
+---update--log--49--Log ID lama==60849--menjadi Log ID Baru=60849--
+update log_jaringan set log_id=59419 where log_id=60849;
+
+---update--log--50--Log ID lama==60850--menjadi Log ID Baru=60850--
+update log_jaringan set log_id=60849 where log_id=60850;
+
+---update--log--state pertama ke urutan terakhir--log_id=60850--
+update log_jaringan set log_id=60850 where log_id=104196;
+
+Close untuk 203848
+<!-----------Akhir GESER LOG 203848------------->
+
+<!-----------GESER LOG 203853------------->
+---update--log--3--Log ID lama==59480--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59480;
+
+---update--log--49--Log ID lama==61165--menjadi Log ID Baru=61165--
+update log_jaringan set log_id=59480 where log_id=61165;
+
+---update--log--50--Log ID lama==61166--menjadi Log ID Baru=61166--
+update log_jaringan set log_id=61165 where log_id=61166;
+
+---update--log--state pertama ke urutan terakhir--log_id=61166--
+update log_jaringan set log_id=61166 where log_id=104196;
+
+Close untuk 203853
+<!-----------Akhir GESER LOG 203853------------->
+
+<!-----------GESER LOG 203854------------->
+---update--log--3--Log ID lama==59481--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59481;
+
+---update--log--49--Log ID lama==61167--menjadi Log ID Baru=61167--
+update log_jaringan set log_id=59481 where log_id=61167;
+
+---update--log--50--Log ID lama==61168--menjadi Log ID Baru=61168--
+update log_jaringan set log_id=61167 where log_id=61168;
+
+---update--log--state pertama ke urutan terakhir--log_id=61168--
+update log_jaringan set log_id=61168 where log_id=104196;
+
+Close untuk 203854
+<!-----------Akhir GESER LOG 203854------------->
+
+<!-----------GESER LOG 203855------------->
+---update--log--3--Log ID lama==59482--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59482;
+
+---update--log--49--Log ID lama==61169--menjadi Log ID Baru=61169--
+update log_jaringan set log_id=59482 where log_id=61169;
+
+---update--log--50--Log ID lama==61170--menjadi Log ID Baru=61170--
+update log_jaringan set log_id=61169 where log_id=61170;
+
+---update--log--state pertama ke urutan terakhir--log_id=61170--
+update log_jaringan set log_id=61170 where log_id=104196;
+
+Close untuk 203855
+<!-----------Akhir GESER LOG 203855------------->
+
+<!-----------GESER LOG 203889------------->
+---update--log--3--Log ID lama==59534--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59534;
+
+---update--log--49--Log ID lama==60967--menjadi Log ID Baru=60967--
+update log_jaringan set log_id=59534 where log_id=60967;
+
+---update--log--50--Log ID lama==60968--menjadi Log ID Baru=60968--
+update log_jaringan set log_id=60967 where log_id=60968;
+
+---update--log--state pertama ke urutan terakhir--log_id=60968--
+update log_jaringan set log_id=60968 where log_id=104196;
+
+Close untuk 203889
+<!-----------Akhir GESER LOG 203889------------->
+
+<!-----------GESER LOG 203890------------->
+---update--log--3--Log ID lama==59535--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59535;
+
+---update--log--49--Log ID lama==60969--menjadi Log ID Baru=60969--
+update log_jaringan set log_id=59535 where log_id=60969;
+
+---update--log--50--Log ID lama==60970--menjadi Log ID Baru=60970--
+update log_jaringan set log_id=60969 where log_id=60970;
+
+---update--log--state pertama ke urutan terakhir--log_id=60970--
+update log_jaringan set log_id=60970 where log_id=104196;
+
+Close untuk 203890
+<!-----------Akhir GESER LOG 203890------------->
+
+<!-----------GESER LOG 203891------------->
+---update--log--3--Log ID lama==59536--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59536;
+
+---update--log--49--Log ID lama==60971--menjadi Log ID Baru=60971--
+update log_jaringan set log_id=59536 where log_id=60971;
+
+---update--log--50--Log ID lama==60972--menjadi Log ID Baru=60972--
+update log_jaringan set log_id=60971 where log_id=60972;
+
+---update--log--state pertama ke urutan terakhir--log_id=60972--
+update log_jaringan set log_id=60972 where log_id=104196;
+
+Close untuk 203891
+<!-----------Akhir GESER LOG 203891------------->
+
+<!-----------GESER LOG 203892------------->
+---update--log--3--Log ID lama==59537--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59537;
+
+---update--log--49--Log ID lama==60973--menjadi Log ID Baru=60973--
+update log_jaringan set log_id=59537 where log_id=60973;
+
+---update--log--50--Log ID lama==60974--menjadi Log ID Baru=60974--
+update log_jaringan set log_id=60973 where log_id=60974;
+
+---update--log--state pertama ke urutan terakhir--log_id=60974--
+update log_jaringan set log_id=60974 where log_id=104196;
+
+Close untuk 203892
+<!-----------Akhir GESER LOG 203892------------->
+
+<!-----------GESER LOG 203893------------->
+---update--log--3--Log ID lama==59538--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59538;
+
+---update--log--49--Log ID lama==60975--menjadi Log ID Baru=60975--
+update log_jaringan set log_id=59538 where log_id=60975;
+
+---update--log--50--Log ID lama==60976--menjadi Log ID Baru=60976--
+update log_jaringan set log_id=60975 where log_id=60976;
+
+---update--log--state pertama ke urutan terakhir--log_id=60976--
+update log_jaringan set log_id=60976 where log_id=104196;
+
+Close untuk 203893
+<!-----------Akhir GESER LOG 203893------------->
+
+<!-----------GESER LOG 203894------------->
+---update--log--3--Log ID lama==59539--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59539;
+
+---update--log--49--Log ID lama==60977--menjadi Log ID Baru=60977--
+update log_jaringan set log_id=59539 where log_id=60977;
+
+---update--log--50--Log ID lama==60978--menjadi Log ID Baru=60978--
+update log_jaringan set log_id=60977 where log_id=60978;
+
+---update--log--state pertama ke urutan terakhir--log_id=60978--
+update log_jaringan set log_id=60978 where log_id=104196;
+
+Close untuk 203894
+<!-----------Akhir GESER LOG 203894------------->
+
+<!-----------GESER LOG 203895------------->
+---update--log--3--Log ID lama==59540--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59540;
+
+---update--log--49--Log ID lama==60979--menjadi Log ID Baru=60979--
+update log_jaringan set log_id=59540 where log_id=60979;
+
+---update--log--50--Log ID lama==60980--menjadi Log ID Baru=60980--
+update log_jaringan set log_id=60979 where log_id=60980;
+
+---update--log--state pertama ke urutan terakhir--log_id=60980--
+update log_jaringan set log_id=60980 where log_id=104196;
+
+Close untuk 203895
+<!-----------Akhir GESER LOG 203895------------->
+
+<!-----------GESER LOG 203896------------->
+---update--log--3--Log ID lama==59541--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59541;
+
+---update--log--49--Log ID lama==60981--menjadi Log ID Baru=60981--
+update log_jaringan set log_id=59541 where log_id=60981;
+
+---update--log--50--Log ID lama==60982--menjadi Log ID Baru=60982--
+update log_jaringan set log_id=60981 where log_id=60982;
+
+---update--log--state pertama ke urutan terakhir--log_id=60982--
+update log_jaringan set log_id=60982 where log_id=104196;
+
+Close untuk 203896
+<!-----------Akhir GESER LOG 203896------------->
+
+<!-----------GESER LOG 203897------------->
+---update--log--3--Log ID lama==59542--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59542;
+
+---update--log--49--Log ID lama==60983--menjadi Log ID Baru=60983--
+update log_jaringan set log_id=59542 where log_id=60983;
+
+---update--log--50--Log ID lama==60984--menjadi Log ID Baru=60984--
+update log_jaringan set log_id=60983 where log_id=60984;
+
+---update--log--state pertama ke urutan terakhir--log_id=60984--
+update log_jaringan set log_id=60984 where log_id=104196;
+
+Close untuk 203897
+<!-----------Akhir GESER LOG 203897------------->
+
+<!-----------GESER LOG 203898------------->
+---update--log--3--Log ID lama==59543--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59543;
+
+---update--log--49--Log ID lama==60985--menjadi Log ID Baru=60985--
+update log_jaringan set log_id=59543 where log_id=60985;
+
+---update--log--50--Log ID lama==60986--menjadi Log ID Baru=60986--
+update log_jaringan set log_id=60985 where log_id=60986;
+
+---update--log--state pertama ke urutan terakhir--log_id=60986--
+update log_jaringan set log_id=60986 where log_id=104196;
+
+Close untuk 203898
+<!-----------Akhir GESER LOG 203898------------->
+
+<!-----------GESER LOG 203899------------->
+---update--log--3--Log ID lama==59544--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59544;
+
+---update--log--49--Log ID lama==60987--menjadi Log ID Baru=60987--
+update log_jaringan set log_id=59544 where log_id=60987;
+
+---update--log--50--Log ID lama==60988--menjadi Log ID Baru=60988--
+update log_jaringan set log_id=60987 where log_id=60988;
+
+---update--log--state pertama ke urutan terakhir--log_id=60988--
+update log_jaringan set log_id=60988 where log_id=104196;
+
+Close untuk 203899
+<!-----------Akhir GESER LOG 203899------------->
+
+<!-----------GESER LOG 203904------------->
+---update--log--3--Log ID lama==59549--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59549;
+
+---update--log--49--Log ID lama==60989--menjadi Log ID Baru=60989--
+update log_jaringan set log_id=59549 where log_id=60989;
+
+---update--log--50--Log ID lama==60990--menjadi Log ID Baru=60990--
+update log_jaringan set log_id=60989 where log_id=60990;
+
+---update--log--state pertama ke urutan terakhir--log_id=60990--
+update log_jaringan set log_id=60990 where log_id=104196;
+
+Close untuk 203904
+<!-----------Akhir GESER LOG 203904------------->
+
+<!-----------GESER LOG 203905------------->
+---update--log--3--Log ID lama==59550--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59550;
+
+---update--log--49--Log ID lama==60991--menjadi Log ID Baru=60991--
+update log_jaringan set log_id=59550 where log_id=60991;
+
+---update--log--50--Log ID lama==60992--menjadi Log ID Baru=60992--
+update log_jaringan set log_id=60991 where log_id=60992;
+
+---update--log--state pertama ke urutan terakhir--log_id=60992--
+update log_jaringan set log_id=60992 where log_id=104196;
+
+Close untuk 203905
+<!-----------Akhir GESER LOG 203905------------->
+
+<!-----------GESER LOG 203906------------->
+---update--log--3--Log ID lama==59551--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59551;
+
+---update--log--49--Log ID lama==60993--menjadi Log ID Baru=60993--
+update log_jaringan set log_id=59551 where log_id=60993;
+
+---update--log--50--Log ID lama==60994--menjadi Log ID Baru=60994--
+update log_jaringan set log_id=60993 where log_id=60994;
+
+---update--log--state pertama ke urutan terakhir--log_id=60994--
+update log_jaringan set log_id=60994 where log_id=104196;
+
+Close untuk 203906
+<!-----------Akhir GESER LOG 203906------------->
+
+<!-----------GESER LOG 203907------------->
+---update--log--3--Log ID lama==59552--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59552;
+
+---update--log--49--Log ID lama==60995--menjadi Log ID Baru=60995--
+update log_jaringan set log_id=59552 where log_id=60995;
+
+---update--log--50--Log ID lama==60996--menjadi Log ID Baru=60996--
+update log_jaringan set log_id=60995 where log_id=60996;
+
+---update--log--state pertama ke urutan terakhir--log_id=60996--
+update log_jaringan set log_id=60996 where log_id=104196;
+
+Close untuk 203907
+<!-----------Akhir GESER LOG 203907------------->
+
+<!-----------GESER LOG 203908------------->
+---update--log--3--Log ID lama==59553--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59553;
+
+---update--log--49--Log ID lama==60997--menjadi Log ID Baru=60997--
+update log_jaringan set log_id=59553 where log_id=60997;
+
+---update--log--50--Log ID lama==60998--menjadi Log ID Baru=60998--
+update log_jaringan set log_id=60997 where log_id=60998;
+
+---update--log--state pertama ke urutan terakhir--log_id=60998--
+update log_jaringan set log_id=60998 where log_id=104196;
+
+Close untuk 203908
+<!-----------Akhir GESER LOG 203908------------->
+
+<!-----------GESER LOG 203909------------->
+---update--log--3--Log ID lama==59555--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59555;
+
+---update--log--49--Log ID lama==60999--menjadi Log ID Baru=60999--
+update log_jaringan set log_id=59555 where log_id=60999;
+
+---update--log--50--Log ID lama==61000--menjadi Log ID Baru=61000--
+update log_jaringan set log_id=60999 where log_id=61000;
+
+---update--log--state pertama ke urutan terakhir--log_id=61000--
+update log_jaringan set log_id=61000 where log_id=104196;
+
+Close untuk 203909
+<!-----------Akhir GESER LOG 203909------------->
+
+<!-----------GESER LOG 203910------------->
+---update--log--3--Log ID lama==59556--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59556;
+
+---update--log--49--Log ID lama==61001--menjadi Log ID Baru=61001--
+update log_jaringan set log_id=59556 where log_id=61001;
+
+---update--log--50--Log ID lama==61002--menjadi Log ID Baru=61002--
+update log_jaringan set log_id=61001 where log_id=61002;
+
+---update--log--state pertama ke urutan terakhir--log_id=61002--
+update log_jaringan set log_id=61002 where log_id=104196;
+
+Close untuk 203910
+<!-----------Akhir GESER LOG 203910------------->
+
+<!-----------GESER LOG 203911------------->
+---update--log--3--Log ID lama==59557--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59557;
+
+---update--log--49--Log ID lama==61003--menjadi Log ID Baru=61003--
+update log_jaringan set log_id=59557 where log_id=61003;
+
+---update--log--50--Log ID lama==61004--menjadi Log ID Baru=61004--
+update log_jaringan set log_id=61003 where log_id=61004;
+
+---update--log--state pertama ke urutan terakhir--log_id=61004--
+update log_jaringan set log_id=61004 where log_id=104196;
+
+Close untuk 203911
+<!-----------Akhir GESER LOG 203911------------->
+
+<!-----------GESER LOG 203912------------->
+---update--log--3--Log ID lama==59558--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59558;
+
+---update--log--49--Log ID lama==61005--menjadi Log ID Baru=61005--
+update log_jaringan set log_id=59558 where log_id=61005;
+
+---update--log--50--Log ID lama==61006--menjadi Log ID Baru=61006--
+update log_jaringan set log_id=61005 where log_id=61006;
+
+---update--log--state pertama ke urutan terakhir--log_id=61006--
+update log_jaringan set log_id=61006 where log_id=104196;
+
+Close untuk 203912
+<!-----------Akhir GESER LOG 203912------------->
+
+<!-----------GESER LOG 203913------------->
+---update--log--3--Log ID lama==59559--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59559;
+
+---update--log--49--Log ID lama==61007--menjadi Log ID Baru=61007--
+update log_jaringan set log_id=59559 where log_id=61007;
+
+---update--log--50--Log ID lama==61008--menjadi Log ID Baru=61008--
+update log_jaringan set log_id=61007 where log_id=61008;
+
+---update--log--state pertama ke urutan terakhir--log_id=61008--
+update log_jaringan set log_id=61008 where log_id=104196;
+
+Close untuk 203913
+<!-----------Akhir GESER LOG 203913------------->
+
+<!-----------GESER LOG 203914------------->
+---update--log--3--Log ID lama==59560--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59560;
+
+---update--log--49--Log ID lama==61009--menjadi Log ID Baru=61009--
+update log_jaringan set log_id=59560 where log_id=61009;
+
+---update--log--50--Log ID lama==61010--menjadi Log ID Baru=61010--
+update log_jaringan set log_id=61009 where log_id=61010;
+
+---update--log--state pertama ke urutan terakhir--log_id=61010--
+update log_jaringan set log_id=61010 where log_id=104196;
+
+Close untuk 203914
+<!-----------Akhir GESER LOG 203914------------->
+
+<!-----------GESER LOG 203915------------->
+---update--log--3--Log ID lama==59561--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59561;
+
+---update--log--49--Log ID lama==61011--menjadi Log ID Baru=61011--
+update log_jaringan set log_id=59561 where log_id=61011;
+
+---update--log--50--Log ID lama==61012--menjadi Log ID Baru=61012--
+update log_jaringan set log_id=61011 where log_id=61012;
+
+---update--log--state pertama ke urutan terakhir--log_id=61012--
+update log_jaringan set log_id=61012 where log_id=104196;
+
+Close untuk 203915
+<!-----------Akhir GESER LOG 203915------------->
+
+<!-----------GESER LOG 203916------------->
+---update--log--3--Log ID lama==59562--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59562;
+
+---update--log--49--Log ID lama==61013--menjadi Log ID Baru=61013--
+update log_jaringan set log_id=59562 where log_id=61013;
+
+---update--log--50--Log ID lama==61014--menjadi Log ID Baru=61014--
+update log_jaringan set log_id=61013 where log_id=61014;
+
+---update--log--state pertama ke urutan terakhir--log_id=61014--
+update log_jaringan set log_id=61014 where log_id=104196;
+
+Close untuk 203916
+<!-----------Akhir GESER LOG 203916------------->
+
+<!-----------GESER LOG 203917------------->
+---update--log--3--Log ID lama==59563--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59563;
+
+---update--log--49--Log ID lama==61015--menjadi Log ID Baru=61015--
+update log_jaringan set log_id=59563 where log_id=61015;
+
+---update--log--50--Log ID lama==61016--menjadi Log ID Baru=61016--
+update log_jaringan set log_id=61015 where log_id=61016;
+
+---update--log--state pertama ke urutan terakhir--log_id=61016--
+update log_jaringan set log_id=61016 where log_id=104196;
+
+Close untuk 203917
+<!-----------Akhir GESER LOG 203917------------->
+
+<!-----------GESER LOG 203918------------->
+---update--log--3--Log ID lama==59564--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59564;
+
+---update--log--49--Log ID lama==61017--menjadi Log ID Baru=61017--
+update log_jaringan set log_id=59564 where log_id=61017;
+
+---update--log--50--Log ID lama==61018--menjadi Log ID Baru=61018--
+update log_jaringan set log_id=61017 where log_id=61018;
+
+---update--log--state pertama ke urutan terakhir--log_id=61018--
+update log_jaringan set log_id=61018 where log_id=104196;
+
+Close untuk 203918
+<!-----------Akhir GESER LOG 203918------------->
+
+<!-----------GESER LOG 203919------------->
+---update--log--3--Log ID lama==59565--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59565;
+
+---update--log--49--Log ID lama==61019--menjadi Log ID Baru=61019--
+update log_jaringan set log_id=59565 where log_id=61019;
+
+---update--log--50--Log ID lama==61020--menjadi Log ID Baru=61020--
+update log_jaringan set log_id=61019 where log_id=61020;
+
+---update--log--state pertama ke urutan terakhir--log_id=61020--
+update log_jaringan set log_id=61020 where log_id=104196;
+
+Close untuk 203919
+<!-----------Akhir GESER LOG 203919------------->
+
+<!-----------GESER LOG 203920------------->
+---update--log--3--Log ID lama==59566--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59566;
+
+---update--log--49--Log ID lama==61021--menjadi Log ID Baru=61021--
+update log_jaringan set log_id=59566 where log_id=61021;
+
+---update--log--50--Log ID lama==61022--menjadi Log ID Baru=61022--
+update log_jaringan set log_id=61021 where log_id=61022;
+
+---update--log--state pertama ke urutan terakhir--log_id=61022--
+update log_jaringan set log_id=61022 where log_id=104196;
+
+Close untuk 203920
+<!-----------Akhir GESER LOG 203920------------->
+
+<!-----------GESER LOG 203921------------->
+---update--log--3--Log ID lama==59567--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59567;
+
+---update--log--49--Log ID lama==61023--menjadi Log ID Baru=61023--
+update log_jaringan set log_id=59567 where log_id=61023;
+
+---update--log--50--Log ID lama==61024--menjadi Log ID Baru=61024--
+update log_jaringan set log_id=61023 where log_id=61024;
+
+---update--log--state pertama ke urutan terakhir--log_id=61024--
+update log_jaringan set log_id=61024 where log_id=104196;
+
+Close untuk 203921
+<!-----------Akhir GESER LOG 203921------------->
+
+<!-----------GESER LOG 203922------------->
+---update--log--3--Log ID lama==59568--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59568;
+
+---update--log--49--Log ID lama==61025--menjadi Log ID Baru=61025--
+update log_jaringan set log_id=59568 where log_id=61025;
+
+---update--log--50--Log ID lama==61026--menjadi Log ID Baru=61026--
+update log_jaringan set log_id=61025 where log_id=61026;
+
+---update--log--state pertama ke urutan terakhir--log_id=61026--
+update log_jaringan set log_id=61026 where log_id=104196;
+
+Close untuk 203922
+<!-----------Akhir GESER LOG 203922------------->
+
+<!-----------GESER LOG 203923------------->
+---update--log--3--Log ID lama==59569--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59569;
+
+---update--log--49--Log ID lama==61027--menjadi Log ID Baru=61027--
+update log_jaringan set log_id=59569 where log_id=61027;
+
+---update--log--50--Log ID lama==61028--menjadi Log ID Baru=61028--
+update log_jaringan set log_id=61027 where log_id=61028;
+
+---update--log--state pertama ke urutan terakhir--log_id=61028--
+update log_jaringan set log_id=61028 where log_id=104196;
+
+Close untuk 203923
+<!-----------Akhir GESER LOG 203923------------->
+
+<!-----------GESER LOG 203924------------->
+---update--log--3--Log ID lama==59570--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59570;
+
+---update--log--49--Log ID lama==61029--menjadi Log ID Baru=61029--
+update log_jaringan set log_id=59570 where log_id=61029;
+
+---update--log--50--Log ID lama==61030--menjadi Log ID Baru=61030--
+update log_jaringan set log_id=61029 where log_id=61030;
+
+---update--log--state pertama ke urutan terakhir--log_id=61030--
+update log_jaringan set log_id=61030 where log_id=104196;
+
+Close untuk 203924
+<!-----------Akhir GESER LOG 203924------------->
+
+<!-----------GESER LOG 203925------------->
+---update--log--3--Log ID lama==59571--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59571;
+
+---update--log--49--Log ID lama==61031--menjadi Log ID Baru=61031--
+update log_jaringan set log_id=59571 where log_id=61031;
+
+---update--log--50--Log ID lama==61032--menjadi Log ID Baru=61032--
+update log_jaringan set log_id=61031 where log_id=61032;
+
+---update--log--state pertama ke urutan terakhir--log_id=61032--
+update log_jaringan set log_id=61032 where log_id=104196;
+
+Close untuk 203925
+<!-----------Akhir GESER LOG 203925------------->
+
+<!-----------GESER LOG 203926------------->
+---update--log--3--Log ID lama==59572--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59572;
+
+---update--log--49--Log ID lama==61033--menjadi Log ID Baru=61033--
+update log_jaringan set log_id=59572 where log_id=61033;
+
+---update--log--50--Log ID lama==61034--menjadi Log ID Baru=61034--
+update log_jaringan set log_id=61033 where log_id=61034;
+
+---update--log--state pertama ke urutan terakhir--log_id=61034--
+update log_jaringan set log_id=61034 where log_id=104196;
+
+Close untuk 203926
+<!-----------Akhir GESER LOG 203926------------->
+
+<!-----------GESER LOG 203927------------->
+---update--log--3--Log ID lama==59573--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59573;
+
+---update--log--49--Log ID lama==61035--menjadi Log ID Baru=61035--
+update log_jaringan set log_id=59573 where log_id=61035;
+
+---update--log--50--Log ID lama==61036--menjadi Log ID Baru=61036--
+update log_jaringan set log_id=61035 where log_id=61036;
+
+---update--log--state pertama ke urutan terakhir--log_id=61036--
+update log_jaringan set log_id=61036 where log_id=104196;
+
+Close untuk 203927
+<!-----------Akhir GESER LOG 203927------------->
+
+<!-----------GESER LOG 203928------------->
+---update--log--3--Log ID lama==59574--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59574;
+
+---update--log--49--Log ID lama==61037--menjadi Log ID Baru=61037--
+update log_jaringan set log_id=59574 where log_id=61037;
+
+---update--log--50--Log ID lama==61038--menjadi Log ID Baru=61038--
+update log_jaringan set log_id=61037 where log_id=61038;
+
+---update--log--state pertama ke urutan terakhir--log_id=61038--
+update log_jaringan set log_id=61038 where log_id=104196;
+
+Close untuk 203928
+<!-----------Akhir GESER LOG 203928------------->
+
+<!-----------GESER LOG 203929------------->
+---update--log--3--Log ID lama==59575--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59575;
+
+---update--log--49--Log ID lama==61039--menjadi Log ID Baru=61039--
+update log_jaringan set log_id=59575 where log_id=61039;
+
+---update--log--50--Log ID lama==61040--menjadi Log ID Baru=61040--
+update log_jaringan set log_id=61039 where log_id=61040;
+
+---update--log--state pertama ke urutan terakhir--log_id=61040--
+update log_jaringan set log_id=61040 where log_id=104196;
+
+Close untuk 203929
+<!-----------Akhir GESER LOG 203929------------->
+
+<!-----------GESER LOG 203930------------->
+---update--log--3--Log ID lama==59576--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59576;
+
+---update--log--49--Log ID lama==61041--menjadi Log ID Baru=61041--
+update log_jaringan set log_id=59576 where log_id=61041;
+
+---update--log--50--Log ID lama==61042--menjadi Log ID Baru=61042--
+update log_jaringan set log_id=61041 where log_id=61042;
+
+---update--log--state pertama ke urutan terakhir--log_id=61042--
+update log_jaringan set log_id=61042 where log_id=104196;
+
+Close untuk 203930
+<!-----------Akhir GESER LOG 203930------------->
+
+<!-----------GESER LOG 203931------------->
+---update--log--3--Log ID lama==59577--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59577;
+
+---update--log--49--Log ID lama==61043--menjadi Log ID Baru=61043--
+update log_jaringan set log_id=59577 where log_id=61043;
+
+---update--log--50--Log ID lama==61044--menjadi Log ID Baru=61044--
+update log_jaringan set log_id=61043 where log_id=61044;
+
+---update--log--state pertama ke urutan terakhir--log_id=61044--
+update log_jaringan set log_id=61044 where log_id=104196;
+
+Close untuk 203931
+<!-----------Akhir GESER LOG 203931------------->
+
+<!-----------GESER LOG 203932------------->
+---update--log--3--Log ID lama==59578--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59578;
+
+---update--log--49--Log ID lama==61045--menjadi Log ID Baru=61045--
+update log_jaringan set log_id=59578 where log_id=61045;
+
+---update--log--50--Log ID lama==61046--menjadi Log ID Baru=61046--
+update log_jaringan set log_id=61045 where log_id=61046;
+
+---update--log--state pertama ke urutan terakhir--log_id=61046--
+update log_jaringan set log_id=61046 where log_id=104196;
+
+Close untuk 203932
+<!-----------Akhir GESER LOG 203932------------->
+
+<!-----------GESER LOG 203933------------->
+---update--log--3--Log ID lama==59420--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59420;
+
+---update--log--49--Log ID lama==60851--menjadi Log ID Baru=60851--
+update log_jaringan set log_id=59420 where log_id=60851;
+
+---update--log--50--Log ID lama==60852--menjadi Log ID Baru=60852--
+update log_jaringan set log_id=60851 where log_id=60852;
+
+---update--log--state pertama ke urutan terakhir--log_id=60852--
+update log_jaringan set log_id=60852 where log_id=104196;
+
+Close untuk 203933
+<!-----------Akhir GESER LOG 203933------------->
+
+<!-----------GESER LOG 203934------------->
+---update--log--3--Log ID lama==59421--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59421;
+
+---update--log--49--Log ID lama==60853--menjadi Log ID Baru=60853--
+update log_jaringan set log_id=59421 where log_id=60853;
+
+---update--log--50--Log ID lama==60854--menjadi Log ID Baru=60854--
+update log_jaringan set log_id=60853 where log_id=60854;
+
+---update--log--state pertama ke urutan terakhir--log_id=60854--
+update log_jaringan set log_id=60854 where log_id=104196;
+
+Close untuk 203934
+<!-----------Akhir GESER LOG 203934------------->
+
+<!-----------GESER LOG 203935------------->
+---update--log--3--Log ID lama==59422--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59422;
+
+---update--log--49--Log ID lama==60855--menjadi Log ID Baru=60855--
+update log_jaringan set log_id=59422 where log_id=60855;
+
+---update--log--50--Log ID lama==60856--menjadi Log ID Baru=60856--
+update log_jaringan set log_id=60855 where log_id=60856;
+
+---update--log--state pertama ke urutan terakhir--log_id=60856--
+update log_jaringan set log_id=60856 where log_id=104196;
+
+Close untuk 203935
+<!-----------Akhir GESER LOG 203935------------->
+
+<!-----------GESER LOG 203942------------->
+---update--log--3--Log ID lama==59530--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59530;
+
+---update--log--49--Log ID lama==60803--menjadi Log ID Baru=60803--
+update log_jaringan set log_id=59530 where log_id=60803;
+
+---update--log--50--Log ID lama==60804--menjadi Log ID Baru=60804--
+update log_jaringan set log_id=60803 where log_id=60804;
+
+---update--log--state pertama ke urutan terakhir--log_id=60804--
+update log_jaringan set log_id=60804 where log_id=104196;
+
+Close untuk 203942
+<!-----------Akhir GESER LOG 203942------------->
+
+<!-----------GESER LOG 203943------------->
+---update--log--3--Log ID lama==59531--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59531;
+
+---update--log--49--Log ID lama==60805--menjadi Log ID Baru=60805--
+update log_jaringan set log_id=59531 where log_id=60805;
+
+---update--log--50--Log ID lama==60806--menjadi Log ID Baru=60806--
+update log_jaringan set log_id=60805 where log_id=60806;
+
+---update--log--state pertama ke urutan terakhir--log_id=60806--
+update log_jaringan set log_id=60806 where log_id=104196;
+
+Close untuk 203943
+<!-----------Akhir GESER LOG 203943------------->
+
+<!-----------GESER LOG 203944------------->
+---update--log--3--Log ID lama==59532--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59532;
+
+---update--log--49--Log ID lama==60807--menjadi Log ID Baru=60807--
+update log_jaringan set log_id=59532 where log_id=60807;
+
+---update--log--50--Log ID lama==60808--menjadi Log ID Baru=60808--
+update log_jaringan set log_id=60807 where log_id=60808;
+
+---update--log--state pertama ke urutan terakhir--log_id=60808--
+update log_jaringan set log_id=60808 where log_id=104196;
+
+Close untuk 203944
+<!-----------Akhir GESER LOG 203944------------->
+
+<!-----------GESER LOG 203945------------->
+---update--log--3--Log ID lama==59533--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59533;
+
+---update--log--49--Log ID lama==60809--menjadi Log ID Baru=60809--
+update log_jaringan set log_id=59533 where log_id=60809;
+
+---update--log--50--Log ID lama==60810--menjadi Log ID Baru=60810--
+update log_jaringan set log_id=60809 where log_id=60810;
+
+---update--log--state pertama ke urutan terakhir--log_id=60810--
+update log_jaringan set log_id=60810 where log_id=104196;
+
+Close untuk 203945
+<!-----------Akhir GESER LOG 203945------------->
+
+<!-----------GESER LOG 203946------------->
+---update--log--3--Log ID lama==59489--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59489;
+
+---update--log--49--Log ID lama==60745--menjadi Log ID Baru=60745--
+update log_jaringan set log_id=59489 where log_id=60745;
+
+---update--log--50--Log ID lama==60746--menjadi Log ID Baru=60746--
+update log_jaringan set log_id=60745 where log_id=60746;
+
+---update--log--state pertama ke urutan terakhir--log_id=60746--
+update log_jaringan set log_id=60746 where log_id=104196;
+
+Close untuk 203946
+<!-----------Akhir GESER LOG 203946------------->
+
+<!-----------GESER LOG 203970------------->
+---update--log--3--Log ID lama==59513--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59513;
+
+---update--log--49--Log ID lama==60793--menjadi Log ID Baru=60793--
+update log_jaringan set log_id=59513 where log_id=60793;
+
+---update--log--50--Log ID lama==60794--menjadi Log ID Baru=60794--
+update log_jaringan set log_id=60793 where log_id=60794;
+
+---update--log--state pertama ke urutan terakhir--log_id=60794--
+update log_jaringan set log_id=60794 where log_id=104196;
+
+Close untuk 203970
+<!-----------Akhir GESER LOG 203970------------->
+
+<!-----------GESER LOG 203971------------->
+---update--log--3--Log ID lama==59514--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59514;
+
+---update--log--49--Log ID lama==60795--menjadi Log ID Baru=60795--
+update log_jaringan set log_id=59514 where log_id=60795;
+
+---update--log--50--Log ID lama==60796--menjadi Log ID Baru=60796--
+update log_jaringan set log_id=60795 where log_id=60796;
+
+---update--log--state pertama ke urutan terakhir--log_id=60796--
+update log_jaringan set log_id=60796 where log_id=104196;
+
+Close untuk 203971
+<!-----------Akhir GESER LOG 203971------------->
+
+<!-----------GESER LOG 203972------------->
+---update--log--3--Log ID lama==59515--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59515;
+
+---update--log--49--Log ID lama==60797--menjadi Log ID Baru=60797--
+update log_jaringan set log_id=59515 where log_id=60797;
+
+---update--log--50--Log ID lama==60798--menjadi Log ID Baru=60798--
+update log_jaringan set log_id=60797 where log_id=60798;
+
+---update--log--state pertama ke urutan terakhir--log_id=60798--
+update log_jaringan set log_id=60798 where log_id=104196;
+
+Close untuk 203972
+<!-----------Akhir GESER LOG 203972------------->
+
+<!-----------GESER LOG 203982------------->
+---update--log--3--Log ID lama==59582--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59582;
+
+---update--log--49--Log ID lama==60705--menjadi Log ID Baru=60705--
+update log_jaringan set log_id=59582 where log_id=60705;
+
+---update--log--50--Log ID lama==60706--menjadi Log ID Baru=60706--
+update log_jaringan set log_id=60705 where log_id=60706;
+
+---update--log--state pertama ke urutan terakhir--log_id=60706--
+update log_jaringan set log_id=60706 where log_id=104196;
+
+Close untuk 203982
+<!-----------Akhir GESER LOG 203982------------->
+
+<!-----------GESER LOG 203983------------->
+---update--log--3--Log ID lama==59583--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59583;
+
+---update--log--49--Log ID lama==60707--menjadi Log ID Baru=60707--
+update log_jaringan set log_id=59583 where log_id=60707;
+
+---update--log--50--Log ID lama==60708--menjadi Log ID Baru=60708--
+update log_jaringan set log_id=60707 where log_id=60708;
+
+---update--log--state pertama ke urutan terakhir--log_id=60708--
+update log_jaringan set log_id=60708 where log_id=104196;
+
+Close untuk 203983
+<!-----------Akhir GESER LOG 203983------------->
+
+<!-----------GESER LOG 203984------------->
+---update--log--3--Log ID lama==59584--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59584;
+
+---update--log--49--Log ID lama==60709--menjadi Log ID Baru=60709--
+update log_jaringan set log_id=59584 where log_id=60709;
+
+---update--log--50--Log ID lama==60710--menjadi Log ID Baru=60710--
+update log_jaringan set log_id=60709 where log_id=60710;
+
+---update--log--state pertama ke urutan terakhir--log_id=60710--
+update log_jaringan set log_id=60710 where log_id=104196;
+
+Close untuk 203984
+<!-----------Akhir GESER LOG 203984------------->
+
+<!-----------GESER LOG 203985------------->
+---update--log--3--Log ID lama==59585--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59585;
+
+---update--log--49--Log ID lama==60711--menjadi Log ID Baru=60711--
+update log_jaringan set log_id=59585 where log_id=60711;
+
+---update--log--50--Log ID lama==60712--menjadi Log ID Baru=60712--
+update log_jaringan set log_id=60711 where log_id=60712;
+
+---update--log--state pertama ke urutan terakhir--log_id=60712--
+update log_jaringan set log_id=60712 where log_id=104196;
+
+Close untuk 203985
+<!-----------Akhir GESER LOG 203985------------->
+
+<!-----------GESER LOG 203986------------->
+---update--log--3--Log ID lama==59586--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59586;
+
+---update--log--49--Log ID lama==60713--menjadi Log ID Baru=60713--
+update log_jaringan set log_id=59586 where log_id=60713;
+
+---update--log--50--Log ID lama==60714--menjadi Log ID Baru=60714--
+update log_jaringan set log_id=60713 where log_id=60714;
+
+---update--log--state pertama ke urutan terakhir--log_id=60714--
+update log_jaringan set log_id=60714 where log_id=104196;
+
+Close untuk 203986
+<!-----------Akhir GESER LOG 203986------------->
+
+<!-----------GESER LOG 203987------------->
+---update--log--3--Log ID lama==59587--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59587;
+
+---update--log--49--Log ID lama==60715--menjadi Log ID Baru=60715--
+update log_jaringan set log_id=59587 where log_id=60715;
+
+---update--log--50--Log ID lama==60716--menjadi Log ID Baru=60716--
+update log_jaringan set log_id=60715 where log_id=60716;
+
+---update--log--state pertama ke urutan terakhir--log_id=60716--
+update log_jaringan set log_id=60716 where log_id=104196;
+
+Close untuk 203987
+<!-----------Akhir GESER LOG 203987------------->
+
+<!-----------GESER LOG 203988------------->
+---update--log--3--Log ID lama==59588--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59588;
+
+---update--log--49--Log ID lama==60717--menjadi Log ID Baru=60717--
+update log_jaringan set log_id=59588 where log_id=60717;
+
+---update--log--50--Log ID lama==60718--menjadi Log ID Baru=60718--
+update log_jaringan set log_id=60717 where log_id=60718;
+
+---update--log--state pertama ke urutan terakhir--log_id=60718--
+update log_jaringan set log_id=60718 where log_id=104196;
+
+Close untuk 203988
+<!-----------Akhir GESER LOG 203988------------->
+
+<!-----------GESER LOG 203989------------->
+---update--log--3--Log ID lama==59589--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59589;
+
+---update--log--49--Log ID lama==60719--menjadi Log ID Baru=60719--
+update log_jaringan set log_id=59589 where log_id=60719;
+
+---update--log--50--Log ID lama==60720--menjadi Log ID Baru=60720--
+update log_jaringan set log_id=60719 where log_id=60720;
+
+---update--log--state pertama ke urutan terakhir--log_id=60720--
+update log_jaringan set log_id=60720 where log_id=104196;
+
+Close untuk 203989
+<!-----------Akhir GESER LOG 203989------------->
+
+<!-----------GESER LOG 203990------------->
+---update--log--3--Log ID lama==59590--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59590;
+
+---update--log--49--Log ID lama==60721--menjadi Log ID Baru=60721--
+update log_jaringan set log_id=59590 where log_id=60721;
+
+---update--log--50--Log ID lama==60722--menjadi Log ID Baru=60722--
+update log_jaringan set log_id=60721 where log_id=60722;
+
+---update--log--state pertama ke urutan terakhir--log_id=60722--
+update log_jaringan set log_id=60722 where log_id=104196;
+
+Close untuk 203990
+<!-----------Akhir GESER LOG 203990------------->
+
+<!-----------GESER LOG 203991------------->
+---update--log--3--Log ID lama==59591--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59591;
+
+---update--log--49--Log ID lama==60723--menjadi Log ID Baru=60723--
+update log_jaringan set log_id=59591 where log_id=60723;
+
+---update--log--50--Log ID lama==60724--menjadi Log ID Baru=60724--
+update log_jaringan set log_id=60723 where log_id=60724;
+
+---update--log--state pertama ke urutan terakhir--log_id=60724--
+update log_jaringan set log_id=60724 where log_id=104196;
+
+Close untuk 203991
+<!-----------Akhir GESER LOG 203991------------->
+
+<!-----------GESER LOG 203992------------->
+---update--log--3--Log ID lama==59592--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59592;
+
+---update--log--49--Log ID lama==60725--menjadi Log ID Baru=60725--
+update log_jaringan set log_id=59592 where log_id=60725;
+
+---update--log--50--Log ID lama==60726--menjadi Log ID Baru=60726--
+update log_jaringan set log_id=60725 where log_id=60726;
+
+---update--log--state pertama ke urutan terakhir--log_id=60726--
+update log_jaringan set log_id=60726 where log_id=104196;
+
+Close untuk 203992
+<!-----------Akhir GESER LOG 203992------------->
+
+<!-----------GESER LOG 203993------------->
+---update--log--3--Log ID lama==59593--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59593;
+
+---update--log--49--Log ID lama==60727--menjadi Log ID Baru=60727--
+update log_jaringan set log_id=59593 where log_id=60727;
+
+---update--log--50--Log ID lama==60728--menjadi Log ID Baru=60728--
+update log_jaringan set log_id=60727 where log_id=60728;
+
+---update--log--state pertama ke urutan terakhir--log_id=60728--
+update log_jaringan set log_id=60728 where log_id=104196;
+
+Close untuk 203993
+<!-----------Akhir GESER LOG 203993------------->
+
+<!-----------GESER LOG 203994------------->
+---update--log--3--Log ID lama==59594--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59594;
+
+---update--log--49--Log ID lama==60729--menjadi Log ID Baru=60729--
+update log_jaringan set log_id=59594 where log_id=60729;
+
+---update--log--50--Log ID lama==60730--menjadi Log ID Baru=60730--
+update log_jaringan set log_id=60729 where log_id=60730;
+
+---update--log--state pertama ke urutan terakhir--log_id=60730--
+update log_jaringan set log_id=60730 where log_id=104196;
+
+Close untuk 203994
+<!-----------Akhir GESER LOG 203994------------->
+
+<!-----------GESER LOG 203995------------->
+---update--log--3--Log ID lama==59595--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59595;
+
+---update--log--49--Log ID lama==60731--menjadi Log ID Baru=60731--
+update log_jaringan set log_id=59595 where log_id=60731;
+
+---update--log--50--Log ID lama==60732--menjadi Log ID Baru=60732--
+update log_jaringan set log_id=60731 where log_id=60732;
+
+---update--log--state pertama ke urutan terakhir--log_id=60732--
+update log_jaringan set log_id=60732 where log_id=104196;
+
+Close untuk 203995
+<!-----------Akhir GESER LOG 203995------------->
+
+<!-----------GESER LOG 203996------------->
+---update--log--3--Log ID lama==59596--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59596;
+
+---update--log--49--Log ID lama==60733--menjadi Log ID Baru=60733--
+update log_jaringan set log_id=59596 where log_id=60733;
+
+---update--log--50--Log ID lama==60734--menjadi Log ID Baru=60734--
+update log_jaringan set log_id=60733 where log_id=60734;
+
+---update--log--state pertama ke urutan terakhir--log_id=60734--
+update log_jaringan set log_id=60734 where log_id=104196;
+
+Close untuk 203996
+<!-----------Akhir GESER LOG 203996------------->
+
+<!-----------GESER LOG 203997------------->
+---update--log--3--Log ID lama==59597--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59597;
+
+---update--log--49--Log ID lama==60735--menjadi Log ID Baru=60735--
+update log_jaringan set log_id=59597 where log_id=60735;
+
+---update--log--50--Log ID lama==60736--menjadi Log ID Baru=60736--
+update log_jaringan set log_id=60735 where log_id=60736;
+
+---update--log--state pertama ke urutan terakhir--log_id=60736--
+update log_jaringan set log_id=60736 where log_id=104196;
+
+Close untuk 203997
+<!-----------Akhir GESER LOG 203997------------->
+
+<!-----------GESER LOG 203998------------->
+---update--log--3--Log ID lama==59598--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59598;
+
+---update--log--49--Log ID lama==60737--menjadi Log ID Baru=60737--
+update log_jaringan set log_id=59598 where log_id=60737;
+
+---update--log--50--Log ID lama==60738--menjadi Log ID Baru=60738--
+update log_jaringan set log_id=60737 where log_id=60738;
+
+---update--log--state pertama ke urutan terakhir--log_id=60738--
+update log_jaringan set log_id=60738 where log_id=104196;
+
+Close untuk 203998
+<!-----------Akhir GESER LOG 203998------------->
+
+<!-----------GESER LOG 203999------------->
+---update--log--3--Log ID lama==59599--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59599;
+
+---update--log--49--Log ID lama==60739--menjadi Log ID Baru=60739--
+update log_jaringan set log_id=59599 where log_id=60739;
+
+---update--log--50--Log ID lama==60740--menjadi Log ID Baru=60740--
+update log_jaringan set log_id=60739 where log_id=60740;
+
+---update--log--state pertama ke urutan terakhir--log_id=60740--
+update log_jaringan set log_id=60740 where log_id=104196;
+
+Close untuk 203999
+<!-----------Akhir GESER LOG 203999------------->
+
+<!-----------GESER LOG 204023------------->
+---update--log--3--Log ID lama==59471--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59471;
+
+---update--log--49--Log ID lama==60487--menjadi Log ID Baru=60487--
+update log_jaringan set log_id=59471 where log_id=60487;
+
+---update--log--50--Log ID lama==60488--menjadi Log ID Baru=60488--
+update log_jaringan set log_id=60487 where log_id=60488;
+
+---update--log--state pertama ke urutan terakhir--log_id=60488--
+update log_jaringan set log_id=60488 where log_id=104196;
+
+Close untuk 204023
+<!-----------Akhir GESER LOG 204023------------->
+
+<!-----------GESER LOG 204024------------->
+---update--log--3--Log ID lama==59472--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59472;
+
+---update--log--49--Log ID lama==60489--menjadi Log ID Baru=60489--
+update log_jaringan set log_id=59472 where log_id=60489;
+
+---update--log--50--Log ID lama==60490--menjadi Log ID Baru=60490--
+update log_jaringan set log_id=60489 where log_id=60490;
+
+---update--log--state pertama ke urutan terakhir--log_id=60490--
+update log_jaringan set log_id=60490 where log_id=104196;
+
+Close untuk 204024
+<!-----------Akhir GESER LOG 204024------------->
+
+<!-----------GESER LOG 204025------------->
+---update--log--3--Log ID lama==59473--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59473;
+
+---update--log--49--Log ID lama==60491--menjadi Log ID Baru=60491--
+update log_jaringan set log_id=59473 where log_id=60491;
+
+---update--log--50--Log ID lama==60492--menjadi Log ID Baru=60492--
+update log_jaringan set log_id=60491 where log_id=60492;
+
+---update--log--state pertama ke urutan terakhir--log_id=60492--
+update log_jaringan set log_id=60492 where log_id=104196;
+
+Close untuk 204025
+<!-----------Akhir GESER LOG 204025------------->
+
+<!-----------GESER LOG 204045------------->
+---update--log--3--Log ID lama==59603--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59603;
+
+---update--log--49--Log ID lama==60883--menjadi Log ID Baru=60883--
+update log_jaringan set log_id=59603 where log_id=60883;
+
+---update--log--50--Log ID lama==60884--menjadi Log ID Baru=60884--
+update log_jaringan set log_id=60883 where log_id=60884;
+
+---update--log--state pertama ke urutan terakhir--log_id=60884--
+update log_jaringan set log_id=60884 where log_id=104196;
+
+Close untuk 204045
+<!-----------Akhir GESER LOG 204045------------->
+
+<!-----------GESER LOG 204046------------->
+---update--log--3--Log ID lama==59604--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59604;
+
+---update--log--49--Log ID lama==60885--menjadi Log ID Baru=60885--
+update log_jaringan set log_id=59604 where log_id=60885;
+
+---update--log--50--Log ID lama==60886--menjadi Log ID Baru=60886--
+update log_jaringan set log_id=60885 where log_id=60886;
+
+---update--log--state pertama ke urutan terakhir--log_id=60886--
+update log_jaringan set log_id=60886 where log_id=104196;
+
+Close untuk 204046
+<!-----------Akhir GESER LOG 204046------------->
+
+<!-----------GESER LOG 204061------------->
+---update--log--3--Log ID lama==59528--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59528;
+
+---update--log--49--Log ID lama==60911--menjadi Log ID Baru=60911--
+update log_jaringan set log_id=59528 where log_id=60911;
+
+---update--log--50--Log ID lama==60912--menjadi Log ID Baru=60912--
+update log_jaringan set log_id=60911 where log_id=60912;
+
+---update--log--state pertama ke urutan terakhir--log_id=60912--
+update log_jaringan set log_id=60912 where log_id=104196;
+
+Close untuk 204061
+<!-----------Akhir GESER LOG 204061------------->
+
+<!-----------GESER LOG 204062------------->
+---update--log--3--Log ID lama==59529--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59529;
+
+---update--log--49--Log ID lama==60913--menjadi Log ID Baru=60913--
+update log_jaringan set log_id=59529 where log_id=60913;
+
+---update--log--50--Log ID lama==60914--menjadi Log ID Baru=60914--
+update log_jaringan set log_id=60913 where log_id=60914;
+
+---update--log--state pertama ke urutan terakhir--log_id=60914--
+update log_jaringan set log_id=60914 where log_id=104196;
+
+Close untuk 204062
+<!-----------Akhir GESER LOG 204062------------->
+
+<!-----------GESER LOG 204101------------->
+---update--log--3--Log ID lama==59425--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59425;
+
+---update--log--49--Log ID lama==60859--menjadi Log ID Baru=60859--
+update log_jaringan set log_id=59425 where log_id=60859;
+
+---update--log--50--Log ID lama==60860--menjadi Log ID Baru=60860--
+update log_jaringan set log_id=60859 where log_id=60860;
+
+---update--log--state pertama ke urutan terakhir--log_id=60860--
+update log_jaringan set log_id=60860 where log_id=104196;
+
+Close untuk 204101
+<!-----------Akhir GESER LOG 204101------------->
+
+<!-----------GESER LOG 204102------------->
+---update--log--3--Log ID lama==59426--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59426;
+
+---update--log--49--Log ID lama==60861--menjadi Log ID Baru=60861--
+update log_jaringan set log_id=59426 where log_id=60861;
+
+---update--log--50--Log ID lama==60862--menjadi Log ID Baru=60862--
+update log_jaringan set log_id=60861 where log_id=60862;
+
+---update--log--state pertama ke urutan terakhir--log_id=60862--
+update log_jaringan set log_id=60862 where log_id=104196;
+
+Close untuk 204102
+<!-----------Akhir GESER LOG 204102------------->
+
+<!-----------GESER LOG 204103------------->
+---update--log--3--Log ID lama==59427--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59427;
+
+---update--log--49--Log ID lama==60863--menjadi Log ID Baru=60863--
+update log_jaringan set log_id=59427 where log_id=60863;
+
+---update--log--50--Log ID lama==60864--menjadi Log ID Baru=60864--
+update log_jaringan set log_id=60863 where log_id=60864;
+
+---update--log--state pertama ke urutan terakhir--log_id=60864--
+update log_jaringan set log_id=60864 where log_id=104196;
+
+Close untuk 204103
+<!-----------Akhir GESER LOG 204103------------->
+
+<!-----------GESER LOG 204104------------->
+---update--log--3--Log ID lama==59428--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59428;
+
+---update--log--49--Log ID lama==60865--menjadi Log ID Baru=60865--
+update log_jaringan set log_id=59428 where log_id=60865;
+
+---update--log--50--Log ID lama==60866--menjadi Log ID Baru=60866--
+update log_jaringan set log_id=60865 where log_id=60866;
+
+---update--log--state pertama ke urutan terakhir--log_id=60866--
+update log_jaringan set log_id=60866 where log_id=104196;
+
+Close untuk 204104
+<!-----------Akhir GESER LOG 204104------------->
+
+<!-----------GESER LOG 204105------------->
+---update--log--3--Log ID lama==59429--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59429;
+
+---update--log--49--Log ID lama==60867--menjadi Log ID Baru=60867--
+update log_jaringan set log_id=59429 where log_id=60867;
+
+---update--log--50--Log ID lama==60868--menjadi Log ID Baru=60868--
+update log_jaringan set log_id=60867 where log_id=60868;
+
+---update--log--state pertama ke urutan terakhir--log_id=60868--
+update log_jaringan set log_id=60868 where log_id=104196;
+
+Close untuk 204105
+<!-----------Akhir GESER LOG 204105------------->
+
+<!-----------GESER LOG 204106------------->
+---update--log--3--Log ID lama==59430--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59430;
+
+---update--log--49--Log ID lama==60869--menjadi Log ID Baru=60869--
+update log_jaringan set log_id=59430 where log_id=60869;
+
+---update--log--50--Log ID lama==60870--menjadi Log ID Baru=60870--
+update log_jaringan set log_id=60869 where log_id=60870;
+
+---update--log--state pertama ke urutan terakhir--log_id=60870--
+update log_jaringan set log_id=60870 where log_id=104196;
+
+Close untuk 204106
+<!-----------Akhir GESER LOG 204106------------->
+
+<!-----------GESER LOG 204107------------->
+---update--log--3--Log ID lama==59431--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59431;
+
+---update--log--49--Log ID lama==60871--menjadi Log ID Baru=60871--
+update log_jaringan set log_id=59431 where log_id=60871;
+
+---update--log--50--Log ID lama==60872--menjadi Log ID Baru=60872--
+update log_jaringan set log_id=60871 where log_id=60872;
+
+---update--log--state pertama ke urutan terakhir--log_id=60872--
+update log_jaringan set log_id=60872 where log_id=104196;
+
+Close untuk 204107
+<!-----------Akhir GESER LOG 204107------------->
+
+<!-----------GESER LOG 204108------------->
+---update--log--3--Log ID lama==59432--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59432;
+
+---update--log--49--Log ID lama==60873--menjadi Log ID Baru=60873--
+update log_jaringan set log_id=59432 where log_id=60873;
+
+---update--log--50--Log ID lama==60874--menjadi Log ID Baru=60874--
+update log_jaringan set log_id=60873 where log_id=60874;
+
+---update--log--state pertama ke urutan terakhir--log_id=60874--
+update log_jaringan set log_id=60874 where log_id=104196;
+
+Close untuk 204108
+<!-----------Akhir GESER LOG 204108------------->
+
+<!-----------GESER LOG 204109------------->
+---update--log--3--Log ID lama==59433--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59433;
+
+---update--log--49--Log ID lama==60875--menjadi Log ID Baru=60875--
+update log_jaringan set log_id=59433 where log_id=60875;
+
+---update--log--50--Log ID lama==60876--menjadi Log ID Baru=60876--
+update log_jaringan set log_id=60875 where log_id=60876;
+
+---update--log--state pertama ke urutan terakhir--log_id=60876--
+update log_jaringan set log_id=60876 where log_id=104196;
+
+Close untuk 204109
+<!-----------Akhir GESER LOG 204109------------->
+
+<!-----------GESER LOG 204118------------->
+---update--log--3--Log ID lama==59581--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59581;
+
+---update--log--49--Log ID lama==60273--menjadi Log ID Baru=60273--
+update log_jaringan set log_id=59581 where log_id=60273;
+
+---update--log--50--Log ID lama==60274--menjadi Log ID Baru=60274--
+update log_jaringan set log_id=60273 where log_id=60274;
+
+---update--log--state pertama ke urutan terakhir--log_id=60274--
+update log_jaringan set log_id=60274 where log_id=104196;
+
+Close untuk 204118
+<!-----------Akhir GESER LOG 204118------------->
+
+<!-----------GESER LOG 204120------------->
+Aset_ID=204120 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 204120------------->
+
+<!-----------GESER LOG 204121------------->
+Aset_ID=204121 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 204121------------->
+
+<!-----------GESER LOG 204122------------->
+Aset_ID=204122 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 204122------------->
+
+<!-----------GESER LOG 204123------------->
+Aset_ID=204123 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 204123------------->
+
+<!-----------GESER LOG 204124------------->
+Aset_ID=204124 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 204124------------->
+
+<!-----------GESER LOG 204182------------->
+---update--log--3--Log ID lama==59434--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59434;
+
+---update--log--49--Log ID lama==60389--menjadi Log ID Baru=60389--
+update log_jaringan set log_id=59434 where log_id=60389;
+
+---update--log--50--Log ID lama==60390--menjadi Log ID Baru=60390--
+update log_jaringan set log_id=60389 where log_id=60390;
+
+---update--log--state pertama ke urutan terakhir--log_id=60390--
+update log_jaringan set log_id=60390 where log_id=104196;
+
+Close untuk 204182
+<!-----------Akhir GESER LOG 204182------------->
+
+<!-----------GESER LOG 204183------------->
+---update--log--3--Log ID lama==59435--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59435;
+
+---update--log--49--Log ID lama==60391--menjadi Log ID Baru=60391--
+update log_jaringan set log_id=59435 where log_id=60391;
+
+---update--log--50--Log ID lama==60392--menjadi Log ID Baru=60392--
+update log_jaringan set log_id=60391 where log_id=60392;
+
+---update--log--state pertama ke urutan terakhir--log_id=60392--
+update log_jaringan set log_id=60392 where log_id=104196;
+
+Close untuk 204183
+<!-----------Akhir GESER LOG 204183------------->
+
+<!-----------GESER LOG 204184------------->
+---update--log--3--Log ID lama==59436--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59436;
+
+---update--log--49--Log ID lama==60393--menjadi Log ID Baru=60393--
+update log_jaringan set log_id=59436 where log_id=60393;
+
+---update--log--50--Log ID lama==60394--menjadi Log ID Baru=60394--
+update log_jaringan set log_id=60393 where log_id=60394;
+
+---update--log--state pertama ke urutan terakhir--log_id=60394--
+update log_jaringan set log_id=60394 where log_id=104196;
+
+Close untuk 204184
+<!-----------Akhir GESER LOG 204184------------->
+
+<!-----------GESER LOG 204185------------->
+---update--log--3--Log ID lama==59437--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59437;
+
+---update--log--49--Log ID lama==60395--menjadi Log ID Baru=60395--
+update log_jaringan set log_id=59437 where log_id=60395;
+
+---update--log--50--Log ID lama==60396--menjadi Log ID Baru=60396--
+update log_jaringan set log_id=60395 where log_id=60396;
+
+---update--log--state pertama ke urutan terakhir--log_id=60396--
+update log_jaringan set log_id=60396 where log_id=104196;
+
+Close untuk 204185
+<!-----------Akhir GESER LOG 204185------------->
+
+<!-----------GESER LOG 204186------------->
+---update--log--3--Log ID lama==59438--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59438;
+
+---update--log--49--Log ID lama==60397--menjadi Log ID Baru=60397--
+update log_jaringan set log_id=59438 where log_id=60397;
+
+---update--log--50--Log ID lama==60398--menjadi Log ID Baru=60398--
+update log_jaringan set log_id=60397 where log_id=60398;
+
+---update--log--state pertama ke urutan terakhir--log_id=60398--
+update log_jaringan set log_id=60398 where log_id=104196;
+
+Close untuk 204186
+<!-----------Akhir GESER LOG 204186------------->
+
+<!-----------GESER LOG 204187------------->
+---update--log--3--Log ID lama==59439--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59439;
+
+---update--log--49--Log ID lama==60399--menjadi Log ID Baru=60399--
+update log_jaringan set log_id=59439 where log_id=60399;
+
+---update--log--50--Log ID lama==60400--menjadi Log ID Baru=60400--
+update log_jaringan set log_id=60399 where log_id=60400;
+
+---update--log--state pertama ke urutan terakhir--log_id=60400--
+update log_jaringan set log_id=60400 where log_id=104196;
+
+Close untuk 204187
+<!-----------Akhir GESER LOG 204187------------->
+
+<!-----------GESER LOG 204188------------->
+---update--log--3--Log ID lama==59440--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59440;
+
+---update--log--49--Log ID lama==60401--menjadi Log ID Baru=60401--
+update log_jaringan set log_id=59440 where log_id=60401;
+
+---update--log--50--Log ID lama==60402--menjadi Log ID Baru=60402--
+update log_jaringan set log_id=60401 where log_id=60402;
+
+---update--log--state pertama ke urutan terakhir--log_id=60402--
+update log_jaringan set log_id=60402 where log_id=104196;
+
+Close untuk 204188
+<!-----------Akhir GESER LOG 204188------------->
+
+<!-----------GESER LOG 204189------------->
+---update--log--3--Log ID lama==59441--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59441;
+
+---update--log--49--Log ID lama==60403--menjadi Log ID Baru=60403--
+update log_jaringan set log_id=59441 where log_id=60403;
+
+---update--log--50--Log ID lama==60404--menjadi Log ID Baru=60404--
+update log_jaringan set log_id=60403 where log_id=60404;
+
+---update--log--state pertama ke urutan terakhir--log_id=60404--
+update log_jaringan set log_id=60404 where log_id=104196;
+
+Close untuk 204189
+<!-----------Akhir GESER LOG 204189------------->
+
+<!-----------GESER LOG 204190------------->
+---update--log--3--Log ID lama==59442--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59442;
+
+---update--log--49--Log ID lama==60405--menjadi Log ID Baru=60405--
+update log_jaringan set log_id=59442 where log_id=60405;
+
+---update--log--50--Log ID lama==60406--menjadi Log ID Baru=60406--
+update log_jaringan set log_id=60405 where log_id=60406;
+
+---update--log--state pertama ke urutan terakhir--log_id=60406--
+update log_jaringan set log_id=60406 where log_id=104196;
+
+Close untuk 204190
+<!-----------Akhir GESER LOG 204190------------->
+
+<!-----------GESER LOG 204191------------->
+---update--log--3--Log ID lama==59443--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59443;
+
+---update--log--49--Log ID lama==60407--menjadi Log ID Baru=60407--
+update log_jaringan set log_id=59443 where log_id=60407;
+
+---update--log--50--Log ID lama==60408--menjadi Log ID Baru=60408--
+update log_jaringan set log_id=60407 where log_id=60408;
+
+---update--log--state pertama ke urutan terakhir--log_id=60408--
+update log_jaringan set log_id=60408 where log_id=104196;
+
+Close untuk 204191
+<!-----------Akhir GESER LOG 204191------------->
+
+<!-----------GESER LOG 204192------------->
+---update--log--3--Log ID lama==59444--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59444;
+
+---update--log--49--Log ID lama==60409--menjadi Log ID Baru=60409--
+update log_jaringan set log_id=59444 where log_id=60409;
+
+---update--log--50--Log ID lama==60410--menjadi Log ID Baru=60410--
+update log_jaringan set log_id=60409 where log_id=60410;
+
+---update--log--state pertama ke urutan terakhir--log_id=60410--
+update log_jaringan set log_id=60410 where log_id=104196;
+
+Close untuk 204192
+<!-----------Akhir GESER LOG 204192------------->
+
+<!-----------GESER LOG 204193------------->
+---update--log--3--Log ID lama==59445--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59445;
+
+---update--log--49--Log ID lama==60411--menjadi Log ID Baru=60411--
+update log_jaringan set log_id=59445 where log_id=60411;
+
+---update--log--50--Log ID lama==60412--menjadi Log ID Baru=60412--
+update log_jaringan set log_id=60411 where log_id=60412;
+
+---update--log--state pertama ke urutan terakhir--log_id=60412--
+update log_jaringan set log_id=60412 where log_id=104196;
+
+Close untuk 204193
+<!-----------Akhir GESER LOG 204193------------->
+
+<!-----------GESER LOG 204194------------->
+---update--log--3--Log ID lama==59446--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59446;
+
+---update--log--49--Log ID lama==60413--menjadi Log ID Baru=60413--
+update log_jaringan set log_id=59446 where log_id=60413;
+
+---update--log--50--Log ID lama==60414--menjadi Log ID Baru=60414--
+update log_jaringan set log_id=60413 where log_id=60414;
+
+---update--log--state pertama ke urutan terakhir--log_id=60414--
+update log_jaringan set log_id=60414 where log_id=104196;
+
+Close untuk 204194
+<!-----------Akhir GESER LOG 204194------------->
+
+<!-----------GESER LOG 204195------------->
+---update--log--3--Log ID lama==59447--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59447;
+
+---update--log--49--Log ID lama==60415--menjadi Log ID Baru=60415--
+update log_jaringan set log_id=59447 where log_id=60415;
+
+---update--log--50--Log ID lama==60416--menjadi Log ID Baru=60416--
+update log_jaringan set log_id=60415 where log_id=60416;
+
+---update--log--state pertama ke urutan terakhir--log_id=60416--
+update log_jaringan set log_id=60416 where log_id=104196;
+
+Close untuk 204195
+<!-----------Akhir GESER LOG 204195------------->
+
+<!-----------GESER LOG 204196------------->
+---update--log--3--Log ID lama==59448--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59448;
+
+---update--log--49--Log ID lama==60417--menjadi Log ID Baru=60417--
+update log_jaringan set log_id=59448 where log_id=60417;
+
+---update--log--50--Log ID lama==60418--menjadi Log ID Baru=60418--
+update log_jaringan set log_id=60417 where log_id=60418;
+
+---update--log--state pertama ke urutan terakhir--log_id=60418--
+update log_jaringan set log_id=60418 where log_id=104196;
+
+Close untuk 204196
+<!-----------Akhir GESER LOG 204196------------->
+
+<!-----------GESER LOG 204197------------->
+---update--log--3--Log ID lama==59449--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59449;
+
+---update--log--49--Log ID lama==60419--menjadi Log ID Baru=60419--
+update log_jaringan set log_id=59449 where log_id=60419;
+
+---update--log--50--Log ID lama==60420--menjadi Log ID Baru=60420--
+update log_jaringan set log_id=60419 where log_id=60420;
+
+---update--log--state pertama ke urutan terakhir--log_id=60420--
+update log_jaringan set log_id=60420 where log_id=104196;
+
+Close untuk 204197
+<!-----------Akhir GESER LOG 204197------------->
+
+<!-----------GESER LOG 204198------------->
+---update--log--3--Log ID lama==59450--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59450;
+
+---update--log--49--Log ID lama==60421--menjadi Log ID Baru=60421--
+update log_jaringan set log_id=59450 where log_id=60421;
+
+---update--log--50--Log ID lama==60422--menjadi Log ID Baru=60422--
+update log_jaringan set log_id=60421 where log_id=60422;
+
+---update--log--state pertama ke urutan terakhir--log_id=60422--
+update log_jaringan set log_id=60422 where log_id=104196;
+
+Close untuk 204198
+<!-----------Akhir GESER LOG 204198------------->
+
+<!-----------GESER LOG 204199------------->
+---update--log--3--Log ID lama==59451--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59451;
+
+---update--log--49--Log ID lama==60423--menjadi Log ID Baru=60423--
+update log_jaringan set log_id=59451 where log_id=60423;
+
+---update--log--50--Log ID lama==60424--menjadi Log ID Baru=60424--
+update log_jaringan set log_id=60423 where log_id=60424;
+
+---update--log--state pertama ke urutan terakhir--log_id=60424--
+update log_jaringan set log_id=60424 where log_id=104196;
+
+Close untuk 204199
+<!-----------Akhir GESER LOG 204199------------->
+
+<!-----------GESER LOG 204200------------->
+---update--log--3--Log ID lama==59452--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59452;
+
+---update--log--49--Log ID lama==60425--menjadi Log ID Baru=60425--
+update log_jaringan set log_id=59452 where log_id=60425;
+
+---update--log--50--Log ID lama==60426--menjadi Log ID Baru=60426--
+update log_jaringan set log_id=60425 where log_id=60426;
+
+---update--log--state pertama ke urutan terakhir--log_id=60426--
+update log_jaringan set log_id=60426 where log_id=104196;
+
+Close untuk 204200
+<!-----------Akhir GESER LOG 204200------------->
+
+<!-----------GESER LOG 204201------------->
+---update--log--3--Log ID lama==59453--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59453;
+
+---update--log--49--Log ID lama==60427--menjadi Log ID Baru=60427--
+update log_jaringan set log_id=59453 where log_id=60427;
+
+---update--log--50--Log ID lama==60428--menjadi Log ID Baru=60428--
+update log_jaringan set log_id=60427 where log_id=60428;
+
+---update--log--state pertama ke urutan terakhir--log_id=60428--
+update log_jaringan set log_id=60428 where log_id=104196;
+
+Close untuk 204201
+<!-----------Akhir GESER LOG 204201------------->
+
+<!-----------GESER LOG 204202------------->
+---update--log--3--Log ID lama==59454--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59454;
+
+---update--log--49--Log ID lama==60429--menjadi Log ID Baru=60429--
+update log_jaringan set log_id=59454 where log_id=60429;
+
+---update--log--50--Log ID lama==60430--menjadi Log ID Baru=60430--
+update log_jaringan set log_id=60429 where log_id=60430;
+
+---update--log--state pertama ke urutan terakhir--log_id=60430--
+update log_jaringan set log_id=60430 where log_id=104196;
+
+Close untuk 204202
+<!-----------Akhir GESER LOG 204202------------->
+
+<!-----------GESER LOG 204203------------->
+---update--log--3--Log ID lama==59455--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59455;
+
+---update--log--49--Log ID lama==60431--menjadi Log ID Baru=60431--
+update log_jaringan set log_id=59455 where log_id=60431;
+
+---update--log--50--Log ID lama==60432--menjadi Log ID Baru=60432--
+update log_jaringan set log_id=60431 where log_id=60432;
+
+---update--log--state pertama ke urutan terakhir--log_id=60432--
+update log_jaringan set log_id=60432 where log_id=104196;
+
+Close untuk 204203
+<!-----------Akhir GESER LOG 204203------------->
+
+<!-----------GESER LOG 204204------------->
+---update--log--3--Log ID lama==59456--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59456;
+
+---update--log--49--Log ID lama==60433--menjadi Log ID Baru=60433--
+update log_jaringan set log_id=59456 where log_id=60433;
+
+---update--log--50--Log ID lama==60434--menjadi Log ID Baru=60434--
+update log_jaringan set log_id=60433 where log_id=60434;
+
+---update--log--state pertama ke urutan terakhir--log_id=60434--
+update log_jaringan set log_id=60434 where log_id=104196;
+
+Close untuk 204204
+<!-----------Akhir GESER LOG 204204------------->
+
+<!-----------GESER LOG 204205------------->
+---update--log--3--Log ID lama==59457--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59457;
+
+---update--log--49--Log ID lama==60435--menjadi Log ID Baru=60435--
+update log_jaringan set log_id=59457 where log_id=60435;
+
+---update--log--50--Log ID lama==60436--menjadi Log ID Baru=60436--
+update log_jaringan set log_id=60435 where log_id=60436;
+
+---update--log--state pertama ke urutan terakhir--log_id=60436--
+update log_jaringan set log_id=60436 where log_id=104196;
+
+Close untuk 204205
+<!-----------Akhir GESER LOG 204205------------->
+
+<!-----------GESER LOG 204206------------->
+---update--log--3--Log ID lama==59458--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59458;
+
+---update--log--49--Log ID lama==60437--menjadi Log ID Baru=60437--
+update log_jaringan set log_id=59458 where log_id=60437;
+
+---update--log--50--Log ID lama==60438--menjadi Log ID Baru=60438--
+update log_jaringan set log_id=60437 where log_id=60438;
+
+---update--log--state pertama ke urutan terakhir--log_id=60438--
+update log_jaringan set log_id=60438 where log_id=104196;
+
+Close untuk 204206
+<!-----------Akhir GESER LOG 204206------------->
+
+<!-----------GESER LOG 204207------------->
+---update--log--3--Log ID lama==59459--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59459;
+
+---update--log--49--Log ID lama==60439--menjadi Log ID Baru=60439--
+update log_jaringan set log_id=59459 where log_id=60439;
+
+---update--log--50--Log ID lama==60440--menjadi Log ID Baru=60440--
+update log_jaringan set log_id=60439 where log_id=60440;
+
+---update--log--state pertama ke urutan terakhir--log_id=60440--
+update log_jaringan set log_id=60440 where log_id=104196;
+
+Close untuk 204207
+<!-----------Akhir GESER LOG 204207------------->
+
+<!-----------GESER LOG 204208------------->
+---update--log--3--Log ID lama==59460--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59460;
+
+---update--log--49--Log ID lama==60441--menjadi Log ID Baru=60441--
+update log_jaringan set log_id=59460 where log_id=60441;
+
+---update--log--50--Log ID lama==60442--menjadi Log ID Baru=60442--
+update log_jaringan set log_id=60441 where log_id=60442;
+
+---update--log--state pertama ke urutan terakhir--log_id=60442--
+update log_jaringan set log_id=60442 where log_id=104196;
+
+Close untuk 204208
+<!-----------Akhir GESER LOG 204208------------->
+
+<!-----------GESER LOG 204209------------->
+---update--log--3--Log ID lama==59461--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59461;
+
+---update--log--49--Log ID lama==60443--menjadi Log ID Baru=60443--
+update log_jaringan set log_id=59461 where log_id=60443;
+
+---update--log--50--Log ID lama==60444--menjadi Log ID Baru=60444--
+update log_jaringan set log_id=60443 where log_id=60444;
+
+---update--log--state pertama ke urutan terakhir--log_id=60444--
+update log_jaringan set log_id=60444 where log_id=104196;
+
+Close untuk 204209
+<!-----------Akhir GESER LOG 204209------------->
+
+<!-----------GESER LOG 204211------------->
+---update--log--3--Log ID lama==59463--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59463;
+
+---update--log--49--Log ID lama==60447--menjadi Log ID Baru=60447--
+update log_jaringan set log_id=59463 where log_id=60447;
+
+---update--log--50--Log ID lama==60448--menjadi Log ID Baru=60448--
+update log_jaringan set log_id=60447 where log_id=60448;
+
+---update--log--state pertama ke urutan terakhir--log_id=60448--
+update log_jaringan set log_id=60448 where log_id=104196;
+
+Close untuk 204211
+<!-----------Akhir GESER LOG 204211------------->
+
+<!-----------GESER LOG 204212------------->
+---update--log--3--Log ID lama==59464--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59464;
+
+---update--log--49--Log ID lama==60449--menjadi Log ID Baru=60449--
+update log_jaringan set log_id=59464 where log_id=60449;
+
+---update--log--50--Log ID lama==60450--menjadi Log ID Baru=60450--
+update log_jaringan set log_id=60449 where log_id=60450;
+
+---update--log--state pertama ke urutan terakhir--log_id=60450--
+update log_jaringan set log_id=60450 where log_id=104196;
+
+Close untuk 204212
+<!-----------Akhir GESER LOG 204212------------->
+
+<!-----------GESER LOG 204213------------->
+---update--log--3--Log ID lama==59465--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59465;
+
+---update--log--49--Log ID lama==60451--menjadi Log ID Baru=60451--
+update log_jaringan set log_id=59465 where log_id=60451;
+
+---update--log--50--Log ID lama==60452--menjadi Log ID Baru=60452--
+update log_jaringan set log_id=60451 where log_id=60452;
+
+---update--log--state pertama ke urutan terakhir--log_id=60452--
+update log_jaringan set log_id=60452 where log_id=104196;
+
+Close untuk 204213
+<!-----------Akhir GESER LOG 204213------------->
+
+<!-----------GESER LOG 204215------------->
+---update--log--3--Log ID lama==59467--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59467;
+
+---update--log--49--Log ID lama==60455--menjadi Log ID Baru=60455--
+update log_jaringan set log_id=59467 where log_id=60455;
+
+---update--log--50--Log ID lama==60456--menjadi Log ID Baru=60456--
+update log_jaringan set log_id=60455 where log_id=60456;
+
+---update--log--state pertama ke urutan terakhir--log_id=60456--
+update log_jaringan set log_id=60456 where log_id=104196;
+
+Close untuk 204215
+<!-----------Akhir GESER LOG 204215------------->
+
+<!-----------GESER LOG 204216------------->
+---update--log--3--Log ID lama==59468--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59468;
+
+---update--log--49--Log ID lama==60457--menjadi Log ID Baru=60457--
+update log_jaringan set log_id=59468 where log_id=60457;
+
+---update--log--50--Log ID lama==60458--menjadi Log ID Baru=60458--
+update log_jaringan set log_id=60457 where log_id=60458;
+
+---update--log--state pertama ke urutan terakhir--log_id=60458--
+update log_jaringan set log_id=60458 where log_id=104196;
+
+Close untuk 204216
+<!-----------Akhir GESER LOG 204216------------->
+
+<!-----------GESER LOG 204217------------->
+---update--log--3--Log ID lama==59474--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59474;
+
+---update--log--49--Log ID lama==60573--menjadi Log ID Baru=60573--
+update log_jaringan set log_id=59474 where log_id=60573;
+
+---update--log--50--Log ID lama==60574--menjadi Log ID Baru=60574--
+update log_jaringan set log_id=60573 where log_id=60574;
+
+---update--log--state pertama ke urutan terakhir--log_id=60574--
+update log_jaringan set log_id=60574 where log_id=104196;
+
+Close untuk 204217
+<!-----------Akhir GESER LOG 204217------------->
+
+<!-----------GESER LOG 204218------------->
+---update--log--3--Log ID lama==59475--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59475;
+
+---update--log--49--Log ID lama==60575--menjadi Log ID Baru=60575--
+update log_jaringan set log_id=59475 where log_id=60575;
+
+---update--log--50--Log ID lama==60576--menjadi Log ID Baru=60576--
+update log_jaringan set log_id=60575 where log_id=60576;
+
+---update--log--state pertama ke urutan terakhir--log_id=60576--
+update log_jaringan set log_id=60576 where log_id=104196;
+
+Close untuk 204218
+<!-----------Akhir GESER LOG 204218------------->
+
+<!-----------GESER LOG 721447------------->
+---update--log--3--Log ID lama==59605--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59605;
+
+---update--log--49--Log ID lama==60915--menjadi Log ID Baru=60915--
+update log_jaringan set log_id=59605 where log_id=60915;
+
+---update--log--50--Log ID lama==60916--menjadi Log ID Baru=60916--
+update log_jaringan set log_id=60915 where log_id=60916;
+
+---update--log--state pertama ke urutan terakhir--log_id=60916--
+update log_jaringan set log_id=60916 where log_id=104196;
+
+Close untuk 721447
+<!-----------Akhir GESER LOG 721447------------->
+
+<!-----------GESER LOG 721448------------->
+---update--log--3--Log ID lama==59606--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59606;
+
+---update--log--49--Log ID lama==60917--menjadi Log ID Baru=60917--
+update log_jaringan set log_id=59606 where log_id=60917;
+
+---update--log--50--Log ID lama==60918--menjadi Log ID Baru=60918--
+update log_jaringan set log_id=60917 where log_id=60918;
+
+---update--log--state pertama ke urutan terakhir--log_id=60918--
+update log_jaringan set log_id=60918 where log_id=104196;
+
+Close untuk 721448
+<!-----------Akhir GESER LOG 721448------------->
+
+<!-----------GESER LOG 1734846------------->
+---update--log--3--Log ID lama==59554--menjadi Log ID Baru=104196--
+update log_jaringan set log_id=104196 where log_id=59554;
+
+---update--log--49--Log ID lama==61047--menjadi Log ID Baru=61047--
+update log_jaringan set log_id=59554 where log_id=61047;
+
+---update--log--50--Log ID lama==61048--menjadi Log ID Baru=61048--
+update log_jaringan set log_id=61047 where log_id=61048;
+
+---update--log--state pertama ke urutan terakhir--log_id=61048--
+update log_jaringan set log_id=61048 where log_id=104196;
+
+Close untuk 1734846
+<!-----------Akhir GESER LOG 1734846------------->
+
+!!!!!!!!Rekonstruksi Pemindahtanganan !!!!! --> 26,49,50 
+!!!!!!!!Rekonstruksi Ubah Data !!!!! --> 18,49,50 
+<!-----------GESER LOG 2637012------------->
+Aset_ID=2637012 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 2637012------------->
+
