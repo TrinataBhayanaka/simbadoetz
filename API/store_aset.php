@@ -2864,6 +2864,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                   $besarnya_kapitalisasi=$data['Satuan']-$kib_old['NilaiPerolehan'];
                   $kib['NilaiBuku']=$kib_old['NilaiBuku']+$besarnya_kapitalisasi;
                   $kib['NilaiBuku_Awal']=$kib_old['NilaiBuku'];
+                  
+                  $update="update aset set NilaiBuku='{$kib['NilaiBuku']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
               }
               if($data['koreksinilai']){
                   $kib['Kd_Riwayat'] = 21;
@@ -2877,7 +2880,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                       $kib['NilaiBuku']=0;
                       $kib['AkumulasiPenyusutan']=$data['Satuan'];
                   }
+                  $update="update aset set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
               }
+              
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
               if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
               if(isset($reklas)) {
