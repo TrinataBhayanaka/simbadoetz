@@ -2872,7 +2872,16 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                   $kib['Kd_Riwayat'] = 21;
                   $MasaManfaat=$kib_old['MasaManfaat'];
                   $nilai_koreksi=$data['Satuan']-$kib_old['NilaiPerolehan'];
-                  $selisih_akumulasi=round($nilai_koreksi/$MasaManfaat);
+                  $beban_penyusutan=round($nilai_koreksi/$MasaManfaat);
+                 
+                  $Tahun=$kib_old['Tahun'];
+                  $TahunPenyusutan=$kib_old['TahunPenyusutan'];
+                  $rentang_penyusutan=$TahunPenyusutan-$Tahun+1;
+                  if($rentang_penyusutan>$MasaManfaat){
+                     $rentang_penyusutan=$MasaManfaat;
+                  }
+                  $selisih_akumulasi=$beban_penyusutan*$rentang_penyusutan;
+                  
                   $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
                   $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
                   $kib['NilaiBuku']=$data['Satuan']-$kib['AkumulasiPenyusutan'];
