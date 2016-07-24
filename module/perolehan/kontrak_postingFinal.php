@@ -51,7 +51,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
     $NilaiPerolehan = ceil($data['NilaiPerolehan'] + $bop);
     $satuan = ceil(intval($data['Satuan']) + ($bop/$data['Kuantitas']));
 
-    $updateAset = "UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
+    $updateAset = "UPDATE aset SET NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
     $execquery = mysql_query($updateAset);
     logFile($updateAset);
     if(!$execquery){
@@ -88,7 +88,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           $tampil = "";
       } 
 
-      $sql = "UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}' {$tampil}, StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
+      $sql = "UPDATE {$tabel} SET NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$satuan}' {$tampil}, StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
       $execquery = mysql_query($sql);
       logFile($sql);
       if(!$execquery){
