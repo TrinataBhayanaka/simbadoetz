@@ -2859,8 +2859,25 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $kib['Kd_Riwayat'] = 1;
                 $kib['kondisi'] = $data['old_kondisi'];
               }
-              if($data['ubahkapitalisasi']) $kib['Kd_Riwayat'] = 2;
-              if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
+              if($data['ubahkapitalisasi']) {
+                  $kib['Kd_Riwayat'] = 2;
+                  $besarnya_kapitalisasi=$data['Satuan']-$kib_old['NilaiPerolehan'];
+                  $kib['NilaiBuku']=$kib_old['NilaiBuku']+$besarnya_kapitalisasi;
+                  $kib['NilaiBuku_Awal']=$kib_old['NilaiBuku'];
+              }
+              if($data['koreksinilai']){
+                  $kib['Kd_Riwayat'] = 21;
+                  $MasaManfaat=$kib_old['MasaManfaat'];
+                  $nilai_koreksi=$data['Satuan']-$kib_old['NilaiPerolehan'];
+                  $selisih_akumulasi=round($nilai_koreksi/$MasaManfaat);
+                  $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
+                  $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
+                  $kib['NilaiBuku']=$data['Satuan']-$kib['AkumulasiPenyusutan'];
+                  if($kib['NilaiBuku']<=0){
+                      $kib['NilaiBuku']=0;
+                      $kib['AkumulasiPenyusutan']=$data['Satuan'];
+                  }
+              }
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
               if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
               if(isset($reklas)) {
