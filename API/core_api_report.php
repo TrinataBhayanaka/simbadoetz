@@ -4906,6 +4906,7 @@ class core_api_report extends DB {
 										FROM mesin_ori as a, kelompok as k 
 										WHERE a.kodeKelompok = k.Kode and a.kodeSatker LIKE '$Satker_ID' 
 										AND a.kodeKelompok like '$data%' and a.TglPerolehan >= '$tgldefault' and a.TglPerolehan <= '$tglAkhirDefault' and a.TglPembukuan >= '$tglAwalDefault' and a.TglPembukuan <= '$tglAkhirDefault' and a.	Status_Validasi_Barang = 1 and a.kodeLokasi like '12%' 
+										and a.StatusTampil=1  
 										and (a.NilaiPerolehan < 300000)
 										group by a.kodeKelompok";
 										
@@ -4913,7 +4914,8 @@ class core_api_report extends DB {
 										FROM bangunan_ori as a, kelompok as k 
 										WHERE a.kodeKelompok = k.Kode and a.kodeSatker LIKE '$Satker_ID' 
 										AND a.kodeKelompok like '$data%' and a.TglPerolehan >= '$tgldefault' and a.TglPerolehan <= '$tglAkhirDefault' and a.TglPembukuan >= '$tglAwalDefault' and a.TglPembukuan <= '$tglAkhirDefault' and a.	Status_Validasi_Barang = 1 and a.kodeLokasi like '12%' 
-										and (a.NilaiPerolehan < 10000000)
+										and (a.NilaiPerolehan < 10000000) 
+										 and a.StatusTampil=1 
 										group by a.kodeKelompok";
 						}
 						// echo $queryok ; 	

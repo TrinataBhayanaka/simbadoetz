@@ -2867,6 +2867,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                   
                   $update="update aset set NilaiBuku='{$kib['NilaiBuku']}' where Aset_ID='{$kib['Aset_ID']}' ";
                   $result_update=  $this->query($update) or die($this->error());
+
+                  $update="update {$tabel} set NilaiBuku='{$kib['NilaiBuku']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
+
+
               }
               if($data['koreksinilai']){
                   $kib['Kd_Riwayat'] = 21;
@@ -2890,6 +2895,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                       $kib['AkumulasiPenyusutan']=$data['Satuan'];
                   }
                   $update="update aset set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
+
+                  $update="update {$tabel} set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
                   $result_update=  $this->query($update) or die($this->error());
               }
               
