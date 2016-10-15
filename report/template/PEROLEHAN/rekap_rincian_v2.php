@@ -380,7 +380,7 @@ $param_tgl = $tglakhirperolehan ;
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[ap_akhir],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nb_akhir],2,",",".")."</td> 
 				</tr>";	
-				
+			if($levelAset>=3||$levelAset==1)	
 			foreach($gol['Bidang'] as $bidang)
 			{	
 			   if($bidang[ap]==""||$bidang[ap]==0)
@@ -418,6 +418,7 @@ $param_tgl = $tglakhirperolehan ;
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[ap_akhir],2,",",".")."</td>
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nb_akhir],2,",",".")."</td> 
 							</tr>";	
+                                if($levelAset>=4||$levelAset==1)
 				foreach($bidang['Kel'] as $Kelompok)
 				{	
 				   if($Kelompok[ap]==""||$Kelompok[ap]==0)
@@ -456,6 +457,7 @@ $param_tgl = $tglakhirperolehan ;
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[nb_akhir],2,",",".")."</td> 
 						
                                         </tr>";
+                                if($levelAset>=5||$levelAset==1)
 					foreach($Kelompok['Sub'] as $Sub)
 					{	
 						if($Sub[ap]==""||$Sub[ap]==0)
@@ -495,6 +497,7 @@ $param_tgl = $tglakhirperolehan ;
 				<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[nb_akhir],2,",",".")."</td> 
 
 									</tr>";
+                                if($levelAset==6||$levelAset==1)
 						foreach($Sub['SubSub'] as $SubSub)
 						{	 
 							if($SubSub[ap]==""||$SubSub[ap]==0)
@@ -2214,11 +2217,11 @@ function history_aset($kodesatker,$aset_id,$tglakhirperolehan,$tglawalperolehan,
 						$nilaiPrlhnMutasiKurangFix = ($nilaiPrlhnMutasiKurang);
 						
 						//MUTASI PENYUSUTAN (Berkurang)
-						$penyusutanBerkurang = 0;
+						$penyusutanBerkurang = $valRwyt->mutasi_ak_kurang;;
 						$penyusutanBerkurangFix = ($penyusutanBerkurang);
 						
 						//MUTASI PENYUSUTAN (Bertambah)
-						$penyusutanBertambah = 0;
+						$penyusutanBertambah = $valRwyt->mutasi_ak_tambah;
 						$penyusutanBertambahFix = ($penyusutanBertambah);
 						
 

@@ -1530,7 +1530,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
-        $tblAset['Info'] = $data['Info'];
+        $tblAset['Info'] = addslashes($data['Info']);
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
@@ -1689,7 +1689,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
             $tblKib['NilaiBuku'] = $tblAset['NilaiPerolehan'];
             $tblKib['kondisi'] = $data['kondisi'];
-            $tblKib['Info'] = $data['Info'];
+            $tblKib['Info'] = addslashes($data['Info']);
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
             $tblKib['kodeKA'] = $tblAset['kodeKA'];
@@ -1941,7 +1941,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = $data['Kuantitas'];
         $tblAset['Satuan'] = $data['Satuan'];
-        $tblAset['Info'] = $data['Info'];
+        $tblAset['Info'] = addslashes($data['Info']);
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['Tahun'] = $data['Tahun'];
@@ -2023,7 +2023,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = $data['Kuantitas'];
         $tblAset['Satuan'] = $data['Satuan'];
-        $tblAset['Info'] = $data['Info'];
+        $tblAset['Info'] = addslashes($data['Info']);
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
@@ -2329,7 +2329,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Kuantitas'] = 1;
         $tblAset['StatusValidasi'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
-        $tblAset['Info'] = $data['Info'];
+        $tblAset['Info'] = addslashes($data['Info']);
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
@@ -2472,7 +2472,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['StatusValidasi'] = 1;
             $tblKib['kondisi'] = $data['kondisi'];
             $tblKib['AsalUsul'] = $data['AsalUsul'];
-            $tblKib['Info'] = $data['Info'];
+            $tblKib['Info'] = addslashes($data['Info']);
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
             $tblKib['kodeKA'] = $tblAset['kodeKA'];
@@ -2603,7 +2603,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['asalusul'])) $tblAset['AsalUsul'] = $data['asalusul'];
         if(isset($data['Kuantitas'])) $tblAset['Kuantitas'] = $data['Kuantitas'];
         if(isset($data['Satuan'])) $tblAset['Satuan'] = $data['Satuan'];
-        if(isset($data['Info'])) $tblAset['Info'] = $data['Info'];
+        if(isset($data['Info'])) $tblAset['Info'] = addslashes($data['Info']);
         if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
@@ -2772,7 +2772,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['StatusTampil'] = 1;
             if(isset($data['kondisi'])) $tblKib['kondisi'] = $data['kondisi'];
             if(isset($data['asalusul'])) $tblKib['AsalUsul'] = $data['asalusul'];
-            if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
+            if(isset($data['Info'])) $tblKib['Info'] = addslashes($data['Info']);
             if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
             if(isset($tblAset['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
 	   
@@ -2859,8 +2859,48 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $kib['Kd_Riwayat'] = 1;
                 $kib['kondisi'] = $data['old_kondisi'];
               }
-              if($data['ubahkapitalisasi']) $kib['Kd_Riwayat'] = 2;
-              if($data['koreksinilai']) $kib['Kd_Riwayat'] = 21;
+              if($data['ubahkapitalisasi']) {
+                  $kib['Kd_Riwayat'] = 2;
+                  $besarnya_kapitalisasi=$data['Satuan']-$kib_old['NilaiPerolehan'];
+                  $kib['NilaiBuku']=$kib_old['NilaiBuku']+$besarnya_kapitalisasi;
+                  $kib['NilaiBuku_Awal']=$kib_old['NilaiBuku'];
+                  
+                  $update="update aset set NilaiBuku='{$kib['NilaiBuku']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
+
+                  $update="update {$tabel} set NilaiBuku='{$kib['NilaiBuku']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
+
+
+              }
+              if($data['koreksinilai']){
+                  $kib['Kd_Riwayat'] = 21;
+                  $MasaManfaat=$kib_old['MasaManfaat'];
+                  $nilai_koreksi=$data['Satuan']-$kib_old['NilaiPerolehan'];
+                  $beban_penyusutan=round($nilai_koreksi/$MasaManfaat);
+                 
+                  $Tahun=$kib_old['Tahun'];
+                  $TahunPenyusutan=$kib_old['TahunPenyusutan'];
+                  $rentang_penyusutan=$TahunPenyusutan-$Tahun+1;
+                  if($rentang_penyusutan>$MasaManfaat){
+                     $rentang_penyusutan=$MasaManfaat;
+                  }
+                  $selisih_akumulasi=$beban_penyusutan*$rentang_penyusutan;
+                  
+                  $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
+                  $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
+                  $kib['NilaiBuku']=$data['Satuan']-$kib['AkumulasiPenyusutan'];
+                  if($kib['NilaiBuku']<=0){
+                      $kib['NilaiBuku']=0;
+                      $kib['AkumulasiPenyusutan']=$data['Satuan'];
+                  }
+                  $update="update aset set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
+
+                  $update="update {$tabel} set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                  $result_update=  $this->query($update) or die($this->error());
+              }
+              
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;
               if($data['pindahruang']) $kib['Kd_Riwayat'] = 4;
               if(isset($reklas)) {
@@ -2981,7 +3021,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
-        $tblAset['Info'] = $data['Info'];
+        $tblAset['Info'] = addslashes($data['Info']);
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
@@ -3060,7 +3100,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
             $tblKib['NilaiPerolehan'] = $data['Satuan'];
             $tblKib['kondisi'] = $data['kondisi'];
-            $tblKib['Info'] = $data['Info'];
+            $tblKib['Info'] = addslashes($data['Info']);
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
 
@@ -3161,7 +3201,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kondisi'] = $data['kondisi'];
         $tblAset['Kuantitas'] = 1;
         $tblAset['Satuan'] = $data['Satuan'];
-        $tblAset['Info'] = $data['Info'];
+        $tblAset['Info'] = addslashes($data['Info']);
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
@@ -3240,7 +3280,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
             $tblKib['NilaiPerolehan'] = $data['Satuan'];
             $tblKib['kondisi'] = $data['kondisi'];
-            $tblKib['Info'] = $data['Info'];
+            $tblKib['Info'] = addslashes($data['Info']);
             $tblKib['Alamat'] = $data['Alamat'];
             $tblKib['Tahun'] = $tblAset['Tahun'];
 
@@ -3286,7 +3326,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         if(isset($data['asalusul'])) $tblAset['AsalUsul'] = $data['asalusul'];
         if(isset($data['Kuantitas'])) $tblAset['Kuantitas'] = $data['Kuantitas'];
         if(isset($data['Satuan'])) $tblAset['Satuan'] = $data['Satuan'];
-        if(isset($data['Info'])) $tblAset['Info'] = $data['Info'];
+        if(isset($data['Info'])) $tblAset['Info'] = addslashes($data['Info']);
         if(isset($data['Alamat'])) $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
@@ -3379,7 +3419,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['StatusTampil'] = 1;
             if(isset($data['kondisi'])) $tblKib['kondisi'] = $data['kondisi'];
             if(isset($data['AsalUsul'])) $tblKib['AsalUsul'] = $data['AsalUsul'];
-            if(isset($data['Info'])) $tblKib['Info'] = $data['Info'];
+            if(isset($data['Info'])) $tblKib['Info'] = addslashes($data['Info']);
             if(isset($data['Alamat'])) $tblKib['Alamat'] = $data['Alamat'];
             if(isset($data['Tahun'])) $tblKib['Tahun'] = $tblAset['Tahun'];
             $tblKib['kodeKA'] = 0;

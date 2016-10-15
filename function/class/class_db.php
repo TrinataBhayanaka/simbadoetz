@@ -409,7 +409,8 @@ class DB
 	    logFile('class_db :: insert log sukses');
 	    return true;
 	}
-	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false, $debug=false)
+	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false,
+                            $AkumulasiPenyusutan=false,$AkumulasiPenyusutan_Awal=false,$NilaiBuku=false,$debug=false)
 	{
 
 	    if (empty($table)) return false;
@@ -430,7 +431,8 @@ class DB
 	    				'TglPerubahan'=>$tglProses,
 	    				'Kd_Riwayat'=>$action,
 	    				'No_Dokumen'=>$noDok,
-	    				'NilaiPerolehan_Awal'=>$Nilai_awal);
+	    				'NilaiPerolehan_Awal'=>$Nilai_awal,
+                                        'AkumulasiPenyusutan_Awal'=>$AkumulasiPenyusutan_Awal);
 
 
 	    foreach ($table as $value) {
@@ -448,6 +450,10 @@ class DB
                                     $val="1";
                                 elseif($key=="StatusTampil")
                                     $val="1";
+                                elseif($key=="NilaiBuku")
+                                    $val="$NilaiBuku";
+                                elseif($key=="AkumulasiPenyusutan")
+                                    $val="$AkumulasiPenyusutan";
 	        		$tmpValue[] = "'".$val."'";
 
 	        		// if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";

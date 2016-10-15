@@ -1,0 +1,851 @@
+Proses Geser Log-Pembangaunan
+!!!!!!!!Rekonstruksi Penghapusan !!!!! --> 7,49,50 
+<!-----------GESER LOG 201119------------->
+---update--log--7--Log ID lama==4699--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=4699;
+
+---update--log--49--Log ID lama==5355--menjadi Log ID Baru=5355--
+update log_bangunan set log_id=4699 where log_id=5355;
+
+---update--log--50--Log ID lama==5356--menjadi Log ID Baru=5356--
+update log_bangunan set log_id=5355 where log_id=5356;
+
+---update--log--state pertama ke urutan terakhir--log_id=5356--
+update log_bangunan set log_id=5356 where log_id=28843;
+
+Close untuk 201119
+<!-----------Akhir GESER LOG 201119------------->
+
+<!-----------GESER LOG 201183------------->
+---update--log--7--Log ID lama==4695--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=4695;
+
+---update--log--49--Log ID lama==5397--menjadi Log ID Baru=5397--
+update log_bangunan set log_id=4695 where log_id=5397;
+
+---update--log--50--Log ID lama==5398--menjadi Log ID Baru=5398--
+update log_bangunan set log_id=5397 where log_id=5398;
+
+---update--log--state pertama ke urutan terakhir--log_id=5398--
+update log_bangunan set log_id=5398 where log_id=28843;
+
+Close untuk 201183
+<!-----------Akhir GESER LOG 201183------------->
+
+<!-----------GESER LOG 201330------------->
+---update--log--7--Log ID lama==4701--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=4701;
+
+---update--log--49--Log ID lama==6475--menjadi Log ID Baru=6475--
+update log_bangunan set log_id=4701 where log_id=6475;
+
+---update--log--50--Log ID lama==6476--menjadi Log ID Baru=6476--
+update log_bangunan set log_id=6475 where log_id=6476;
+
+---update--log--state pertama ke urutan terakhir--log_id=6476--
+update log_bangunan set log_id=6476 where log_id=28843;
+
+Close untuk 201330
+<!-----------Akhir GESER LOG 201330------------->
+
+<!-----------GESER LOG 201398------------->
+---update--log--7--Log ID lama==3398--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=3398;
+
+---update--log--49--Log ID lama==5529--menjadi Log ID Baru=5529--
+update log_bangunan set log_id=3398 where log_id=5529;
+
+---update--log--50--Log ID lama==5530--menjadi Log ID Baru=5530--
+update log_bangunan set log_id=5529 where log_id=5530;
+
+---update--log--state pertama ke urutan terakhir--log_id=5530--
+update log_bangunan set log_id=5530 where log_id=28843;
+
+Close untuk 201398
+<!-----------Akhir GESER LOG 201398------------->
+
+<!-----------GESER LOG 201663------------->
+---update--log--7--Log ID lama==3501--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=3501;
+
+---update--log--49--Log ID lama==5711--menjadi Log ID Baru=5711--
+update log_bangunan set log_id=3501 where log_id=5711;
+
+---update--log--50--Log ID lama==5712--menjadi Log ID Baru=5712--
+update log_bangunan set log_id=5711 where log_id=5712;
+
+---update--log--state pertama ke urutan terakhir--log_id=5712--
+update log_bangunan set log_id=5712 where log_id=28843;
+
+Close untuk 201663
+<!-----------Akhir GESER LOG 201663------------->
+
+<!-----------GESER LOG 201698------------->
+---update--log--7--Log ID lama==4694--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=4694;
+
+---update--log--49--Log ID lama==6639--menjadi Log ID Baru=6639--
+update log_bangunan set log_id=4694 where log_id=6639;
+
+---update--log--50--Log ID lama==6640--menjadi Log ID Baru=6640--
+update log_bangunan set log_id=6639 where log_id=6640;
+
+---update--log--state pertama ke urutan terakhir--log_id=6640--
+update log_bangunan set log_id=6640 where log_id=28843;
+
+Close untuk 201698
+<!-----------Akhir GESER LOG 201698------------->
+
+!!!!!!!!Rekonstruksi Transfer !!!!! --> 3,49,50 
+<!-----------GESER LOG 200132------------->
+---update--log--3--Log ID lama==1050--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1050;
+
+---update--log--49--Log ID lama==1669--menjadi Log ID Baru=1669--
+update log_bangunan set log_id=1050 where log_id=1669;
+
+---update--log--50--Log ID lama==1670--menjadi Log ID Baru=1670--
+update log_bangunan set log_id=1669 where log_id=1670;
+
+---update--log--state pertama ke urutan terakhir--log_id=1670--
+update log_bangunan set log_id=1670 where log_id=28843;
+
+Close untuk 200132
+<!-----------Akhir GESER LOG 200132------------->
+
+<!-----------GESER LOG 201100------------->
+Aset_ID=201100 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201100------------->
+
+<!-----------GESER LOG 201101------------->
+Aset_ID=201101 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201101------------->
+
+<!-----------GESER LOG 201102------------->
+Aset_ID=201102 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201102------------->
+
+<!-----------GESER LOG 201103------------->
+Aset_ID=201103 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201103------------->
+
+<!-----------GESER LOG 201104------------->
+Aset_ID=201104 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201104------------->
+
+<!-----------GESER LOG 201322------------->
+Aset_ID=201322 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201322------------->
+
+<!-----------GESER LOG 202187------------->
+---update--log--3--Log ID lama==1045--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1045;
+
+---update--log--49--Log ID lama==1697--menjadi Log ID Baru=1697--
+update log_bangunan set log_id=1045 where log_id=1697;
+
+---update--log--50--Log ID lama==1698--menjadi Log ID Baru=1698--
+update log_bangunan set log_id=1697 where log_id=1698;
+
+---update--log--state pertama ke urutan terakhir--log_id=1698--
+update log_bangunan set log_id=1698 where log_id=28843;
+
+Close untuk 202187
+<!-----------Akhir GESER LOG 202187------------->
+
+<!-----------GESER LOG 202189------------->
+---update--log--3--Log ID lama==1047--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1047;
+
+---update--log--49--Log ID lama==1701--menjadi Log ID Baru=1701--
+update log_bangunan set log_id=1047 where log_id=1701;
+
+---update--log--50--Log ID lama==1702--menjadi Log ID Baru=1702--
+update log_bangunan set log_id=1701 where log_id=1702;
+
+---update--log--state pertama ke urutan terakhir--log_id=1702--
+update log_bangunan set log_id=1702 where log_id=28843;
+
+Close untuk 202189
+<!-----------Akhir GESER LOG 202189------------->
+
+<!-----------GESER LOG 202190------------->
+---update--log--3--Log ID lama==1040--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1040;
+
+---update--log--49--Log ID lama==1765--menjadi Log ID Baru=1765--
+update log_bangunan set log_id=1040 where log_id=1765;
+
+---update--log--50--Log ID lama==1766--menjadi Log ID Baru=1766--
+update log_bangunan set log_id=1765 where log_id=1766;
+
+---update--log--state pertama ke urutan terakhir--log_id=1766--
+update log_bangunan set log_id=1766 where log_id=28843;
+
+Close untuk 202190
+<!-----------Akhir GESER LOG 202190------------->
+
+<!-----------GESER LOG 202191------------->
+---update--log--3--Log ID lama==1041--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1041;
+
+---update--log--49--Log ID lama==1767--menjadi Log ID Baru=1767--
+update log_bangunan set log_id=1041 where log_id=1767;
+
+---update--log--50--Log ID lama==1768--menjadi Log ID Baru=1768--
+update log_bangunan set log_id=1767 where log_id=1768;
+
+---update--log--state pertama ke urutan terakhir--log_id=1768--
+update log_bangunan set log_id=1768 where log_id=28843;
+
+Close untuk 202191
+<!-----------Akhir GESER LOG 202191------------->
+
+<!-----------GESER LOG 202192------------->
+---update--log--3--Log ID lama==1042--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1042;
+
+---update--log--49--Log ID lama==1769--menjadi Log ID Baru=1769--
+update log_bangunan set log_id=1042 where log_id=1769;
+
+---update--log--50--Log ID lama==1770--menjadi Log ID Baru=1770--
+update log_bangunan set log_id=1769 where log_id=1770;
+
+---update--log--state pertama ke urutan terakhir--log_id=1770--
+update log_bangunan set log_id=1770 where log_id=28843;
+
+Close untuk 202192
+<!-----------Akhir GESER LOG 202192------------->
+
+<!-----------GESER LOG 202193------------->
+---update--log--3--Log ID lama==1059--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1059;
+
+---update--log--49--Log ID lama==1813--menjadi Log ID Baru=1813--
+update log_bangunan set log_id=1059 where log_id=1813;
+
+---update--log--50--Log ID lama==1814--menjadi Log ID Baru=1814--
+update log_bangunan set log_id=1813 where log_id=1814;
+
+---update--log--state pertama ke urutan terakhir--log_id=1814--
+update log_bangunan set log_id=1814 where log_id=28843;
+
+Close untuk 202193
+<!-----------Akhir GESER LOG 202193------------->
+
+<!-----------GESER LOG 202217------------->
+---update--log--3--Log ID lama==1075--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1075;
+
+---update--log--49--Log ID lama==1803--menjadi Log ID Baru=1803--
+update log_bangunan set log_id=1075 where log_id=1803;
+
+---update--log--50--Log ID lama==1804--menjadi Log ID Baru=1804--
+update log_bangunan set log_id=1803 where log_id=1804;
+
+---update--log--state pertama ke urutan terakhir--log_id=1804--
+update log_bangunan set log_id=1804 where log_id=28843;
+
+Close untuk 202217
+<!-----------Akhir GESER LOG 202217------------->
+
+<!-----------GESER LOG 202218------------->
+---update--log--3--Log ID lama==1076--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1076;
+
+---update--log--49--Log ID lama==1805--menjadi Log ID Baru=1805--
+update log_bangunan set log_id=1076 where log_id=1805;
+
+---update--log--50--Log ID lama==1806--menjadi Log ID Baru=1806--
+update log_bangunan set log_id=1805 where log_id=1806;
+
+---update--log--state pertama ke urutan terakhir--log_id=1806--
+update log_bangunan set log_id=1806 where log_id=28843;
+
+Close untuk 202218
+<!-----------Akhir GESER LOG 202218------------->
+
+<!-----------GESER LOG 202219------------->
+---update--log--3--Log ID lama==1043--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1043;
+
+---update--log--49--Log ID lama==1771--menjadi Log ID Baru=1771--
+update log_bangunan set log_id=1043 where log_id=1771;
+
+---update--log--50--Log ID lama==1772--menjadi Log ID Baru=1772--
+update log_bangunan set log_id=1771 where log_id=1772;
+
+---update--log--state pertama ke urutan terakhir--log_id=1772--
+update log_bangunan set log_id=1772 where log_id=28843;
+
+Close untuk 202219
+<!-----------Akhir GESER LOG 202219------------->
+
+<!-----------GESER LOG 202220------------->
+---update--log--3--Log ID lama==1044--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1044;
+
+---update--log--49--Log ID lama==1773--menjadi Log ID Baru=1773--
+update log_bangunan set log_id=1044 where log_id=1773;
+
+---update--log--50--Log ID lama==1774--menjadi Log ID Baru=1774--
+update log_bangunan set log_id=1773 where log_id=1774;
+
+---update--log--state pertama ke urutan terakhir--log_id=1774--
+update log_bangunan set log_id=1774 where log_id=28843;
+
+Close untuk 202220
+<!-----------Akhir GESER LOG 202220------------->
+
+<!-----------GESER LOG 202232------------->
+Aset_ID=202232 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 202232------------->
+
+<!-----------GESER LOG 202233------------->
+---update--log--3--Log ID lama==1070--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1070;
+
+---update--log--49--Log ID lama==2014--menjadi Log ID Baru=2014--
+update log_bangunan set log_id=1070 where log_id=2014;
+
+---update--log--50--Log ID lama==2015--menjadi Log ID Baru=2015--
+update log_bangunan set log_id=2014 where log_id=2015;
+
+---update--log--state pertama ke urutan terakhir--log_id=2015--
+update log_bangunan set log_id=2015 where log_id=28843;
+
+Close untuk 202233
+<!-----------Akhir GESER LOG 202233------------->
+
+<!-----------GESER LOG 202234------------->
+---update--log--3--Log ID lama==1071--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1071;
+
+---update--log--49--Log ID lama==2020--menjadi Log ID Baru=2020--
+update log_bangunan set log_id=1071 where log_id=2020;
+
+---update--log--50--Log ID lama==2021--menjadi Log ID Baru=2021--
+update log_bangunan set log_id=2020 where log_id=2021;
+
+---update--log--state pertama ke urutan terakhir--log_id=2021--
+update log_bangunan set log_id=2021 where log_id=28843;
+
+Close untuk 202234
+<!-----------Akhir GESER LOG 202234------------->
+
+<!-----------GESER LOG 202235------------->
+Aset_ID=202235 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 202235------------->
+
+<!-----------GESER LOG 202236------------->
+---update--log--3--Log ID lama==1064--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1064;
+
+---update--log--49--Log ID lama==1747--menjadi Log ID Baru=1747--
+update log_bangunan set log_id=1064 where log_id=1747;
+
+---update--log--50--Log ID lama==1748--menjadi Log ID Baru=1748--
+update log_bangunan set log_id=1747 where log_id=1748;
+
+---update--log--state pertama ke urutan terakhir--log_id=1748--
+update log_bangunan set log_id=1748 where log_id=28843;
+
+Close untuk 202236
+<!-----------Akhir GESER LOG 202236------------->
+
+<!-----------GESER LOG 202237------------->
+---update--log--3--Log ID lama==1065--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1065;
+
+---update--log--49--Log ID lama==1743--menjadi Log ID Baru=1743--
+update log_bangunan set log_id=1065 where log_id=1743;
+
+---update--log--50--Log ID lama==1744--menjadi Log ID Baru=1744--
+update log_bangunan set log_id=1743 where log_id=1744;
+
+---update--log--state pertama ke urutan terakhir--log_id=1744--
+update log_bangunan set log_id=1744 where log_id=28843;
+
+Close untuk 202237
+<!-----------Akhir GESER LOG 202237------------->
+
+<!-----------GESER LOG 202238------------->
+---update--log--3--Log ID lama==1066--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1066;
+
+---update--log--49--Log ID lama==1745--menjadi Log ID Baru=1745--
+update log_bangunan set log_id=1066 where log_id=1745;
+
+---update--log--50--Log ID lama==1746--menjadi Log ID Baru=1746--
+update log_bangunan set log_id=1745 where log_id=1746;
+
+---update--log--state pertama ke urutan terakhir--log_id=1746--
+update log_bangunan set log_id=1746 where log_id=28843;
+
+Close untuk 202238
+<!-----------Akhir GESER LOG 202238------------->
+
+<!-----------GESER LOG 202239------------->
+---update--log--3--Log ID lama==1067--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1067;
+
+---update--log--49--Log ID lama==1749--menjadi Log ID Baru=1749--
+update log_bangunan set log_id=1067 where log_id=1749;
+
+---update--log--50--Log ID lama==1750--menjadi Log ID Baru=1750--
+update log_bangunan set log_id=1749 where log_id=1750;
+
+---update--log--state pertama ke urutan terakhir--log_id=1750--
+update log_bangunan set log_id=1750 where log_id=28843;
+
+Close untuk 202239
+<!-----------Akhir GESER LOG 202239------------->
+
+<!-----------GESER LOG 202244------------->
+---update--log--3--Log ID lama==1079--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1079;
+
+---update--log--49--Log ID lama==1737--menjadi Log ID Baru=1737--
+update log_bangunan set log_id=1079 where log_id=1737;
+
+---update--log--50--Log ID lama==1738--menjadi Log ID Baru=1738--
+update log_bangunan set log_id=1737 where log_id=1738;
+
+---update--log--state pertama ke urutan terakhir--log_id=1738--
+update log_bangunan set log_id=1738 where log_id=28843;
+
+Close untuk 202244
+<!-----------Akhir GESER LOG 202244------------->
+
+<!-----------GESER LOG 202245------------->
+---update--log--3--Log ID lama==1080--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1080;
+
+---update--log--49--Log ID lama==1739--menjadi Log ID Baru=1739--
+update log_bangunan set log_id=1080 where log_id=1739;
+
+---update--log--50--Log ID lama==1740--menjadi Log ID Baru=1740--
+update log_bangunan set log_id=1739 where log_id=1740;
+
+---update--log--state pertama ke urutan terakhir--log_id=1740--
+update log_bangunan set log_id=1740 where log_id=28843;
+
+Close untuk 202245
+<!-----------Akhir GESER LOG 202245------------->
+
+<!-----------GESER LOG 202247------------->
+---update--log--3--Log ID lama==1052--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1052;
+
+---update--log--49--Log ID lama==1717--menjadi Log ID Baru=1717--
+update log_bangunan set log_id=1052 where log_id=1717;
+
+---update--log--50--Log ID lama==1718--menjadi Log ID Baru=1718--
+update log_bangunan set log_id=1717 where log_id=1718;
+
+---update--log--state pertama ke urutan terakhir--log_id=1718--
+update log_bangunan set log_id=1718 where log_id=28843;
+
+Close untuk 202247
+<!-----------Akhir GESER LOG 202247------------->
+
+<!-----------GESER LOG 202248------------->
+---update--log--3--Log ID lama==1053--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1053;
+
+---update--log--49--Log ID lama==1719--menjadi Log ID Baru=1719--
+update log_bangunan set log_id=1053 where log_id=1719;
+
+---update--log--50--Log ID lama==1720--menjadi Log ID Baru=1720--
+update log_bangunan set log_id=1719 where log_id=1720;
+
+---update--log--state pertama ke urutan terakhir--log_id=1720--
+update log_bangunan set log_id=1720 where log_id=28843;
+
+Close untuk 202248
+<!-----------Akhir GESER LOG 202248------------->
+
+<!-----------GESER LOG 202249------------->
+---update--log--3--Log ID lama==1054--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1054;
+
+---update--log--49--Log ID lama==1721--menjadi Log ID Baru=1721--
+update log_bangunan set log_id=1054 where log_id=1721;
+
+---update--log--50--Log ID lama==1722--menjadi Log ID Baru=1722--
+update log_bangunan set log_id=1721 where log_id=1722;
+
+---update--log--state pertama ke urutan terakhir--log_id=1722--
+update log_bangunan set log_id=1722 where log_id=28843;
+
+Close untuk 202249
+<!-----------Akhir GESER LOG 202249------------->
+
+<!-----------GESER LOG 202253------------->
+---update--log--3--Log ID lama==1086--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1086;
+
+---update--log--49--Log ID lama==1799--menjadi Log ID Baru=1799--
+update log_bangunan set log_id=1086 where log_id=1799;
+
+---update--log--50--Log ID lama==1800--menjadi Log ID Baru=1800--
+update log_bangunan set log_id=1799 where log_id=1800;
+
+---update--log--state pertama ke urutan terakhir--log_id=1800--
+update log_bangunan set log_id=1800 where log_id=28843;
+
+Close untuk 202253
+<!-----------Akhir GESER LOG 202253------------->
+
+<!-----------GESER LOG 202262------------->
+---update--log--3--Log ID lama==1055--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1055;
+
+---update--log--49--Log ID lama==1649--menjadi Log ID Baru=1649--
+update log_bangunan set log_id=1055 where log_id=1649;
+
+---update--log--50--Log ID lama==1650--menjadi Log ID Baru=1650--
+update log_bangunan set log_id=1649 where log_id=1650;
+
+---update--log--state pertama ke urutan terakhir--log_id=1650--
+update log_bangunan set log_id=1650 where log_id=28843;
+
+Close untuk 202262
+<!-----------Akhir GESER LOG 202262------------->
+
+<!-----------GESER LOG 202263------------->
+---update--log--3--Log ID lama==1056--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1056;
+
+---update--log--49--Log ID lama==1651--menjadi Log ID Baru=1651--
+update log_bangunan set log_id=1056 where log_id=1651;
+
+---update--log--50--Log ID lama==1652--menjadi Log ID Baru=1652--
+update log_bangunan set log_id=1651 where log_id=1652;
+
+---update--log--state pertama ke urutan terakhir--log_id=1652--
+update log_bangunan set log_id=1652 where log_id=28843;
+
+Close untuk 202263
+<!-----------Akhir GESER LOG 202263------------->
+
+<!-----------GESER LOG 202278------------->
+---update--log--3--Log ID lama==1087--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1087;
+
+---update--log--49--Log ID lama==1793--menjadi Log ID Baru=1793--
+update log_bangunan set log_id=1087 where log_id=1793;
+
+---update--log--50--Log ID lama==1794--menjadi Log ID Baru=1794--
+update log_bangunan set log_id=1793 where log_id=1794;
+
+---update--log--state pertama ke urutan terakhir--log_id=1794--
+update log_bangunan set log_id=1794 where log_id=28843;
+
+Close untuk 202278
+<!-----------Akhir GESER LOG 202278------------->
+
+<!-----------GESER LOG 202281------------->
+---update--log--3--Log ID lama==1068--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1068;
+
+---update--log--49--Log ID lama==1795--menjadi Log ID Baru=1795--
+update log_bangunan set log_id=1068 where log_id=1795;
+
+---update--log--50--Log ID lama==1796--menjadi Log ID Baru=1796--
+update log_bangunan set log_id=1795 where log_id=1796;
+
+---update--log--state pertama ke urutan terakhir--log_id=1796--
+update log_bangunan set log_id=1796 where log_id=28843;
+
+Close untuk 202281
+<!-----------Akhir GESER LOG 202281------------->
+
+<!-----------GESER LOG 202282------------->
+---update--log--3--Log ID lama==1069--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1069;
+
+---update--log--49--Log ID lama==1797--menjadi Log ID Baru=1797--
+update log_bangunan set log_id=1069 where log_id=1797;
+
+---update--log--50--Log ID lama==1798--menjadi Log ID Baru=1798--
+update log_bangunan set log_id=1797 where log_id=1798;
+
+---update--log--state pertama ke urutan terakhir--log_id=1798--
+update log_bangunan set log_id=1798 where log_id=28843;
+
+Close untuk 202282
+<!-----------Akhir GESER LOG 202282------------->
+
+<!-----------GESER LOG 202298------------->
+---update--log--3--Log ID lama==1048--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1048;
+
+---update--log--49--Log ID lama==1777--menjadi Log ID Baru=1777--
+update log_bangunan set log_id=1048 where log_id=1777;
+
+---update--log--50--Log ID lama==1778--menjadi Log ID Baru=1778--
+update log_bangunan set log_id=1777 where log_id=1778;
+
+---update--log--state pertama ke urutan terakhir--log_id=1778--
+update log_bangunan set log_id=1778 where log_id=28843;
+
+Close untuk 202298
+<!-----------Akhir GESER LOG 202298------------->
+
+<!-----------GESER LOG 202299------------->
+---update--log--3--Log ID lama==1049--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1049;
+
+---update--log--49--Log ID lama==1779--menjadi Log ID Baru=1779--
+update log_bangunan set log_id=1049 where log_id=1779;
+
+---update--log--50--Log ID lama==1780--menjadi Log ID Baru=1780--
+update log_bangunan set log_id=1779 where log_id=1780;
+
+---update--log--state pertama ke urutan terakhir--log_id=1780--
+update log_bangunan set log_id=1780 where log_id=28843;
+
+Close untuk 202299
+<!-----------Akhir GESER LOG 202299------------->
+
+<!-----------GESER LOG 202305------------->
+---update--log--3--Log ID lama==1077--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1077;
+
+---update--log--49--Log ID lama==1633--menjadi Log ID Baru=1633--
+update log_bangunan set log_id=1077 where log_id=1633;
+
+---update--log--50--Log ID lama==1634--menjadi Log ID Baru=1634--
+update log_bangunan set log_id=1633 where log_id=1634;
+
+---update--log--state pertama ke urutan terakhir--log_id=1634--
+update log_bangunan set log_id=1634 where log_id=28843;
+
+Close untuk 202305
+<!-----------Akhir GESER LOG 202305------------->
+
+<!-----------GESER LOG 202306------------->
+---update--log--3--Log ID lama==1078--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1078;
+
+---update--log--49--Log ID lama==1635--menjadi Log ID Baru=1635--
+update log_bangunan set log_id=1078 where log_id=1635;
+
+---update--log--50--Log ID lama==1636--menjadi Log ID Baru=1636--
+update log_bangunan set log_id=1635 where log_id=1636;
+
+---update--log--state pertama ke urutan terakhir--log_id=1636--
+update log_bangunan set log_id=1636 where log_id=28843;
+
+Close untuk 202306
+<!-----------Akhir GESER LOG 202306------------->
+
+<!-----------GESER LOG 202308------------->
+---update--log--3--Log ID lama==1060--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1060;
+
+---update--log--49--Log ID lama==1727--menjadi Log ID Baru=1727--
+update log_bangunan set log_id=1060 where log_id=1727;
+
+---update--log--50--Log ID lama==1728--menjadi Log ID Baru=1728--
+update log_bangunan set log_id=1727 where log_id=1728;
+
+---update--log--state pertama ke urutan terakhir--log_id=1728--
+update log_bangunan set log_id=1728 where log_id=28843;
+
+Close untuk 202308
+<!-----------Akhir GESER LOG 202308------------->
+
+<!-----------GESER LOG 202309------------->
+---update--log--3--Log ID lama==1061--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1061;
+
+---update--log--49--Log ID lama==1729--menjadi Log ID Baru=1729--
+update log_bangunan set log_id=1061 where log_id=1729;
+
+---update--log--50--Log ID lama==1730--menjadi Log ID Baru=1730--
+update log_bangunan set log_id=1729 where log_id=1730;
+
+---update--log--state pertama ke urutan terakhir--log_id=1730--
+update log_bangunan set log_id=1730 where log_id=28843;
+
+Close untuk 202309
+<!-----------Akhir GESER LOG 202309------------->
+
+<!-----------GESER LOG 202310------------->
+---update--log--3--Log ID lama==1062--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1062;
+
+---update--log--49--Log ID lama==1733--menjadi Log ID Baru=1733--
+update log_bangunan set log_id=1062 where log_id=1733;
+
+---update--log--50--Log ID lama==1734--menjadi Log ID Baru=1734--
+update log_bangunan set log_id=1733 where log_id=1734;
+
+---update--log--state pertama ke urutan terakhir--log_id=1734--
+update log_bangunan set log_id=1734 where log_id=28843;
+
+Close untuk 202310
+<!-----------Akhir GESER LOG 202310------------->
+
+<!-----------GESER LOG 202311------------->
+---update--log--3--Log ID lama==1063--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1063;
+
+---update--log--49--Log ID lama==1731--menjadi Log ID Baru=1731--
+update log_bangunan set log_id=1063 where log_id=1731;
+
+---update--log--50--Log ID lama==1732--menjadi Log ID Baru=1732--
+update log_bangunan set log_id=1731 where log_id=1732;
+
+---update--log--state pertama ke urutan terakhir--log_id=1732--
+update log_bangunan set log_id=1732 where log_id=28843;
+
+Close untuk 202311
+<!-----------Akhir GESER LOG 202311------------->
+
+<!-----------GESER LOG 202313------------->
+---update--log--3--Log ID lama==1051--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1051;
+
+---update--log--49--Log ID lama==1667--menjadi Log ID Baru=1667--
+update log_bangunan set log_id=1051 where log_id=1667;
+
+---update--log--50--Log ID lama==1668--menjadi Log ID Baru=1668--
+update log_bangunan set log_id=1667 where log_id=1668;
+
+---update--log--state pertama ke urutan terakhir--log_id=1668--
+update log_bangunan set log_id=1668 where log_id=28843;
+
+Close untuk 202313
+<!-----------Akhir GESER LOG 202313------------->
+
+<!-----------GESER LOG 202314------------->
+---update--log--3--Log ID lama==1057--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1057;
+
+---update--log--49--Log ID lama==1683--menjadi Log ID Baru=1683--
+update log_bangunan set log_id=1057 where log_id=1683;
+
+---update--log--50--Log ID lama==1684--menjadi Log ID Baru=1684--
+update log_bangunan set log_id=1683 where log_id=1684;
+
+---update--log--state pertama ke urutan terakhir--log_id=1684--
+update log_bangunan set log_id=1684 where log_id=28843;
+
+Close untuk 202314
+<!-----------Akhir GESER LOG 202314------------->
+
+<!-----------GESER LOG 202315------------->
+---update--log--3--Log ID lama==1058--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=1058;
+
+---update--log--49--Log ID lama==1685--menjadi Log ID Baru=1685--
+update log_bangunan set log_id=1058 where log_id=1685;
+
+---update--log--50--Log ID lama==1686--menjadi Log ID Baru=1686--
+update log_bangunan set log_id=1685 where log_id=1686;
+
+---update--log--state pertama ke urutan terakhir--log_id=1686--
+update log_bangunan set log_id=1686 where log_id=28843;
+
+Close untuk 202315
+<!-----------Akhir GESER LOG 202315------------->
+
+!!!!!!!!Rekonstruksi Pemindahtanganan !!!!! --> 26,49,50 
+<!-----------GESER LOG 201072------------->
+---update--log--26--Log ID lama==3371--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=3371;
+
+---update--log--49--Log ID lama==5317--menjadi Log ID Baru=5317--
+update log_bangunan set log_id=3371 where log_id=5317;
+
+---update--log--50--Log ID lama==5318--menjadi Log ID Baru=5318--
+update log_bangunan set log_id=5317 where log_id=5318;
+
+---update--log--state pertama ke urutan terakhir--log_id=5318--
+update log_bangunan set log_id=5318 where log_id=28843;
+
+Close untuk 201072
+<!-----------Akhir GESER LOG 201072------------->
+
+<!-----------GESER LOG 201073------------->
+---update--log--26--Log ID lama==3372--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=3372;
+
+---update--log--49--Log ID lama==5319--menjadi Log ID Baru=5319--
+update log_bangunan set log_id=3372 where log_id=5319;
+
+---update--log--50--Log ID lama==5320--menjadi Log ID Baru=5320--
+update log_bangunan set log_id=5319 where log_id=5320;
+
+---update--log--state pertama ke urutan terakhir--log_id=5320--
+update log_bangunan set log_id=5320 where log_id=28843;
+
+Close untuk 201073
+<!-----------Akhir GESER LOG 201073------------->
+
+<!-----------GESER LOG 201176------------->
+---update--log--26--Log ID lama==3492--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=3492;
+
+---update--log--49--Log ID lama==5393--menjadi Log ID Baru=5393--
+update log_bangunan set log_id=3492 where log_id=5393;
+
+---update--log--50--Log ID lama==5394--menjadi Log ID Baru=5394--
+update log_bangunan set log_id=5393 where log_id=5394;
+
+---update--log--state pertama ke urutan terakhir--log_id=5394--
+update log_bangunan set log_id=5394 where log_id=28843;
+
+Close untuk 201176
+<!-----------Akhir GESER LOG 201176------------->
+
+<!-----------GESER LOG 201293------------->
+---update--log--26--Log ID lama==3477--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=3477;
+
+---update--log--49--Log ID lama==5457--menjadi Log ID Baru=5457--
+update log_bangunan set log_id=3477 where log_id=5457;
+
+---update--log--50--Log ID lama==5458--menjadi Log ID Baru=5458--
+update log_bangunan set log_id=5457 where log_id=5458;
+
+---update--log--state pertama ke urutan terakhir--log_id=5458--
+update log_bangunan set log_id=5458 where log_id=28843;
+
+Close untuk 201293
+<!-----------Akhir GESER LOG 201293------------->
+
+<!-----------GESER LOG 201702------------->
+---update--log--26--Log ID lama==4702--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=4702;
+
+---update--log--49--Log ID lama==5751--menjadi Log ID Baru=5751--
+update log_bangunan set log_id=4702 where log_id=5751;
+
+---update--log--50--Log ID lama==5752--menjadi Log ID Baru=5752--
+update log_bangunan set log_id=5751 where log_id=5752;
+
+---update--log--state pertama ke urutan terakhir--log_id=5752--
+update log_bangunan set log_id=5752 where log_id=28843;
+
+Close untuk 201702
+<!-----------Akhir GESER LOG 201702------------->
+
+<!-----------GESER LOG 201732------------->
+---update--log--26--Log ID lama==3491--menjadi Log ID Baru=28843--
+update log_bangunan set log_id=28843 where log_id=3491;
+
+---update--log--49--Log ID lama==5785--menjadi Log ID Baru=5785--
+update log_bangunan set log_id=3491 where log_id=5785;
+
+---update--log--50--Log ID lama==5786--menjadi Log ID Baru=5786--
+update log_bangunan set log_id=5785 where log_id=5786;
+
+---update--log--state pertama ke urutan terakhir--log_id=5786--
+update log_bangunan set log_id=5786 where log_id=28843;
+
+Close untuk 201732
+<!-----------Akhir GESER LOG 201732------------->
+
+!!!!!!!!Rekonstruksi Ubah Data !!!!! --> 18,49,50 
+<!-----------GESER LOG 201785------------->
+Aset_ID=201785 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201785------------->
+
+<!-----------GESER LOG 201806------------->
+Aset_ID=201806 tidak di geser karena tidak ada penyusutan<!-----------Akhir GESER LOG 201806------------->
+

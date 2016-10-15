@@ -52,8 +52,8 @@ while ($dataKapital = mysql_fetch_assoc($sql)){
         }
 // pr($kapital);
 foreach ($kapital as $key => $value) {
-  $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
-  $sqlaset = mysql_query("UPDATE aset SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},Satuan = if(Satuan is null,0,Satuan)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+  $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},NilaiBuku = if(NilaiBuku is null,0,NilaiBuku)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+  $sqlaset = mysql_query("UPDATE aset SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},Satuan = if(Satuan is null,0,Satuan)+{$value['nilai']},NilaiBuku = if(NilaiBuku is null,0,NilaiBuku)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
 
   //log
   $sqlkib = "SELECT * FROM {$value['tipeAset']} WHERE Aset_ID = '{$value['Aset_ID']}'";
@@ -66,6 +66,8 @@ foreach ($kapital as $key => $value) {
   $kib['action'] = 3;
   $kib['operator'] = $_SESSION['ses_uoperatorid'];
   $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'] - $value['nilai'];
+  $kib['NilaiBuku_Awal'] = $kib['NilaiBuku'] - $value['nilai'];
+  $kib['NilaiBuku'] = $kib['NilaiBuku']; 
   $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
   $kib['Kd_Riwayat'] = 2;    
   

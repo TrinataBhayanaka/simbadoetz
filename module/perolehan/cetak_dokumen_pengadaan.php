@@ -908,7 +908,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<span class="span2">Level</span>
-								<select disabled="1"  name="levelAset" id="levelAset" style="width:170px">
+								<select  name="levelAset" id="levelAset" style="width:170px">
 									<option value="1">Semua Level</option>
 									<option value="2">Golongan</option>
 									<option value="3">Bidang</option>
@@ -971,7 +971,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<span class="span2">Level</span>
-                                                                <select disabled="1" name="levelAset" id="levelAset" style="width:170px">
+                                                                <select  name="levelAset" id="levelAset" style="width:170px">
 									<option value="1">Semua Level</option>
 									<option value="2">Golongan</option>
 									<option value="3">Bidang</option>
@@ -1035,7 +1035,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<span class="span2">Level</span>
-								<select disabled="1"  name="levelAset" id="levelAset" style="width:170px">
+								<select   name="levelAset" id="levelAset" style="width:170px">
 									<option value="1">Semua Level</option>
 									<option value="2">Golongan</option>
 									<option value="3">Bidang</option>
@@ -1098,7 +1098,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							</li>
 							<li>
 								<span class="span2">Level</span>
-                                                                <select disabled="1" name="levelAset" id="levelAset" style="width:170px">
+                                                                <select  name="levelAset" id="levelAset" style="width:170px">
 									<option value="1">Semua Level</option>
 									<option value="2">Golongan</option>
 									<option value="3">Bidang</option>

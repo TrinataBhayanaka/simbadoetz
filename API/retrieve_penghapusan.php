@@ -8815,7 +8815,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                                 $sql_tipe = array(
                                     'table'=>'Aset',
-                                    'field'=>"Aset_ID,TipeAset,NilaiPerolehan,kondisi",
+                                    'field'=>"Aset_ID,TipeAset,NilaiPerolehan,kondisi,AkumulasiPenyusutan,MasaManfaat,TahunPenyusutan,Tahun",
                                     'condition' => "Aset_ID='$asetid[Aset_ID]'",
                                     );
                                 $res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
@@ -8827,6 +8827,36 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 $aset_id_valid=$res_tipe[0][Aset_ID];
                                 $aset_idNilai=$res_tipe[0][NilaiPerolehan];
                                 $aset_idKondisi=$res_tipe[0][kondisi];
+                                
+                //untuk penyusutan
+                                $AkumulasiPenyusutan=$res_tipe[0][AkumulasiPenyusutan];
+                                $MasaManfaat=$res_tipe[0][MasaManfaat];
+                                $TahunPenyusutan=$res_tipe[0][TahunPenyusutan];
+                                $Tahun=$res_tipe[0][Tahun];
+                                $rentang_penyusutan=$TahunPenyusutan-$Tahun+1;
+                                
+                                if($rentang_penyusutan>$MasaManfaat){
+                                    $rentang_penyusutan=$MasaManfaat;
+                                 }
+                  $nilai_koreksi=$asetid[NilaiPerolehanTmp]-$aset_idNilai;
+                  $beban_penyusutan=round($nilai_koreksi/$MasaManfaat);
+                  logFile("nilai_koreksi=$asetid[NilaiPerolehanTmp]-$aset_idNilai",'penghapusan.txt');
+                  logFile('log data penghapusan, beban_penyusutan ='.$beban_penyusutan."rentang penyusutan $rentang_penyusutan",'penghapusan.txt');
+                  
+                  $selisih_akumulasi=$rentang_penyusutan*$beban_penyusutan;
+                  logFile('log data penghapusan, selisih akumulasi ='.$selisih_akumulasi,'penghapusan.txt');
+                  $AkumulasiPenyusutan_Awal=$AkumulasiPenyusutan;
+                  $AkumulasiPenyusutan=$AkumulasiPenyusutan+$selisih_akumulasi;
+                  
+                  $NilaiBuku=$asetid[NilaiPerolehanTmp]-$AkumulasiPenyusutan;
+                  if($NilaiBuku<=0){
+                      $NilaiBuku=0;
+                      $AkumulasiPenyusutan=$asetid[NilaiPerolehanTmp];
+                  }
+                  
+                              
+                                
+                //akhir untuk penyusutan
                                 
                                 if($TipeAset=="A"){
                                     $tabel="tanah";
@@ -8852,7 +8882,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 
                                 $sql1_valid = array(
                                     'table'=>"$tabel",
-                                    'field'=>"StatusTampil=1, Status_Validasi_Barang=1,NilaiPerolehan='$asetid[NilaiPerolehanTmp]' ",
+                                    'field'=>"StatusTampil=1, Status_Validasi_Barang=1,NilaiPerolehan='$asetid[NilaiPerolehanTmp]',"
+                                        . "AkumulasiPenyusutan='$AkumulasiPenyusutan',NilaiBuku='$NilaiBuku' ",
                                     'condition' => "Aset_ID=$aset_id_valid",
                                     );
                                 //////////////////////////////////////pr($sql1_valid);
@@ -8861,14 +8892,16 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 $Aset_IDtmp[$asetid[Aset_ID]]=$tabel;
                                  $sql1As = array(
                                     'table'=>'Aset',
-                                    'field'=>"fixPenggunaan=1, Status_Validasi_Barang=1,NilaiPerolehan='$asetid[NilaiPerolehanTmp]' ",
+                                    'field'=>"fixPenggunaan=1, Status_Validasi_Barang=1,NilaiPerolehan='$asetid[NilaiPerolehanTmp]',"
+                                         . "AkumulasiPenyusutan='$AkumulasiPenyusutan',NilaiBuku='$NilaiBuku' ",
                                     'condition' => "Aset_ID='$asetid[Aset_ID]'",
                                     );
                                 // //////////////////////////////////////pr($sql1);
                                 $res1As = $this->db->lazyQuery($sql1As,$debug,2);
 
                                      logFile('log data penghapusan, Aset_ID ='.$asetid[Aset_ID],'penghapusan.txt');
-                                    $this->db->logItHPS($tabel=array($tabel), $Aset_ID=$asetid[Aset_ID], 7,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus],$aset_idNilai);
+                                    $this->db->logItHPS($tabel=array($tabel), $Aset_ID=$asetid[Aset_ID], 7,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus],$aset_idNilai,
+                                            $AkumulasiPenyusutan,$AkumulasiPenyusutan_Awal,$NilaiBuku);
 
                                  $sqlUsulan_valid = array(
                                     'table'=>"usulanaset",
