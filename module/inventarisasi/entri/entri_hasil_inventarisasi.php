@@ -117,6 +117,13 @@ $menu_id = 10;
 								<select id="asalusul" name="asalusul" style="width:255px">
 									<option value="Pembelian">Pembelian</option>
 									<option value="Hibah">Hibah</option>
+									<option value="BOS">BOS</option>
+									<option value="Hibah BOS">Hibah BOS</option>
+									<option value="Hibah Komite">Hibah Komite</option>
+									<option value="Hibah Pusat">Hibah Pusat</option>
+									<option value="Hibah Provinsi">Hibah Provinsi</option>
+									<option value="Hibah Pihak ke-3">Hibah Pihak ke-3</option>
+									<option value="Inventarisasi">Inventarisasi</option>
 								</select>
 							</li>
 							<li>&nbsp;</li>

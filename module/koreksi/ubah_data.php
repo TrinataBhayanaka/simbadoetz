@@ -166,6 +166,14 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 									<option></option>
 									<option value="Pembelian" <?=$dataArr['aset']['AsalUsul'] == 'Pembelian' ? 'selected' : ''?>>Pembelian</option>
 									<option value="Hibah" <?=$dataArr['aset']['AsalUsul'] == 'Hibah' ? 'selected' : ''?>>Hibah</option>
+									<option value="BOS" <?=$dataArr['aset']['AsalUsul'] == 'BOS' ? 'selected' : ''?>>BOS</option>
+									<option value="Hibah BOS" <?=$dataArr['aset']['AsalUsul'] == 'Hibah BOS' ? 'selected' : ''?>>Hibah BOS</option>
+									<option value="Hibah Komite" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Komite' ? 'selected' : ''?>>Hibah Komite</option>
+									<option value="Hibah Pusat" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Pusat' ? 'selected' : ''?>>Hibah Pusat</option>
+									<option value="Hibah Provinsi" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Provinsi' ? 'selected' : ''?>>Hibah Provinsi</option>
+									<option value="Hibah Pihak ke-3" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Pihak ke-3' ? 'selected' : ''?>>Hibah Pihak ke-3</option>
+									<option value="Inventarisasi" <?=$dataArr['aset']['AsalUsul'] == 'Inventarisasi' ? 'selected' : ''?>>Inventarisasi</option>
+
 								</select>
 							</li>
 							<li>&nbsp;</li>

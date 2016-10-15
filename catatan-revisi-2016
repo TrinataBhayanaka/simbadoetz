@@ -1,0 +1,25 @@
+ALTER TABLE `kontrak` ADD `jenis_belanja` 
+	INT NOT NULL DEFAULT '0' AFTER `n_status`;
+
+
+ALTER TABLE `aset` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+
+ALTER TABLE `tanah` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+ALTER TABLE `log_tanah` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+ALTER TABLE `mesin` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+ALTER TABLE `log_mesin` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+
+ALTER TABLE `bangunan` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+ALTER TABLE `log_bangunan` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+
+ALTER TABLE `jaringan` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+ALTER TABLE `log_jaringan` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+
+ALTER TABLE `asetlain` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+ALTER TABLE `log_aset` ADD `jenis_belanja` INT NOT NULL DEFAULT '0';
+
+
+
+
+
+
