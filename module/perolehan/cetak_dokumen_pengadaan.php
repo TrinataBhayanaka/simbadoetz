@@ -7,17 +7,17 @@ $SESSION = new Session();
 
 $menu_id = 13;
 $SessionUser = $SESSION->get_session_user();
-$USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
+$USERAUTH->FrontEnd_check_akses_menu( $menu_id, $SessionUser );
 // pr($_SESSION);
 // ?>
 
 <?php
-	include"$path/meta.php";
-	include"$path/header.php";
-	include"$path/menu.php";
-	
+include"$path/meta.php";
+include"$path/header.php";
+include"$path/menu.php";
+
 ?>
-  
+
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
@@ -28,7 +28,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<div class="breadcrumb">
 				<div class="title"> Cetak Dokumen Pengadaan</div>
 				<div class="subtitle">Cetak Dokumen</div>
-			</div>	
+			</div>
 		<section class="formLegend">
 			<script>
 				$(document).ready(function() {
@@ -36,7 +36,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						// Allow: backspace, delete, tab, escape, enter and .
 						if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 							 // Allow: Ctrl+A
-							(e.keyCode == 65 && e.ctrlKey === true) || 
+							(e.keyCode == 65 && e.ctrlKey === true) ||
 							 // Allow: home, end, left, right
 							(e.keyCode >= 35 && e.keyCode <= 39)) {
 								 // let it happen, don't do anything
@@ -47,14 +47,29 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 							e.preventDefault();
 						}
 					});*/
-					$("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset").mask('9999-99-99');
-					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset,#tglPerolehanAwalRekapNeraca3,#tglPerolehanAkhirRekapNeraca3" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,\n\
+                                            #tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,\n\
+                                            #tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,\n\
+                                            #tglCetakMutasi,#tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,\n\
+                                                #tglCetakMutasiskpd,#tglPerolehanAwalRekapLapMutasi,\n\
+                                            #tglPerolehanAkhirRekapLapMutasi,#tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset").mask('9999-99-99');
+					$( "#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,\n\
+                                            #tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,\n\
+                                            #tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,\n\
+                                            #tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,\n\
+                                            #tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,#tglPerolehanAwalNeraca,\n\
+                                            #tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,#tglPerolehanAwalrbp,\n\
+                                            #tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,#tglCetakMutasi,\n\
+                                             #tglPerolehanAwalPengadaan,#tglPerolehanAkhirPengadaan,#tglCetakPengadaan,#tglCetakMutasiskpd,\n\
+                                             #tglPerolehanAwalRekapLapMutasi,#tglPerolehanAkhirRekapLapMutasi,\n\
+                                            #tglPerolehanAwalNonAset,#tglPerolehanAkhirNonAset,#tglPerolehanAwalRekapNeraca3,\n\
+                                            #tglPerolehanAkhirRekapNeraca3,#tglPerolehanAkhirKK_detail,#tglPerolehanAwalKK_detail" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
-					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAwalRekapNeraca,#tglPerolehanAwalRekapNeraca1,#tglPerolehanAkhirRekapNeraca,#tglPerolehanAkhirRekapNeraca1").mask('9999-01-01');	
-					$("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-31');	
-					
+					$("#tglPerolehanAwalLapMutasi,#tglPerolehanAwalLapMutasiSkpd,#tglPerolehanAwalRekapNeraca,#tglPerolehanAwalRekapNeraca1,#tglPerolehanAkhirRekapNeraca,#tglPerolehanAkhirRekapNeraca1,#tglPerolehanAkhirKK_detail,#tglPerolehanAwalKK_detail").mask('9999-01-01');
+					$("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-31');
+
 				});
-				
+
 			</script>
 			<div class="tabbable" style="margin-bottom: 18px;">
 					  <ul class="nav nav-tabs">
@@ -75,14 +90,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<li><a href="#lapmutasi" data-toggle="tab">Laporan Mutasi</a></li>
 						<li><a href="#lapmutasiskpd" data-toggle="tab">Laporan Mutasi Antar SKPD</a></li>
 						<!--<li><a href="#laprekapmutasiskpd" data-toggle="tab">Rekap Mutasi Barang</a></li>-->
-						<li><a href="#lapdaftarpengadaan" data-toggle="tab">Laporan Daftar Pengadaan</a></li>    
+						<li><a href="#lapdaftarpengadaan" data-toggle="tab">Laporan Daftar Pengadaan</a></li>
 					  <li><a href="#rekaprincianbarangmutasi" data-toggle="tab">Rekapitulasi Rincian Mutasi Barang </a></li>
                                           <li><a href="#rekapdetailrincianbarangmutasi" data-toggle="tab">Rekapitulasi Detail Rincian Mutasi Barang </a></li>
                                           <li><a href="#rekaprincianbarangmutasi-lain" data-toggle="tab">Rekapitulasi Rincian Mutasi Barang As.Lain</a></li>
-                                          <li><a href="#rekapdetailrincianbarangmutasi-lain" data-toggle="tab">Rekapitulasi Detail Rincian Mutasi Barang As.Lain</a></li>
+                                         <li><a href="#rekapdetailrincianbarangmutasi-lain" data-toggle="tab">Rekapitulasi Detail Rincian Mutasi Barang As.Lain</a></li>
+                  <li><a href="#kk_detail" data-toggle="tab">Kerta Kerja Detail </a></li>
 
 					  </ul>
-					  
+
 					  <div class="tab-content" style="padding-bottom: 9px; border-bottom: 1px solid #ddd;">
 						<div class="tab-pane active" id="bkintra">
 						<div class="breadcrumb">
@@ -109,9 +125,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<li>
-								<?php 
-										selectAllSatker('kodeSatker11','255',true,false,false,true);
-								?>
+								<?php
+selectAllSatker( 'kodeSatker11', '255', true, false, false, true );
+?>
 								<br>
 							</li>
 							<li>
@@ -160,9 +176,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<li>
-								<?php 
-										selectAllSatker('kodeSatker12','255',true,false); 
-								?>
+								<?php
+selectAllSatker( 'kodeSatker12', '255', true, false );
+?>
 								<br>
 							</li>
 							<li>
@@ -214,14 +230,14 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php 
-								// if($_SESSION[ses_uaksesadmin] == '1'){
-									selectAllSatker('kodeSatker1','255',true,false,false,true);
-								// }else{
-									// selectSatker('kodeSatker1','255',true,false,false,true);
-								// }
-								// selectAllSatker('kodeSatker1','255',true,false); 
-							?>
+							<?php
+// if($_SESSION[ses_uaksesadmin] == '1'){
+selectAllSatker( 'kodeSatker1', '255', true, false, false, true );
+// }else{
+// selectSatker('kodeSatker1','255',true,false,false,true);
+// }
+// selectAllSatker('kodeSatker1','255',true,false);
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -231,7 +247,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="rpbmd">
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Peralatan dan Mesin</div>
@@ -256,11 +272,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php 
-						
-								selectAllSatker('kodeSatker2','255',true,false,false,true);
-								// selectAllSatker('kodeSatker2','255',true,false); 
-							?>
+							<?php
+
+selectAllSatker( 'kodeSatker2', '255', true, false, false, true );
+// selectAllSatker('kodeSatker2','255',true,false);
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -270,7 +286,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="pmbmd">
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Gedung dan Bangunan</div>
@@ -295,10 +311,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker3','255',true,false); 
-					
-								selectAllSatker('kodeSatker3','255',true,false,false,true);
-							?>
+							<?php //selectAllSatker('kodeSatker3','255',true,false);
+
+selectAllSatker( 'kodeSatker3', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -308,7 +324,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="rpmbmd">
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Jalan, Irigasi dan Jaringan</div>
@@ -333,10 +349,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker4','255',true,false); 
-					
-								selectAllSatker('kodeSatker4','255',true,false,false,true);
-							?>
+							<?php //selectAllSatker('kodeSatker4','255',true,false);
+
+selectAllSatker( 'kodeSatker4', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -346,7 +362,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="bdp3">
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Aset Tetap Lainnya</div>
@@ -371,11 +387,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker5','255',true,false); 
-			
-								selectAllSatker('kodeSatker5','255',true,false,false,true);
-								
-							?>
+							<?php //selectAllSatker('kodeSatker5','255',true,false);
+
+selectAllSatker( 'kodeSatker5', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -385,7 +401,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="rbdp3">
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Tetap - Konstruksi Dalam Pengerjaan</div>
@@ -411,9 +427,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker6','255',true,false);
-				
-								selectAllSatker('kodeSatker6','255',true,false,false,true);
-							?>
+
+selectAllSatker( 'kodeSatker6', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -423,7 +439,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="lainnya">
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Aset Lainnya</div>
@@ -448,10 +464,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker7','255',true,false); 
-					
-								selectAllSatker('kodeSatker7','255',true,false,false,true);
-							?>
+							<?php //selectAllSatker('kodeSatker7','255',true,false);
+
+selectAllSatker( 'kodeSatker7', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -461,7 +477,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="NonAset">
 						<div class="breadcrumb">
 							<div class="titleTab">Daftar Barang Non Aset</div>
@@ -486,10 +502,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker7','255',true,false); 
-					
-								selectAllSatker('kodeSatker16','255',true,false,false,true);
-							?>
+							<?php //selectAllSatker('kodeSatker7','255',true,false);
+
+selectAllSatker( 'kodeSatker16', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -499,8 +515,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
-						
+
+
 						<div class="tab-pane" id="neraca">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Barang Ke Neraca</div>
@@ -525,11 +541,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-				
-								selectAllSatker('kodeSatker8','255',true,false,false,true);
-							
-							?>
+							<?php //selectAllSatker('kodeSatker8','255',true,false);
+
+selectAllSatker( 'kodeSatker8', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -539,7 +555,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="rekapneraca">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Rincian Barang Ke Neraca</div>
@@ -587,11 +603,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									<option value="6">Sub Sub Kelompok</option>
 								</select>
 							</li>
-							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-				
-								selectAllSatker('kodeSatker18','255',true,false,false,true);
-							
-							?>
+							<?php //selectAllSatker('kodeSatker8','255',true,false);
+
+selectAllSatker( 'kodeSatker18', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -601,8 +617,8 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
-						
+
+
 						<div class="tab-pane" id="rekapskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Barang Per SKPD</div>
@@ -627,10 +643,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker13','255',true,false); 
-					
-								selectAllSatker('kodeSatker13','255',true,false,false,true);
-							?>
+							<?php //selectAllSatker('kodeSatker13','255',true,false);
+
+selectAllSatker( 'kodeSatker13', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -640,7 +656,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="rekapupb">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Barang Per UPB</div>
@@ -665,10 +681,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectAllSatker('kodeSatker14','255',true,false); 
-				
-								selectAllSatker('kodeSatker14','255',true,false,false,true);
-							?>
+							<?php //selectAllSatker('kodeSatker14','255',true,false);
+
+selectAllSatker( 'kodeSatker14', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -678,10 +694,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
-						
-						
-						
+
+
+
+
 						<div class="tab-pane" id="lapmutasi">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Mutasi Barang</div>
@@ -707,10 +723,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								</div>
 							</li>
 							<?php //selectAllSatker('kodeSatker9','255',true,false);
-					
-								selectAllSatker('kodeSatker9','255',true,false,false,true);
 
-							?>
+selectAllSatker( 'kodeSatker9', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
@@ -733,7 +749,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
 						</div>
-						
+
 						<div class="tab-pane" id="lapmutasiskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Mutasi Barang Antar SKPD</div>
@@ -758,10 +774,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectSatker('kodeSatker10','255',true,false); 
-					
-								selectAllSatker('kodeSatker10','255',true,false,false,true);
-							?>
+							<?php //selectSatker('kodeSatker10','255',true,false);
+
+selectAllSatker( 'kodeSatker10', '255', true, false, false, true );
+?>
 							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
@@ -780,7 +796,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						</ul>
 						</form>
                         </div>
-                        
+
 						<!--<div class="tab-pane" id="laprekapmutasiskpd">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekap Mutasi Barang</div>
@@ -805,10 +821,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php 
-					
-								//selectAllSatker('kodeSatker15','255',true,false,false,true);
-							?>
+							<?php
+
+//selectAllSatker('kodeSatker15','255',true,false,false,true);
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -820,7 +836,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
                         </div>-->
 
 
-						
+
 						<div class="tab-pane" id="lapdaftarpengadaan">
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Daftar Pengadaan</div>
@@ -845,10 +861,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									</div>
 								</div>
 							</li>
-							<?php //selectSatker('kodeSatker10','255',true,false); 
-					
-								selectAllSatker('kodeSatkerPengadaan','255',true,false,false,true);
-							?>
+							<?php //selectSatker('kodeSatker10','255',true,false);
+
+selectAllSatker( 'kodeSatkerPengadaan', '255', true, false, false, true );
+?>
 							<br>
                                                                                                <li>
 								<span class="span2">Tanggal Cetak</span>
@@ -865,9 +881,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						</form>                                          
-                                          
-                                     </div>   
+						</form>
+
+                                     </div>
 
 
                          <div class="tab-pane" id="rekaprincianbarangmutasi">
@@ -917,11 +933,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									<option value="6">Sub Sub Kelompok</option>
 								</select>
 							</li>
-							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-				
-								selectAllSatker('kodeSatkerRincian19','255',true,false,false,true);
-							
-							?>
+							<?php //selectAllSatker('kodeSatker8','255',true,false);
+
+selectAllSatker( 'kodeSatkerRincian19', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -929,10 +945,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						</form>                                         
-                                          
+						</form>
+
                                      </div>
-                                                
+
                                                 <div class="tab-pane" id="rekapdetailrincianbarangmutasi">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Detail Rincian Barang Mutasi (sampai ke no-register)</div>
@@ -980,11 +996,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									<option value="6">Sub Sub Kelompok</option>
 								</select>
 							</li>
-							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-				
-								selectAllSatker('kodeSatkerRincian20','255',true,false,false,true);
-							
-							?>
+							<?php //selectAllSatker('kodeSatker8','255',true,false);
+
+selectAllSatker( 'kodeSatkerRincian20', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -992,11 +1008,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						</form>                                         
-                                          
+						</form>
+
                                      </div>
-                                                
-                                                
+
+
                                                  <div class="tab-pane" id="rekaprincianbarangmutasi-lain">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Rincian Barang Mutasi-Aset LAIN</div>
@@ -1044,11 +1060,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									<option value="6">Sub Sub Kelompok</option>
 								</select>
 							</li>
-							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-				
-								selectAllSatker('kodeSatkerRincian19lain','255',true,false,false,true);
-							
-							?>
+							<?php //selectAllSatker('kodeSatker8','255',true,false);
+
+selectAllSatker( 'kodeSatkerRincian19lain', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -1056,10 +1072,10 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						</form>                                         
-                                          
+						</form>
+
                                      </div>
-                                                
+
                                                 <div class="tab-pane" id="rekapdetailrincianbarangmutasi-lain">
 						<div class="breadcrumb">
 							<div class="titleTab">Rekapitulasi Detail Rincian Barang Mutasi (sampai ke no-register)-Aset Lain</div>
@@ -1107,11 +1123,11 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 									<option value="6">Sub Sub Kelompok</option>
 								</select>
 							</li>
-							<?php //selectAllSatker('kodeSatker8','255',true,false); 
-				
-								selectAllSatker('kodeSatkerRincian20lain','255',true,false,false,true);
-							
-							?>
+							<?php //selectAllSatker('kodeSatker8','255',true,false);
+
+selectAllSatker( 'kodeSatkerRincian20lain', '255', true, false, false, true );
+
+?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
@@ -1119,18 +1135,83 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
-						</form>                                         
-                                          
-                                     </div>
-                                     
+						</form>
 
+                                     </div>
+
+                                                <!-- Kertas Kerja-->
+						    <div class="tab-pane" id="kk_detail">
+						<div class="breadcrumb">
+							<div class="titleTab">Kertas Kerja</div>
 						</div>
-			</div> 
-			
-			
-		</section>     
+						<form method="post" name="form" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/kk_detail.php"; ?>">
+						<ul>
+							<li>
+								<span class="span2">Tanggal Awal</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+                                                                                <input type="text" class="span2 full" name="tglPerolehanAwalRekapNeraca" id="tglPerolehanAwalKK_detail" value="" readonly="1"/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Tanggal Akhir</span>
+								<div class="control">
+									<div class="input-prepend">
+										<span class="add-on"><i class="fa fa-calendar"></i></span>
+										<input type="text" class="span2 full" name="tglPerolehanAkhirRekapNeraca" id="tglPerolehanAkhirKK_detail" value="" required/>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="span2">Jenis Aset</span>
+								<select name="tipeAset" id="tipeAset" style="width:170px">
+									<option value="all">Semua Aset</option>
+									<option value="tanah">Tanah</option>
+									<option value="mesin">Mesin</option>
+									<option value="bangunan">Bangunan</option>
+									<option value="jaringan">Jaringan</option>
+									<option value="asetlain">Aset Lain</option>
+									<option value="kdp">KDP</option>
+								</select>
+							</li>
+							<li>
+								<span class="span2">Level</span>
+                                                                <select  name="levelAset" id="levelAset" style="width:170px">
+									<option value="1">Semua Level</option>
+									<option value="2">Golongan</option>
+									<option value="3">Bidang</option>
+									<option value="4">Kelompok</option>
+									<option value="5">Sub Kelompok</option>
+									<option value="6">Sub Sub Kelompok</option>
+								</select>
+							</li>
+							<?php //selectAllSatker('kodeSatker8','255',true,false);
+
+selectAllSatker( 'kodeSatkerRincianKK', '255', true, false, false, true );
+
+?>
+							<br>
+							<li>
+								<span class="span2">&nbsp;</span>
+								<input type="submit" name="pengadaanbmd" class="btn btn-primary" value="Lanjut" />&nbsp;
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
+							</li>
+						</ul>
+						</form>
+
+                                     </div>
+						<!-- Akhir Kertas Kerja -->
+						</div>
+
+						
+			</div>
+
+
+		</section>
 	</section>
-	
+
 <?php
-	include"$path/footer.php";
+include"$path/footer.php";
 ?>
