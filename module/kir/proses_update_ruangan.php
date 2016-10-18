@@ -4,7 +4,13 @@ include "../../config/config.php";
 	// $KIR = new RETRIEVE_KIR;
 	$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	// pr($_POST);
-	$kodeRuang = $_POST['kodeRuang'];
+	$kodeRuangan = $_POST['kodeRuang'];
+	if($kodeRuangan){
+		$kodeRuang = trim($kodeRuangan);
+	}else{
+		$kodeRuang = 'NULL';
+	}
+
 	$kodeSatker = $_POST['kodeSatker'];
 	$tgl = $_POST['tglPerubahan'];
 	// EXIT;
@@ -25,7 +31,7 @@ include "../../config/config.php";
 	
 	//sql sementara
 	//update ruangan di tabel aset
-	$QueryAset	  = "UPDATE aset SET kodeRuangan = '$kodeRuang' WHERE Aset_ID in ($implodeAset_ID)";
+	$QueryAset	  = "UPDATE aset SET kodeRuangan = $kodeRuang WHERE Aset_ID in ($implodeAset_ID)";
 	// pr($QueryAset);
 	$ExeQueryAset = $DBVAR->query($QueryAset);
 	$POST=$_POST;
@@ -62,10 +68,6 @@ include "../../config/config.php";
 			$tableLog = 'log_kdp';
 		}
 		
-		//update ruangan di tabel kib
-		$QueryKib	  = "UPDATE $tableKib SET kodeRuangan = '$kodeRuang' WHERE Aset_ID = '$Aset_ID'";
-		$ExeQueryKib = $DBVAR->query($QueryKib);
-		
 		//select field dan value tabel kib
 		$QueryKibSelect	  = "SELECT * FROM $tableKib WHERE Aset_ID = '$Aset_ID'";
 		$exequeryKibSelect = $DBVAR->query($QueryKibSelect);
@@ -75,14 +77,14 @@ include "../../config/config.php";
 		$tmpVal = array();
 		$sign = "'"; 
 		foreach ($resultqueryKibSelect as $key => $val) {
-            $tmpField[] = $key;
-			if ($val ==''){
-				$tmpVal[] = NULL;
+			$tmpField[] = $key;
+			if ($val =='' || $val == NULL){
+				$tmpVal[] = 'NULL';
 			}else{
 				$tmpVal[] = $sign.addslashes($val).$sign;
 			}
 		}
-		pr($tmpVal);
+		//pr($tmpVal);
 		$implodeField = implode (',',$tmpField);
 		$implodeVal = implode (',',$tmpVal);
 		
@@ -93,11 +95,14 @@ include "../../config/config.php";
 		$NilaiPerolehan_Awal = $resultqueryKibSelect->NilaiPerolehan;
 		$Kd_Riwayat = '4';
 		
+		//update ruangan di tabel kib
+		$QueryKib	  = "UPDATE $tableKib SET kodeRuangan = $kodeRuang WHERE Aset_ID = '$Aset_ID'";
+		$ExeQueryKib = $DBVAR->query($QueryKib);
+		
 		//insert log
 		$QueryLog  = "INSERT INTO $tableLog ($implodeField,$AddField)
 					VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
 	
-		// pr($QueryLog);
 		$exeQueryLog = $DBVAR->query($QueryLog);
 	}
 	

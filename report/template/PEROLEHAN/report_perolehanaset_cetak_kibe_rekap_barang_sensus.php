@@ -69,8 +69,9 @@ if($tglcetak != ''){
 	$tanggalCetak = format_tanggal($tglcetak);	
 	$thnPejabat =substr($tglcetak,0,4);
 }
+$thnRuangan = $tahun;
 //retrieve html
-$html=$REPORT->retrieve_html_kib_e_rekap_sensus($result_query,$gambar,$tanggalCetak,$thnPejabat);
+$html=$REPORT->retrieve_html_kib_e_rekap_sensus($result_query,$gambar,$tanggalCetak,$thnPejabat,$thnRuangan);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

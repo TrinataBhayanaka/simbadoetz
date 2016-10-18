@@ -1034,7 +1034,8 @@ class core_api_report extends DB {
 			$rekap_barang_b_condition_sensus ="select M.kodeSatker,M.noRegister,
 													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
-													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+													M.Silinder,M.kodeLokasi,M.kodeRuangan, 
+													K.Kode, K.Uraian
 												from 
 													mesin_ori as M,kelompok as K 
 												where 
@@ -1096,7 +1097,7 @@ class core_api_report extends DB {
 											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
 											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
 											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-											AL.kondisi, AL.kodeLokasi,
+											AL.kondisi, AL.kodeLokasi,AL.kodeRuangan,
 											K.Kode, K.Uraian
 											from 
 											asetlain_ori as AL,kelompok as K  

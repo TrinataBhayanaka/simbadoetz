@@ -15555,7 +15555,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
      }
 
 //Rekapitulasi Sensus KIB-B 
-	public function retrieve_html_kib_b_rekap_sensus($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+	public function retrieve_html_kib_b_rekap_sensus($dataArr,$gambar,$tanggalCetak,$thnPejabat,$thnRuangan){
       if($dataArr!="")
           {
 		 
@@ -16124,56 +16124,58 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
                                                 $status_print++;
 
                                              }
-                                             //udah dites
-												$split = explode("-", $row->noRegister);
-												/*if (count($split) == 1){
-													// $hasil = 1;
-													$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
-													$nilaiPerolehan = $row->NilaiPerolehan;
-												}else{
-													$awal = $split[0];
-													$akhir = end($split);
-													$hasil = (intval($akhir) - intval($awal)) + 1;
-													$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
-													$nilaiPerolehan = $nilaiPrlhn ; 
-													$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
-												}*/
-												$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
-												$nilaiPerolehan = $row->NilaiPerolehan;
-												$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
-												// $noReg=$this->sortirNoReg($row->noRegister);
-												// $noReg=$row->noRegister;
-												$noReg = sprintf("%04s", $row->noRegister);
-												if($row->TglPerolehan == ''){
-													$tglPrlhn = ''; 
-												}else{
-													list($tahun, $bulan, $tanggal)= explode('-', $row->TglPerolehan);
-													$tglPrlhn = "$tanggal/$bulan/$tahun";
-												}												
-                                                            $body.="
-																<tr align=\"center\">
-																	<td style=\"width: 30px; text-align: center;\">$no</td>
-																	<td style=\"width: 85px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 150px; \">$row->Uraian</td>
-																	<td style=\"width: 60px; text-align: center; width: 60px; \">$noReg</td>
-																	<td style=\"width: 43px; font-weight: \">$row->Merk</td>
-																	<td style=\"width: 60px;font-weight: \">$row->Ukuran</td>
-																	<td style=\"width: 60px;font-weight: \">$row->Material</td>
-																	<td style=\"width: 70; text-align: center;\">$row->Tahun</td>
-																	<td style=\"width: 70; text-align: center;\">$tglPrlhn</td>
-																	<td style=\"width: 72px; text-align: center;\">$row->NoSeri</td>
-																	<td style=\"width: 72px; text-align: center;\">$row->NoRangka</td>
-																	<td style=\"width: 72px; text-align: center;\">$row->NoMesin</td>
-																	<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
-																	<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
-																	<td style=\"width: 69; text-align: center;\">$row->AsalUsul</td>
-																	<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
-																	<td style=\"width: 70px;font-weight: \">$row->Info</td>
-																	<td style=\"width: 70px;font-weight: \"></td>
-																	<td style=\"width: 70px;font-weight: \"></td>
-																	<td style=\"width: 100px;font-weight: \"></td>
-																	<td style=\"width: 100px;font-weight: \"></td>
-																</tr>";
+                                 //udah dites
+									$split = explode("-", $row->noRegister);
+									/*if (count($split) == 1){
+										// $hasil = 1;
+										$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+										$nilaiPerolehan = $row->NilaiPerolehan;
+									}else{
+										$awal = $split[0];
+										$akhir = end($split);
+										$hasil = (intval($akhir) - intval($awal)) + 1;
+										$nilaiPrlhn = $hasil * $row->NilaiPerolehan;
+										$nilaiPerolehan = $nilaiPrlhn ; 
+										$nilaiPrlhnFix = number_format($nilaiPrlhn,2,",",".");
+									}*/
+									$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+									$nilaiPerolehan = $row->NilaiPerolehan;
+									$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+									// $noReg=$this->sortirNoReg($row->noRegister);
+									// $noReg=$row->noRegister;
+									$noReg = sprintf("%04s", $row->noRegister);
+									if($row->TglPerolehan == ''){
+										$tglPrlhn = ''; 
+									}else{
+										list($tahun, $bulan, $tanggal)= explode('-', $row->TglPerolehan);
+										$tglPrlhn = "$tanggal/$bulan/$tahun";
+									}
+									$ketRuangan = $this->get_Ruangan($thnRuangan,$row->kodeSatker,
+																	$row->kodeRuangan);										
+                                    $body.="
+										<tr align=\"center\">
+											<td style=\"width: 30px; text-align: center;\">$no</td>
+											<td style=\"width: 85px; text-align: center;\">$row->Kode</td>
+											<td style=\"width: 150px; \">$row->Uraian</td>
+											<td style=\"width: 60px; text-align: center; width: 60px; \">$noReg</td>
+											<td style=\"width: 43px; font-weight: \">$row->Merk</td>
+											<td style=\"width: 60px;font-weight: \">$row->Ukuran</td>
+											<td style=\"width: 60px;font-weight: \">$row->Material</td>
+											<td style=\"width: 70; text-align: center;\">$row->Tahun</td>
+											<td style=\"width: 70; text-align: center;\">$tglPrlhn</td>
+											<td style=\"width: 72px; text-align: center;\">$row->NoSeri</td>
+											<td style=\"width: 72px; text-align: center;\">$row->NoRangka</td>
+											<td style=\"width: 72px; text-align: center;\">$row->NoMesin</td>
+											<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
+											<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
+											<td style=\"width: 69; text-align: center;\">$row->AsalUsul</td>
+											<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
+											<td style=\"width: 70px;font-weight: \">$row->Info</td>
+											<td style=\"width: 70px;font-weight: \"></td>
+											<td style=\"width: 70px;font-weight: \"></td>
+											<td style=\"width: 100px;font-weight: \">$ketRuangan</td>
+											<td style=\"width: 100px;font-weight: \"></td>
+										</tr>";
                                                            
                                                   $no++;
                                                  
@@ -17809,7 +17811,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
      }          
 
 //Rekapitulasi Sensus KIB-E (ok)	 
-	public function retrieve_html_kib_e_rekap_sensus($dataArr,$gambar,$tanggalCetak,$thnPejabat){
+	public function retrieve_html_kib_e_rekap_sensus($dataArr,$gambar,$tanggalCetak,$thnPejabat,$thnRuangan){
 			 if($dataArr!="")
           {
 			  // include ('../../../function/tanggal/tanggal.php');
@@ -18459,32 +18461,33 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														$tglPrlhn = "$tanggal/$bulan/$tahun";
 													}
 													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
-													       $body.="
-																<tr>
-																	<td style=\"width: 30px; text-align: center;\">$no</td>
-																	<td style=\"width: 150px; \">$row->Uraian</td>
-																	<td style=\"width: 79px; text-align: center;\">$row->Kode</td>
-																	<td style=\"width: 60px; text-align: center;\">$noReg</td>
-																	<td style=\"width: 150px;  \">$judulBuku</td>
-																	<td style=\"width: 70px;  \">$row->Spesifikasi</td>
-																	<td style=\"width: 70px;  \">$row->AsalDaerah</td>
-																	<td style=\"width: 69px;  \">$row->Pengarang</td>
-																	<td style=\"width: 80px; \">$row->Material</td>
-																	<td style=\"width: 69px;  \">$judulHewan</td>
-																	<td style=\"width: 70px; \">$mix</td>
-																	<td style=\"width: 51px; text-align: center;\">$hasil</td>
-																	<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
-																	<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
-																	<td style=\"width: 69px; text-align: center;\">$tglPrlhn</td>
-																	<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
-																	<td style=\"width: 70px;\">$row->Info</td>
-																	<td style=\"width: 70px;\"></td>
-																	<td style=\"width: 70px;\"></td>
-																	<td style=\"width: 100px;\"></td>
-																	<td style=\"width: 100px;\"></td>
-																</tr>";
-                                                            
-                                                            $no++;				
+													$ketRuangan = $this->get_Ruangan($thnRuangan,$row->kodeSatker,$row->kodeRuangan);										
+											       $body.="
+														<tr>
+															<td style=\"width: 30px; text-align: center;\">$no</td>
+															<td style=\"width: 150px; \">$row->Uraian</td>
+															<td style=\"width: 79px; text-align: center;\">$row->Kode</td>
+															<td style=\"width: 60px; text-align: center;\">$noReg</td>
+															<td style=\"width: 150px;  \">$judulBuku</td>
+															<td style=\"width: 70px;  \">$row->Spesifikasi</td>
+															<td style=\"width: 70px;  \">$row->AsalDaerah</td>
+															<td style=\"width: 69px;  \">$row->Pengarang</td>
+															<td style=\"width: 80px; \">$row->Material</td>
+															<td style=\"width: 69px;  \">$judulHewan</td>
+															<td style=\"width: 70px; \">$mix</td>
+															<td style=\"width: 51px; text-align: center;\">$hasil</td>
+															<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
+															<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+															<td style=\"width: 69px; text-align: center;\">$tglPrlhn</td>
+															<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
+															<td style=\"width: 70px;\">$row->Info</td>
+															<td style=\"width: 70px;\"></td>
+															<td style=\"width: 70px;\"></td>
+															<td style=\"width: 100px;\">$ketRuangan</td>
+															<td style=\"width: 100px;\"></td>
+														</tr>";
+                                                    
+                                                    $no++;				
                                                             
                                  
                                              }
@@ -38027,7 +38030,9 @@ return $hasil_html;
 	}else{
 		$query_getRuangan="SELECT NamaSatker FROM satker WHERE kode ='$satker' and Kd_Ruang ='$kdRuang'";	
 	}
-	// echo "query =".$query_getRuangan;
+	//echo "<>";
+	//echo "query =".$query_getRuangan;
+	//pr($query_getRuangan);
 	// echo "<br>";
 	$result=$this->retrieve_query($query_getRuangan);
 	if($result!=""){

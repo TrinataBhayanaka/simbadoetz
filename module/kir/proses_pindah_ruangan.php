@@ -5,8 +5,14 @@ include "../../config/config.php";
 	// exit;
 	// $KIR = new RETRIEVE_KIR;
 	$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-	// pr($_POST);
-	$kodeRuang = $_POST['kodeRuang'];
+	//pr($_POST);
+	$kodeRuangan = $_POST['kodeRuang'];
+	if($kodeRuangan){
+		$kodeRuang = trim($kodeRuangan);
+	}else{
+		$kodeRuang = 'NULL';
+	}
+	
 	$kodeSatker = $_POST['kodeSatker'];
 	$tgl = $_POST['tglPerubahan'];
 	// EXIT;
@@ -22,13 +28,13 @@ include "../../config/config.php";
 	
 	//implode Aset_ID
 	$implodeAset_ID = implode(",",$cleanArray);
-	// echo "implode ".$implodeAset_ID;
-	// exit;
+	//echo "implode ".$implodeAset_ID;
+	//exit;
 	
 	//sql sementara
 	//update ruangan di tabel aset
-	$QueryAset	  = "UPDATE aset SET kodeRuangan = '$kodeRuang' WHERE Aset_ID in ($implodeAset_ID)";
-	// pr($QueryAset);
+	$QueryAset	  = "UPDATE aset SET kodeRuangan = $kodeRuang WHERE Aset_ID in ($implodeAset_ID)";
+	//pr($QueryAset);
 	$ExeQueryAset = $DBVAR->query($QueryAset);
 	$POST=$_POST;
 	$POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
@@ -64,11 +70,7 @@ include "../../config/config.php";
 			$tableLog = 'log_kdp';
 		}
 		
-		//update ruangan di tabel kib
-		$QueryKib	  = "UPDATE $tableKib SET kodeRuangan = '$kodeRuang' WHERE Aset_ID = '$Aset_ID'";
-		$ExeQueryKib = $DBVAR->query($QueryKib);
-		
-		//select field dan value tabel kib
+		//select field dan value tabel kib and koderuangan lama
 		$QueryKibSelect	  = "SELECT * FROM $tableKib WHERE Aset_ID = '$Aset_ID'";
 		$exequeryKibSelect = $DBVAR->query($QueryKibSelect);
 		$resultqueryKibSelect = $DBVAR->fetch_object($exequeryKibSelect);
@@ -78,14 +80,13 @@ include "../../config/config.php";
 		$sign = "'"; 
 		foreach ($resultqueryKibSelect as $key => $val) {
             $tmpField[] = $key;
-			if ($val ==''){
-				// $tmpVal[] = $sign.NULL.$sign;
-				$tmpVal[] = $sign.$sign;
+			if ($val =='' || $val == NULL){
+				$tmpVal[] = 'NULL';
 			}else{
 				$tmpVal[] = $sign.addslashes($val).$sign;
 			}
 		}
-		
+			
 		$implodeField = implode (',',$tmpField);
 		$implodeVal = implode (',',$tmpVal);
 		
@@ -96,6 +97,11 @@ include "../../config/config.php";
 		$NilaiPerolehan_Awal = $resultqueryKibSelect->NilaiPerolehan;
 		$Kd_Riwayat = '4';
 		
+
+		//update ruangan di tabel kib
+		$QueryKib	  = "UPDATE $tableKib SET kodeRuangan = $kodeRuang WHERE Aset_ID = '$Aset_ID'";
+		$ExeQueryKib = $DBVAR->query($QueryKib);
+
 		//insert log
 		$QueryLog  = "INSERT INTO $tableLog ($implodeField,$AddField)
 					VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
