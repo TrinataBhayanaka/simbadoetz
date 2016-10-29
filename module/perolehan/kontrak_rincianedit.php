@@ -90,6 +90,24 @@ $menu_id = 10;
 								<span class="labelInfo">Tgl. Kontrak</span>
 								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
 							</li>
+							<li>
+								<span class="labelInfo">Kategori Belanja Aset</span>
+								<?php
+								if($kontrak[0]['kategori_belanja'] == '01'){
+									$kategori_belanja = 'Tanah';
+								}elseif($kontrak[0]['kategori_belanja'] == '02'){
+									$kategori_belanja = 'Mesin';
+								}elseif($kontrak[0]['kategori_belanja'] == '03'){
+									$kategori_belanja = 'Bangunan';
+								}elseif($kontrak[0]['kategori_belanja'] == '04'){
+									$kategori_belanja = 'Jaringan';
+								}elseif($kontrak[0]['kategori_belanja'] == '05'){
+									$kategori_belanja = 'Aset lain';
+								}
+								?>
+								<input type="text" value="<?=$kategori_belanja?>" id="" disabled/>
+								<input type="hidden" value="<?=$kontrak[0]['kategori_belanja']?>" id="kategori_belanja" disabled/>
+							</li>
 						</ul>
 							
 					</div>
@@ -164,6 +182,22 @@ $menu_id = 10;
 						</ul>
 						<ul>
 							<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
+						</ul>
+						<ul>
+		            	<li style="display:none" class="infoReklas">
+							<span class="">&nbsp;</span>
+							<div class="checkbox">
+			                  <em id="infoReklas">
+			                  </em>
+			                </div>
+						</li>
+						</ul>
+						<ul style="display:none" class="reklasAset">
+							<?php selectAset('kodeKelompokTujuan','255',true,false,''); ?>
+						</ul>
+						<ul style="display:none" class="reklasAset">
+							<li><span class="span2">&nbsp;</span>
+							*)Kode Reklas Aset</li>
 						</ul>
 						<ul class="tanah" style="display:none">
 							<li>
@@ -370,6 +404,7 @@ $menu_id = 10;
 							
 					</div>
 					<!-- hidden -->
+					<input type="hidden" name="flag" value="0" id="flag">
 					<input type="hidden" name="Aset_ID" value="">
 					<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
 					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
@@ -410,8 +445,40 @@ $menu_id = 10;
 			}
 		}, 1000);
 	})
-
+	$(document).on('change','#kodeKelompokTujuan', function(){
+		//@revisi
+		var tmp = $(this).val(); 
+		var kodeKelompok = tmp.split("."); 
+		var kategori_belanja = $('#kategori_belanja').val(); 
+		 if(kodeKelompok[0] != kategori_belanja){
+		 	//show that the value is NOT available
+        	$('#flag').val("2");
+        	$('.infoReklas').show();
+          	$('#infoReklas').html('Kode Reklas Aset tidak sesuai dengan kategori Belanja Aset');
+            $('#infoReklas').css("color","red");
+            $('#submit').attr("disabled","disabled");
+      	}else{
+        	//show that the value is available
+        	$('#flag').val("1");
+        	$('.infoReklas').show();
+      		$('#infoReklas').html('Kode Reklas Aset sesuai dengan kategori Belanja Aset');
+        	$('#infoReklas').css("color","green");
+            $('#submit').removeAttr("disabled");
+      	}
+	});
 	$(document).on('change','#kodeKelompok', function(){
+		//@revisi
+		var tmp = $(this).val(); 
+        var kodeKelompok = tmp.split("."); 
+        var kategori_belanja = $('#kategori_belanja').val(); 
+        if(kodeKelompok[0] != kategori_belanja){
+        	$('#flag').val("3");
+        	$('.reklasAset').show(400);
+      	}else{
+        	$('.reklasAset').hide(400);
+      	}
+      	$('.infoReklas').hide();
+      	
 
 		var kode = $('#kodeKelompok').val();
 		var gol = kode.split(".");
@@ -475,6 +542,13 @@ $menu_id = 10;
 	});
 
 	$(document).on('submit', function(){
+		
+		var flag = $("#flag").val();
+		if(flag == 3){
+			alert("Kode Reklas Aset Di Isi Terlebih Dahulu");
+			return false;	
+		}
+
 		var perolehan = $("#nilaiPerolehan").val();
 		var total = $("#totalRB").val();
 		var spk = $("#spk").val();

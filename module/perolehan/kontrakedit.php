@@ -19,7 +19,7 @@ include"$path/menu.php";
  <?php
 if ( isset( $_POST['noKontrak'] ) ) {
   if ( $_POST['id'] == "" ) {
-    // pr($_POST);exit;
+    //pr($_POST);//exit;
     $dataArr = $STORE->store_kontrak( $_POST );
   }  else {
     $dataArr = $STORE->store_edit_kontrak( $_POST, $_POST['id'] );
@@ -41,11 +41,34 @@ if ( isset( $_GET['id'] ) ) {
     jQuery(function($) {
         $('#nilai_front').autoNumeric('init');
         $("#datepicker").mask("9999-99-99");
+
+         //get jenis belanja 
+        var idkontrak  = $('#idkontrak').val();
+        if(idkontrak){
+          var jns_blnj  = $('.jns_blnj').val();
+          if(jns_blnj == 0){
+            $('#kategori_blnj').show(400);
+          }else{
+            $('#kategori_blnj').hide(400);
+          }
+        }
+        
+        $('.jns_blnj').on('change', function(){
+          //alert("masuk");
+          var tmp = $(this).val();       
+          if(tmp == 0){
+            $('#kategori_blnj').show(400);
+          }else{
+            $('#kategori_blnj').hide(400);
+          }
+      }); 
     });
 
     function getCurrency(item){
       $('#nilai').val($(item).autoNumeric('get'));
     }
+
+   
   </script>
   <section id="main">
     <ul class="breadcrumb">
@@ -116,32 +139,47 @@ if ( isset( $_GET['id'] ) ) {
           </label>
         </div>
       </li>
+
       <li>
-                <span  class="span2">&nbsp;</span>
+      <span  class="span2">&nbsp;</span>
         <div class="checkbox">
           <label>
           <input type="radio" required name="tipeAset" value="3" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['tipeAset']== "3" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Ubah Status
           </label>
         </div>
-              </li>
+      </li>
 
       <li>
-                <span  class="span2">Jenis Belanja</span>
+      <span  class="span2">Jenis Belanja</span>
         <div class="checkbox">
           <label>
-          <input type="radio" required name="jenis_belanja" value="0" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['jenis_belanja']== "0" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Belanja Modal
+          <input type="radio" class = "jns_blnj" required name="jenis_belanja" value="0" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['jenis_belanja']== "0" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Belanja Modal
           </label>
         </div>
-      </li>
+      </li>      
       <li>
-                <span  class="span2">&nbsp;</span>
+      <span  class="span2">&nbsp;</span>
         <div class="checkbox">
           <label>
-          <input type="radio" required name="jenis_belanja" value="1" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['jenis_belanja']== "1" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Belanja Barang dan Jasa
+          <input type="radio" class = "jns_blnj" required name="jenis_belanja" value="1" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['jenis_belanja']== "1" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Belanja Barang dan Jasa
           </label>
         </div>
       </li>
-            </ul>
+      <br/>
+      <div id ="kategori_blnj" style="display: none">
+      <li>
+      <span  class="span2" >Kategori Belanja Aset</span>
+        <select  name="kategori_belanja" class="span2" id="NamaJabatan" required>
+            <option value="" >Pilih Kategori Aset</option>
+            <option value="01" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "01" ) ? 'selected' : '' ) : '' ?>/>Tanah</option>
+            <option value="02" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "02" ) ? 'selected' : '' ) : '' ?>/>Mesin</option>
+            <option value="03" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "03" ) ? 'selected' : '' ) : '' ?>/>Bangunan</option>
+            <option value="04" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "04" ) ? 'selected' : '' ) : '' ?>/>Jaringan</option>
+            <option value="05" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "05" ) ? 'selected' : '' ) : '' ?>/>Asetlain</option>
+          </select>
+      </li> 
+      </div>
+      </ul>
 
           </div>
           <div class="formPerusahaan">
@@ -191,7 +229,7 @@ if ( isset( $_GET['id'] ) ) {
         </div>
 
         <!-- Hidden -->
-        <input type="hidden" name="id" value="<?php echo ( isset( $kontrak ) ) ? $kontrak[0]['id'] : '' ?>"/>
+        <input type="hidden" name="id" id="idkontrak" value="<?php echo ( isset( $kontrak ) ) ? $kontrak[0]['id'] : '' ?>"/>
         <input type="hidden" name="UserNm" value="<?php echo $_SESSION['ses_uoperatorid']?>"/>
         <input type="hidden" name="tipe_kontrak" value="1"/>
 

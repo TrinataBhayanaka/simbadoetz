@@ -1519,6 +1519,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $kodeSatker = explode(".",$data['kodeSatker']);
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+        //@revisi
+        $tblAset['kodeKelompokReklas'] = $data['kodeKelompokTujuan'];
+        
         $tblAset['kodeSatker'] = $data['kodeSatker'];
         $tahun = explode("-", $data['TglPerolehan']);
         $tblAset['Tahun'] = $tahun[0];
@@ -1683,6 +1686,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
             $tblKib['kodeRuangan'] = $data['kodeRuangan'];
             $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+            //@revisi
+            $tblKib['kodeKelompokReklas'] = $tblAset['kodeKelompokReklas'];
+
             $tblKib['kodeSatker'] = $data['kodeSatker'];
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];

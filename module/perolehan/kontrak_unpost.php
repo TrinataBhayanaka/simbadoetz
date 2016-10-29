@@ -76,6 +76,16 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       $sql = "UPDATE {$tabel} SET NilaiPerolehan = '{$satuan}', StatusTampil = NULL, StatusValidasi = NULL WHERE Aset_ID = '{$data['Aset_ID']}'";
       $execquery = mysql_query($sql);
       logFile($sql);
+
+       //@revisi non aktif tgl perubahan
+      if($data['kodeKelompokReklas']){
+        $sql = "UPDATE log_{$tabel} SET TglPerubahan = NULL
+                WHERE Aset_ID = '{$data['Aset_ID']}' 
+                ORDER BY log_id DESC LIMIT 1";
+        $execquery = mysql_query($sql);
+        logFile($sql);
+      }
+
       if(!$execquery){
         $DBVAR->rollback();
         echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
