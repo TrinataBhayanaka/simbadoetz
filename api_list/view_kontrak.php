@@ -28,7 +28,7 @@ $id=$_SESSION['user_id'];//Nanti diganti
  // pr($_GET);
  // exit;
 $aColumns = array('k.id','k.noKontrak','k.kodeSatker','s.NamaSatker','k.tglKontrak',
-				 'k.tipeAset','k.tipe_kontrak','k.nilai','k.n_status');
+				 'k.tipeAset','k.tipe_kontrak','k.nilai','k.n_status','k.status_belanja','k.jenis_belanja');
 $test = count($aColumns);
   
 // echo $aColumns; 
@@ -224,16 +224,30 @@ if (!empty($data)){
 			$del = "";
 			$act = "<span class='label label-Success'>Sudah di posting</span>";
 		}
-		
-		
-		
+
+		if($aRow['status_belanja'] == '0'){
+			$ket = "";
+		}elseif($aRow['status_belanja'] == '1'){
+			$ket = "Reklas";
+		}else{
+			$ket = "";
+		}
+
+		if($aRow['jenis_belanja'] == '0'){
+			$belanja = "Belanja Modal";
+		}elseif($aRow['jenis_belanja'] == '1'){
+			$belanja = "Belanja Barang dan jasa";
+		}
+
 		  $row[] ="<center>".$no."</center>";
 		  $row[] =$tes;
 		  $row[] =$noKontrak;
 		  $row[] =$tglKontrak;
 		  $row[] =$jenisKontrak;
 		  $row[] =$tipeAset;
+		  $row[] =$belanja;
 		  $row[] ="<center>".number_format($nilai,2)."</center>";
+		  $row[] =$ket;
 		  $row[] ="<center>".$edit." ".$del.$act."</center>";
 		 
 		  

@@ -20,13 +20,34 @@ while ($dataStatusBelanja = mysql_fetch_assoc($execGetStatusBelanja)){
   $StatusBelanja[] = $dataStatusBelanja;
 }
 $count = count($StatusBelanja);
-if($count == 1){
-  //jenis aset sama semua
-  $status_belanja = '0';
-}else{
-  //jenis aset mix
-  $status_belanja = '1';
-}
+//pr($count);
+  if($count == 1){
+    $ceck = "SELECT count(Aset_ID) as jml FROM aset WHERE 
+        noKontrak  = '{$noKontrak[noKontrak]}'  
+        AND (kodeKelompokReklas is null or kodeKelompokReklas ='')";
+        $execceck= mysql_query($ceck);
+        while ($dataceck = mysql_fetch_assoc($execceck)){
+          
+          if($dataceck['jml'] == 0){
+            //nothing
+          }else{
+            $Statusceck[] = $dataceck;
+          } 
+    }
+    $ceccountk = count($Statusceck);
+    //pr($ceccountk);
+    if($ceccountk == $count){
+      //jenis aset sama semua
+      $status_belanja = '0';
+    }else{
+      //jenis aset mix
+      $status_belanja = '1';
+    }
+  }else{
+    //jenis aset mix
+    $status_belanja = '1';
+  }
+
 $updateStatusBelanja = "UPDATE kontrak SET 
                   status_belanja = '{$status_belanja}' 
                   WHERE id = '{$noKontrak['id']}'";
@@ -76,17 +97,8 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
     $jenis_belanja=$noKontrak['jenis_belanja'];
     
-    //@revisi
-    if($data['kodeKelompokReklas']){
-      $updateAset = "UPDATE aset SET jenis_belanja='{$jenis_belanja}',NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '0', Status_Validasi_Barang = '0' 
-        WHERE Aset_ID = '{$data['Aset_ID']}'";
-
-    }else{
-      $updateAset = "UPDATE aset SET jenis_belanja='{$jenis_belanja}',NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
-    }
+    $updateAset = "UPDATE aset SET jenis_belanja='{$jenis_belanja}',NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
     
-
-
     $execquery = mysql_query($updateAset);
     logFile($updateAset);
     if(!$execquery){
@@ -194,12 +206,103 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                 $fileldImp2 = implode(',', $tmpField2);
                 $dataImp2 = implode(',', $tmpValue2);
 
-                $sql = "INSERT INTO log_{$tabel} ({$fileldImp2}) VALUES ({$dataImp2})";
-                $execquery = mysql_query($sql);
-                logFile($sql);
+                $sql2 = "INSERT INTO log_{$tabel} ({$fileldImp2}) VALUES ({$dataImp2})";
+                $execquery = mysql_query($sql2);
+                logFile($sql2);
+
+                //@revisi tambahan
+                //insert untuk log aset reklas
+                $explode = explode('.', $data['kodeKelompokReklas']);
+
+                if($explode[0] =="01"){
+                    $tabel = "tanah";
+                    //$logtabel = "log_tanah";
+                } elseif ($explode[0]=="02") {
+                    $tabel = "mesin";
+                    //$logtabel = "log_mesin";
+                } elseif ($explode[0]=="03") {
+                    $tabel = "bangunan";
+                    //$logtabel = "log_bangunan";
+                } elseif ($explode[0]=="04") {
+                    $tabel = "jaringan";
+                    //$logtabel = "log_jaringan";
+                } elseif ($explode[0]=="05") {
+                    $tabel = "asetlain";
+                    //$logtabel = "log_asetlain";
+                } elseif ($explode[0]=="06") {
+                    $tabel = "kdp";
+                    //$logtabel = "log_kdp";
+                }
+
+                $query = mysql_query("SELECT noRegister,Bangunan_ID FROM {$tabel} 
+                  WHERE kodeKelompok = '{$data['kodeKelompokReklas']}' 
+                  AND kodeKelompokReklas = '{$data['kodeKelompok']}'
+                  AND kodeLokasi = '{$data['kodeLokasi']}'
+                  AND GUID = '{$data['Aset_ID']}'
+                  LIMIT 1");
+                while ($row = mysql_fetch_assoc($query)){
+                    $startreg = $row['noRegister'];
+                    $Bangunan_ID = $row['Bangunan_ID'];
+                }
+                //pr($startreg);
+                $noreg = $startreg; 
+                //@kodereklas (tujuan)
+                $tblLogKib['Bangunan_ID'] = $Bangunan_ID;
+                $tblLogKib['kodeKelompok'] = $kib['kodeKelompokReklas'];
+                $tblLogKib['kodeSatker'] = $kib['kodeSatker'];
+                $tblLogKib['kodeLokasi'] = $kib['kodeLokasi'];
+                $tblLogKib['noRegister'] = $noreg;
+                $tblLogKib['TglPerolehan'] = $kib['TglPerolehan'];
+                $tblLogKib['Tahun'] = $kib['Tahun'];
+                //@set kebalikan dari kodereklas (asal)
+                $tblLogKib['kodeKelompokReklas'] = $kib['kodeKelompok'];
+                $tblLogKib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
+                $tblLogKib['NilaiBuku'] = $kib['NilaiPerolehan'];
+                $tblLogKib['kondisi'] = $kib['kondisi'];
+                $tblLogKib['Info'] = addslashes($kib['Info']);
+                $tblLogKib['Alamat'] = $kib['Alamat'];
+                $tblLogKib['StatusValidasi'] = 0;
+                $tblLogKib['Status_Validasi_Barang'] = 0;
+                $tblLogKib['StatusTampil'] = 0;
+                //flag u/Aset_ID
+                $tblLogKib['GUID'] = $kib['Aset_ID'];
+                $tblLogKib['TglPerubahan'] = $kib['TglPerolehan'];    
+                $tblLogKib['changeDate'] = date("Y-m-d");
+                $tblLogKib['action'] = 'reklas';
+                $tblLogKib['operator'] = $_SESSION['ses_uoperatorid'];
+                $tblLogKib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
+                $tblLogKib['Info'] = addslashes($kib['Info']);
+                
+                unset($tmpField3);
+                unset($tmpValue3);
+
+                for($i=0;$i<2;$i++){
+                  if($i == 0){
+                      $tblLogKib['Kd_Riwayat'] = '0'; 
+                  }elseif($i == 1){
+                      $tblLogKib['Kd_Riwayat'] = '35'; 
+                  }
+                  $fileldImp3 = '';
+                  $dataImp3 = '';
+                  
+                  $tmpField3 = array();
+                  $tmpValue3 = array();
+                  foreach ($tblLogKib as $key3 => $val3) {
+                    $tmpField3[] = $key3;
+                    $tmpValue3[] = "'".$val3."'";
+                  }
+                 
+                  $fileldImp3 = implode(',', $tmpField3);
+                  $dataImp3 = implode(',', $tmpValue3);
+
+                  $sql3 = "INSERT INTO log_{$tabel} ({$fileldImp3}) 
+                          VALUES ({$dataImp3})";
+                  //pr($sql);
+                  $execquery = mysql_query($sql3);
+                  logFile($sql3);
+                }  
               }
-              
-              
+              //exit;
               if(!$execquery){
                 $DBVAR->rollback();
                 echo "<script>alert('ERROR #003 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";              
@@ -208,7 +311,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       } 
            
   }
-  // exit;
+  //exit;
   $DBVAR->commit();
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;

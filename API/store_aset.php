@@ -1737,7 +1737,77 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                   exit;
                 }
             }
+            //@revisi
+            if($data['kodeKelompokTujuan']){
+               
+                $explode = explode('.', $data['kodeKelompokTujuan']);
 
+                if($explode[0] =="01"){
+                    $tabel = "tanah";
+                } elseif ($explode[0]=="02") {
+                    $tabel = "mesin";
+                } elseif ($explode[0]=="03") {
+                    $tabel = "bangunan";
+                } elseif ($explode[0]=="04") {
+                    $tabel = "jaringan";
+                } elseif ($explode[0]=="05") {
+                    $tabel = "asetlain";
+                } elseif ($explode[0]=="06") {
+                    $tabel = "kdp";
+                } /*elseif ($data['TipeAset']=="G") {
+                    $tabel = "aset";
+                    $logtabel = "log_aset";
+                    $idkey = "Aset_ID";
+                } elseif ($data['TipeAset']=="H") {
+                    $tabel = "aset";
+                    $logtabel = "log_aset";
+                    $idkey = "Aset_ID";
+                }*/
+                $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompokTujuan']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
+
+                while ($row = mysql_fetch_assoc($query)){
+                    $startreg = $row['noRegister'];
+                }
+                $noreg = intval($startreg)+1; 
+                //@kodereklas (tujuan)
+                $tblKib2['kodeKelompok'] = $data['kodeKelompokTujuan'];
+                $tblKib2['kodeSatker'] = $data['kodeSatker'];
+                $tblKib2['kodeLokasi'] = $tblAset['kodeLokasi'];
+                $tblKib2['noRegister'] = $noreg;
+                $tblKib2['TglPerolehan'] = $data['TglPerolehan'];
+                $tblKib2['Tahun'] = $tblAset['Tahun'];
+                //@set kebalikan dari kodereklas (asal)
+                $tblKib2['kodeKelompokReklas'] = $data['kodeKelompok'];
+                $tblKib2['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $tblKib2['NilaiBuku'] = $tblAset['NilaiPerolehan'];
+                $tblKib2['kondisi'] = $data['kondisi'];
+                $tblKib2['Info'] = addslashes($data['Info']);
+                $tblKib2['Alamat'] = $data['Alamat'];
+                $tblKib2['StatusValidasi'] = 0;
+                $tblKib2['Status_Validasi_Barang'] = 0;
+                $tblKib2['StatusTampil'] = 0;
+                //flag u/Aset_ID
+                $tblKib2['GUID'] = $tblKib['Aset_ID'];
+                
+                unset($tmpfield3);
+                unset($tmpvalue3);
+                foreach ($tblKib2 as $keys => $vals) {
+                    $tmpfield3[] = $keys;
+                    $tmpvalue3[] = "'$vals'";
+                }
+                $fields = implode(',', $tmpfield3);
+                $values = implode(',', $tmpvalue3);
+                $query = "INSERT INTO {$tabel} ({$fields}) 
+                        VALUES ({$values})";
+                $execquery = mysql_query($query);
+                if(!$execquery){
+                  $this->rollback();
+                  echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                  exit;
+                }
+            }
+            
+            
             if(isset($data['xls'])){
                 //log
                   $sqlkib = "SELECT * FROM {$tabel} WHERE Aset_ID = '{$tblKib['Aset_ID']}'";

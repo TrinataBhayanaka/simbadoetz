@@ -80,10 +80,33 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
        //@revisi non aktif tgl perubahan
       if($data['kodeKelompokReklas']){
         $sql = "UPDATE log_{$tabel} SET TglPerubahan = NULL
-                WHERE Aset_ID = '{$data['Aset_ID']}' 
+                WHERE Aset_ID = '{$data['Aset_ID']}'
+                AND Kd_Riwayat = '35' 
                 ORDER BY log_id DESC LIMIT 1";
         $execquery = mysql_query($sql);
         logFile($sql);
+
+        //@revisi tambahan
+        $explode = explode('.', $data['kodeKelompokReklas']);
+
+        if($explode[0] =="01"){
+            $tabel2 = "tanah";
+        } elseif ($explode[0]=="02") {
+            $tabel2 = "mesin";
+        } elseif ($explode[0]=="03") {
+            $tabel2 = "bangunan";
+        } elseif ($explode[0]=="04") {
+            $tabel2 = "jaringan";
+        } elseif ($explode[0]=="05") {
+            $tabel2 = "asetlain";
+        } elseif ($explode[0]=="06") {
+            $tabel2 = "kdp";
+        }
+        $sql = "UPDATE log_{$tabel2} SET TglPerubahan = NULL
+                WHERE GUID = '{$data['Aset_ID']}'
+                AND Kd_Riwayat = '35' 
+                ORDER BY log_id DESC LIMIT 1";
+         $execquery = mysql_query($sql);        
       }
 
       if(!$execquery){
@@ -126,9 +149,8 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
   
   }
-  // exit;
   $DBVAR->commit();
-
+  //exit;
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;
 

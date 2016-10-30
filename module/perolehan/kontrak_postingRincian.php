@@ -19,7 +19,7 @@ $menu_id = 1;
 
 	//getdata
 	// $RKsql = mysql_query("SELECT Satuan, kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
-	$RKsql = mysql_query("SELECT Aset_ID, Satuan, kodeLokasi, kodeKelompok, noRegister, NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
+	$RKsql = mysql_query("SELECT Aset_ID, Satuan, kodeLokasi, kodeKelompok, noRegister, NilaiPerolehan,kodeKelompokReklas FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -227,6 +227,11 @@ $menu_id = 1;
 						<th>Nama Barang</th>
 						<!-- <th>Jumlah</th> -->
 						<th>No. Register</th>
+
+						<th>Kode Barang Reklas</th>
+						<th>Nama Barang Reklas</th>
+						<th>No. Register Reklas</th>
+
 						<th>Harga Satuan</th>
 						<!-- <th>Total</total> -->
 						<th>Penunjang</th>
@@ -249,8 +254,31 @@ $menu_id = 1;
 								$bop = ceil($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);
 							}
 
+					$explode = explode('.', $value['kodeKelompokReklas']);
+					if($explode[0] =="01"){
+	                    $tabel = "tanah as a";
+	                } elseif ($explode[0]=="02") {
+	                    $tabel = "mesin as a";
+	                } elseif ($explode[0]=="03") {
+	                    $tabel = "bangunan as a";
+	                } elseif ($explode[0]=="04") {
+	                    $tabel = "jaringan as a";
+	                } elseif ($explode[0]=="05") {
+	                    $tabel = "asetlain as a";
+	                } elseif ($explode[0]=="06") {
+	                    $tabel = "kdp as a";
+	                }
 
-							
+	            $sql = "SELECT a.kodeKelompok,a.noRegister,k.uraian 
+	            		FROM {$tabel}
+	            		inner join kelompok as k on a.kodeKelompok = k.Kode
+	                	WHERE a.GUID = '{$value['Aset_ID']}'";
+	            $exec = mysql_query($sql);   		
+				while ($dataReklas = mysql_fetch_assoc($exec)){
+					$kodeKelompokReklas = $dataReklas['kodeKelompok'];
+					$noRegReklas = $dataReklas['noRegister'];
+					$uraianReklas = $dataReklas['uraian'];
+				}			
 				?>
 					<tr class="gradeA">
 						<td><?=$i?></td>
@@ -258,6 +286,11 @@ $menu_id = 1;
 						<td><?=$value['uraian']?></td>
 						<!-- <td><?=$value['Kuantitas']?></td> -->
 						<td><?=$value['noRegister']?></td>
+
+						<td><?=$kodeKelompokReklas?></td>
+						<td><?=$uraianReklas?></td>
+						<td><?=$noRegReklas?></td>
+						
 						<td><?=number_format($value['Satuan'])?></td>
 						<!-- <td><?=number_format($value['Satuan']*$value['Kuantitas'])?></td> -->
 						<td><?=number_format($bop)?></td>

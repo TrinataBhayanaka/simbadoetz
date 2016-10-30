@@ -35,6 +35,8 @@ $menu_id = 10;
 						 {"bSortable": true},
 						 {"bSortable": true},
 						 {"bSortable": true},
+						 {"bSortable": true},
+						 {"bSortable": true},
 						 {"bSortable": true}],
 					"sPaginationType": "full_numbers",
 
@@ -109,17 +111,21 @@ $menu_id = 10;
 						<th>Tanggal</th>
 						<th>Jenis Dokumen</th>
 						<th>Tipe Aset</th>
+						<th>Jenis Belanja</th>
 						<th>Nilai</th>
+						<th>Keterangan</th>
 						<th width="18%">Action</th>
 					</tr>
 				</thead>
 				<tbody>			
 					 <tr>
-                        <td colspan="8">Data Tidak di temukan</td>
+                        <td colspan="10">Data Tidak di temukan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
