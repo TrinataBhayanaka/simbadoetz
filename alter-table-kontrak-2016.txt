@@ -1,0 +1,18 @@
+ALTER TABLE `aset` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `tanah` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `mesin` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `bangunan` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `jaringan` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `asetlain` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `kdp` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+
+ALTER TABLE `log_aset` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `log_tanah` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `log_mesin` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `log_bangunan` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `log_jaringan` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `log_asetlain` ADD `kodeKelompokReklas` VARCHAR(150) NULL; 
+ALTER TABLE `log_kdp` ADD `kodeKelompokReklas` VARCHAR(150) NULL;
+
+ALTER TABLE `kontrak` ADD `kategori_belanja` VARCHAR(5) NULL;
+ALTER TABLE `kontrak` ADD `status_belanja` VARCHAR(5) NULL;

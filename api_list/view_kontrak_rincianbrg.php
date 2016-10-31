@@ -42,11 +42,16 @@ $cond_satker ="s.kode = k.kodeSatker AND s.Kd_Ruang IS NULL";
 
 $kodeSatker 		= $_GET['kodeSatker'];
 $jabatan			= $_GET['jabatan'];
-
+$Tahun              = $_GET['tahun'];
 
 	if($kodeSatker != "") $condtn = "k.kodeSatker LIKE '$kodeSatker%' "; else $condtn = "1";
 
-
+if($Tahun!=""){
+	if($condtn!="" ||$condtn!="1")
+		$condtn=" $condtn and k.tglKontrak like '$Tahun%'";
+	else
+		$condtn=" $condtn k.tglKontrak like '$Tahun%'";
+}
 
 // echo $tahun;
 /* REMOVE THIS LINE (it just includes my SQL connection user/pass) */

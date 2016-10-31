@@ -7,7 +7,11 @@ $menu_id = 10;
 
             $kodeSatker = $_SESSION['ses_satkerkode'];
             $jabatan = $_SESSION['ses_ujabatan'];
-			$par_data_table="kodeSatker=$kodeSatker&jabatan=$jabatan";
+		$tahun= $_GET['tahun'];
+		if($tahun=="")
+            	$tahun=$TAHUN_AKTIF;
+			$par_data_table="kodeSatker=$kodeSatker&jabatan=$jabatan&tahun=$tahun";
+
 
 // $get_data_filter = $RETRIEVE->retrieve_kontrak();
 // pr($get_data_filter);
@@ -100,7 +104,20 @@ $menu_id = 10;
 			</div>		
 
 		<section class="formLegend">
-			
+				<p>Tahun Kontrak:
+				<?=$tahun?>
+			</p>
+			<?php
+			$tahun_akhir=date("Y");
+			for($tahun=2014;$tahun<=$tahun_akhir;$tahun++){
+
+
+			?><a href="?tahun=<?=$tahun?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;<?=$tahun?></a>
+			&nbsp;
+			<?php
+			}
+			?>
+				</p>
 			
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="kontrak">
