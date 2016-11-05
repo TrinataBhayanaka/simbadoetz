@@ -159,7 +159,8 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
         $kib['operator'] = $_SESSION['ses_uoperatorid'];
         $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
         $kib['Info'] = addslashes($kib['Info']);
-        $kib['kodeKelompokReklas'] = $kib['kodeKelompokReklas'];
+        $kib['kodeKelompokReklasAsal'] = $kib['kodeKelompokReklasAsal'];
+        $kib['kodeKelompokReklasTujuan'] = $kib['kodeKelompokReklasTujuan'];
         if($tabel == "kdp") $kib['Kd_Riwayat'] = 20; else $kib['Kd_Riwayat'] = 0;    
 
        
@@ -178,7 +179,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
               logFile($sql);
 
               //@revisi
-              if($data['kodeKelompokReklas']){
+              if($data['kodeKelompokReklasAsal']){
           
                 $kib2['TglPerubahan'] = $kib['TglPerolehan'];    
                 $kib2['changeDate'] = date("Y-m-d");
@@ -186,12 +187,13 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                 $kib2['operator'] = $_SESSION['ses_uoperatorid'];
                 $kib2['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
                 $kib2['Info'] = addslashes($kib['Info']);
-                $kib2['kodeKelompokReklas'] = $kib['kodeKelompokReklas'];
+                $kib2['kodeKelompokReklasAsal'] = $kib['kodeKelompokReklasAsal'];
+                $kib2['kodeKelompokReklasTujuan'] = $kib['kodeKelompokReklasTujuan'];
                 if(isset($kib['StatusValidasi'])){
-                  $kib2['StatusValidasi'] = '0'; 
+                  $kib2['StatusValidasi'] = '1'; 
                 }
                 if(isset($kib['StatusTampil'])){
-                  $kib2['StatusTampil'] = '0'; 
+                  $kib2['StatusTampil'] = '1'; 
                 }
                 $kib2['Kd_Riwayat'] = '35'; 
                 
@@ -212,7 +214,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
                 //@revisi tambahan
                 //insert untuk log aset reklas
-                $explode = explode('.', $data['kodeKelompokReklas']);
+                $explode = explode('.', $data['kodeKelompokReklasAsal']);
 
                 if($explode[0] =="01"){
                     $tabel = "tanah";
@@ -234,38 +236,38 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                     //$logtabel = "log_kdp";
                 }
 
-                $query = mysql_query("SELECT noRegister,Bangunan_ID FROM {$tabel} 
-                  WHERE kodeKelompok = '{$data['kodeKelompokReklas']}' 
-                  AND kodeKelompokReklas = '{$data['kodeKelompok']}'
+                $query = mysql_query("SELECT noRegister,Bangunan_ID,Aset_ID FROM {$tabel} 
+                  WHERE kodeKelompok = '{$data['kodeKelompokReklasAsal']}' 
+                  AND kodeKelompokReklasTujuan = '{$data['kodeKelompokReklasTujuan']}'
                   AND kodeLokasi = '{$data['kodeLokasi']}'
-                  AND GUID = '{$data['Aset_ID']}'
+                  AND Aset_ID = '{$data['Aset_ID']}'
                   LIMIT 1");
                 while ($row = mysql_fetch_assoc($query)){
                     $startreg = $row['noRegister'];
                     $Bangunan_ID = $row['Bangunan_ID'];
+                    $Aset_ID = $row['Aset_ID'];
                 }
                 //pr($startreg);
                 $noreg = $startreg; 
                 //@kodereklas (tujuan)
                 $tblLogKib['Bangunan_ID'] = $Bangunan_ID;
-                $tblLogKib['kodeKelompok'] = $kib['kodeKelompokReklas'];
+                $tblLogKib['Aset_ID'] = $Aset_ID;
+                $tblLogKib['kodeKelompok'] = $kib['kodeKelompokReklasAsal'];
                 $tblLogKib['kodeSatker'] = $kib['kodeSatker'];
                 $tblLogKib['kodeLokasi'] = $kib['kodeLokasi'];
                 $tblLogKib['noRegister'] = $noreg;
                 $tblLogKib['TglPerolehan'] = $kib['TglPerolehan'];
                 $tblLogKib['Tahun'] = $kib['Tahun'];
                 //@set kebalikan dari kodereklas (asal)
-                $tblLogKib['kodeKelompokReklas'] = $kib['kodeKelompok'];
+                $tblLogKib['kodeKelompokReklasAsal'] = NULL;
+                $tblLogKib['kodeKelompokReklasTujuan'] = $kib['kodeKelompokReklasTujuan'];
                 $tblLogKib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
                 $tblLogKib['NilaiBuku'] = $kib['NilaiPerolehan'];
                 $tblLogKib['kondisi'] = $kib['kondisi'];
                 $tblLogKib['Info'] = addslashes($kib['Info']);
                 $tblLogKib['Alamat'] = $kib['Alamat'];
-                $tblLogKib['StatusValidasi'] = 0;
-                $tblLogKib['Status_Validasi_Barang'] = 0;
-                $tblLogKib['StatusTampil'] = 0;
                 //flag u/Aset_ID
-                $tblLogKib['GUID'] = $kib['Aset_ID'];
+                //$tblLogKib['GUID'] = $kib['Aset_ID'];
                 $tblLogKib['TglPerubahan'] = $kib['TglPerolehan'];    
                 $tblLogKib['changeDate'] = date("Y-m-d");
                 $tblLogKib['action'] = 'reklas';
@@ -278,9 +280,15 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
                 for($i=0;$i<2;$i++){
                   if($i == 0){
+                      $tblLogKib['StatusValidasi'] = '1';
+                      $tblLogKib['Status_Validasi_Barang'] = '0';
+                      $tblLogKib['StatusTampil'] = '1';
                       $tblLogKib['Kd_Riwayat'] = '0'; 
                   }elseif($i == 1){
-                      $tblLogKib['Kd_Riwayat'] = '35'; 
+                      $tblLogKib['StatusValidasi'] = '0';
+                      $tblLogKib['Status_Validasi_Barang'] = '0';
+                      $tblLogKib['StatusTampil'] = '0';
+                      $tblLogKib['Kd_Riwayat'] = '36'; 
                   }
                   $fileldImp3 = '';
                   $dataImp3 = '';

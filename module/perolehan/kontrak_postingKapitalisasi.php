@@ -46,6 +46,21 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
   }  
 
 
+//untuk insert log barang yg mengkapitalisasi
+$sqldata = mysql_query("SELECT asetKapitalisasi,tipeAset FROM kapitalisasi WHERE idKontrak = '{$noKontrak['id']}' and n_status = 1");
+while ($data = mysql_fetch_assoc($sqldata)){
+            $asetkapital[] = $data['asetKapitalisasi'];
+        }
+foreach ($asetkapital as $keys => $values) {
+  # code...
+  $sqlkib = "SELECT * FROM {$values['tipeAset']} WHERE Aset_ID = '{$values['asetKapitalisasi']}'";
+  $sqlquery = mysql_query($sqlkib);
+  while ($dataAset = mysql_fetch_assoc($sqlquery)){
+          $kib = $dataAset;
+      }    
+}
+
+
 $sql = mysql_query("SELECT * FROM kapitalisasi WHERE idKontrak = '{$noKontrak['id']}'");
 while ($dataKapital = mysql_fetch_assoc($sql)){
             $kapital[] = $dataKapital;

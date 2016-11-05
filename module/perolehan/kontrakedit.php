@@ -39,30 +39,42 @@ if ( isset( $_GET['id'] ) ) {
   <!-- End Sql -->
   <script>
     jQuery(function($) {
-        $('#nilai_front').autoNumeric('init');
-        $("#datepicker").mask("9999-99-99");
+      $('#nilai_front').autoNumeric('init');
+      $("#datepicker").mask("9999-99-99");
 
-         //get jenis belanja 
-        var idkontrak  = $('#idkontrak').val();
-        if(idkontrak){
+       //get jenis belanja 
+      var idkontrak  = $('#idkontrak').val();
+      if(idkontrak){
+      var jenis_posting = $("input[type='radio'].jenis_posting:checked").val();
+        //if(jenis_posting == 1 || jenis_posting == 2){
+        if(jenis_posting == 1 ){
           var jns_blnj  = $('.jns_blnj').val();
           if(jns_blnj == 0){
             $('#kategori_blnj').show(400);
           }else{
             $('#kategori_blnj').hide(400);
           }
+        }else{
+          $('#kategori_blnj').hide(400);
         }
-        
-        $('.jns_blnj').on('change', function(){
-          //alert("masuk");
-          var tmp = $(this).val();       
-          if(tmp == 0){
+      }
+
+      $('.jenis_posting,.jns_blnj').on('change', function(){
+      var jenis_posting = $("input[type='radio'].jenis_posting:checked").val();
+      var jenis_blnj = $("input[type='radio'].jns_blnj:checked").val();
+      //if(jenis_posting == 1 || jenis_posting == 2){
+      if(jenis_posting == 1 ){
+        if(jenis_blnj == 0){
             $('#kategori_blnj').show(400);
           }else{
             $('#kategori_blnj').hide(400);
-          }
-      }); 
-    });
+        }
+      }else{
+          $('#kategori_blnj').hide(400);
+      }   
+    }); 
+
+  });
 
     function getCurrency(item){
       $('#nilai').val($(item).autoNumeric('get'));
@@ -124,7 +136,7 @@ if ( isset( $_GET['id'] ) ) {
                 <span  class="span2">Jenis Posting</span>
         <div class="checkbox">
           <label>
-          <input type="radio" required name="tipeAset" value="1" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['tipeAset']== "1" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Aset Baru
+          <input type="radio" required name="tipeAset" class="jenis_posting" value="1" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['tipeAset']== "1" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Aset Baru
           </label>
         </div>
       </li>
@@ -135,7 +147,7 @@ if ( isset( $_GET['id'] ) ) {
                 <span  class="span2">&nbsp;</span>
         <div class="checkbox">
           <label>
-            <input type="radio" class="add-popover" data-toggle="popover" data-html="true" data-trigger="focus" data-placement="left" data-original-title="<label style='color:red'>Peringatan Kapitalisasi!!</label>" data-content="Khusus untuk jenis barang : <br> <b>Mesin</b> : Minimal <u>Rp. 300.000</u> <br> <b>Bangunan</b> : Minimal <u>Rp. 10.000.000</u> " required name="tipeAset" value="2" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['tipeAset']== "2" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Kapitalisasi
+            <input type="radio" class="add-popover jenis_posting" data-toggle="popover" data-html="true" data-trigger="focus" data-placement="left" data-original-title="<label style='color:red'>Peringatan Kapitalisasi!!</label>" data-content="Khusus untuk jenis barang : <br> <b>Mesin</b> : Minimal <u>Rp. 300.000</u> <br> <b>Bangunan</b> : Minimal <u>Rp. 10.000.000</u> " required name="tipeAset" value="2" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['tipeAset']== "2" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Kapitalisasi
           </label>
         </div>
       </li>
@@ -144,7 +156,7 @@ if ( isset( $_GET['id'] ) ) {
       <span  class="span2">&nbsp;</span>
         <div class="checkbox">
           <label>
-          <input type="radio" required name="tipeAset" value="3" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['tipeAset']== "3" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Ubah Status
+          <input type="radio" required name="tipeAset" class="jenis_posting"  value="3" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['tipeAset']== "3" ) ? 'checked' : '' ) : '' ?>/>&nbsp;Ubah Status
           </label>
         </div>
       </li>

@@ -71,8 +71,7 @@ if($tglcetak != ''){
 }
 $thnRuangan = $tahun;
 //retrieve html
-$html=$REPORT->retrieve_html_kib_b_rekap_sensus($result_query,$gambar,$tanggalCetak,$thnPejabat,
-												$thnRuangan);
+$html=$REPORT->retrieve_html_kib_b_rekap_sensus($result_query,$gambar,$tanggalCetak,$thnPejabat,$thnRuangan);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

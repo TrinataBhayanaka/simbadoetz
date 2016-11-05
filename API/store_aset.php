@@ -1520,7 +1520,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
         //@revisi
-        $tblAset['kodeKelompokReklas'] = $data['kodeKelompokTujuan'];
+        //$tblAset['kodeKelompokReklas'] = $data['kodeKelompokTujuan'];
+        $tblAset['kodeKelompokReklasAsal'] = $data['kodeKelompokTujuan'];
+        $tblAset['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
         
         $tblAset['kodeSatker'] = $data['kodeSatker'];
         $tahun = explode("-", $data['TglPerolehan']);
@@ -1687,7 +1689,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $tblKib['kodeRuangan'] = $data['kodeRuangan'];
             $tblKib['kodeKelompok'] = $data['kodeKelompok'];
             //@revisi
-            $tblKib['kodeKelompokReklas'] = $tblAset['kodeKelompokReklas'];
+            //$tblKib['kodeKelompokReklas'] = $tblAset['kodeKelompokReklas'];
+            $tblKib['kodeKelompokReklasAsal'] = $data['kodeKelompokTujuan'];
+            $tblKib['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
 
             $tblKib['kodeSatker'] = $data['kodeSatker'];
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
@@ -1777,7 +1781,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib2['TglPerolehan'] = $data['TglPerolehan'];
                 $tblKib2['Tahun'] = $tblAset['Tahun'];
                 //@set kebalikan dari kodereklas (asal)
-                $tblKib2['kodeKelompokReklas'] = $data['kodeKelompok'];
+                //$tblKib2['kodeKelompokReklas'] = $data['kodeKelompok'];
+                $tblKib2['kodeKelompokReklasAsal'] = NULL;
+                $tblKib2['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+
                 $tblKib2['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
                 $tblKib2['NilaiBuku'] = $tblAset['NilaiPerolehan'];
                 $tblKib2['kondisi'] = $data['kondisi'];
@@ -1787,7 +1794,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib2['Status_Validasi_Barang'] = 0;
                 $tblKib2['StatusTampil'] = 0;
                 //flag u/Aset_ID
-                $tblKib2['GUID'] = $tblKib['Aset_ID'];
+                //$tblKib2['GUID'] = $tblKib['Aset_ID'];
+                $tblKib2['Aset_ID'] = $tblKib['Aset_ID'];
                 
                 unset($tmpfield3);
                 unset($tmpvalue3);

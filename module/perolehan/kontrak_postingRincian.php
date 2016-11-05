@@ -19,7 +19,7 @@ $menu_id = 1;
 
 	//getdata
 	// $RKsql = mysql_query("SELECT Satuan, kodeLokasi, kodeKelompok,SUM(Kuantitas) as Kuantitas, SUM(NilaiPerolehan) as NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' GROUP BY kodeKelompok, kodeLokasi");
-	$RKsql = mysql_query("SELECT Aset_ID, Satuan, kodeLokasi, kodeKelompok, noRegister, NilaiPerolehan,kodeKelompokReklas FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
+	$RKsql = mysql_query("SELECT Aset_ID, Satuan, kodeLokasi, kodeKelompok, noRegister, NilaiPerolehan,kodeKelompokReklasAsal FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -30,7 +30,6 @@ $menu_id = 1;
 				$rKontrak[$key]['uraian'] = $tmp['Uraian'];
 			}
 	}
-
 	$sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$idKontrak}' AND type = '2'");
 		while ($dataSP2D = mysql_fetch_assoc($sql)){
 				$sumsp2d = $dataSP2D;
@@ -254,7 +253,7 @@ $menu_id = 1;
 								$bop = ceil($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);
 							}
 
-					$explode = explode('.', $value['kodeKelompokReklas']);
+					$explode = explode('.', $value['kodeKelompokReklasAsal']);
 					if($explode[0] =="01"){
 	                    $tabel = "tanah as a";
 	                } elseif ($explode[0]=="02") {
@@ -272,7 +271,7 @@ $menu_id = 1;
 	            $sql = "SELECT a.kodeKelompok,a.noRegister,k.uraian 
 	            		FROM {$tabel}
 	            		inner join kelompok as k on a.kodeKelompok = k.Kode
-	                	WHERE a.GUID = '{$value['Aset_ID']}'";
+	                	WHERE a.Aset_ID = '{$value['Aset_ID']}'";
 	            $exec = mysql_query($sql);   		
 				while ($dataReklas = mysql_fetch_assoc($exec)){
 					$kodeKelompokReklas = $dataReklas['kodeKelompok'];

@@ -24,7 +24,7 @@ $menu_id = 10;
 			while ($dataKontrak = mysql_fetch_assoc($sql)){
 					$kontrak[] = $dataKontrak;
 				}
-		// pr($kontrak);
+		//pr($kontrak);
 
 		if(isset($_POST['kodeKelompok'])){
 		    if($_POST['Aset_ID'] == "")
@@ -90,6 +90,9 @@ $menu_id = 10;
 								<span class="labelInfo">Tgl. Kontrak</span>
 								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
 							</li>
+							<?php
+								if($kontrak[0]['tipeAset'] == '1'){
+							?>
 							<li>
 								<span class="labelInfo">Kategori Belanja Aset</span>
 								<?php
@@ -108,6 +111,9 @@ $menu_id = 10;
 								<input type="text" value="<?=$kategori_belanja?>" id="" disabled/>
 								<input type="hidden" value="<?=$kontrak[0]['kategori_belanja']?>" id="kategori_belanja" disabled/>
 							</li>
+							<?php
+							}
+							?>
 						</ul>
 							
 					</div>
@@ -409,6 +415,8 @@ $menu_id = 10;
 					<input type="hidden" name="id" value="<?=$kontrak[0]['id']?>">
 					<input type="hidden" name="kodeSatker" value="<?=$kontrak[0]['kodeSatker']?>">
 					<input type="hidden" name="noKontrak" value="<?=$kontrak[0]['noKontrak']?>">
+					<input type="hidden" name="tipeAset" id="tipeAset" value="<?=$kontrak[0]['tipeAset']?>">
+
 					<input type="hidden" name="kondisi" value="1">
 					<input type="hidden" name="AsalUsul" value="Pembelian">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
@@ -471,12 +479,18 @@ $menu_id = 10;
 		var tmp = $(this).val(); 
         var kodeKelompok = tmp.split("."); 
         var kategori_belanja = $('#kategori_belanja').val(); 
-        if(kodeKelompok[0] != kategori_belanja){
-        	$('#flag').val("3");
-        	$('.reklasAset').show(400);
-      	}else{
+        var tipeAset = $('#tipeAset').val(); 
+        if(tipeAset == 1){
+        	if(kodeKelompok[0] != kategori_belanja){
+        		$('#flag').val("3");
+        		$('.reklasAset').show(400);
+      		}else{
+        		$('.reklasAset').hide(400);
+      		}
+        }else{
         	$('.reklasAset').hide(400);
-      	}
+        }
+        
       	$('.infoReklas').hide();
       	
 

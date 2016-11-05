@@ -38,7 +38,7 @@ $menu_id = 1;
 	        }
 	    }
 	}
-	$RKsql = mysql_query("SELECT Aset_ID, noRegister, Satuan, kodeLokasi, kodeKelompok, NilaiPerolehan FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	$RKsql = mysql_query("SELECT Aset_ID, noRegister, Satuan, kodeLokasi, kodeKelompok, NilaiPerolehan,kodeKelompokReklasAsal FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -259,6 +259,11 @@ $menu_id = 1;
 						<th>Kode Barang</th>
 						<th>Nama Barang</th>
 						<th>No. Register</th>
+
+						<th>Kode Barang Reklas</th>
+						<th>Nama Barang Reklas</th>
+						<th>No. Register Reklas</th>
+
 						<th>Harga Satuan</th>
 						<th>Penunjang</th>
 						<th>Total Perolehan</th>
@@ -271,6 +276,7 @@ $menu_id = 1;
 						$j = 0;
 						$bopsisa = $sumsp2d['total'];
 						foreach ($rKontrak as $key => $value) {
+							//pr($value);
 							$j++;
 							if(count($rKontrak) == $j){
 								$bop = $bopsisa;
@@ -280,7 +286,33 @@ $menu_id = 1;
 							}
 							
 							$satuan = $value['NilaiPerolehan']-$bop;
-								
+							
+						$explode = explode('.', $value['kodeKelompokReklasAsal']);
+							if($explode[0] =="01"){
+			                    $tabel = "tanah as a";
+			                } elseif ($explode[0]=="02") {
+			                    $tabel = "mesin as a";
+			                } elseif ($explode[0]=="03") {
+			                    $tabel = "bangunan as a";
+			                } elseif ($explode[0]=="04") {
+			                    $tabel = "jaringan as a";
+			                } elseif ($explode[0]=="05") {
+			                    $tabel = "asetlain as a";
+			                } elseif ($explode[0]=="06") {
+			                    $tabel = "kdp as a";
+			                }
+
+			            $sql = "SELECT a.kodeKelompok,a.noRegister,k.uraian 
+			            		FROM {$tabel}
+			            		inner join kelompok as k on a.kodeKelompok = k.Kode
+			                	WHERE a.Aset_ID = '{$value['Aset_ID']}'";
+			            //pr($sql);
+			            $exec = mysql_query($sql);   		
+						while ($dataReklas = mysql_fetch_assoc($exec)){
+							$kodeKelompokReklas = $dataReklas['kodeKelompok'];
+							$noRegReklas = $dataReklas['noRegister'];
+							$uraianReklas = $dataReklas['uraian'];
+						}					
 						
 				?>
 					<tr class="gradeA">
@@ -288,6 +320,11 @@ $menu_id = 1;
 						<td><?=$value['kodeKelompok']?></td>
 						<td><?=$value['uraian']?></td>
 						<td><?=$value['noRegister']?></td>
+						
+						<td><?=$kodeKelompokReklas?></td>
+						<td><?=$uraianReklas?></td>
+						<td><?=$noRegReklas?></td>
+
 						<td>
 						<?php
 							if($kontrak['tipeAset'] == 3) {
@@ -316,7 +353,7 @@ $menu_id = 1;
 				</tbody>
 				<tfoot>
 					<tr>
-						<th colspan="5">&nbsp;</th>
+						<th colspan="8">&nbsp;</th>
 					</tr>
 				</tfoot>
 			</table>

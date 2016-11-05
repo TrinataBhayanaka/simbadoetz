@@ -78,7 +78,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       logFile($sql);
 
        //@revisi non aktif tgl perubahan
-      if($data['kodeKelompokReklas']){
+      if($data['kodeKelompokReklasAsal']){
         $sql = "UPDATE log_{$tabel} SET TglPerubahan = NULL
                 WHERE Aset_ID = '{$data['Aset_ID']}'
                 AND Kd_Riwayat = '35' 
@@ -87,7 +87,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
         logFile($sql);
 
         //@revisi tambahan
-        $explode = explode('.', $data['kodeKelompokReklas']);
+        $explode = explode('.', $data['kodeKelompokReklasAsal']);
 
         if($explode[0] =="01"){
             $tabel2 = "tanah";
@@ -103,8 +103,8 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
             $tabel2 = "kdp";
         }
         $sql = "UPDATE log_{$tabel2} SET TglPerubahan = NULL
-                WHERE GUID = '{$data['Aset_ID']}'
-                AND Kd_Riwayat = '35' 
+                WHERE Aset_ID = '{$data['Aset_ID']}'
+                AND Kd_Riwayat = '36' 
                 ORDER BY log_id DESC LIMIT 1";
          $execquery = mysql_query($sql);        
       }
