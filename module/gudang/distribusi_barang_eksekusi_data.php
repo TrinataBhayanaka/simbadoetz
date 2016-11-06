@@ -28,8 +28,7 @@ if($_GET['id']){
 ?>
 	<script>
 	jQuery(function($){
-		$("#datepicker").mask("9999-99-99");
-	});
+		$("#datepicker").mask('0000-00-00');
 	</script>
 	<section id="main">
 		<ul class="breadcrumb">

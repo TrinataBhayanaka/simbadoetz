@@ -393,7 +393,7 @@ class DB
 	        			//$result = $this->query($sqlu);
 	        		}
 	        		usleep(100);
-	        		if ($action==28){
+	        		if ($action==281||$action==291){
 	        			$insert_id = $this->insert_id();
 
 	        			$sqlu = "UPDATE log_{$value} SET StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1 WHERE log_id = {$insert_id} LIMIT 1";
@@ -409,6 +409,105 @@ class DB
 	    logFile('class_db :: insert log sukses');
 	    return true;
 	}
+
+	function logIt_kapitalisasi($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, 
+			$tgl=false, $text= false, $tmpAsetID=false, 
+			$AkumulasiPenyusutan_Awal=false,$NilaiBuku_Awal=false,
+                        $NilaiPerolehan_Awal=false,
+
+			$debug=false)
+	{
+
+	    if (empty($table)) return false;
+	    if (empty($Aset_ID)) return false;
+	    
+	    if ($text) $actionText = $text;
+	    else $actionText = $action;
+
+	    $date = date('Y-m-d H:i:s');
+	    if ($tgl) $tglProses = $tgl;
+	    else $tglProses = '0000-00-00';
+
+	    if ($No_Dokumen) $noDok = $No_Dokumen;
+	    else $noDok = '-';
+
+	    if ($tmpAsetID) $tmpAsetIDTujuan = $tmpAsetID;
+	    else $tmpAsetIDTujuan = '-';
+	    
+	    $actionList = array(1=>'insert',2=>'update');
+	    $addField = array(
+	    				'changeDate'=>$date,
+	    				'action'=>$actionText,
+	    				'operator'=>$_SESSION['ses_uoperatorid'],
+	    				'TglPerubahan'=>$tglProses,
+	    				'Kd_Riwayat'=>$action,
+	    				'Aset_ID_Penambahan'=>$tmpAsetIDTujuan,
+	    				'No_Dokumen'=>$noDok,
+	    				'AkumulasiPenyusutan_Awal'=>$AkumulasiPenyusutan_Awal,
+	    				'NilaiBuku_Awal'=>$NilaiBuku_Awal,
+	    				'NilaiPerolehan_Awal'=>$NilaiPerolehan_Awal);
+
+
+	    foreach ($table as $value) {
+	    	
+	    	// $field['log_id'] = get_auto_increment($value);
+			$field = $this->getFieldName($value,$Aset_ID);
+			$mergeField = array_merge($field, $addField);
+	        
+	        if ($mergeField){
+	        	foreach ($mergeField as $key => $val) {
+	        		$tmpField[] = $key;
+	        		$tmpValue[] = "'".$val."'";
+
+	        		//if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";
+	        	}
+	        	
+	        	//$tmpField[] = 'NilaiPerolehan_Awal';
+	        	//$tmpValue[] = $NilaiPerolehan_Awal;
+
+	        	$fileldImp = implode(',', $tmpField);
+	        	$dataImp = implode(',', $tmpValue);
+
+	        	$sql = "INSERT INTO log_{$value} ({$fileldImp}) VALUES ({$dataImp})";
+	        	logFile($sql);
+	        	if ($debug){
+	        		pr($sql); exit;
+	        	}
+	        	$res = $this->query($sql);
+	        	//echo $sql;
+	        	//pr($res);
+	        	//exit();
+	        	if ($res){
+	        		
+	        		logFile($res);
+	        		logFile('action = '.$action);
+	        		usleep(100);
+	        		
+	        		if ($action==3){
+	        			$insert_id = $this->insert_id();
+
+	        			$sqlu = "UPDATE log_{$value} SET TglPembukuan = '{$tglProses}' WHERE log_id = {$insert_id} LIMIT 1";
+	        			//logFile($sqlu);
+	        			//$result = $this->query($sqlu);
+	        		}
+	        		usleep(100);
+	        		if ($action==28||$action==29){
+	        			$insert_id = $this->insert_id();
+
+	        			$sqlu = "UPDATE log_{$value} SET StatusValidasi = 1, Status_Validasi_Barang = 1, StatusTampil = 1 WHERE log_id = {$insert_id} LIMIT 1";
+	        			logFile($sqlu);
+	        			$result = $this->query($sqlu);
+	        		}
+	        			
+	        	}
+	        }
+
+	        
+	    }
+	    logFile('class_db :: insert log sukses');
+	    return true;
+	}
+
 	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false,
                             $AkumulasiPenyusutan=false,$AkumulasiPenyusutan_Awal=false,$NilaiBuku=false,$debug=false)
 	{

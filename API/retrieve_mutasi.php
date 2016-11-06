@@ -657,7 +657,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         return false;
     }
 
-    function store_validasi_Mutasi($data, $debug=false)
+    function store_validasi_Mutasi($data, $TAHUN_AKTIF,$debug=false)
     {
 
         
@@ -696,6 +696,14 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $dataSatkerAwalKib = $this->getSatkerData($resultAwal[0]['kodeSatker']);
 
                 logFile(serialize($res));
+                /*echo "Tabel:<br/>";
+                pr($table );
+
+                echo "Lokasi Asal:<br/>";
+                pr($resultAwal );
+                echo "Lokasi Tujuan:<br/>";
+                pr($getLokasiTujuan );
+                */
                 if ($res){
                     /* 
                         cek apakah aset id tujuan ada atau tidak
@@ -709,17 +717,74 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         // ambil nilai perolehan aset tujuan
                         $sql = array(
                                 'table'=>"{$table['listTableOri']}",
-                                'field'=>"NilaiPerolehan",
+                                'field'=>"*",
                                 'condition'=>"Aset_ID={$res[0]['Aset_ID_Tujuan']}",
                                 );
 
                         $result2 = $this->db->lazyQuery($sql,$debug);
 
+                        
+                         
                         $NilaiPerolehan = ($resultAwal[0]['NilaiPerolehan'] + $result2[0]['NilaiPerolehan']);
+                        /**
+                         * Pentuan apakah koreksi kapitalisasi atau kapitalisasi transfer
+                         */
+                            $MasaManfaat =$result2[0]['MasaManfaat'];
+                            $AkumulasiPenyusutan =$result2[0]['AkumulasiPenyusutan'];
+                            $Tahun_U_Range =$result2[0]['TahunPenyusutan'];
+                            $TahunASet =$result2[0]['Tahun'];
+                            $NilaiBuku_Tujuan =$result2[0]['NilaiBuku'];
+                            $NilaiPerolehan_Tujuan=$result2[0]['NilaiPerolehan'];
+
+                            //aset asal atau penambah 
+                            $Tahun_Aset_Kapitalisasi=$resultAwal[0]['Tahun'];
+                            $nilai_koreksi=$resultAwal[0]['NilaiPerolehan'];
+                            //akhir aset asal atau penambah 
+                           
+                            if($Tahun_Aset_Kapitalisasi!=$TAHUN_AKTIF)
+                            {
+                                $kd_riwayat_asal=281;
+                                $kd_riwayat_akhir=28;
+                                $beban_penyusutan=round($nilai_koreksi/$MasaManfaat);
+                                //Koreksi Kapitalisasi == riwayat =28
+                                $rentang_penyusutan=$Tahun_U_Range-$TahunASet+1;
+                                  if($rentang_penyusutan>$MasaManfaat){
+                                     $rentang_penyusutan=$MasaManfaat;
+                                  }
+                                  $selisih_akumulasi =$beban_penyusutan*$rentang_penyusutan;
+                                  $AkumulasiPenyusutan_Final =$AkumulasiPenyusutan+$selisih_akumulasi;
+                                  $NilaiBuku_Tujuan_Final=$NilaiBuku_Tujuan-$AkumulasiPenyusutan_Final;
+                                  logFile("Perhitungan koreksi kapitalisasi :\n 
+                                    beban_penyusutan=round($nilai_koreksi/$MasaManfaat) \n
+                                    selisih_akumulasi =$beban_penyusutan*$rentang_penyusutan;\n
+                                    AkumulasiPenyusutan_Final =$AkumulasiPenyusutan+$selisih_akumulasi;\n
+                                    NilaiBuku_Tujuan_Final=$NilaiBuku_Tujuan-$AkumulasiPenyusutan_Final; \n
+                                    Kd_riwayat_asal = $kd_riwayat_asal \n 
+                                    Kd_riwayat_akhir= $kd_riwayat_akhir
+                                    ");
+                            }else{
+                                //Kapitalisasi == riwayat = 29
+                                $kd_riwayat_asal=291;
+                                $kd_riwayat_akhir=29;
+                                $NilaiBuku_Tujuan_Final=$NilaiBuku_Tujuan + $nilai_koreksi;
+                                $AkumulasiPenyusutan_Final=$AkumulasiPenyusutan;
+                                logFile("Perhitungan transfer kapitalisasi :\n 
+                                    NilaiBuku_Tujuan_Final=$NilaiBuku_Tujuan + $nilai_koreksi; \n
+                                    AkumulasiPenyusutan_Final=$AkumulasiPenyusutan; \n
+                                    Kd_riwayat_asal = $kd_riwayat_asal \n 
+                                    Kd_riwayat_akhir= $kd_riwayat_akhir
+                                    ");
+                            }
+                        /**
+                         * Akhir dari Penentuan koreksi kapitalisasi atau kapitalisasi transfer
+                         */
                         $olah_tgl =  $_POST['TglSKKDH'];
                         
                         // log aset id tujuan sebelum dilakukan penambahan nilai
-                        $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$res[0]['Aset_ID_Tujuan'], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Aset Penambahan kapitalisasi Mutasi",0);
+                        $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$res[0]['Aset_ID_Tujuan'], 
+                                    $kd_riwayat=$kd_riwayat_asal, 
+                                    $noDokumen=$nodok, $tglProses =$olah_tgl,
+                                    $text="Aset Penambahan kapitalisasi Mutasi",0);
 
                         
                         logFile('Nilai Perolehan awal : '.serialize($resultAwal));
@@ -728,7 +793,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         if ($NilaiPerolehan > 0){
                             $sqlKib = array(
                                     'table'=>"{$table['listTableOri']}",
-                                    'field'=>"NilaiPerolehan='{$NilaiPerolehan}'",
+                                    'field'=>"NilaiPerolehan='{$NilaiPerolehan}',NilaiBuku='{$NilaiBuku_Tujuan_Final}',
+                                            AkumulasiPenyusutan='{$AkumulasiPenyusutan_Final}'  ",
                                     'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
                                     );
 
@@ -746,7 +812,8 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
                             $sql2 = array(
                                     'table'=>"Aset",
-                                    'field'=>"NilaiPerolehan = '{$NilaiPerolehan}'",
+                                     'field'=>"NilaiPerolehan='{$NilaiPerolehan}',NilaiBuku='{$NilaiBuku_Tujuan_Final}',
+                                            AkumulasiPenyusutan='{$AkumulasiPenyusutan_Final}'  ",
                                     'condition'=>"Aset_ID='{$res[0]['Aset_ID_Tujuan']}'",
                                     );
 
@@ -765,7 +832,12 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                             $nodok = $_POST['noDokumen'];
                             $olah_tgl =  $_POST['TglSKKDH'];
                             
-                            $this->db->logIt($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], $kd_riwayat=28, $noDokumen=$nodok, $tglProses =$olah_tgl, $text="Sukses kapitalisasi Mutasi",$res[0]['Aset_ID_Tujuan']);
+                            $this->db->logIt_kapitalisasi($tabel=array($table['listTableOri']), $Aset_ID=$data['aset_id'][$key], 
+                                    $kd_riwayat=$kd_riwayat_akhir, $noDokumen=$nodok, $tglProses =$olah_tgl, 
+                                    $text="Sukses kapitalisasi Mutasi",$res[0]['Aset_ID_Tujuan'],
+                                    $AkumulasiPenyusutan_Awal=$AkumulasiPenyusutan,
+                                    $NilaiBuku_Awal=$NilaiBuku_Tujuan, 
+                                    $NilaiPerolehan_Awal=$NilaiPerolehan_Tujuan,0);
                         
                         }else{
 

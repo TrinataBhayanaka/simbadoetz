@@ -56,7 +56,10 @@ $menu_id = 10;
         $('#hrgmask,#total').autoNumeric('init');
         $("select").select2({});
         $( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ format: 'yyyy-mm-dd' });
-		$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('9999-99-99');    
+		$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('0000-00-00');  
+           //     $( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).attr('readonly',true);
+             //           $( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).attr('required',true); 
+
     });
 
     function getCurrency(item){
@@ -187,7 +190,7 @@ $menu_id = 10;
 							<?=selectRuang('kodeRuangan','kodeSatker','255',true,false);?>
 						</ul>
 						<ul>
-							<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
+							<?php selectAset('kodeKelompok','255',true,false,'required','Jenis Aset'); ?>
 						</ul>
 						<ul>
 		            	<li style="display:none" class="infoReklas">
@@ -199,7 +202,7 @@ $menu_id = 10;
 						</li>
 						</ul>
 						<ul style="display:none" class="reklasAset">
-							<?php selectAset('kodeKelompokTujuan','255',true,false,''); ?>
+							<?php selectAset('kodeKelompokTujuan','255',true,false,'','Jenis Aset Asal'); ?>
 						</ul>
 						<ul style="display:none" class="reklasAset">
 							<li><span class="span2">&nbsp;</span>
@@ -468,7 +471,7 @@ $menu_id = 10;
       	}else{
         	//show that the value is available
         	$('#flag').val("1");
-        	$('.infoReklas').show();
+                $('.infoReklas').show();
       		$('#infoReklas').html('Kode Reklas Aset sesuai dengan kategori Belanja Aset');
         	$('#infoReklas').css("color","green");
             $('#submit').removeAttr("disabled");
@@ -477,6 +480,7 @@ $menu_id = 10;
 	$(document).on('change','#kodeKelompok', function(){
 		//@revisi
 		var tmp = $(this).val(); 
+                
         var kodeKelompok = tmp.split("."); 
         var kategori_belanja = $('#kategori_belanja').val(); 
         var tipeAset = $('#tipeAset').val(); 
@@ -485,6 +489,7 @@ $menu_id = 10;
         		$('#flag').val("3");
         		$('.reklasAset').show(400);
       		}else{
+                    $('#flag').val("0");
         		$('.reklasAset').hide(400);
       		}
         }else{
@@ -563,6 +568,12 @@ $menu_id = 10;
 			return false;	
 		}
 
+           /*     var tgl_perolehan=$("#datepicker").val();
+		if(tgl_perolehan=="")
+		{
+				alert("Tgl Perolehan Harus diisi");
+				return false;
+		}*/
 		var perolehan = $("#nilaiPerolehan").val();
 		var total = $("#totalRB").val();
 		var spk = $("#spk").val();

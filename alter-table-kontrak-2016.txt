@@ -16,3 +16,36 @@ ALTER TABLE `log_kdp` ADD `kodeKelompokReklas` VARCHAR(150) NULL;
 
 ALTER TABLE `kontrak` ADD `kategori_belanja` VARCHAR(5) NULL;
 ALTER TABLE `kontrak` ADD `status_belanja` VARCHAR(5) NULL;
+
+ALTER TABLE `aset` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `tanah` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `mesin` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `bangunan` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `jaringan` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `asetlain` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `kdp` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+
+ALTER TABLE `log_aset` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `log_tanah` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `log_mesin` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `log_bangunan` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `log_jaringan` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `log_asetlain` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+ALTER TABLE `log_kdp` CHANGE `kodeKelompokReklas` `kodeKelompokReklasAsal` VARCHAR(150) NULL;
+
+ALTER TABLE `aset` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `tanah` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `mesin` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `bangunan` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `jaringan` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `asetlain` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `kdp` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+
+
+ALTER TABLE `log_aset` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `log_tanah` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `log_mesin` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `log_bangunan` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `log_jaringan` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `log_asetlain` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
+ALTER TABLE `log_kdp` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL;
