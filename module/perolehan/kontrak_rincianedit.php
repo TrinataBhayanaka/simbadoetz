@@ -91,7 +91,7 @@ $menu_id = 10;
 								<input type="text" value="<?=$kontrak[0]['tglKontrak']?>" disabled/>
 							</li>
 							<?php
-								if($kontrak[0]['tipeAset'] == '1'){
+								if($kontrak[0]['tipeAset'] == '1' || $kontrak[0]['tipeAset'] == '2'){
 							?>
 							<li>
 								<span class="labelInfo">Kategori Belanja Aset</span>
@@ -163,7 +163,7 @@ $menu_id = 10;
 								<th>Nilai</th>
 							</tr>
 							<tr>
-								<td align="center"><?=$aset[0]['kodeKelompok']?></td>
+								<td align="center" ><?=$aset[0]['kodeKelompok']?></td>
 								<td align="center"><?=$aset[0]['uraian']?></td>
 								<td align="center"><?=$aset[0]['kodeSatker']?></td>
 								<td align="center"><?=$aset[0]['kodeLokasi']?></td>
@@ -171,7 +171,7 @@ $menu_id = 10;
 								<td align="center"><?=number_format($aset[0]['NilaiPerolehan'])?></td>
 							</tr>	
 						</table>	
-
+						<input type = "hidden" id="kodeKelompokKapitalisasi" value="<?=$aset[0]['kodeKelompok']?>">
 					</div><!-- /search-option -->
 	        <?php
 				}	
@@ -421,6 +421,7 @@ $menu_id = 10;
 					<input type="hidden" name="AsalUsul" value="Pembelian">
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 					<input type="hidden" name="TipeAset" id="TipeAset" value="">
+					<input type="hidden" name="TipeAsetKontrak" id="TipeAsetKontrak" value="<?=$kontrak[0]['tipeAset']?>">
 					<input type="hidden" name="getTipe" id="getTipe" value="<?=$_GET['tipeaset']?>">
 			
 		</form>
@@ -474,6 +475,22 @@ $menu_id = 10;
             $('#submit').removeAttr("disabled");
       	}
 	});
+
+	$(document).on('change','#jumlah', function(){
+		//@revisi
+		var jumlah = $(this).val(); 
+		var TipeAsetKontrak = $('#TipeAsetKontrak').val(); 
+		if(TipeAsetKontrak == '2' && jumlah > 1){
+		 	//show that the value is NOT available
+		 	alert("Untuk Kapitilasi Jumlah Aset tidak boleh > 1");
+            $('#submit').attr("disabled","disabled");
+      	}else{
+        	//show that the value is available
+            $('#submit').removeAttr("disabled");
+      	}
+	});
+
+
 	$(document).on('change','#kodeKelompok', function(){
 		//@revisi
 		var tmp = $(this).val(); 
@@ -488,6 +505,14 @@ $menu_id = 10;
         		$('.reklasAset').hide(400);
       		}
         }else{
+        	var kodeKelompokKapitalisasi = $('#kodeKelompokKapitalisasi').val(); 
+        	var temp = kodeKelompokKapitalisasi.split("."); 
+        	if(temp[0] != kodeKelompok[0]){
+        		alert("Jenis Aset tidak sesuai dengan Aset Kapitalisasi");
+            	$('#submit').attr("disabled","disabled");
+        	}else{
+        		$('#submit').removeAttr("disabled");
+        	}
         	$('.reklasAset').hide(400);
         }
         

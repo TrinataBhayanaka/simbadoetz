@@ -46,21 +46,6 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
   }  
 
 
-//untuk insert log barang yg mengkapitalisasi
-$sqldata = mysql_query("SELECT asetKapitalisasi,tipeAset FROM kapitalisasi WHERE idKontrak = '{$noKontrak['id']}' and n_status = 1");
-while ($data = mysql_fetch_assoc($sqldata)){
-            $asetkapital[] = $data['asetKapitalisasi'];
-        }
-foreach ($asetkapital as $keys => $values) {
-  # code...
-  $sqlkib = "SELECT * FROM {$values['tipeAset']} WHERE Aset_ID = '{$values['asetKapitalisasi']}'";
-  $sqlquery = mysql_query($sqlkib);
-  while ($dataAset = mysql_fetch_assoc($sqlquery)){
-          $kib = $dataAset;
-      }    
-}
-
-
 $sql = mysql_query("SELECT * FROM kapitalisasi WHERE idKontrak = '{$noKontrak['id']}'");
 while ($dataKapital = mysql_fetch_assoc($sql)){
             $kapital[] = $dataKapital;
@@ -85,7 +70,11 @@ foreach ($kapital as $key => $value) {
   $kib['NilaiBuku'] = $kib['NilaiBuku']; 
   $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
   $kib['Kd_Riwayat'] = 2;    
-  
+  if($value['jenis_belanja'] == 0){
+    $kib['GUID'] = 'Modal'; 
+  }else{
+    $kib['GUID'] = 'Jasa'; 
+  }
   
         unset($tmpField);
         unset($tmpValue);
@@ -98,7 +87,46 @@ foreach ($kapital as $key => $value) {
         $dataImp = implode(',', $tmpValue);
 
         $sql = mysql_query("INSERT INTO log_{$value['tipeAset']} ({$fileldImp}) VALUES ({$dataImp})");
-  
+        
+    //tambahan log aset penambah kapitalisasi
+    $getAset = "SELECT * from {$value['tipeAset']} WHERE Aset_ID = '{$value[asetKapitalisasi]}'";
+
+    $sqlAset = mysql_query($getAset);
+    while ($dataAset = mysql_fetch_assoc($sqlAset)){
+          $log = $dataAset;
+      }
+    
+    $log['changeDate'] = date("Y-m-d");
+    $log['TglPerubahan'] = $tglKontrak;//$kib['TglPerolehan'];
+    $log['operator'] = $_SESSION['ses_uoperatorid'];
+    $log['NilaiBuku'] = $log['NilaiBuku']; 
+    $log['NilaiPerolehan'] = $log['NilaiPerolehan'];
+    
+    for($i=0;$i<2;$i++){
+      if($i==0){
+          $log['StatusValidasi'] = '1';
+          $log['Status_Validasi_Barang'] = '0';
+          $log['StatusTampil'] = '1';
+          $log['Kd_Riwayat'] = '0';          
+      }else{
+          $log['StatusValidasi'] = '0';
+          $log['Status_Validasi_Barang'] = '0';
+          $log['StatusTampil'] = '0';
+          $log['Kd_Riwayat'] = '37';
+      }
+
+      unset($tmpField2);
+      unset($tmpValue2);
+      foreach ($log as $keys => $vals) {
+        $tmpField2[] = $keys;
+        $tmpValue2[] = "'".$vals."'";
+      }
+       
+      $fileldImp2 = implode(',', $tmpField2);
+      $dataImp2 = implode(',', $tmpValue2);
+
+      $sql2 = mysql_query("INSERT INTO log_{$value['tipeAset']} ({$fileldImp2}) VALUES ({$dataImp2})");
+    }
 }
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;

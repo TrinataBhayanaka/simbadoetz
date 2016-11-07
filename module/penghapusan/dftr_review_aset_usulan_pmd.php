@@ -135,17 +135,27 @@ $menu_id = 10;
 			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 						
 			<div class="detailLeft">
-						
-						<ul>
-							<li>
-								<span  class="labelInfo">No Usulan</span>
-								<input type="text" name="noUsulan" value="" required/>
-							</li>
-							<li>
-								<span class="labelInfo">Keterangan usulan</span>
-								<textarea name="ketUsulan" required></textarea>
-							</li>
-						</ul>
+			<ul>
+				<li>
+					<span  class="labelInfo">No Usulan</span>
+					<input type="text" name="noUsulan" value="" required/>
+				</li>
+				<li>
+					<span  class="labelInfo">Jenis Penghapusan</span>
+					<select  name="kategori_belanja" class="span2" id="NamaJabatan" required="">
+		            <option value="" >Pilih Kategori Aset</option>
+		            <option value="01">Tanah</option>
+		            <option value="02" >Mesin</option>
+		            <option value="03" >Bangunan</option>
+		            <option value="04" >Jaringan</option>
+		            <option value="05" >Asetlain</option>
+		          </select>
+				</li>
+				<li>
+					<span class="labelInfo">Keterangan usulan</span>
+					<textarea name="ketUsulan" required></textarea>
+				</li>
+			</ul>
 							
 					</div>
 
