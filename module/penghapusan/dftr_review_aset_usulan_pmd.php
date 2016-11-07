@@ -142,13 +142,12 @@ $menu_id = 10;
 				</li>
 				<li>
 					<span  class="labelInfo">Jenis Penghapusan</span>
-					<select  name="kategori_belanja" class="span2" id="NamaJabatan" required="">
-		            <option value="" >Pilih Kategori Aset</option>
-		            <option value="01">Tanah</option>
-		            <option value="02" >Mesin</option>
-		            <option value="03" >Bangunan</option>
-		            <option value="04" >Jaringan</option>
-		            <option value="05" >Asetlain</option>
+					<select  name="jenis_hapus" class="span2" id="NamaJabatan" required="">
+		            <option value="" >Pilih Jenis Penghapusan</option>
+		            <option value="jual beli">Jual Beli</option>
+		            <option value="dihibahkan">Di Hibahkan</option>
+		            <option value="dilelang" >Di Lelang</option>
+		            <option value="tukar menukar" >Tukar Menukar</option>
 		          </select>
 				</li>
 				<li>

@@ -41,6 +41,10 @@ $menu_id = 10;
 	// 	$POST=$_SESSION['reviewAsetUsulanAdd'];
 	// 	////pr($POST);
 	// }
+
+	//pr("here");
+	//pr($_POST);
+	//exit;
 	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 	$POST=$_POST;
 	$POST['penghapusanfilter']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
@@ -127,16 +131,26 @@ $menu_id = 10;
 			
 			<div class="detailLeft">
 						
-						<ul>
-							<li>
-								<span  class="labelInfo">No Usulan</span>
-								<input type="text" name="noUsulan" disabled value="<?=$row['NoUsulan']?>" />
-							</li>
-							<li>
-								<span class="labelInfo">Keterangan usulan</span>
-								<textarea name="ketUsulan" disabled ><?=$row['KetUsulan']?></textarea>
-							</li>
-						</ul>
+		<ul>
+			<li>
+				<span  class="labelInfo">No Usulan</span>
+				<input type="text" name="noUsulan" readonly="" value="<?=$row['NoUsulan']?>" />
+			</li>
+			<li>
+				<span  class="labelInfo">Jenis Penghapusan</span>
+				<select  name="jenis_hapus" class="span2" id="NamaJabatan" required="" readonly>
+			    <option value="" >Pilih Jenis Penghapusan</option>
+			    <option value="jual beli" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "jual beli" ) ? 'selected' : '' ) : '' ?>/>Jual Beli</option>
+			    <option value="dihibahkan" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "dihibahkan" ) ? 'selected' : '' ) : '' ?>/>Di Hibahkan</option>
+			    <option value="dilelang" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "dilelang" ) ? 'selected' : '' ) : '' ?>/>Di Lelang</option>
+			    <option value="tukar menukar" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "tukar menukar" ) ? 'selected' : '' ) : '' ?>/>Tukar Menukar</option>
+			  </select>
+			</li>
+			<li>
+				<span class="labelInfo">Keterangan usulan</span>
+				<textarea name="ketUsulan" readonly="" ><?=$row['KetUsulan']?></textarea>
+			</li>
+		</ul>
 							
 					</div>
 

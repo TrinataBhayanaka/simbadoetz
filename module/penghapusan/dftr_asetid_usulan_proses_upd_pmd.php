@@ -3,8 +3,7 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- */
-    
+ */ 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
     $menu_id = 40;

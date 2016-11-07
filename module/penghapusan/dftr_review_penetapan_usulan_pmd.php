@@ -215,13 +215,13 @@ $menu_id = 10;
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>No Register</th>
-						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
 						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
+						<th>Jenis Penghapusan</th>					
 					</tr>
 				</thead>
 				<tbody>		
@@ -310,9 +310,6 @@ $menu_id = 10;
 							<?php echo $nilai[noRegister]?>
 						</td>
 						<td>
-							<?php echo $nilai[noKontrak]?>
-						</td>
-						<td>
 							 [<?php echo $nilai[kodeKelompok]?>]<br/> 
 							<?php echo $nilai[Uraian]?>
 						</td>
@@ -331,6 +328,9 @@ $menu_id = 10;
 						</td>
 						<td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+						</td>
+						<td>
+							<?php echo $nilai[jenis_hapus]?>
 						</td>
 							
 					</tr>
@@ -359,105 +359,13 @@ $menu_id = 10;
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 					</tr>
 				</tfoot>
 			</table>
 			</div>
 			</form>
 			<div class="spacer"></div>
-		<!-- 	<div id="demo">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>Nama Satker</th>
-						<th>No. Dokumen</th>
-						<th>Tanggal</th>
-						<th>Jenis Dokumen</th>
-						<th>Tipe Aset</th>
-						<th>Nilai</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody> -->
-					<!-- 
-				<?php
-						$jmlUsulan=count($data['dataRow']);
-						$disabledForm="";
-						foreach ($data['dataRow'] as $valueUsulan) {
-							
-							$dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan($valueUsulan['Usulan_ID']);
-									//////pr($dataUsulanAset);
-									// //////pr($_SESSION);
-									// StatusKonfirmasi
-									$no = 1;
-									foreach ($dataUsulanAset as $keys => $nilai)
-									{
-										if ($nilai[Aset_ID] !='')
-										{
-										if ($nilai->AsetOpr == 0)
-										$select="selected='selected'";
-										if ($nilai->AsetOpr ==1)
-										$select2="selected='selected'";
-
-										if($nilai->SumberAset =='sp2d')
-										$pilih="selected='selected'";
-										if($nilai->SumberAset =='hibah')
-										$pilih2="selected='selected'";
-
-										if($nilai[StatusKonfirmasi]==1){
-											$textLabel="Diterima";
-											$labelColor="label label-success";
-										}elseif($nilai[StatusKonfirmasi]==2){
-											$textLabel="Ditolak";
-											$labelColor="label label-danger";
-										}else{
-											$textLabel="Ditunda";
-											$labelColor="label label-warning";
-											$disabled="
-										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
-										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
-										}
-						?>
-					<tr class="gradeA">
-						<td><?=$no?>|<?php echo $valueUsulan['Usulan_ID'];?></td>
-						<td width="20%"><?=$nilai['NamaSatker']?></td>
-						<td><?=$nilai['noKontrak']?></td>
-						<td><?=$nilai['tglKontrak']?></td>
-						<td><?=($nilai['tipe_kontrak'] == 2) ? 'Pembelian Langsung' : 'Kontrak'?></td>
-						<td><?=$nilai['tipeAset']?></td>
-						<td><?=number_format($nilai['nilai'])?></td>
-						<td class="center">
-						<?php
-						if($nilai['n_status'] != 1){
-						?>	
-							<a href="<?=($nilai['tipe_kontrak'] == 1) ? 'kontrakedit' : 'pledit'?>.php?id=<?=$nilai['id']?>" class="btn btn-warning btn-small"><i class="icon-edit icon-white"></i>&nbsp;Ubah</a>
-							<a href="kontrakhapus.php?id=<?=$val['id']?>" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i>&nbsp;Hapus</a>
-						<?php
-						} else {
-							echo "<span class='label label-Success'>Sudah di posting</span>";
-						}
-						?>
-						</td>
-						
-					</tr>
-					<?php
-					$no++;
-										}
-									}
-							
-								}
-							?>
-			
-				</tbody>
-				<tfoot>
-					<tr>
-						<th colspan="5">&nbsp;</th>
-					</tr>
-				</tfoot>
-			</table>
-			</div>
-			<div class="spacer"></div> -->
 		</form>
 		</section> 
 		     

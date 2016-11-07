@@ -32,7 +32,7 @@ $menu_id = 10;
 	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 	
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pms($POST);
-	// pr($data);
+	pr($data);
 	if($data['dataArr']){
 		$CountData=count($data['dataArr']);
 	}else{
@@ -214,13 +214,13 @@ $menu_id = 10;
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>No Register</th>
-						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
 						<th>Merk / Type</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
+						<th>Jenis Penghapusan</th>
 					</tr>
 				</thead>
 				<tbody>		
@@ -308,9 +308,7 @@ $menu_id = 10;
 						<td>
 							<?php echo $nilai[noRegister]?>
 						</td>
-						<td>
-							<?php echo $nilai[noKontrak]?>
-						</td>
+						
 						<td>
 							 [<?php echo $nilai[kodeKelompok]?>]<br/> 
 							<?php echo $nilai[Uraian]?>
@@ -330,6 +328,9 @@ $menu_id = 10;
 						</td>
 						<td>
 							<?php echo $kondisi. ' - ' .$nilai[AsalUsul]?>
+						</td>
+						<td>
+							<?php echo $nilai[jenis_hapus]?>
 						</td>
 							
 					</tr>

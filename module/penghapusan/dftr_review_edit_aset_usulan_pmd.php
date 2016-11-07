@@ -149,22 +149,32 @@ $menu_id = 10;
 
 				?>
 						
-						<ul>
-							<li>
-								<span  class="labelInfo">No Usulan</span>
-								<input type="text" name="noUsulan" value="<?=$row['NoUsulan']?>" <?=$disabled?> required/>
-							</li>
-							<li>
-								<span class="labelInfo">Keterangan usulan</span>
-								<textarea name="ketUsulan" <?=$disabled?> required><?=$row['KetUsulan']?></textarea>
-							</li>
-							<li>
-								<span  class="labelInfo">&nbsp;</span>
-								<input type="submit" <?=$disabled?> value="Upadte Informasi Usulan" class="btn"/>
-							</li>
-						</ul>
+			<ul>
+				<li>
+					<span  class="labelInfo">No Usulan</span>
+					<input type="text" name="noUsulan" value="<?=$row['NoUsulan']?>" <?=$disabled?> required/>
+				</li>
+				<li>
+					<span  class="labelInfo">Jenis Penghapusan</span>
+					<select  name="jenis_hapus" class="span2" id="NamaJabatan" required="">
+		            <option value="" >Pilih Jenis Penghapusan</option>
+		            <option value="jual beli" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "jual beli" ) ? 'selected' : '' ) : '' ?>/>Jual Beli</option>
+		            <option value="dihibahkan" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "dihibahkan" ) ? 'selected' : '' ) : '' ?>/>Di Hibahkan</option>
+		            <option value="dilelang" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "dilelang" ) ? 'selected' : '' ) : '' ?>/>Di Lelang</option>
+		            <option value="tukar menukar" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "tukar menukar" ) ? 'selected' : '' ) : '' ?>/>Tukar Menukar</option>
+		          </select>
+				</li>
+				<li>
+					<span class="labelInfo">Keterangan usulan</span>
+					<textarea name="ketUsulan" <?=$disabled?> required><?=$row['KetUsulan']?></textarea>
+				</li>
+				<li>
+					<span  class="labelInfo">&nbsp;</span>
+					<input type="submit" <?=$disabled?> value="Update Informasi Usulan" class="btn"/>
+				</li>
+			</ul>
 							
-					</div>
+			</div>
 
 			<div class="detailRight">
 				<ul>

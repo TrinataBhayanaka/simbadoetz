@@ -32,7 +32,7 @@ $menu_id = 10;
 
 						$data = $PENGHAPUSAN->DataPenetapan($idPenetapan);
 	
-	// ////pr($data);
+		//pr($data);
 
 		$POST['page'] = intval($_GET['pid']);
 	// pr($POST);

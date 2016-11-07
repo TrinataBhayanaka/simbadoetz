@@ -128,12 +128,22 @@ if($_SESSION['kdSatkerFilterPMD']){
 			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
 			
 			<div class="detailLeft">
-						
-						<ul>
-							<li>
-								<span  class="labelInfo">No Usulan</span>
-								<input type="text" name="noUsulan" value="" required/>
-							</li>
+			
+			<ul>
+				<li>
+					<span  class="labelInfo">No Usulan</span>
+					<input type="text" name="noUsulan" value="" required/>
+				</li>
+				<li>
+					<span  class="labelInfo">Jenis Penghapusan</span>
+					<select  name="jenis_hapus" class="span2" id="NamaJabatan" required="">
+		            <option value="" >Pilih Jenis Penghapusan</option>
+		            <option value="hilang">Hilang</option>
+		            <option value="pemusnahan">Pemusnahan</option>
+		            <option value="alasan lain" >Alasan lain sesuai dengan ketentuan Perundang-undangan</option>
+		          </select>
+				</li>
+				
 							<li>
 								<span class="labelInfo">Keterangan usulan</span>
 								<textarea name="ketUsulan" required></textarea>

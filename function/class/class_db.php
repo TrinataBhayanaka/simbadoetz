@@ -511,7 +511,15 @@ class DB
 	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false,
                             $AkumulasiPenyusutan=false,$AkumulasiPenyusutan_Awal=false,$NilaiBuku=false,$debug=false)
 	{
-
+		/*pr($table);
+		pr($Aset_ID);
+		pr($No_Dokumen);
+		pr($tgl);
+		pr($Nilai_awal);
+		pr($AkumulasiPenyusutan);
+		pr($AkumulasiPenyusutan_Awal);
+		pr($NilaiBuku);*/
+		//exit;
 	    if (empty($table)) return false;
 	    if (empty($Aset_ID)) return false;
 	    
@@ -522,6 +530,28 @@ class DB
 	    if ($No_Dokumen) $noDok = $No_Dokumen;
 	    else $noDok = '-';
 
+	    //get penghapusan_ID
+	    $sqlpenghapusan_ID = array(
+                        'table'=>'Penghapusan',
+                        'field'=>"Penghapusan_ID",
+                        'condition' => "NoSKHapus='$No_Dokumen' AND 
+                        TglHapus='$tgl' AND FixPenghapusan = '1'",
+                        );
+        $ressqlpenghapusan_ID = $this->lazyQuery($sqlpenghapusan_ID,$debug);
+        $penghapusan_ID = $ressqlpenghapusan_ID['0']['Penghapusan_ID'];
+		//pr($penghapusan_ID);
+
+		//get jenis_penghapusan
+		$sqljenis_penghapusan = array(
+                        'table'=>'penghapusanaset',
+                        'field'=>"jenis_penghapusan",
+                        'condition' => "Aset_ID='$Aset_ID' AND 
+                        Penghapusan_ID='$penghapusan_ID'",
+                        );
+        $ressqljenis_penghapusan = $this->lazyQuery($sqljenis_penghapusan,$debug);
+        $jenis_penghapusan = $ressqljenis_penghapusan['0']['jenis_penghapusan'];
+        //pr($jenis_penghapusan);
+
 	    $actionList = array(1=>'insert',2=>'update');
 	    $addField = array(
 	    				'changeDate'=>$date,
@@ -531,13 +561,17 @@ class DB
 	    				'Kd_Riwayat'=>$action,
 	    				'No_Dokumen'=>$noDok,
 	    				'NilaiPerolehan_Awal'=>$Nilai_awal,
-                                        'AkumulasiPenyusutan_Awal'=>$AkumulasiPenyusutan_Awal);
+                        'AkumulasiPenyusutan_Awal'=>$AkumulasiPenyusutan_Awal,
+                        'jenis_hapus'=>$jenis_penghapusan,
+                        );
 
 
 	    foreach ($table as $value) {
 	    	
 	    	// $field['log_id'] = get_auto_increment($value);
 			$field = $this->getFieldName($value,$Aset_ID);
+			//pr($field);
+			//exit;
 			$mergeField = array_merge($field, $addField);
 	        
 	        if ($mergeField){

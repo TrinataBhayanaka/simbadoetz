@@ -3,7 +3,9 @@
 include "../../config/config.php"; 
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-
+//pr("here");
+//pr($_POST);
+//exit;
 $menu_id = 39;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
