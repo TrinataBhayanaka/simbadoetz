@@ -114,7 +114,7 @@ $menu_id = 10;
 						<ul>
 							<li>
 								<span class="span2">Asal Usul</span>
-								<select id="asalusul" name="asalusul" style="width:255px">
+								<select id="asalusul" name="AsalUsul" style="width:255px">
 									<option value="Pembelian">Pembelian</option>
 									<option value="Hibah">Hibah</option>
 									<option value="BOS">BOS</option>
