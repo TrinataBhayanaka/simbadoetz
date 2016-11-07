@@ -361,15 +361,19 @@ class DB
 	        
 	        if ($mergeField){
 	        	foreach ($mergeField as $key => $val) {
-	        		$tmpField[] = $key;
-	        		$tmpValue[] = "'".$val."'";
+	        		
 
 	        		if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";
+	        		if ($key == 'StatusValidasi') $val=1;
+	        		
+	        		$tmpField[] = $key;
+	        		$tmpValue[] = "'".$val."'";
 	        	}
 	        	
 	        	$tmpField[] = 'NilaiPerolehan_Awal';
 	        	$tmpValue[] = $NilaiPerolehan_Awal;
 
+	        
 	        	$fileldImp = implode(',', $tmpField);
 	        	$dataImp = implode(',', $tmpValue);
 
@@ -456,8 +460,12 @@ class DB
 	        
 	        if ($mergeField){
 	        	foreach ($mergeField as $key => $val) {
+	        		
+	        		if ($key == 'StatusValidasi') $val=1;
+	        		
 	        		$tmpField[] = $key;
 	        		$tmpValue[] = "'".$val."'";
+	        		
 
 	        		//if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";
 	        	}
