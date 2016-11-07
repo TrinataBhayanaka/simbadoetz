@@ -25,14 +25,15 @@ $panjang=count($nmaset);
 
 $mutasi_id=get_auto_increment("Mutasi");
 
-// pr($_POST);
+ pr($_POST);
+
 if ($_POST['submit']){
 
     if (isset($_POST['aset_id'])){
         if (count($_POST['aset_id'])>0){
             // pr('ada');exit;
             $DBVAR->log(6, $_POST);
-            $data = $MUTASI->store_validasi_Mutasi($_POST);
+            $data = $MUTASI->store_validasi_Mutasi($_POST,$TAHUN_AKTIF);
             
         }    
     }

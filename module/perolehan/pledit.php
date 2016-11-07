@@ -43,7 +43,7 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
   <script>
     jQuery(function($) {
         $('#nilai_front').autoNumeric('init');
-        $("#datepicker").mask("9999-99-99");    
+        $("#datepicker").attr('readonly',true);    
     });
 
     function getCurrency(item){

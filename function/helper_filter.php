@@ -440,13 +440,14 @@ class helper_filter {
 			// pr($data);
           $dataImplode = explode(',', $data['Aset_ID']);
           foreach ($dataImplode as $asetid) {
-               $sql = "SELECT Aset_ID FROM Aset WHERE UserNm = {$this->UserSes['ses_uoperatorid']} AND Aset_ID = {$asetid} LIMIT 1";
-               // pr($sql);
-               $res = $this->sql->_fetch_array($sql, 0);
-               if ($res) {
-                    $dataAsetUser[] = $res['Aset_ID'];
-               }
-          }
+              if($asetid!=""){
+                    $sql = "SELECT Aset_ID FROM Aset WHERE UserNm = {$this->UserSes['ses_uoperatorid']} AND Aset_ID = {$asetid} LIMIT 1";
+                    // pr($sql);
+                    $res = $this->sql->_fetch_array($sql, 0);
+                    if ($res) {
+                         $dataAsetUser[] = $res['Aset_ID'];
+                    }
+          }     }
 
           return $dataAsetUser;
      }
