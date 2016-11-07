@@ -49,3 +49,14 @@ ALTER TABLE `log_bangunan` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL;
 ALTER TABLE `log_jaringan` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
 ALTER TABLE `log_asetlain` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL; 
 ALTER TABLE `log_kdp` ADD `kodeKelompokReklasTujuan` VARCHAR(150) NULL;
+
+ALTER TABLE `usulan` ADD `jenis_hapus` VARCHAR(30) NULL;
+ALTER TABLE `usulanaset` ADD `jenis_hapus` VARCHAR(30) NULL;
+ALTER TABLE `penghapusanaset` ADD `jenis_penghapusan` VARCHAR(30) NULL;
+
+ALTER TABLE `log_tanah` ADD `jenis_hapus` VARCHAR(30) NULL;
+ALTER TABLE `log_mesin` ADD `jenis_hapus` VARCHAR(30) NULL;
+ALTER TABLE `log_bangunan` ADD `jenis_hapus` VARCHAR(30) NULL;
+ALTER TABLE `log_jaringan` ADD `jenis_hapus` VARCHAR(30) NULL;
+ALTER TABLE `log_asetlain` ADD `jenis_hapus` VARCHAR(30) NULL;
+ALTER TABLE `log_kdp` ADD `jenis_hapus` VARCHAR(30) NULL;
