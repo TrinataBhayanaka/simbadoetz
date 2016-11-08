@@ -342,8 +342,40 @@ class DB
 	    if ($tmpAsetID) $tmpAsetIDTujuan = $tmpAsetID;
 	    else $tmpAsetIDTujuan = '-';
 	    
+	    //cek penghapusan pemindahtanganan / pemusnahan
+	    if($action == '26' || $action == '27'){
+	    	$sql_PenghapusanID = array(
+                            'table'=>'penghapusan',
+                            'field'=>"Penghapusan_ID",
+                            'condition' => "NoSKHapus = '$No_Dokumen'
+                            AND TglHapus = '$No_Dokumen'
+                            AND FixPenghapusan = '1'
+                            ",);
+			$res_PenghapusanID = $this->db->lazyQuery($sql_PenghapusanID,$debug);
+            $Penghapusan_ID = $res_PenghapusanID['0']['Penghapusan_ID'];
+
+            $sql_jenis_penghapusan = array(
+                            'table'=>'penghapusanaset',
+                            'field'=>"jenis_penghapusan",
+                            'condition' => "Penghapusan_ID = '$Penghapusan_ID'
+                            ",);
+           $res_jenis_penghapusan = $this->db->lazyQuery($sql_jenis_penghapusan,$debug);
+           $jenis_penghapusan = $res_jenis_penghapusan['0']['jenis_penghapusan'];                                     
+	    }
+
 	    $actionList = array(1=>'insert',2=>'update');
-	    $addField = array(
+	    if($jenis_penghapusan){
+	    	$addField = array(
+	    				'changeDate'=>$date,
+	    				'action'=>$actionText,
+	    				'operator'=>$_SESSION['ses_uoperatorid'],
+	    				'TglPerubahan'=>$tglProses,
+	    				'Kd_Riwayat'=>$action,
+	    				'Aset_ID_Penambahan'=>$tmpAsetIDTujuan,
+	    				'No_Dokumen'=>$noDok,
+	    				'jenis_hapus'=>$jenis_penghapusan);
+	    }else{
+	    	$addField = array(
 	    				'changeDate'=>$date,
 	    				'action'=>$actionText,
 	    				'operator'=>$_SESSION['ses_uoperatorid'],
@@ -351,7 +383,8 @@ class DB
 	    				'Kd_Riwayat'=>$action,
 	    				'Aset_ID_Penambahan'=>$tmpAsetIDTujuan,
 	    				'No_Dokumen'=>$noDok);
-
+	    }
+	    
 
 	    foreach ($table as $value) {
 	    	
