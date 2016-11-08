@@ -218,25 +218,25 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
                 if($explode[0] =="01"){
                     $tabel = "tanah";
-                    //$logtabel = "log_tanah";
+                    $paramID = "Tanah_ID";
                 } elseif ($explode[0]=="02") {
                     $tabel = "mesin";
-                    //$logtabel = "log_mesin";
+                    $paramID = "Mesin_ID";
                 } elseif ($explode[0]=="03") {
                     $tabel = "bangunan";
-                    //$logtabel = "log_bangunan";
+                    $paramID = "Bangunan_ID";
                 } elseif ($explode[0]=="04") {
                     $tabel = "jaringan";
-                    //$logtabel = "log_jaringan";
+                    $paramID = "Jaringan_ID";
                 } elseif ($explode[0]=="05") {
                     $tabel = "asetlain";
-                    //$logtabel = "log_asetlain";
+                    $paramID = "AsetLain_ID";
                 } elseif ($explode[0]=="06") {
                     $tabel = "kdp";
-                    //$logtabel = "log_kdp";
+                    $paramID = "KDP_ID";
                 }
 
-                $query = mysql_query("SELECT noRegister,Bangunan_ID,Aset_ID FROM {$tabel} 
+                $query = mysql_query("SELECT noRegister,{$paramID},Aset_ID FROM {$tabel} 
                   WHERE kodeKelompok = '{$data['kodeKelompokReklasAsal']}' 
                   AND kodeKelompokReklasTujuan = '{$data['kodeKelompokReklasTujuan']}'
                   AND kodeLokasi = '{$data['kodeLokasi']}'
@@ -244,13 +244,13 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                   LIMIT 1");
                 while ($row = mysql_fetch_assoc($query)){
                     $startreg = $row['noRegister'];
-                    $Bangunan_ID = $row['Bangunan_ID'];
+                    $param = $row[$paramID];
                     $Aset_ID = $row['Aset_ID'];
                 }
                 //pr($startreg);
                 $noreg = $startreg; 
                 //@kodereklas (tujuan)
-                //$tblLogKib['Bangunan_ID'] = $Bangunan_ID;
+                $tblLogKib[$paramID] = $param;
                 $tblLogKib['Aset_ID'] = $Aset_ID;
                 $tblLogKib['kodeKelompok'] = $kib['kodeKelompokReklasAsal'];
                 $tblLogKib['kodeSatker'] = $kib['kodeSatker'];
@@ -305,7 +305,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
                   $sql3 = "INSERT INTO log_{$tabel} ({$fileldImp3}) 
                           VALUES ({$dataImp3})";
-                  pr($sql3);
+                  //pr($sql3);
                   $execquery = mysql_query($sql3) or die($sql3."<br/>".mysql_error());
                   logFile($sql3);
                 }  
