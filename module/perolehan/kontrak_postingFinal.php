@@ -250,7 +250,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                 //pr($startreg);
                 $noreg = $startreg; 
                 //@kodereklas (tujuan)
-                $tblLogKib['Bangunan_ID'] = $Bangunan_ID;
+                //$tblLogKib['Bangunan_ID'] = $Bangunan_ID;
                 $tblLogKib['Aset_ID'] = $Aset_ID;
                 $tblLogKib['kodeKelompok'] = $kib['kodeKelompokReklasAsal'];
                 $tblLogKib['kodeSatker'] = $kib['kodeSatker'];
@@ -305,8 +305,8 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
                   $sql3 = "INSERT INTO log_{$tabel} ({$fileldImp3}) 
                           VALUES ({$dataImp3})";
-                  //pr($sql);
-                  $execquery = mysql_query($sql3);
+                  pr($sql3);
+                  $execquery = mysql_query($sql3) or die($sql3."<br/>".mysql_error());
                   logFile($sql3);
                 }  
               }
