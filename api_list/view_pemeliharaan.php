@@ -312,8 +312,10 @@ while ($aRow = $DBVAR->fetch_array($rResult)) {
 			$cekPmlhrn = $GetDataCeck['jml']." x";
 			$wrd = "Telah Dilakukan"."<br>"." Pemeliharaan :";
 			$label ="label-success";
-			$rincian="";
-			
+			//$rincian="";
+			$rincian ="<center><a href=\"pemeliharaan_tambah_rincian.php?url=$addUrl&surl=$filterUrl&turl=$filterUrlPmlhrn&skUrl=$skUrl\" class=\"btn btn-info btn-small\">
+			<i class=\"icon-plus icon-white\"></i>&nbsp;Pemeliharaan
+			</a></center>";
 			$view= "<center><a href=\"pemeliharaan_detail.php?url=$addUrl&surl=$filterUrl&turl=$filterUrlPmlhrn&flag=$flag&skUrl=$skUrl\" class=\"btn btn-info btn-small\">
 			<i class=\"fa fa-eye\" align=\"center\"></i>&nbsp;&nbsp;Detail</a></center>";
 		}else{

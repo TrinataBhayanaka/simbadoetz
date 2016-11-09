@@ -156,7 +156,7 @@ $menu_id = 10;
 				</li>
 				<li>
 					<span  class="labelInfo">Jenis Penghapusan</span>
-					<select  name="jenis_hapus" class="span2" id="NamaJabatan" required="">
+					<select  name="jenis_hapus" class="span2" id="NamaJabatan"  <?=$disabled?>  required="" >
 		            <option value="" >Pilih Jenis Penghapusan</option>
 		            <option value="jual beli" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "jual beli" ) ? 'selected' : '' ) : '' ?>/>Jual Beli</option>
 		            <option value="dihibahkan" <?php echo ( isset( $row ) ) ? ( ( $row['jenis_hapus']== "dihibahkan" ) ? 'selected' : '' ) : '' ?>/>Di Hibahkan</option>
