@@ -108,7 +108,9 @@ $Uraian = $GetDataTipe['Uraian'];
 				<li>&nbsp;</li>
 				<?php
 				//cek biaya dari rencana perncanaan
-					$queryCek ="SELECT HargaSatuan from rencana_pemeliharaan WHERE Aset_ID = '$Aset_ID' LIMIT 1";
+					$tahun=$TAHUN_AKTIF;
+					$queryCek ="SELECT HargaSatuan from rencana_pemeliharaan WHERE Aset_ID = '$Aset_ID' and YEAR(TglPemeliharaan) = '$tahun' order by RencanaPemeliharaan_ID desc LIMIT 1";
+					//echo "query =".$queryCek;
 					$exequery = $DBVAR->query($queryCek);
 					$count = $DBVAR->num_rows($exequery);
 					$getData = $DBVAR->fetch_array($exequery); 			
