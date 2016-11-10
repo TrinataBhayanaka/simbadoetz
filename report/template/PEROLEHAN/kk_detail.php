@@ -16,7 +16,7 @@ $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&levelAset=$le
 // echo $paramater_url;
 // exit;
 $REPORT=new report_engine();
-$url = "rekap_kk_detail.php?$paramater_url";
+$url = "rekap_kk_detail_v2.php?$paramater_url";
 $REPORT->show_pilih_download($url);  
 
 

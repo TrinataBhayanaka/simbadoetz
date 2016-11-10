@@ -29,19 +29,6 @@ $TBS = new clsTinyButStrong; // new instance of TBS
 $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN); // load the OpenTBS plugin
 $template = "revisi-template_kk2.xlsx";
 $TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8); // Also merge some [onload] automatic fields (depends of the type of document).
-/*$data_header=array();
-$data_header[]=array("provinsi"=>"Jawa Tengah","tahun"=>"2016",
-				"kabupaten"=>"Pekalongan",
-				"bidang"=>"bidang",
-				"unit"=>"percobaan","subunit"=>"coba2132121",
-				"upb"=>"masuk upb");
-// Merge data in the first sheet
-//print_r($data_header);
- //$TBS->Plugin(OPENTBS_DEBUG_XML_SHOW);
-$TBS->MergeBlock('kk', $data_header);
-$filename = "/srv/www/htdocs/ngoprek/office/opentbs/demo/coba.xlsx";
-    $TBS->Show(OPENTBS_FILE, $filename);
-    exit();*/
 
 
 $modul = $_GET['menuID'];
@@ -797,33 +784,6 @@ foreach ($data as $gol) {
         $kode_tmp=  explode(".", $SubSub[Kelompok]);
         $kode_final=sprintf('%02d', $kode_tmp[4])."-".($kode_tmp[5]);
         
-        /*$subsub_array[] = array("kode" => "", "kode2" => "", "kode3" => "", "kode4" => "",
-            "kode5" => "$kode_final",
-            "uraian" => " {$SubSub[Uraian]}", "sa_jml" => "{$SubSub[jml]}",
-            "sa_harga" => "{$SubSub[nilai]}", "sa_ak" => "{$SubSub[ap]}", "sa_nb" => "{$SubSub[nb]}", 
-             "satambah_jml" => "5",
-            "satambah_harga" => "6", 
-            "bm_aset" => "7", "bm_kapitalisasi" => "8", "bm_barangi" => "9",
-            "bm_total" => "10", "bj_jml" => "11", "bj_harga" => "12", "hibah_jml" => "13",
-            "hibah_harga" => "14", "transfer_jml" => "15", "transfer_harga" => "16",
-            "reklas_jml" => "17", "reklas_harga" => "18", "inv_jml" => "19",
-            "inv_hrg" => "20",
-            "mt_jml" => "", 
-            "mt_harga" => "{$SubSub[mutasi_nilai_tambah]}",
-            
-            "sakrg_jml" => "23", "sakrg_harga" => "24", "p_pemindahtanganan" => "25",
-            "p_penghapusan" => "26", "p_jml" => "27", "p_harga" => "28",
-            "transferk_jml" => "29", "transferk_harga" => "30", "reklask_harga" => "31",
-            "reklas_ekstra" => "32", "reklas_lainnya" => "33", "reklas_bmt" => "34",
-            "reklas_jml" => "35", "reklas_harga" => "36", 
-            "mtk_jml" => "38",
-            "mtk_harga" => "$SubSub[mutasi_nilai_kurang]",
-            "sr_jml" => "{$SubSub[jml_akhir]}", "sr_harga" => "{$SubSub[nilai_akhir]}", 
-                    "sr_ak" => "{$SubSub[ap_akhir]}", "sr_nb" => "{$SubSub[nb_akhir]}",
-            
-            "am_harga"=>"{$SubSub[mutasi_ap_tambah]}","amk_harga"=>"{$SubSub[mutasi_ap_kurang]}"
-            );
-            $TBS->MergeBlock('a', $subsub_array);*/
         $DATA_FINAL[] = array("kode" => "", "kode2" => "", "kode3" => "", "kode4" => "",
             "kode5" => "$kode_final",
             "uraian" => " {$SubSub[Uraian]}", "sa_jml" => "{$SubSub[jml]}",
