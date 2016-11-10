@@ -281,7 +281,13 @@ while ($aRow = $DBVAR->fetch_array($rResult)) {
 			$cekPmlhrn = $GetDataCeck['jml']." x";
 			$wrd = "Telah Dilakukan"."<br>"." Pemeliharaan :";
 			$label ="label-success";
-			$rincian = "";
+			//$rincian = "";
+			$identity = "id=$id&tipe=$TipeAset&";
+			$addUrl = encode($identity.$par_data_table);
+			$filterUrl = encode($par_data_table);
+			$rincian ="<center><a href=\"prcn_pemeliharaan_tambah_rev.php?url=$addUrl&surl=$filterUrl\" class=\"btn btn-info btn-small\">
+			<i class=\"icon-plus icon-white\"></i>&nbsp;Pemeliharaan
+			</a></center>";
 		}else{
 			$cekPmlhrn = '';
 			$wrd = "Belum Dilakukan"."<br>"." Pemeliharaan ";
