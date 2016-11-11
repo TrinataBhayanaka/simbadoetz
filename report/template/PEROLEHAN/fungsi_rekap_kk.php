@@ -60,7 +60,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
   $paramLog = "l.TglPerubahan >='$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
        and $paramSatker
          AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,35,36,37,281,282,77)
-         order by l.tglPerubahan,l.Aset_ID ASC";
+         order by l.tglPerubahan,l.log_id DESC";
 
   $log_data = "select l.* ,(select Uraian from kelompok
                where kode= l.kodeKelompok

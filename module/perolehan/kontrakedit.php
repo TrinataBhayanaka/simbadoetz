@@ -40,10 +40,10 @@ if ( isset( $_GET['id'] ) ) {
   <script>
     jQuery(function($) {
       $('#nilai_front').autoNumeric('init');
-     $("#datepicker").mask("0000-00-00");
+      //$("#datepicker").mask("0000-00-00");
     //  $("#datepicker").attr('readonly',true);
 
-       //get jenis belanja 
+      //get jenis belanja 
       var idkontrak  = $('#idkontrak').val();
       if(idkontrak){
       var jenis_posting = $("input[type='radio'].jenis_posting:checked").val();
