@@ -274,7 +274,7 @@ foreach ( $data as $gol ) {
   $TBS->MergeBlock( 'a', $DATA_FINAL );
   $filename = "$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
   $TBS->Show( OPENTBS_FILE, $filename );
-  $namafile_web = "$url_rewrite"."report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
+  $namafile_web = "$url_rewrite"."/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
   echo "<script>window.location.href='$namafile_web';</script>";
 
 
