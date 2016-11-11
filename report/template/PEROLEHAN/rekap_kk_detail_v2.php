@@ -27,7 +27,7 @@ include "fungsi_rekap_kk.php";
 
 $TBS = new clsTinyButStrong; // new instance of TBS
 $TBS->Plugin( TBS_INSTALL, OPENTBS_PLUGIN ); // load the OpenTBS plugin
-$template = "revisi-template_kk_v3.xlsx";
+$template = "revisi-template_kk_v4.xlsx";
 $TBS->LoadTemplate( $template, OPENTBS_ALREADY_UTF8 ); // Also merge some [onload] automatic fields (depends of the type of document).
 
 
@@ -166,12 +166,8 @@ foreach ( $data as $gol ) {
   $data[$i] = $hasil;
 
 
-
+  
   foreach ( $hasil as $gol ) {
-
-    //pr($gol);
-    //exit();
-
 
     /**
      * UNTUK KELOMPOK XLSX
@@ -183,13 +179,8 @@ foreach ( $data as $gol ) {
     $DATA_FINAL[] = array( "kode" => "$kode_final", "kode2" => "", "kode3" => "", "kode4" => "",
       "kode5" => "" )+$gol;
 
-    //pr($hasil);
-//  exit();
-
     if ( $levelAset >= 3 || $levelAset == 1 )
       foreach ( $gol['Bidang'] as $bidang ) {
-
-
         /**
          * UNTUK BIDANG XLSX
          */
@@ -228,10 +219,6 @@ foreach ( $data as $gol ) {
 
                 $DATA_FINAL[] = array( "kode" => "", "kode2" => "", "kode3" => "", "kode4" => "$kode_final",
                   "kode5" => "" )+$Sub;
-
-
-
-
                 /**
                  * AKHIR UNTUK SUB XLSX
                  */
@@ -240,8 +227,6 @@ foreach ( $data as $gol ) {
 
                 if ( $levelAset == 6 || $levelAset == 1 )
                   foreach ( $Sub['SubSub'] as $SubSub ) {
-
-
                     /**
                      * UNTUK SUBSUB XLSX
                      */
@@ -254,7 +239,24 @@ foreach ( $data as $gol ) {
 
                     /**
                      * AKHIR UNTUK SUBSUB XLSX
-                     */
+                     */ 
+                    if ( $levelAset == 7 || $levelAset == 1 )
+                        foreach ( $SubSub['Detail'] as $Detail ) {
+                          /**
+                           * UNTUK SUBSUB XLSX
+                           */
+                          $subsub_array=array();
+                          $kode_tmp=  explode( ".", $Detail[kelompok] );
+                          //$kode_final=sprintf( '%02d', $kode_tmp[4] )."-".( $kode_tmp[5] );
+                          $kode_final=sprintf( '%02d', $kode_tmp[4] );
+                          $DATA_FINAL[] = array( "kode" => "", "kode2" => "", "kode3" => "", "kode4" => "",
+                            "kode5" => "" )+$Detail;
+
+                          /**
+                           * AKHIR UNTUK SUBSUB XLSX
+                           */
+
+                        }
 
                   }
               }

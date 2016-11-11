@@ -57,21 +57,20 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     break;
   }
 
-  $paramLog = "l.TglPerubahan >'$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
-      and l.TglPembukuan>='$tglpembukuan' and $paramSatker
+  $paramLog = "l.TglPerubahan >='$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
+       and $paramSatker
          AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,35,36,37,281,282,77)
          order by l.tglPerubahan,l.Aset_ID ASC";
 
   $log_data = "select l.* ,(select Uraian from kelompok
                where kode= l.kodeKelompok
                ) as Uraian from {$tabel_log} as l
-           
             where $paramLog";
 
   //echo "$log_data<br/>";
 
   //echo "$gol == $sql";
-  $result = mysql_query( $log_data ) or die( mysql_error() );
+  $result = mysql_query( $log_data ) or die( "$log_data==" . mysql_error() );
   $data_final = array();
   while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
     $log_id = $data['log_id'];
@@ -109,9 +108,17 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
 
     $Uraian = $data['Uraian'];
     $AsalUsul = $data['AsalUsul'];
-    $kodeKa = $data['kodeKa'];
-    if($final_gol=="tanah"||$final_gol=="kdp"||$final_gol=="asetlain")
+    $kodeKa = $data['kodeKA'];
+    list( $noKontrak, $kondisi_aset,$kodeKa,$TipeAset )=get_aset( $Aset_ID );
+    
+    if($final_gol=="tanah"||$final_gol=="kdp"||$final_gol=="asetlain"||$final_gol=="jaringan")
       $kodeKa=1;
+
+    if($final_gol=="tanah"||$final_gol=="kdp"||$final_gol=="asetlain")
+    {  
+      $NilaiBuku=$NilaiPerolehan;
+      $NilaiBuku_Awal=$NilaiPerolehan_Awal;
+    }
     $data['Uraian']=$Uraian;
     $data['kelompok']=$kodeKelompok;
     $jenis_kapitalisasi=$data['GUID'];
@@ -218,12 +225,12 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
 
     /** -----------------------------------------------------Akhir Inisialisasi DATA */
     
-    //$data_final[]=$data;
-    list( $noKontrak, $kondisi_aset )=get_aset( $Aset_ID );
-    //echo "( $noKontrak, $kondisi_aset )$Kd_Riwayat==$Kd_Riwayat && Status_Validasi_Barang=$Status_Validasi_Barang && StatusValidasi==$StatusValidasi && StatusTampil==$StatusTampil<br/>";
-    //exit();
+    $status_masuk=0;
+    
+     // echo "$Aset_ID --$kodeKa( $noKontrak, $kondisi_aset )Kd_Riwayat==$Kd_Riwayat && Status_Validasi_Barang=$Status_Validasi_Barang && StatusValidasi==$StatusValidasi && StatusTampil==$StatusTampil<br/>";
     if ( $Kd_Riwayat=="0" && $Status_Validasi_Barang==1 && $StatusValidasi==1 && $StatusTampil==1 && $TglPembukuan!=0 ) {
-
+      
+      $status_masuk=1;
       // kontrak / inventarisasi / ekstrakomtabel
       /** ----------------------------MUTASI TAMBAH---------------------------------- */
       $data['saldo_awal_nilai']=0;
@@ -255,13 +262,13 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         }else {
           if ( $AsalUsul!="Inventarisasi" && $AsalUsul!="Pembelian" ) {
             /** HIBAH */
-            $data['hibah_jml']=$NilaiPerolehan;
-            $data['hibah_nilai']=1;
+            $data['hibah_jml']=1;
+            $data['hibah_nilai']=$NilaiPerolehan;
             /** AKHIR HIBAH */
           }else {
             /** Inventarisasi */
-            $data['inventarisasi_jml']=$NilaiPerolehan;
-            $data['inventarisasi_nilai']=1;
+            $data['inventarisasi_jml']=1;
+            $data['inventarisasi_nilai']=$NilaiPerolehan;
             /** Inventarisasi */
           }
         }
@@ -353,6 +360,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
 
     }else if ( $Kd_Riwayat=="1" ) {
         // Ubah Kondisi
+        $status_masuk=1;
         if ( $kodeKa==1 ) {
 
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
@@ -489,6 +497,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       }else if ( $Kd_Riwayat=="2" || $Kd_Riwayat=="29" ) {
         // code... KAPITALISASI dan KAPITALISASI VIA TRANSFER
         if ( $kodeKa==1 ) {
+          $status_masuk=1;
 
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           if ( $Tahun==$TAHUN_AKTIF ) {
@@ -614,6 +623,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       }else if ( $Kd_Riwayat=="3" ) {
         // code... PINDAH SKPD
         if ( $kodeKa==1 ) {
+          $status_masuk=1;
 
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           if ( $Tahun==$TAHUN_AKTIF ) {
@@ -754,6 +764,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         // code... PENGHAPUSAN SEBAGIAN
         if ( $kodeKa==1 ) {
 
+          $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
@@ -879,7 +890,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         // code... KOREKSI NILAI dan KOREKSI KAPITALISASI
         $selisih=$NilaiPerolehan-$NilaiPerolehan_Awal;
         if ( $kodeKa==1 ) {
-
+          $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
@@ -1015,12 +1026,13 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           }
           $data['bp_penyusutan_kurang']=0;
           /** AKHIR PENYUSUTAN - */
-          $data['Saldo_akhir_jml']=0;
+          $data['Saldo_akhir_jml']=1;
           $data['bp_berjalan']=0;
         }
       }else if ( $Kd_Riwayat=="26"||$Kd_Riwayat=="27" ) {
         // code... PENGHAPUSAN DAN PEMINDAHTANGANAN
         if ( $kodeKa==1 ) {
+          $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
@@ -1212,6 +1224,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         //code REKLAS ASET VIA KOREKSI
         if ( $kodeKa==1 ) {
 
+          $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
@@ -1365,18 +1378,19 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         $PenyusutanPerTahun_Awal=get_penyusutan_awal( $tabel_log, $log_id );
         if ( $kodeKa==1 ) {
 
+          $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
-          if ( $Tahun==$TAHUN_AKTIF ) {
+        /*  if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
             $data['saldo_awal_akm']=0;
             $data['saldo_awal_nilaibuku']=0;
             $data['saldo_awal_jml']=0;
-          }else {
+          }else {*/
             $data['saldo_awal_nilai']=$NilaiPerolehan;
             $data['saldo_awal_akm']=$AkumulasiPenyusutan;
             $data['saldo_awal_nilaibuku']=$NilaiBuku;
             $data['saldo_awal_jml']=1;
-          }
+          //}
           /** Koreksi Saldo Awal  */
           $data['koreksi_tambah_nilai']=0;
           $data['koreksi_tambah_jml']=0;
@@ -1480,7 +1494,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       }else if ( $Kd_Riwayat=="281"||$Kd_Riwayat=="282" ) {
         // code REKLAS KOREKSI KAPITALISAI, REKLAS TRANSFER KAPITALISASI
         if ( $kodeKa==1 ) {
-
+          $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
@@ -1601,10 +1615,10 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['Saldo_akhir_jml']=0;
           $data['bp_berjalan']=0;
         }
-      }else if ( $Kd_Riwayat=="35" ) {
-        // code  REKLAS KONTRAK
+      }else if ( $Kd_Riwayat=="36" ) {
+        // code  REKLAS kontrak
         if ( $kodeKa==1 ) {
-
+          $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           $data['saldo_awal_nilai']=0;
           $data['saldo_awal_akm']=0;
@@ -1616,8 +1630,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['koreksi_tambah_jml']=0;
           /**  Akhir Koreksi Saldo Awal */
 
-
-          if ( $nokontrak!="" ) {
+          if ( $noKontrak!="" ) {
             if ( $jenis_belanja==0 ) {
               /** BELANJA MODAL */
               $data['bm_aset_baru']=$NilaiPerolehan;
@@ -1654,8 +1667,8 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** JUMLAH MUTASI TAMBAH */
-          $data['jumlah_mutasi_tambah_jml']=0;
-          $data['jumlah_mutasi_tambah_nilai']=0;
+          $data['jumlah_mutasi_tambah_jml']=1;
+          $data['jumlah_mutasi_tambah_nilai']=$NilaiPerolehan;
 
           /** AKHIR JUMLAH MUTASI TAMBAH */
 
@@ -1720,26 +1733,29 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['bp_berjalan']=0;
         }
       }
-      $data_final[]=$data;
+      if($status_masuk==1)
+        $data_final[]=$data;
       //$data_final["$Aset_ID-$Kd_Riwayat-$log_id"]=$data;
   }
   return $data_final;
 }
 
 function get_aset( $aset_id ) {
-  $sql = "select noKontrak,kondisi from aset where aset_id='$aset_id' limit 1";
-  $result=mysql_query( $sql ) or die( mysql_error() );
+  $sql = "select noKontrak,kondisi,kodeKA,TipeAset from aset where aset_id='$aset_id' limit 1";
+  $result=mysql_query( $sql ) or die( "masuk sini".mysql_error() );
   while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
     $nokontrak= $data['noKontrak'];
     $kondisi = $data['kondisi'];
+    $kodeKa=$data['kodeKA'];
+    $TipeAset=$data['TipeAset'];
   }
-  return array( $nokontrak, $kondisi );
+  return array( $nokontrak, $kondisi,$kodeKa,$TipeAset );
 
 }
 function get_penyusutan_awal( $log, $log_id ) {
   $id=$log_id-1;
   $query="select PenyusutanPerTahun from $log where log_id=$log_id and kd_riwayat=49";
-  $result=mysql_query( $sql ) or die( mysql_error() );
+  $result=mysql_query( $query ) or die( mysql_error() );
   $PenyusutanPerTahun=0;
   while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
     $PenyusutanPerTahun= $data['PenyusutanPerTahun'];
@@ -1817,9 +1833,36 @@ function subsub_awal( $kode, $gol, $ps, $pt ) {
                 where kodeKelompok like '$kode_sub%' and
                  $param_where
                order by kelompok asc";
-    } else {
+    }else if($gol=='tanahView'){
+       $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,kodeSatker,
+               NilaiPerolehan as nilai,Status_Validasi_barang as jml,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
+               AkumulasiPenyusutan as AP, NilaiPerolehan as NB,
+              (select Uraian from kelompok
+               where kode= kodeKelompok
+               ) as Uraian,
+               Status_Validasi_barang,kodeSatker from $gol m
+                where kodeKelompok like '$kode_sub%' and
+                 $param_where
+               order by kelompok asc";
+    }else if($gol=='kdp_ori'){
+       $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,kodeSatker,
+               NilaiPerolehan as nilai,Status_Validasi_barang as jml,
+               0 as PP,Tahun as Tahun, noRegister as noRegister,
+               0 as AP, NilaiPerolehan as NB,
+              (select Uraian from kelompok
+               where kode= kodeKelompok
+               ) as Uraian,
+               Status_Validasi_barang,kodeSatker from $gol m
+                where kodeKelompok like '$kode_sub%' and
+                 $param_where
+               order by kelompok asc";
+    }
+    else {
       $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,kodeSatker,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
+               PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
+               AkumulasiPenyusutan as AP, NilaiBuku as NB,
               (select Uraian from kelompok
                where kode= kodeKelompok
                ) as Uraian,
@@ -1950,6 +1993,7 @@ function group_data( $data_awal_perolehan, $data_log ) {
 
   foreach ( $data_awal_perolehan as $arg ) {
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['kelompok']=$arg['kelompok'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['Aset_ID']=$arg['Aset_ID'];
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['Uraian']=$arg['Uraian'];
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['saldo_awal_nilai'] = $arg['saldo_awal_nilai'];
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['saldo_awal_akm'] = $arg['saldo_awal_akm'];
@@ -2053,6 +2097,8 @@ function group_data( $data_awal_perolehan, $data_log ) {
   $data_log_full = array();
   foreach ( $data_log  as $arg ) {  
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['kelompok']=$arg['kodeKelompok'];
+    $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['Aset_ID']=$arg['Aset_ID'];
+
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['Uraian']=$arg['Uraian'];
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['saldo_awal_nilai'] = $arg['saldo_awal_nilai'];
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['saldo_awal_akm'] = $arg['saldo_awal_akm'];
@@ -2156,42 +2202,39 @@ function group_data( $data_awal_perolehan, $data_log ) {
 
   }
 
-  
-
-   echo "array data awal:<br/><pre>";
-   print_r(count($data_awal));
-   print_r(($data_awal));
-
-   
-   echo " <br/>array data log:<br/><pre>";
-   print_r(count($data_log_full));
-   print_r(($data_log_full));
-   //exit();
-   //echo "array data awal:<br/><pre>";
-   //print_r($data_gabungan);//data-sub-sub
-    //  exit; 
+  /**
+   * Bentuk array history
+   */
+  $query_riwayat="select * from ref_riwayat order by kd_riwayat asc";
+  $RIWAYAT=array();
+  $sql_riwayat=mysql_query($query_riwayat);
+  while($row=mysql_fetch_array($sql_riwayat)){
+    $RIWAYAT[$row[Kd_Riwayat]]=$row[Nm_Riwayat];
+  }
+  /** Proses Menggabungkan data */
   $data_gabungan = array_merge( $data_awal, $data_log_full );
-  $data_gabungan = $data_awal+ $data_log_full ;
- 
-  //echo "array gabungan:<br/><pre>";
-  
-  //print_r(($data_gabungan));//data-sub-sub
+  /** Proses Menggabungkan data */
+ // pr($data_log_full);
   //exit();
-  /**/
-  //
+
+  //echo "masuk";
+  //pr($data_gabungan);
   $data_level_aset = array();
   $count=0;
   $aset_tmp=0;
   foreach ( $data_gabungan as $key => $value ) {
     $tmp = explode( ".", $key );
-    /*$tmp_4=explode("-",$tmp[4]);
-    $tmp[4]=$tmp_4;*/
-    $key_baru = "{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}.{$tmp[5]}";
-
+    $index_aset_id=explode("-",$tmp[5]);
+    $index_aset_id=$index_aset_id[0];
+    $key_baru = "{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}.{$index_aset_id}";
+    //echo "key==$key_baru=={$value['Kd_Riwayat']}<br/>";
     $URAIAN = get_uraian( $key_baru, 5 );
 
     $data_level_aset[$key_baru]['kelompok']=$value['kelompok'];
     $data_level_aset[$key_baru]['Uraian']=$value['Uraian'];
+
+    $data_level_aset[$key_baru]['no_aset']=$value['Aset_ID'];
+    $data_level_aset[$key_baru]['riwayat']=$value['Kd_Riwayat'];
     
    $data_level_aset[$key_baru]['saldo_awal_nilai'] = $value['saldo_awal_nilai'];
    $data_level_aset[$key_baru]['saldo_awal_akm'] = $value['saldo_awal_akm'];
@@ -2248,10 +2291,11 @@ function group_data( $data_awal_perolehan, $data_log ) {
     $data_level_aset[$key_baru]['koreksi_penyusutan_kurang'] += $value['koreksi_penyusutan_kurang'];
     $data_level_aset[$key_baru]['bp_penyusutan_kurang'] += $value['bp_penyusutan_kurang'];
     $data_level_aset[$key_baru]['bp_berjalan'] += $value['bp_berjalan'];
-    if ($data_level_aset[$key_baru]['Kd_Riwayat']=="")
-      $data_level_aset[$key_baru]['Kd_Riwayat'] .= $value['Kd_Riwayat'];
-    else
-      $data_level_aset[$key_baru]['Kd_Riwayat'] .= "{$data_level_aset[$key_baru]['Kd_Riwayat']},".$value['Kd_Riwayat'];
+    $text_riwayat=$RIWAYAT[$value['Kd_Riwayat']];
+    if($value['Kd_Riwayat']!="")
+      $data_level_aset[$key_baru]['Kd_Riwayat'] .= $text_riwayat."({$value['Kd_Riwayat']})";
+    else $data_level_aset[$key_baru]['Kd_Riwayat'] .="";
+    //echo "Text Riwayat==$text_riwayat<br/>";
   }
 
    $data_level5 = array();
@@ -2263,8 +2307,12 @@ function group_data( $data_awal_perolehan, $data_log ) {
 
     $URAIAN = get_uraian( $key_baru, 5 );
 
-    $data_level5[$key_baru]['kelompok']=$value['kelompok'];
+    //$data_level5[$key_baru]['kelompok']=$value['kelompok'];
+    $data_level5[$key_baru]['kelompok']=$key_baru;
     $data_level5[$key_baru]['Uraian']=$value['Uraian'];
+
+    $data_level5[$key_baru]['no_aset']="";
+    $data_level5[$key_baru]['riwayat']="";
     
    $data_level5[$key_baru]['saldo_awal_nilai'] += $value['saldo_awal_nilai'];
    $data_level5[$key_baru]['saldo_awal_akm'] += $value['saldo_awal_akm'];
@@ -2321,8 +2369,11 @@ function group_data( $data_awal_perolehan, $data_log ) {
     $data_level5[$key_baru]['koreksi_penyusutan_kurang'] += $value['koreksi_penyusutan_kurang'];
     $data_level5[$key_baru]['bp_penyusutan_kurang'] += $value['bp_penyusutan_kurang'];
     $data_level5[$key_baru]['bp_berjalan'] += $value['bp_berjalan'];
-
-    $data_level5[$key_baru]['Kd_Riwayat'] = $value['Kd_Riwayat'].",";
+    if($value['Kd_Riwayat']!="")
+      $data_level5[$key_baru]['Kd_Riwayat'] .= $value['Kd_Riwayat']." , ";
+    else
+      $data_level5[$key_baru]['Kd_Riwayat'] .="";
+    $data_level5[$key_baru]['Detail'][$key] = $data_level_aset[$key];
   }
   //echo "data";
   //pr($data_level5);
@@ -2337,6 +2388,9 @@ function group_data( $data_awal_perolehan, $data_log ) {
 
     $data_level4[$key_baru]['kelompok']=$value5['kelompok'];
     $data_level4[$key_baru]['Uraian']=$URAIAN;
+    $data_level4[$key_baru]['no_aset']="";
+    $data_level4[$key_baru]['riwayat']="";
+
     $data_level4[$key_baru]['saldo_awal_nilai'] += $value5['saldo_awal_nilai'];
     $data_level4[$key_baru]['saldo_awal_akm'] += $value5['saldo_awal_akm'];
     $data_level4[$key_baru]['saldo_awal_nilaibuku'] += $value5['saldo_awal_nilaibuku'];
@@ -2405,6 +2459,9 @@ function group_data( $data_awal_perolehan, $data_log ) {
 
     $data_level3[$key_baru]['kelompok']=$value4['kelompok'];
     $data_level3[$key_baru]['Uraian']=$URAIAN;
+    $data_level3[$key_baru]['no_aset']="";
+    $data_level3[$key_baru]['riwayat']="";
+
     $data_level3[$key_baru]['saldo_awal_nilai'] += $value4['saldo_awal_nilai'];
     $data_level3[$key_baru]['saldo_awal_akm'] += $value4['saldo_awal_akm'];
     $data_level3[$key_baru]['saldo_awal_nilaibuku'] += $value4['saldo_awal_nilaibuku'];
@@ -2475,6 +2532,9 @@ function group_data( $data_awal_perolehan, $data_log ) {
 
     $data_level2[$key_baru]['kelompok']=$value3['kelompok'];
     $data_level2[$key_baru]['Uraian']=$URAIAN;
+    $data_level2[$key_baru]['no_aset']="";
+    $data_level2[$key_baru]['riwayat']="";
+
     $data_level2[$key_baru]['saldo_awal_nilai'] += $value3['saldo_awal_nilai'];
     $data_level2[$key_baru]['saldo_awal_akm'] += $value3['saldo_awal_akm'];
     $data_level2[$key_baru]['saldo_awal_nilaibuku'] += $value3['saldo_awal_nilaibuku'];
@@ -2537,6 +2597,7 @@ function group_data( $data_awal_perolehan, $data_log ) {
   //print_r($data_level2);//data-sub-sub
 
 
+
   $data_level = array();
   //Buat array gabungan --> level 1
   foreach ( $data_level2 as $key => $value2 ) {
@@ -2546,6 +2607,10 @@ function group_data( $data_awal_perolehan, $data_log ) {
 
     $data_level[$key_baru]['kelompok']=$value2['kelompok'];
     $data_level[$key_baru]['Uraian']=$URAIAN;
+
+    $data_level[$key_baru]['no_aset']="";
+    $data_level[$key_baru]['riwayat']="";
+
     $data_level[$key_baru]['saldo_awal_nilai'] += $value2['saldo_awal_nilai'];
     $data_level[$key_baru]['saldo_awal_akm'] += $value2['saldo_awal_akm'];
     $data_level[$key_baru]['saldo_awal_nilaibuku'] += $value2['saldo_awal_nilaibuku'];
