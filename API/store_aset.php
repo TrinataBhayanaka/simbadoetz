@@ -3098,26 +3098,35 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                   $nilai_koreksi=$data['Satuan']-$kib_old['NilaiPerolehan'];
                   $beban_penyusutan=round($nilai_koreksi/$MasaManfaat);
                  
-                  $Tahun=$kib_old['Tahun'];
-                  $TahunPenyusutan=$kib_old['TahunPenyusutan'];
-                  $rentang_penyusutan=$TahunPenyusutan-$Tahun+1;
-                  if($rentang_penyusutan>$MasaManfaat){
-                     $rentang_penyusutan=$MasaManfaat;
-                  }
-                  $selisih_akumulasi=$beban_penyusutan*$rentang_penyusutan;
-                  
-                  $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
-                  $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
-                  $kib['NilaiBuku']=$data['Satuan']-$kib['AkumulasiPenyusutan'];
-                  if($kib['NilaiBuku']<=0){
-                      $kib['NilaiBuku']=0;
-                      $kib['AkumulasiPenyusutan']=$data['Satuan'];
-                  }
-                  $update="update aset set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
-                  $result_update=  $this->query($update) or die($this->error());
+                 if($data['TipeAset']=="B"||$data['TipeAset']=="C"||$data['TipeAset']=="D")
+                 { 
+                      $Tahun=$kib_old['Tahun'];
+                      $TahunPenyusutan=$kib_old['TahunPenyusutan'];
+                      $rentang_penyusutan=$TahunPenyusutan-$Tahun+1;
+                      if($rentang_penyusutan>$MasaManfaat){
+                         $rentang_penyusutan=$MasaManfaat;
+                      }
+                      $selisih_akumulasi=$beban_penyusutan*$rentang_penyusutan;
+                      
+                      $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
+                      $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
+                      $kib['NilaiBuku']=$data['Satuan']-$kib['AkumulasiPenyusutan'];
+                      if($kib['NilaiBuku']<=0){
+                          $kib['NilaiBuku']=0;
+                          $kib['AkumulasiPenyusutan']=$data['Satuan'];
+                      }
+                      $update="update aset set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                      $result_update=  $this->query($update) or die($this->error());
 
-                  $update="update {$tabel} set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
-                  $result_update=  $this->query($update) or die($this->error());
+                      $update="update {$tabel} set NilaiBuku='{$kib['NilaiBuku']}',AkumulasiPenyusutan='{$kib['AkumulasiPenyusutan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                      $result_update=  $this->query($update) or die($this->error());
+                 }else{
+                      $update="update aset set NilaiBuku='{$data['Satuan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                      $result_update=  $this->query($update) or die($this->error());
+
+                      $update="update {$tabel} set NilaiBuku='{$data['Satuan']}' where Aset_ID='{$kib['Aset_ID']}' ";
+                      $result_update=  $this->query($update) or die($this->error());
+                 }
               }
               
               if($data['rubahdata']) $kib['Kd_Riwayat'] = 18;

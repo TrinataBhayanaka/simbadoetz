@@ -240,10 +240,11 @@ foreach ( $data as $gol ) {
                     /**
                      * AKHIR UNTUK SUBSUB XLSX
                      */ 
+                    
                     if ( $levelAset == 7 || $levelAset == 1 )
                         foreach ( $SubSub['Detail'] as $Detail ) {
                           /**
-                           * UNTUK SUBSUB XLSX
+                           * UNTUK Aset_ID
                            */
                           $subsub_array=array();
                           $kode_tmp=  explode( ".", $Detail[kelompok] );
@@ -253,13 +254,33 @@ foreach ( $data as $gol ) {
                             "kode5" => "" )+$Detail;
 
                           /**
-                           * AKHIR UNTUK SUBSUB XLSX
+                           * AKHIR UNTUK Aset_ID
                            */
+                          
+                             if ( $levelAset == 7 || $levelAset == 1 )
+                                foreach ( $Detail['log_data'] as $LOG_DATA ) {
+                                  /**
+                                   * UNTUK Aset_ID
+                                   */
+                                  $Detail['Uraian']='';
+                                  $Detail['no_aset']='';
+                                  $subsub_array=array();
+                                  $kode_tmp=  explode( ".", $LOG_DATA[kelompok] );
+                                  //$kode_final=sprintf( '%02d', $kode_tmp[4] )."-".( $kode_tmp[5] );
+                                  $kode_final=sprintf( '%02d', $LOG_DATA[4] );
+                                  $DATA_FINAL[] = array( "kode" => "", "kode2" => "", "kode3" => "", "kode4" => "",
+                                    "kode5" => "" )+$LOG_DATA;
 
+                                  /**
+                                   * AKHIR UNTUK Aset_ID
+                                   */
+                                  
+
+                                }
                         }
 
-                  }
-              }
+                    }
+              } 
           }
       }
   }

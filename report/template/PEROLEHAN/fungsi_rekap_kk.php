@@ -60,7 +60,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
   $paramLog = "l.TglPerubahan >='$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
        and $paramSatker
          AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,35,36,37,281,282,77)
-         order by l.tglPerubahan,l.Aset_ID ASC";
+         order by l.tglPerubahan,l.log_id DESC";
 
   $log_data = "select l.* ,(select Uraian from kelompok
                where kode= l.kodeKelompok
@@ -118,6 +118,16 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     {  
       $NilaiBuku=$NilaiPerolehan;
       $NilaiBuku_Awal=$NilaiPerolehan_Awal;
+    }
+    if($NilaiBuku_Awal==""){
+      list($tmp_nilai_buku_awal,$tmp_akm_awal)=get_log_before($tabel_log,$log_id);
+      if($tmp_nilai_buku_awal==""){
+        $NilaiBuku_Awal=$NilaiPerolehan;
+        $AkumulasiPenyusutan_Awal=0;
+      }else{
+        $NilaiBuku_Awal=$tmp_nilai_buku_awal;
+        $AkumulasiPenyusutan_Awal=$tmp_akm_awal;
+      }
     }
     $data['Uraian']=$Uraian;
     $data['kelompok']=$kodeKelompok;
@@ -1994,6 +2004,12 @@ function group_data( $data_awal_perolehan, $data_log ) {
   foreach ( $data_awal_perolehan as $arg ) {
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['kelompok']=$arg['kelompok'];
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['Aset_ID']=$arg['Aset_ID'];
+      
+    $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['log_id']="";
+
+    $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['no_aset']=$arg['no_aset'];
+    $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['riwayat']="";
+
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['Uraian']=$arg['Uraian'];
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['saldo_awal_nilai'] = $arg['saldo_awal_nilai'];
     $data_awal[$arg['kelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']]['saldo_awal_akm'] = $arg['saldo_awal_akm'];
@@ -2098,6 +2114,10 @@ function group_data( $data_awal_perolehan, $data_log ) {
   foreach ( $data_log  as $arg ) {  
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['kelompok']=$arg['kodeKelompok'];
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['Aset_ID']=$arg['Aset_ID'];
+    $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['log_id']=$arg['log_id'];
+
+    $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['no_aset']=$arg['Aset_ID'];
+    $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['riwayat']=$arg['Kd_Riwayat'];
 
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['Uraian']=$arg['Uraian'];
     $data_log_full[$arg['kodeKelompok'].'.'.$arg['Aset_ID'].'-'.$arg['Tahun']."-".$arg['log_id']]['saldo_awal_nilai'] = $arg['saldo_awal_nilai'];
@@ -2218,7 +2238,8 @@ function group_data( $data_awal_perolehan, $data_log ) {
   //exit();
 
   //echo "masuk";
-  //pr($data_gabungan);
+  //pr($data_log_full);
+
   $data_level_aset = array();
   $count=0;
   $aset_tmp=0;
@@ -2226,12 +2247,15 @@ function group_data( $data_awal_perolehan, $data_log ) {
     $tmp = explode( ".", $key );
     $index_aset_id=explode("-",$tmp[5]);
     $index_aset_id=$index_aset_id[0];
+    $log_id=$value['log_id'];
     $key_baru = "{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}.{$index_aset_id}";
     //echo "key==$key_baru=={$value['Kd_Riwayat']}<br/>";
     $URAIAN = get_uraian( $key_baru, 5 );
 
     $data_level_aset[$key_baru]['kelompok']=$value['kelompok'];
     $data_level_aset[$key_baru]['Uraian']=$value['Uraian'];
+
+
 
     $data_level_aset[$key_baru]['no_aset']=$value['Aset_ID'];
     $data_level_aset[$key_baru]['riwayat']=$value['Kd_Riwayat'];
@@ -2293,10 +2317,15 @@ function group_data( $data_awal_perolehan, $data_log ) {
     $data_level_aset[$key_baru]['bp_berjalan'] += $value['bp_berjalan'];
     $text_riwayat=$RIWAYAT[$value['Kd_Riwayat']];
     if($value['Kd_Riwayat']!="")
-      $data_level_aset[$key_baru]['Kd_Riwayat'] .= $text_riwayat."({$value['Kd_Riwayat']})";
+    {  $data_level_aset[$key_baru]['Kd_Riwayat'] .= $text_riwayat."({$value['Kd_Riwayat']})";
+       $data_gabungan[$key]['Uraian']='';
+       $data_gabungan[$key]['no_aset']='';
+       $data_level_aset[$key_baru]['log_data'][]=$data_gabungan[$key];
+    }
     else $data_level_aset[$key_baru]['Kd_Riwayat'] .="";
     //echo "Text Riwayat==$text_riwayat<br/>";
   }
+  //pr($data_level_aset);
 
    $data_level5 = array();
   foreach ( $data_level_aset as $key => $value ) {
@@ -2750,5 +2779,19 @@ function get_akumulasi_sblm( $Aset_ID, $TahunPenyusutan, $kelompok ) {
 
 
   return $AkumulasiPenyusutan;
+}
+
+function get_log_before( $log, $log_id ) {
+
+  $query="select NilaiBuku,AkumulasiPenyusutan from $log where log_id<$log_id and TglPerubahan!=''";
+  //echo $query;
+  $result=mysql_query( $query ) or die( mysql_error() );
+  $NilaiBuku=0;
+  $AkumulasiPenyusutan=0;
+  while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
+    $NilaiBuku=$data['NilaiBuku'];
+    $AkumulasiPenyusutan=$data['AkumulasiPenyusutan'];
+  }
+  return array($NilaiBuku,$AkumulasiPenyusutan);
 }
 ?>

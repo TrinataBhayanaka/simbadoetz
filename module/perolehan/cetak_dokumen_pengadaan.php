@@ -96,6 +96,7 @@ include"$path/menu.php";
                                           <li><a href="#rekaprincianbarangmutasi-lain" data-toggle="tab">Rekapitulasi Rincian Mutasi Barang As.Lain</a></li>
                                          <li><a href="#rekapdetailrincianbarangmutasi-lain" data-toggle="tab">Rekapitulasi Detail Rincian Mutasi Barang As.Lain</a></li>
                   <li><a href="#kk_detail" data-toggle="tab">Kerta Kerja Detail </a></li>
+                  
 
 					  </ul>
 
