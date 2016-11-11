@@ -49,6 +49,7 @@ if ( isset( $_GET['id'] ) ) {
       var jenis_posting = $("input[type='radio'].jenis_posting:checked").val();
         if(jenis_posting == 1 || jenis_posting == 2){
         //if(jenis_posting == 1 ){
+          $('#Kategoribelanja').attr("required", "true");;
           var jns_blnj  = $('.jns_blnj').val();
           if(jns_blnj == 0){
             $('#kategori_blnj').show(400);
@@ -56,6 +57,7 @@ if ( isset( $_GET['id'] ) ) {
             $('#kategori_blnj').hide(400);
           }
         }else{
+          $('#Kategoribelanja').removeAttr('required');
           $('#kategori_blnj').hide(400);
         }
       }
@@ -65,12 +67,14 @@ if ( isset( $_GET['id'] ) ) {
       var jenis_blnj = $("input[type='radio'].jns_blnj:checked").val();
       if(jenis_posting == 1 || jenis_posting == 2){
       //if(jenis_posting == 1 ){
+        $('#Kategoribelanja').attr("required", "true");;
         if(jenis_blnj == 0){
             $('#kategori_blnj').show(400);
           }else{
             $('#kategori_blnj').hide(400);
         }
       }else{
+          $('#Kategoribelanja').removeAttr('required');
           $('#kategori_blnj').hide(400);
       }   
     }); 
@@ -182,7 +186,7 @@ if ( isset( $_GET['id'] ) ) {
       <div id ="kategori_blnj" style="display: none">
       <li>
       <span  class="span2" >Kategori Belanja Aset</span>
-        <select  name="kategori_belanja" class="span2" id="NamaJabatan" required="">
+        <select  name="kategori_belanja" class="span2" id="Kategoribelanja" required="">
             <option value="" >Pilih Kategori Aset</option>
             <option value="01" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "01" ) ? 'selected' : '' ) : '' ?>/>Tanah</option>
             <option value="02" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "02" ) ? 'selected' : '' ) : '' ?>/>Mesin</option>
