@@ -108,7 +108,7 @@ if(isset($_POST['simpan']))
 	*/
 	
 	list ($dataArr, $dataParentArr) = $RETRIEVE_ADMIN->admin_retrieve_adm_menu_1();
-	
+
 	foreach ($dataParentArr as $resultParent)
 	{
 	
@@ -156,14 +156,13 @@ if(isset($_POST['simpan']))
 				$no++;
 			}
 		}
-		
+	}	
                 
-                
-	}
+     
 	//$allMenuID = implode(',',$dataArray);
-	echo '<pre>';
+	//echo '<pre>';
 	//print_r($dataArr) ;
-	echo '</pre>';
+	//echo '</pre>';
 	
 	
 	//echo ($dataArr['menuID'][0]);
