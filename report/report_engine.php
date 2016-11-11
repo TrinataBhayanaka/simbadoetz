@@ -7932,8 +7932,8 @@ public function retrieve_html_rencana_pengadaan_barang($dataArr,$gambar,$skpd_id
 				$SubUnitOrganisasi = $detailSatker[4][2];
 				$UPB = $detailSatker[4][3];
 				
-				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($skpd_id,"3",$thnPejabat);
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($skpd_id,"4",
 				$thnPejabat);
 				if($nip_pengurus!="")
 				{
@@ -8256,9 +8256,7 @@ public function retrieve_html_rencana_pengadaan_barang($dataArr,$gambar,$skpd_id
 public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd_id,$thnPejabat,$tglcetak){
 		foreach ($dataArr as $satker_id => $value)
 			{
-						
 				$detailSatker=$this->get_satker($skpd_id);
-				// pr($detailSatker);
 				$NoBidang = $detailSatker[0];
 				$NoUnitOrganisasi = $detailSatker[1];
 				$NoSubUnitOrganisasi = $detailSatker[2];
@@ -8281,8 +8279,9 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 				$SubUnitOrganisasi = $detailSatker[4][2];
 				$UPB = $detailSatker[4][3];
 				
-				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
-				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",
+				list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($skpd_id,"3",$thnPejabat);
+
+				list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($skpd_id,"4",
 				$thnPejabat);
 				if($nip_pengurus!="")
 				{
@@ -37983,6 +37982,9 @@ return $hasil_html;
 }
     
 	public function get_jabatan($satker,$jabatan,$thnPejabat){
+	/*pr($satker);
+	pr($jabatan);
+	pr($thnPejabat);*/
 	if($jabatan=="1")
 		$namajabatan="Atasan Langsung";
 	else if ($jabatan=="2")
@@ -38006,7 +38008,7 @@ return $hasil_html;
 			$Satker_ID=$value->Satker_ID;
 		}
 		$queryPejabat="select NIPPejabat, NamaPejabat,GUID  from Pejabat where Satker_ID='$Satker_ID' and NamaJabatan='$namajabatan' and Tahun = '$thnPejabat' limit 1";
-		// echo $queryPejabat;
+		//echo $queryPejabat;
 		$result2=$this->retrieve_query($queryPejabat);
 		// pr($result2);
             if($result2!=""){
@@ -38017,8 +38019,13 @@ return $hasil_html;
 					
 				}
 			}
-	}
-	
+	}	
+	/*echo "nip=".$nip;
+	echo "<br/>";
+	echo "nama_pejabat=".$nama_pejabat;
+	echo "<br/>";
+	echo "InfoJabatan=".$InfoJabatan;
+	echo "<br/>";*/
 	return array($nip,$nama_pejabat,$InfoJabatan);
 			
 		
