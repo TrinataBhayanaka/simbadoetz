@@ -75,6 +75,14 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
   while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
     $log_id = $data['log_id'];
     $Aset_ID = $data['Aset_ID'];
+
+    $data_kode_riwayat=array();
+    $query_kode="select l.kd_riwayat as kd_riwayat from {$tabel_log} as l where l.Aset_ID='{$Aset_ID}' and  $paramLog";
+    $result_kode=mysql_query($query_kode) or die(mysql_error());
+    while($row_kode=mysql_fetch_array($result_kode)){
+      $data_kode_riwayat[]=$row_kode[kd_riwayat];
+    }
+
     $kodeKelompok = $data['kodeKelompok'];
     $kodeSatker = $data['kodeSatker'];
     $kodeLokasi = $data['kodeLokasi'];
@@ -120,7 +128,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       $NilaiBuku_Awal=$NilaiPerolehan_Awal;
     }
     if($NilaiBuku_Awal==""){
-      list($tmp_nilai_buku_awal,$tmp_akm_awal)=get_log_before($tabel_log,$log_id);
+      list($tmp_nilai_buku_awal,$tmp_akm_awal,$kondisi_awal)=get_log_before($tabel_log,$log_id);
       if($tmp_nilai_buku_awal==""){
         $NilaiBuku_Awal=$NilaiPerolehan;
         $AkumulasiPenyusutan_Awal=0;
@@ -368,7 +376,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       $data['Saldo_akhir_jml']=1;
       $data['bp_berjalan']=0;
 
-    }else if ( $Kd_Riwayat=="1" ) {
+    }else if ( $Kd_Riwayat=="1" || $final_gol!="tanah" ) {
         // Ubah Kondisi
         $status_masuk=1;
         if ( $kodeKa==1 ) {
@@ -385,6 +393,29 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
             $data['saldo_awal_nilaibuku']=$NilaiBuku;
             $data['saldo_awal_jml']=1;
           }
+          /*
+            Penetuan Jenis Kondisi
+           */
+          $status_kondisi=0;
+           list($tmp_nilai_buku_awal,$tmp_akm_awal,$kondisi_awal)=
+                  get_log_before_tahun_sblmya($tabel_log,$log_id,$tglawalperolehan);
+          if($kondisi_awal==0||$kondisi_awal=="")
+          {
+              $status_masuk=0;
+          }
+          else{
+            if(($kondisi_awal=="1"||$kondisi_awal=="2") && $kondisi=="3")
+              $status_kondisi=-1;
+            else if($kondisi_awal=="3" && ($kondisi=="1"||$kondisi=="2"))
+              $status_kondisi=1;
+            else
+              $status_masuk=0;
+
+          }
+          /*
+            Penetuan Jenis Kondisi
+           */
+          
           /** Koreksi Saldo Awal  */
           $data['koreksi_tambah_nilai']=0;
           $data['koreksi_tambah_jml']=0;
@@ -425,23 +456,34 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklasi Aset Tetap Tambah */
-          $data['reklas_aset_tambah_nilai']=0;
-          $data['reklas_aset_tambah_jml']=0;
+          if($status_kondisi==1)
+          {
+            $data['reklas_aset_tambah_nilai']=$NilaiPerolehan;
+            $data['reklas_aset_tambah_jml']=1;
+          }
+          else{
+            $data['reklas_aset_tambah_nilai']=0;
+            $data['reklas_aset_tambah_jml']=0;
+          }
           /** AkhirTransfer SKPD */
 
           /** JUMLAH MUTASI TAMBAH */
-          $data['jumlah_mutasi_tambah_jml']=$data['koreksi_tambah_jml']+$data['bm_total_brg']+$data['bj_total_brg']+
-            $data['hibah_jml']+$data['inventarisasi_jml']+$data['transfer_skpd_tambah_jml']+
-            $data['reklas_aset_tambah_jml'];
-
-          $data['jumlah_mutasi_tambah_nilai']=$data['koreksi_tambah_nilai']+$data['bm_total_nilai']+$data['bj_total_nilai']+
-            $data['hibah_nilai']+$data['inventarisasi_nilai']+$data['transfer_skpd_tambah_nilai']+
-            $data['reklas_aset_tambah_nilai'];;
+          if($status_kondisi==1)
+          {
+            $data['jumlah_mutasi_tambah_jml']=1;
+            $data['jumlah_mutasi_tambah_nilai']=$NilaiPerolehan;
+          }else{
+            $data['jumlah_mutasi_tambah_jml']=0;
+            $data['jumlah_mutasi_tambah_nilai']=0;
+          }
 
           /** AKHIR JUMLAH MUTASI TAMBAH */
 
           /** PENYUSUTAN + */
-          $data['koreksi_penyusutan_tambah']=0;
+           if($status_kondisi==1)
+            $data['koreksi_penyusutan_tambah']=$AkumulasiPenyusutan;
+           else
+            $data['koreksi_penyusutan_tambah']=0;
           $data['bp_penyusutan_tambah']=0;
           /** AKHIR PENYUSUTAN + */
           /** ------------------------------MUTASI KURANG--------------------------------------- */
@@ -465,7 +507,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
 
           /** Reklas Kurang Aset Tetap */
           $data['reklas_krg_aset_tetap']=0;
-          if ( $kondisi_aset==3 ) {
+          if ( $status_kondisi==-1 ) {
             $data['reklas_krg_aset_lain']=$NilaiPerolehan;
             $data['reklas_krg_jml']=1;
             $data['reklas_krg_nilai']=$NilaiPerolehan;
@@ -493,10 +535,12 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR JUMLAH MUTASI KURANG */
 
           /** PENYUSUTAN - */
-          if ( $kondisi_aset==3 ) {
-            $data['koreksi_penyusutan_kurang']=$NilaiPerolehan;
+          if ( $status_kondisi==-1  ) {
+            $data['koreksi_penyusutan_kurang']=$AkumulasiPenyusutan;
             $data['Saldo_akhir_jml']=0;
             $data['NilaiPerolehan']=0;
+            $data['NilaiBuku']=0;
+
           }else {
             $data['koreksi_penyusutan_kurang']=0;
           }
@@ -1254,17 +1298,11 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
               $data['saldo_awal_jml']=1;
             }
           }
-          if ( $StatusValidasi==0 || $Status_Validasi_Barang==0 ) {
-            /** Koreksi Saldo Awal  */
-            $data['koreksi_tambah_nilai']=$NilaiPerolehan;
-            $data['koreksi_tambah_jml']=1;
-            /**  Akhir Koreksi Saldo Awal */
-          }else {
-            /** Koreksi Saldo Awal  */
+             /** Koreksi Saldo Awal  */
             $data['koreksi_tambah_nilai']=0;
             $data['koreksi_tambah_jml']=0;
             /**  Akhir Koreksi Saldo Awal */
-          }
+         
 
           /** BELANJA jASA */
           $data['bj_aset_baru']=0;
@@ -1299,10 +1337,17 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['transfer_skpd_tambah_jml']=0;
           /** AkhirTransfer SKPD */
 
-          /** Reklasi Aset Tetap Tambah */
-          $data['reklas_aset_tambah_nilai']=0;
-          $data['reklas_aset_tambah_jml']=0;
-          /** AkhirTransfer SKPD */
+          if ( $StatusValidasi==0 || $Status_Validasi_Barang==0 ) {
+            /** Reklasi Aset Tetap Tambah */
+            $data['reklas_aset_tambah_nilai']=$NilaiPerolehan;
+            $data['reklas_aset_tambah_jml']=1;
+            /** AkhirTransfer SKPD */
+          }else{
+             /** Reklasi Aset Tetap Tambah */
+            $data['reklas_aset_tambah_nilai']=0;
+            $data['reklas_aset_tambah_jml']=0;
+            /** AkhirTransfer SKPD */
+          }
 
           /** JUMLAH MUTASI TAMBAH */
           $data['jumlah_mutasi_tambah_jml']=0;
@@ -1320,17 +1365,12 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR PENYUSUTAN + */
 
           /** ------------------------------MUTASI KURANG--------------------------------------- */
-          if ( $StatusValidasi==1 || $Status_Validasi_Barang==1 ) {
-            /** Koreksi Saldo Awal  */
-            $data['koreksi_kurang_nilai']=$NilaiPerolehan;
-            $data['koreksi_kurang_jml']=1;
-            /**  Akhir Koreksi Saldo Awal */
-          }else {
             /** Koreksi Saldo Awal  */
             $data['koreksi_kurang_nilai']=0;
             $data['koreksi_kurang_jml']=0;
             /**  Akhir Koreksi Saldo Awal */
-          }
+
+        
           /** PENGHAPUSAN */
           $data['hapus_hibah_nilai']=0;
           $data['hapus_lelang_nilai']=0;
@@ -1345,9 +1385,15 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklas Kurang Aset Tetap */
-          $data['reklas_krg_aset_tetap']=0;
+          if ( $StatusValidasi==1 || $Status_Validasi_Barang==1 ) {
+            $data['reklas_krg_aset_tetap']=$NilaiPerolehan;
+            $data['reklas_krg_jml']=1;
+          }else{
+            $data['reklas_krg_aset_tetap']=0;
+            $data['reklas_krg_jml']=0;
+          }
           $data['reklas_krg_aset_lain']=0;
-          $data['reklas_krg_jml']=0;
+          
           $data['reklas_krg_nilai']=0;
 
           $data['reklas_krg_ekstra']=0;
@@ -1626,7 +1672,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['bp_berjalan']=0;
         }
       }else if ( $Kd_Riwayat=="36" ) {
-        // code  REKLAS kontrak
+        // code  REKLAS kontrak KURANG
         if ( $kodeKa==1 ) {
           $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
@@ -1743,8 +1789,130 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['bp_berjalan']=0;
         }
       }
+      else if ( $Kd_Riwayat=="35" ) {
+        // code  REKLAS kontrak KURANG
+        if ( $kodeKa==1 ) {
+          $status_masuk=1;
+          /** ----------------------------MUTASI TAMBAH---------------------------------- */
+          $data['saldo_awal_nilai']=0;
+          $data['saldo_awal_akm']=0;
+          $data['saldo_awal_nilaibuku']=0;
+          $data['saldo_awal_jml']=0;
+
+          /** Koreksi Saldo Awal  */
+          $data['koreksi_tambah_nilai']=0;
+          $data['koreksi_tambah_jml']=0;
+          /**  Akhir Koreksi Saldo Awal */
+
+             /** BELANJA MODAL */
+              $data['bm_aset_baru']=0;
+              $data['bm_aset_kapitalisasi']=0;
+              $data['bm_total_brg']=0;
+              $data['bm_total_nilai']=0;
+              /** AKHIR BELANJA MODAL */
+              /** BELANJA jASA */
+              $data['bj_aset_baru']=0;
+              $data['bj_aset_kapitalisasi']=0;
+              $data['bj_total_brg']=0;
+              $data['bj_total_nilai']=0;
+              /** AKHIR BELANJA JASA */
+         
+             /** HIBAH */
+              $data['hibah_jml']=0;
+              $data['hibah_nilai']=0;
+              /** AKHIR HIBAH */
+              /** Inventarisasi */
+              $data['inventarisasi_jml']=0;
+              $data['inventarisasi_nilai']=0;
+              /** Inventarisasi */
+          
+          /** Transfer SKPD */
+          $data['transfer_skpd_tambah_nilai']=0;
+          $data['transfer_skpd_tambah_jml']=0;
+          /** AkhirTransfer SKPD */
+
+          /** Reklasi Aset Tetap Tambah */
+          $data['reklas_aset_tambah_nilai']=$NilaiPerolehan;
+          $data['reklas_aset_tambah_jml']=1;
+          /** AkhirTransfer SKPD */
+
+          /** JUMLAH MUTASI TAMBAH */
+          $data['jumlah_mutasi_tambah_jml']=1;
+          $data['jumlah_mutasi_tambah_nilai']=$NilaiPerolehan;
+
+          /** AKHIR JUMLAH MUTASI TAMBAH */
+
+          /** PENYUSUTAN + */
+          $data['koreksi_penyusutan_tambah']=0;
+          $data['bp_penyusutan_tambah']=0;
+
+          /** AKHIR PENYUSUTAN + */
+
+          /** ------------------------------MUTASI KURANG--------------------------------------- */
+          /** Koreksi Saldo Awal  */
+          $data['koreksi_kurang_nilai']=0;
+          $data['koreksi_kurang_jml']=0;
+          /**  Akhir Koreksi Saldo Awal */
+
+          /** PENGHAPUSAN */
+          $data['hapus_hibah_nilai']=0;
+          $data['hapus_lelang_nilai']=0;
+          $data['hapus_hilang_musnah_nilai']=0;
+          $data['hapus_total_jml']=0;
+          $data['hapus_total_nilai']=0;
+          /** AKHIR PENGHAPUSAN */
+
+          /** Transfer SKPD */
+          $data['transfer_skpd_kurang_nilai']=0;
+          $data['transfer_skpd_kurang_jml']=0;
+          /** AkhirTransfer SKPD */
+
+          /** Reklas Kurang Aset Tetap */
+          $data['reklas_krg_aset_tetap']=0;
+          $data['reklas_krg_aset_lain']=0;
+          $data['reklas_krg_jml']=0;
+          $data['reklas_krg_nilai']=0;
+
+          $data['reklas_krg_ekstra']=0;
+          $data['reklas_krg_aset_bm_tdk_dikapitalisasi']=0;
+          $data['reklas_krg_aset_lain']=0;
+
+
+          /** Akhir Reklas Kurang Aset Tetap */
+
+          /** JUMLAH MUTASI KURANG */
+          $data['jumlah_mutasi_kurang_jml']=0;
+          $data['jumlah_mutasi_kurang_nilai']=0;
+          $data['NilaiPerolehan']=0;
+          $data['NilaiBuku']=0;
+          $data['PenyusutanPerTahun']=0;
+
+          /** AKHIR JUMLAH MUTASI KURANG */
+
+          /** PENYUSUTAN - */
+          $data['koreksi_penyusutan_kurang']=0;
+          $data['bp_penyusutan_kurang']=0;
+
+          /** AKHIR PENYUSUTAN - */
+
+          /** UPDATE AKHIR */
+         
+        }
+      }
       if($status_masuk==1)
-        $data_final[]=$data;
+        {
+          if($Kd_Riwayat!=0)
+            $data_final[]=$data;
+          else{
+            if($Kd_Riwayat==0 &&  in_array(30,$data_kode_riwayat) !=1 &&
+               in_array(35,$data_kode_riwayat)!=1  )
+              {
+                $data_final[]=$data;
+               
+              }
+          }
+
+        }
       //$data_final["$Aset_ID-$Kd_Riwayat-$log_id"]=$data;
   }
   return $data_final;
@@ -2783,7 +2951,7 @@ function get_akumulasi_sblm( $Aset_ID, $TahunPenyusutan, $kelompok ) {
 
 function get_log_before( $log, $log_id ) {
 
-  $query="select NilaiBuku,AkumulasiPenyusutan from $log where log_id<$log_id and TglPerubahan!=''";
+  $query="select NilaiBuku,AkumulasiPenyusutan,kondisi from $log where log_id<$log_id and TglPerubahan!=''";
   //echo $query;
   $result=mysql_query( $query ) or die( mysql_error() );
   $NilaiBuku=0;
@@ -2791,7 +2959,23 @@ function get_log_before( $log, $log_id ) {
   while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
     $NilaiBuku=$data['NilaiBuku'];
     $AkumulasiPenyusutan=$data['AkumulasiPenyusutan'];
+    $kondisi=$data['kondisi'];
   }
-  return array($NilaiBuku,$AkumulasiPenyusutan);
+  return array($NilaiBuku,$AkumulasiPenyusutan,$kondisi);
+}
+
+function get_log_before_tahun_sblmya( $log, $log_id,$tglPerubahan ) {
+
+  $query="select NilaiBuku,AkumulasiPenyusutan,kondisi from $log where log_id<$log_id and TglPerubahan<'$tglPerubahan'";
+  //echo $query;
+  $result=mysql_query( $query ) or die( mysql_error() );
+  $NilaiBuku=0;
+  $AkumulasiPenyusutan=0;
+  while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
+    $NilaiBuku=$data['NilaiBuku'];
+    $AkumulasiPenyusutan=$data['AkumulasiPenyusutan'];
+    $kondisi=$data['kondisi'];
+  }
+  return array($NilaiBuku,$AkumulasiPenyusutan,$kondisi);
 }
 ?>
