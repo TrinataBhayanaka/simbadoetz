@@ -72,17 +72,23 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
   //echo "$gol == $sql";
   $result = mysql_query( $log_data ) or die( "$log_data==" . mysql_error() );
   $data_final = array();
+  
+  $data_kode_riwayat=array();
+    $query_kode="select l.kd_riwayat as kd_riwayat,l.log_id as log_id from {$tabel_log} as l where l.Aset_ID='{$Aset_ID}' 
+          and  l.TglPerubahan >='$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
+       and $paramSatker
+         AND l.Kd_Riwayat in (35,36)
+         order by l.tglPerubahan,l.log_id DESC";
+    $result_kode=mysql_query($query_kode) or die(mysql_error());
+    while($row_kode=mysql_fetch_array($result_kode)){
+      $log_id=$row_kode['log_id'];
+      $data_kode_riwayat[$log_id][]=$row_kode['kd_riwayat'];
+    }
+  
+
   while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
     $log_id = $data['log_id'];
     $Aset_ID = $data['Aset_ID'];
-
-    $data_kode_riwayat=array();
-    $query_kode="select l.kd_riwayat as kd_riwayat from {$tabel_log} as l where l.Aset_ID='{$Aset_ID}' and  $paramLog";
-    $result_kode=mysql_query($query_kode) or die(mysql_error());
-    while($row_kode=mysql_fetch_array($result_kode)){
-      $data_kode_riwayat[]=$row_kode[kd_riwayat];
-    }
-
     $kodeKelompok = $data['kodeKelompok'];
     $kodeSatker = $data['kodeSatker'];
     $kodeLokasi = $data['kodeLokasi'];
@@ -249,6 +255,10 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     if ( $Kd_Riwayat=="0" && $Status_Validasi_Barang==1 && $StatusValidasi==1 && $StatusTampil==1 && $TglPembukuan!=0 ) {
       
       $status_masuk=1;
+
+      if(in_array($data_kode_riwayat[$log_id], 35)||in_array($data_kode_riwayat[$log_id], 36))
+           $status_masuk=0;
+      
       // kontrak / inventarisasi / ekstrakomtabel
       /** ----------------------------MUTASI TAMBAH---------------------------------- */
       $data['saldo_awal_nilai']=0;
@@ -376,7 +386,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       $data['Saldo_akhir_jml']=1;
       $data['bp_berjalan']=0;
 
-    }else if ( $Kd_Riwayat=="1" || $final_gol!="tanah" ) {
+    }else if ( $Kd_Riwayat=="1" && $final_gol!="tanah" ) {
         // Ubah Kondisi
         $status_masuk=1;
         if ( $kodeKa==1 ) {
@@ -1901,17 +1911,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       }
       if($status_masuk==1)
         {
-          if($Kd_Riwayat!=0)
             $data_final[]=$data;
-          else{
-            if($Kd_Riwayat==0 &&  in_array(30,$data_kode_riwayat) !=1 &&
-               in_array(35,$data_kode_riwayat)!=1  )
-              {
-                $data_final[]=$data;
-               
-              }
-          }
-
         }
       //$data_final["$Aset_ID-$Kd_Riwayat-$log_id"]=$data;
   }
