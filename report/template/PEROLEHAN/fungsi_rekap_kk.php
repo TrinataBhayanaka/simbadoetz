@@ -270,7 +270,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       $data['koreksi_tambah_jml']=0;
       /**  Akhir Koreksi Saldo Awal */
       //echo "--$final_gol == $kodeKa== $noKontrak ==$jenis_belanja<br/>";
-      if ( $kodeKa==1 ) {
+      //if ( $kodeKa==1 ) {
         if ( $noKontrak!="" ) {
           if ( $jenis_belanja==0 ) {
             /** BELANJA MODAL */
@@ -300,7 +300,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
             /** Inventarisasi */
           }
         }
-      }
+     // }
       /** Transfer SKPD */
       $data['transfer_skpd_tambah_nilai']=0;
       $data['transfer_skpd_tambah_jml']=0;
