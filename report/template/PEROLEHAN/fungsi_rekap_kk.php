@@ -385,6 +385,12 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       /** PENYUSUTAN - */
       $data['Saldo_akhir_jml']=1;
       $data['bp_berjalan']=0;
+      if($kodeKa==0){
+         $data['NilaiPerolehan']=0;
+          $data['NilaiBuku']=0;
+          $data['PenyusutanPerTahun']=0;
+          $data['Saldo_akhir_jml']=0;
+      }
 
     }else if ( $Kd_Riwayat=="1" && $final_gol!="tanah" ) {
         // Ubah Kondisi
