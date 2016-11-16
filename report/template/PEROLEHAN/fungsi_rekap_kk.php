@@ -74,17 +74,21 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
   $data_final = array();
   
   $data_kode_riwayat=array();
-    $query_kode="select l.kd_riwayat as kd_riwayat,l.log_id as log_id from {$tabel_log} as l where l.Aset_ID='{$Aset_ID}' 
-          and  l.TglPerubahan >='$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
+    $query_kode="select l.kd_riwayat as kd_riwayat,l.log_id as log_id,
+        l.aset_id as aset_id from {$tabel_log} as l where
+            l.TglPerubahan >='$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
        and $paramSatker
          AND l.Kd_Riwayat in (35,36)
          order by l.tglPerubahan,l.log_id DESC";
     $result_kode=mysql_query($query_kode) or die(mysql_error());
     while($row_kode=mysql_fetch_array($result_kode)){
       $log_id=$row_kode['log_id'];
-      $data_kode_riwayat[$log_id][]=$row_kode['kd_riwayat'];
+      $aset_id=$row_kode['aset_id'];
+
+      $data_kode_riwayat[$aset_id][]=$row_kode['kd_riwayat'];
     }
-  
+   // echo " data kode riwayat <br/>";
+   // pr($data_kode_riwayat);
 
   while ( $data = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
     $log_id = $data['log_id'];
@@ -255,9 +259,12 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     if ( $Kd_Riwayat=="0" && $Status_Validasi_Barang==1 && $StatusValidasi==1 && $StatusTampil==1 && $TglPembukuan!=0 ) {
       
       $status_masuk=1;
-
-      if(in_array($data_kode_riwayat[$log_id], 35)||in_array($data_kode_riwayat[$log_id], 36))
-           $status_masuk=0;
+      //echo "masuk2";
+      //pr($data_kode_riwayat);
+      if(in_array( 35,$data_kode_riwayat[$Aset_ID])||in_array( 36,$data_kode_riwayat[$Aset_ID]))
+         {  
+            $status_masuk=0;
+         }
       
       // kontrak / inventarisasi / ekstrakomtabel
       /** ----------------------------MUTASI TAMBAH---------------------------------- */
@@ -1705,17 +1712,17 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           if ( $noKontrak!="" ) {
             if ( $jenis_belanja==0 ) {
               /** BELANJA MODAL */
-              $data['bm_aset_baru']=$NilaiPerolehan;
+              $data['bm_aset_baru']=0;//$NilaiPerolehan;
               $data['bm_aset_kapitalisasi']=0;
-              $data['bm_total_brg']=1;
-              $data['bm_total_nilai']=$NilaiPerolehan;
+              $data['bm_total_brg']=0;//1;
+              $data['bm_total_nilai']=0;//$NilaiPerolehan;
               /** AKHIR BELANJA MODAL */
             }else {
               /** BELANJA jASA */
               $data['bj_aset_baru']=0;
-              $data['bj_aset_kapitalisasi']=$NilaiPerolehan;
-              $data['bj_total_brg']=1;
-              $data['bj_total_nilai']=$NilaiPerolehan;
+              $data['bj_aset_kapitalisasi']=0;//$NilaiPerolehan;
+              $data['bj_total_brg']=0;//1;
+              $data['bj_total_nilai']=0;//$NilaiPerolehan;
               /** AKHIR BELANJA JASA */
             }
           }
@@ -1734,8 +1741,8 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklasi Aset Tetap Tambah */
-          $data['reklas_aset_tambah_nilai']=0;
-          $data['reklas_aset_tambah_jml']=0;
+          $data['reklas_aset_tambah_nilai']=$NilaiPerolehan;
+          $data['reklas_aset_tambah_jml']=1;
           /** AkhirTransfer SKPD */
 
           /** JUMLAH MUTASI TAMBAH */
@@ -1770,12 +1777,18 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklas Kurang Aset Tetap */
-          $data['reklas_krg_aset_tetap']=$NilaiPerolehan;
+           if ( $kodeKa==1 ) {
+              $data['reklas_krg_aset_tetap']=$NilaiPerolehan;
+              $data['reklas_krg_ekstra']=0;
+           }else{
+              $data['reklas_krg_aset_tetap']=0;
+              $data['reklas_krg_ekstra']=$NilaiPerolehan;
+           }
           $data['reklas_krg_aset_lain']=0;
           $data['reklas_krg_jml']=1;
           $data['reklas_krg_nilai']=$NilaiPerolehan;
 
-          $data['reklas_krg_ekstra']=0;
+          
           $data['reklas_krg_aset_bm_tdk_dikapitalisasi']=0;
           $data['reklas_krg_aset_lain']=0;
 
@@ -1807,7 +1820,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       }
       else if ( $Kd_Riwayat=="35" ) {
         // code  REKLAS kontrak KURANG
-        if ( $kodeKa==1 ) {
+       
           $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           $data['saldo_awal_nilai']=0;
@@ -1884,11 +1897,22 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklas Kurang Aset Tetap */
+          if ( $kodeKa==1 ) {
+              $data['reklas_krg_aset_tetap']=0;
+              $data['reklas_krg_ekstra']=0;
+           }else{
+              $data['reklas_krg_aset_tetap']=0;
+              $data['reklas_krg_ekstra']=$NilaiPerolehan;
+           }
           $data['reklas_krg_aset_tetap']=0;
           $data['reklas_krg_aset_lain']=0;
-          $data['reklas_krg_jml']=0;
-          $data['reklas_krg_nilai']=0;
-
+           if ( $kodeKa==1 ) {
+            $data['reklas_krg_jml']=0;
+            $data['reklas_krg_nilai']=0;
+          }else{
+             $data['reklas_krg_jml']=1;
+            $data['reklas_krg_nilai']=$NilaiPerolehan;
+          }
           $data['reklas_krg_ekstra']=0;
           $data['reklas_krg_aset_bm_tdk_dikapitalisasi']=0;
           $data['reklas_krg_aset_lain']=0;
@@ -1912,8 +1936,14 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR PENYUSUTAN - */
 
           /** UPDATE AKHIR */
-         
-        }
+          if($kodeKa!=1){
+             $data['NilaiPerolehan']=0;
+            $data['NilaiBuku']=0;
+            $data['PenyusutanPerTahun']=0;
+            $data['Saldo_akhir_jml']=0;
+            $data['bp_berjalan']=0;
+          }
+        
       }
       if($status_masuk==1)
         {
