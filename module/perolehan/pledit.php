@@ -46,42 +46,46 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
         $('#nilai_front').autoNumeric('init');
         //$("#datepicker").attr('readonly',true);  
         //$("#datepicker").mask("0000-00-00");  
-
-        //get jenis belanja 
+       //get jenis belanja 
       var idkontrak  = $('#idkontrak').val();
       if(idkontrak){
       var jenis_posting = $("input[type='radio'].jenis_posting:checked").val();
         if(jenis_posting == 1 || jenis_posting == 2){
         //if(jenis_posting == 1 ){
-          $('#Kategoribelanja').attr("required", "true");;
-          var jns_blnj  = $('.jns_blnj').val();
+          //var jns_blnj  = $('.jns_blnj').val();
+          var jns_blnj  = $("input[type='radio'].jns_blnj:checked").val();
+         
           if(jns_blnj == 0){
+            $('#Kategoribelanja').attr("required", "true");;
             $('#kategori_blnj').show(400);
           }else{
+            $('#Kategoribelanja').removeAttr('required');
             $('#kategori_blnj').hide(400);
           }
         }else{
-           $('#Kategoribelanja').removeAttr('required');
+          $('#Kategoribelanja').removeAttr('required');
           $('#kategori_blnj').hide(400);
         }
       }
 
-        $('.jenis_posting,.jns_blnj').on('change', function(){
-        var jenis_posting = $("input[type='radio'].jenis_posting:checked").val();
-        var jenis_blnj = $("input[type='radio'].jns_blnj:checked").val();
-        if(jenis_posting == 1 || jenis_posting == 2){
-        //if(jenis_posting == 1 ){
-          $('#Kategoribelanja').attr("required", "true");;
-          if(jenis_blnj == 0){
-              $('#kategori_blnj').show(400);
-            }else{
-              $('#kategori_blnj').hide(400);
-          }
-        }else{
+      $('.jenis_posting,.jns_blnj').on('change', function(){
+      var jenis_posting = $("input[type='radio'].jenis_posting:checked").val();
+      var jenis_blnj = $("input[type='radio'].jns_blnj:checked").val();
+      if(jenis_posting == 1 || jenis_posting == 2){
+      //if(jenis_posting == 1 ){
+        if(jenis_blnj == 0){
+            $('#Kategoribelanja').attr("required", "true");;
+            $('#kategori_blnj').show(400);
+          }else{
             $('#Kategoribelanja').removeAttr('required');
             $('#kategori_blnj').hide(400);
-        }   
-      }); 
+        }
+      }else{
+          $('#Kategoribelanja').removeAttr('required');
+          $('#kategori_blnj').hide(400);
+      }   
+    });   
+      
     });
 
     function getCurrency(item){

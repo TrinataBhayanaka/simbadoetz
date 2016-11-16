@@ -1477,7 +1477,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
     public function store_edit_kontrak($data,$id)
     {
 
-        // pr($data);exit; 
+        if($data['jenis_belanja'] == 1){
+            $data['kategori_belanja'] = NULL;
+        }
+        //exit; 
         global $url_rewrite;
         unset($data['id']);
         $sql = mysql_query("SELECT noKontrak FROM kontrak WHERE id = '{$id}'");
@@ -1495,7 +1498,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tmpset[] = $key."='".$val."'";
             }
             $set = implode(',', $tmpset);
-
+           
             $query = "UPDATE kontrak SET {$set} WHERE id='{$id}'";
             // pr($query);exit;
             $result=  $this->query($query) or die($this->error());
