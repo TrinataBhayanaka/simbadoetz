@@ -270,7 +270,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       $data['koreksi_tambah_jml']=0;
       /**  Akhir Koreksi Saldo Awal */
       //echo "--$final_gol == $kodeKa== $noKontrak ==$jenis_belanja<br/>";
-      if ( $kodeKa==1 ) {
+      //if ( $kodeKa==1 ) {
         if ( $noKontrak!="" ) {
           if ( $jenis_belanja==0 ) {
             /** BELANJA MODAL */
@@ -300,7 +300,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
             /** Inventarisasi */
           }
         }
-      }
+     // }
       /** Transfer SKPD */
       $data['transfer_skpd_tambah_nilai']=0;
       $data['transfer_skpd_tambah_jml']=0;
@@ -385,6 +385,12 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       /** PENYUSUTAN - */
       $data['Saldo_akhir_jml']=1;
       $data['bp_berjalan']=0;
+      if($kodeKa==0){
+         $data['NilaiPerolehan']=0;
+          $data['NilaiBuku']=0;
+          $data['PenyusutanPerTahun']=0;
+          $data['Saldo_akhir_jml']=0;
+      }
 
     }else if ( $Kd_Riwayat=="1" && $final_gol!="tanah" ) {
         // Ubah Kondisi
@@ -1683,7 +1689,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         }
       }else if ( $Kd_Riwayat=="36" ) {
         // code  REKLAS kontrak KURANG
-        if ( $kodeKa==1 ) {
+        //if ( $kodeKa==1 ) {
           $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           $data['saldo_awal_nilai']=0;
@@ -1797,7 +1803,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['PenyusutanPerTahun']=0;
           $data['Saldo_akhir_jml']=0;
           $data['bp_berjalan']=0;
-        }
+        //}
       }
       else if ( $Kd_Riwayat=="35" ) {
         // code  REKLAS kontrak KURANG
