@@ -155,7 +155,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     $info=trim( $data['Info'] );
     $temp_info=explode( " ", $info );
     $status_info=$temp_info[0];
-
+    $aksi=$data['action'];
     /** -----------------------------------------------------Inisialisasi DATA */
 
     $data['saldo_awal_nilai']=0;
@@ -705,6 +705,9 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $status_masuk=1;
 
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
+          $tmp_tahun=explode("-",$TglPembukuan);
+          $Tahun=$tmp_tahun[0];
+          pr($tmp_tahun);
           if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
             $data['saldo_awal_akm']=0;
@@ -746,7 +749,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** Inventarisasi */
 
           /** Transfer SKPD */
-          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
+          if ( $aksi=="Sukses Mutasi" ) {
             $data['transfer_skpd_tambah_nilai']=$NilaiPerolehan;
             $data['transfer_skpd_tambah_jml']=1;
           }else {
@@ -761,18 +764,18 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** JUMLAH MUTASI TAMBAH */
-          $data['jumlah_mutasi_tambah_jml']=$data['koreksi_tambah_jml']+$data['bm_total_brg']+$data['bj_total_brg']+
-            $data['hibah_jml']+$data['inventarisasi_jml']+$data['transfer_skpd_tambah_jml']+
-            $data['reklas_aset_tambah_jml'];
-
-          $data['jumlah_mutasi_tambah_nilai']=$data['koreksi_tambah_nilai']+$data['bm_total_nilai']+$data['bj_total_nilai']+
-            $data['hibah_nilai']+$data['inventarisasi_nilai']+$data['transfer_skpd_tambah_nilai']+
-            $data['reklas_aset_tambah_nilai'];;
+          if ( $aksi=="Sukses Mutasi" ) {
+              $data['jumlah_mutasi_tambah_jml']=1;
+              $data['jumlah_mutasi_tambah_nilai']=$NilaiPerolehan;
+          }else{
+              $data['jumlah_mutasi_tambah_jml']=0;
+              $data['jumlah_mutasi_tambah_nilai']=0;
+          }
 
           /** AKHIR JUMLAH MUTASI TAMBAH */
 
           /** PENYUSUTAN + */
-          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
+          if ( $aksi=="Sukses Mutasi") {
             $data['koreksi_penyusutan_tambah']=$AkumulasiPenyusutan;
           }else {
             $data['koreksi_penyusutan_tambah']=0;
@@ -794,7 +797,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR PENGHAPUSAN */
 
           /** Transfer SKPD */
-          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
+          if ( $aksi=="Data Mutasi sebelum diubah" ) {
             $data['transfer_skpd_kurang_nilai']=$NilaiPerolehan;
             $data['transfer_skpd_kurang_jml']=1;
           }else {
@@ -817,18 +820,22 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
 
           /** Akhir Reklas Kurang Aset Tetap */
           /** JUMLAH MUTASI KURANG */
-          $data['jumlah_mutasi_kurang_jml']=$data['koreksi_kurang_jml']+$data['hapus_total_jml']+
-            $data['transfer_skpd_kurang_jml']+$data['reklas_krg_jml'];
+          if ( $aksi=="Data Mutasi sebelum diubah" ) {
+              $data['jumlah_mutasi_kurang_jml']=1;
+              $data['jumlah_mutasi_kurang_nilai']=$NilaiPerolehan;
+          }else{
+              $data['jumlah_mutasi_kurang_jml']=0;
+              $data['jumlah_mutasi_kurang_nilai']=0;
 
-          $data['jumlah_mutasi_kurang_nilai']=$data['koreksi_kurang_nilai']+$data['hapus_total_nilai']+
-            $data['reklas_krg_nilai'];
+          }
           /** AKHIR JUMLAH MUTASI KURANG */
 
           /** PENYUSUTAN - */
-          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
+          if ( $aksi=="Data Mutasi sebelum diubah" ) {
             $data['koreksi_penyusutan_kurang']=$AkumulasiPenyusutan;
             $data['NilaiPerolehan']=0;
             $data['NilaiBuku']=0;
+            $data['AkumulasiPenyusutan']=0;
             $data['PenyusutanPerTahun']=0;
             $data['Saldo_akhir_jml']=0;
           }else {
