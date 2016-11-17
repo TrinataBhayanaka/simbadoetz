@@ -127,11 +127,13 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     $Uraian = $data['Uraian'];
     $AsalUsul = $data['AsalUsul'];
     $kodeKa = $data['kodeKA'];
+    //echo "sblm $final_gol -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
     list( $noKontrak, $kondisi_aset,$kodeKa,$TipeAset )=get_aset( $Aset_ID );
     
     if($final_gol=="tanah"||$final_gol=="kdp"||$final_gol=="asetlain"||$final_gol=="jaringan")
-      $kodeKa=1;
-
+    { $kodeKa=1;
+     // echo "masuk22";
+    }
     if($final_gol=="tanah"||$final_gol=="kdp"||$final_gol=="asetlain")
     {  
       $NilaiBuku=$NilaiPerolehan;
@@ -148,7 +150,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         $AkumulasiPenyusutan_Awal=$tmp_akm_awal;
       }
     }
-
+    //echo "setelah -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
     $data['Uraian']=$Uraian;
     $data['kelompok']=$kodeKelompok;
     $jenis_kapitalisasi=$data['GUID'];
@@ -707,7 +709,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           $tmp_tahun=explode("-",$TglPembukuan);
           $Tahun=$tmp_tahun[0];
-          pr($tmp_tahun);
+          //pr($tmp_tahun);
           if ( $Tahun==$TAHUN_AKTIF ) {
             $data['saldo_awal_nilai']=0;
             $data['saldo_awal_akm']=0;
@@ -1829,7 +1831,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       }
       else if ( $Kd_Riwayat=="35"  ) {
         // code  REKLAS kontrak KURANG
-       
+        //echo "Aset_ID=$Aset_ID kodeKa $kodeKa <br/>";
           $status_masuk=1;
           /** ----------------------------MUTASI TAMBAH---------------------------------- */
           $data['saldo_awal_nilai']=0;
@@ -1921,7 +1923,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
              $data['reklas_krg_jml']=1;
             $data['reklas_krg_nilai']=$NilaiPerolehan;
           }
-          $data['reklas_krg_ekstra']=0;
+          
           $data['reklas_krg_aset_bm_tdk_dikapitalisasi']=0;
           $data['reklas_krg_aset_lain']=0;
 
@@ -1931,9 +1933,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** JUMLAH MUTASI KURANG */
           $data['jumlah_mutasi_kurang_jml']=0;
           $data['jumlah_mutasi_kurang_nilai']=0;
-          $data['NilaiPerolehan']=0;
-          $data['NilaiBuku']=0;
-          $data['PenyusutanPerTahun']=0;
+         
 
           /** AKHIR JUMLAH MUTASI KURANG */
 
