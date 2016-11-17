@@ -127,7 +127,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     $Uraian = $data['Uraian'];
     $AsalUsul = $data['AsalUsul'];
     $kodeKa = $data['kodeKA'];
-    echo "sblm $final_gol -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
+    //echo "sblm $final_gol -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
     list( $noKontrak, $kondisi_aset,$kodeKa,$TipeAset )=get_aset( $Aset_ID );
     
     if($final_gol=="tanah"||$final_gol=="kdp"||$final_gol=="asetlain"||$final_gol=="jaringan")
@@ -150,7 +150,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         $AkumulasiPenyusutan_Awal=$tmp_akm_awal;
       }
     }
-    echo "setelah -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
+    //echo "setelah -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
     $data['Uraian']=$Uraian;
     $data['kelompok']=$kodeKelompok;
     $jenis_kapitalisasi=$data['GUID'];
