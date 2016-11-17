@@ -136,6 +136,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     {  
       $NilaiBuku=$NilaiPerolehan;
       $NilaiBuku_Awal=$NilaiPerolehan_Awal;
+
     }
     if($NilaiBuku_Awal==""){
       list($tmp_nilai_buku_awal,$tmp_akm_awal,$kondisi_awal)=get_log_before($tabel_log,$log_id);
@@ -147,6 +148,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
         $AkumulasiPenyusutan_Awal=$tmp_akm_awal;
       }
     }
+
     $data['Uraian']=$Uraian;
     $data['kelompok']=$kodeKelompok;
     $jenis_kapitalisasi=$data['GUID'];
@@ -2072,7 +2074,21 @@ function subsub_awal( $kode, $gol, $ps, $pt ) {
                  $param_where
                order by kelompok asc";
     }
-    else {
+    else if($gol=='asetlain_ori'){
+       $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,kodeSatker,
+               NilaiPerolehan as nilai,Status_Validasi_barang as jml,
+               0 as PP,Tahun as Tahun, noRegister as noRegister,
+               0 as AP, NilaiPerolehan as NB,
+              (select Uraian from kelompok
+               where kode= kodeKelompok
+               ) as Uraian,
+               Status_Validasi_barang,kodeSatker from $gol m
+                where kodeKelompok like '$kode_sub%' and
+                 $param_where
+               order by kelompok asc";
+    }else {
+      
+  
       $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,kodeSatker,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
