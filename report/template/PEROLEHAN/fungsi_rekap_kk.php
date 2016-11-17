@@ -746,7 +746,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** Inventarisasi */
 
           /** Transfer SKPD */
-          if ( $status_info!="ex" ) {
+          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
             $data['transfer_skpd_tambah_nilai']=$NilaiPerolehan;
             $data['transfer_skpd_tambah_jml']=1;
           }else {
@@ -772,7 +772,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR JUMLAH MUTASI TAMBAH */
 
           /** PENYUSUTAN + */
-          if ( $status_info!="ex" ) {
+          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
             $data['koreksi_penyusutan_tambah']=$AkumulasiPenyusutan;
           }else {
             $data['koreksi_penyusutan_tambah']=0;
@@ -794,7 +794,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR PENGHAPUSAN */
 
           /** Transfer SKPD */
-          if ( $status_info=="ex" ) {
+          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
             $data['transfer_skpd_kurang_nilai']=$NilaiPerolehan;
             $data['transfer_skpd_kurang_jml']=1;
           }else {
@@ -825,7 +825,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR JUMLAH MUTASI KURANG */
 
           /** PENYUSUTAN - */
-          if ( $status_info=="ex" ) {
+          if ( strpos($info, "ex ")!=""||strpos($info, "ex ")>0 ) {
             $data['koreksi_penyusutan_kurang']=$AkumulasiPenyusutan;
             $data['NilaiPerolehan']=0;
             $data['NilaiBuku']=0;
