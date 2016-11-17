@@ -1827,7 +1827,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           $data['bp_berjalan']=0;
         //}
       }
-      else if ( $Kd_Riwayat=="35" ) {
+      else if ( $Kd_Riwayat=="35"  ) {
         // code  REKLAS kontrak KURANG
        
           $status_masuk=1;
@@ -1913,8 +1913,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
               $data['reklas_krg_aset_tetap']=0;
               $data['reklas_krg_ekstra']=$NilaiPerolehan;
            }
-          $data['reklas_krg_aset_tetap']=0;
-          $data['reklas_krg_aset_lain']=0;
+         
            if ( $kodeKa==1 ) {
             $data['reklas_krg_jml']=0;
             $data['reklas_krg_nilai']=0;
