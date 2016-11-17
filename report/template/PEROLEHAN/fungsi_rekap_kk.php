@@ -1950,6 +1950,8 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
             $data['PenyusutanPerTahun']=0;
             $data['Saldo_akhir_jml']=0;
             $data['bp_berjalan']=0;
+          }else{
+            $data['Saldo_akhir_jml']=1;
           }
         
       }
