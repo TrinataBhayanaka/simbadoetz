@@ -128,7 +128,9 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     $AsalUsul = $data['AsalUsul'];
     $kodeKa = $data['kodeKA'];
     //echo "sblm $final_gol -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
-    list( $noKontrak, $kondisi_aset,$kodeKa,$TipeAset )=get_aset( $Aset_ID );
+    if($Kd_Riwayat=="1" || $Kd_Riwayat=="35"){
+      list( $noKontrak, $kondisi_aset,$kodeKa,$TipeAset )=get_aset( $Aset_ID );
+    }
     
     if($final_gol=="tanah"||$final_gol=="kdp"||$final_gol=="asetlain"||$final_gol=="jaringan")
     { $kodeKa=1;
