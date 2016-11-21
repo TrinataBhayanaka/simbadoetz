@@ -1759,8 +1759,8 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** JUMLAH MUTASI TAMBAH */
-          $data['jumlah_mutasi_tambah_jml']=0;
-          $data['jumlah_mutasi_tambah_nilai']=0;
+          $data['jumlah_mutasi_tambah_jml']=1;
+          $data['jumlah_mutasi_tambah_nilai']=$NilaiPerolehan;
 
           /** AKHIR JUMLAH MUTASI TAMBAH */
 
