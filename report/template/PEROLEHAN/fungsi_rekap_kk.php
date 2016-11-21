@@ -128,7 +128,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     $AsalUsul = $data['AsalUsul'];
     $kodeKa = $data['kodeKA'];
     //echo "sblm $final_gol -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
-    if($Kd_Riwayat=="1" || $Kd_Riwayat=="35"){
+    if($Kd_Riwayat=="1" || $Kd_Riwayat=="35"|| $Kd_Riwayat=="36"){
       list( $noKontrak, $kondisi_aset,$kodeKa,$TipeAset )=get_aset( $Aset_ID );
     }
     
