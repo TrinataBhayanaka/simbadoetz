@@ -1725,7 +1725,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           if ( $noKontrak!="" ) {
             if ( $jenis_belanja==0 ) {
               /** BELANJA MODAL */
-              $data['bm_aset_baru']=0;$NilaiPerolehan;
+              $data['bm_aset_baru']=$NilaiPerolehan;
               $data['bm_aset_kapitalisasi']=0;
               $data['bm_total_brg']=1;
               $data['bm_total_nilai']=$NilaiPerolehan;
