@@ -8498,7 +8498,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         'condition' => "Aset_ID IN ($aset_id)",
                         );
                     // //////////////////////////////////////pr($sql1);
-                    //$res1 = $this->db->lazyQuery($sql1,$debug,2);
+                    $res1 = $this->db->lazyQuery($sql1,$debug,2);
 
                             foreach ($Aset_IDtmp as $key => $value) {
                                     logFile('log data penghapusan, Aset_ID ='.$key,'penghapusan.txt');

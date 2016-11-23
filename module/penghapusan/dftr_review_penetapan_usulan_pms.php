@@ -32,7 +32,7 @@ $menu_id = 10;
 	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 	
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pms($POST);
-	pr($data);
+	//pr($data);
 	if($data['dataArr']){
 		$CountData=count($data['dataArr']);
 	}else{

@@ -624,10 +624,10 @@ class DB
                                     $val="1";
                                 elseif($key=="StatusTampil")
                                     $val="1";
-                                elseif($key=="NilaiBuku")
+                                /*elseif($key=="NilaiBuku")
                                     $val="$NilaiBuku";
                                 elseif($key=="AkumulasiPenyusutan")
-                                    $val="$AkumulasiPenyusutan";
+                                    $val="$AkumulasiPenyusutan";*/
 	        		$tmpValue[] = "'".$val."'";
 
 	        		// if ($key == 'NilaiPerolehan') $NilaiPerolehan_Awal = "'".$val."'";

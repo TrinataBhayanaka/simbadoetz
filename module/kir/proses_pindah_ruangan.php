@@ -1,11 +1,23 @@
 <?php
 include "../../config/config.php";
-	// echo "masuk";
+//modif
+try {
+    // First of all, let's begin a transaction
+    //$db->beginTransaction();
+
+    // A set of queries; if one fails, an exception should be thrown
+    //$db->query('first query');
+    //$db->query('second query');
+    //$db->query('third query');
+
+    // If we arrive here, it means that no exception was thrown
+    // i.e. no query has failed, and we can commit the transaction
+
+    //$db->commit();
 	
-	// exit;
-	// $KIR = new RETRIEVE_KIR;
+
+	$DBVAR->begin();
 	$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-	//pr($_POST);
 	$kodeRuangan = $_POST['kodeRuang'];
 	if($kodeRuangan){
 		$kodeRuang = trim($kodeRuangan);
@@ -15,7 +27,6 @@ include "../../config/config.php";
 	
 	$kodeSatker = $_POST['kodeSatker'];
 	$tgl = $_POST['tglPerubahan'];
-	// EXIT;
 	$menu_id = 59;
 	($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 	$SessionUser = $SESSION->get_session_user();
@@ -28,22 +39,24 @@ include "../../config/config.php";
 	
 	//implode Aset_ID
 	$implodeAset_ID = implode(",",$cleanArray);
-	//echo "implode ".$implodeAset_ID;
-	//exit;
 	
 	//sql sementara
 	//update ruangan di tabel aset
 	$QueryAset	  = "UPDATE aset SET kodeRuangan = $kodeRuang WHERE Aset_ID in ($implodeAset_ID)";
 	//pr($QueryAset);
+	//	exit;
 	$ExeQueryAset = $DBVAR->query($QueryAset);
+	if(!$ExeQueryAset){
+		$DBVAR->rollback();
+		echo "<script>
+			alert('Data gagal masuk #001. Silahkan coba lagi');
+		</script>";	
+		redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+	}
 	$POST=$_POST;
 	$POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 	
 	$hitung = count($POST_data);
-	/*echo "hitung = ".$hitung;
-	echo "<br>";
-	echo "aset 1 =".$POST_data[0];
-	exit;*/
 	for($i = 0; $i < $hitung; $i++){
 		$Aset_ID = $POST_data[$i];
 		$queryTipeAset = "SELECT TipeAset FROM aset WHERE Aset_ID = '$Aset_ID'";
@@ -101,15 +114,28 @@ include "../../config/config.php";
 		//update ruangan di tabel kib
 		$QueryKib	  = "UPDATE $tableKib SET kodeRuangan = $kodeRuang WHERE Aset_ID = '$Aset_ID'";
 		$ExeQueryKib = $DBVAR->query($QueryKib);
-
+		if(!$ExeQueryKib){
+			$DBVAR->rollback();
+			echo "<script>
+				alert('Data gagal masuk #002. Silahkan coba lagi');
+			</script>";	
+			redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+		}
 		//insert log
 		$QueryLog  = "INSERT INTO $tableLog ($implodeField,$AddField)
 					VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
 	
 		$exeQueryLog = $DBVAR->query($QueryLog);
-		
+		if(!$exeQueryLog){
+			$DBVAR->rollback();
+			echo "<script>
+				alert('Data gagal masuk #003. Silahkan coba lagi');
+			</script>";	
+			redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+		}
 	}
 	
+	$DBVAR->commit();
 	if($data_post){
 	 $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("KIRASETDETAIL");
 	}
@@ -118,4 +144,17 @@ include "../../config/config.php";
 			alert('Data Berhasil Disimpan');
 		</script>";	
 redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+
+} catch (Exception $e) {
+    // An exception has been thrown
+    // We must rollback the transaction
+    //$db->rollback();
+    $DBVAR->rollback();
+    echo "<script>
+		alert('Data gagal masuk #999. Silahkan coba lagi');
+	</script>";	
+	redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+}
+
+
 ?>
