@@ -12,7 +12,7 @@ try {
     // If we arrive here, it means that no exception was thrown
     // i.e. no query has failed, and we can commit the transaction
     $db->commit();*/
-
+	$DBVAR->begin();
     $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	// pr($_POST);
 	$kodeRuangan = $_POST['kodeRuang'];
@@ -41,7 +41,8 @@ try {
 	//sql sementara
 	//update ruangan di tabel aset
 	$QueryAset	  = "UPDATE aset SET kodeRuangan = $kodeRuang WHERE Aset_ID in ($implodeAset_ID)";
-	// pr($QueryAset);
+	pr($QueryAset);
+	//exit();
 	$ExeQueryAset = $DBVAR->query($QueryAset);
 	if(!$ExeQueryAset){
 		$DBVAR->rollback();
@@ -49,6 +50,7 @@ try {
 			alert('Data gagal masuk #001. Silahkan coba lagi');
 		</script>";	
 		redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+		exit();
 	}
 	$POST=$_POST;
 	$POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
@@ -116,6 +118,7 @@ try {
 				alert('Data gagal masuk #002. Silahkan coba lagi');
 			</script>";	
 			redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+			exit();
 		}
 		
 		//insert log
@@ -129,6 +132,7 @@ try {
 				alert('Data gagal masuk #003. Silahkan coba lagi');
 			</script>";	
 			redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+			exit();
 		}
 	}
 	$DBVAR->commit();
@@ -149,6 +153,6 @@ try {
 		alert('Data gagal masuk #999. Silahkan coba lagi');
 	</script>";	
 	redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
-
+	exit();
 }
 ?>

@@ -52,6 +52,7 @@ try {
 			alert('Data gagal masuk #001. Silahkan coba lagi');
 		</script>";	
 		redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+		exit();
 	}
 	$POST=$_POST;
 	$POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
@@ -120,6 +121,7 @@ try {
 				alert('Data gagal masuk #002. Silahkan coba lagi');
 			</script>";	
 			redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+			exit();
 		}
 		//insert log
 		$QueryLog  = "INSERT INTO $tableLog ($implodeField,$AddField)
@@ -132,6 +134,7 @@ try {
 				alert('Data gagal masuk #003. Silahkan coba lagi');
 			</script>";	
 			redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+			exit();
 		}
 	}
 	
@@ -154,6 +157,7 @@ redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
 		alert('Data gagal masuk #999. Silahkan coba lagi');
 	</script>";	
 	redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+	exit();
 }
 
 
