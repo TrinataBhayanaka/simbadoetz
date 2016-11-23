@@ -128,7 +128,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
     $AsalUsul = $data['AsalUsul'];
     $kodeKa = $data['kodeKA'];
     //echo "sblm $final_gol -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
-    if($Kd_Riwayat=="1" || $Kd_Riwayat=="35"){
+    if($Kd_Riwayat=="1" || $Kd_Riwayat=="35"|| $Kd_Riwayat=="36"||$Kd_Riwayat=="0"){
       list( $noKontrak, $kondisi_aset,$kodeKa,$TipeAset )=get_aset( $Aset_ID );
     }
     
@@ -1725,17 +1725,17 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           if ( $noKontrak!="" ) {
             if ( $jenis_belanja==0 ) {
               /** BELANJA MODAL */
-              $data['bm_aset_baru']=0;//$NilaiPerolehan;
+              $data['bm_aset_baru']=$NilaiPerolehan;
               $data['bm_aset_kapitalisasi']=0;
-              $data['bm_total_brg']=0;//1;
-              $data['bm_total_nilai']=0;//$NilaiPerolehan;
+              $data['bm_total_brg']=1;
+              $data['bm_total_nilai']=$NilaiPerolehan;
               /** AKHIR BELANJA MODAL */
             }else {
               /** BELANJA jASA */
               $data['bj_aset_baru']=0;
-              $data['bj_aset_kapitalisasi']=0;//$NilaiPerolehan;
-              $data['bj_total_brg']=0;//1;
-              $data['bj_total_nilai']=0;//$NilaiPerolehan;
+              $data['bj_aset_kapitalisasi']=$NilaiPerolehan;
+              $data['bj_total_brg']=1;
+              $data['bj_total_nilai']=$NilaiPerolehan;
               /** AKHIR BELANJA JASA */
             }
           }
@@ -1754,8 +1754,8 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklasi Aset Tetap Tambah */
-          $data['reklas_aset_tambah_nilai']=$NilaiPerolehan;
-          $data['reklas_aset_tambah_jml']=1;
+          $data['reklas_aset_tambah_nilai']=0;
+          $data['reklas_aset_tambah_jml']=0;
           /** AkhirTransfer SKPD */
 
           /** JUMLAH MUTASI TAMBAH */
