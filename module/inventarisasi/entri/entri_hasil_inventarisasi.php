@@ -115,15 +115,24 @@ $menu_id = 10;
 							<li>
 								<span class="span2">Asal Usul</span>
 								<select id="asalusul" name="AsalUsul" style="width:255px">
-									<option value="Pembelian">Pembelian</option>
-									<option value="Hibah">Hibah</option>
-									<option value="BOS">BOS</option>
-									<option value="Hibah BOS">Hibah BOS</option>
-									<option value="Hibah Komite">Hibah Komite</option>
-									<option value="Hibah Pusat">Hibah Pusat</option>
-									<option value="Hibah Provinsi">Hibah Provinsi</option>
-									<option value="Hibah Pihak ke-3">Hibah Pihak ke-3</option>
-									<option value="Inventarisasi">Inventarisasi</option>
+									<optgroup label="Pembelian">
+										<option value="Inventarisasi">Inventarisasi</option>
+									</optgroup>
+									
+									<optgroup label="Hibah">
+										<option value="Hibah BOS">Hibah BOS</option>
+										<option value="Hibah Komite">Hibah Komite</option>
+										<option value="Hibah Pusat">Hibah Pusat</option>
+										<option value="Hibah Provinsi">Hibah Provinsi</option>
+										<option value="Hibah Pihak ke-3">Hibah Pihak ke-3</option>
+									</optgroup>
+									<optgroup label="Sitaan/ Rampasan">
+										<option value="Sitaan/ Rampasan">Sitaan/ Rampasan</option>
+									</optgroup>
+									<optgroup label="perolehan sah lainnya">
+										<option value="perolehan sah lainnya">perolehan sah lainnya</option>
+									</optgroup>
+									
 								</select>
 							</li>
 							<li>&nbsp;</li>
