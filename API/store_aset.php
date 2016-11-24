@@ -1799,6 +1799,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 //flag u/Aset_ID
                 //$tblKib2['GUID'] = $tblKib['Aset_ID'];
                 $tblKib2['Aset_ID'] = $tblKib['Aset_ID'];
+                //penambahan kodeKA
+                $tblKib2['kodeKA'] = $tblAset['kodeKA']; 
                 
                 unset($tmpfield3);
                 unset($tmpvalue3);
@@ -2038,14 +2040,36 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['Tahun'] = $tahun[0];
+
+        if(intval($tblAset['Tahun']) < 2008){
+            $tblAset['kodeKA'] = 1;
+        }else {
+            if($data['TipeAset'] == 'B'){
+                if($tblAset['NilaiPerolehan'] < 300000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
+            } elseif ($data['TipeAset'] == 'C') {
+                if($tblAset['NilaiPerolehan'] < 10000000){
+                    $tblAset['kodeKA'] = 0;
+                } else {
+                    $tblAset['kodeKA'] = 1;
+                }
+            } else {
+                $tblAset['kodeKA'] = 0;
+            }
+        }
+
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['GUID'] = $aset['idaset'];
-        $tblAset['kodeKA'] = 0;
+        $tblAset['kodeKA'] = $tblAset['kodeKA'];
         $getAsetAset_ID =mysql_query("SELECT * from aset where Aset_ID = '{$aset[idaset]}'");
         while ($rows2 = mysql_fetch_assoc($getAsetAset_ID)){
             $dataAst[] = $rows2;
         }
         
+
         $tblAset['kodeKelompokReklasTujuan'] = $dataAst['0']['kodeKelompok'];
 
             foreach ($tblAset as $key => $val) {
@@ -2054,7 +2078,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             }
             $field = implode(',', $tmpfield);
             $value = implode(',', $tmpvalue);
-
         $query = mysql_query("SELECT MAX(noRegister) AS noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}'");
         while ($row = mysql_fetch_assoc($query)){
              $i = $row['noRegister'];
@@ -2167,7 +2190,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblKib['StatusValidasi'] = '0';
         $tblKib['Status_Validasi_Barang'] = '0';
         $tblKib['StatusTampil'] = '0';
-        $tblKib['GUID'] = $datakib2['Aset_ID'];
+        //$tblKib['GUID'] = $datakib2['Aset_ID']; //$tblAset['GUID']
+        $tblKib['GUID'] = $tblAset['GUID']; //$tblAset['GUID']
+        $tblKib['kodeKA'] = $tblAset['kodeKA'];
         
         unset($tmpfield2);
         unset($tmpvalue2);

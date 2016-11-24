@@ -274,6 +274,8 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                 $tblLogKib['operator'] = $_SESSION['ses_uoperatorid'];
                 $tblLogKib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'];
                 $tblLogKib['Info'] = addslashes($kib['Info']);
+                //tambah kodekA
+                $tblLogKib['kodeKA'] = $kib['kodeKA'];
                 
                 unset($tmpField3);
                 unset($tmpValue3);
