@@ -117,6 +117,7 @@ $menu_id = 10;
 								<select id="asalusul" name="AsalUsul" style="width:255px">
 									<optgroup label="Pembelian">
 										<option value="Inventarisasi">Inventarisasi</option>
+										<option value="perolehan sah lainnya">perolehan sah lainnya</option>
 									</optgroup>
 									
 									<optgroup label="Hibah">
@@ -129,9 +130,7 @@ $menu_id = 10;
 									<optgroup label="Sitaan/ Rampasan">
 										<option value="Sitaan/ Rampasan">Sitaan/ Rampasan</option>
 									</optgroup>
-									<optgroup label="perolehan sah lainnya">
-										<option value="perolehan sah lainnya">perolehan sah lainnya</option>
-									</optgroup>
+									
 									
 								</select>
 							</li>

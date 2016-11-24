@@ -166,6 +166,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 									<option></option>
 																<optgroup label="Pembelian">
 										<option value="Inventarisasi" <?=$dataArr['aset']['AsalUsul'] == 'Inventarisasi' ? 'selected' : ''?>>Inventarisasi</option>
+										<option value="perolehan sah lainnya" <?=$dataArr['aset']['AsalUsul'] == 'perolehan sah lainnya' ? 'selected' : ''?>>perolehan sah lainnya</option>
 									</optgroup>
 
 									<optgroup label="Hibah">
@@ -180,9 +181,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 									<optgroup label="Sitaan/ Rampasan">
 										<option value="Sitaan/ Rampasan" <?=$dataArr['aset']['AsalUsul'] == 'Sitaan/ Rampasan' ? 'selected' : ''?>>Sitaan/ Rampasan</option>
 									</optgroup>
-									<optgroup label="perolehan sah lainnya">
-										<option value="perolehan sah lainnya" <?=$dataArr['aset']['AsalUsul'] == 'perolehan sah lainnya' ? 'selected' : ''?>>perolehan sah lainnya</option>
-									</optgroup>
+								
 								</select>
 							</li>
 							<li>&nbsp;</li>

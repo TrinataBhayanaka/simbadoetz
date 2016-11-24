@@ -301,7 +301,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
             /** AKHIR BELANJA JASA */
           }
         }else {
-          if ( $AsalUsul!="Inventarisasi" && $AsalUsul!="Pembelian" ) {
+          if ( $AsalUsul!="Inventarisasi" && $AsalUsul!="Pembelian" && $AsalUsul!="perolehan sah lainnya") {
             /** HIBAH */
             $data['hibah_jml']=1;
             $data['hibah_nilai']=$NilaiPerolehan;
@@ -1790,13 +1790,15 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklas Kurang Aset Tetap */
-           if ( $kodeKa==1 ) {
+           /*if ( $kodeKa==1 ) {
               $data['reklas_krg_aset_tetap']=$NilaiPerolehan;
               $data['reklas_krg_ekstra']=0;
            }else{
               $data['reklas_krg_aset_tetap']=0;
               $data['reklas_krg_ekstra']=$NilaiPerolehan;
-           }
+           }*/
+          $data['reklas_krg_aset_tetap']=$NilaiPerolehan;
+          $data['reklas_krg_ekstra']=0;
           $data['reklas_krg_aset_lain']=0;
           $data['reklas_krg_jml']=1;
           $data['reklas_krg_nilai']=$NilaiPerolehan;

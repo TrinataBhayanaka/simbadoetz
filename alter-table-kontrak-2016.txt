@@ -65,3 +65,19 @@ ALTER TABLE `log_kdp` ADD `jenis_hapus` VARCHAR(30) NULL;
 ALTER TABLE `log_asetlain` ADD `AkumulasiPenyusutan_Awal` DECIMAL(50) NOT NULL AFTER `kodeKelompokReklasTujuan`;
 ALTER TABLE `log_tanah` ADD `AkumulasiPenyusutan_Awal` DECIMAL(50) NOT NULL AFTER `kodeKelompokReklasTujuan`;
 ALTER TABLE `log_kdp` ADD `AkumulasiPenyusutan_Awal` DECIMAL(50) NOT NULL AFTER `kodeKelompokReklasTujuan`;
+
+
+ALTER TABLE `aset` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `tanah` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `mesin` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `bangunan` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `jaringan` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `asetlain` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `kdp` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+
+ALTER TABLE `log_tanah` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `log_mesin` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `log_bangunan` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `log_jaringan` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `log_asetlain` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
+ALTER TABLE `log_kdp` ADD `longitude` FLOAT(10) NOT NULL AFTER `kodeKelompokReklasTujuan`, ADD `latitude` FLOAT(10) NOT NULL AFTER `longitude`;
