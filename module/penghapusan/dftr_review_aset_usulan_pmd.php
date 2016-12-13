@@ -23,21 +23,7 @@ $menu_id = 10;
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMD'];
 	}
 
-	// if(isset($_POST['reviewAsetUsulan']) && $_POST['reviewAsetUsulan']==1){
-	// 	$_SESSION['reviewAsetUsulan']=$_POST;
-	// 	$POST=$_SESSION['reviewAsetUsulan'];
-	// 	pr($POST);
-	// 	pr("!");
-	// }else{
-	// 	pr($_POST);
-	// 	////////pr($_SESSION['reviewAsetUsulan']);
-	// 	foreach ($_POST['penghapusanfilter'] as $key => $value) {
-	// 		$_SESSION['reviewAsetUsulan']['penghapusanfilter'][]=$value;
-	// 	}
-	// 	$POST=$_SESSION['reviewAsetUsulan'];
-	// 	pr($POST);
-	// 	pr("?");
-	// }
+
 	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
 	
 	$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);

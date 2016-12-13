@@ -21,7 +21,8 @@ $get_data_filter = $RETRIEVE->retrieve_kontrak();
 	<?php
 		// $data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan($_POST);
 		$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_validasi_pmd($_POST);
-		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
+		//pr($data);
+		$sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
         while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
             }

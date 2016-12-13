@@ -53,42 +53,7 @@ $menu_id = 10;
 		// pr($CountData);
 	}
 
-	// $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-
-	// 	if($data_post){
-			
-	// 	}else{
-			
-	// 	}
-	// if(isset($_POST['filterAsetUsulan']) && $_POST['filterAsetUsulan']==1){
-	// 	$data = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd($_POST);
-	// 	$_SESSION['filterAsetUsulanAdd']=$data;
-	// 	$data=$_SESSION['filterAsetUsulanAdd'];
-	// 	// ////pr($_SESSION['reviewAsetUsulan']);
-	// 	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-
-	// 	if($data_post){
-	// 	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
-	// 	}
-	// }else{
-	// 	$dataSESSION=$_SESSION['filterAsetUsulanAdd'];
-	// 	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-		
-	// 	$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
-
-	// 	$POST['penghapusanfilter']=$POST;
-	// 	if($POST){
-	// 		// ////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
-	// 		foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-	// 			// ////pr($valueSESSION['Aset_ID']);
-	// 			if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
-	// 				// echo "stringnot";
-	// 				$data[]=$valueSESSION;
-	// 			}
-	// 		}
-		
-	// 	}
-	// 	// ////pr($data);
+	
 	$POST = $_SESSION['filterAsetUsulan'];
 	
 	$POST['page'] = intval($_GET['pid']);

@@ -174,10 +174,8 @@ $data_post=$PENGHAPUSAN->apl_userasetlistHPS("DELUSPMD");
 
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 $POST['penghapusanfilter']=$POST;
-    if($POST){
-      // //////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
+    if($POST && $dataSESSION){
       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
-        // //////pr($valueSESSION['Aset_ID']);
         if(!in_array($valueSESSION['Aset_ID'], $POST)){
           // echo "stringnot";
           $data[]=$valueSESSION;

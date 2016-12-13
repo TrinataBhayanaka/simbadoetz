@@ -20,21 +20,9 @@ $menu_id = 10;
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	// if($_POST['submit']==''){
-	// $dataPost=$_SESSION['dataPost'];
-	// }else{
-	// $_SESSION['dataPost']=$_POST;
-	// $dataPost=$_SESSION['dataPost'];
-	// }
-
 	$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPMD");
-	// $
 	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
-	// $POST['penetapanpenghapusan']=$POST;
-	// pr($POST);
-	// pr($_POST);
 	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($POST);
-	// pr($data);
 	if($data['dataArr']){
 		$CountData=count($data['dataArr']);
 	}else{
@@ -43,11 +31,10 @@ $menu_id = 10;
 	if($_SESSION['kdSatkerFilterPMDp']){
 		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
 	}
-	// //////pr($data);
-		 $sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
-        while ($dataKontrak = mysql_fetch_assoc($sql)){
+ 	$sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
+    while ($dataKontrak = mysql_fetch_assoc($sql)){
                 $kontrak[] = $dataKontrak;
-            }
+    }
 	?>
 	<!-- End Sql -->
 	<script>
@@ -243,59 +230,44 @@ $menu_id = 10;
 						<!-- <input type="hidden" name="UsulanID[]" value="<?php echo $valueUsulan['Usulan_ID'];?>"/> -->
 					<?php
 					
-					// $TglPerolehanTmp=explode("-", $valueUsulan[TglPerolehan]);
-					// // //////pr($TglPerolehanTmp);
-					// $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+					if ($nilai[Aset_ID] !='')
+					{
+					if ($nilai->AsetOpr == 0)
+					$select="selected='selected'";
+					if ($nilai->AsetOpr ==1)
+					$select2="selected='selected'";
 
-					// $dataUsulanAset = $PENGHAPUSAN->retrieve_penetapan_penghapusan_detail_usulan_pmd($valueUsulan['Usulan_ID']);
-									// //////pr($dataUsulanAset);
-									// //////pr($_SESSION);
-									// StatusKonfirmasi
-									
-									// foreach ($dataUsulanAset as $keys => $nilai)
-									// {
-										if ($nilai[Aset_ID] !='')
-										{
-										if ($nilai->AsetOpr == 0)
-										$select="selected='selected'";
-										if ($nilai->AsetOpr ==1)
-										$select2="selected='selected'";
+					if($nilai->SumberAset =='sp2d')
+					$pilih="selected='selected'";
+					if($nilai->SumberAset =='hibah')
+					$pilih2="selected='selected'";
 
-										if($nilai->SumberAset =='sp2d')
-										$pilih="selected='selected'";
-										if($nilai->SumberAset =='hibah')
-										$pilih2="selected='selected'";
-
-										if($nilai[StatusKonfirmasi]==1){
-											$textLabel="Diterima";
-											$labelColor="label label-success";
-										}elseif($nilai[StatusKonfirmasi]==2){
-											$textLabel="Ditolak";
-											$labelColor="label label-danger";
-										}else{
-											$textLabel="Ditunda";
-											$labelColor="label label-warning";
-											$disabled="
-										<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
-										<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
-										}
-										if($nilai[kondisi]==2){
-											$kondisi="Rusak Ringan";
-										}elseif($nilai[kondisi]==3){
-											$kondisi="Rusak Berat";
-										}elseif($nilai[kondisi]==1){
-											$kondisi="Baik";
-										}
-										// ////pr($value[TglPerolehan]);
-										$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
-										// ////pr($TglPerolehanTmp);
-										$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-
-
-              $NamaSatker=$PENGHAPUSAN->getNamaSatker($nilai[kodeSatker]);
-              // pr($NamaSatker);
-
-              $SelectKIB=$PENGHAPUSAN->SelectKIB($nilai[Aset_ID],$nilai[TipeAset]);
+					if($nilai[StatusKonfirmasi]==1){
+						$textLabel="Diterima";
+						$labelColor="label label-success";
+					}elseif($nilai[StatusKonfirmasi]==2){
+						$textLabel="Ditolak";
+						$labelColor="label label-danger";
+					}else{
+						$textLabel="Ditunda";
+						$labelColor="label label-warning";
+						$disabled="
+					<a href='penetapan_asetid_proses_diterima.php?asetid=$nilai[Aset_ID]' class='btn btn-success' >Diterima</a>
+					<a href='penetapan_asetid_proses_ditolak.php?asetid=$nilai[Aset_ID]' class='btn btn-danger' >Ditolak</a>";
+					}
+					if($nilai[kondisi]==2){
+						$kondisi="Rusak Ringan";
+					}elseif($nilai[kondisi]==3){
+						$kondisi="Rusak Berat";
+					}elseif($nilai[kondisi]==1){
+						$kondisi="Baik";
+					}
+					// ////pr($value[TglPerolehan]);
+					$TglPerolehanTmp=explode("-", $nilai[TglPerolehan]);
+					// ////pr($TglPerolehanTmp);
+					$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+              		$NamaSatker=$PENGHAPUSAN->getNamaSatker($nilai[kodeSatker]);
+              		$SelectKIB=$PENGHAPUSAN->SelectKIB($nilai[Aset_ID],$nilai[TipeAset]);
 
 					?>
 						

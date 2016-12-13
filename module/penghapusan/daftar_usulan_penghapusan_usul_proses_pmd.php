@@ -1,7 +1,5 @@
 <?php
 include "../../config/config.php";
-
-
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
         $menu_id = 38;
@@ -14,28 +12,13 @@ $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
         $usulan_id=get_auto_increment("Usulan");
         $date=date('Y-m-d');
         $ses_uid=$_SESSION['ses_uid'];
-		// //pr($nmaset);
-		// echo "jml=".$nmaset;
-        // exit;
-        // $data = $STORE->store_usulan_penghapusan(
-                // $UserNm,
-                // $nmaset,
-                // $usulan_id,
-                // $date,
-                // $ses_uid
-                // );
-		// //pr($_POST);
-
+		
         $data_post=$PENGHAPUSAN->apl_userasetlistHPS("USPMD");
         $POST=$_POST;
         // //pr($POST);
         $POST_data=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
         $POST['penghapusan_nama_aset']=$POST_data;
-        // //pr($POST);
-
-        // //pr($_POST);
-        // exit;
-		$data = $PENGHAPUSAN->store_usulan_penghapusan_pmd($POST);
+        $data = $PENGHAPUSAN->store_usulan_penghapusan_pmd($POST);
         
         $data_postRVW=$PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
         if($data_postRVW){
