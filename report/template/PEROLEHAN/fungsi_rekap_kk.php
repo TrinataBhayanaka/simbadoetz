@@ -142,8 +142,10 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
       $NilaiBuku_Awal=$NilaiPerolehan_Awal;
 
     }
+    
     if($NilaiBuku_Awal==""){
-      list($tmp_nilai_buku_awal,$tmp_akm_awal,$kondisi_awal)=get_log_before($tabel_log,$log_id);
+      list($tmp_nilai_buku_awal,$tmp_akm_awal,$kondisi_awal)=get_log_before($tabel_log,$log_id,$Aset_ID);
+      
       if($tmp_nilai_buku_awal==""){
         $NilaiBuku_Awal=$NilaiPerolehan;
         $AkumulasiPenyusutan_Awal=0;
@@ -301,7 +303,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
             /** AKHIR BELANJA JASA */
           }
         }else {
-          if ( $AsalUsul!="Inventarisasi" && $AsalUsul!="Pembelian" ) {
+          if ( $AsalUsul!="Inventarisasi" && $AsalUsul!="Pembelian" && $AsalUsul!="perolehan sah lainnya") {
             /** HIBAH */
             $data['hibah_jml']=1;
             $data['hibah_nilai']=$NilaiPerolehan;
@@ -427,7 +429,7 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
            */
           $status_kondisi=0;
            list($tmp_nilai_buku_awal,$tmp_akm_awal,$kondisi_awal)=
-                  get_log_before_tahun_sblmya($tabel_log,$log_id,$tglawalperolehan);
+                  get_log_before_tahun_sblmya($tabel_log,$log_id,$tglawalperolehan,$Aset_ID);
           if($kondisi_awal==0||$kondisi_awal=="")
           {
               $status_masuk=0;
@@ -1055,7 +1057,8 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AKHIR JUMLAH MUTASI TAMBAH */
 
           /** PENYUSUTAN + */
-          if ( $selisih>=0 ) { $data['koreksi_penyusutan_tambah']=$AkumulasiPenyusutan-$AkumulasiPenyusutan_Awal;
+          if ( $selisih>=0 ) { 
+            $data['koreksi_penyusutan_tambah']=$AkumulasiPenyusutan-$AkumulasiPenyusutan_Awal;
           }else {
             $data['koreksi_penyusutan_tambah']=0;
           }
@@ -1790,13 +1793,15 @@ function history_log( $kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $
           /** AkhirTransfer SKPD */
 
           /** Reklas Kurang Aset Tetap */
-           if ( $kodeKa==1 ) {
+           /*if ( $kodeKa==1 ) {
               $data['reklas_krg_aset_tetap']=$NilaiPerolehan;
               $data['reklas_krg_ekstra']=0;
            }else{
               $data['reklas_krg_aset_tetap']=0;
               $data['reklas_krg_ekstra']=$NilaiPerolehan;
-           }
+           }*/
+          $data['reklas_krg_aset_tetap']=$NilaiPerolehan;
+          $data['reklas_krg_ekstra']=0;
           $data['reklas_krg_aset_lain']=0;
           $data['reklas_krg_jml']=1;
           $data['reklas_krg_nilai']=$NilaiPerolehan;
@@ -3011,9 +3016,10 @@ function get_akumulasi_sblm( $Aset_ID, $TahunPenyusutan, $kelompok ) {
   return $AkumulasiPenyusutan;
 }
 
-function get_log_before( $log, $log_id ) {
+function get_log_before( $log, $log_id,$aset_id ) {
 
-  $query="select NilaiBuku,AkumulasiPenyusutan,kondisi from $log where log_id<$log_id and TglPerubahan!=''";
+  $query="select NilaiBuku,AkumulasiPenyusutan,kondisi from $log where log_id<$log_id 
+          and aset_id='$aset_id' and TglPerubahan!=''";
   //echo $query;
   $result=mysql_query( $query ) or die( mysql_error() );
   $NilaiBuku=0;
@@ -3026,9 +3032,10 @@ function get_log_before( $log, $log_id ) {
   return array($NilaiBuku,$AkumulasiPenyusutan,$kondisi);
 }
 
-function get_log_before_tahun_sblmya( $log, $log_id,$tglPerubahan ) {
+function get_log_before_tahun_sblmya( $log, $log_id,$tglPerubahan,$Aset_ID ) {
 
-  $query="select NilaiBuku,AkumulasiPenyusutan,kondisi from $log where log_id<$log_id and TglPerubahan<'$tglPerubahan'";
+  $query="select NilaiBuku,AkumulasiPenyusutan,kondisi from $log where log_id<$log_id 
+         and Aset_ID='$Aset_ID' and TglPerubahan<'$tglPerubahan'";
   //echo $query;
   $result=mysql_query( $query ) or die( mysql_error() );
   $NilaiBuku=0;
