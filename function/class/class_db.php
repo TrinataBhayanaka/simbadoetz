@@ -647,14 +647,20 @@ class DB
 	        	$res = $this->query($sql);
 	        	if(!$res){
 	        		if($action == 26){
+	        			
 	        			$this->rollback();
 	        			echo "<script>
 	                    alert('Input Log Gagal. Silahkan coba lagi');
 	                    document.location='dftr_validasi_pmd.php?pid=1';
 	                    </script>";
 	                	exit();
-	        		}else{
-
+	        		}elseif($action == 27){
+	        			$this->rollback();
+	        			echo "<script>
+	                    alert('Input Log Gagal. Silahkan coba lagi');
+	                    document.location='dftr_validasi_pms.php?pid=1';
+	                    </script>";
+	                	exit();
 
 	        		}
 	        		

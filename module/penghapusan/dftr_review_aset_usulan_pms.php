@@ -1,6 +1,6 @@
 <?php
 include "../../config/config.php";
-
+exit();
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
