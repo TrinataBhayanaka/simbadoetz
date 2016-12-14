@@ -8,7 +8,7 @@ include "../../../config/database.php";
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
 
-$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
+$query = "SELECT aset_list FROM apl_userasetlist WHERE aset_action = 'XLSIMP' ORDER BY id DESC LIMIT 1" or die("Error in the consult.." . mysqli_error($link));
 $result = $link->query($query); 
 while($row = mysqli_fetch_assoc($result)) {
   $asetlist = $row;
@@ -50,6 +50,18 @@ foreach ($cleardata as $key => $val) {
 	$data['kodeSatker'] = $datatmp['kodeSatker'];
 	$data['kodeRuangan'] = $datatmp['kodeRuangan'];
 	$data['kodeKelompok'] = $datatmp['kodeKelompok'];
+    
+    //revisi
+    $tblAset['kodeKelompokReklasTujuan'] = $datatmp['kodeKelompok'];
+    $queryJnsBlnj = "SELECT jenis_belanja FROM kontrak WHERE id = '{$argv[2]}'" or die("Error in the consult.." . mysqli_error($link));
+        
+        $resultJnsBlnj = $link->query($queryJnsBlnj);
+        while($rowJnsBlnj = mysqli_fetch_assoc($resultJnsBlnj)) {
+          $jenis_belanja = $rowJnsBlnj['jenis_belanja'];
+    }
+
+    $data['jenis_belanja'] = $jenis_belanja;
+
 	$data['Judul'] = addslashes($datatmp['Judul']);
 	$data['Pengarang'] = addslashes($datatmp['Pengarang']);
 	$data['Penerbit'] = addslashes($datatmp['Penerbit']);
@@ -103,6 +115,11 @@ function store_aset($data,$link,$totaldata)
         $kodeSatker = explode(".",$data['kodeSatker']);
         $tblAset['kodeRuangan'] = $data['kodeRuangan'];
         $tblAset['kodeKelompok'] = $data['kodeKelompok'];
+
+        //revisi
+        $tblAset['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+        $tblAset['jenis_belanja'] = $data['jenis_belanja'];
+        
         $tblAset['kodeSatker'] = $data['kodeSatker'];
         $tahun = explode("-", $data['TglPerolehan']);
         $tblAset['Tahun'] = $tahun[0];
@@ -275,6 +292,11 @@ function store_aset($data,$link,$totaldata)
 
             $tblKib['kodeRuangan'] = $data['kodeRuangan'];
             $tblKib['kodeKelompok'] = $data['kodeKelompok'];
+            
+            //revisi
+            $tblKib['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+            $tblKib['jenis_belanja'] = $data['jenis_belanja'];
+
             $tblKib['kodeSatker'] = $data['kodeSatker'];
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
             $tblKib['TglPerolehan'] = $data['TglPerolehan'];
@@ -344,6 +366,11 @@ function store_aset($data,$link,$totaldata)
             } elseif ($data['TipeAset']=="E") {
                 $kib['Aset_ID'] = $tblKib['Aset_ID'];
                 $kib['kodeKelompok'] = $data['kodeKelompok'];
+                
+                //revisi
+                $kib['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+                $kib['jenis_belanja'] = $data['jenis_belanja'];
+
                 $kib['kodeSatker'] = $data['kodeSatker'];
                 $kib['kodeLokasi'] = $tblAset['kodeLokasi'];
                 $kib['noRegister'] = $tblAset['noRegister'];

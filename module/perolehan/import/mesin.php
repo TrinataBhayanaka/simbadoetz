@@ -191,7 +191,7 @@ $menu_id = 10;
 							
 					</div>
 			<div style="height:5px;width:100%;clear:both"></div>
-				<form action="hasil_kibb.php" method=POST name="checks" ID="Form2">
+				<form action="hasil_kibb.php" name="checks" ID="Form2">
 					<p><a href="hasil_kibb.php?id=<?=$_GET['id']?>"><button type="button" class="btn btn-success btn-small" id="btn-dis" disabled><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Import</button></a>
 							&nbsp;</p>
 
