@@ -24,7 +24,7 @@ $count = count($StatusBelanja);
   if($count == 1){
     $ceck = "SELECT count(Aset_ID) as jml FROM aset WHERE 
         noKontrak  = '{$noKontrak[noKontrak]}'  
-        AND (kodeKelompokReklas is null or kodeKelompokReklas ='')";
+        AND (kodeKelompokReklasAsal is null or kodeKelompokReklasAsal ='')";
         $execceck= mysql_query($ceck);
         while ($dataceck = mysql_fetch_assoc($execceck)){
           
@@ -202,7 +202,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
                 foreach ($kib2 as $keys => $val2) {
                   $tmpField2[] = $keys;
-                  $tmpValue2[] = "'".$val2."'";
+                  $tmpValue2[] = "'".addslashes($val2)."'";
                 }
                
                 $fileldImp2 = implode(',', $tmpField2);
@@ -299,7 +299,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                   $tmpValue3 = array();
                   foreach ($tblLogKib as $key3 => $val3) {
                     $tmpField3[] = $key3;
-                    $tmpValue3[] = "'".$val3."'";
+                    $tmpValue3[] = "'".addslashes($val3)."'";
                   }
                  
                   $fileldImp3 = implode(',', $tmpField3);

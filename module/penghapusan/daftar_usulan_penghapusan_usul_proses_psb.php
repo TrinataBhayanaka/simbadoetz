@@ -1,6 +1,7 @@
 <?php
 include "../../config/config.php";
-
+//pr($_POST);
+//exit();
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
