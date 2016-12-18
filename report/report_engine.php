@@ -10431,6 +10431,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 					
 					$ex = explode('.',$row->Kode);
 					$ceckKode = $ex[0].".".$ex[1];
+					$judulBuku = '';
+					$judulHewan = '';
 					if($ceckKode == '05.17'){
 						$judulBuku =  $row->Judul;
 						$judulHewan = '';
@@ -13965,6 +13967,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													
 													$ex = explode('.',$row->Kode);
 													$ceckKode = $ex[0].".".$ex[1];
+													$judulBuku = '';
+													$judulHewan = '';
 													if($ceckKode == '05.17'){
 														$judulBuku =  $row->Judul;
 														$judulHewan = '';
@@ -18445,6 +18449,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													
 													$ex = explode('.',$row->Kode);
 													$ceckKode = $ex[0].".".$ex[1];
+													$judulBuku = '';
+													$judulHewan = '';
 													if($ceckKode == '05.17'){
 														$judulBuku =  $row->Judul;
 														$judulHewan = '';
@@ -22875,6 +22881,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													$hit = count($ex);
 													$ex = explode('.',$row->Kode);
 													$ceckKode = $ex[0].".".$ex[1];
+													$judulBuku = '';
+													$judulHewan = '';
 													if($ceckKode == '05.17'){
 														$judulBuku =  $row->Judul;
 														$judulHewan = '';
