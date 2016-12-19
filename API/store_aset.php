@@ -1515,6 +1515,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     public function store_aset($data)
     {
+        pr($data);
+        exit;
         global $url_rewrite;
         $this->begin();
         unset($data['Aset_ID']);
@@ -1526,6 +1528,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         //$tblAset['kodeKelompokReklas'] = $data['kodeKelompokTujuan'];
         $tblAset['kodeKelompokReklasAsal'] = $data['kodeKelompokTujuan'];
         $tblAset['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+        $tblAset['jenis_belanja'] = $data['jenis_belanja'];
         
         $tblAset['kodeSatker'] = $data['kodeSatker'];
         $tahun = explode("-", $data['TglPerolehan']);
@@ -1603,8 +1606,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
             $value = implode(',', $tmpvalue);
             $query = "INSERT INTO aset ({$field}) VALUES ({$value})";
-            // pr($query);exit;
-            // $result= $this->query($query) or die($this->error());
+            
             $execquery = mysql_query($query);
             // logFile($query);
             if(!$execquery){
@@ -1688,13 +1690,17 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_aset";
                 $idkey = "Aset_ID";
             }
-
+        
+        //handler untuk kode 07 dan 08
+        if($tabel!="aset"){
+    
             $tblKib['kodeRuangan'] = $data['kodeRuangan'];
             $tblKib['kodeKelompok'] = $data['kodeKelompok'];
             //@revisi
             //$tblKib['kodeKelompokReklas'] = $tblAset['kodeKelompokReklas'];
             $tblKib['kodeKelompokReklasAsal'] = $data['kodeKelompokTujuan'];
             $tblKib['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+            $tblKib['jenis_belanja'] = $data['jenis_belanja'];
 
             $tblKib['kodeSatker'] = $data['kodeSatker'];
             $tblKib['kodeLokasi'] = $tblAset['kodeLokasi'];
@@ -1734,8 +1740,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $value = implode(',', $tmpvalue2);
             $query = "INSERT INTO {$tabel} ({$field}) VALUES ({$value})";
             
-            // $result= $this->query($query) or die($this->error());
-            if($tabel!="aset"){
                 $execquery = mysql_query($query);
                 // logFile($query);
                 if(!$execquery){
@@ -1743,33 +1747,39 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                   echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                   exit;
                 }
-            }
-            //@revisi
-            if($data['kodeKelompokTujuan']){
-               
-                $explode = explode('.', $data['kodeKelompokTujuan']);
+        }
 
-                if($explode[0] =="01"){
-                    $tabel = "tanah";
-                } elseif ($explode[0]=="02") {
-                    $tabel = "mesin";
-                } elseif ($explode[0]=="03") {
-                    $tabel = "bangunan";
-                } elseif ($explode[0]=="04") {
-                    $tabel = "jaringan";
-                } elseif ($explode[0]=="05") {
-                    $tabel = "asetlain";
-                } elseif ($explode[0]=="06") {
-                    $tabel = "kdp";
-                } /*elseif ($data['TipeAset']=="G") {
-                    $tabel = "aset";
-                    $logtabel = "log_aset";
-                    $idkey = "Aset_ID";
-                } elseif ($data['TipeAset']=="H") {
-                    $tabel = "aset";
-                    $logtabel = "log_aset";
-                    $idkey = "Aset_ID";
-                }*/
+        //@revisi untuk reklas
+        //jika jenis belanja tidak sama
+        if($data['kodeKelompokTujuan']){
+               
+            $explode = explode('.', $data['kodeKelompokTujuan']);
+
+            if($explode[0] =="01"){
+                $tabel = "tanah";
+            } elseif ($explode[0]=="02") {
+                $tabel = "mesin";
+            } elseif ($explode[0]=="03") {
+                $tabel = "bangunan";
+            } elseif ($explode[0]=="04") {
+                $tabel = "jaringan";
+            } elseif ($explode[0]=="05") {
+                $tabel = "asetlain";
+            } elseif ($explode[0]=="06") {
+                $tabel = "kdp";
+            } elseif ($data['TipeAset']=="G") {
+                $tabel = "aset";
+                $logtabel = "log_aset";
+                $idkey = "Aset_ID";
+            } elseif ($data['TipeAset']=="H") {
+                $tabel = "aset";
+                $logtabel = "log_aset";
+                $idkey = "Aset_ID";
+            }
+
+            //handler untuk kode 07 dan 08
+            if($tabel != 'aset'){
+                
                 $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompokTujuan']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
 
                 while ($row = mysql_fetch_assoc($query)){
@@ -1787,6 +1797,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 //$tblKib2['kodeKelompokReklas'] = $data['kodeKelompok'];
                 $tblKib2['kodeKelompokReklasAsal'] = NULL;
                 $tblKib2['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+                $tblKib2['jenis_belanja'] = $data['jenis_belanja'];
 
                 $tblKib2['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
                 $tblKib2['NilaiBuku'] = $tblAset['NilaiPerolehan'];
@@ -1810,15 +1821,18 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 }
                 $fields = implode(',', $tmpfield3);
                 $values = implode(',', $tmpvalue3);
-                $query = "INSERT INTO {$tabel} ({$fields}) 
-                        VALUES ({$values})";
-                $execquery = mysql_query($query);
-                if(!$execquery){
-                  $this->rollback();
-                  echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
-                  exit;
-                }
+                
+                    $query = "INSERT INTO {$tabel} ({$fields}) VALUES ({$values})";
+                    $execquery = mysql_query($query);
+                    if(!$execquery){
+                      $this->rollback();
+                      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                      exit;
+                    }
+
             }
+                
+        }
             
             
             if(isset($data['xls'])){

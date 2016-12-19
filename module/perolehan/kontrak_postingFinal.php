@@ -48,17 +48,16 @@ $count = count($StatusBelanja);
     $status_belanja = '1';
   }
 
+//update status_belanja dan n_status = 1
 $updateStatusBelanja = "UPDATE kontrak SET 
-                  status_belanja = '{$status_belanja}' 
+                  status_belanja = '{$status_belanja}', n_status = '1'
                   WHERE id = '{$noKontrak['id']}'";
 $execquery = mysql_query($updateStatusBelanja);
 logFile($updateStatusBelanja);
 
-$updateKontrak = "UPDATE kontrak SET n_status = '1' WHERE id = '{$noKontrak['id']}'";
+/*$updateKontrak = "UPDATE kontrak SET n_status = '1' WHERE id = '{$noKontrak['id']}'";
 $execquery = mysql_query($updateKontrak);
-logFile($updateKontrak);
-
-
+logFile($updateKontrak);*/
 
 if(!$execquery){
   $DBVAR->rollback();
@@ -97,7 +96,8 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
 
     $jenis_belanja=$noKontrak['jenis_belanja'];
     
-    $updateAset = "UPDATE aset SET jenis_belanja='{$jenis_belanja}',NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
+    //update aset
+    $updateAset = "UPDATE aset SET NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$NilaiPerolehan}', Satuan = '{$satuan}', StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
     
     $execquery = mysql_query($updateAset);
     logFile($updateAset);
@@ -125,16 +125,14 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           $tabel = "kdp";
           $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="G") {
-          // $DBVAR->commit();
-          // echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
-          // exit;
           $tabel = "aset";
           $tampil = "";
       } elseif ($data['TipeAset']=="H") {
           $tabel = "aset";
           $tampil = "";
       } 
-
+      
+      //update kib
       $sql = "UPDATE {$tabel} SET jenis_belanja='{$jenis_belanja}',NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$satuan}' {$tampil}, StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
     
       $execquery = mysql_query($sql);

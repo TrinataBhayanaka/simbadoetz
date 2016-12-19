@@ -95,6 +95,7 @@ $menu_id = 10;
 							</li>
 							<?php
 								if($kontrak[0]['tipeAset'] == '1' || $kontrak[0]['tipeAset'] == '2'){
+
 							?>
 							<li>
 								<span class="labelInfo">Kategori Belanja Aset</span>
@@ -109,10 +110,13 @@ $menu_id = 10;
 									$kategori_belanja = 'Jaringan';
 								}elseif($kontrak[0]['kategori_belanja'] == '05'){
 									$kategori_belanja = 'Aset lain';
+								}else{
+									$kategori_belanja = '';
 								}
 								?>
 								<input type="text" value="<?=$kategori_belanja?>" id="" disabled/>
 								<input type="hidden" value="<?=$kontrak[0]['kategori_belanja']?>" id="kategori_belanja" disabled/>
+
 							</li>
 							<?php
 							}
@@ -425,7 +429,10 @@ $menu_id = 10;
 					<input type="hidden" name="UserNm" value="<?=$_SESSION['ses_uoperatorid']?>">
 					<input type="hidden" name="TipeAset" id="TipeAset" value="">
 					<input type="hidden" name="TipeAsetKontrak" id="TipeAsetKontrak" value="<?=$kontrak[0]['tipeAset']?>">
-					<input type="hidden" name="getTipe" id="getTipe" value="<?=$_GET['tipeaset']?>">
+					<input type="hidden" name="getTipe" id="getTipe" value="<?=$_GET['tipeaset']
+					?>">
+					<input type="hidden" name="jenis_belanja" id="jenis_belanja" 
+									value="<?=$kontrak[0]['jenis_belanja']?>" />
 			
 		</form>
 		</div>  
@@ -502,13 +509,19 @@ $menu_id = 10;
         var kategori_belanja = $('#kategori_belanja').val(); 
         var tipeAset = $('#tipeAset').val(); 
         if(tipeAset == 1){
-        	if(kodeKelompok[0] != kategori_belanja){
-        		$('#flag').val("3");
-        		$('.reklasAset').show(400);
-      		}else{
-                    $('#flag').val("0");
+        	if(kategori_belanja){
+        		if(kodeKelompok[0] != kategori_belanja){
+        			$('#flag').val("3");
+        			$('.reklasAset').show(400);
+      			}else{
+                	$('#flag').val("0");
+        			$('.reklasAset').hide(400);
+      			}
+        	}else{
+        		$('#flag').val("0");
         		$('.reklasAset').hide(400);
-      		}
+        	}
+        	
         }else{
         	var kodeKelompokKapitalisasi = $('#kodeKelompokKapitalisasi').val(); 
         	var temp = kodeKelompokKapitalisasi.split("."); 
@@ -527,8 +540,7 @@ $menu_id = 10;
 		var kode = $('#kodeKelompok').val();
 		var gol = kode.split(".");
 
-		if(gol[0] == '01')
-		{
+		if(gol[0] == '01'){
 			$("#TipeAset").val('A');
 			$(".mesin,.bangunan,.jaringan,.asetlain,.kdp").hide('');
 			$(".mesin li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
@@ -536,16 +548,22 @@ $menu_id = 10;
 			$("#hakpakai").removeAttr('disabled');
 			$("#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".tanah").show('');
-		} else if(gol[0] == '02')
-		{
+
+			//temporary
+			$('#submit').removeAttr("disabled");
+		
+		}else if(gol[0] == '02'){
 			$("#TipeAset").val('B');
 			$(".tanah,.bangunan,.jaringan,.asetlain,.kdp").hide('');
 			$(".tanah li > input,.bangunan li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".mesin li > input,textarea").removeAttr('disabled');
 			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".mesin").show('');
-		} else if(gol[0] == '03')
-		{
+			
+			//temporary
+			$('#submit').removeAttr("disabled");
+
+		}else if(gol[0] == '03'){
 			$("#TipeAset").val('C');
 			$(".tanah,.mesin,.jaringan,.asetlain,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.jaringan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
@@ -553,14 +571,21 @@ $menu_id = 10;
 			$("#beton_bangunan").removeAttr('disabled');
 			$("#hakpakai,#beton_kdp").attr('disabled','disabled');
 			$(".bangunan").show('');
-		} else if(gol[0] == '04')
-		{
+
+			//temporary
+			$('#submit').removeAttr("disabled");
+
+		}else if(gol[0] == '04'){
 			$("#TipeAset").val('D');
 			$(".tanah,.mesin,.bangunan,.asetlain,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.kdp li > input").attr('disabled','disabled');
 			$(".jaringan li > input,textarea").removeAttr('disabled');
 			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".jaringan").show('');
+			
+			//temporary
+			$('#submit').removeAttr("disabled");
+
 		} else if(gol[0] == '05'){
 			$("#TipeAset").val('E');
 			$(".tanah,.mesin,.bangunan,.jaringan,.kdp").hide('');
@@ -568,6 +593,10 @@ $menu_id = 10;
 			$(".asetlain li > input,textarea").removeAttr('disabled');
 			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
 			$(".asetlain").show('');
+			
+			//temporary
+			$('#submit').removeAttr("disabled");
+
 		} else if(gol[0] == '06'){
 			$("#TipeAset").val('F');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan").hide('');
@@ -576,11 +605,19 @@ $menu_id = 10;
 			$("#beton_kdp").removeAttr('disabled');
 			$("#hakpakai,#beton_bangunan").attr('disabled','disabled');
 			$(".kdp").show('');
+
+			//temporary
+			$('#submit').removeAttr("disabled");
+
 		} else {
 			$("#TipeAset").val('G');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
 			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
+			
+			//temporary
+			alert("Untuk Sementara Jenis Aset 07 dan 08 Tidak Di Izinkan");
+			$('#submit').attr("disabled","disabled");
 		}			
 		
 	});
