@@ -1515,8 +1515,8 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     public function store_aset($data)
     {
-        pr($data);
-        exit;
+        //pr($data);
+        //exit;
         global $url_rewrite;
         $this->begin();
         unset($data['Aset_ID']);
