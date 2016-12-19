@@ -1682,13 +1682,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $logtabel = "log_kdp";
                 $idkey = "KDP_ID";
             } elseif ($data['TipeAset']=="G") {
-                $tabel = "aset";
-                $logtabel = "log_aset";
-                $idkey = "Aset_ID";
+                $tabel = "aset_07";
+                $logtabel = "log_aset_07";
+                //$idkey = "Aset_ID";
             } elseif ($data['TipeAset']=="H") {
-                $tabel = "aset";
-                $logtabel = "log_aset";
-                $idkey = "Aset_ID";
+                $tabel = "aset_08";
+                $logtabel = "log_aset_08";
+                //$idkey = "Aset_ID";
             }
         
         //handler untuk kode 07 dan 08
@@ -1722,13 +1722,14 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $tblKib['GUID'] = $data['GUID'];
 
             }
-            if(substr($tblKib['kodeKelompok'], 0, 5) == "07.24")
+            
+            /*if(substr($tblKib['kodeKelompok'], 0, 5) == "07.24")
             {
                 $tblKib['StatusValidasi'] = 1;
                 $tblKib['Status_Validasi_Barang'] = 1;
                 $tblKib['kondisi'] = 3;
                 $tblKib['kodeKA'] = 1;
-            }
+            }*/
             
             unset($tmpfield2);
             unset($tmpvalue2);
@@ -1768,13 +1769,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             } elseif ($explode[0]=="06") {
                 $tabel = "kdp";
             } elseif ($data['TipeAset']=="G") {
-                $tabel = "aset";
-                $logtabel = "log_aset";
-                $idkey = "Aset_ID";
+                $tabel = "aset_07";
+                //$logtabel = "log_aset";
+                //$idkey = "Aset_ID";
             } elseif ($data['TipeAset']=="H") {
-                $tabel = "aset";
-                $logtabel = "log_aset";
-                $idkey = "Aset_ID";
+                $tabel = "aset_08";
+                //$logtabel = "log_aset";
+                //$idkey = "Aset_ID";
             }
 
             //handler untuk kode 07 dan 08

@@ -125,11 +125,11 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
           $tabel = "kdp";
           $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="G") {
-          $tabel = "aset";
-          $tampil = "";
+          $tabel = "aset_07";
+          $tampil = ", StatusTampil = '1'";
       } elseif ($data['TipeAset']=="H") {
-          $tabel = "aset";
-          $tampil = "";
+          $tabel = "aset_08";
+          $tampil = ", StatusTampil = '1'";
       } 
       
       //update kib
@@ -232,6 +232,12 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
                 } elseif ($explode[0]=="06") {
                     $tabel = "kdp";
                     $paramID = "KDP_ID";
+                } elseif ($explode[0]=="07") {
+                    $tabel = "aset_07";
+                    $paramID = "Aset_07_ID";
+                } elseif ($explode[0]=="08") {
+                    $tabel = "aset_08";
+                    $paramID = "Aset_08_ID";
                 }
 
                 $query = mysql_query("SELECT noRegister,{$paramID},Aset_ID FROM {$tabel} 

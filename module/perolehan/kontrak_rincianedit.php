@@ -550,7 +550,7 @@ $menu_id = 10;
 			$(".tanah").show('');
 
 			//temporary
-			$('#submit').removeAttr("disabled");
+			//$('#submit').removeAttr("disabled");
 		
 		}else if(gol[0] == '02'){
 			$("#TipeAset").val('B');
@@ -561,7 +561,7 @@ $menu_id = 10;
 			$(".mesin").show('');
 			
 			//temporary
-			$('#submit').removeAttr("disabled");
+			//$('#submit').removeAttr("disabled");
 
 		}else if(gol[0] == '03'){
 			$("#TipeAset").val('C');
@@ -573,7 +573,7 @@ $menu_id = 10;
 			$(".bangunan").show('');
 
 			//temporary
-			$('#submit').removeAttr("disabled");
+			//$('#submit').removeAttr("disabled");
 
 		}else if(gol[0] == '04'){
 			$("#TipeAset").val('D');
@@ -584,7 +584,7 @@ $menu_id = 10;
 			$(".jaringan").show('');
 			
 			//temporary
-			$('#submit').removeAttr("disabled");
+			//$('#submit').removeAttr("disabled");
 
 		} else if(gol[0] == '05'){
 			$("#TipeAset").val('E');
@@ -595,7 +595,7 @@ $menu_id = 10;
 			$(".asetlain").show('');
 			
 			//temporary
-			$('#submit').removeAttr("disabled");
+			//$('#submit').removeAttr("disabled");
 
 		} else if(gol[0] == '06'){
 			$("#TipeAset").val('F');
@@ -607,9 +607,22 @@ $menu_id = 10;
 			$(".kdp").show('');
 
 			//temporary
-			$('#submit').removeAttr("disabled");
+			//$('#submit').removeAttr("disabled");
 
-		} else {
+		} else if(gol[0] == '07'){
+			$("#TipeAset").val('G');
+			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
+			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
+			
+		} else if(gol[0] == '08'){
+			$("#TipeAset").val('H');
+			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
+			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
+			$("#hakpakai,#beton_bangunan,#beton_kdp").attr('disabled','disabled');
+			
+		}
+		/*else {
 			$("#TipeAset").val('G');
 			$(".tanah,.mesin,.bangunan,.asetlain,.jaringan,.kdp").hide('');
 			$(".tanah li > input,.mesin li > input,.bangunan li > input,.asetlain li > input,.jaringan li > input,.kdp li > input").attr('disabled','disabled');
@@ -618,7 +631,7 @@ $menu_id = 10;
 			//temporary
 			alert("Untuk Sementara Jenis Aset 07 dan 08 Tidak Di Izinkan");
 			$('#submit').attr("disabled","disabled");
-		}			
+		}*/			
 		
 	});
 
