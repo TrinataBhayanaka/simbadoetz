@@ -2494,6 +2494,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     public function store_trs_rinc($data,$get,$table)
     {
+        $this->begin();
         unset($data['example_length']);
         // pr($data);exit;
         foreach ($data['aset'] as $key => $value) {
@@ -2516,12 +2517,22 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $query = "INSERT INTO transferaset ({$field}) VALUES ({$value})";
             // pr($query);
             $result=  $this->query($query) or die($this->error());
+            if(!$result){
+              $this->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+              exit;
+            }
 
             $sqlupd = "UPDATE {$dataArr['tipeaset']} SET Status_Validasi_Barang = '0' WHERE kodeKelompok = '{$dataArr['kodeKelompok']}' AND kodeLokasi = '{$dataArr['kodeLokasi']}' AND noRegister BETWEEN {$dataArr['noReg_awal']} AND {$dataArr['noReg_akhir']} AND NilaiPerolehan = '{$dataArr['NilaiPerolehan']}'";
             // pr($sqlupd);
             $result=  $this->query($sqlupd) or die($this->error());
+            if(!$result){
+              $this->rollback();
+              echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+              exit;
+            }
         }
-
+        $this->commit();
         return true;
         exit;
 
@@ -2529,6 +2540,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     public function store_trs_validasi($data)
     {
+        $this->begin();
         unset($data['example_length']);
         // pr($data);
 
@@ -2555,17 +2567,32 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $sqlupd = "UPDATE {$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}'";
                 // pr($sqlupd);exit;
                 $result=  $this->query($sqlupd) or die($this->error());
+                if(!$result){
+                  $this->rollback();
+                  echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                  exit;
+                }
 
                 $sqlupd = "UPDATE log_{$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}' and Kd_Riwayat=0";
                 // pr($sqlupd);exit;
                 $result=  $this->query($sqlupd) or die($this->error());
+                if(!$result){
+                  $this->rollback();
+                  echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                  exit;
+                }
 
                 $sqlupd = "UPDATE aset SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}'";
                 // pr($sqlupd);exit;
                 $result=  $this->query($sqlupd) or die($this->error());
+                if(!$result){
+                  $this->rollback();
+                  echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                  exit;
+                }
             }
         }
-
+        $this->commit();
         return true;
         exit;
     }  
