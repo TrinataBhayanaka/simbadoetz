@@ -9773,7 +9773,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 'join' => 'b.Aset_ID=a.Aset_ID , a.kodeKelompok=k.Kode' 
                 );
 
-                $resUsulAst = $this->db->lazyQuery($sqlUsulAst,1);
+                $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
                 if ($res1) return $resUsulAst;
                 return false;  
         }else{
