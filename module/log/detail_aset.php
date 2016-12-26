@@ -84,11 +84,12 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 				<thead>
 					<tr>
-						<th>Aset ID</th>
+						<th>Log ID</th>
 						<th>Informasi Tambahan</th>
 						<th>Keterangan Log</th>
 						<th>Nilai Perolehan Awal</th>
 						<th>Nilai Perolehan</th>
+						<th>Selisih Nilai</th>
 						<th>Kondisi</th>
 						<th>Kode KA</th>
 						<th>Tanggal Perolehan</th>
@@ -107,11 +108,20 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						
 				?>
 					<tr class="gradeA">
-						<td><?=$value['Aset_ID']?></td>
-						<td><?=$value['data_awal'][0]['kodeSatker']. " - " .$value['data_awal'][0]['Uraian']?></td>
+						<td><?=$value['log_id']?></td>
+						<td><?=$value['data_awal'][0]['kodeSatker']. " - " .$value['data_awal'][0]['Uraian']?><br/>
+								<?=$value['kodeSatker']?>
+							</td>
 						<td><?="[Kode ". $value['Kd_Riwayat'] .'] - '. $value['Nm_Riwayat']?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan_Awal'])?></td>
 						<td class="center"><?=number_format($value['NilaiPerolehan'])?></td>
+						<?php
+							$Selisih=0;
+							if($value['NilaiPerolehan_Awal']!=""||$value['NilaiPerolehan_Awal']!=0){
+								$selisih=$value['NilaiPerolehan']-$value['NilaiPerolehan_Awal'];
+							}
+						?>
+						<td class="center"><?=number_format($Selisih)?></td>
 						<td><?=$value['kondisi']?></td>
 						<td><?=$value['kodeKA']?></td>
 						<td><?=$value['TglPerolehan']?></td>
