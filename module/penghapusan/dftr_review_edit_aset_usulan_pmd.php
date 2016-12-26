@@ -1,6 +1,5 @@
 <?php
 include "../../config/config.php";
-
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 $menu_id = 10;
             $SessionUser = $SESSION->get_session_user();
@@ -73,6 +72,8 @@ $menu_id = 10;
 		}
 		</script>
 		<script>
+		 //"scrollY": 200,
+        //"scrollX": true
     $(document).ready(function() {
           $('#rvw_aset_usulan_pmd_table').dataTable(
                    {
