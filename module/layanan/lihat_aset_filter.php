@@ -17,7 +17,7 @@ include "../../config/config.php";
 ?>
 	<!-- SQL Sementara -->
 	<?php
-
+/*
 		if(isset($_POST['noKontrak'])){
 
 			if($_POST['s_posting'] == "on") $_POST['s_posting'] = 1; else $_POST['s_posting'] = 2; 
@@ -38,7 +38,7 @@ include "../../config/config.php";
 		$sql = mysql_query("SELECT * FROM kontrak");
 		while ($dataKontrak = mysql_fetch_array($sql)){
 				$kontrak[] = $dataKontrak;
-			}
+			}*/
 	?>
 	
      <script type="text/javascript">
@@ -123,20 +123,91 @@ include "../../config/config.php";
 		</div>
 		
 		
-		<section class="formLegend">
+			<section class="formLegend">
+			
+			<form method="POST" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" >
+				<ul>
+					<li>&nbsp;</li>
+					<li><i>*) <u>cukup isi field <strong class="blink_text_red" >Tipe Aset</strong> & <strong class="blink_text_red">Kode Satker</strong> untuk menampilkan seluruh data </u></i></li>
+					<li>&nbsp;</li>
+					<li>
+						<span class="span2">Nomor Kontrak</span>
+						<input type='text' style="width: 200px;" name="bup_nokontrak" placeholder=""/>
+					</li>
+					<li>
+						<span class="span2">Tahun Perolehan</span>
+						<input type='text' id="#lda_tp" maxlength="4" name="bup_tahun" placeholder="" />
+					</li>
+                    <li>&nbsp;</li>
+
+					<?php selectAset('kodeKelompok','235',true,false); ?>
+
+                    <li>&nbsp;</li>
+					<li>
+						<span class="span2">Tipe Aset</span>
+						<select name="jenisaset[]" style="width:170px" id="jenisaset">
+
+							<option value="">Pilih Tipe Aset</option>
+							<option value="1">Tanah</option>
+							<option value="2">Mesin</option>
+							<option value="3">Bangunan</option>
+							<option value="4">Jaringan</option>
+							<option value="5">Aset Tetap Lain</option>
+							<option value="6">KDP</option>
+						</select><!-- 
+                        <span class="span2">Jenis Aset</span>
+                        <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
+                        <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
+                        <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
+                        <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
+                        <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
+                        <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
+                        --> <?php
+                        	if($id!=""){?>
+                        	<input type="hidden" name="usulanID" value="<?=$id?>">
+                     
+                       <?php 	}
+                        ?>
+                    </li>  
+
+					<li><span class="span2">Status Aset</span>
+		                                <select name="statusaset">
+		                                    <option value="1">Terdistribusi</option>
+		                                    <option value="0">Belum Terdistribusi</option>
+		                                    <option value="22">Digunakan</option>
+		                                    <option value="23">Dimanfaatkan</option>
+		                                    
+		                                </select>
+		            </li>
+							
+
+                    <li>&nbsp;</li>
+					<?=selectSatker('kodeSatker',$width='205',$br=true,(isset($kontrak)) ? $kontrak[0]['kodeSatker'] : false);?>
+                    <li>&nbsp;</li>
+					<li>
+						<span class="span2">&nbsp;</span>
+						<input type="submit" name="submit" class="btn btn-primary" value="Tampilkan Data" />
+						<input type="hidden" name="filterAsetUsulan" value="1" />
+						<input type="reset" name="reset" class="btn" value="Bersihkan Data">
+					</li>
+				</ul>
+			</form>
+			    
+		</section> 
+
+		<!-- <section class="formLegend">
 			
 			 <form name="lda_filter" action="<?php echo "$url_rewrite/module/layanan/"; ?>lihat_aset_daftar.php?pid=1" method="post" onsubmit="return requiredFilter(1,1, 'kodeSatker')">
 			<ul>
 							
-				<!--
-							<li>
+				<li>
 								<span class="span2">ID ASET (System ID)</span>
 								<input id="lda_ia" name="kd_idaset" class="span3" type="text" >
 							</li>
 							<li>
 								<span class="span2">Nama Aset</span>
 								<input isdatepicker="true"  name="kd_namaaset" class="span5"  type="text">
-							</li>-->
+							</li>
 							<li>
 								<span class="span2">Nomor Kontrak</span>
 								<input isdatepicker="true" id="lda_nk" class="span3" name="kd_nokontrak"  type="text">
@@ -145,7 +216,7 @@ include "../../config/config.php";
 								<span class="span2">Tahun Perolehan</span>
 								<input name="kd_tahun" id="lda_tp" class="span2"  type="text" required placeholder="Tahun (ex:2015)" maxlength="4">
 							</li>
-							<!--<li>
+							<li>
 								<span>Kelompok</span><br/>
 								<div class="input-append">
 									<input type="text" name="pem_kelompok" id="pem_kelompok" style="width:480px;" readonly="readonly" value="">
@@ -178,7 +249,7 @@ include "../../config/config.php";
 										<td>
 											<input type="text" id="p_kecamatan" name="p_kecamatan" value="" size="45" readonly="readonly" >
 										</td>
-
+		
 									</tr>
 									<tr>
 										<td>Kabupaten</td>
@@ -213,50 +284,49 @@ include "../../config/config.php";
 										?>
 									</div>
 								</div>	
-							</li>-->
+							</li>
 							
-
+		
 							<?php selectSatker('kodeSatker','255',true,false); ?>
-
-
-							<!--<li>&nbsp;</li>-->
+		
+		
+							<li>&nbsp;</li>
 							<?php //selectAset('kodeKelompok','255',true,false); ?>
 							<li>&nbsp;</li>
-
+		
 							<li><span class="span2">Status Aset</span>
-                                <select name="statusaset">
-                                    <option value="1">Terdistribusi</option>
-                                    <option value="0">Belum Terdistribusi</option>
-                                    <!--<option value="22">Digunakan</option>
-                                    <option value="23">Dimanfaatkan</option>-->
-                                    
-                                </select></li>
+		                                <select name="statusaset">
+		                                    <option value="1">Terdistribusi</option>
+		                                    <option value="0">Belum Terdistribusi</option>
+		                                    <option value="22">Digunakan</option>
+		                                    <option value="23">Dimanfaatkan</option>
+		                                    
+		                                </select></li>
 							<?php //selectAset('kodeKelompok','255',true,false); ?>
 							<li>
-                                <span class="span2">Jenis Aset</span>
-                                <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
-                                <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
-                                <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
-                                <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
-                                <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
-                                <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
-                                <!--
-                                <select name="jenisaset">
-                                    <option value="1">Tanah</option>
-                                    <option value="2">Mesin</option>
-                                    <option value="3">Bangunan</option>
-                                    <option value="4">Jaringan</option>
-                                    <option value="5">Aset Lain</option>
-                                    <option value="6">KDP</option>
-                                </select>-->
-                            </li>
+		                                <span class="span2">Jenis Aset</span>
+		                                <input type="checkbox" name="jenisaset[]" value="1" class="jenisaset1">Tanah
+		                                <input type="checkbox" name="jenisaset[]" value="2" class="jenisaset2">Mesin
+		                                <input type="checkbox" name="jenisaset[]" value="3" class="jenisaset3">Bangunan
+		                                <input type="checkbox" name="jenisaset[]" value="4" class="jenisaset4">Jaringan
+		                                <input type="checkbox" name="jenisaset[]" value="5" class="jenisaset5">Aset Lain
+		                                <input type="checkbox" name="jenisaset[]" value="6" class="jenisaset6">KDP
+		                                <select name="jenisaset">
+		                                    <option value="1">Tanah</option>
+		                                    <option value="2">Mesin</option>
+		                                    <option value="3">Bangunan</option>
+		                                    <option value="4">Jaringan</option>
+		                                    <option value="5">Aset Lain</option>
+		                                    <option value="6">KDP</option>
+		                                </select>
+		                            </li>
 							<li>
 								<span class="span2"><input type='submit' value='Lanjut'  name="submit" class="btn btn-primary"></span>
 							</li>
 						</ul>
 						</form>
 			
-		</section>     
+		</section>      -->
 	</section>
 	
 <?php
