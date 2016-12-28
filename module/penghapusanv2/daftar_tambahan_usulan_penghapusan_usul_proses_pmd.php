@@ -43,8 +43,16 @@ echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/pengha
 	$log = "usulan_aset_pmd_".$id;
 
 	$apl_userasetlistHPS = $PENGHAPUSAN->apl_userasetlistHPS("RVWUSPMD");
-	$data = $apl_userasetlistHPS['0']['aset_list'];
-
+	$addExplode = explode(",",$apl_userasetlistHPS[0]['aset_list']);
+	$cleanArray = array_filter($addExplode);
+	$implodeAset_ID = implode(",",$cleanArray);
+	$arr = array("0"=>$implodeAset_ID);
+	/*pr($apl_userasetlistHPS);
+	pr($cleanArray);
+	pr($implodeAset_ID);*/
+	$data = $arr['0'];
+	//pr($data);
+	//exit;
 	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
 	//exit;
 

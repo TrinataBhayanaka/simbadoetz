@@ -55,7 +55,7 @@ include"$path/menu.php";
 
 		<section class="formLegend">
 			
-		<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusanv2/dftr_aset_usulan_pmd.php">
+	<form method="POST" action="<?php echo"$url_rewrite"?>/module/penghapusanv2/dftr_aset_usulan_pmd.php">
 			<ul>
 				<li>&nbsp;</li>
 				<li><i>*) <u>cukup isi field <strong class="blink_text_red" >Tipe Aset</strong> & <strong class="blink_text_red">Kode Satker</strong> untuk menampilkan seluruh data </u></i></li>
@@ -86,7 +86,7 @@ include"$path/menu.php";
 				<li>
 
 					<span class="span2">Tipe Aset</span>
-					<select name="jenisaset" style="width:170px" id="jenisaset">
+					<select name="jenisaset" style="width:170px" id="jenisaset" required="">
 
 						<option value="">Pilih Tipe Aset</option>
 						<option value="1">Tanah</option>

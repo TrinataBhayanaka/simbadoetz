@@ -61,10 +61,10 @@ include"$path/menu.php";
 			}
 			else
 			{
-			   $('#submit').attr('disabled','disabled');	
+			   $('#submit').attr('disabled','disabled');
 			   updDataCheckbox('RVWUSPMD');
 			    countCheckbox('RVWUSPMD');
-			}}, 500);
+			}}, 100);
 		}
 		jQuery(function($) {
       		AreAnyCheckboxesChecked();
@@ -123,14 +123,10 @@ include"$path/menu.php";
                     "aoColumnDefs": [
                          { "aTargets": [2] }
                     ],
-                    //"sScrollY": "350px",
-                    //"sScrollY": "70vh",
-                    //"sScrollX": "100%",
-    				//"bScrollCollapse": true,
-           		//"aLengthMenu": [[50, 100, 500,1000], [50, 100, 500,1000]],
                     "aoColumns":[
                          {"bSortable": false},
                          {"bSortable": false,"sClass": "checkbox-column" },
+                         {"bSortable": false},	
                          {"bSortable": true},	
                          {"bSortable": true},
                          {"bSortable": true},
@@ -191,6 +187,7 @@ include"$path/menu.php";
 					<tr>
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
 						<th>Satker</th>
@@ -202,11 +199,12 @@ include"$path/menu.php";
 				</thead>
 				<tbody>		
 					 <tr>
-                        <td colspan="9">Data Tidak di temukkan</td>
+                        <td colspan="10">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

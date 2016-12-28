@@ -9,12 +9,12 @@ echo "Id Usulan : ".$idUsulan."\n\n";
 
 $query = "DELETE FROM usulan where Usulan_ID = '{$idUsulan}' " or die("Error in the consult.." . mysqli_error($link));
     
-echo "query usulan : ".$query."\n\n";           
+//echo "query usulan : ".$query."\n\n";           
 $exec = $link->query($query);
 
 $query2 = "DELETE FROM usulanaset where Usulan_ID = '{$idUsulan}' " or die("Error in the consult.." . mysqli_error($link));
     
-echo "query usulanaset: ".$query2."\n\n";           
+//echo "query usulanaset: ".$query2."\n\n";           
 $exec2 = $link->query($query2);
 
 

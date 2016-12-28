@@ -2,8 +2,6 @@
 ob_start();
 include "../config/config.php";
 
-
-
 $id=$_SESSION['user_id'];//Nanti diganti
 
 /*
@@ -22,7 +20,7 @@ $id=$_SESSION['user_id'];//Nanti diganti
  * you want to insert a non-database field (for example a counter or static image)
  */
 
-$aColumns = array('a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kodeKelompok','a.AsalUsul');
+$aColumns = array('a.Aset_ID','a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kodeKelompok','a.AsalUsul','a.AsalUsul');
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -58,7 +56,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-        $sOrder = " ORDER BY a.kodeKelompok ASC";
+          $sOrder = "ORDER BY a.kodeKelompok";
      }
 }
 
@@ -100,19 +98,19 @@ for ($i = 0; $i < count($aColumns); $i++) {
  * SQL queries
  * Get data to display
  */
-
-$dataParam['condition']=$sWhere;
+$dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
-$dataParam['limit']=$sLimit;
+$dataParam['limit']="$sLimit";
 //pr($dataParam);
-
 $dataSESSION = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd_rev($dataParam); 
-//pr($dataSESSION);
-//exit
+//pr($data);
+//exit;
+//$rResult = $DBVAR->query($sQuery);
+
 // /* Data set length after filtering */
 $sQuery = "
-		SELECT FOUND_ROWS()
-	";
+    SELECT FOUND_ROWS()
+  ";
 $rResultFilterTotal = $DBVAR->query($sQuery);
 $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
@@ -121,14 +119,17 @@ $iFilteredTotal = $aResultFilterTotal[0];
 
 /* Total data set length */
 $sQuery = "
-		SELECT COUNT(a.Aset_ID)
-		FROM   $sTable INNER JOIN usulanaset as us on 
-    us.Aset_ID = a.Aset_ID WHERE us.Usulan_ID in ($dataParam[id])";
+    SELECT COUNT(a.Aset_ID)
+    FROM   $sTable INNER JOIN usulanaset as p 
+    ON p.Aset_ID = a.Aset_ID WHERE p.Usulan_ID IN ({$dataParam['id']})";
 
+//echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
 //pr($aResultTotal );
 $iTotal = $aResultTotal[0];
+
+
 /*
  * Output
  */
@@ -146,7 +147,6 @@ $data_post=$PENGHAPUSAN->apl_userasetlistHPS("PTUSPMD");
 
 $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 $POST['penghapusanfilter']=$POST;
-//pr($POST);
     if($POST && $dataSESSION){
       foreach ($dataSESSION as $keySESSION => $valueSESSION) {
         if(!in_array($valueSESSION['Aset_ID'], $POST)){
@@ -163,38 +163,27 @@ $POST['penghapusanfilter']=$POST;
     }
 $no=$_GET['iDisplayStart']+1;
   if (!empty($data))
-					{
+          {
 foreach ($data as $key => $value)
-						{
-							// //pr($get_data_filter);
+            {
+              //pr($value);
+              // //pr($get_data_filter);
               $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[kodeSatker]);
-
+              //pr($NamaSatker);
 
               $SelectKIB=$PENGHAPUSAN->SelectKIB($value[Aset_ID],$value[TipeAset]);
-              
+              //pr($SelectKIB);
               if($value[kondisi]==2){
-								$kondisi="Rusak Ringan";
-							}elseif($value[kondisi]==3){
-								$kondisi="Rusak Berat";
-							}elseif($value[kondisi]==1){
-								$kondisi="Baik";
-							}
-							// //pr($value[TglPerolehan]);
-							$TglPerolehanTmp=explode("-", $value[TglPerolehan]);
-							// //pr($TglPerolehanTmp);
-							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
-       
-                if($value['StatusKonfirmasi']==0){
-                  $label="warning";
-                  $text="Belum Diproses";
-                }elseif($value['StatusKonfirmasi']==1){
-                  $label="success";
-                  $text="Diterima";
-                }elseif($value['StatusKonfirmasi']==2){
-                  $label="danger";
-                  $text="Ditolak";
-                }
+                $kondisi="Rusak Ringan";
+              }elseif($value[kondisi]==3){
+                $kondisi="Rusak Berat";
+              }elseif($value[kondisi]==1){
+                $kondisi="Baik";
+              }
               
+              $TglPerolehanTmp=explode("-", $value[TglPerolehan]);
+              $TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
+  
               $StatusKonfirmasi="<span class=\"label label-{$label}\" >{$text}</span>";    
               if($value['StatusPenetapan']==0){              
                  $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusan_nama_aset[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
@@ -208,14 +197,13 @@ foreach ($data as $key => $value)
                  $row[]=$no;
                  $row[]=$checkbox;
                  $row[]="<center>".$value['noRegister']."</center>";
-                 $row[]="{$value[kodeKelompok]}<br/>{$value[Uraian]}";
-                 $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
-                 $row[]=$TglPerolehan;
-                 $row[]=number_format($value[NilaiPerolehan],4);
-                 $row[]="{$StatusKonfirmasi}";
+                 $row[]="{$value['kodeKelompok']}<br/>{$value['Uraian']}";
+                 $row[]="[".$value['kodeSatker'] ."]<br/>". $NamaSatker['0']['NamaSatker'];
+                 $row[]="<center>".$TglPerolehan."</center>";
+                 $row[]= number_format($value['NilaiPerolehan'],2,",",".");
+                 $row[]=$kondisi. ' - ' .$value['AsalUsul'];
                  $row[]="{$SelectKIB[0][Merk]}-{$SelectKIB[0][Model]}";
-                 $row[]=$value['jenis_hapus'];
-                 
+                 $row[]=$checkbox;
                  $output['aaData'][] = $row;
                   $no++;
                     }

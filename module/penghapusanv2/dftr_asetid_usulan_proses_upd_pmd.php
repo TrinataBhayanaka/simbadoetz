@@ -14,5 +14,5 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 $id=$_POST['usulanID'];
 $data = $PENGHAPUSAN->update_usulan_penghapusan_asetid_pmd($_POST);
 
-echo "<script>alert('Data Berhasil DiUpdate'); document.location='$url_rewrite/module/penghapusan/v2/dftr_review_edit_aset_usulan_pmd.php?id=$id';</script>";
+echo "<script>alert('Data Berhasil DiUpdate'); document.location='$url_rewrite/module/penghapusanv2/dftr_review_edit_aset_usulan_pmd.php?id=$id';</script>";
 ?>

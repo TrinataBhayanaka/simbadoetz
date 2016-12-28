@@ -26,18 +26,22 @@ $id=$_SESSION['user_id'];//Nanti diganti
 $aColumns = array('us.Usulan_ID','us.NoUsulan','us.SatkerUsul','us.TglUpdate','us.KetUsulan',);
 
 /* Indexed column (used for fast and accurate table cardinality) */
-$sIndexColumn = "Usulan_ID";
+$sIndexColumn = "us.Usulan_ID";
 
 /* DB table to use */
-$sTable = "usulan";
+//pr($_GET);
+$sTable = "usulan as us";
 $dataParam['bup_pp_sp_nousulan']=$_GET['bup_pp_sp_nousulan'];
 $dataParam['bup_pp_sp_tglusul']=$_GET['bup_pp_sp_tglusul'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 
-////pr($data);
-//exit;
+$filter = "";
+if ($dataParam['bup_pp_sp_nousulan']) $filter .= " AND us.NoUsulan = '{$dataParam[bup_pp_sp_nousulan]}' ";
+if ($dataParam['kodeSatker']) $filter .= " AND us.SatkerUsul LIKE '{$dataParam[kodeSatker]}%' ";
+if ($dataParam['bup_pp_sp_tglusul']) $filter .= " AND us.TglUpdate = '{$$dataParam[bup_pp_sp_tglusul]}' ";    
+
 $sLimit = "";
 if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
      $sLimit = " " . intval($_GET['iDisplayStart']) . ", " .
@@ -129,10 +133,9 @@ $iFilteredTotal = $aResultFilterTotal[0];
 
 /* Total data set length */
 $sQuery = "
-		SELECT COUNT(`" . $sIndexColumn . "`)
-		FROM   $sTable
-	";
-
+		SELECT COUNT(" . $sIndexColumn . "  ) FROM {$sTable}
+    WHERE  us.Jenis_Usulan = 'PMD' AND us.StatusPenetapan = 0
+    {$filter} ORDER BY us.Usulan_ID desc";
 //echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);

@@ -43,8 +43,8 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $TglUpdate = $data['TglUpdate'];
         $KetUsulan = addslashes($data['KetUsulan']);
         $jenis_hapus = $data['jenis_hapus'];
-        $UserNm = $_SESSION['ses_aoperatorid'];
-        
+        $UserNm = $_SESSION['ses_uoperatorid'];
+        //pr($_SESSION);
         //begin transaction
         $this->db->begin();
         $sql = array(
@@ -74,14 +74,13 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $TglHapus = $data['TglHapus'];
         $AlasanHapus = addslashes($data['AlasanHapus']);
         $jenis_hapus = $data['jenis_hapus'];
-        $UserNm = $_SESSION['ses_aoperatorid'];
-        
+        $UserNm = $_SESSION['ses_uoperatorid'];
         //begin transaction
         $this->db->begin();
         $sql = array(
                     'table'=>'penghapusan',
-                    'field'=>'SatkerUsul,NoSKHapus,TglHapus,AlasanHapus,Jenis_Hapus, UserNm,FixPenghapusan',
-                    'value' => "'$SatkerUsul','$NoSKHapus','$TglHapus','$AlasanHapus', 'PMD', '$UserNm','1'",
+                    'field'=>'SatkerUsul,NoSKHapus,TglHapus,AlasanHapus,Jenis_Hapus, UserNm,FixPenghapusan,Status',
+                    'value' => "'$SatkerUsul','$NoSKHapus','$TglHapus','$AlasanHapus', 'PMD', '$UserNm','1','0'",
                     );
             
         $res = $this->db->lazyQuery($sql,$debug,1);
@@ -98,6 +97,58 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $this->db->commit();  
     }
 
+    public function retrieve_list_validasi_pmd_rev($data,$debug=false){
+        //pr($data);
+        $tahun = $data['tahun'];
+        $cndtn = trim($data['condition']);
+        $limit= $data['limit'];
+        $order= $data['order'];
+        $filter = "";
+        $jenis_hapus = 'PMD';
+        if($cndtn != ''){
+            $filter = "AND $cndtn";
+        }else{
+            $filter = "";
+        }
+         
+        $sql = array(
+            'table'=>'penghapusan ',
+            'field'=>"SQL_CALC_FOUND_ROWS * ",
+            'condition' => "FixPenghapusan=1 AND Status=1 AND Jenis_Hapus='$jenis_hapus' AND YEAR(TglHapus) ='{$tahun}' {$filter} {$order}",
+            'limit'=>$limit
+            );
+        $res = $this->db->lazyQuery($sql,$debug);
+        if($res) return $res;
+        return false;
+    }
+
+    public function getStatusUsulan($asetid,$usulanID){
+
+        $sql = array(
+                'table'=>"usulanaset",
+                'field'=>"StatusKonfirmasi,jenis_hapus",
+                'condition' => "Usulan_ID in ({$usulanID}) 
+                                AND Aset_ID ='{$asetid}'"
+                 );
+          
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+
+    public function getStatusPenghapusan($Penghapusan_ID){
+        //pr($Penghapusan_ID);
+        $sql1 = array(
+                'table'=>'penghapusan',
+                'field'=>" Status",
+                'condition' => "Penghapusan_ID='$Penghapusan_ID'",
+                );
+
+        $res = $this->db->lazyQuery($sql1,$debug);
+        if ($res) return $res;
+        return false;
+        
+    }
     public function apl_userasetlistHPS($data){
         $ses_user=$_SESSION['ses_utoken'];
         $sql_apl = array(
@@ -343,7 +394,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     );
         // ////////////////////////////////////////pr($sqlKIb);
         $resKIb = $this->db->lazyQuery($sqlKIb,$debug);
-
+        //pr($resKIb);
         if ($resKIb) return $resKIb;
         return false;
     }
@@ -472,7 +523,11 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $kondisi= trim($data['condition']);
         $limit= $data['limit'];
         $order= $data['order'];
-
+        if($kondisi){
+            $paramKondisi = " AND $kondisi";
+        }else{
+            $paramKondisi = "";
+        }
         $filterkontrak = "";
         if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
         if ($kodePemilik) $filterkontrak .= " 
@@ -566,7 +621,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $sql2 = array(
                         'table'=>"{$listTable},Aset AS ast,kelompok AS k",
                         'field'=>"ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
-                        'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} GROUP BY ast.Aset_ID $order",
+                        'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} {$paramKondisi} GROUP BY ast.Aset_ID $order",
                         'joinmethod' => ' LEFT JOIN ',
                         'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                          );
@@ -4115,11 +4170,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
     public function  retrieve_penetapan_penghapusan_eksekusi_pmd_rev($data,$debug=false)
     {
+        //pr($data);
         $id = $data['id'];
         $condition = trim($data['condition']);
         $order = $data['order'];
         $limit = trim($data['limit']);
-        $listUsulan = explode(',', $id);
+        //$listUsulan = explode(',', $id);
         $jenis_hapus="PMD";
         
         if($condition){
@@ -4128,50 +4184,36 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $condt ="";
         }
         
-        if($listUsulan){
-            foreach ($listUsulan as $key => $value) {
-                $sqlUsl = array(
-                    'table'=>'usulanAset',
+        $sqlUsl = array(
+                    'table'=>'usulanaset',
                     'field'=>" Aset_ID ",
-                    'condition' => "Usulan_ID='$value' AND Jenis_Usulan='$jenis_hapus' ORDER BY Aset_ID asc"
+                    'condition' => "Usulan_ID IN ($id) AND Jenis_Usulan='$jenis_hapus' ORDER BY Aset_ID asc"
                     );
             
-                $resUsl = $this->db->lazyQuery($sqlUsl,$debug);
-                $listAset = array();
-                if($resUsl){
-                    foreach ($resUsl as $val) {
-                        $listAset[] = $val['Aset_ID'];
-                    }
-                    //$hit = count($listAset);
-                    //$TotAset = $TotAset + $hit; 
-
-                    $list = implode(',', $listAset); 
-                    $sqlUsulAst = array(   
-                        'table'=>'usulanaset AS b,Aset AS a,Kelompok AS k',
-                        'field'=>"a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.TipeAset,a.kondisi,a.AsalUsul,b.StatusKonfirmasi,b.StatusPenetapan,b.Usulan_ID,b.jenis_hapus, k.Kode,k.Uraian",
-                        'condition' => "{$condt} b.Usulan_ID='$value' AND b.Aset_ID IN ({$list}) 
-                         GROUP BY b.Aset_ID ",
+        $resUsl = $this->db->lazyQuery($sqlUsl,$debug);
+        $list = array();
+        if($resUsl){
+            foreach ($resUsl as $key => $value) {
+                # code...
+                $list[] = $value['Aset_ID']; 
+            }
+            if($list){
+                $listAset = implode(',', $list);
+                $sqlUsulAst = array(   
+                        'table'=>'aset AS a,kelompok AS k',
+                        'field'=>"SQL_CALC_FOUND_ROWS a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.TipeAset,a.kondisi,a.AsalUsul, k.Kode,k.Uraian",
+                        'condition' => "{$condt} a.Aset_ID IN ({$listAset}) 
+                          {$order}",
                         'limit' => $limit,
-                        'joinmethod' => ' LEFT JOIN ',
-                        'join' => 'b.Aset_ID=a.Aset_ID , a.kodeKelompok=k.Kode'
+                        'joinmethod' => ' INNER JOIN ',
+                        'join' => ' a.kodeKelompok=k.Kode'
                         );
-                    $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
-                       
-                }
-                $resData[]=$resUsulAst;
+                $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
             }
-            if($resData){
-                foreach ($resData as $value) {
-                    if ($value){
-                        foreach ($value as $val) {
-                            $newData[] = $val;
-                        } 
-                    }
-                }         
-            }
+
         }
-        //exit;
-        if ($resData) return $newData;
+        
+        if ($resUsulAst) return $resUsulAst;
         return false;
         
     }
@@ -4947,6 +4989,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 if ($UserName) $filterkontrak .= " AND UserNm = '{$UserName}' ";
             }
        if($kodeSatker){
+            
                 $sqlHPSaset = array(
                             'table'=>'penghapusanaset AS b,Aset AS a,usulanaset as ua,Lokasi AS f,Satker AS e,Kelompok AS g',
                             'field'=>"ua.*,a.kodeSatker,b.Penghapusan_ID, b.Aset_ID,b.Jenis_Hapus, e.NamaSatker, f.NamaLokasi, g.Kode",
@@ -5029,27 +5072,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     }
                 //////////////////////////////////////////////////////pr($res);
             }
-            // ////////////////////////////////////////////pr($sql);
-            // $sql = array(
-            //      'table'=>'Penghapusan',
-            //      'field'=>"*",
-            //      'condition' => "FixPenghapusan=1 AND Status=0 AND Jenis_Hapus='$jenis_hapus' {$filterkontrak}",
-            //      'limit'=>'100',
-            //      );
-
-   //          // //////////////////////////////////////////////////////pr($sql);
-            // $res = $this->db->lazyQuery($sql,$debug);
-            // //////////////////////////////////////////////////////pr($res);
-            // $asetid[$val['Aset_ID']] = $listTable[implode(',', $res[0])];
-        //     if ($res){
             
-        //     // foreach ($asetid as $key => $value) {
-
-        //     //     $this->db->logIt($tabel=array($value), $Aset_ID=$key, 7);
-        //     // }
-
-        //     return $res;
-        // } 
             if ($res) return $res;
             return false;
     // echo "masukk";
@@ -9788,6 +9811,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         $id=$_GET['id'];
         $limit= $data['limit'];
         $order= $data['order'];
+        $condition = trim($data['condition']);
+        if($condition){
+            $filter = "AND ".$condition;
+        }else{
+            $filter = "";
+        }
         $sql1 = array(
                 'table'=>'usulanaset',
                 'field'=>" * ",
@@ -9810,7 +9839,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
             $sqlUsulAst = array(   
                 'table'=>'usulanaset AS b,Aset AS a,Kelompok AS k',
                 'field'=>"SQL_CALC_FOUND_ROWS a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.TipeAset,a.kondisi,a.AsalUsul,b.StatusKonfirmasi,b.StatusPenetapan, k.Kode,k.Uraian",
-                'condition' => "b.Usulan_ID='$id' AND b.Aset_ID IN ({$listAset}) {$filterkontrak} $kondisi GROUP BY b.Aset_ID  $order ",
+                'condition' => "b.Usulan_ID='$id' AND b.Aset_ID IN ({$listAset}) {$filter} $kondisi GROUP BY b.Aset_ID  $order ",
                         'limit'=>"$limit",
                 'joinmethod' => ' INNER JOIN ',
                 'join' => 'b.Aset_ID=a.Aset_ID , a.kodeKelompok=k.Kode' 
@@ -9818,6 +9847,53 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
                 $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
                 if ($res1) return $resUsulAst;
+                return false;  
+        }else{
+            return false;
+        }
+    }
+
+    public function retrieve_daftar_penetapan_penghapusan_edit_data_pmd_rev($data,$debug=false){
+        $id=$data['id'];
+        $limit= $data['limit'];
+        $order= $data['order'];
+        $condition = trim($data['condition']);
+        if($condition){
+            $filter = "AND ".$condition;
+        }else{
+            $filter = "";
+        }
+        //pr($filter);
+        $sql1 = array(
+                'table'=>'penghapusanaset',
+                'field'=>" * ",
+                'condition' => "Penghapusan_ID='$id' ORDER BY Penghapusan_ID desc",
+                );
+
+        $res1 = $this->db->lazyQuery($sql1,$debug);
+        //pr($res1);
+        foreach ($res1 as $value) {
+            # code...
+            $Aset_ID[] = $value['Aset_ID'];
+        }
+        //pr($Aset_ID);
+        
+        $listAset = implode(',', $Aset_ID);
+        //pr($listAset);
+        
+        if($listAset){
+            $sqlUsulAst = array(   
+                'table'=>'Aset AS a,Kelompok AS k',
+                'field'=>"SQL_CALC_FOUND_ROWS a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.TipeAset,a.kondisi,a.AsalUsul, k.Kode,k.Uraian",
+                'condition' => " a.Aset_ID IN ({$listAset}) {$filter} {$order} ",
+                'joinmethod' => ' INNER JOIN ',
+                'join' => 'a.kodeKelompok=k.Kode', 
+                'limit'=>"$limit"
+                );
+
+                $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
+                //pr($resUsulAst);
+                if ($resUsulAst) return $resUsulAst;
                 return false;  
         }else{
             return false;

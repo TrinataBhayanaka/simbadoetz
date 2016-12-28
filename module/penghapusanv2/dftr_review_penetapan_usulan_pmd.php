@@ -18,65 +18,43 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 ?>
 	<!-- SQL Sementara -->
 	<?php
-	/*$data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPMD");
-	$POST['penetapanpenghapusan']=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
-	$data = $PENGHAPUSAN->retrieve_penetapan_penghapusan_eksekusi_pmd($POST);
-	if($data['dataArr']){
-		$CountData=count($data['dataArr']);
-	}else{
-		$CountData=0;
-	}
-	if($_SESSION['kdSatkerFilterPMDp']){
-		$kdSatkerFilter=$_SESSION['kdSatkerFilterPMDp'];
-	}
- 	$sql = mysql_query("SELECT * FROM kontrak ORDER BY id ");
-    while ($dataKontrak = mysql_fetch_assoc($sql)){
-                $kontrak[] = $dataKontrak;
-    }*/
-
-    //revisi
+	//pr($_POST);
+	$Penghapusan_ID = $_POST['Penghapusan_ID'];
+    //pr($Penghapusan_ID);
     $data_post=$PENGHAPUSAN->apl_userasetlistHPS("RVWPTUSPMD");
-	$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
-	$param = implode(',', $POST);
-	pr($param);
+    $api_list=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+    $param = implode(',', $api_list);
 	$par_data_table = "param=$param"; 
 	
 	?>
 	<!-- End Sql -->
-	<script language="Javascript" type="text/javascript">  
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
-	</script>
+	
 	<script>
 		function confirmValidate(){	
-			var ConfH = $("#countcheckboxH").html();
-			var conf = confirm(ConfH);
-			if(conf){return true;} else {return false;}
+			
+			var checkedValue = $('#cekAll:checked').val();
+			if(checkedValue){
+				//alert("Checked");
+				var r = confirm("Anda Yakin Menetapkan Semua Data!");
+		    	if (r == true) {
+		    	    return true;
+		    	} else {
+		        	return false;
+		    	}	
+			}else{
+				//alert("Unchecked");				
+				var ConfH = $("#countcheckboxH").html();
+				var conf = confirm(ConfH);
+				if(conf){return true;} else {return false;}	
+			}		
 		}
+		
 		function countCheckbox(item,rvwitem){
-			var CountDataVal=$("#CountData").val();
-			// console.log(CountDataVal);
-			// alert(CountDataVal);
 			setTimeout(function() {
 				$.post('<?=$url_rewrite?>/function/api/countapplist.php', { UserNm:'<?=$_SESSION['ses_uoperatorid']?>',act:item,rvwact:rvwitem,sess:'<?=$_SESSION['ses_utoken']?>'}, function(data){
-						$("#countcheckbox").html("<h5>Jumlah Data Usulan yang akan diterima untuk penetapan <div class='blink_text_blue'>"+data.countAset+" Dari "+CountDataVal+" Data Aset</div><div>Total Nilai Rp."+data.totalNilaiAset+",-</div></h5>");
-						$("#countcheckboxH").html("Jumlah Data yang diterima untuk ditetapkan "+data.countAset+" Dari "+CountDataVal+" Data Aset dengan Total Nilai Rp."+data.totalNilaiAset+",-");
+						//console.log(data);
+						$("#countcheckbox").html("<h5>Jumlah Data yang akan dibuat usulan <div class='blink_text_blue'>"+data.countAset+" Data Aset</div><div>Total Nilai Rp."+data.totalNilaiAset+",-</div></h5>");
+						$("#countcheckboxH").html("Jumlah Data yang akan dibuat usulan "+data.countAset+" Data Aset dengan Total Nilai Rp."+data.totalNilaiAset+",-");
 					 },"JSON")
 			}, 500);
 		}
@@ -94,10 +72,19 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 			   $('#submit').attr("disabled","disabled");
 			    updDataCheckbox('PTUSPMD');
 			    countCheckbox('PTUSPMD');
-			}}, 400);
+			}}, 300);
 		}
 
 		$(document).ready(function() {
+			AreAnyCheckboxesChecked();
+			$("#cekAll").click( function(){
+   				if($(this).is(':checked')){
+					//alert("checked");
+					$("#submit").removeAttr("disabled");
+				}else{
+					$('#submit').attr('disabled','disabled');
+				}   					 
+			});
           	$('#rvw_aset_usulan_pmd_table').dataTable(
                    {
                     "aoColumnDefs": [
@@ -112,7 +99,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
                          {"bSortable": true},
                          {"bSortable": true},
                          {"bSortable": false},
-                         {"bSortable": false},
+                         //{"bSortable": false},
                          {"bSortable": true}],
                     "sPaginationType": "full_numbers",
 
@@ -160,24 +147,29 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 
 		<section class="formLegend">
 			<form name="form" method="POST" ID="Form2" onsubmit="return confirmValidate()" action="<?php echo "$url_rewrite/module/penghapusanv2/"; ?>penetapan_penghapusan_tambah_data_proses_pmd.php">
-			<!--<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
-			<input type="hidden" id="CountData" value="<?=$CountData?>" />-->		
+			<input type="hidden" name="Penghapusan_ID" value="<?=$Penghapusan_ID?>">
 			<input type="hidden" name="Usulan_ID" value="<?=$param?>">
 	
 			<div style="height:5px;width:100%;clear:both"></div>
 			<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="rvw_aset_usulan_pmd_table">
 				<thead>
+					<tr>
+						<td colspan="10" align="center">
+							<span id="countcheckbox"><h5>Jumlah Data yang akan dibuat usulan <div class="blink_text_blue"><?=$CountData?> Data Aset</div></h5></span>
+							<span id="countcheckboxH" class="label label-success" style="display:none">Jumlah Data yang akan dibuat usulan 1 <?=$CountData?> Data Aset</span>
+						</td>
+						
+					</tr>
 					<tr> 
-						<td colspan="14" align="center">
-							<h4>Ceklis dibawah ini untuk menghapus semua aset :</h4>
+						<td colspan="10" align="center">
+							<h4>Ceklis dibawah ini untuk penetapan semua aset :</h4>
 							 <label><input type="checkbox" value="1" name ="cekAll" id="cekAll"><h4>Select All</h4></label>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="14">
-							<a href="filter_tambah_aset_usulan_pmd.php?usulanID=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign 	icon-white"></i>&nbsp;&nbsp;TambahKan Aset Usulan</a>
-							
+						<td colspan="10">
+							<button type="submit" id="submit" class="btn btn-info" disabled=""><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Aset Penetapan</button>
 						</td>
 					</tr>
 					<tr>
@@ -190,12 +182,12 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
 						<th>Merk / Type</th>
-						<th>Jenis Penghapusan</th>	
+						<!--<th>Jenis Penghapusan</th>-->	
 					</tr>
 				</thead>
 				<tbody>		
 					 <tr>
-                        <td colspan="10">Data Tidak di temukkan</td>
+                        <td colspan="9">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
@@ -209,7 +201,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
-						<th>&nbsp;</th>
+						<!--<th>&nbsp;</th>-->
 					</tr>
 				</tfoot>
 			</table>

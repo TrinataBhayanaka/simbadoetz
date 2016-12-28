@@ -154,8 +154,7 @@ $no=$_GET['iDisplayStart']+1;
 					{
 foreach ($data as $key => $value)
 						{
-							
-              $NamaSatker=$PENGHAPUSAN->getNamaSatker($value[SatkerUsul]);
+							$NamaSatker=$PENGHAPUSAN->getNamaSatker($value[SatkerUsul]);
 
               $jmlh=explode(",", $value[Usulan_ID]);
               $jmlUsul=0;
@@ -184,9 +183,9 @@ foreach ($data as $key => $value)
               
                       if($_SESSION['ses_ujabatan']==1){
                            $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_penetapan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;
-                            <a href=\"$url_rewrite/module/penghapusan/penetapan_penghapusan_daftar_hapus_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-danger btpenetapanl\" style=\"margin-top:3px\"> <i class=\"fa fa-trash\"></i>Hapus</a>";
+                            <a href=\"$url_rewrite/module/penghapusanv2/penetapan_penghapusan_daftar_hapus_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-danger btpenetapanl\" style=\"margin-top:3px\"> <i class=\"fa fa-trash\"></i>Hapus</a>";
                       }else{
-                          $tindakan="<a href=\"{$url_rewrite}/module/penghapusan/dftr_review_edit_penetapan_usulan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>";
+                          $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_penetapan_usulan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>";
                       }
                  
                     
@@ -208,7 +207,11 @@ foreach ($data as $key => $value)
               // pr($NilaiASet);
               
               $Asetditerima=$PENGHAPUSAN->totalDataPenghapusanAset($value['Penghapusan_ID']);
-              $TotalAset=count($Asetditerima);
+              if($Asetditerima){
+                $TotalAset=count($Asetditerima);  
+              }else{
+                $TotalAset = 0;
+              }
               $row = array();
                              
               $row[]=$no;

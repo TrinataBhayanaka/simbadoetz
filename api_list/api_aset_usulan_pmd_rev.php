@@ -27,7 +27,7 @@ if($_GET['jenisaset']=="2")
      $merk="m.Merk";
 else
      $merk="ast.Aset_ID";
-$aColumns = array('ast.Aset_ID','ast.kodeLokasi','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -68,7 +68,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "";
+          $sOrder = "ORDER BY ast.kodeKelompok,ast.noRegister";
      }
 }
 
@@ -189,22 +189,23 @@ foreach ($data as $key => $value)
 							// ////pr($TglPerolehanTmp);
 							$TglPerolehan=$TglPerolehanTmp[2]."/".$TglPerolehanTmp[1]."/".$TglPerolehanTmp[0];
                                           
-                             $row = array();
-                             
-                             $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
-                             $row[]=$no;
-                             $row[]=$checkbox;
-                             $row[]=$value['noRegister'] ;
-                             $row[]=$value['noKontrak'];
-                             $row[]="{$value[kodeLokasi]}<br/>[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
-                             $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
-                             $row[]=$TglPerolehan;
-                             $row[]=number_format($value[NilaiPerolehan],4);
-                             $row[]=$kondisi. ' - ' .$value[AsalUsul];
-                             $row[]="{$value[Merk]}$value[Model] ";
-                             
-                             $output['aaData'][] = $row;
-                              $no++;
+                 $row = array();
+                 
+                 $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"penghapusanfilter[]\" value=\"{$value['Aset_ID']}\" {$value['checked']}>";
+                 $row[]=$no;
+                 $row[]=$checkbox;
+                 $row[]="<center>".$value['noRegister']."</center>" ;
+                 $row[]=$value['noKontrak'];
+                 /*$row[]="{$value[kodeLokasi]}<br/>[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";*/
+                 $row[]="[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
+                 $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
+                 $row[]="<center>".$TglPerolehan."</center>";
+                 $row[]=number_format($value[NilaiPerolehan],4);
+                 $row[]=$kondisi. ' - ' .$value[AsalUsul];
+                 $row[]="{$value[Merk]}$value[Model] ";
+                 
+                 $output['aaData'][] = $row;
+                  $no++;
                     }
               }
 echo json_encode($output);

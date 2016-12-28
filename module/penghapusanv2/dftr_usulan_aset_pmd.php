@@ -6,7 +6,7 @@ $menu_id = 74;
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
-pr($_POST);
+//pr($_POST);
 
 ?>
 
@@ -18,8 +18,10 @@ pr($_POST);
 ?>
 	<!-- SQL Sementara -->
 	<?php
+	//pr($_POST);
+	$Penghapusan_ID	= $_POST['Penghapusan_ID'];
 	$par_data_table="bup_pp_sp_tglusul={$_POST['bup_pp_sp_tglusul']}&bup_pp_sp_nousulan={$_POST['bup_pp_sp_nousulan']}&kodeSatker={$_POST['kodeSatker']}";
-	// pr($par_data_table);
+	//pr($par_data_table);
 	
 	/*if($_POST['kodeSatker']){
 		$_SESSION['kdSatkerFilterPMDp']=$_POST['kodeSatker'];
@@ -46,11 +48,12 @@ pr($_POST);
 			{
 			   $('#submit').attr("disabled","disabled");
 			    updDataCheckbox('RVWPTUSPMD');
-			}}, 100);
+			}}, 300);
 		}
 		</script>
 		<script>
     $(document).ready(function() {
+    	  AreAnyCheckboxesChecked () 
           $('#usulan_aset_pmd_table').dataTable(
                    {
                     "aoColumnDefs": [
@@ -115,9 +118,8 @@ pr($_POST);
 		<section class="formLegend">
 		
 			<div id="demo">
-			<form name="myform" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_penetapan_usulan_pmd.php">
-			<input type="hidden" name="kdSatkerFilter" value="<?=$kdSatkerFilter?>" />
-					
+			<form name="myform" method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusanv2/"; ?>dftr_review_penetapan_usulan_pmd.php">
+			<input type="hidden" name="Penghapusan_ID" value="<?=$Penghapusan_ID?>" />
 			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="usulan_aset_pmd_table">
 				<thead>
 					<tr>
@@ -126,7 +128,7 @@ pr($_POST);
 								<span><button type="submit" name="submit"  class="btn btn-info " id="submit" disabled/><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Penetapan Penghapusan</button></span>
 						</td>
 						<td colspan="2">
-							<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>filter_usulan_pmd.php" class="btn">Kembali Ke Pencarian</a>
+							<a href="<?php echo "$url_rewrite/module/penghapusanv2/"; ?>filter_usulan_pmd.php" class="btn">Kembali Ke Pencarian</a>
 						</td>
 					</tr>
 					<tr>

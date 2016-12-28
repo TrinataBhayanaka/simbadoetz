@@ -22,7 +22,7 @@ $id=$_SESSION['user_id'];//Nanti diganti
  * you want to insert a non-database field (for example a counter or static image)
  */
 
-$aColumns = array('a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kodeKelompok','a.AsalUsul','a.AsalUsul');
+$aColumns = array('a.Aset_ID','a.Aset_ID','a.noRegister','a.noKontrak','k.Uraian','a.kodeSatker','a.TglPerolehan','a.NilaiPerolehan','a.kodeKelompok','a.AsalUsul','a.AsalUsul');
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -58,7 +58,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY a.kodeKelompok,a.noRegister,a.Tahun";
+          $sOrder = "ORDER BY a.kodeKelompok";
      }
 }
 
@@ -100,12 +100,13 @@ for ($i = 0; $i < count($aColumns); $i++) {
  * SQL queries
  * Get data to display
  */
-
+pr("here");
+exit;
 $dataParam['condition']="$sWhere ";
 $dataParam['order']=$sOrder;  
 $dataParam['limit']="$sLimit";
 //pr($dataParam);
-$dataSESSION = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_edit_data_pmd_rev($dataParam); 
+$dataSESSION = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_edit_data_pmd_rev($dataParam); 
 //pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
@@ -123,7 +124,7 @@ $iFilteredTotal = $aResultFilterTotal[0];
 /* Total data set length */
 $sQuery = "
 		SELECT COUNT(a.Aset_ID)
-		FROM   $sTable INNER JOIN usulanaset as p 
+		FROM   $sTable INNER JOIN penghapusanaset as p 
     ON p.Aset_ID = a.Aset_ID WHERE p.Usulan_ID = '{$dataParam['id']}'";
 
 //echo "$sQuery";

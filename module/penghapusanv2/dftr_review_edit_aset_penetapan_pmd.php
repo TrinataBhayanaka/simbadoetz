@@ -2,6 +2,7 @@
 include "../../config/config.php";
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 $menu_id = 74;
+
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
@@ -41,27 +42,25 @@ if (isset($id)){
 		        return false;
 		    }		
 		}
-	</script>
-	
-	<script>
+
 		function AreAnyCheckboxesChecked () 
 		{
 			setTimeout(function() {
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
 			    $("#submit").removeAttr("disabled");
-			    updDataCheckbox('DELUSPMD');
+			    updDataCheckbox('DELASPMD');
 			}
 			else
 			{
 			   $('#submit').attr("disabled","disabled");
-			    updDataCheckbox('DELUSPMD');
-			}}, 500);
+			    updDataCheckbox('DELASPMD');
+			}}, 300);
 		}
-		</script>
-
+	</script>
 		<script>
    		 $(document).ready(function() {
+   		  AreAnyCheckboxesChecked();	
           $('#rvw_aset_usulan_pmd_table').dataTable(
                    {
                     "aoColumnDefs": [
@@ -76,13 +75,12 @@ if (isset($id)){
                          {"bSortable": false},
                          {"bSortable": true},
                          {"bSortable": false},
-                         {"bSortable": false},
                          {"bSortable": false}],
                     "sPaginationType": "full_numbers",
 
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_review_edit_aset_usulan_pmd_rev.php?<?php echo $par_data_table?>"
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_review_edit_aset_penetapan_pmd_fix_rev.php?<?php echo $par_data_table?>"
                }
                   );
       });
@@ -100,14 +98,14 @@ if (isset($id)){
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusanv2/dftr_usulan_pmd.php">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusanv2/dftr_usulan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/penghapusanv2/dftr_penetapan_pmd.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusanv2/dftr_penetapan_pmd.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
@@ -125,30 +123,34 @@ if (isset($id)){
 
 		<section class="formLegend">
 			<form method="POST" action="<?php echo "$url_rewrite/module/penghapusanv2/"; ?>dftr_asetid_penetapan_proses_upd_pmd.php"> 
-			
-			<div class="detailLeft">
-				<?php
-					if($row['StatusPenetapan']==0){
-						$disabled="";
-					}elseif($row['StatusPenetapan']==1){
-						$disabled="disabled";
-					}
+			<?php
+				if($row['Status']==0){
+					$disabled = "";
+				}else{
+					$disabled = "readonly";
+				}
 
-				?>
-						
+			?>
+			<div class="detailLeft">			
 			<ul>
 				<li>
 					<span  class="labelInfo">No Penetapan</span>
-					<input type="text" name="NoSKHapus" value="<?=$row['NoSKHapus']?>" <?=$disabled?> required/>
+					<input type="text" name="NoSKHapus" value="<?=$row['NoSKHapus']?>"  <?=$disabled?>/>
 				</li>
 				<li>
 					<span class="labelInfo">Keterangan Penetapan</span>
-					<textarea name="AlasanHapus" <?=$disabled?> required><?=$row['AlasanHapus']?></textarea>
+					<textarea name="AlasanHapus" <?=$disabled?> ><?=$row['AlasanHapus']?></textarea>
 				</li>
+				<?php
+				if($row['Status']==0){
+					?>
 				<li>
 					<span  class="labelInfo">&nbsp;</span>
 					<input type="submit" <?=$disabled?> value="Update Informasi Penetapan" class="btn"/>
 				</li>
+				<?php
+					}
+				?>
 			</ul>
 							
 			</div>
@@ -178,38 +180,40 @@ if (isset($id)){
 			
 			<div style="height:5px;width:100%;clear:both"></div>
 			</form>
-			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusanv2/"; ?>dftr_asetid_usulan_proses_hapus_pmd.php" onsubmit="return confirmValidate()" > 
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/penghapusanv2/"; ?>dftr_asetid_penetapan_proses_hapus_pmd.php" onsubmit="return confirmValidate()" > 
 			<div id="demo">
-			<?php
-				if($row['StatusPenetapan']==0){
-					$idtable="penghapusan11";
-				}else{
-					$idtable="penghapusan10";
-				}
-
-			?>
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="rvw_aset_usulan_pmd_table">
 				<thead>
+					<?php
+						if($row['Status']==0){
+					?>
 					<tr> 
 						<td colspan="11" align="center">
 							<h4>Ceklis dibawah ini untuk menghapus semua aset :</h4>
 							 <label><input type="checkbox" value="1" name ="cekAll" id="cekAll"	><h4>Select All</h4></label>
 						</td>
 					</tr>
+					<?php
+						}
+					?>
 					<tr>
 						<td colspan="7" align="Left">
 							<?php
-								if($row['StatusPenetapan']==0){
+								if($row['Status']==0){
 							?>
 								<a href="filter_usulan_pmd.php?id=<?=$id?>" class="btn btn-info " /><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;TambahKan Penetapan</a>
 								<span><button type="submit" name="submit"  class="btn btn-danger " id="submit" disabled/><i class="icon-trash icon-white"></i>&nbsp;&nbsp;Delete</button></span>
-								<input type="hidden" name="usulanID" value="<?=$row['Penghapusan_ID']?>"/>
+								<input type="hidden" name="Penghapusan_ID" value="<?=$row['Penghapusan_ID']?>"/>
 							<?php
+								}else{
+									?>
+								<?php
+
 								}
 							?>
 						</td>
 						<?php
-								if($row['StatusPenetapan']==0){
+								if($row['Status']==0){
 							?>
 						<td colspan="4" align="right">
 							<?php
@@ -220,14 +224,14 @@ if (isset($id)){
 							<?php
 								}
 							?>
-							<a href="dftr_usulan_pmd.php" class="btn btn-success " /><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali Ke Daftar Usulan</a>
+							<a href="dftr_penetapan_pmd.php" class="btn btn-success " /><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali Ke Daftar Usulan</a>
 								
 						</td>
 					</tr>
 					<tr>
 						<th>No</th>
 						<?php
-								if($row['StatusPenetapan']==0){
+								if($row['Status']==0){
 							?>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 							<?php
@@ -241,18 +245,16 @@ if (isset($id)){
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
 						<th>Status</th>
-						<th>Status Konfirmasi</th>
 						<th>Merk / Type</th>
 					</tr>
 				</thead>
 				<tbody>		
 					 <tr>
-                        <td colspan="10">Data Tidak di temukkan</td>
+                        <td colspan="9">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

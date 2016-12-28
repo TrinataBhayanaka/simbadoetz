@@ -23,7 +23,18 @@ if($_POST['cekAll'] == 1){
     $log = "hapus_aset_usulan_pmd_".$id;
 
     $apl_userasetlistHPS = $PENGHAPUSAN->apl_userasetlistHPS("DELUSPMD");
-    $data = $apl_userasetlistHPS['0']['aset_list'];
+    //pr($apl_userasetlistHPS);
+    $addExplode = explode(",",$apl_userasetlistHPS[0]['aset_list']);
+    $cleanArray = array_filter($addExplode);
+    $implodeAset_ID = implode(",",$cleanArray);
+    $arr = array("0"=>$implodeAset_ID);
+    /*pr($apl_userasetlistHPS);
+    pr($cleanArray);
+    pr($implodeAset_ID);
+    pr($data);*/
+    $data = $arr['0'];
+    //pr($data);
+    //$data = $apl_userasetlistHPS['0']['aset_list'];
     //pr($data);
     //exit;
     $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELUSPMD");

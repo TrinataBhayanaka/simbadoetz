@@ -25,12 +25,12 @@ $jenis_hapus = $jns_hps;
 
 $time_start = microtime(true); 
 
-foreach ($clearList as $value) {
+foreach ($clearList as $val) {
     # code...
     //counting process loop
-    echo "Aset_ID : ".$value."\n\n";
+    echo "Aset_ID : ".$val."\n\n";
     $field = "Usulan_ID,Aset_ID,Jenis_Usulan,jenis_hapus";
-    $value = "'{$idUsulan}','{$value}','PMD','{$jenis_hapus}'";
+    $value = "'{$idUsulan}','{$val}','PMD','{$jenis_hapus}'";
     $query = "INSERT INTO usulanaset ({$field}) VALUES ({$value})" or die("Error in the consult.." . mysqli_error($link));
     
     //echo "query : ".$query."\n\n";

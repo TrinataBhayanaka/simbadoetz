@@ -12,10 +12,7 @@ include"$path/header.php";
 include"$path/menu.php";
 	
 unset($_SESSION['ses_retrieve_filter_'.$menu_id.'_'.$SessionUser['ses_uid']]);
-$parameter = array('menuID'=>$menu_id,'type'=>'','paging'=>$paging);
 
-$kodeSatker = $_SESSION['ses_satkerkode'];
-$jabatan = $_SESSION['ses_ujabatan'];
 $tahun= $_GET['tahun'];
 if($tahun=="") $tahun=$TAHUN_AKTIF;
 $par_data_table="tahun=$tahun";
@@ -65,11 +62,7 @@ $par_data_table="tahun=$tahun";
                    	"aoColumnDefs": [
                          { "aTargets": [2] }
                     ],
-                    "sScrollY": "350px",
-                    //"sScrollY": "70vh",
-                    "sScrollX": "100%",
-    				"bScrollCollapse": true,
-           			"aoColumns":[
+                    "aoColumns":[
                          {"bSortable": false},
                          {"bSortable": true},
                          {"bSortable": false},

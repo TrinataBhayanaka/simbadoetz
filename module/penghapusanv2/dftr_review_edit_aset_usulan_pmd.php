@@ -60,8 +60,8 @@ if (isset($id)){
 		</script>
 
 		<script>
-   		 $(document).ready(function() {
-          $('#rvw_aset_usulan_pmd_table').dataTable(
+   		$(document).ready(function() {
+          	$('#rvw_aset_usulan_pmd_table').dataTable(
                    {
                     "aoColumnDefs": [
                          { "aTargets": [2] }
@@ -82,9 +82,8 @@ if (isset($id)){
                     "bProcessing": true,
                     "bServerSide": true,
                     "sAjaxSource": "<?=$url_rewrite?>/api_list/api_review_edit_aset_usulan_pmd_rev.php?<?php echo $par_data_table?>"
-               }
-                  );
-      });
+               });
+      	});
     </script>
 	<section id="main">
 		<ul class="breadcrumb">
@@ -203,12 +202,18 @@ if (isset($id)){
 			?>
 			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="rvw_aset_usulan_pmd_table">
 				<thead>
+					<?php
+								if($row['StatusPenetapan']==0){
+							?>
 					<tr> 
 						<td colspan="11" align="center">
 							<h4>Ceklis dibawah ini untuk menghapus semua aset :</h4>
 							 <label><input type="checkbox" value="1" name ="cekAll" id="cekAll"><h4>Select All</h4></label>
 						</td>
 					</tr>
+					<?php
+						}
+					?>
 					<tr>
 						<td colspan="7" align="Left">
 							<?php
