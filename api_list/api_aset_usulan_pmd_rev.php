@@ -110,10 +110,8 @@ $dataParam['order']=$sOrder;
 $dataParam['limit']="$sLimit";
 
 $dataSESSION = $PENGHAPUSAN->retrieve_usulan_penghapusan_pmd_rev($dataParam); 
-////pr($dataSESSION);
+//pr($dataSESSION);
 //exit;
-//$rResult = $DBVAR->query($sQuery);
-
 // /* Data set length after filtering */
 $sQuery = "
 		SELECT FOUND_ROWS()
@@ -126,14 +124,13 @@ $iFilteredTotal = $aResultFilterTotal[0];
 
 /* Total data set length */
 $sQuery = "
-		SELECT COUNT(`" . $sIndexColumn . "`)
-		FROM   $sTable
-	";
+    SELECT COUNT(`" . $sIndexColumn . "`)
+    FROM   $sTable where Aset_ID IN ($dataSESSION[count])
+  "; 
 
 //echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
-//////pr($aResultTotal );
 $iTotal = $aResultTotal[0];
 
 
@@ -156,7 +153,7 @@ $POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
 $POST['penghapusanfilter']=$POST;
     if($POST){
       // ////////pr($_SESSION['reviewAsetUsulan']['penghapusanfilter']);
-      foreach ($dataSESSION as $keySESSION => $valueSESSION) {
+      foreach ($dataSESSION['data'] as $keySESSION => $valueSESSION) {
         // ////////pr($valueSESSION['Aset_ID']);
         if(!in_array($valueSESSION['Aset_ID'], $POST['penghapusanfilter'])){
           // echo "stringnot";

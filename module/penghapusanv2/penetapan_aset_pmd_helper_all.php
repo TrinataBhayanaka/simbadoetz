@@ -58,7 +58,8 @@ foreach ($data as $val) {
 
     //update usulan aset
 	$quertUSA = "UPDATE usulanaset SET StatusPenetapan='1', Penetapan_ID='{$idPenghapusan}',StatusKonfirmasi = '1'
-			WHERE Aset_ID = '{$Aset_ID}' AND Jenis_Usulan = 'PMD'" or die("Error in the consult.." . mysqli_error($link));	
+			WHERE Aset_ID = '{$Aset_ID}' AND Jenis_Usulan = 'PMD' 
+			AND Usulan_ID IN ({$ListUsul})" or die("Error in the consult.." . mysqli_error($link));	
 	$execUSA = $link->query($quertUSA);	
 	//echo "quertUS : ".$quertUSA."\n\n";
 

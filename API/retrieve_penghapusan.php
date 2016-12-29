@@ -654,13 +654,15 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                              ); 
-                        $resAsetFix = $this->db->lazyQuery($sqlFix,$debug);  
+                        $resAsetFix = $this->db->lazyQuery($sqlFix,$debug); 
+       
                     }      
                 }
 
         }
         //if ($dataArr) return $dataArr;
-        if ($resAsetFix) return $resAsetFix;
+        //if ($resAsetFix) return $resAsetFix;
+        if ($resAsetFix) return array("data"=>$resAsetFix,"count"=> $listAsetid);
         return false;
     }    
 
