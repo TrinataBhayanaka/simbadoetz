@@ -15,19 +15,22 @@ $param = $argv[2];
 //get list aset dari usulan aset
 $sql = "SELECT Aset_ID FROM usulanaset where (Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB') AND StatusValidasi='0' AND (StatusKonfirmasi='0' OR StatusKonfirmasi='1') ORDER BY Usulan_ID DESC";
 
-$result = $link->query($sql); 
+$result = $link->query($sql);
+$resUsul = array(); 
 while($row = mysqli_fetch_assoc($result)) {
   $resUsul[] = $row;
 } 
 //print_r($resUsul);
 
 if($resUsul){
+    $dataArrListUsul =array();
     foreach($resUsul as $asetidUsul){
         //list Aset_ID yang pernah diusulkan
         $dataArrListUsul[]=$asetidUsul['Aset_ID'];
     }
     //print_r($dataArrListUsul);
     //reverse array usulan 
+    $ListUsul = array();
     foreach(array_values($dataArrListUsul) as $v){
         $ListUsul[$v] = 1;
     }
@@ -107,6 +110,7 @@ $sql2 = "SELECT ast.Aset_ID FROM aset as ast
          GROUP BY ast.Aset_ID";
 //print_r($sql2);
 $result2 = $link->query($sql2); 
+$resAset = array();
 while($row2 = mysqli_fetch_assoc($result2)) {
   $resAset[] = $row2;
 } 
@@ -123,6 +127,7 @@ if($resAset){
     //list Usulan Aset
     if($ListUsul){
         //list Aset
+        $dataArr = array();
         foreach($resAset as $asetidAset){
             //list Aset_ID yang pernah diusulkan
             $needle = $asetidAset['Aset_ID'];

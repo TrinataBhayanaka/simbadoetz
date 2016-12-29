@@ -13,6 +13,7 @@ $sqlAst = "SELECT Aset_ID FROM penghapusanaset where
 //echo "sqlAst : ".$sqlAst."\n\n";
 
 $result = $link->query($sqlAst); 
+$data = array();
 while($row = mysqli_fetch_assoc($result)) {
 	$data[] = $row['Aset_ID'];
 } 

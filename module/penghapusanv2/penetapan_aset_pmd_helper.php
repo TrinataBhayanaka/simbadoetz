@@ -81,7 +81,8 @@ if($temp){
 	}
 	//print_r($ListAsetFix);
 	$sqlLsUS = "SELECT Aset_ID FROM usulanaset where Usulan_ID in ({$ListUsul})";
-	$resultLsUS = $link->query($sqlLsUS); 
+	$resultLsUS = $link->query($sqlLsUS);
+	$ListAsetTotal =array(); 
 	while($rows = mysqli_fetch_assoc($resultLsUS)) {
 		  $ListAsetTotal[] = $rows['Aset_ID'];
 	}
