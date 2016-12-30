@@ -22,7 +22,7 @@ $execUS = $link->query($quertUS);
 //echo "quertUS : ".$quertUS."\n\n";
 
 //update penghapusan
-$queryPnghps = "UPDATE penghapusan SET FixPenghapusan = '1',
+$queryPnghps = "UPDATE penghapusan SET FixPenghapusan = '1',Status='2', 
 				Usulan_ID = '{$ListUsul}' 
 				WHERE Penghapusan_ID = '{$idPenghapusan}'" or die("Error in the consult.." . mysqli_error($link));
 $execPnghps = $link->query($queryPnghps);	
@@ -69,9 +69,15 @@ foreach ($data as $val) {
 		WHERE Aset_ID = '{$Aset_ID}'" or die("Error in the consult.." . mysqli_error($link));	
 	$execAST = $link->query($quertAST);	
 	//echo "quertAST : ".$quertAST."\n\n";
+	//
+	//update penghapusan
+
 	
 }
-
+$queryPnghps = "UPDATE penghapusan SET FixPenghapusan = '1',Status='0', 
+				Usulan_ID = '{$ListUsul}' 
+				WHERE Penghapusan_ID = '{$idPenghapusan}'" or die("Error in the consult.." . mysqli_error($link));
+$execPnghps = $link->query($queryPnghps);	
 $time_end = microtime(true);
 
 //dividing with 60 will give the execution time in minutes other wise seconds
