@@ -728,11 +728,17 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     }
                     if($dataArr){
                       $listAsetid = implode(',',$dataArr);
+                     if($listAsetid=="Array"){
+                          $query_aset_idin="";
+                      }else{
+                        $query_aset_idin="AND   ast.Aset_ID IN ($listAsetid)";
+                      
+                      }
                     
                         $sqlFix = array(
                             'table'=>"{$listTable},Aset AS ast,kelompok AS k",
                             'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
-                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND   ast.Aset_ID IN ($listAsetid) GROUP BY ast.Aset_ID $order",
+                            'condition' => "ast.TipeAset = '{$listTableAbjad}' $query_aset_idin GROUP BY ast.Aset_ID $order",
                             'limit'=>"$limit",
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
