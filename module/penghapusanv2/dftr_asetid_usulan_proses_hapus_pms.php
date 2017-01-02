@@ -13,16 +13,16 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 
 if($_POST['cekAll'] == 1){
     $id = $_POST['usulanID'];
-    $log = "hapus_aset_usulan_pmd_".$id;
+    $log = "hapus_aset_usulan_pms_".$id;
 
-    $status=exec("php hapus_aset_usulan_pmd_helper_all.php $id > ../../log/$log.txt 2>&1 &");
+    $status=exec("php hapus_aset_usulan_pms_helper_all.php $id > ../../log/$log.txt 2>&1 &");
     echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_usulan_pmd.php?id=$id\">";    
     exit;
 }else{
     $id = $_POST['usulanID'];
-    $log = "hapus_aset_usulan_pmd_".$id;
+    $log = "hapus_aset_usulan_pms_".$id;
 
-    $apl_userasetlistHPS = $PENGHAPUSAN->apl_userasetlistHPS("DELUSPMD");
+    $apl_userasetlistHPS = $PENGHAPUSAN->apl_userasetlistHPS("DELUSPMS");
     //pr($apl_userasetlistHPS);
     $addExplode = explode(",",$apl_userasetlistHPS[0]['aset_list']);
     $cleanArray = array_filter($addExplode);
@@ -37,10 +37,10 @@ if($_POST['cekAll'] == 1){
     //$data = $apl_userasetlistHPS['0']['aset_list'];
     //pr($data);
     //exit;
-    $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELUSPMD");
+    $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELUSPMS");
     
 
-    $status=exec("php hapus_aset_usulan_pmd_helper.php $id $data > ../../log/$log.txt 2>&1 &");
+    $status=exec("php hapus_aset_usulan_pms_helper.php $id $data > ../../log/$log.txt 2>&1 &");
     echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_usulan_pmd.php?id=$id\">";    
     exit;
 }
