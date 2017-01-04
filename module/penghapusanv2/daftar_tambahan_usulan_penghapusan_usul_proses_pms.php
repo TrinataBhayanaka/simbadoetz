@@ -30,7 +30,10 @@ if($_POST['cekAll'] == 1){
 	if($kodeKelompok) $filterkontrak .="kodeKelompok={$kodeKelompok}"."-";
 	if($jenisaset) $filterkontrak .="TipeAset={$jenisaset}";
 
-$status=exec("php usulan_aset_pms_helper_all.php $id $filterkontrak > ../../log/$log.txt 2>&1 &");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMS");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELASPMS");
+
+	$status=exec("php usulan_aset_pms_helper_all.php $id $filterkontrak > ../../log/$log.txt 2>&1 &");
 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/penghapusanv2/dftr_usulan_pms.php\">";    
     exit;
 }else{	
@@ -53,7 +56,8 @@ echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/pengha
 	$data = $arr['0'];
 	//pr($data);
 	//exit;
-	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMS");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELASPMS");
 	//exit;
 
 $status=exec("php usulan_aset_pms_helper.php $id $data > ../../log/$log.txt 2>&1 &");

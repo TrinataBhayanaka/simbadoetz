@@ -29,8 +29,11 @@ if($_POST['cekAll'] == 1){
 	if($tahun) $filterkontrak .="Tahun={$tahun}"."-";
 	if($kodeKelompok) $filterkontrak .="kodeKelompok={$kodeKelompok}"."-";
 	if($jenisaset) $filterkontrak .="TipeAset={$jenisaset}";
+	
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELUSPMD");
 
-$status=exec("php usulan_aset_pmd_helper_all.php $id $filterkontrak > ../../log/$log.txt 2>&1 &");
+	$status=exec("php usulan_aset_pmd_helper_all.php $id $filterkontrak > ../../log/$log.txt 2>&1 &");
 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/penghapusanv2/dftr_usulan_pmd.php\">";    
     exit;
 }else{	
@@ -54,6 +57,7 @@ echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/pengha
 	//pr($data);
 	//exit;
 	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELUSPMD");
 	//exit;
 
 $status=exec("php usulan_aset_pmd_helper.php $id $data > ../../log/$log.txt 2>&1 &");

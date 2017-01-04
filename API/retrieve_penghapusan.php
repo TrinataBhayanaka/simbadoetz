@@ -666,7 +666,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     $condition="ast.fixPenggunaan=1 AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
                 }
                 
-                //query aset
+                //query asetid
                 /*
                 Info : kekurangan penyajian jumlah menjadi tidak akurat
                 $sql2 = array(
@@ -738,7 +738,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $sqlFix = array(
                             'table'=>"{$listTable},Aset AS ast,kelompok AS k",
                             'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
-                            'condition' => "ast.TipeAset = '{$listTableAbjad}' $query_aset_idin GROUP BY ast.Aset_ID $order",
+                            'condition' => "ast.TipeAset = '{$listTableAbjad}' {$query_aset_idin} GROUP BY ast.Aset_ID $order",
                             'limit'=>"$limit",
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
@@ -889,11 +889,18 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                     }
                     if($dataArr){
                       $listAsetid = implode(',',$dataArr);
-                    
+                       if($listAsetid=="Array"){
+                          $query_aset_idin="";
+                      }else{
+                        $query_aset_idin="AND   ast.Aset_ID IN ($listAsetid)";
+                      
+                      }
                         $sqlFix = array(
                             'table'=>"{$listTable},Aset AS ast,kelompok AS k",
                             'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
-                            'condition' => "ast.TipeAset = '{$listTableAbjad}' AND   ast.Aset_ID IN ($listAsetid) GROUP BY ast.Aset_ID $order",
+                            'condition' => "ast.TipeAset = '{$listTableAbjad}' 
+                                            {$query_aset_idin}
+                                            GROUP BY ast.Aset_ID $order",
                             'limit'=>"$limit",
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"

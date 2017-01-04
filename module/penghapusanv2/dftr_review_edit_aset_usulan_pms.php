@@ -238,7 +238,7 @@ if (isset($id)){
 							<?php
 								}
 							?>
-							<a href="dftr_usulan_pmd.php" class="btn btn-success " /><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali Ke Daftar Usulan</a>
+							<a href="dftr_usulan_pms.php" class="btn btn-success " /><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali Ke Daftar Usulan</a>
 								
 						</td>
 					</tr>

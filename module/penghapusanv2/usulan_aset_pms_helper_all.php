@@ -12,6 +12,13 @@ $idUsulan = $argv[1];
 $param = $argv[2];
 //echo "param : ".$param."\n\n";
 
+//update usulan
+$quertUS = "UPDATE usulan SET FixUsulan = '0'
+            WHERE Usulan_ID = '{$idUsulan}'"
+            or die("Error in the consult.." . mysqli_error($link));  
+$execUS = $link->query($quertUS);   
+//echo "quertUS : ".$quertUS."\n\n";
+
 //get list aset dari usulan aset
 $sql = "SELECT Aset_ID FROM usulanaset where (Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB') AND StatusValidasi='0' AND (StatusKonfirmasi='0' OR StatusKonfirmasi='1') ORDER BY Usulan_ID DESC";
 
@@ -148,6 +155,12 @@ if($resAset){
         $dataArr[] = $resAset;
     }    
 }
+//update usulan
+$quertUS = "UPDATE usulan SET FixUsulan = '1'
+            WHERE Usulan_ID = '{$idUsulan}'"
+            or die("Error in the consult.." . mysqli_error($link));  
+$execUS = $link->query($quertUS);   
+//echo "quertUS : ".$quertUS."\n\n";
 
 echo "Total Data List Aset : ".count($dataArr)."\n\n";
 

@@ -1,8 +1,7 @@
 <?php
 include "../../config/config.php";
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-$menu_id = 74;
-
+$menu_id = 75;
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
@@ -41,7 +40,7 @@ if (isset($id)){
 
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_list_validasi_pmd.php?<?php echo $par_data_table?>"
+                "sAjaxSource": "<?=$url_rewrite?>/api_list/api_list_validasi_pms.php?<?php echo $par_data_table?>"
                }
                   );
       });
@@ -50,30 +49,30 @@ if (isset($id)){
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Penghapusan</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Aset Usulan Penghapusan Pemindahtanganan</li>
+			  <li class="active">Daftar Aset Usulan Penghapusan Pemusnahan</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Penghapusan Pemindahtanganan</div>
+				<div class="title">Usulan Penghapusan Pemusnahan</div>
 				<div class="subtitle">Review Aset yang akan dibuat Usulan</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusanv2/dftr_usulan_pmd.php">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusanv2/dftr_usulan_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Penghapusan</span>
 				</a>
-				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusanv2/dftr_penetapan_pmd.php">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/penghapusanv2/dftr_penetapan_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
 					<span class="text">Penetapan Penghapusan</span>
 				</a>
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusanv2/dftr_validasi_pmd.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/penghapusanv2/dftr_validasi_pms.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
@@ -109,7 +108,7 @@ if (isset($id)){
 						<span  class="labelInfo">Tanggal Penetapan</span>
 							<div class="input-prepend">
 								<span class="add-on"><i class="fa fa-calendar"></i></span>
-								<input name="TglHapus" type="text" id="tanggal1" readonly value="<?=$TglUsulan?>"/>
+								<input name="TglHapus" type="text" id="tanggal1" readonly value="<?=$TglUsulan?>" />
 							</div>
 					</li>	
 				</ul>

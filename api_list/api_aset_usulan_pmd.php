@@ -35,6 +35,7 @@ $sIndexColumn = "Aset_ID";
 /* DB table to use */
 $sTable = "aset";
 $dataParam['bup_nokontrak']=$_GET['bup_nokontrak'];
+$dataParam['bup_tahun']=$_GET['bup_tahun'];
 $dataParam['jenisaset'][0]=$_GET['jenisaset'];
 $dataParam['kodeSatker']=$_GET['kodeSatker'];
 $dataParam['kodeKelompok']=$_GET['kodeKelompok'];

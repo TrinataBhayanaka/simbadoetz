@@ -22,7 +22,9 @@ if($_POST['cekAll'] == 1){
 	$id = $_POST['Penghapusan_ID'];
 	$idUsl = $_POST['Usulan_ID'];
 	$log = "penetapan_aset_pmd_".$id;
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("PTUSPMD");
 	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWPTUSPMD");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELASPMD");
 	
 	$status=exec("php penetapan_aset_pmd_helper_all.php $id $idUsl > ../../log/$log.txt 2>&1 &");
 	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/penghapusanv2/dftr_penetapan_pmd.php\">";    
@@ -49,6 +51,7 @@ if($_POST['cekAll'] == 1){
 	//exit;
 	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("PTUSPMD");
 	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWPTUSPMD");
+	$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("DELASPMD");
 	
 $status=exec("php penetapan_aset_pmd_helper.php $id $data $idUsl > ../../log/$log.txt 2>&1 &");
 echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/penghapusanv2/dftr_penetapan_pmd.php\">";  
