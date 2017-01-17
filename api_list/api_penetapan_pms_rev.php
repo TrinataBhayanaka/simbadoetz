@@ -110,7 +110,7 @@ $dataParam['limit']="$sLimit";
 // pr($dataParam);
 // list($data,$iFilteredTotal ) = $PENGHAPUSAN->retrieve_daftar_usulan_penghapusan_pmd($dataParam);	
 
-$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_pmd_rev($dataParam); 
+$data = $PENGHAPUSAN->retrieve_daftar_penetapan_penghapusan_pms_rev($dataParam); 
 //pr($data);
 //exit;
 //$rResult = $DBVAR->query($sQuery);
@@ -125,15 +125,15 @@ $iFilteredTotal = $aResultFilterTotal[0];
 
 // echo $iFilteredTotal ;
 if(trim($dataParam['tahun'])){
-  $cond = " WHERE FixPenghapusan=1 AND Jenis_Hapus='PMD'  AND YEAR(TglHapus) ='{$dataParam[tahun]}'";
+  $cond = " WHERE FixPenghapusan=1 AND Jenis_Hapus='PMS'  AND YEAR(TglHapus) ='{$dataParam[tahun]}'";
 }else{
-  $cond = " WHERE FixPenghapusan=1 AND Jenis_Hapus='PMD'";
+  $cond = " WHERE FixPenghapusan=1 AND Jenis_Hapus='PMS'";
 }
 /* Total data set length */
 $sQuery = "
-    SELECT COUNT(`" . $sIndexColumn . "`)
-    FROM   $sTable {$cond}
-  ";
+		SELECT COUNT(`" . $sIndexColumn . "`)
+		FROM   $sTable {$cond}
+	";
 
 //echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
@@ -181,8 +181,7 @@ foreach ($data as $key => $value)
               }elseif($value['Status']==1){
                 $label="success";
                 $text="sudah Divalidasi";
-              
-                }elseif($value['Status']==2){
+              }elseif($value['Status']==2){
                 $label="info";
                 $text="proses pemasukan data";
              
@@ -194,17 +193,17 @@ foreach ($data as $key => $value)
                   if($value['Status']==0){
               
                       if($_SESSION['ses_ujabatan']==1){
-                           $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_penetapan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;
-                            <a href=\"$url_rewrite/module/penghapusanv2/penetapan_penghapusan_daftar_hapus_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-danger btpenetapanl\" style=\"margin-top:3px\"> <i class=\"fa fa-trash\"></i>Hapus</a>";
+                           $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_penetapan_pms.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;
+                            <a href=\"$url_rewrite/module/penghapusanv2/penetapan_penghapusan_daftar_hapus_pms.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-danger btpenetapanl\" style=\"margin-top:3px\"> <i class=\"fa fa-trash\"></i>Hapus</a>";
                       }else{
-                          $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_penetapan_usulan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>";
+                          $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_penetapan_usulan_pms.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>";
                       }
                  
                     
                     
                 }elseif($value['Status']==1){
                  if($value['Usulan_ID']!=""){
-                   $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_penetapan_pmd.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;
+                   $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_penetapan_pms.php?id={$value[Penghapusan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i> View</a>&nbsp;
 
               <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}&tglHapus={$value[TglHapus]}\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp;
               <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_sk_penghapusan.php?idpenetapan={$value[Penghapusan_ID]}&sk={$value[NoSKHapus]}&tglHapus={$value[TglHapus]}&tipe_file=2\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp;";

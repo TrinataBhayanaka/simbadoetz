@@ -143,7 +143,7 @@ if($resAset){
                 $dataArr[] = $needle;
                 echo "Aset_ID : ".$needle."\n\n";
                 $field = "Usulan_ID,Aset_ID,Jenis_Usulan,jenis_hapus";
-                $value = "'{$idUsulan}','{$needle}','PMD','{$jenis_hapus}'";
+                $value = "'{$idUsulan}','{$needle}','PMS','{$jenis_hapus}'";
                 $query = "INSERT INTO usulanaset ({$field}) VALUES ({$value})" or die("Error in the consult.." . mysqli_error($link));
                 
                 //echo "query : ".$query."\n\n";
@@ -161,6 +161,7 @@ $quertUS = "UPDATE usulan SET FixUsulan = '1'
             or die("Error in the consult.." . mysqli_error($link));  
 $execUS = $link->query($quertUS);   
 //echo "quertUS : ".$quertUS."\n\n";
+
 echo "Total Data List Aset : ".count($dataArr)."\n\n";
 
 $time_end = microtime(true);

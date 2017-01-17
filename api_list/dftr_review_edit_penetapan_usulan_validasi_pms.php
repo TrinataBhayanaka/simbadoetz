@@ -1,7 +1,7 @@
 <?php
 include "../../config/config.php";
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-$menu_id = 74;
+$menu_id = 75;
 
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
@@ -41,7 +41,7 @@ if (isset($id)){
 
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_list_validasi_pmd.php?<?php echo $par_data_table?>"
+                "sAjaxSource": "<?=$url_rewrite?>/api_list/api_list_validasi_pms_rev.php?<?php echo $par_data_table?>"
                }
                   );
       });
@@ -109,7 +109,7 @@ if (isset($id)){
 						<span  class="labelInfo">Tanggal Penetapan</span>
 							<div class="input-prepend">
 								<span class="add-on"><i class="fa fa-calendar"></i></span>
-								<input name="TglHapus" type="text" id="tanggal1" readonly value="<?=$TglUsulan?>"/>
+								<input name="TglHapus" type="text" id="tanggal1" readonly />
 							</div>
 					</li>	
 				</ul>
