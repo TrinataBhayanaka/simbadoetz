@@ -41,7 +41,7 @@ try {
 	//sql sementara
 	//update ruangan di tabel aset
 	$QueryAset	  = "UPDATE aset SET kodeRuangan = $kodeRuang WHERE Aset_ID in ($implodeAset_ID)";
-	pr($QueryAset);
+	//pr($QueryAset);
 	//exit();
 	$ExeQueryAset = $DBVAR->query($QueryAset);
 	if(!$ExeQueryAset){

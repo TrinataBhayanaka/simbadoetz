@@ -41,7 +41,8 @@ $sTable_inner_join_kelompok = "kelompok as k";
 // $sTable_inner_join_satker ="satker as s";
 $cond_kelompok ="k.Kode = a.kodeKelompok ";
 // $cond_satker ="s.kode = a.kodeSatker";
-$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
+//$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
+$status = "a.Status_Validasi_Barang = 1 AND";
 //variabel ajax
 $kodeSatker 		= $_GET['kodeSatker'];
 $kodeRuangan 		= $_GET['kodeRuangan'];
@@ -136,7 +137,7 @@ $sQuery = "
 		$sOrder
 		$sLimit
 		";
-// echo $sQuery;
+ //echo $sQuery;
 // $rResult = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
 //get data all
 $rResultGetDataApluserlist = $DBVAR->fetch($sQuery,1);

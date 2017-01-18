@@ -38,10 +38,9 @@ $sIndexColumn = "a.Aset_ID";
 /* DB table to use */
 $sTable = "aset as a";
 $sTable_inner_join_kelompok = "kelompok as k";
-// $sTable_inner_join_satker ="satker as s";
 $cond_kelompok ="k.Kode = a.kodeKelompok ";
-// $cond_satker ="s.kode = a.kodeSatker";
-$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
+//$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
+$status = "a.Status_Validasi_Barang = 1 AND";
 //variabel ajax
 $tahun_aw 		= $_GET['tahun_aw'];
 $tahun_ak 		= $_GET['tahun_ak'];
@@ -53,18 +52,49 @@ $tipeAset		= $_GET['tipeAset'];
 $thnR			= $_GET['thnR'];
 $kd_ruangan		= $_GET['ruangan'];
 // pr($_GET);
+
 if($tipeAset == 'tanah'){
 	$tipe = '01';
+	$sTable_inner_join_kib ="tanah as kib";
+	$cond_kib ="kib.Aset_ID = a.Aset_ID";
 }elseif($tipeAset == 'mesin'){
 	$tipe = '02';
+	$sTable_inner_join_kib ="mesin as kib";
+	$cond_kib ="kib.Aset_ID = a.Aset_ID";
 }elseif($tipeAset == 'bangunan'){
 	$tipe = '03';
+	$sTable_inner_join_kib ="bangunan as kib";
+	$cond_kib ="kib.Aset_ID = a.Aset_ID";
 }elseif($tipeAset == 'jaringan'){
 	$tipe = '04';
+	$sTable_inner_join_kib ="jaringan as kib";
+	$cond_kib ="kib.Aset_ID = a.Aset_ID";
 }elseif($tipeAset == 'asetlain'){
 	$tipe = '05';
+	$sTable_inner_join_kib ="asetlain as kib";
+	$cond_kib ="kib.Aset_ID = a.Aset_ID";
 }elseif($tipeAset == 'kdp'){
 	$tipe = '06';
+	$sTable_inner_join_kib ="kdp as kib";
+	$cond_kib ="kib.Aset_ID = a.Aset_ID";
+}
+
+//handle untuk kir
+if($kd_ruangan == ''){
+	$tmp = array();
+	$queryRuangan = "SELECT Kd_Ruang from satker where  Kd_Ruang is NOT null 
+					AND kode = '{$satker}' AND Tahun ='{$thnR}'";
+	//pr($queryRuangan);
+	$res = $DBVAR->fetch($queryRuangan,1);
+	foreach ($res as $key => $value) {
+		# code...
+		$tmp[] = $value['Kd_Ruang'];
+	}
+	//pr($tmp);
+	$listRuangan = implode(',', $tmp);
+	//pr($list);
+}else{
+
 }
 // echo $tahun;
 /* REMOVE THIS LINE (it just includes my SQL connection user/pass) */
@@ -137,7 +167,8 @@ else if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset !=
 	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan'";
 }
 elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == '' ){
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok='$kodeKelompok' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null)";
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok='$kodeKelompok' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan))";
+	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13) listRuangan
 }
 elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
 	
@@ -145,7 +176,8 @@ elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != ''
 }
 elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
 	
-	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null)";
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan))";
+	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
 }
 
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
@@ -153,13 +185,17 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
 	 if ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
 		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan' AND (";
 	}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
-		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND (";
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak'  AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND (";
+
+	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
 	}
 	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
 		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND kodeRuangan ='$kd_ruangan'  AND (";
 	}
 	elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
-		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'  AND (";
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan))  AND (";
+
+	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
 	}
 	 
      // $sWhere.="(";
@@ -194,18 +230,19 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
  inner join satker as s on s.kode = a.kodeSatker 
  where a.tahun = '2014' and a.kodeSatker = '01.01.01.01' and a.kodekelompok like '02%' limit 1 */
  
- // echo $sWhere;
+//echo $sWhere;
 
 $sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
 		FROM   $sTable 
 		INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
+		INNER JOIN $sTable_inner_join_kib ON $cond_kib
 		$sWhere
 		$sOrder
 		$sLimit
 		";
 
-// echo $sQuery;
+//echo $sQuery;
 // $rResult = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
 //get data all
 $rResultGetDataApluserlist = $DBVAR->fetch($sQuery,1);
@@ -222,34 +259,45 @@ $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
 
 /* Total data set length */
-if($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR != ''){
+if($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
+	//pr("1");
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
 		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' 
 		AND a.kodeKelompok='$kodeKelompok'
 		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'
-		AND kodeRuangan ='$thnR' ";
-}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR == '' ){
+		AND kodeRuangan ='$kd_ruangan' ";
+}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == '' ){
+	//pr("2");
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
 		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker'
 		AND a.kodeKelompok='$kodeKelompok'
-		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
-}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR != ''){
+		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'
+		AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan))
+		";
+
+	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
+}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan != ''){
+	//pr("3");
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
 		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' 
 		AND a.kodeKelompok like '$tipe%' 
 		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'
-		AND kodeRuangan ='$thnR'";
-}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $thnR == ''){
+		AND kodeRuangan ='$kd_ruangan'";
+}elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == ''){
+	//pr("4");
 	$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' 
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' 	
 		AND a.kodeKelompok like '$tipe%'
-		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'";
+		AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak'
+		AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan))";
+		
+	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
 }
-	// 	echo $sQuery;
+//echo $sQuery;
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
 $iTotal = $aResultTotal[0];

@@ -122,12 +122,14 @@ include "../../config/config.php";
 		</div>
 		
 			<script>
+
 			$(document).ready(function() {
 				  $('#kir_aset').dataTable(
 						   {
 							"aoColumnDefs": [
 								 { "aTargets": [2] }
 							],
+							//"sScrollY": "200px",
 							"aoColumns":[
 								 {"bSortable": false},
 								 {"bSortable": false,"sClass": "checkbox-column" },
@@ -140,12 +142,12 @@ include "../../config/config.php";
 								 {"bSortable": true},
 								 {"bSortable": true}],
 							"sPaginationType": "full_numbers",
-
 							"bProcessing": true,
 							"bServerSide": true,
 							"sAjaxSource": "<?=$url_rewrite?>/api_list/viewkir_aset_detail.php?<?php echo $par_data_table?>"
 					   }
-						  );
+					);
+
 			  });
 			</script>
 			<!--<div class="detailLeft">-->

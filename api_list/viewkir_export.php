@@ -173,7 +173,7 @@ $iFilteredTotal = $aResultFilterTotal[0];
 /* Total data set length */
 $sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
-		FROM   $sTable WHERE Kd_Ruang != 0 AND Kd_Ruang is not null
+		FROM   $sTable WHERE Kd_Ruang != 0 AND Kd_Ruang is not null AND tahun='$tahun' AND kode='$satker'
 	";
 	// 	echo $sQuery;
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
