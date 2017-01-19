@@ -136,6 +136,15 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 					<input type="number" name="register_ak" id="" class="span1"  type="text" value="1">
 				</li>
 				<li>
+					<span class="span2">Kode Pemilik</span>
+					<select name="kodeLokasi" id="kodeLokasi" style="width:200px">
+						<option value="12" selected="">12 - Pemerintah Kota</option>
+						<option value="11">11 - Pemerintah Provinsi</option>
+						<option value="00">00 - Kementrian Lembaga</option>
+					</select>
+				</li>
+				<li>&nbsp;</li>
+				<li>
 					<span class="span2">Tipe Aset</span>
 					<select name="tipeAset" id="tipeAset" style="width:170px">
 						<option value="tanah">Tanah</option>

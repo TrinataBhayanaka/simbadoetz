@@ -1701,60 +1701,93 @@ class core_api_report extends DB {
                                                   //kir
                                                   case '2':
                                                   { 
-														if($parameter_sql!="" ) {
-																		// $query = $query_kir_condition; 
-																		$pecah = explode("AND ",$parameter_sql);
-																		for ($q=0;$q<count($pecah);$q++){
-																			$param_02[]="M.".$pecah[$q];
-																			$param_05[]="AL.".$pecah[$q];
-																			
-																		}
-																		
-																		$newparameter_sql_02 = implode('AND ', $param_02);
-																		$newparameter_sql_05 = implode('AND ', $param_05);
-																		// pr($param);
-																		$query_02 = "select SUM(M.NilaiPerolehan) as Nilai,GROUP_CONCAT(M.noRegister) as noReg,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-																						M.Tahun, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
-																						M.Silinder,M.kodeRuangan,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
-																					from 
-																						mesin_ori as M,kelompok as K 
-																					where 
-																						M.kodeKelompok=K.Kode  
-																						 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and 
-																						(M.KodeRuangan is not null AND M.KodeRuangan !=0) 
-																						and $newparameter_sql_02
-																					group by 
-																						M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
-																						M.Tahun,M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
-																						M.kodeLokasi, M.kodeRuangan,M.kondisi,K.Kode, K.Uraian 
-																					order by 
-																						M.kodeSatker,M.kodeRuangan,M.Tahun,M.kodeKelompok $limit";
-																		
-																		$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,GROUP_CONCAT(AL.noRegister) as noReg,AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
-																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
-																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,
-																					K.Kode, K.Uraian
-																				from 
-																					asetlain_ori as AL,kelompok as K  
-																				where
-																					AL.kodeKelompok = K.Kode 
-																					 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and 
-																					(AL.KodeRuangan is not null AND AL.KodeRuangan !=0) 
-																					and $newparameter_sql_05
-																				group by 
-																					AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
-																					AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
-																					AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
-																					AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,AL.kondisi,
-																					K.Kode, K.Uraian
-																				order by AL.kodeSatker,AL.kodeRuangan,AL.Tahun,AL.kodeKelompok $limit";
-																	
-																		$dataQuery = array($query_02,$query_05);
-																				// $dataQuery = array($query_01,$query_02,$query_03,$query_04);
-																		$query = $dataQuery;
-																							 
-																	}
+										if($parameter_sql!="" ) {
+											// $query = $query_kir_condition; 
+											$pecah = explode("AND ",$parameter_sql);
+											for ($q=0;$q<count($pecah);$q++){
+												$param_02[]="M.".$pecah[$q];
+												$param_05[]="AL.".$pecah[$q];
+												
+											}
+											
+											$newparameter_sql_02 = implode('AND ', $param_02);
+											$newparameter_sql_05 = implode('AND ', $param_05);
+											// pr($param);
+											/*$query_02 = "select SUM(M.NilaiPerolehan) as Nilai,GROUP_CONCAT(M.noRegister) as noReg,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															M.Tahun, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+															M.Silinder,M.kodeRuangan,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
+														from 
+															mesin_ori as M,kelompok as K 
+														where 
+															M.kodeKelompok=K.Kode  
+															 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and 
+															(M.KodeRuangan is not null AND M.KodeRuangan !=0) 
+															and $newparameter_sql_02
+														group by 
+															M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															M.Tahun,M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+															M.kodeLokasi, M.kodeRuangan,M.kondisi,K.Kode, K.Uraian 
+														order by 
+															M.kodeSatker,M.kodeRuangan,M.Tahun,M.kodeKelompok $limit";
+											
+											$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,GROUP_CONCAT(AL.noRegister) as noReg,AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+														AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
+														AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+														AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,
+														K.Kode, K.Uraian
+													from 
+														asetlain_ori as AL,kelompok as K  
+													where
+														AL.kodeKelompok = K.Kode 
+														 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 and 
+														(AL.KodeRuangan is not null AND AL.KodeRuangan !=0) 
+														and $newparameter_sql_05
+													group by 
+														AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+														AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
+														AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+														AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,AL.kondisi,
+														K.Kode, K.Uraian
+													order by AL.kodeSatker,AL.kodeRuangan,AL.Tahun,AL.kodeKelompok $limit";*/
+											$query_02 = "select SUM(M.NilaiPerolehan) as Nilai,GROUP_CONCAT(M.noRegister) as noReg,M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															M.Tahun, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+															M.Silinder,M.kodeRuangan,M.kodeLokasi,M.kondisi, K.Kode, K.Uraian
+														from 
+															mesin_ori as M,kelompok as K 
+														where 
+															M.kodeKelompok=K.Kode  
+															 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 
+															and $newparameter_sql_02
+														group by 
+															M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+															M.Tahun,M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+															M.kodeLokasi, M.kodeRuangan,M.kondisi,K.Kode, K.Uraian 
+														order by 
+															M.kodeSatker,M.kodeRuangan,M.Tahun,M.kodeKelompok $limit";
+											
+											$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,GROUP_CONCAT(AL.noRegister) as noReg,AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+														AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
+														AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+														AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,
+														K.Kode, K.Uraian
+													from 
+														asetlain_ori as AL,kelompok as K  
+													where
+														AL.kodeKelompok = K.Kode 
+														and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 
+														and $newparameter_sql_05
+													group by 
+														AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+														AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,
+														AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+														AL.kondisi, AL.kodeRuangan,AL.kodeLokasi,AL.kondisi,
+														K.Kode, K.Uraian
+													order by AL.kodeSatker,AL.kodeRuangan,AL.Tahun,AL.kodeKelompok $limit";
+											$dataQuery = array($query_02,$query_05);
+													// $dataQuery = array($query_01,$query_02,$query_03,$query_04);
+											$query = $dataQuery;
+																				 
+										}
 														if($parameter_sql=="" ) {
 															// $query = $query_kir_default; 
 														}

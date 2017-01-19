@@ -8,7 +8,7 @@ include "../../config/config.php";
         $SessionUser = $SESSION->get_session_user();
         $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
         session_start();
-		// pr($_POST);
+		//pr($_POST);
 		// exit;
 		// pr($_SESSION);
 		// exit;
@@ -23,13 +23,14 @@ include "../../config/config.php";
 			$SessionUser['register_ak'] = $_POST['register_ak'];
 			$SessionUser['satker'] = $_POST['kodeSatker'];
 			$SessionUser['kodeKelompok'] = $_POST['kodeKelompok'];
+			$SessionUser['kodeLokasi'] = $_POST['kodeLokasi'];
 			$SessionUser['tipeAset'] = $_POST['tipeAset'];
 			$SessionUser['ruangan'] = $_POST['ruangan'];
 			$SessionUser['tahunRuangan'] = $_POST['tahunRuangan'];
 			
-			$par_data_table="tahun_aw=$SessionUser[tahun_aw]&tahun_ak=$SessionUser[tahun_ak]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&tipeAset=$SessionUser[tipeAset]&thnR=$SessionUser[tahunRuangan]&ruangan=$SessionUser[ruangan]&Reg_aw=$SessionUser[register_aw]&Reg_ak=$SessionUser[register_ak]";
+			$par_data_table="tahun_aw=$SessionUser[tahun_aw]&tahun_ak=$SessionUser[tahun_ak]&satker=$SessionUser[satker]&kodeKelompok=$SessionUser[kodeKelompok]&kodeLokasi=$SessionUser[kodeLokasi]&tipeAset=$SessionUser[tipeAset]&thnR=$SessionUser[tahunRuangan]&ruangan=$SessionUser[ruangan]&Reg_aw=$SessionUser[register_aw]&Reg_ak=$SessionUser[register_ak]";
 		
-		// pr($par_data_table);
+		//pr($par_data_table);
 		// exit;
 ?>
 
@@ -167,6 +168,7 @@ include "../../config/config.php";
 								 {"bSortable": true},
 								 {"bSortable": true},
 								 {"bSortable": true},
+								 {"bSortable": true},
 								 {"bSortable": true}],
 							"sPaginationType": "full_numbers",
 
@@ -188,6 +190,7 @@ include "../../config/config.php";
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Satker</th>
+						<th>Kode Pemilik</th>
 						<th>Kode Kelompok</th>
 						<th>Nama Barang</th>
 						<th>Merk</th>
@@ -199,11 +202,12 @@ include "../../config/config.php";
 				</thead>
 				<tbody>			
 					 <tr>
-                        <td colspan="10">Data Tidak di temukan</td>
+                        <td colspan="11">Data Tidak di temukan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

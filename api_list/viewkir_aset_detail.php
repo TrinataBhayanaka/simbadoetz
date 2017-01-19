@@ -27,8 +27,10 @@ $id=$_SESSION['user_id'];//Nanti diganti
  // echo "masuk aja dulu";
  // pr($_GET);
  // exit;
+/*$aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.kodeSatker',
+				 'a.StatusValidasi','a.Status_Validasi_Barang','a.NilaiPerolehan','a.noRegister','a.kodeRuangan','a.TipeAset');*/
 $aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.kodeSatker',
-				 'a.StatusValidasi','a.Status_Validasi_Barang','a.NilaiPerolehan','a.noRegister','a.kodeRuangan','a.TipeAset');
+				 'a.kodeLokasi','a.Status_Validasi_Barang','a.NilaiPerolehan','a.noRegister','a.kodeRuangan','a.TipeAset');				 
 $test = count($aColumns);
   
 // echo $aColumns; 
@@ -214,6 +216,7 @@ if (!empty($data)){
 		$Kd_Satker = $aRow['kodeSatker'];
 		$NamaSatker = $aRow['NamaSatker'];
 		$Kd_Kelompok = $aRow['kodeKelompok'];
+		$kodeLokasi = $aRow['kodeLokasi'];
 		$Uraian = $aRow['Uraian'];
 		$noRegister = $aRow['noRegister'];
 		$NilaiPerolehan = $aRow['NilaiPerolehan'];
@@ -246,6 +249,7 @@ if (!empty($data)){
 		  $row[] ="<center>".$no."</center>";
 		  $row[] ="<center>".$checkbox."</center>";
 		  $row[] =$Kd_Satker;
+		  $row[] =$kodeLokasi;
 		  $row[] =$Kd_Kelompok;
 		  $row[] =$Uraian;
 		  $row[] =$Merk;

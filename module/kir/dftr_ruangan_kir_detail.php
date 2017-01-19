@@ -140,6 +140,7 @@ include "../../config/config.php";
 								 {"bSortable": true},
 								 {"bSortable": true},
 								 {"bSortable": true},
+								 {"bSortable": true},
 								 {"bSortable": true}],
 							"sPaginationType": "full_numbers",
 							"bProcessing": true,
@@ -161,6 +162,7 @@ include "../../config/config.php";
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Satker</th>
+						<th>KodeLokasi</th>
 						<th>Kode Kelompok</th>
 						<th>Nama Barang</th>
 						<th>Merk</th>
@@ -172,11 +174,12 @@ include "../../config/config.php";
 				</thead>
 				<tbody>			
 					 <tr>
-                        <td colspan="10">Data Tidak di temukan</td>
+                        <td colspan="11">Data Tidak di temukan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

@@ -8,7 +8,7 @@ include "../../../config/config.php";
 ket : param
 id = id usulan penghapusan pmd
 */
-$skpd  = "10.01.01.01";
+$skpd  = "50.02.09.01";
 $log = "normalisasi_ruangan_".$skpd;
 //pr($id);
 //exit;	
