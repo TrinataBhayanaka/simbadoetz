@@ -239,16 +239,23 @@ $menu_id = 1;
 			<div style="height:5px;width:100%;clear:both"></div>
 			
 			<?php
-				if($unpost['dist'] == 0){
+				//if($unpost['dist'] == 0){
+				$tmp_tahun_kontrak=explode("-",$kontrak['tglKontrak']);
+				$tahun_kontrak=$tmp_tahun_kontrak[0];
+				if($tahun_kontrak==$TAHUN_AKTIF)
+				{
 					if($kontrak['tipeAset'] == 1){
 						if($kapchek['kap'] == 0){
-							if($countdist == 0){ 
+							//if($countdist == 0){ 
 			?>		
 				<p><a href="kontrak_unpost.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Anda akan melakukan unposting data. Data tidak dapat diproses jika belum di posting. Lanjutkan?');"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 				&nbsp;</p>	
-			<?php			} else {echo "* Data sudah dipergunakan di distribusi barang";}
+			<?php			//} else {echo "* Data sudah dipergunakan di distribusi barang";}
 						}
 					}
+				//}
+				}else{
+				//	echo "<h1>sdh lewat</h1>";
 				}
 			?>
 			<div id="demo">
