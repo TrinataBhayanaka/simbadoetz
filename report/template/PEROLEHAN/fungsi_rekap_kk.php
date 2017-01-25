@@ -2485,7 +2485,7 @@ function group_data( $data_awal_perolehan, $data_log ) {
     $log_id=$value['log_id'];
     $key_baru = "{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}.{$index_aset_id}";
     //echo "key==$key_baru=={$value['Kd_Riwayat']}<br/>";
-    $URAIAN = get_uraian( $key_baru, 5 );
+    //$URAIAN = get_uraian( $key_baru, 5 );
 
     $data_level_aset[$key_baru]['kelompok']=$value['kelompok'];
     $data_level_aset[$key_baru]['Uraian']=$value['Uraian'];
@@ -2567,7 +2567,7 @@ function group_data( $data_awal_perolehan, $data_log ) {
     $tmp = explode( ".", $key );
     /*$tmp_4=explode("-",$tmp[4]);
     $tmp[4]=$tmp_4;*/
-    $key_baru = "{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}}";
+    $key_baru = "{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}";
 
     $URAIAN = get_uraian( $key_baru, 5 );
 
