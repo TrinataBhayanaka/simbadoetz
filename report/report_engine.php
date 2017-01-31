@@ -29041,9 +29041,9 @@ foreach ($dataArr as $asetID => $value)
 			}
 			$foot.="</table></body></html>";
 		}
-		
+	$hasil_html[]=$head.$body.$foot;	
 	}				 
-$hasil_html[]=$head.$body.$foot; 
+ 
 return $hasil_html;		 
 }
 
