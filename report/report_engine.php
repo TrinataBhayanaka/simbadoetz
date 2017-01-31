@@ -28405,8 +28405,23 @@ foreach ($dataArr as $asetID => $value)
 				$kodeKelompok=$valRwyt->kodeKelompok;
                                
 				//cek tgl u/info
+				/** umur ekonomis**/
+
+
+				if($valRwyt->Kd_Riwayat == '50'){
+					$rentang_tahun_penyusutan=($valRwyt->TahunPenyusutan-$valRwyt->Tahun) + 1;
+					if($valRwyt->UmurEkonomis == '' || $valRwyt->UmurEkonomis == '0'){
+						$umurekonomis = $valRwyt->MasaManfaat  - $rentang_tahun_penyusutan;
+						if($umurekonomis < 0 ){
+							$umurekonomis = 0;
+						}
+					}else{
+						$umurekonomis =$valRwyt->UmurEkonomi;
+					}
+				}
+				/**akhir umur ekonomis */
 				/*$ex_tgl_filter = explode('-',$valRwyt->TglPerubahan);
-				$tahun = $ex_tgl_filter[0];
+				$tahun = $ex_tgl_filter[0];*/
 				$tahun_pnystn = $valRwyt->TahunPenyusutan;
 				if($tahun_pnystn == 0){
 					$Info = '';
@@ -28418,7 +28433,8 @@ foreach ($dataArr as $asetID => $value)
 					}
 				}else{
 					$Info = "";
-				}*/
+				}
+				
 				if($paramKd_Rwyt == 0 || $paramKd_Rwyt == 2 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29 ){
 					/*
 					Kode Riwayat
@@ -28988,7 +29004,7 @@ foreach ($dataArr as $asetID => $value)
 						$PenyusutanPerTahun = $valRwyt->PenyusutanPerTahun;
 						$PenyusutanPerTahunFix = number_format($PenyusutanPerTahun,2,",",".");
 						
-						$umurEkonomis = $valRwyt->UmurEkonomis;
+						$umurEkonomis = $umurekonomis;
 						$flag_penyusutan++;
 				}
 
@@ -29084,6 +29100,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 	27 = Penghapusan Pemusnahan
 	*/
 	$paramLog = "l.TglPerubahan <='$tglakhirperolehan' 
+			     and (l.TglPerubahan != '0000-00-00 00:00:00' or l.TglPerubahan is null)
 				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}'
 				 order by l.Aset_ID ASC";
@@ -29092,7 +29109,8 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
 						where $paramLog";	
 						
-	 //pr($log_data);	
+	// pr($log_data);	
+	// exit();
 	$splitKodeSatker = explode ('.',$skpd_id);
 	if(count($splitKodeSatker) == 4){	
 		$paramSatker = "kodeSatker = '$skpd_id'";

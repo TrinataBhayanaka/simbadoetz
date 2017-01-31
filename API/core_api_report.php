@@ -1128,7 +1128,7 @@ class core_api_report extends DB {
 													tanahView as T,kelompok as K
 												where
 													T.kodeKelompok=K.Kode  
-													and $parameter_sql
+													and $parameter_sql and T.Status_Validasi_Barang=1 and T.StatusTampil=1 
 												group by T.Aset_ID
 												order by 
 													T.Aset_ID,T.kodeKelompok,T.kodeSatker ";
@@ -1142,7 +1142,7 @@ class core_api_report extends DB {
 												from 
 													mesin_ori as M,kelompok as K 
 												where 
-													M.kodeKelompok=K.Kode  
+													M.kodeKelompok=K.Kode  and M.Status_Validasi_Barang=1 and M.StatusTampil=1 
 													and $parameter_sql
 												order by 
 													M.Aset_ID,M.kodeKelompok,M.kodeSatker $limit";
@@ -1159,7 +1159,7 @@ class core_api_report extends DB {
 											where
 											B.kodeKelompok = K.Kode 
 											 
-											and $parameter_sql
+											and $parameter_sql and B.Status_Validasi_Barang=1 and B.StatusTampil=1 
 											order by
 												B.Aset_ID,B.kodeKelompok,B.kodeSatker $limit";
 			//ok
@@ -1174,7 +1174,7 @@ class core_api_report extends DB {
 											where
 											J.kodeKelompok = K.Kode 
 											 
-											and $parameter_sql
+											and $parameter_sql and J.Status_Validasi_Barang=1 and J.StatusTampil=1 
 											order by 
 												J.Aset_ID,J.kodeKelompok,J.kodeSatker $limit";
           
@@ -1189,7 +1189,7 @@ class core_api_report extends DB {
 											where
 											AL.kodeKelompok = K.Kode 
 											 
-											and $parameter_sql
+											and $parameter_sql and AL.Status_Validasi_Barang=1 and AL.StatusTampil=1 
 											order by 
 												AL.Aset_ID,AL.kodeKelompok,AL.kodeSatker $limit";
 											
@@ -1204,7 +1204,7 @@ class core_api_report extends DB {
 											where
 											KDPA.kodeKelompok = K.Kode  
 											 
-											and $parameter_sql
+											and $parameter_sql and KDPA.Status_Validasi_Barang=1 and KDPA.StatusTampil=1 
 											order by 
 												KDPA.Aset_ID,KDPA.kodeKelompok,KDPA.kodeSatker $limit";
           
@@ -7054,7 +7054,7 @@ class core_api_report extends DB {
 						      inner join aset ast on ast.Aset_ID= a.Aset_ID
 						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
 						      and (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0') and $paramLog";
-				$query_asetlain_3_bangunan="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan,AkumulasiPenyusutan,NilaiBuku,PenyusutanPerTaun )
+				$query_asetlain_3_bangunan="replace into aset_lain_3(kod_aeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan,AkumulasiPenyusutan,NilaiBuku,PenyusutanPerTaun )
 						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan,if(a.AkumulasiPenyusutan_Awal is not null and a.AkumulasiPenyusutan_Awal !=0,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null and a.NilaiBuku_Awal !=0,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun_Awal is not null and a.PenyusutanPerTahun_Awal !=0,a.PenyusutanPerTahun_Awal,a.PenyusutanPerTahun) 
 						      FROM log_bangunan as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
 						      inner join aset ast on ast.Aset_ID= a.Aset_ID
@@ -7251,7 +7251,7 @@ class core_api_report extends DB {
 					// echo "query_$i =".$AllTableTemp[$i];
 					// echo "<br>";
 					// echo "<br><br/>";
-					// exit;
+					 //exit;
 					$resultQuery = $this->query($AllTableTemp[$i]) or die ($this->error('error dataQuery'));
 					
 				}	
