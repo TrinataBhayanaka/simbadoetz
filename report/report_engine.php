@@ -29424,6 +29424,12 @@ $body="
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran / Konstruksi (P,S,D)</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Keterangan</td>
+
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Akumulasi Penyusutan</td>
+
+
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Nilai Buku</td>
+
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Awal</td>
                 <td colspan=\"4\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Mutasi</td>
                 <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah Akhir</td>
@@ -29463,14 +29469,16 @@ $body="
                 <td style=\"text-align:center; font-weight: bold; width: 72px;\">10</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">11</td>
                 <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
-                <td style=\"text-align:center; font-weight: bold;\">13</td>
-                <td style=\"text-align:center; font-weight: bold;\">14</td>
-                <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
-                <td style=\"text-align:center; font-weight: bold; width: 60px;\">16</td>
+                <td style=\"text-align:center; font-weight: bold; width: 81px;\">13</td>
+                <td style=\"text-align:center; font-weight: bold; width: 81px;\">14</td>
+                <td style=\"text-align:center; font-weight: bold;\">15</td>
+                <td style=\"text-align:center; font-weight: bold;\">16</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">17</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">18</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">19</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">20</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">21</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">22</td>
             </tr></thead>";
 																					  
 		}
@@ -29501,6 +29509,14 @@ $body="
 					
 					$noReg = sprintf("%04s", $row->noRegister);
 					$nilaiPrlhn = $row->NilaiPerolehan_Awal;
+
+					$AkumulasiPenyusutan = number_format($row->AkumulasiPenyusutan,2,",",".");
+					if($AkumulasiPenyusutan != 0 || $AkumulasiPenyusutan != ''){
+						$NilaiBuku = number_format($row->NilaiBuku,2,",",".");
+					}else{
+						$NilaiBuku = number_format($row->NilaiPerolehan,2,",",".");
+					}
+
 					// $kuantitas = 1;
 					// $nilaiPrlhnFix = number_format($row->NilaiPerolehan_Awal,2,",",".");
 					// $kdRwyt = $row->Kd_Riwayat;
@@ -29777,6 +29793,8 @@ $body="
 									<td style=\"width: 71px;\">$konstruksi</td>
 									<td style=\"width: 81px;\">$ketKondisi</td>
 									<td style=\"width: 60px; text-align:center;\">$Ket_Riwayat $flag</td>
+									<td style=\"width: 60px; text-align:right;\">$AkumulasiPenyusutan</td>
+									<td style=\"width: 60px; text-align:right;\">$NilaiBuku</td>
 									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
 									<td style=\"width: 80px; text-align:right;\">$nilaiAwalPerolehan</td>
 									<td style=\"width: 71px; text-align:center;\">$jmlKurang</td>
@@ -29800,7 +29818,7 @@ $body="
 						
 						$tabletotal="
 						<tr>
-							<td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
+							<td colspan=\"15\" style=\"text-align: center;\">Jumlah</td>
 							<td style=\"text-align: right;\">$printperolehanTotal</td>
                             <td>&nbsp;</td>
                             <td  style=\"text-align: right;\">$printperolehanTotalKurang</td>
