@@ -105,10 +105,17 @@ foreach ($tabel as $key => $value) {
 				echo ""."\n\n";
 				print_r($rows['jml']);
 				echo ""."\n\n";*/
-				echo "KIB : ".$rows['jml']."\n\n";
-				echo "KIR : ".$jmlAll."\n\n";
+				//echo "KIB : ".$rows['jml']."\n\n";
+				echo "KIB : ".number_format($rows['jml'], 4, '.', '')."\n\n";
+				//echo "KIR : ".$jmlAll."\n\n";
+				echo "KIR : ".number_format($jmlAll, 4, '.', '')."\n\n";
 				
-				if($rows['jml'] ==  $jmlAll){
+				/*if($rows['jml'] ==  $jmlAll){
+					$status = 'KIB dan KIR sama';
+				}else{
+					$status = 'KIB dan KIR tidak sama';
+				}*/
+				if(number_format($rows['jml'], 4, '.', '') ==  number_format($jmlAll, 4, '.', '')){
 					$status = 'KIB dan KIR sama';
 				}else{
 					$status = 'KIB dan KIR tidak sama';
@@ -164,9 +171,16 @@ $rows = mysqli_fetch_assoc($resultStatus);
 echo ""."\n\n";
 print_r($rows['jml']);
 echo ""."\n\n";*/
-echo "KIB : ".$rows['jml']."\n\n";
-echo "KIR : ".$jmlAll."\n\n";				
-if($rows['jml'] ==  $jmlAll){
+//echo "KIB : ".$rows['jml']."\n\n";
+echo "KIB : ".number_format($rows['jml'], 4, '.', '')."\n\n";
+//echo "KIR : ".$jmlAll."\n\n";				
+echo "KIR : ".number_format($jmlAll, 4, '.', '')."\n\n";				
+/*if($rows['jml'] ==  $jmlAll){
+	$status = 'KIB dan KIR sama';
+}else{
+	$status = 'KIB dan KIR tidak sama';
+}*/
+if(number_format($rows['jml'], 4, '.', '') ==  number_format($jmlAll, 4, '.', '')){
 	$status = 'KIB dan KIR sama';
 }else{
 	$status = 'KIB dan KIR tidak sama';
