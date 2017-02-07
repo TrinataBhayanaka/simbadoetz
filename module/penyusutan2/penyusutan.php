@@ -11,7 +11,16 @@ if($Session['ses_uaksesadmin'] == 1){
 }else{
 	$param = $Session['ses_satkerkode'];
 }
-$get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
+ $tahun= $_GET['tahun'];
+  if($tahun=="")
+            	$tahun=$TAHUN_AKTIF;
+          
+$get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param,$tahun);
+
+ $tahun= $_GET['tahun'];
+  if($tahun=="")
+            	$tahun=$TAHUN_AKTIF;
+
 //echo "masukk gak";
 // echo "<pre>";
 // print_r($get_data_penyusutan);
@@ -47,6 +56,20 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 		&nbsp;
 		<!-- <a class="btn btn-danger btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Kontrak Simral</a>
 		&nbsp; --></p>	
+		<p>Tahun Penyusutan:
+				<?=$tahun?>
+			</p>
+			<?php
+			$tahun_akhir=date("Y");
+			for($tahun=2015;$tahun<=$tahun_akhir;$tahun++){
+
+
+			?><a href="?tahun=<?=$tahun?>" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;<?=$tahun?></a>
+			&nbsp;
+			<?php
+			}
+			?>
+				</p>	
 		<div id="demo">
 		<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
 			<thead>
@@ -56,7 +79,6 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 					<th>Kelompok Aset</th>
 					<th>Tahun Berjalan</th>
 					<th>Status Running</th>
-                                        <th>Status Revisi</th>
 					<th>Aksi</th>
 				</tr>
 			</thead>
@@ -71,9 +93,6 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 				$text_status=array("0"=>"Belum disusutkan",
 							  "1"=>"Sedang disusutkan",
 							  "2"=>"Telah disusutkan");
-                                $text_revisi=array("0"=>"Belum revisi",
-							  "1"=>"Sedang revisi",
-							  "2"=>"Telah revisi");
 				$namaSatker = $PENYUSUTAN->getNamaSatkercustome($val[kodeSatker]);
 				/*$namaSatker = $PENYUSUTAN->getNamaSatkercustome($val[UserNm]);*/
 				if($namaSatker){
@@ -86,33 +105,35 @@ $get_data_penyusutan= $PENYUSUTAN->getStatusPenyusutansatker_berjalan($param);
 				<td><?=$val['KelompokAset']?></td>
 				<td><?=$val['Tahun']?></td>
 				<td><?=$text_status[$val['StatusRunning']]?></td>
-                                <td><?=$text_revisi[$val['status_revisi']]?></td>
 				<td>
 			<?php
 			if($Session['ses_uaksesadmin'] == 1){
-			switch ($val['StatusRunning']) {
-				case 0:
-					// $tahun = date('Y');
-					// if($val['Tahun'] == $tahun){
-                                    if($val['status_revisi']=="2")
-                                            echo "<a href=\"running_penyusutan_tmp.php?id={$val['id']}\" class=\"btn btn-warning\">Lakukan Penyusutan Baru</a>";
-                                        else
-                                        echo "Harus revisi ";    
-					// }
-					break;
-				case 2:
-					// $tahun = date('Y');
-					// if($val['Tahun'] == $tahun){
-                                    if($val['status_revisi']=="0")
-						echo "<a href=\"running_penyusutan_tmp_batal.php?id={$val['id']}\" class=\"btn btn-danger\">Batal Lama</a>";
-                                          else
-                                              echo "<a href=\"running_penyusutan_akhir_batal.php?id={$val['id']}\" class=\"btn btn-danger\">Batal Penyusutan Baru</a>";
-					// }
-					break;
-			default:
-				 echo "-";
-				 break;
-			}
+				//	echo "<H1>$tahun || $TAHUN_AKTIF</H1>";
+				$tahun_cek= $_GET['tahun'];
+				if($tahun_cek==$TAHUN_AKTIF){
+						switch ($val['StatusRunning']) {
+						case 0:
+							// $tahun = date('Y');
+							// if($val['Tahun'] == $tahun){
+							echo "<a href=\"running_penyusutan_tmp.php?id={$val['id']}\" class=\"btn btn-warning\">Lakukan Penyusutan</a>";
+							// }
+							break;
+						case 2:
+							// $tahun = date('Y');
+							// if($val['Tahun'] == $tahun){
+								echo "<a href=\"running_penyusutan_tmp_batal.php?id={$val['id']}\" class=\"btn btn-danger\">Batal Penyusutan</a>";
+							// }
+							break;
+						default:
+							 echo "-";
+							 break;
+					}
+
+
+				}else{
+					echo "-";
+				}
+				
 			}
 			 ?></td>
 			</tr>
