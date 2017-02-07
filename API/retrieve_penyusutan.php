@@ -75,7 +75,7 @@ class RETRIEVE_PENYUSUTAN extends RETRIEVE{
 			   return $dataArr;
                  
           }
-          public function getStatusPenyusutansatker_berjalan($par=NULL){
+          public function getStatusPenyusutansatker_berjalan($par=NULL,$tahun){
 				// pr($par);
                if ($par!=""){
                  $count =explode('.',$par);
@@ -87,10 +87,15 @@ class RETRIEVE_PENYUSUTAN extends RETRIEVE{
 				 }
 			   }else{
 				$par = '';
-			   }		 
+			   }
+			   if($par==""){
+			   		$par="where  Tahun='$tahun'";
+			   }else{
+			   	$par="$par and  Tahun='$tahun'";
+			   }
+		 
                $query="select * from penyusutan_tahun_berjalan $par";
-               
-			   $result = $this->query($query) or die(mysql_error());//die($this->error());
+               $result = $this->query($query) or die(mysql_error());//die($this->error());
                  while ($data = $this->fetch_array($result))
                {
                        $dataArr[] = $data;
