@@ -110,6 +110,8 @@ $menu_id = 10;
 									$kategori_belanja = 'Jaringan';
 								}elseif($kontrak[0]['kategori_belanja'] == '05'){
 									$kategori_belanja = 'Aset lain';
+								}elseif($kontrak[0]['kategori_belanja'] == '06'){
+									$kategori_belanja = 'KDP';
 								}else{
 									$kategori_belanja = '';
 								}
