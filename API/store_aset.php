@@ -2899,6 +2899,13 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['UserNm'] = $data['UserNm'];
         if(isset($data['TipeAset'])) $tblAset['TipeAset'] = $data['TipeAset'];
 
+         //cek tahun
+        if($tblAset['Tahun']==""||$tblAset['Tahun']=="0"){
+            $sql = "SELECT Tahun FROM aset WHERE Aset_ID = '{$data['Aset_ID']}'";
+            echo $sql;
+            $tahun_aset = $this->fetch($sql);
+            $tblAset['Tahun'] = abs($tahun_aset['Tahun']);
+        }
         if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
 	    $tblKib['kodeKA'] = 1;
@@ -3637,6 +3644,15 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['kodeKA'] = 0;
         if(isset($data['kodeRuangan'])) $tblAset['kodeRuangan'] = $data['kodeRuangan'];
 
+
+         //cek tahun
+        if($tblAset['Tahun']==""||$tblAset['Tahun']=="0"){
+            $sql = "SELECT Tahun FROM aset WHERE Aset_ID = '{$data['Aset_ID']}'";
+            echo $sql;
+            $tahun_aset = $this->fetch($sql);
+            $tblAset['Tahun'] = abs($tahun_aset['Tahun']);
+        }
+        
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key."='$val'";
             }
