@@ -28380,6 +28380,7 @@ foreach ($dataArr as $asetID => $value)
                         $status_masuk_penyusutan=0;
                         $flag_penyusutan=0;
 			foreach ($getdataRwyt as $valRwyt){
+				pr($valRwyt);
 				$tglFormat = $new_date = date('d-m-Y ', strtotime($valRwyt->TglPerubahan));
 				// pr($tglFormat);
                                 //perhitungan rentang waktu penyusutan
@@ -28408,15 +28409,15 @@ foreach ($dataArr as $asetID => $value)
 				/** umur ekonomis**/
 
 
-				if($valRwyt->Kd_Riwayat == '50'){
-					$rentang_tahun_penyusutan=($valRwyt->TahunPenyusutan-$valRwyt->Tahun) + 1;
+				if($valRwyt->Kd_Riwayat == '50' || $valRwyt->Kd_Riwayat == '51'){
+					$rentang_tahun_penyusutan=($valRwyt->TahunPenyusutan - $valRwyt->Tahun) + 1;
 					if($valRwyt->UmurEkonomis == '' || $valRwyt->UmurEkonomis == '0'){
 						$umurekonomis = $valRwyt->MasaManfaat  - $rentang_tahun_penyusutan;
 						if($umurekonomis < 0 ){
 							$umurekonomis = 0;
 						}
 					}else{
-						$umurekonomis =$valRwyt->UmurEkonomi;
+						$umurekonomis =$valRwyt->UmurEkonomis;
 					}
 				}
 				/**akhir umur ekonomis */
@@ -28445,8 +28446,13 @@ foreach ($dataArr as $asetID => $value)
 					26 = Penghapusan Pemindahtanganan
 					27 = Penghapusan Pemusnahan
 					*/
-                                    //$status_masuk_penyusutan=1;
-					$cekSelisih =($valRwyt->NilaiPerolehan - $valRwyt->NilaiPerolehan_Awal);  
+                	//$status_masuk_penyusutan=1;
+                	//pr($paramKd_Rwyt);
+					//pr("here");
+					//exit;
+					$cekSelisih =($valRwyt->NilaiPerolehan - $valRwyt->NilaiPerolehan_Awal); 
+					//pr($cekSelisih);
+					//pr("==============="); 
 					if($cekSelisih >= 0){
 						//mutasi tambah
 						if($cekSelisih == 0){
@@ -28469,7 +28475,7 @@ foreach ($dataArr as $asetID => $value)
 							
 						}else{
 							$valAdd = $cekSelisih;
-							$valSubstAp = $valRwyt->AkumulasiPenyusutan - $valRwyt->AkumulasiPenyusutan_Awal;
+							//$valSubstAp = $valRwyt->AkumulasiPenyusutan - $valRwyt->AkumulasiPenyusutan_Awal;
 							//SALDO AWAL
 							$nilaiAwalPrlhn = $valRwyt->NilaiPerolehan_Awal;
 							$nilaiAwalPerolehanFix = number_format($nilaiAwalPrlhn,2,",",".");
@@ -28477,7 +28483,7 @@ foreach ($dataArr as $asetID => $value)
 							//revisi 
 							/*$AkumulasiPenyusutan = $valRwyt->AkumulasiPenyusutan_Awal;
 							$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan,2,",",".");*/
-							if($paramKd_Rwyt == 21 ){
+							if($paramKd_Rwyt == 21 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 29){
 								$AkumulasiPenyusutan = $valRwyt->AkumulasiPenyusutan_Awal;
 								$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan,2,",",".");
 							}else{
@@ -28487,7 +28493,7 @@ foreach ($dataArr as $asetID => $value)
 							if($AkumulasiPenyusutan != 0 && $AkumulasiPenyusutan !=''){
 								if($valRwyt->NilaiBuku_Awal !=''){
 									$NilaiBuku = $valRwyt->NilaiBuku_Awal;
-									$NilaiBukuFix = number_format($NilaiBuku_Awal,2,",",".");	
+									$NilaiBukuFix = number_format($NilaiBuku,2,",",".");	
 								}else{
 									$NilaiBuku = $valRwyt->NilaiBuku;
 									$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
@@ -28519,7 +28525,7 @@ foreach ($dataArr as $asetID => $value)
                                                 }else $valSubstAp=0;*/
 						/*$valSubstAp=$valRwyt->AkumulasiPenyusutan - $valRwyt->AkumulasiPenyusutan_Awal;
 						$penyusutanBertambah = $valSubstAp;*/
-						if($paramKd_Rwyt == 21 ){	
+						if($paramKd_Rwyt == 21 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 29){	
 							$valSubstAp=$valRwyt->AkumulasiPenyusutan - $valRwyt->AkumulasiPenyusutan_Awal;
 							$penyusutanBertambah = $valSubstAp;
 							$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
@@ -28554,7 +28560,7 @@ foreach ($dataArr as $asetID => $value)
 						//$AkumulasiPenyusutan = $valRwyt->AkumulasiPenyusutan_Awal;
 						//$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan,2,",",".");
 
-						if($paramKd_Rwyt == 21 ){
+						if($paramKd_Rwyt == 21 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 29){
 							$AkumulasiPenyusutan = $valRwyt->AkumulasiPenyusutan_Awal;
 							$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan,2,",",".");
 						}else{
@@ -28599,7 +28605,7 @@ foreach ($dataArr as $asetID => $value)
                                                 {
                                                     $valSubstAp=(abs($cekSelisih)/$masa_manfaat)*$rentang_penyusutan;
                                                 }*/
-                        if($paramKd_Rwyt == 21 ){	
+                        if($paramKd_Rwyt == 21 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 29){	
 							/*$valSubstAp=$valRwyt->AkumulasiPenyusutan - $valRwyt->AkumulasiPenyusutan_Awal;*/
 							$valSubstAp=abs($valRwyt->AkumulasiPenyusutan - $valRwyt->AkumulasiPenyusutan_Awal);
 							$penyusutanBerkurang = $valSubstAp;
