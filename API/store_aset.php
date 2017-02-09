@@ -1606,7 +1606,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $field = implode(',', $tmpfield);
             $value = implode(',', $tmpvalue);
             $query = "INSERT INTO aset ({$field}) VALUES ({$value})";
-            
             $execquery = mysql_query($query);
             // logFile($query);
             if(!$execquery){
@@ -1734,8 +1733,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             unset($tmpfield2);
             unset($tmpvalue2);
             foreach ($tblKib as $key => $val) {
+                $temp = addslashes(html_entity_decode($val));
                 $tmpfield2[] = $key;
-                $tmpvalue2[] = "'$val'";
+                $tmpvalue2[] = "'$temp'";
+                //$tmpvalue2[] = "'$val'";
             }
             $field = implode(',', $tmpfield2);
             $value = implode(',', $tmpvalue2);
@@ -1817,8 +1818,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 unset($tmpfield3);
                 unset($tmpvalue3);
                 foreach ($tblKib2 as $keys => $vals) {
+                    $temp2 = addslashes(html_entity_decode($vals));
                     $tmpfield3[] = $keys;
-                    $tmpvalue3[] = "'$vals'";
+                    $tmpvalue3[] = "'$temp2'";
                 }
                 $fields = implode(',', $tmpfield3);
                 $values = implode(',', $tmpvalue3);
