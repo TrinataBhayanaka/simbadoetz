@@ -28380,7 +28380,7 @@ foreach ($dataArr as $asetID => $value)
                         $status_masuk_penyusutan=0;
                         $flag_penyusutan=0;
 			foreach ($getdataRwyt as $valRwyt){
-				pr($valRwyt);
+				//pr($valRwyt);
 				$tglFormat = $new_date = date('d-m-Y ', strtotime($valRwyt->TglPerubahan));
 				// pr($tglFormat);
                                 //perhitungan rentang waktu penyusutan
