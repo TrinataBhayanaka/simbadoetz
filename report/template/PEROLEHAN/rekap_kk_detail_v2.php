@@ -290,8 +290,8 @@ foreach ( $data as $gol ) {
 
 
 //}
-  pr($DATA_FINAL);
-  exit();
+  //pr($DATA_FINAL);
+  //exit();
   $waktu = date("d-m-y_h:i:s");
   $TBS->MergeBlock( 'a', $DATA_FINAL );
   $filename = "$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
