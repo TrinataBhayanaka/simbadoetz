@@ -113,7 +113,7 @@ exit;
 else
 {
 	$waktu=date("d-m-y_h:i:s");
-	$filename ="Daftar Aset Tetap Tanah_$waktu.xls";
+	$filename ="Daftar_Aset_Tetap_Tanah_$waktu.xls";
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	$count = count($html);
