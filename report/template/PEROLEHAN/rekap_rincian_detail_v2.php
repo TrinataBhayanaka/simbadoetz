@@ -1715,7 +1715,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 if($cekSelisih >= 0) {
                     //mutasi tambah
                     if($cekSelisih == 0) {
-                        $valAdd = $valRwyt->NilaiPerolehan;
+                        $valAdd = 0;
                         $valSubstAp = 0;
                         //SALDO AWAL
                         $nilaiAwalPrlhn = 0;
