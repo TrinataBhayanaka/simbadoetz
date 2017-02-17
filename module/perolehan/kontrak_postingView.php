@@ -242,7 +242,8 @@ $menu_id = 1;
 				//if($unpost['dist'] == 0){
 				$tmp_tahun_kontrak=explode("-",$kontrak['tglKontrak']);
 				$tahun_kontrak=$tmp_tahun_kontrak[0];
-				if($tahun_kontrak==$TAHUN_AKTIF)
+				$hak_akses_admin=$SessionUser['ses_uaksesadmin'];
+				if($tahun_kontrak==$TAHUN_AKTIF && $hak_akses_admin==1)
 				{
 					if($kontrak['tipeAset'] == 1){
 						if($kapchek['kap'] == 0){
