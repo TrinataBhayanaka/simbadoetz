@@ -40,17 +40,33 @@ $data=array(
 
 $REPORT_RETRIEVE=new RETRIEVE_REPORT();
 
-$data=$REPORT_RETRIEVE->daftar_pengadaan_berdasarkan_skpd($skpd_id,$tglawalperolehan,$tglakhirperolehan);
-// exit;
+//pengadaan kontrak aset non kapitalisasi
+$data_non_kapitalisasi=$REPORT_RETRIEVE->daftar_pengadaan_berdasarkan_skpd($skpd_id,$tglawalperolehan,$tglakhirperolehan);
+//pr($data_non_kapitalisasi);
+
+//pengadaan kontrak aset kapitalisasi
+$data_kapitalisasi=$REPORT_RETRIEVE->daftar_pengadaan_kapitalisasi_berdasarkan_skpd($skpd_id,$tglawalperolehan,$tglakhirperolehan);
+//pr($data_kapitalisasi);
+$data =array();
+if($data_non_kapitalisasi != '' && $data_kapitalisasi != ''){
+	$data = array_merge($data_non_kapitalisasi,$data_kapitalisasi);
+}elseif($data_non_kapitalisasi != '' && $data_kapitalisasi == ''){
+	$data = $data_non_kapitalisasi;
+}elseif($data_non_kapitalisasi == '' && $data_kapitalisasi != ''){
+	$data = $data_kapitalisasi;
+}elseif($data_non_kapitalisasi == '' && $data_kapitalisasi == ''){
+	$data ='';
+}
+//pr($data);
+//exit;
 $tglPerolehanAwal=  format_tanggal($tglawalperolehan);
 $tglPerolehanAkhir=  format_tanggal($tglakhirperolehan);
 $tglcetak=  format_tanggal($tglcetak);
-//pr($data);
 
 $gambar = $FILE_GAMBAR_KABUPATEN;
 $html=$REPORT->report_daftar_pengadaan($data, $gambar,$tglPerolehanAwal,$tglPerolehanAkhir,$tglcetak) ;
-// pr($html);
-// exit;
+//pr($html);
+//exit;
 
 if($tipe==1){
 $REPORT->show_status_download_kib();

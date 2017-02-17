@@ -110,8 +110,6 @@ $menu_id = 10;
 									$kategori_belanja = 'Jaringan';
 								}elseif($kontrak[0]['kategori_belanja'] == '05'){
 									$kategori_belanja = 'Aset lain';
-								}elseif($kontrak[0]['kategori_belanja'] == '06'){
-									$kategori_belanja = 'KDP';
 								}else{
 									$kategori_belanja = '';
 								}
@@ -510,7 +508,8 @@ $menu_id = 10;
         var kodeKelompok = tmp.split("."); 
         var kategori_belanja = $('#kategori_belanja').val(); 
         var tipeAset = $('#tipeAset').val(); 
-        if(tipeAset == 1){
+        if(tipeAset == 1 || tipeAset == 2){
+        	//untuk belnja modal dan kapitalisasi
         	if(kategori_belanja){
         		if(kodeKelompok[0] != kategori_belanja){
         			$('#flag').val("3");
@@ -525,7 +524,7 @@ $menu_id = 10;
         	}
         	
         }else{
-        	var kodeKelompokKapitalisasi = $('#kodeKelompokKapitalisasi').val(); 
+        	/*var kodeKelompokKapitalisasi = $('#kodeKelompokKapitalisasi').val(); 
         	var temp = kodeKelompokKapitalisasi.split("."); 
         	if(temp[0] != kodeKelompok[0]){
         		alert("Jenis Aset tidak sesuai dengan Aset Kapitalisasi");
@@ -533,7 +532,7 @@ $menu_id = 10;
         	}else{
         		$('#submit').removeAttr("disabled");
         	}
-        	$('.reklasAset').hide(400);
+        	$('.reklasAset').hide(400);*/
         }
         
       	$('.infoReklas').hide();
