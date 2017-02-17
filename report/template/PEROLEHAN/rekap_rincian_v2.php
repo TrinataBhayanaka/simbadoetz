@@ -1715,7 +1715,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 if($cekSelisih >= 0) {
                     //mutasi tambah
                     if($cekSelisih == 0) {
-                        $valAdd = $valRwyt->NilaiPerolehan;
+                        $valAdd = 0;
                         $valSubstAp = 0;
                         //SALDO AWAL
                         $nilaiAwalPrlhn = 0;
@@ -2238,11 +2238,11 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 $nilaiPrlhnMutasiKurangFix = ($nilaiPrlhnMutasiKurang);
 
                 //MUTASI PENYUSUTAN (Berkurang)
-                $penyusutanBerkurang = $valRwyt->mutasi_ak_kurang;
+                $penyusutanBerkurang = 0; //$valRwyt->mutasi_ak_kurang
                 $penyusutanBerkurangFix = ($penyusutanBerkurang);
 
                 //MUTASI PENYUSUTAN (Bertambah)
-                $penyusutanBertambah = $valRwyt->mutasi_ak_tambah;
+                $penyusutanBertambah = 0; //$valRwyt->mutasi_ak_tambah
                 $penyusutanBertambahFix = ($penyusutanBertambah);
 
 
@@ -2252,7 +2252,11 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
 
                 $AkumulasiPenyusutan_Akhir = $valRwyt->AkumulasiPenyusutan;
 
-                $beban_penyusutan = $valRwyt->PenyusutanPerTahun;
+                //meghitung beban penyusutan
+                if($akumulasi_penyusutan_awal!=$AkumulasiPenyusutan_Akhir)
+                    $beban_penyusutan = abs($AkumulasiPenyusutan_Akhir)-abs($akumulasi_penyusutan_awal);
+                else
+                    $beban_penyusutan=0;
                 $beban_penyusutanFix = ($beban_penyusutan);
 
 

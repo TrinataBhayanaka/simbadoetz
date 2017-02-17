@@ -1301,12 +1301,14 @@ selectAllSatker( 'kodeSatkerRincian20lain', '255', true, false, false, true );
 							<li>
 								<span class="span2">Level</span>
                                                                 <select  name="levelAset" id="levelAset" style="width:170px">
-									<option value="1">Semua Level</option>
+									<option value="7">Semua Level</option>
 									<option value="2">Golongan</option>
 									<option value="3">Bidang</option>
 									<option value="4">Kelompok</option>
 									<option value="5">Sub Kelompok</option>
 									<option value="6">Sub Sub Kelompok</option>
+									<option value="7">Detail Per Aset</option>
+									<option value="1">Detail Per Aset dan Per Riwayat</option>
 								</select>
 							</li>
 							<?php //selectAllSatker('kodeSatker8','255',true,false);
