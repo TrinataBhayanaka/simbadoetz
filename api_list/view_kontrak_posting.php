@@ -1,8 +1,9 @@
 <?php
-ob_start();
+ob_start ();
 include "../config/config.php";
 
-$id=$_SESSION['user_id'];//Nanti diganti
+$id = $_SESSION[ 'user_id' ];//Nanti diganti
+$SessionUser = $SESSION->get_session_user();
 // echo  $id;
 /*
  * To change this template, choose Tools | Templates
@@ -19,18 +20,18 @@ $id=$_SESSION['user_id'];//Nanti diganti
 /* Array of database columns which should be read and sent back to DataTables. Use a space where
  * you want to insert a non-database field (for example a counter or static image)
  */
- /*SELECT a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.Tahun,k.Uraian,s.NamaSatker from aset a 
- inner join kelompok as k on k.Kode = a.kodeKelompok 
- inner join satker as s on s.kode = a.kodeSatker 
- where a.tahun = '2014' and a.kodeSatker = '01.01.01.01' and a.kodekelompok like '02%' limit 1 */
- 
- // echo "masuk aja dulu";
- // pr($_GET);
- // exit;
-$aColumns = array('k.id','k.noKontrak','k.kodeSatker','s.NamaSatker','k.tglKontrak',
-				 'k.tipeAset','k.tipe_kontrak','k.nilai','k.n_status','k.status_belanja','k.jenis_belanja');
-$test = count($aColumns);
-  
+/*SELECT a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.Tahun,k.Uraian,s.NamaSatker from aset a
+inner join kelompok as k on k.Kode = a.kodeKelompok
+inner join satker as s on s.kode = a.kodeSatker
+where a.tahun = '2014' and a.kodeSatker = '01.01.01.01' and a.kodekelompok like '02%' limit 1 */
+
+// echo "masuk aja dulu";
+// pr($_GET);
+// exit;
+$aColumns = array( 'k.id', 'k.noKontrak', 'k.kodeSatker', 's.NamaSatker', 'k.tglKontrak',
+    'k.tipeAset', 'k.tipe_kontrak', 'k.nilai', 'k.n_status', 'k.status_belanja', 'k.jenis_belanja' );
+$test = count ($aColumns);
+
 // echo $aColumns; 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "k.id";
@@ -38,19 +39,19 @@ $sIndexColumn = "k.id";
 /* DB table to use */
 $sTable = "kontrak as k";
 $sTable_inner_join_satker = "satker as s";
-$cond_satker ="s.kode = k.kodeSatker AND s.Kd_Ruang IS NULL";
+$cond_satker = "s.kode = k.kodeSatker AND s.Kd_Ruang IS NULL";
 
-$kodeSatker 		= $_GET['kodeSatker'];
-$jabatan			= $_GET['jabatan'];
-$Tahun              = $_GET['tahun'];
+$kodeSatker = $_GET[ 'kodeSatker' ];
+$jabatan = $_GET[ 'jabatan' ];
+$Tahun = $_GET[ 'tahun' ];
 
-	if($kodeSatker != "") $condtn = "k.kodeSatker LIKE '$kodeSatker%' "; else $condtn = "1";
+if($kodeSatker != "") $condtn = "k.kodeSatker LIKE '$kodeSatker%' "; else $condtn = "1";
 
-if($Tahun!=""){
-	if($condtn!="" ||$condtn!="1")
-		$condtn=" $condtn and k.tglKontrak like '$Tahun%'";
-	else
-		$condtn=" $condtn k.tglKontrak like '$Tahun%'";
+if($Tahun != "") {
+    if($condtn != "" || $condtn != "1")
+        $condtn = " $condtn and k.tglKontrak like '$Tahun%'";
+    else
+        $condtn = " $condtn k.tglKontrak like '$Tahun%'";
 }
 
 // echo $tahun;
@@ -67,10 +68,11 @@ if($Tahun!=""){
  * Local functions
  */
 
-function fatal_error($sErrorMessage = '') {
-     header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error');
-     
-     die(mysql_error());
+function fatal_error($sErrorMessage = '')
+{
+    header ($_SERVER[ 'SERVER_PROTOCOL' ] . ' 500 Internal Server Error');
+
+    die(mysql_error ());
 }
 
 /*
@@ -78,9 +80,9 @@ function fatal_error($sErrorMessage = '') {
  * Paging
  */
 $sLimit = "";
-if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
-     $sLimit = "LIMIT " . intval($_GET['iDisplayStart']) . ", " .
-             intval($_GET['iDisplayLength']);
+if(isset($_GET[ 'iDisplayStart' ]) && $_GET[ 'iDisplayLength' ] != '-1') {
+    $sLimit = "LIMIT " . intval ($_GET[ 'iDisplayStart' ]) . ", " .
+        intval ($_GET[ 'iDisplayLength' ]);
 }
 
 
@@ -88,20 +90,20 @@ if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
  * Ordering
  */
 $sOrder = "";
-if (isset($_GET['iSortCol_0'])) {
-     $sOrder = "ORDER BY  ";
-     for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
-          if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
-               $sOrder .= "" . $aColumns[intval($_GET['iSortCol_' . $i])] . " " .
-                       ($_GET['sSortDir_' . $i] === 'asc' ? 'asc' : 'desc') . ", ";
-          }
-     }
+if(isset($_GET[ 'iSortCol_0' ])) {
+    $sOrder = "ORDER BY  ";
+    for ($i = 0; $i < intval ($_GET[ 'iSortingCols' ]); $i++) {
+        if($_GET[ 'bSortable_' . intval ($_GET[ 'iSortCol_' . $i ]) ] == "true") {
+            $sOrder .= "" . $aColumns[ intval ($_GET[ 'iSortCol_' . $i ]) ] . " " .
+                ($_GET[ 'sSortDir_' . $i ] === 'asc' ? 'asc' : 'desc') . ", ";
+        }
+    }
 
-     $sOrder = substr_replace($sOrder, "", -2);
-     if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY k.tglKontrak";
-          // $sOrder = "";
-     }
+    $sOrder = substr_replace ($sOrder, "", -2);
+    if($sOrder == "ORDER BY") {
+        $sOrder = "ORDER BY k.tglKontrak";
+        // $sOrder = "";
+    }
 }
 // ECHO $sOrder;
 
@@ -112,19 +114,19 @@ if (isset($_GET['iSortCol_0'])) {
  * on very large tables, and MySQL's regex functionality is very limited
  */
 $sWhere = "";
-if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
-     //$sWhere = "WHERE (";
-     $sWhere ="WHERE (";
-     for ($i = 0; $i < count($aColumns); $i++) {
-          if (isset($_GET['bSearchable_' . $i]) && $_GET['bSearchable_' . $i] == "true") {
-               $sWhere .= "" . $aColumns[$i] . " LIKE '%" . mysql_real_escape_string($_GET['sSearch']) . "%' OR ";
-          }
-     }
-     $sWhere = substr_replace($sWhere, "", -3);
-     if($condtn == "1") $condtn = ""; else $condtn = ' AND '.$condtn;
-     $sWhere .= ')'.$condtn;
+if(isset($_GET[ 'sSearch' ]) && $_GET[ 'sSearch' ] != "") {
+    //$sWhere = "WHERE (";
+    $sWhere = "WHERE (";
+    for ($i = 0; $i < count ($aColumns); $i++) {
+        if(isset($_GET[ 'bSearchable_' . $i ]) && $_GET[ 'bSearchable_' . $i ] == "true") {
+            $sWhere .= "" . $aColumns[ $i ] . " LIKE '%" . mysql_real_escape_string ($_GET[ 'sSearch' ]) . "%' OR ";
+        }
+    }
+    $sWhere = substr_replace ($sWhere, "", -3);
+    if($condtn == "1") $condtn = ""; else $condtn = ' AND ' . $condtn;
+    $sWhere .= ')' . $condtn;
 } else {
-	$sWhere = "WHERE ".$condtn;
+    $sWhere = "WHERE " . $condtn;
 }
 
 /* Individual column filtering */
@@ -147,7 +149,7 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
  */
 
 $sQuery = "
-		SELECT SQL_CALC_FOUND_ROWS " . str_replace(" , ", " ", implode(", ", $aColumns)) . "
+		SELECT SQL_CALC_FOUND_ROWS " . str_replace (" , ", " ", implode (", ", $aColumns)) . "
 		FROM   {$sTable} INNER JOIN $sTable_inner_join_satker ON $cond_satker
 		{$sWhere}
 		{$sOrder}
@@ -158,7 +160,7 @@ $sQuery = "
 
 // $rResult = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
 //get data all
-$rResultGetDataApluserlist = $DBVAR->fetch($sQuery,1);
+$rResultGetDataApluserlist = $DBVAR->fetch ($sQuery, 1);
 // pr($rResultGetDataApluserlist);
 
 
@@ -167,100 +169,116 @@ $sQuery = "
 		SELECT FOUND_ROWS()
 	";
 // echo $sQuery;
-$rResultFilterTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
-$aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
-$iFilteredTotal = $aResultFilterTotal[0];
+$rResultFilterTotal = $DBVAR->query ($sQuery) or fatal_error ('MySQL Error: ' . mysql_errno ());
+$aResultFilterTotal = $DBVAR->fetch_array ($rResultFilterTotal);
+$iFilteredTotal = $aResultFilterTotal[ 0 ];
 
 /* Total data set length */
-	$sQuery = "
+$sQuery = "
 		SELECT COUNT(" . $sIndexColumn . ")
 		FROM   $sTable INNER JOIN $sTable_inner_join_satker ON $cond_satker $sWhere";
 
-		// echo $sQuery;
-$rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
-$aResultTotal = $DBVAR->fetch_array($rResultTotal);
-$iTotal = $aResultTotal[0];
+// echo $sQuery;
+$rResultTotal = $DBVAR->query ($sQuery) or fatal_error ('MySQL Error: ' . mysql_errno ());
+$aResultTotal = $DBVAR->fetch_array ($rResultTotal);
+$iTotal = $aResultTotal[ 0 ];
 
 
 /*
  * Output
  */
 $output = array(
-    "sEcho" => intval($_GET['sEcho']),
+    "sEcho" => intval ($_GET[ 'sEcho' ]),
     "iTotalRecords" => $iTotal,
     "iTotalDisplayRecords" => $iFilteredTotal,
     "aaData" => array()
 );
-$no=$_GET['iDisplayStart']+1;
+$no = $_GET[ 'iDisplayStart' ] + 1;
 
 
-	
-		$data=$rResultGetDataApluserlist;
-	
-if (!empty($data)){
-	foreach ($data as $key => $aRow)
-	{
-		$row = array();
-		$NamaSatker = $aRow['NamaSatker'];
-		$noKontrak = $aRow['noKontrak'];
-		$tglKontrak = $aRow['tglKontrak'];
-		$nilai = $aRow['nilai'];
-		if($aRow['tipeAset'] == 1) $tipeAset = 'Aset Baru';
-        elseif ($aRow['tipeAset'] == 2) $tipeAset = 'Kapitalisasi';
-        elseif ($aRow['tipeAset'] == 3) $tipeAset = 'Perubahan Status';
+$data = $rResultGetDataApluserlist;
 
-        if($aRow['tipe_kontrak'] == 1) {
-        	$jenisKontrak = 'Kontrak';
-        	$link = "kontrakedit";
-        }
-        elseif ($aRow['tipe_kontrak'] == 2) {
-        	$jenisKontrak = 'Pembelian Langsung';
-        	$link = "pledit";
+if(!empty($data)) {
+    foreach ($data as $key => $aRow) {
+        $row = array();
+        $NamaSatker = $aRow[ 'NamaSatker' ];
+        $noKontrak = $aRow[ 'noKontrak' ];
+        $tglKontrak = $aRow[ 'tglKontrak' ];
+        $nilai = $aRow[ 'nilai' ];
+        if($aRow[ 'tipeAset' ] == 1) $tipeAset = 'Aset Baru';
+        elseif($aRow[ 'tipeAset' ] == 2) $tipeAset = 'Kapitalisasi';
+        elseif($aRow[ 'tipeAset' ] == 3) $tipeAset = 'Perubahan Status';
+
+        if($aRow[ 'tipe_kontrak' ] == 1) {
+            $jenisKontrak = 'Kontrak';
+            $link = "kontrakedit";
+        } elseif($aRow[ 'tipe_kontrak' ] == 2) {
+            $jenisKontrak = 'Pembelian Langsung';
+            $link = "pledit";
         }
 
-		if($aRow['n_status'] != 1)
-		{
-			$status = "<span class=\"label label-Default\">BELUM</span>";
-			$view = "<a href=\"kontrak_postingRincian.php?id={$aRow['id']}\" class=\"btn btn-default btn-small\"><i class=\"fa fa-book\"></i>&nbsp;Posting</a>";
-		} else 
-		{
-			$status = "<span class=\"label label-success\">SUDAH</span>";
-			$view = "<a href=\"kontrak_postingView.php?id={$aRow['id']}\" class=\"btn btn-default btn-small\"><i class=\"fa fa-eye\"></i>&nbsp;View</a>";
-		}
-		
-		if($aRow['status_belanja'] == '0'){
-			$ket = "";
-		}elseif($aRow['status_belanja'] == '1'){
-			$ket = "Reklas";
-		}else{
-			$ket = "";
-		}
+        if($aRow[ 'n_status' ] != 1) {
+            $status = "<span class=\"label label-Default\">BELUM</span>";
+            $view = "<a href=\"kontrak_postingRincian.php?id={$aRow['id']}\" class=\"btn btn-default btn-small\"><i class=\"fa fa-book\"></i>&nbsp;Posting</a>";
 
-		if($aRow['jenis_belanja'] == '0'){
-			$belanja = "Belanja Modal";
-		}elseif($aRow['jenis_belanja'] == '1'){
-			$belanja = "Belanja Barang dan jasa";
-		}
-		
-		
-		  $row[] ="<center>".$no."</center>";
-		  $row[] =$NamaSatker;
-		  $row[] =$noKontrak;
-		  $row[] =$tglKontrak;
-		  $row[] =$jenisKontrak;
-		  $row[] =$tipeAset;
-		  $row[] =$belanja;
-		  $row[] ="<center>".number_format($nilai,2)."</center>";
-		  $row[] =$ket;
-		  $row[] ="<center>".$status."</center>";
-		  $row[] ="<center>".$view."</center>";
-		 
-		  
-		$no++;
-		 $output['aaData'][] = $row;
-	}
+        } else {
+            $status = "<span class=\"label label-success\">SUDAH</span>";
+            $view = "<a href=\"kontrak_postingView.php?id={$aRow['id']}\" class=\"btn btn-default btn-small\"><i class=\"fa fa-eye\"></i>&nbsp;View</a>";
+        }
+
+        if($aRow[ 'status_belanja' ] == '0') {
+            $ket = "";
+        } elseif($aRow[ 'status_belanja' ] == '1') {
+            $ket = "Reklas";
+        } else {
+            $ket = "";
+        }
+
+        if($aRow[ 'jenis_belanja' ] == '0') {
+            $belanja = "Belanja Modal";
+        } elseif($aRow[ 'jenis_belanja' ] == '1') {
+            $belanja = "Belanja Barang dan jasa";
+        }
+
+        /*Batal kontrak */
+        $hak_akses_admin = $SessionUser[ 'ses_uaksesadmin' ];
+        if($hak_akses_admin == 1) {
+            if($aRow[ 'tipeAset' ] != "3") {
+                $noKontrak = $aRow[ 'noKontrak' ];
+                $nama_satker = $aRow[ 'NamaSatker' ];
+                $tmp_kontrak = explode ("-", $aRow[ 'tglKontrak' ]);
+                $tahun_kontrak = $tmp_kontrak[ 0 ];
+                $id_kontrak = $aRow[ 'id' ];
+                if($tahun_kontrak == $TAHUN_AKTIF) {
+                    $batal_kontrak = "<a href=\"batal_kontrak.php?id_kontrak=$id_kontrak\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Apakah anda akan membatalkan kontrak =$noKontrak pada $nama_satker')\">
+                                            <i class=\"fa fa-delete\"></i>&nbsp;Batal Kontrak</a>";
+                  //  echo "$batal_kontrak<br/>";
+                }else{
+                    $batal_kontrak="";
+                }
+
+            }
+        }
+        /*Akhir Batal kontrak */
+
+        $row[] = "<center>" . $no . "</center>";
+        $row[] = $NamaSatker;
+        $row[] = $noKontrak;
+        $row[] = $tglKontrak;
+        $row[] = $jenisKontrak;
+        $row[] = $tipeAset;
+        $row[] = $belanja;
+        $row[] = "<center>" . number_format ($nilai, 2) . "</center>";
+        $row[] = $ket;
+        $row[] = "<center>" . $status . "</center>";
+        $row[] = "<center>$view  <br>$batal_kontrak</center>";
+
+
+        $no++;
+        $output[ 'aaData' ][] = $row;
+    }
 }
-echo json_encode($output);
+echo json_encode ($output);
 
 ?>
 
