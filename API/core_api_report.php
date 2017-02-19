@@ -7293,7 +7293,7 @@ class core_api_report extends DB {
 						      inner join aset ast on ast.Aset_ID= a.Aset_ID
 						      WHERE a.Aset_ID is not null And a.Aset_ID!=0
 						      and (a.Kd_Riwayat != '77' AND a.Kd_Riwayat != '0') and $paramLog";
-				$query_asetlain_3_bangunan="replace into aset_lain_3(kod_aeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan,AkumulasiPenyusutan,NilaiBuku,PenyusutanPerTaun )
+				$query_asetlain_3_bangunan="replace into aset_lain_3(kodeKA,kodeKelompok,kodeSatker,kodeLokasi,noRegister, Aset_ID, NilaiPerolehan ,Uraian,Kondisi,Status_Validasi_Barang,TglPerolehan,TglPembukuan,AkumulasiPenyusutan,NilaiBuku,PenyusutanPerTaun )
 						      SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan,if(a.AkumulasiPenyusutan_Awal is not null and a.AkumulasiPenyusutan_Awal !=0,a.AkumulasiPenyusutan_Awal,a.AkumulasiPenyusutan), if(a.NilaiBuku_Awal is not null ,a.NilaiBuku_Awal,a.NilaiBuku), if(a.PenyusutanPerTahun_Awal is not null and a.PenyusutanPerTahun_Awal !=0,a.PenyusutanPerTahun_Awal,a.PenyusutanPerTahun) 
 						      FROM log_bangunan as a inner join kelompok as k  on a.kodeKelompok = k.Kode 
 						      inner join aset ast on ast.Aset_ID= a.Aset_ID
