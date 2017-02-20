@@ -253,31 +253,37 @@ $menu_id = 1;
 								$bop = ceil($value['NilaiPerolehan']/$sumTotal['total']*$sumsp2d['total']);
 							}
 
-					$explode = explode('.', $value['kodeKelompokReklasAsal']);
-					if($explode[0] =="01"){
-	                    $tabel = "tanah as a";
-	                } elseif ($explode[0]=="02") {
-	                    $tabel = "mesin as a";
-	                } elseif ($explode[0]=="03") {
-	                    $tabel = "bangunan as a";
-	                } elseif ($explode[0]=="04") {
-	                    $tabel = "jaringan as a";
-	                } elseif ($explode[0]=="05") {
-	                    $tabel = "asetlain as a";
-	                } elseif ($explode[0]=="06") {
-	                    $tabel = "kdp as a";
-	                }
-
-	            $sql = "SELECT a.kodeKelompok,a.noRegister,k.uraian 
+					if($value['kodeKelompokReklasAsal']){
+						$explode = explode('.', $value['kodeKelompokReklasAsal']);
+						if($explode[0] =="01"){
+		                    $tabel = "tanah as a";
+		                } elseif ($explode[0]=="02") {
+		                    $tabel = "mesin as a";
+		                } elseif ($explode[0]=="03") {
+		                    $tabel = "bangunan as a";
+		                } elseif ($explode[0]=="04") {
+		                    $tabel = "jaringan as a";
+		                } elseif ($explode[0]=="05") {
+		                    $tabel = "asetlain as a";
+		                } elseif ($explode[0]=="06") {
+		                    $tabel = "kdp as a";
+		                }
+		                
+		                $sql = "SELECT a.kodeKelompok,a.noRegister,k.uraian 
 	            		FROM {$tabel}
 	            		inner join kelompok as k on a.kodeKelompok = k.Kode
 	                	WHERE a.Aset_ID = '{$value['Aset_ID']}'";
-	            $exec = mysql_query($sql);   		
-				while ($dataReklas = mysql_fetch_assoc($exec)){
-					$kodeKelompokReklas = $dataReklas['kodeKelompok'];
-					$noRegReklas = $dataReklas['noRegister'];
-					$uraianReklas = $dataReklas['uraian'];
-				}			
+			            $exec = mysql_query($sql);   		
+						while ($dataReklas = mysql_fetch_assoc($exec)){
+							$kodeKelompokReklas = $dataReklas['kodeKelompok'];
+							$noRegReklas = $dataReklas['noRegister'];
+							$uraianReklas = $dataReklas['uraian'];
+						}	
+					}else{
+						$kodeKelompokReklas = '';
+			            $noRegReklas = '';
+			            $uraianReklas = '';
+					}			
 				?>
 					<tr class="gradeA">
 						<td><?=$i?></td>

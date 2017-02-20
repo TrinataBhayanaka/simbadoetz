@@ -2033,9 +2033,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
     public function store_aset_kapitalisasi($data,$aset)
     {
-        //pr($data);
-        //pr($aset);
-        //exit();
         global $url_rewrite;
         $this->begin();
         unset($data['Aset_ID']);
@@ -2081,13 +2078,10 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblAset['TipeAset'] = $data['TipeAset'];
         $tblAset['GUID'] = $aset['idaset'];
         $tblAset['kodeKA'] = $tblAset['kodeKA'];
-        $getAsetAset_ID =mysql_query("SELECT * from aset where Aset_ID = '{$aset[idaset]}'");
-        while ($rows2 = mysql_fetch_assoc($getAsetAset_ID)){
-            $dataAst[] = $rows2;
-        }
-        
-
-        $tblAset['kodeKelompokReklasTujuan'] = $dataAst['0']['kodeKelompok'];
+        //@revisi
+        $tblAset['kodeKelompokReklasAsal'] = $data['kodeKelompokTujuan'];
+        $tblAset['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+        $tblAset['jenis_belanja'] = $data['jenis_belanja'];
 
             foreach ($tblAset as $key => $val) {
                 $tmpfield[] = $key;
@@ -2178,14 +2172,9 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         $tblKib['kodeRuangan'] = $data['kodeRuangan'];
         $tblKib['kodeKelompok'] = $data['kodeKelompok'];
         //@revisi
-        $tblKib['kodeKelompokReklasAsal'] = NULL;
-
-        $getAset_ID =mysql_query("SELECT * from aset where Aset_ID = '{$aset[idaset]}'");
-        while ($rows = mysql_fetch_assoc($getAset_ID)){
-            $datakib[] = $rows;
-        }
-        
-        $tblKib['kodeKelompokReklasTujuan'] = $datakib['0']['kodeKelompok'];
+        $tblKib['kodeKelompokReklasAsal'] = $data['kodeKelompokTujuan'];
+        $tblKib['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+        $tblKib['jenis_belanja'] = $data['jenis_belanja'];
 
         $query_id2 = mysql_query("SELECT Aset_ID FROM aset WHERE noKontrak = '{$data['noKontrak']}' AND kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}'");
             while ($rows2 = mysql_fetch_assoc($query_id2)){
@@ -2231,6 +2220,92 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               exit;
             }
         }
+        //add revisi reklas
+        //@revisi untuk reklas
+        //jika jenis belanja tidak sama
+        if($data['kodeKelompokTujuan']){
+               
+            $explode = explode('.', $data['kodeKelompokTujuan']);
+
+            if($explode[0] =="01"){
+                $tabel = "tanah";
+            } elseif ($explode[0]=="02") {
+                $tabel = "mesin";
+            } elseif ($explode[0]=="03") {
+                $tabel = "bangunan";
+            } elseif ($explode[0]=="04") {
+                $tabel = "jaringan";
+            } elseif ($explode[0]=="05") {
+                $tabel = "asetlain";
+            } elseif ($explode[0]=="06") {
+                $tabel = "kdp";
+            } elseif ($data['TipeAset']=="G") {
+                $tabel = "aset_07";
+                //$logtabel = "log_aset";
+                //$idkey = "Aset_ID";
+            } elseif ($data['TipeAset']=="H") {
+                $tabel = "aset_08";
+                //$logtabel = "log_aset";
+                //$idkey = "Aset_ID";
+            }
+
+            //handler untuk kode 07 dan 08
+            if($tabel != 'aset'){
+                
+                $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompokTujuan']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
+
+                while ($row = mysql_fetch_assoc($query)){
+                    $startreg = $row['noRegister'];
+                }
+                $noreg = intval($startreg)+1; 
+                //@kodereklas (tujuan)
+                $tblKib2['kodeKelompok'] = $data['kodeKelompokTujuan'];
+                $tblKib2['kodeSatker'] = $data['kodeSatker'];
+                $tblKib2['kodeLokasi'] = $tblAset['kodeLokasi'];
+                $tblKib2['noRegister'] = $noreg;
+                $tblKib2['TglPerolehan'] = $data['TglPerolehan'];
+                $tblKib2['Tahun'] = $tblAset['Tahun'];
+                //@set kebalikan dari kodereklas (asal)
+                //$tblKib2['kodeKelompokReklas'] = $data['kodeKelompok'];
+                $tblKib2['kodeKelompokReklasAsal'] = NULL;
+                $tblKib2['kodeKelompokReklasTujuan'] = $data['kodeKelompok'];
+                $tblKib2['jenis_belanja'] = $data['jenis_belanja'];
+
+                $tblKib2['NilaiPerolehan'] = $tblAset['NilaiPerolehan'];
+                $tblKib2['NilaiBuku'] = $tblAset['NilaiPerolehan'];
+                $tblKib2['kondisi'] = $data['kondisi'];
+                $tblKib2['Info'] = addslashes($data['Info']);
+                $tblKib2['Alamat'] = $data['Alamat'];
+                $tblKib2['StatusValidasi'] = 0;
+                $tblKib2['Status_Validasi_Barang'] = 0;
+                $tblKib2['StatusTampil'] = 0;
+                //flag u/Aset_ID
+                $tblKib2['GUID'] = $tblAset['GUID'];;
+                $tblKib2['Aset_ID'] = $tblKib['Aset_ID'];
+                //penambahan kodeKA
+                $tblKib2['kodeKA'] = $tblAset['kodeKA']; 
+                
+                unset($tmpfield3);
+                unset($tmpvalue3);
+                foreach ($tblKib2 as $keys => $vals) {
+                    $tmpfield3[] = $keys;
+                    $tmpvalue3[] = "'$vals'";
+                }
+                $fields = implode(',', $tmpfield3);
+                $values = implode(',', $tmpvalue3);
+                
+                    $query = "INSERT INTO {$tabel} ({$fields}) VALUES ({$values})";
+                    $execquery = mysql_query($query);
+                    if(!$execquery){
+                      $this->rollback();
+                      echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+                      exit;
+                    }
+
+            }
+                
+        }
+
 
         $query_id = mysql_query("SELECT Aset_ID FROM aset WHERE noKontrak = '{$data['noKontrak']}' AND kodeKelompok = '{$data['kodeKelompok']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}'");
             while ($row = mysql_fetch_assoc($query_id)){
