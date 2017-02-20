@@ -104,9 +104,9 @@ foreach ($kapital as $key => $value) {
          
         $fileldImp = implode(',', $tmpField);
         $dataImp = implode(',', $tmpValue);
-        $pr_sql = "INSERT INTO log_{$value['tipeAset']} ({$fileldImp}) VALUES ({$dataImp})";
-        pr($pr_sql);
-        exit();
+        //$pr_sql = "INSERT INTO log_{$value['tipeAset']} ({$fileldImp}) VALUES ({$dataImp})";
+        //pr($pr_sql);
+        //exit();
         $sql = mysql_query("INSERT INTO log_{$value['tipeAset']} ({$fileldImp}) VALUES ({$dataImp})");
         if(!$sql){
         $DBVAR->rollback();
