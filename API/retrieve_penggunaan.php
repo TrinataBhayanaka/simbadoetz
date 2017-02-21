@@ -9,7 +9,313 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         $this->db = new DB;
 	}
 	
+    //revisi
+    function getTableKibAliasrev($type=1)
+        {
+        $listTableAlias = array(1=>'t',2=>'m',3=>'b',4=>'j',5=>'al',6=>'kdp');
+        $listTableAbjad = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+
+        $listTable = array(
+                        1=>'tanah AS t',
+                        2=>'mesin AS m',
+                        3=>'bangunan AS b',
+                        4=>'jaringan AS j',
+                        5=>'asetlain AS al',
+                        6=>'kdp AS kdp');
+
+        $listTableField = array(
+                        1=>'t.NoSertifikat',
+                        2=>'m.Merk,m.Model',
+                        3=>'b.TglPakai',
+                        4=>'j.Konstruksi,j.NoDokumen',
+                        5=>'al.Pengarang,al.Penerbit,al.TahunTerbit,al.ISBN',
+                        6=>'kdp.NoSertifikat,kdp.TglSertifikat');
+        $listTable = array(
+                        1=>'tanah AS t',
+                        2=>'mesin AS m',
+                        3=>'bangunan AS b',
+                        4=>'jaringan AS j',
+                        5=>'asetlain AS al',
+                        6=>'kdp AS kdp');
+
+
+        $FieltableGeneral="{$listTableAlias[$type]}.Aset_ID,{$listTableAlias[$type]}.kodeKelompok,{$listTableAlias[$type]}.kodeSatker,{$listTableAlias[$type]}.kodeLokasi,{$listTableAlias[$type]}.noRegister,{$listTableAlias[$type]}.TglPerolehan,{$listTableAlias[$type]}.TglPembukuan,{$listTableAlias[$type]}.Status_Validasi_Barang,{$listTableAlias[$type]}.StatusTampil,{$listTableAlias[$type]}.Tahun,{$listTableAlias[$type]}.NilaiPerolehan,{$listTableAlias[$type]}.Alamat,{$listTableAlias[$type]}.Info,{$listTableAlias[$type]}.AsalUsul,{$listTableAlias[$type]}.kondisi,{$listTableAlias[$type]}.CaraPerolehan";
+        $listTableOri = array(
+                        1=>'tanah',
+                        2=>'mesin',
+                        3=>'bangunan',
+                        4=>'jaringan',
+                        5=>'asetlain',
+                        6=>'kdp');
+
+        $data['listTable'] = $listTable[$type];
+        $data['listTableAlias'] = $listTableAlias[$type];
+        $data['listTableAbjad'] = $listTableAbjad[$type];
+        $data['listTableOri'] = $listTableOri[$type];
+        $data['listTableField'] = $listTableField[$type];
+        $data['FieltableGeneral'] = $FieltableGeneral;
+
+        return $data;
+        }
+
+    public function create_usulan_penggunaan($data,$debug=false){
+        $NoSKKDH = $data['NoSKKDH'];        
+        $TglSKKDH = $data['TglSKKDH'];        
+        $TglUpdate = $data['TglSKKDH'];   
+        $Keterangan = str_replace("'", "", $data['Keterangan']);
+        $UserNm = $data['UserNm'];        
+        $NotUse = 0;        
+        $FixPenggunaan = 0;        
+        $Status = 0;        
+        $GUID = $_SESSION['ses_uid'];        
+        
+        //begin transaction
+        $this->db->begin();
+        $sql = array(
+                    'table'=>'penggunaan',
+                    'field'=>'NoSKKDH,TglSKKDH,Keterangan,NotUse, TglUpdate, UserNm,FixPenggunaan,GUID,Status',
+                    'value' => "'$NoSKKDH','$TglSKKDH','$Keterangan','$NotUse', '$TglUpdate', 
+                               '$UserNm','$FixPenggunaan','$GUID','$Status'",
+                    );
+            
+        $res = $this->db->lazyQuery($sql,$debug,1);
+        if(!$res){
+                //rollback transaction
+                $this->db->rollback();
+                echo "<script>
+                alert('Input Data Usulan Gagal. Silahkan coba lagi');
+                document.location='dftr_usulan_penggunaan.php';
+                </script>";
+                exit();
+        }
+        //commit transaction
+        $this->db->commit();  
+    }
 	
+    public function DataUsulan($id){
+
+             $sql = array(
+                    'table'=>'penggunaan',
+                    'field'=>" * ",
+                    'condition' => "Penggunaan_ID='{$id}' ORDER BY Penggunaan_ID desc",
+                    );
+
+            $res = $this->db->lazyQuery($sql,$debug);
+            // //////pr($sql);
+
+        if ($res) return $res;
+        return false;
+    }
+
+     public function retrieve_daftar_usulan_aset_penggunaan($data,$debug=false){
+        //pr($data);
+        $id=$_GET['id'];
+        $limit= $data['limit'];
+        $order= $data['order'];
+        $condition = trim($data['condition']);
+        if($condition){
+            $filter = "AND ".$condition;
+        }else{
+            $filter = "";
+        }
+        $sql1 = array(
+                'table'=>'penggunaanaset',
+                'field'=>" * ",
+                'condition' => "Penggunaan_ID='$id' ORDER BY Aset_ID",
+                );
+
+        $res1 = $this->db->lazyQuery($sql1,$debug);
+        //pr($res1);
+        $Aset_ID = array();
+        foreach ($res1 as $value) {
+            # code...
+            $Aset_ID[] = $value['Aset_ID'];
+        }
+        //pr($Aset_ID);
+        
+        $listAset = implode(',', $Aset_ID);
+        //pr($listAset);
+        //exit;
+        if($listAset){
+            $sqlUsulAst = array(   
+                'table'=>'penggunaanaset AS b,Aset AS a,Kelompok AS k',
+                'field'=>"SQL_CALC_FOUND_ROWS b.*,a.Aset_ID,a.kodeSatker,a.TglPerolehan,a.kodeKelompok,a.NilaiPerolehan,a.noKontrak,a.noRegister,a.TipeAset,a.kondisi,a.AsalUsul, k.Kode,k.Uraian",
+                'condition' => "b.Penggunaan_ID='$id' AND b.Aset_ID IN ({$listAset}) {$filter}  GROUP BY b.Aset_ID  $order ",
+                        'limit'=>"$limit",
+                'joinmethod' => ' INNER JOIN ',
+                'join' => 'b.Aset_ID=a.Aset_ID , a.kodeKelompok=k.Kode' 
+                );
+
+                $resUsulAst = $this->db->lazyQuery($sqlUsulAst,$debug);
+                if ($res1) return $resUsulAst;
+                return false;  
+        }else{
+            return false;
+        }
+    }
+
+     public function retrieve_usulan_penggunaan($data,$debug=false)
+    {
+        //pr($data);
+        //exit;
+        $jenisaset = array($data['jenisaset']);
+        $kodeSatker = $data['kodeSatker'];
+        $kodePemilik = $data['kodepemilik'].'%';
+        $kodeKelompok = $data['kodeKelompok'];
+        $tahun = $data['bup_tahun'];
+        $kondisi= trim($data['condition']);
+        $limit= $data['limit'];
+        $order= $data['order'];
+        if($kondisi){
+            $paramKondisi = " AND $kondisi";
+        }else{
+            $paramKondisi = "";
+        }
+        $filterkontrak = "";
+        if ($kodeKelompok) $filterkontrak .= " AND ast.kodeKelompok = '{$kodeKelompok}' ";
+        if ($kodePemilik) $filterkontrak .= " 
+            AND ast.kodeLokasi LIKE '{$kodePemilik}' ";
+
+        if ($kodeSatker){ 
+            $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
+        }else{
+            $kodeSatker=$_SESSION['ses_satkerkode'];
+            $filterkontrak .= " AND ast.kodeSatker = '{$kodeSatker}' "; 
+        }
+        if ($tahun) $filterkontrak .= " AND ast.Tahun = '{$tahun}' ";
+        
+            foreach ($jenisaset as $value) {
+                //pr($value);
+                //exit;
+                $table = $this->getTableKibAliasrev($value);
+                $listTable = $table['listTable'];
+                $listTableAlias = $table['listTableAlias'];
+                $listTableAbjad = $table['listTableAbjad'];
+                $listTableField = $table['listTableField'];
+                $FieltableGeneral= $table['FieltableGeneral'];
+
+                //define array
+                $dataArrListUsul = array();
+                $ListUsul = array();
+                $dataArr = array();
+
+                $sql1 = array(
+                        'table'=>'penggunaanaset',
+                        'field'=>"Aset_ID",
+                        'condition' => "Status = 0 AND  kodeSatker = '$kodeSatker' ORDER BY Aset_ID",
+                        //'limit'=>"10",
+                        );
+                
+                $resUsul = $this->db->lazyQuery($sql1,$debug);
+                if($resUsul){
+                    foreach($resUsul as $asetidUsul){
+                        //list Aset_ID yang pernah diusulkan
+                        $dataArrListUsul[]=$asetidUsul[Aset_ID];
+                    }
+                    
+                    //reverse array usulan 
+                    foreach(array_values($dataArrListUsul) as $v){
+                        $ListUsul[$v] = 1;
+                    }
+                   
+                    $condition="ast.fixPenggunaan=0 AND (ast.NotUse = 0 OR ast.NotUse IS NULL) AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";    
+                }else{
+                    $condition="ast.fixPenggunaan=0 AND (ast.NotUse = 0 OR ast.NotUse IS NULL) AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
+                }
+                
+                //pr($condition);
+                //exit;
+                //cara ke dua
+                $sql2 = array(
+                        'table'=>"{$listTable},Aset AS ast,kelompok AS k",
+                        'field'=>"ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
+                        'condition' => "{$condition} {$filterkontrak} {$paramKondisi} GROUP BY ast.Aset_ID $order",
+                        'joinmethod' => ' INNER JOIN ',
+                        'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
+                         );
+                    
+                $resAset = $this->db->lazyQuery($sql2,$debug);
+                
+                if($resAset){
+                    //list Usulan Aset
+                    if($ListUsul){
+                        //list Aset
+                        foreach($resAset as $asetidAset){
+                            //list Aset_ID yang pernah diusulkan
+                            $needle = $asetidAset[Aset_ID];
+                            //matching
+                            if (!isset($ListUsul[$needle])){
+                                $dataArr[] = $needle;
+                            }                        
+                        }      
+                    }else{
+                        foreach($resAset as $asetidAset){
+                            $needle[] = $asetidAset[Aset_ID];
+                                                    
+                        }  
+                        $dataArr= $needle;
+                    }
+                    if($dataArr){
+                      $listAsetid = implode(',',$dataArr);
+                      if($listAsetid=="Array"){
+                          $query_aset_idin="";
+                      }else{
+                        $query_aset_idin=" ast.Aset_ID IN ($listAsetid)";
+                      
+                      }
+                        $sqlFix = array(
+                            'table'=>"{$listTable},Aset AS ast,kelompok AS k",
+                            'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
+                            'condition' => "{$query_aset_idin} GROUP BY ast.Aset_ID $order",
+                            'limit'=>"$limit",
+                            'joinmethod' => ' INNER JOIN ',
+                            'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
+                             ); 
+                        $resAsetFix = $this->db->lazyQuery($sqlFix,$debug); 
+                    }      
+                }
+        }
+        //if ($dataArr) return $dataArr;
+        //if ($resAsetFix) return $resAsetFix;
+        if ($resAsetFix) return array("data"=>$resAsetFix,"count"=> $listAsetid);
+        return false;
+    }  
+
+    public function update_usulan_penghapusan_asetid_penggunaan($data,$debug=false)
+    {
+      
+        //pr($_POST);
+        // exit;
+        $Penggunaan_ID=$data['Penggunaan_ID'];
+        $NoSKKDH=$data['NoSKKDH'];
+        $ketUsulan=$data['ketUsulan'];
+        $tgl=$data['TglSKKDH'];
+        //begin transaction
+        $this->db->begin();
+        $sql2 = array(
+                            'table'=>'penggunaan',
+                            'field'=>"NoSKKDH='$NoSKKDH',Keterangan='$ketUsulan',TglSKKDH='$tgl',TglUpdate='$tgl'",
+                            'condition' => "Penggunaan_ID='$Penggunaan_ID'",
+                            );
+        $res2 = $this->db->lazyQuery($sql2,$debug,2);
+        if(!$res2){
+            //rollback transaction
+            $this->db->rollback();
+            echo "<script>
+                    alert('Update Data Usulan Gagal. Silahkan coba lagi');
+                    document.location='dftr_usulan_penggunaan.php';
+                    </script>";
+            exit();
+        }
+        //commit transaction
+        $this->db->commit(); 
+        if($res2 && $res3){
+            return true;
+        }else{
+            return false;
+        }
+
+    } 
     public function update_daftar_penetapan_penggunaan($data,$debug=false)
     {
         
@@ -365,7 +671,122 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
         if ($res) return $res;
         return false;
     }
-    
+    //revisi
+    public function retrieve_daftar_penetapan_penggunaan_v2($data=array(),$debug=false)
+    {
+        $tahun = $data['tahun'];
+        $cndtn = trim($data['condition']);
+        $limit= $data['limit'];
+        $order= $data['order'];
+        $paramWhere = '';
+        $filter = "";
+        
+        if($cndtn != ''){
+            $paramWhere = "AND $cndtn";
+        }else{
+            $paramWhere = "";
+        }
+         
+        if($_SESSION['ses_uaksesadmin']==1){
+
+            $filter .= " AND YEAR(p.TglSKKDH) ='{$tahun}' $paramWhere";
+        }else{
+            $UserName=$_SESSION['ses_uoperatorid'];
+           
+            if ($UserName) $filter .= " AND p.UserNm LIKE '{$UserName}%' AND YEAR(p.TglUpdate) ='{$tahun}' $paramWhere";
+        }
+        $param = "(p.FixPenggunaan = 0 or p.FixPenggunaan is null or 
+                   p.FixPenggunaan = 1 )  
+                  AND (p.Status = 0 or p.Status IS NULL or p.Status = 1)  
+                  AND p.NoSKKDH NOT LIKE '%Migrasi%'";
+
+        $sql = array(
+                'table'=>'penggunaan AS p',
+                'field'=>"SQL_CALC_FOUND_ROWS p.*",
+                'condition' => " {$param} {$filter} $order ",
+                'limit'=>"$limit",
+                );        
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+
+    public function retrieve_daftar_penetapan_penggunaan_view_validasi($data=array(),$debug=false)
+    {
+        $tahun = $data['tahun'];
+        $cndtn = trim($data['condition']);
+        $limit= $data['limit'];
+        $order= $data['order'];
+        $paramWhere = '';
+        $filter = "";
+        
+        if($cndtn != ''){
+            $paramWhere = "AND $cndtn";
+        }else{
+            $paramWhere = "";
+        }
+         
+        if($_SESSION['ses_uaksesadmin']==1){
+
+            $filter .= " AND YEAR(p.TglSKKDH) ='{$tahun}' $paramWhere";
+        }else{
+            $UserName=$_SESSION['ses_uoperatorid'];
+           
+            if ($UserName) $filter .= " AND p.UserNm LIKE '{$UserName}%' AND YEAR(p.TglUpdate) ='{$tahun}' $paramWhere";
+        }
+        $param = "(p.FixPenggunaan = 0 or p.FixPenggunaan is null )  
+                  AND (p.Status = 0 or p.Status IS NULL)  
+                  AND p.NoSKKDH NOT LIKE '%Migrasi%'";
+
+        $sql = array(
+                'table'=>'penggunaan AS p',
+                'field'=>"SQL_CALC_FOUND_ROWS p.*",
+                'condition' => " {$param} {$filter} $order ",
+                'limit'=>"$limit",
+                );        
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+
+     public function retrieve_daftar_penetapan_penggunaan_validasi($data=array(),$debug=false)
+    {
+        $tahun = $data['tahun'];
+        $cndtn = trim($data['condition']);
+        $limit= $data['limit'];
+        $order= $data['order'];
+        $paramWhere = '';
+        $filter = "";
+        
+        if($cndtn != ''){
+            $paramWhere = "AND $cndtn";
+        }else{
+            $paramWhere = "";
+        }
+         
+        if($_SESSION['ses_uaksesadmin']==1){
+
+            $filter .= " AND YEAR(p.TglSKKDH) ='{$tahun}' $paramWhere";
+        }else{
+            $UserName=$_SESSION['ses_uoperatorid'];
+           
+            if ($UserName) $filter .= " AND p.UserNm LIKE '{$UserName}%' AND YEAR(p.TglUpdate) ='{$tahun}' $paramWhere";
+        }
+        $param = "p.FixPenggunaan = 1  
+                  AND p.Status = 1  
+                  AND p.NoSKKDH NOT LIKE '%Migrasi%'";
+
+        $sql = array(
+                'table'=>'penggunaan AS p',
+                'field'=>"SQL_CALC_FOUND_ROWS p.*",
+                'condition' => " {$param} {$filter} $order ",
+                'limit'=>"$limit",
+                );        
+        $res = $this->db->lazyQuery($sql,$debug);
+        if ($res) return $res;
+        return false;
+    }
+
 	public function retrieve_penetapan_penggunaan_eksekusi($parameter, $debug=false)
     {
         $id = $_POST['Penggunaan'];
@@ -500,7 +921,7 @@ class RETRIEVE_PENGGUNAAN extends RETRIEVE{
                     
                 }
             }
-
+            //pr($asetidKib);
             if (!$asetidKib) return false;
             $tmpAsetid = array_keys($asetidKib);
 

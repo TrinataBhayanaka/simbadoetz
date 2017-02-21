@@ -1,0 +1,24 @@
+//filter awal
+SELECT p.* FROM penggunaan AS p 
+LEFT JOIN Penggunaanaset AS pa ON p.Penggunaan_ID = pa.Penggunaan_ID 
+WHERE  p.NotUse = 0 AND p.FixPenggunaan = 0 AND p.Status IS NULL AND p.NoSKKDH NOT LIKE '%Migrasi%'  group by p.Penggunaan_ID 
+
+
+SELECT m.* FROM mesin AS m WHERE  m.Status_Validasi_Barang = 1 AND m.StatusTampil =1  AND
+m.kodeSatker = '01.01.01.01'
+
+retrieve_penetapan_penggunaan
+
+*) bentuk array dengan index[Aset_ID]
+*) array key
+*) SELECT SQL_CALC_FOUND_ROWS a.Aset_ID, a.TipeAset, k.Uraian, s.NamaSatker, a.noKontrak FROM
+ aset AS a LEFT JOIN kelompok AS k ON a.kodeKelompok = k.Kode LEFT JOIN satker AS s ON  a.kodeSatker
+ = s.kode WHERE  a.TipeAset IN ('B') AND a.Status_Validasi_Barang = 1 AND (a.NotUse IS NULL OR a.NotUse
+ =0)   AND a.kodeSatker = '01.01.01.01'    GROUP BY a.Aset_ID    LIMIT  0, 10
+ *) array merge
+
+ *)penggunaan_penetapan_eksekusi_data_proses
+ *)store_penetapan_penggunaan
+
+
+ update fixpenggunaan dan notuse
