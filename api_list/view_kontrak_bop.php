@@ -100,7 +100,7 @@ if (isset($_GET['iSortCol_0'])) {
 
      $sOrder = substr_replace($sOrder, "", -2);
      if ($sOrder == "ORDER BY") {
-          $sOrder = "ORDER BY k.tglKontrak";
+          $sOrder = "ORDER BY k.id desc";
           // $sOrder = "";
      }
 }
