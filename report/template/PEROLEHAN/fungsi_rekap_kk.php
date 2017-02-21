@@ -2498,9 +2498,9 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level_aset[ $key_baru ][ 'no_aset' ] = $value[ 'Aset_ID' ];
         $data_level_aset[ $key_baru ][ 'riwayat' ] = $value[ 'Kd_Riwayat' ];
 
-        if($log_id!=="")
+        if($log_id=="") $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
+
         $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
-        //$data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
 
         $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
         $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
