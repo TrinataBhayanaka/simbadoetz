@@ -11,8 +11,15 @@ while ($dataKontrak = mysql_fetch_assoc($sql)){
             $noKontrak = $dataKontrak;
         }
 
-$updateKontrak = mysql_query("UPDATE kontrak SET n_status = '1' WHERE id = '{$noKontrak['id']}'");
+//begi transaction
+$DBVAR->begin();
 
+$updateKontrak = mysql_query("UPDATE kontrak SET n_status = '1' WHERE id = '{$noKontrak['id']}'");
+if(!$updateKontrak){
+  $DBVAR->rollback();
+  echo "<script>alert('ERROR #001 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+  exit;
+}
 
 $sql = mysql_query("SELECT SUM(nilai) as total FROM sp2d WHERE idKontrak='{$kontrakID}' AND type = '2'");
 while ($dataSP2D = mysql_fetch_assoc($sql)){
@@ -53,8 +60,20 @@ while ($dataKapital = mysql_fetch_assoc($sql)){
 // pr($kapital);
 foreach ($kapital as $key => $value) {
   $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},NilaiBuku = if(NilaiBuku is null,0,NilaiBuku)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
-  $sqlaset = mysql_query("UPDATE aset SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},Satuan = if(Satuan is null,0,Satuan)+{$value['nilai']},NilaiBuku = if(NilaiBuku is null,0,NilaiBuku)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+  
+  if(!$sqlkib){
+    $DBVAR->rollback();
+    echo "<script>alert('ERROR #002 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+    exit;
+  }
 
+  $sqlaset = mysql_query("UPDATE aset SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},Satuan = if(Satuan is null,0,Satuan)+{$value['nilai']},NilaiBuku = if(NilaiBuku is null,0,NilaiBuku)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+  
+  if(!$sqlaset){
+  $DBVAR->rollback();
+  echo "<script>alert('ERROR #003 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+  exit;
+  }
   //log
   $sqlkib = "SELECT * FROM {$value['tipeAset']} WHERE Aset_ID = '{$value['Aset_ID']}'";
   $sqlquery = mysql_query($sqlkib);
@@ -85,12 +104,51 @@ foreach ($kapital as $key => $value) {
          
         $fileldImp = implode(',', $tmpField);
         $dataImp = implode(',', $tmpValue);
-
+        //$pr_sql = "INSERT INTO log_{$value['tipeAset']} ({$fileldImp}) VALUES ({$dataImp})";
+        //pr($pr_sql);
+        //exit();
         $sql = mysql_query("INSERT INTO log_{$value['tipeAset']} ({$fileldImp}) VALUES ({$dataImp})");
-        
-    //tambahan log aset penambah kapitalisasi
-    $getAset = "SELECT * from {$value['tipeAset']} WHERE Aset_ID = '{$value[asetKapitalisasi]}'";
+        if(!$sql){
+        $DBVAR->rollback();
+        echo "<script>alert('ERROR #004 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+        exit;
+        }
+    //get table 
+    $getTable = "SELECT kodeKelompok from aset WHERE Aset_ID = '{$value[asetKapitalisasi]}'";
 
+    $sqlTable = mysql_query($getTable);
+    $dataTable = mysql_fetch_assoc($sqlTable);
+    //pr($dataTable);
+    $explode = explode('.', $dataTable['kodeKelompok']);
+    if($explode[0] =="01"){
+        $tabel = "tanah";
+        $tabel_log = "log_tanah";
+    } elseif ($explode[0]=="02") {
+        $tabel = "mesin";
+        $tabel_log = "log_mesin";
+    } elseif ($explode[0]=="03") {
+        $tabel = "bangunan";
+        $tabel_log = "log_bangunan";
+    } elseif ($explode[0]=="04") {
+        $tabel = "jaringan";
+        $tabel_log = "log_jaringan";
+    } elseif ($explode[0]=="05") {
+        $tabel = "asetlain";
+        $tabel_log = "log_asetlain";
+    } elseif ($explode[0]=="06") {
+        $tabel = "kdp";
+        $tabel_log = "log_kdp";
+    } elseif ($explode[0]=="07") {
+        $tabel = "aset_07";
+        $tabel_log = "log_aset_07";
+    } elseif ($explode[0]=="08") {
+        $tabel = "aset_08";
+        $tabel_log = "log_aset_08";
+    }
+    //tambahan log aset penambah kapitalisasi
+    $getAset = "SELECT * from {$tabel} WHERE 
+                Aset_ID = '{$value[asetKapitalisasi]}'";
+                
     $sqlAset = mysql_query($getAset);
     while ($dataAset = mysql_fetch_assoc($sqlAset)){
           $log = $dataAset;
@@ -125,8 +183,14 @@ foreach ($kapital as $key => $value) {
       $fileldImp2 = implode(',', $tmpField2);
       $dataImp2 = implode(',', $tmpValue2);
 
-      $sql2 = mysql_query("INSERT INTO log_{$value['tipeAset']} ({$fileldImp2}) VALUES ({$dataImp2})");
+      $sql2 = mysql_query("INSERT INTO {$tabel_log} ({$fileldImp2}) VALUES ({$dataImp2})");
+      if(!$sql2){
+        $DBVAR->rollback();
+        echo "<script>alert('ERROR #005 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
+        exit;
+        }
     }
+    $DBVAR->commit();
 }
   echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;

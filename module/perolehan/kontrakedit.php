@@ -197,6 +197,7 @@ if ( isset( $_GET['id'] ) ) {
             <option value="03" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "03" ) ? 'selected' : '' ) : '' ?>/>Bangunan</option>
             <option value="04" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "04" ) ? 'selected' : '' ) : '' ?>/>Jaringan</option>
             <option value="05" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "05" ) ? 'selected' : '' ) : '' ?>/>Asetlain</option>
+            <option value="06" <?php echo ( isset( $kontrak ) ) ? ( ( $kontrak[0]['kategori_belanja']== "06" ) ? 'selected' : '' ) : '' ?>/>KDP</option>
           </select>
       </li> 
       </div>

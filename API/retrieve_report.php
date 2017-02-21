@@ -105,34 +105,54 @@ class RETRIEVE_REPORT extends DB {
      }
      
      public function daftar_pengadaan_berdasarkan_skpd($skpd,$tglPerolehanAwal,$tglPerolehanAkhir){
-          $query="select K.Uraian, A.info,A.kodeKelompok,A.kodeSatker, A.noKontrak,"
+          $query="select K.Uraian, A.info,A.kodeKelompok,A.kodeSatker, A.noKontrak,A.StatusValidasi,"
                   . "  Sum(NilaiPerolehan) as Total,Sum(Kuantitas) as Jumlah,NilaiPerolehan as Satuan"
-                  . "    from aset A  left join kelompok K on K.Kode=A.kodeKelompok"
-                  . "  left join kontrak Kon on Kon.noKontrak=A.noKontrak "
+                  . "    from aset A  inner join kelompok K on K.Kode=A.kodeKelompok "
                   . "where A.kodeSatker like '$skpd%' and A.TglPerolehan>='$tglPerolehanAwal'"
-                              . " and TglPerolehan<='$tglPerolehanAkhir'  "
-                  . "  and kon.tglKontrak>='$tglPerolehanAwal' and kon.tglKontrak<='$tglPerolehanAkhir'"
-                  . "  and A.noKontrak is not null and A.StatusValidasi=1 "
+                              . " and TglPerolehan<='$tglPerolehanAkhir'  and A.noKontrak is not null and A.StatusValidasi=1 "
                               . " group by A.kodeSatker,A.kodeKelompok,A.noKontrak";
-        //echo $query;
-        //exit();
+         //echo $query;
           $result = $this->query($query) or die($this->error());
           $check = $this->num_rows($result);
           while ($data = $this->fetch_array($result)) {
               
-               list($tglKontrak,$keterangan,$nosp2d,$tglsp2d)=  $this->get_kontrak($data[noKontrak]);
+               list($tglKontrak,$keterangan,$nosp2d,$tglsp2d,$status_kontrak)=  $this->get_kontrak($data[noKontrak]);
                $data['tglkontrak'] = $tglKontrak;
                $data['Satker']=  $this->get_skpd($data['kodeSatker']);
                $data['keterangan'] = $keterangan;
                $data['nosp2d'] = $nosp2d;
                $data['tglsp2d'] = $tglsp2d;
+               if($status_kontrak==1)
                 $dataArr[] = $data;
           }
          // pr($dataArr);
           return $dataArr;//array('dataArr' => $dataArr, 'count' => $check);
+    }
 
-          
-     }
+    public function daftar_pengadaan_kapitalisasi_berdasarkan_skpd($skpd,$tglPerolehanAwal,$tglPerolehanAkhir){
+          $query="select K.Uraian, A.info,A.kodeKelompok,A.kodeSatker, A.noKontrak,A.StatusValidasi,"
+                  . "  Sum(NilaiPerolehan) as Total,Sum(Kuantitas) as Jumlah,NilaiPerolehan as Satuan"
+                  . "    from aset A  inner join kelompok K on K.Kode=A.kodeKelompok "
+                  . "where A.kodeSatker like '$skpd%' and A.TglPerolehan>='$tglPerolehanAwal'"
+                              . " and TglPerolehan<='$tglPerolehanAkhir'  and A.noKontrak is not null and A.StatusValidasi is null"
+                              . " group by A.kodeSatker,A.kodeKelompok,A.noKontrak";
+         //echo $query;
+          $result = $this->query($query) or die($this->error());
+          $check = $this->num_rows($result);
+          while ($data = $this->fetch_array($result)) {
+              
+               list($tglKontrak,$keterangan,$nosp2d,$tglsp2d,$status_kontrak)=  $this->get_kontrak($data[noKontrak]);
+               $data['tglkontrak'] = $tglKontrak;
+               $data['Satker']=  $this->get_skpd($data['kodeSatker']);
+               $data['keterangan'] = $keterangan;
+               $data['nosp2d'] = $nosp2d;
+               $data['tglsp2d'] = $tglsp2d;
+               if($status_kontrak==1)
+                $dataArr[] = $data;
+          }
+         // pr($dataArr);
+          return $dataArr;//array('dataArr' => $dataArr, 'count' => $check);
+    }
 
      public function format_tanggal($tgl) {
     if($tgl!="0000-00-00" && $tgl!="")

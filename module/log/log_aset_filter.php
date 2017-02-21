@@ -8,7 +8,7 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	 $menu_id = 1;
+	 $menu_id = 75;
      $SessionUser = $SESSION->get_session_user();
      ($SessionUser['ses_uid'] != '') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title' => 'GuestMenu', 'ses_name' => 'menu_without_login'));
      $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
@@ -102,7 +102,7 @@ include "../../config/config.php";
 		
 		<section class="formLegend">
 			
-			<form method="POST" action="<?php echo"$url_rewrite"?>module/log/log_aset_daftar.php" >
+			<form method="POST" action="<?php echo"$url_rewrite"?>/module/log/log_aset_daftar.php" >
 				<ul>
 					<li>&nbsp;</li>
 					<li><i>*) <u>cukup isi field <strong class="blink_text_red" >Tipe Aset</strong> & <strong class="blink_text_red">Kode Satker</strong> untuk menampilkan seluruh data </u></i></li>

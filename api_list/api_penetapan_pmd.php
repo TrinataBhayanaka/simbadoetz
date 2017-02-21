@@ -234,6 +234,14 @@ foreach ($data as $key => $value)
               }elseif($value['Status']==1){
                 $label="success";
                 $text="sudah Divalidasi";
+              
+            }elseif($value['Status']==2){
+                $label="info";
+                $text="proses pemasukan data";
+             
+             }elseif($value['Status']==3){
+                $label="info";
+                $text="proses validasi data";
               }
               // if($value['StatusPenetapan']==0){
               //     $label="warning";

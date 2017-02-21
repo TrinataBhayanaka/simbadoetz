@@ -12,7 +12,6 @@ class ServerSide{
 
 	function dTableData($data=array())
 	{
-
 		global $DBVAR, $url_rewrite;
 
 		$API = $this->loadAPI($data['APIHelper']);
@@ -98,7 +97,7 @@ class ServerSide{
 
 		$SSData = $data;
 		$data = $API->$data['APIFunction']($dataParam);	
-		
+		//pr($data);
 
 		/* Data set length after filtering */
 		$sQuery = "
@@ -139,11 +138,10 @@ class ServerSide{
              	$row = array();
 		        
 		        foreach ($SSData['view'] as $key => $val) {
-		            
+		            //pr($val);
 		        	$tmp = explode('|', $val);
-		        	
 		        	if (count($tmp)>1){
-
+		        		
 		        		if ($tmp[0] == 'detail'){
 
 			            	$expl = explode('|', $val);
@@ -204,8 +202,29 @@ class ServerSide{
 			            	}else{
 			            		$row[] = $this->additional('checkbox', array('name'=>$expl[1]));
 			            	}
-			            }
-			            else $row[]=$value[$tmp[0]] . ' / ' . $value[$tmp[1]];
+			            }else{
+			            	//$row[]=$value[$tmp[0]] . ' / ' . $value[$tmp[1]];
+			            	//revisi
+			            	if($tmp['0'] == 'Merk'){
+			            		$expl = explode('.', $value['kodeKelompok']);
+			            		$Aset_ID = $value['Aset_ID'];
+			            		if($expl['0'] == '02'){
+				            		if($tmp['0'] == 'Merk' && $tmp['1'] == 'Model'){
+				            			$query = "SELECT Merk,Model FROM mesin WHERE 
+				            			          Aset_ID = '$Aset_ID'";
+				            			$exe = $DBVAR->query($query);
+				            			$res = $DBVAR->fetch_array($exe);
+				            			$row[]=$res[0] . ' / ' . $res[1];
+			            			}
+				            	}else{
+				            		//nothing
+				            		$row[]='';
+				            	}
+			            	}else{
+			            		$row[]=$value[$tmp[0]] . ' / ' . $value[$tmp[1]];	
+			            	}
+			            } 
+			            
 
 		        	}else{
 
@@ -214,7 +233,25 @@ class ServerSide{
 			            	$row[]=$$val;
 
 			            }else{
-			            	$row[] = $value[$val];
+							//$row[] = $value[$val];
+							//revisi
+							if($val == 'NoSTNK'){
+								$expl = explode('.', $value['kodeKelompok']);
+			            		$Aset_ID = $value['Aset_ID'];
+			            		if($expl['0'] == '02'){
+			            			$query2 = "SELECT NoSTNK FROM mesin WHERE 
+			            			          Aset_ID = '$Aset_ID'";
+			            			$exe2 = $DBVAR->query($query2);
+			            			$res2 = $DBVAR->fetch_array($exe2);
+			            			$row[]=$res2[0];
+			            			
+				            	}else{
+				            		//nothing
+				            		$row[]='';
+				            	}
+							}else{
+							   $row[] = $value[$val];
+							}
 			            } 
 		        	}
 
@@ -222,7 +259,8 @@ class ServerSide{
 
 	            }    
 
-	            
+	            //pr($row);
+	            //exit;
 		        $output['aaData'][] = $row;
 		        $no++;
 		  	}

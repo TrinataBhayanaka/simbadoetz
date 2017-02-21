@@ -225,7 +225,7 @@ foreach ( $data as $gol ) {
 
 
 
-                if ( $levelAset == 6 || $levelAset == 1 )
+                if ( $levelAset >= 6 || $levelAset == 1 )
                   foreach ( $Sub['SubSub'] as $SubSub ) {
                     /**
                      * UNTUK SUBSUB XLSX
@@ -241,7 +241,7 @@ foreach ( $data as $gol ) {
                      * AKHIR UNTUK SUBSUB XLSX
                      */ 
                     
-                    if ( $levelAset == 7 || $levelAset == 1 )
+                    if ( $levelAset >= 7 || $levelAset == 1 )
                         foreach ( $SubSub['Detail'] as $Detail ) {
                           /**
                            * UNTUK Aset_ID
@@ -257,7 +257,7 @@ foreach ( $data as $gol ) {
                            * AKHIR UNTUK Aset_ID
                            */
                           
-                             if ( $levelAset == 7 || $levelAset == 1 )
+                             if ( $levelAset >= 8 || $levelAset == 1 )
                                 foreach ( $Detail['log_data'] as $LOG_DATA ) {
                                   /**
                                    * UNTUK Aset_ID
@@ -290,7 +290,8 @@ foreach ( $data as $gol ) {
 
 
 //}
-
+  //pr($DATA_FINAL);
+  //exit();
   $waktu = date("d-m-y_h:i:s");
   $TBS->MergeBlock( 'a', $DATA_FINAL );
   $filename = "$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";

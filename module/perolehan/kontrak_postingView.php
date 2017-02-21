@@ -38,7 +38,7 @@ $menu_id = 1;
 	        }
 	    }
 	}
-	$RKsql = mysql_query("SELECT Aset_ID, noRegister, Satuan, kodeLokasi, kodeKelompok, NilaiPerolehan,kodeKelompokReklasAsal FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	$RKsql = mysql_query("SELECT Aset_ID, noRegister, Satuan, kodeLokasi, kodeKelompok, NilaiPerolehan,kodeKelompokReklasAsal FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
 	while ($dataRKontrak = mysql_fetch_assoc($RKsql)){
 				$rKontrak[] = $dataRKontrak;
 			}
@@ -60,7 +60,7 @@ $menu_id = 1;
 			}
 
 	//sum total 
-	$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}'");
+	$sqlsum = mysql_query("SELECT SUM(NilaiPerolehan) as total FROM aset WHERE noKontrak = '{$kontrak['noKontrak']}' AND (StatusValidasi != 9 OR StatusValidasi IS NULL) AND (Status_Validasi_Barang != 9 OR Status_Validasi_Barang IS NULL)");
 	while ($sum = mysql_fetch_assoc($sqlsum)){
 				$sumTotal = $sum;
 			}
@@ -239,16 +239,24 @@ $menu_id = 1;
 			<div style="height:5px;width:100%;clear:both"></div>
 			
 			<?php
-				if($unpost['dist'] == 0){
+				//if($unpost['dist'] == 0){
+				$tmp_tahun_kontrak=explode("-",$kontrak['tglKontrak']);
+				$tahun_kontrak=$tmp_tahun_kontrak[0];
+				$hak_akses_admin=$SessionUser['ses_uaksesadmin'];
+				if($tahun_kontrak==$TAHUN_AKTIF && $hak_akses_admin==1)
+				{
 					if($kontrak['tipeAset'] == 1){
 						if($kapchek['kap'] == 0){
-							if($countdist == 0){ 
+							//if($countdist == 0){ 
 			?>		
 				<p><a href="kontrak_unpost.php?id=<?=$_GET['id']?>" class="btn btn-danger btn-small" onclick="return confirm('Anda akan melakukan unposting data. Data tidak dapat diproses jika belum di posting. Lanjutkan?');"><i class="icon-download icon-white"></i>&nbsp;&nbsp;Unpost</a>
 				&nbsp;</p>	
-			<?php			} else {echo "* Data sudah dipergunakan di distribusi barang";}
+			<?php			//} else {echo "* Data sudah dipergunakan di distribusi barang";}
 						}
 					}
+				//}
+				}else{
+				//	echo "<h1>sdh lewat</h1>";
 				}
 			?>
 			<div id="demo">
@@ -287,32 +295,36 @@ $menu_id = 1;
 							
 							$satuan = $value['NilaiPerolehan']-$bop;
 							
+					if($value['kodeKelompokReklasAsal']){
 						$explode = explode('.', $value['kodeKelompokReklasAsal']);
-							if($explode[0] =="01"){
-			                    $tabel = "tanah as a";
-			                } elseif ($explode[0]=="02") {
-			                    $tabel = "mesin as a";
-			                } elseif ($explode[0]=="03") {
-			                    $tabel = "bangunan as a";
-			                } elseif ($explode[0]=="04") {
-			                    $tabel = "jaringan as a";
-			                } elseif ($explode[0]=="05") {
-			                    $tabel = "asetlain as a";
-			                } elseif ($explode[0]=="06") {
-			                    $tabel = "kdp as a";
-			                }
-
-			            $sql = "SELECT a.kodeKelompok,a.noRegister,k.uraian 
-			            		FROM {$tabel}
-			            		inner join kelompok as k on a.kodeKelompok = k.Kode
-			                	WHERE a.Aset_ID = '{$value['Aset_ID']}'";
-			            //pr($sql);
+						if($explode[0] =="01"){
+		                    $tabel = "tanah as a";
+		                } elseif ($explode[0]=="02") {
+		                    $tabel = "mesin as a";
+		                } elseif ($explode[0]=="03") {
+		                    $tabel = "bangunan as a";
+		                } elseif ($explode[0]=="04") {
+		                    $tabel = "jaringan as a";
+		                } elseif ($explode[0]=="05") {
+		                    $tabel = "asetlain as a";
+		                } elseif ($explode[0]=="06") {
+		                    $tabel = "kdp as a";
+		                }
+		                $sql = "SELECT a.kodeKelompok,a.noRegister,k.uraian 
+	            		FROM {$tabel}
+	            		inner join kelompok as k on a.kodeKelompok = k.Kode
+	                	WHERE a.Aset_ID = '{$value['Aset_ID']}'";
 			            $exec = mysql_query($sql);   		
 						while ($dataReklas = mysql_fetch_assoc($exec)){
 							$kodeKelompokReklas = $dataReklas['kodeKelompok'];
 							$noRegReklas = $dataReklas['noRegister'];
 							$uraianReklas = $dataReklas['uraian'];
-						}					
+						}	
+					}else{
+						$kodeKelompokReklas = '';
+			            $noRegReklas = '';
+			            $uraianReklas = '';
+					}				
 						
 				?>
 					<tr class="gradeA">

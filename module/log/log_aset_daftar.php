@@ -3,7 +3,7 @@ include "../../config/config.php";
 
 //include "/config/config.php";
 $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
-$menu_id = 74;
+$menu_id = 75;
 $SessionUser = $SESSION->get_session_user();
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
