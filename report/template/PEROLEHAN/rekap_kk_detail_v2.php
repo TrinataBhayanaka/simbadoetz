@@ -26,6 +26,7 @@ include "fungsi_rekap_kk.php";
 // Initialize the TBS instance
 
 $TBS = new clsTinyButStrong; // new instance of TBS
+$TBS->SetOption('noerr', true);
 $TBS->Plugin( TBS_INSTALL, OPENTBS_PLUGIN ); // load the OpenTBS plugin
 $template = "revisi-template_kk_v4.xlsx";
 $TBS->LoadTemplate( $template, OPENTBS_ALREADY_UTF8 ); // Also merge some [onload] automatic fields (depends of the type of document).
@@ -293,6 +294,7 @@ foreach ( $data as $gol ) {
   //pr($DATA_FINAL);
   //exit();
   $waktu = date("d-m-y_h:i:s");
+
   $TBS->MergeBlock( 'a', $DATA_FINAL );
   $filename = "$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
   $TBS->Show( OPENTBS_FILE, $filename );

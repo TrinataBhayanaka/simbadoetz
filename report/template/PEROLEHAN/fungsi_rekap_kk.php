@@ -2347,6 +2347,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bp_berjalan' ] = $arg[ 'bp_berjalan' ];
 
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Kd_Riwayat' ] = "";
+        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'log_id' ] = "";
 
     }
     $data_log_full = array();
@@ -2458,6 +2459,8 @@ function group_data($data_awal_perolehan, $data_log)
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bp_berjalan' ] = $arg[ 'bp_berjalan' ];
 
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Kd_Riwayat' ] = $arg[ 'Kd_Riwayat' ];
+        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'log_id' ] = $arg[ 'log_id' ];
+
 
     }
 
@@ -2496,15 +2499,27 @@ function group_data($data_awal_perolehan, $data_log)
 
 
         $data_level_aset[ $key_baru ][ 'no_aset' ] = $value[ 'Aset_ID' ];
+
+        if($log_id==""){
+            $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
+            $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
+            $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
+            //echo "masukk==".$value[ 'Aset_ID' ]. "==saldo-awal==".$value[ 'saldo_awal_nilai' ]."<br/>";
+        }else{
+            //echo $value[ 'Aset_ID' ]. "==".$value[ 'log_id' ]."==".$value[ 'Kd_Riwayat' ]."<br/>";
+            //$data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ]= $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ]
+        }
+
         $data_level_aset[ $key_baru ][ 'riwayat' ] = $value[ 'Kd_Riwayat' ];
 
-        if($log_id=="") $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
 
-        $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
 
-        $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
+
+        //$data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
+       /* $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
         $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
-        $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
+       */
+       $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
 
 
         $data_level_aset[ $key_baru ][ 'NilaiPerolehan' ] = $value[ 'NilaiPerolehan' ];
@@ -2566,7 +2581,7 @@ function group_data($data_awal_perolehan, $data_log)
         //echo "Text Riwayat==$text_riwayat<br/>";
     }
     //pr($data_level_aset);
-
+   //exit();
     $data_level5 = array();
     foreach ($data_level_aset as $key => $value) {
         $tmp = explode (".", $key);
@@ -2645,7 +2660,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level5[ $key_baru ][ 'Detail' ][ $key ] = $data_level_aset[ $key ];
     }
     //echo "data";
-    //pr($data_level5);
+   // pr($data_level5);
     //exit();
     //$data_level5 = $data_gabungan;
     $data_level4 = array();
