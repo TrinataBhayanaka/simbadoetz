@@ -2500,12 +2500,11 @@ function group_data($data_awal_perolehan, $data_log)
 
         $data_level_aset[ $key_baru ][ 'no_aset' ] = $value[ 'Aset_ID' ];
 
-        if(str_){
+        if($log_id==""){
             $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
             //echo "masukk==".$value[ 'Aset_ID' ]. "==saldo-awal==".$value[ 'saldo_awal_nilai' ]."<br/>";
         }else{
-           //masuk
-           // echo $value[ 'Aset_ID' ]. "==".$value[ 'log_id' ]."==".$value[ 'Kd_Riwayat' ]."<br/>";
+            //echo $value[ 'Aset_ID' ]. "==".$value[ 'log_id' ]."==".$value[ 'Kd_Riwayat' ]."<br/>";
             //$data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ]= $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ]
         }
 
