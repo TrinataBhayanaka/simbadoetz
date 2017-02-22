@@ -2359,7 +2359,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'riwayat' ] = $arg[ 'Kd_Riwayat' ];
 
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
+        //testing //$data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_akm' ] = $arg[ 'saldo_awal_akm' ];
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilaibuku' ] = $arg[ 'saldo_awal_nilaibuku' ];
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
