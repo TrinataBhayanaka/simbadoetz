@@ -1467,15 +1467,11 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             $data['saldo_awal_nilaibuku']=0;
             $data['saldo_awal_jml']=0;
           }else {*/
-/*                $data[ 'saldo_awal_nilai' ] = $NilaiPerolehan;
+                $data[ 'saldo_awal_nilai' ] = $NilaiPerolehan;
                 $data[ 'saldo_awal_akm' ] = $AkumulasiPenyusutan;
                 $data[ 'saldo_awal_nilaibuku' ] = $NilaiBuku;
-                $data[ 'saldo_awal_jml' ] = 1;*/
+                $data[ 'saldo_awal_jml' ] = 1;
                 //}
-                $data[ 'saldo_awal_nilai' ] = 0;
-                $data[ 'saldo_awal_akm' ] = 0;
-                $data[ 'saldo_awal_nilaibuku' ] = 0;
-                $data[ 'saldo_awal_jml' ] = 0;
                 /** Koreksi Saldo Awal  */
                 $data[ 'koreksi_tambah_nilai' ] = 0;
                 $data[ 'koreksi_tambah_jml' ] = 0;
@@ -2506,6 +2502,8 @@ function group_data($data_awal_perolehan, $data_log)
 
         if($log_id==""){
             $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
+            $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
+            $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
             //echo "masukk==".$value[ 'Aset_ID' ]. "==saldo-awal==".$value[ 'saldo_awal_nilai' ]."<br/>";
         }else{
             //echo $value[ 'Aset_ID' ]. "==".$value[ 'log_id' ]."==".$value[ 'Kd_Riwayat' ]."<br/>";
@@ -2518,10 +2516,10 @@ function group_data($data_awal_perolehan, $data_log)
 
 
         //$data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
-
-        $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
+       /* $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
         $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
-        $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
+       */
+       $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
 
 
         $data_level_aset[ $key_baru ][ 'NilaiPerolehan' ] = $value[ 'NilaiPerolehan' ];
