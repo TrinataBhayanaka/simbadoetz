@@ -9,42 +9,40 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
-
-$skpd_id = $_POST['kodeSatker17'];
-$kelompok = $_POST['kodeKelompok'];
-
-$tglPrlhn = $_POST['tglawalPerolehan_li'];
+$skpd_id = $_GET['skpd_id'];
+$kelompok = $_GET['kode'];
+$tipe = $_GET['tipe_file'];
+/*$tglPrlhn = $_POST['tglawalPerolehan_li'];
 if($tglPrlhn != ''){
 	$tglperolehan = $tglPrlhn;
 }else{
 	$tglperolehan = '';
-}
+}*/
+//pr($TAHUN_AKTIF);
+$thn_aktif   = $TAHUN_AKTIF;
+$tglpembukuanAwalDef  = $thn_aktif.'-'.'01'.'-'.'01';
+$tglpembukuanAkhirDef = $thn_aktif.'-'.'12'.'-'.'31';
 
-$tglPmbkuan = $_POST['tglpembukuan_li'];
+$tglPmbkuan = $_GET['tgl'];
 if($tglPmbkuan != ''){
-	$tglpembukuan = $tglPmbkuan;
+	$tglpembukuanAwal  = $tglpembukuanAwalDef; 
+	$tglpembukuanAkhir = $tglPmbkuan;
 }else{
-	$tglpembukuan = '';
+	$tglpembukuanAwal  = $tglpembukuanAwalDef; 
+	$tglpembukuanAkhir = $tglpembukuanAkhirDef;
 }
-
-// pr($_POST);
-// exit;
+/*pr($skpd_id);
+pr($kelompok);
+pr($tglpembukuanAwal);
+pr($tglpembukuanAkhir);
+exit;*/
 
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
-
-$hit = count($query);
-$flag = '';
-$TypeRprtr = '';
-$Info = '';
-/*$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);*/
-// exit;
-
-$GetData = $REPORT->LaporanInventaris($skpd_id,$kelompok,$tglperolehan,$tglpembukuan);
+//$GetData = $REPORT->LaporanInventaris($skpd_id,$kelompok,$tglperolehan,$tglpembukuan);
+$GetData = $REPORT->LaporanInventaris($skpd_id,$kelompok,$tglpembukuanAwal,$tglpembukuanAkhir);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
-
 
 $html=$REPORT->retrieve_html_laporan_inventaris($GetData,$gambar);
 /*$count = count($html);
@@ -53,6 +51,8 @@ $html=$REPORT->retrieve_html_laporan_inventaris($GetData,$gambar);
 	}
 exit;*/
 $REPORT->show_status_download_kib();
+
+if($tipe!="2"){
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
 $mpdf->setFooter('{PAGENO}') ;
@@ -61,14 +61,12 @@ $mpdf->StartProgressBarOutput(2);
 $mpdf->useGraphs = true;
 $mpdf->list_number_suffix = ')';
 $mpdf->hyphenate = true;
-
+//$mpdf->debug = true;
 $count = count($html);
 
 	for ($i = 0; $i < $count; $i++) {
 		 if($i==0)
-			{ 
-			$mpdf->WriteHTML($html[$i]);
-			}
+			  $mpdf->WriteHTML($html[$i]);
 		 else
 		 {
 			   $mpdf->AddPage('L','','','','',15,15,16,16,9,9);
@@ -78,11 +76,26 @@ $count = count($html);
 	}
 
 $waktu=date("d-m-y_h-i-s");
-$namafile="$path/report/output/Laporan Inventaris $waktu.pdf";
+$namafile="$path/report/output/Lap_Inventaris_$waktu.pdf";
 $mpdf->Output("$namafile",'F');
-$namafile_web="$url_rewrite/report/output/Laporan Inventaris $waktu.pdf";
+$namafile_web="$url_rewrite/report/output/Lap_Inventaris_$waktu.pdf";
 echo "<script>window.location.href='$namafile_web';</script>";
 exit;
+}
+else
+{
+	$waktu=date("d-m-y_h:i:s");
+	$filename ="Lap_Inventaris_$waktu.xls";
+	header('Content-type: application/ms-excel');
+	header('Content-Disposition: attachment; filename='.$filename);
+	$count = count($html);
+	for ($i = 0; $i < $count; $i++) {
+           echo "$html[$i]";
+           
+     }
+}
+?>
+
 
 
 ?>

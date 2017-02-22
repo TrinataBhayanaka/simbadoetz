@@ -857,9 +857,9 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 						<div class="breadcrumb">
 							<div class="titleTab">Laporan Inventaris</div>
 						</div>
-						  <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/report_perolehanaset_cetak_laporan_inventaris.php"; ?>">
+						  <form name="form" method="POST" action="<?php echo "$url_rewrite/report/template/PEROLEHAN/lap_inventaris.php"; ?>">
 						<ul>
-							<li>
+							<!--<li>
 								<span class="span2">Tanggal Perolehan</span>
 								<div class="control">
 									<div class="input-prepend">
@@ -867,18 +867,19 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 										<input type="text" class="span2 full" name="tglawalPerolehan_li" id="tglawalPerolehan_li" value="" />
 									</div>
 								</div>
-							</li>
+							</li>-->
 							<li>
 								<span class="span2">Tanggal Pembukuan</span>
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2 full" name="tglpembukuan_li" id="tglpembukuan_li" value=""/>
+										<input type="text" class="span2 full" name="tglpembukuan_li" id="tglpembukuan_li" value="" required="" />
 									</div>
 								</div>
 							</li>
 							<li>
-								<?php selectAset('kodeKelompok','255',true,false,''); ?>
+								<?php //selectAset('kodeKelompok','255',true,false,''); ?>
+								<?php selectAllAset('kodeKelompok55','235',true,false); ?>
 							</li>
 							<br>
 							<li>

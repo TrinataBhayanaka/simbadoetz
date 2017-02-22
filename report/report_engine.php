@@ -27217,7 +27217,6 @@ if($dataArr!="")
                     <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Tanggal<br/>TglPembukuan</td>
                     <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Keadaan Barang (B,KB,RB)</td>
                     <td colspan=\"2\" rowspan=\"1\" style=\"text-align:center; font-weight: bold;\">Jumlah</td>
-                    <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Kode Riwayat</td>
                     <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 60px;\">Keterangan</td>
                 </tr>
                 <tr align=\"center\"></tr>
@@ -27247,7 +27246,6 @@ if($dataArr!="")
                     <td style=\"text-align:center; font-weight: bold;\">13</td>
                     <td style=\"text-align:center; font-weight: bold;\">14</td>
                     <td style=\"text-align:center; font-weight: bold; width: 60px;\">15</td>
-                    <td style=\"text-align:center; font-weight: bold; width: 60px;\">16</td>
                 </tr>
             </thead>";
     }
@@ -27294,7 +27292,6 @@ if($dataArr!="")
                     <td style=\"width: 81px;\">$ketKondisi</td>
                     <td style=\"width: 71px; text-align:center;\">$kuantitas</td>
                     <td style=\"width: 73px; text-align:right;\">$nilaiPrlhnFix</td>
-                    <td style=\"width: 60px;\">$row->Kd_Riwayat($KodeRiwayat)</td>
                     <td style=\"width: 60px;\">$row->Info</td>
                 </tr>";
                                                             
@@ -27304,9 +27301,9 @@ if($dataArr!="")
             // $printbarang=  number_format($barangTotal);
             $printperolehanTotal=  number_format($perolehanTotal,2,",",".");
             $tabletotal="<tr>
-                            <td colspan=\"13\" style=\"text-align: center;\">Jumlah</td>
+                            <td colspan=\"13\" style=\"text-align: center; font-weight: bold;\">Jumlah</td>
                             <td style=\"text-align: right;\">$printperolehanTotal</td>
-                            <td colspan=\"2\">&nbsp;</td>
+                            <td colspan=\"1\">&nbsp;</td>
                         </tr>
                     </table>"; 
 						
