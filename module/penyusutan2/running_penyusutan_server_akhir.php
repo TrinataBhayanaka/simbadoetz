@@ -478,7 +478,7 @@ for ($i = 0; $i < 2; $i++) {
                                                                                                                  NilaiBuku = '$NilaiBuku',
                                                                                                                  UmurEkonomis = '$UmurEkonomis',
                                                                                               TahunPenyusutan='$tahun'
-                                                                                        WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
+                                                                                        WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan_awal' ";
                     $ExeQueryKib = $DBVAR->query ($QueryKib);
                 } elseif($Data[ 'TipeAset' ] == 'C') {
                     $tableKib = 'bangunan';
@@ -498,7 +498,7 @@ for ($i = 0; $i < 2; $i++) {
                                                                                                                  PenyusutanPerTahun = '$penyusutan_per_tahun',
                                                                                                                  NilaiBuku = '$NilaiBuku',
                                                                                                                  UmurEkonomis = '$UmurEkonomis'
-                                                                                        WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
+                                                                                        WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan_awal' ";
                     $ExeQueryKib = $DBVAR->query ($QueryKib);
                 } elseif($Data[ 'TipeAset' ] == 'D') {
                     $tableKib = 'jaringan';
@@ -519,7 +519,7 @@ for ($i = 0; $i < 2; $i++) {
                                                                                                                  NilaiBuku = '$NilaiBuku',
                                                                                                                  UmurEkonomis = '$UmurEkonomis',
                                                                                               TahunPenyusutan='$tahun'
-                                                                                        WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
+                                                                                        WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan_awal' ";
                     $ExeQueryKib = $DBVAR->query ($QueryKib);
                 }
 
@@ -551,14 +551,14 @@ for ($i = 0; $i < 2; $i++) {
 
                     $Kd_Riwayat = '49';
                     //insert log
-                    $QueryLog = "INSERT INTO $tableLog ($implodeField__lama,$AddField) VALUES ($implodeVal_lama,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
+                    $QueryLog = "INSERT INTO $tableLog ($implodeField__lama,$AddField) VALUES ($implodeVal_lama,'$action','$changeDate','$TglPerubahan_temp','$NilaiPerolehan_Awal','$Kd_Riwayat')";
                     // pr($QueryLog);
                     // exit;
                     $exeQueryLog = $DBVAR->query ($QueryLog);
 
                     $Kd_Riwayat = '50';
                     //insert log
-                    $QueryLog = "INSERT INTO $tableLog ($implodeField,$AddField) VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
+                    $QueryLog = "INSERT INTO $tableLog ($implodeField,$AddField) VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan_temp','$NilaiPerolehan_Awal','$Kd_Riwayat')";
                     // pr($QueryLog);
                     // exit;
                     $exeQueryLog = $DBVAR->query ($QueryLog);
@@ -591,7 +591,7 @@ for ($i = 0; $i < 2; $i++) {
 
                     $Kd_Riwayat = '50';
                     //insert log
-                    $QueryLog = "INSERT INTO $tableLog ($implodeField,$AddField) VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$AkumulasiPenyusutan_Awal','$NilaiBuku_Awal','$PenyusutanPerTahun_Awal','$Kd_Riwayat')";
+                    $QueryLog = "INSERT INTO $tableLog ($implodeField,$AddField) VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan_temp','$NilaiPerolehan_Awal','$AkumulasiPenyusutan_Awal','$NilaiBuku_Awal','$PenyusutanPerTahun_Awal','$Kd_Riwayat')";
                     // echo $QueryLog; 
                     // pr($QueryLog);
                     // exit;
