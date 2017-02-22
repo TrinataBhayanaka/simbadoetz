@@ -892,7 +892,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<li>
 								<span class="span2">&nbsp;</span>
 								 <input type="submit" class="btn btn-primary" name="bi_skpd" value="Lanjut" />
-								<input type="reset"name="reset" onClick="sendit_6()" value="Bersihkan Filter" />
+								<input type="reset" name="reset" class="btn" value="Bersihkan Filter" />
 							</li>
 						</ul>
 						</form>
