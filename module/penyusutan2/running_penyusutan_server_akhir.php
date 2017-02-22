@@ -587,7 +587,7 @@ for ($i = 0; $i < 2; $i++) {
                         $NilaiBuku_Awal = $resultQueryLogSelect[ 'NilaiBuku_Awal' ];
                         $PenyusutanPerTahun_Awal = $resultQueryLogSelect[ 'PenyusutanPerTahun_Awal' ];
                     }
- 
+
 
                     $Kd_Riwayat = '50';
                     //insert log
