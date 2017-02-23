@@ -273,13 +273,9 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         $status_kondisi = 0;
         if(($kondisi_next == "1" || $kondisi_next == "2 ") and $kondisi == "3") {
             $status_kondisi = 1;
-        }
-
-        if($kondisi_next == "3" || ($kondisi == "1" || $kondisi == "2")) {
+        }else if($kondisi_next == "3" || ($kondisi == "1" || $kondisi == "2")) {
             $status_kondisi = -7;
-        }
-
-        if(($kondisi_next == "1" || $kondisi_next == "2") || ($kondisi == "1" || $kondisi == "2")) {
+        }else if(($kondisi_next == "1" || $kondisi_next == "2") || ($kondisi == "1" || $kondisi == "2")) {
             $status_kondisi = 0;
         }
         if( $Kd_Riwayat == "1")
