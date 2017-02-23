@@ -8722,11 +8722,12 @@ foreach ($dataArr as $satker_id => $value)
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= ' ';
 	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+	//pr($TotalNilai);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
         $TotalPPFix=number_format($TotalNilai[2],2,",",".");
         $TotalAPFix=number_format($TotalNilai[3],2,",",".");
-        $TotalNBFix=number_format($TotalNilai[2],2,",",".");
+        $TotalNBFix=number_format($TotalNilai[0],2,",",".");
 	$html.="<tr>
 				<td style=\"text-align: center; font-weight: bold;\">$no</td>
 				<td style=\"text-align: left; font-weight: bold;\">$NamaSatker</td>
@@ -8747,22 +8748,33 @@ foreach ($dataArr as $satker_id => $value)
         
         foreach ($data as $index => $value)
         {
+                /*$html .= "<tr>
+						<td style=\"text-align: ;\">&nbsp;</td>
+                        <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
+                        <td style=\"text-align: center;\">&nbsp;$value->jml</td>
+                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
+                      </tr>";*/
                 $html .= "<tr>
 						<td style=\"text-align: ;\">&nbsp;</td>
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
                         <td style=\"text-align: center;\">&nbsp;$value->jml</td>
                         <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
-                            <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
-                                <td style=\"text-align: right;\">".number_format($value->NilaiBuku,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
                       </tr>";
+                            	
                 $total += ($value->jml);
                 $total_perolehan += ($value->Nilai);
 				$total_kel += ($value->jml);
-                                $total_akm+=$value->AkumulasiPenyusutan;
-                                $total_nb +=$value->NilaiBuku;
+                $total_akm+=$value->AkumulasiPenyusutan;
+                //$total_nb +=$value->NilaiBuku;
+                $total_nb +=$value->Nilai;
                 $total_perolehan_kel += ($value->Nilai);
                 $total_akm_kel+=$value->AkumulasiPenyusutan;
-                $total_nb_kel +=$value->NilaiBuku;
+                //$total_nb_kel +=$value->NilaiBuku;
+                $total_nb_kel +=$value->Nilai;
 				// $tot_perkel=
         }
 		$html .="<tr>
@@ -40265,17 +40277,19 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and (NilaiPerolehan < 10000000 ) and kodeLokasi like '12%' ";
 		}else{
-			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml"
-                                . "sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku"
-                                . " FROM $paramGol
+			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+					  sum(PenyusutanPerTaun) as NilaiPP,
+					  sum(AkumulasiPenyusutan) as NilaiAP,
+					  sum(NilaiBuku) as NilaiBuku
+                      FROM $paramGol
 			WHERE kodeSatker = '$satker_id' and kondisi = '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
-			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
+			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan <= '$tglakhirperolehan' 
 			and Status_Validasi_Barang =1 and kodeLokasi like '12%' $KodeKaCondt1";
 		}
 		
-		/*echo "query =".$query;
-		echo "<br>";*/
+		//echo "query =".$query;
+		//echo "<br>";
 		$result=$this->retrieve_query($query);
 		// pr($result);
 		// exit;	
@@ -40289,7 +40303,7 @@ return $hasil_html;
 				}
 				$jml=$value->jml;
 				
-				if($gol = '02' || $gol = '03' || $gol = '04'){
+				if($gol == '02' || $gol == '03' || $gol == '04'){
 					if($value->NilaiPP == NULL || $value->NilaiPP == ''){
 						$NilaiPP=0;
 					}else{
@@ -40319,7 +40333,7 @@ return $hasil_html;
 		// echo "NilaiFix =".$NilaiFix;
 		// echo "<br>";
 		// echo "jmlFix =".$jmlFix;
-		if($gol = '02' || $gol = '03' || $gol = '04'){
+		if($gol == '02' || $gol == '03' || $gol == '04'){
 			return array($NilaiFix,$jmlFix,$NilaiPPFix,$NilaiAPFix,$NilaiBukuFix);
 		}else{
 			return array($NilaiFix,$jmlFix);
