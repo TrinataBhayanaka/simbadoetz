@@ -281,7 +281,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             $status_kondisi = -7;
         }else if(($kondisi_next == "1" || $kondisi_next == "2") && ($kondisi == "1" || $kondisi == "2")) {
             $status_kondisi = 0;
-            echo "tidak masuk kondisi apapun <br/>";
+            //echo "tidak masuk kondisi apapun <br/>";
         }
 //        if( $Kd_Riwayat == "1")
 //            echo "<br/>$Aset_ID==$status_kondisi";
