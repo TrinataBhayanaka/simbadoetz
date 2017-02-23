@@ -3094,7 +3094,7 @@ function get_log_status_validasi($log, $log_id, $aset_id)
         $query_cek==1;
     }
     if($query_cek==0){
-        $query = "select Status_Validasi_barang from aset where aset_id='$aset_id' ";
+        $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil from aset where aset_id='$aset_id' ";
         //echo $query;
         $result = mysql_query ($query) or die(mysql_error ());
         while ($data = mysql_fetch_array ($result, MYSQL_ASSOC)) {
