@@ -87,7 +87,7 @@ if($statusaset!=""){
     case "0":
       // code...
       //baru masuk kontrak atau inventarisasi  StatusValidasi=1 dan Status_Validasi_Barang=0
-      $aset_status= " (StatusValidasi=1 and (Status_Validasi_Barang=0 or Status_Validasi_Barang is null)";
+      $aset_status= " (StatusValidasi=1 and (Status_Validasi_Barang=0 or Status_Validasi_Barang is null))";
       break;
     case "27":
       // code...
