@@ -245,11 +245,13 @@ while ($aRow = mysql_fetch_array($rResult)) {
      $text_svb="";
      
      if($StatusValidasi!=$StatusValidasiM){
-      $text_sv="StatusValidasi tdk sama <br/>";
+      //$text_sv="StatusValidasi tdk sama <br/>";
+      $text_svb="+";
      }
 
      if($Status_Validasi_Barang!=$Status_Validasi_BarangM){
-      $text_svb="Status_Validasi_Barang tdk sama <br/>";
+      //$text_svb="Status_Validasi_Barang tdk sama <br/>";
+      $text_svb="-";
      }
 
     $href="<a href=\"$url_rewrite/module/layanan/detail_aset.php?id=$Aset_ID&jenisaset=$TipeAset\">
