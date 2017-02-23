@@ -212,6 +212,9 @@ $output = array(
 );
 $no=$_GET['iDisplayStart']+1;
 //echo "<pre>";
+
+//tahun aktif
+$tahun_aktif = $TAHUN_AKTIF;
 while ($aRow = mysql_fetch_array($rResult)) {
      //pr($aRow);
      $row = array();
@@ -227,6 +230,7 @@ while ($aRow = mysql_fetch_array($rResult)) {
      $TglPembukuan=$aRow['TglPembukuan'];
      $kondisi=$aRow['kondisi'];
      $TipeAset=$aRow['TipeAset'];
+     $TahunAset=$aRow['Tahun'];
 
      //$NilaiPerolehan,2,",","."
      //$aRow['NilaiPerolehan'],2
@@ -263,7 +267,15 @@ while ($aRow = mysql_fetch_array($rResult)) {
        if($noKontrak){
            $checkbox="";
        }else{
-            $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"Layanan[]\" value=\"{$Aset_ID}\">";    
+            if($statusaset == '0'){
+              $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"Layanan[]\" value=\"{$Aset_ID}\">";   
+            }elseif ($statusaset == '1') {
+              if($TahunAset == $tahun_aktif){
+                $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"Layanan[]\" value=\"{$Aset_ID}\">";
+              }else{
+                $checkbox="";   
+              }
+            }  
        }
      }else{
          $checkbox="";

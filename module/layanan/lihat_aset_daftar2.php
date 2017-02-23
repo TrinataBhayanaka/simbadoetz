@@ -107,7 +107,8 @@ include"$path/menu.php";
 			<?php if($statusaset=="1"||$statusaset=="0"){ $data=array("Belum Terdistribusi","Terdistribusi");
 										echo "<h4> Status Aset = {$data[$statusaset]}</h1>";?>
 				<input type="submit" name="submit2" class="btn btn-danger" value="Hapus Aset" id="submit" disabled/>
-
+				<input type ="hidden" name="kodeSatker" value="<?=$kodeSatker?>">
+				<input type ="hidden" name="jenisaset" value="<?=$jenisaset?>">
 			<?php } endif;?>
 			<a href="<?php echo "$url_rewrite/report/template/PEROLEHAN/liat_dftr_aset.php?$param"; ?>" target="blank">
 			   <input type="button" name="cetak" class="btn btn-info" value="Cetak Aset" >
