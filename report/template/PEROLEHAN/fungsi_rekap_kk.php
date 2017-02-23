@@ -268,7 +268,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         $kondisi_next = 0;
         if($Kd_Riwayat == "0" || $Kd_Riwayat == "1") {
             list($Status_Validasi_Barang, $StatusValidasi, $StatusTampil, $TglPembukuan, $kondisi_next) = get_log_status_validasi ($tabel_log, $log_id, $Aset_ID, $final_gol);
-            echo "masukk===$kondisi_next $kondisi $log_id $final_gol ";
+            echo "<br/>masukk===$kondisi_next== $kondisi ==$log_id ==$Aset_ID==$final_gol ";
         }
         $status_kondisi = 0;
         if(($kondisi_next == "1" || $kondisi_next == "2 ") and $kondisi == 3) {
@@ -282,7 +282,8 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         if(($kondisi_next = "1" || $kondisi_next = "2") || ($kondisi = "1" || $kondisi = "2")) {
             $status_kondisi = 0;
         }
-
+        if( $Kd_Riwayat == "1")
+            echo "<br/>$Aset_ID==$status_kondisi";
         // echo "$Aset_ID --$kodeKa( $noKontrak, $kondisi_aset )Kd_Riwayat==$Kd_Riwayat && Status_Validasi_Barang=$Status_Validasi_Barang && StatusValidasi==$StatusValidasi && StatusTampil==$StatusTampil<br/>";
         if($Kd_Riwayat == "0" && $Status_Validasi_Barang == 1 && $StatusValidasi == 1 && $StatusTampil == 1 && $TglPembukuan != 0) {
 
