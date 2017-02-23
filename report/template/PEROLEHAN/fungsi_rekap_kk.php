@@ -268,7 +268,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         $status_masuk = 0;
 
         if($Kd_Riwayat == "0"){
-            list($Status_Validasi_Barang,$StatusValidasi,$StatusTampil)=get_log_status_validasi($tabel_log, $log_id, $Aset_ID);
+            list($Status_Validasi_Barang,$StatusValidasi,$StatusTampil)=get_log_status_validasi($tabel_log, $log_id, $Aset_ID,$final_gol);
         }
         // echo "$Aset_ID --$kodeKa( $noKontrak, $kondisi_aset )Kd_Riwayat==$Kd_Riwayat && Status_Validasi_Barang=$Status_Validasi_Barang && StatusValidasi==$StatusValidasi && StatusTampil==$StatusTampil<br/>";
         if($Kd_Riwayat == "0" && $Status_Validasi_Barang == 1 && $StatusValidasi == 1 && $StatusTampil == 1 && $TglPembukuan != 0) {
@@ -3078,7 +3078,7 @@ function get_log_before($log, $log_id, $aset_id)
     return array( $NilaiBuku, $AkumulasiPenyusutan, $kondisi );
 }
 
-function get_log_status_validasi($log, $log_id, $aset_id)
+function get_log_status_validasi($log, $log_id, $aset_id,$final_gol)
 {
 
     $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil from $log where log_id>$log_id 
@@ -3094,7 +3094,7 @@ function get_log_status_validasi($log, $log_id, $aset_id)
         $query_cek==1;
     }
     if($query_cek==0){
-        $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil from aset where aset_id='$aset_id' ";
+        $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil from $final_gol where aset_id='$aset_id' ";
         //echo $query;
         $result = mysql_query ($query) or die(mysql_error ());
         while ($data = mysql_fetch_array ($result, MYSQL_ASSOC)) {
