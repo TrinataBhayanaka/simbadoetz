@@ -273,7 +273,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         $status_kondisi = 0;
         $kondisi_next=trim($kondisi_next);
         $kondisi=trim($kondisi);
-        if(($kondisi_next == "1" || $kondisi_next == "2 ") && $kondisi == "3") {
+        if(($kondisi_next == "1" || $kondisi_next == "2") && $kondisi == "3") {
             echo "masuk kondisi tambah <br>";
             $status_kondisi = 1;
         }else if($kondisi_next == "3" && ($kondisi == "1" || $kondisi == "2")) {
