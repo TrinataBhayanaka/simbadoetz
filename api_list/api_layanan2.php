@@ -20,6 +20,7 @@ include "../config/config.php";
  * you want to insert a non-database field (for example a counter or static image)
  */
 //$aColumns = array('Aset_ID', 'a.kodeKelompok', 'a.kodeSatker', 'a.kodeLokasi', 'a.noRegister', 'a.noKontrak', 'a.TglPerolehan', 'a.TglPembukuan', 'a.SumberDana', 'a.NilaiPerolehan', 'a.Alamat', 'a.RTRW', 'a.kondisi', 'a.TglInventarisasi', 'a.BAST_ID', 'a.BASP_ID', 'a.Kuantitas', 'a.Satuan', 'a.Bersejarah', 'a.Info', 'a.Dihapus', 'a.UserNm', 'a.FixAset', 'a.NotUse', 'a.Tahun', 'a.AsalUsul', 'a.Dipindah', 'a.StatusValidasi', 'a.CaraPerolehan', 'a.Status_Validasi_Barang', 'a.kodeData', 'a.kodeKA', 'a.kodeRuangan', 'a.TipeAset', 'a.statusPemanfaatan', 'a.MasaManfaat', 'a.AkumulasiPenyusutan', 'a.PenyusutanPertaun', 'a.fixPenggunaan', 'a.GUID', 'a.NilaiBuku', 'a.UmurEkonomis', 'a.TahunPenyusutan', 'a.nilai_kapitalisasi', 'a.prosentase', 'a.penambahan_masa_manfaat', 'a.jenis_belanja', 'a.kodeKelompokReklasAsal', 'a.kodeKelompokReklasTujuan');
+
 $aColumns=array('Aset_ID', 'kodeKelompok', 'kodeSatker', 'kodeLokasi', 'noRegister', 'noKontrak', 'TglPerolehan', 'TglPembukuan', 'SumberDana', 'NilaiPerolehan',  'kondisi','Info', 'Dihapus', 'UserNm',  'NotUse', 'Tahun', 'AsalUsul',  'StatusValidasi', 'CaraPerolehan', 'Status_Validasi_Barang',  'kodeKA', 'kodeRuangan', 'TipeAset',  'MasaManfaat', 'AkumulasiPenyusutan', 'PenyusutanPertaun', 'fixPenggunaan', 'GUID', 'NilaiBuku', 'UmurEkonomis', 'TahunPenyusutan',   'jenis_belanja', 'kodeKelompokReklasAsal', 'kodeKelompokReklasTujuan');
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -27,7 +28,7 @@ $sIndexColumn = "Aset_ID";
 /* DBVAR table to use */
 $sTable = "aset";
 
-$par_data_table ="tahun={$bup_tahun}&jenisaset={$jenisaset}&kodeSatker={$kodeSatker}&kodepemilik={$kodepemilik}&kodeKelompok={$kodeKelompok}&statusaset={$statusaset}";
+/*$par_data_table ="tahun={$bup_tahun}&jenisaset={$jenisaset}&kodeSatker={$kodeSatker}&kodepemilik={$kodepemilik}&kodeKelompok={$kodeKelompok}&statusaset={$statusaset}";*/
 
 $tahun = $_GET['tahun'];
 $jenisaset = $_GET['jenisaset'];
@@ -38,9 +39,7 @@ $statusaset=$_GET['statusaset'];
 
 
 //$document=$_GET["document"];
-$sWhere = "";
-
-if ($tahun != "") {
+/*if ($tahun != "") {
      if ($sWhere != "")
           $sWhere.=" and tahun ='$tahun' ";
      else
@@ -60,11 +59,21 @@ if ($kodeSatker != "") {
      else
           $sWhere = "Where kodeSatker like '%$kodeSatker%' ";
 }
-if ($kodeKelompok != "") {
-     if ($sWhere != "")
-          $sWhere.=" and kodeKelompok like '%$kodeKelompok%' ";
+if ($sWhere != "")
+          $sWhere.=" and $aset_status ";
      else
-          $sWhere = "Where kodeKelompok like '%$kodeKelompok%' ";
+          $sWhere = "Where $aset_status ";*/
+
+//add param
+$param = '';
+//param tahun
+if ($tahun != "") {
+  $param.=" AND Tahun ='$tahun' ";
+}
+
+//param kodekelompok
+if ($kodeKelompok != "") {
+  $param.=" AND kodeKelompok ='$kodeKelompok' ";
 }
 
 if($statusaset!=""){
@@ -72,12 +81,13 @@ if($statusaset!=""){
     case "1":
       // code... 
       //masuk neraca  StatusValidasi=1 dan Status_Validasi_Barang=1
+     // tahun berjalan dan tgl
       $aset_status= " (StatusValidasi=1 and Status_Validasi_Barang=1)";
       break;
     case "0":
       // code...
       //baru masuk kontrak atau inventarisasi  StatusValidasi=1 dan Status_Validasi_Barang=0
-      $aset_status= " (StatusValidasi=1 and Status_Validasi_Barang=0)";
+      $aset_status= " (StatusValidasi=1 and (Status_Validasi_Barang=0 or Status_Validasi_Barang is null)";
       break;
     case "27":
       // code...
@@ -90,12 +100,12 @@ if($statusaset!=""){
       $aset_status= " (StatusValidasi not in(0,1) or Status_Validasi_Barang not in(0,1)";
       break;
     
-   }
-   if ($sWhere != "")
-          $sWhere.=" and $aset_status ";
-     else
-          $sWhere = "Where $aset_status ";
+   } 
 }
+
+$sWhere = "";
+//parameter
+$sWhere = "WHERE $aset_status AND kodeSatker='$kodeSatker' AND TipeAset='$jenisaset' {$param}";
 
 /*
  * Paging
@@ -106,13 +116,12 @@ if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
              intval($_GET['iDisplayLength']);
 }
 
-
 /*
  * Ordering
  */
 $sOrder = "";
 if (isset($_GET['iSortCol_0'])) {
-     $sOrder = "ORDER BY  ";
+     /*$sOrder = "ORDER BY  ";
      for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
           if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
                //$sOrder .= "'" . $aColumns[intval($_GET['iSortCol_' . $i])] . "' " .
@@ -120,11 +129,10 @@ if (isset($_GET['iSortCol_0'])) {
                        ($_GET['sSortDir_' . $i] === 'asc' ? 'asc' : 'desc') . ", ";
           }
      }
-
-     $sOrder = substr_replace($sOrder, "", -2);
-     if ($sOrder == "ORDER BY") {
-          $sOrder = "";
-     }
+     $sOrder = substr_replace($sOrder, "", -2);*/
+     //if ($sOrder == "ORDER BY") {
+          $sOrder = " ORDER BY kodeKelompok,noRegister";
+     //}
 }
 
 
@@ -137,7 +145,8 @@ if (isset($_GET['iSortCol_0'])) {
  */
 //$sWhere = "";
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
-     $sWhere = "WHERE (";
+     //$sWhere = "WHERE (";
+     $sWhere=" WHERE $aset_status AND kodeSatker='$kodeSatker' AND TipeAset='$jenisaset' {$param} AND (";
      for ($i = 0; $i < count($aColumns); $i++) {
           if (isset($_GET['bSearchable_' . $i]) && $_GET['bSearchable_' . $i] == "true") {
                $sWhere .= "`" . $aColumns[$i] . "` LIKE '%" . mysql_real_escape_string($_GET['sSearch']) . "%' OR ";
@@ -148,7 +157,7 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
 }
 
 /* Individual column filtering */
-for ($i = 0; $i < count($aColumns); $i++) {
+/*for ($i = 0; $i < count($aColumns); $i++) {
      if (isset($_GET['bSearchable_' . $i]) && $_GET['bSearchable_' . $i] == "true" && $_GET['sSearch_' . $i] != '') {
           if ($sWhere == "") {
                $sWhere = "WHERE ";
@@ -157,7 +166,7 @@ for ($i = 0; $i < count($aColumns); $i++) {
           }
           $sWhere .= "`" . $aColumns[$i] . "` LIKE '%" . mysql_real_escape_string($_GET['sSearch_' . $i]) . "%' ";
      }
-}
+}*/
 
 
 $sQuery = "
@@ -179,10 +188,14 @@ $aResultFilterTotal = mysql_fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
 
 /* Total data set length */
-$sQuery = "
+/*$sQuery = "
     SELECT COUNT(`" . $sIndexColumn . "`)
     FROM   $sTable
-  ";
+  ";*/
+$sQuery = "
+    SELECT COUNT(`" . $sIndexColumn . "`)
+    FROM   $sTable WHERE $aset_status AND kodeSatker='$kodeSatker' AND TipeAset='$jenisaset' {$param}
+  ";  
 $rResultTotal = mysql_query($sQuery);
 $aResultTotal = mysql_fetch_array($rResultTotal);
 $iTotal = $aResultTotal[0];
@@ -197,8 +210,10 @@ $output = array(
     "iTotalDisplayRecords" => $iFilteredTotal,
     "aaData" => array()
 );
+$no=$_GET['iDisplayStart']+1;
 //echo "<pre>";
 while ($aRow = mysql_fetch_array($rResult)) {
+     //pr($aRow);
      $row = array();
      $Aset_ID=$aRow['Aset_ID'];
      $noRegister=$aRow['noRegister'];
@@ -213,10 +228,13 @@ while ($aRow = mysql_fetch_array($rResult)) {
      $kondisi=$aRow['kondisi'];
      $TipeAset=$aRow['TipeAset'];
 
-     $NilaiPerolehan=number_format($aRow['NilaiPerolehan'],2);
-     $NilaiBuku=number_format($aRow ['NilaiBuku'],2);
-     $PenyusutanPertaun=number_format($aRow ['PenyusutanPertaun'],2);
-     $AkumulasiPenyusutan=number_format($aRow ['AkumulasiPenyusutan'],2);
+     //$NilaiPerolehan,2,",","."
+     //$aRow['NilaiPerolehan'],2
+     //$aRow['NilaiPerolehan'],2,",","."
+     $NilaiPerolehan=number_format($aRow['NilaiPerolehan'],2,",",".");
+     $NilaiBuku=number_format($aRow['NilaiBuku'],2,",",".");
+     $PenyusutanPertaun=number_format($aRow['PenyusutanPertaun'],2,",",".");
+     $AkumulasiPenyusutan=number_format($aRow['AkumulasiPenyusutan'],2,",",".");
 
      $StatusValidasi=$aRow['StatusValidasi'];
      $Status_Validasi_Barang=$aRow['Status_Validasi_Barang']; 
@@ -237,19 +255,30 @@ while ($aRow = mysql_fetch_array($rResult)) {
     $href="<a href=\"$url_rewrite/module/layanan/detail_aset.php?id=$Aset_ID&jenisaset=$TipeAset\">
         <input type=\"button\" name=\"Lanjut\" class=\"btn\" value=\"Lihat Riwayat\"> </a>";
 
-     $row[] = $noRegister;
-      $row[] = "<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"Layanan[]\" value=\"{$Aset_ID}_{$jenisaset}\" {$checked} >";     
+     /*$row[] = "<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"Layanan[]\" value=\"{$Aset_ID}_{$jenisaset}\" {$checked} >";*/  
+     //pr($statusaset);
+     if($statusaset == '0' || $statusaset =='1'){
+       if($noKontrak){
+           $checkbox="";
+       }else{
+            $checkbox="<input type=\"checkbox\" id=\"checkbox\" class=\"icheck-input checkbox\" onchange=\"return AreAnyCheckboxesChecked();\" name=\"Layanan[]\" value=\"{$Aset_ID}\">";    
+       }
+     }else{
+         $checkbox="";
+     }
+   
+     $row[] ="<center>".$no."</center>";
+     $row[] = "<center>".$checkbox."</center>";  
+     $row[] = "<center>".$noRegister."</center>";
      $row[] = $noKontrak;
      $row[]= "$kodeKelompok<br/>$text_kelompok";
      $row[]= "$kodeSatker<br/>$text_satker";
-     $row[] = "$info";
-     $row[] = "$TglPerolehan <br/> /$TglPembukuan";
+     $row[] = "$TglPerolehan <br/> / $TglPembukuan";
      $row[] = "$NilaiPerolehan";
+     $row[] = "$info";
      $row[] = "$text_sv $text_svb";
      $row[] = "$href";
-    
-
-
+     $no++;
      $output['aaData'][] = $row;
 }
 

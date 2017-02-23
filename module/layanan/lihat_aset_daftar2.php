@@ -27,84 +27,23 @@ include"$path/menu.php";
 	?>
 	<script type="text/javascript">
 	$(document).ready(function() {
-			
-				
-				var tes=document.getElementsByTagName('*');
-				var button=document.getElementById('submit');
-				var boxeschecked=0;
-				for(k=0;k<tes.length;k++)
-				{
-					if(tes[k].className=='checkbox')
-						{
-							//
-							tes[k].checked == true  ? boxeschecked++: null;
-						}
-				}
-			//alert(boxeschecked);
-				// if(boxeschecked!=0){
-				// 	button.disabled=false;
-				// }
-				// else {
-				// 	button.disabled=true;
-				// }
-			
-			} );
-			
-			function enable(){  
-			var tes=document.getElementsByTagName('*');
-			var button=document.getElementById('submit');
-			var boxeschecked=0;
-			for(k=0;k<tes.length;k++)
-			{
-				if(tes[k].className=='checkbox')
-					{
-						//
-						tes[k].checked == true  ? boxeschecked++: null;
-					}
-			}
-			//alert(boxeschecked);
-			if(boxeschecked!=0)
-				button.disabled=false;
-			else
-				button.disabled=true;
-			}
-			function disable_submit(){
-				var enable = document.getElementById('pilihHalamanIni');
-				var disable = document.getElementById('kosongkanHalamanIni');
-				var button=document.getElementById('submit');
-				if (disable){
-					button.disabled=true;
-				} 
-			}
-			function enable_submit(){
-				var enable = document.getElementById('pilihHalamanIni');
-				var disable = document.getElementById('kosongkanHalamanIni');
-				var button=document.getElementById('submit');
-				if (enable){
-					button.disabled=false;
-				} 
-			}
+		AreAnyCheckboxesChecked();
+	} );
 
 	function AreAnyCheckboxesChecked () 
-	{
-		setTimeout(function() {
-	  if ($("#Form2 input:checkbox:checked").length > 0)
 		{
-		    $("#submit").removeAttr("disabled");
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('LYNAN');
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('LYNAN');
+			}}, 100);
 		}
-		else
-		{
-		   $('#submit').attr("disabled","disabled");
-		}}, 100);
-	}
-
-    $(document).ready(function() {
-
-    	// alert('ada');
-    	var param = "api_layanan.php?<?php echo $par_data_table?>";
-        dTableParam("layanan_tabel", param, 10);
-        // log();
-    });
 
     function checkBefore(){
 
@@ -124,49 +63,43 @@ include"$path/menu.php";
 			  <li><a href="#">Layanan</a><span class="divider"><b>&raquo;</b></span></li>
 			  <li class="active">Log Aset Simbada</li>
 			  <?php SignInOut();?>
-			</ul>
-			<div class="breadcrumb">
-				<div class="title">Daftar Aset</div>
-				<div class="subtitle">Daftar Aset hasil penelusuran</div>
-			</div>	
-
-		
+		</ul>
+		<div class="breadcrumb">
+			<div class="title">Daftar Aset</div>
+			<div class="subtitle">Daftar Aset hasil penelusuran</div>
+		</div>	
 
 		<section class="formLegend">
-			
 			<script>
-    $(document).ready(function() {
-          $('#usulan_pmd_table').dataTable(
-                   {
-                    "aoColumnDefs": [
-                         { "aTargets": [2] }
-                    ],
-                    //"sScrollY": "350px",
-                    //"sScrollY": "70vh",
-                    //"sScrollX": "100%",
-    				//"bScrollCollapse": true,
-           		//"aLengthMenu": [[50, 100, 500,1000], [50, 100, 500,1000]],
-                    "aoColumns":[
-                         {"bSortable": true},	
-                         {"bSortable": false},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true}],
-                    "sPaginationType": "full_numbers",
+			    $(document).ready(function() {
+			          $('#layanan').dataTable(
+	                    {
+	                    "aoColumnDefs": [
+	                         { "aTargets": [2] }
+	                    ],
+	                    "aoColumns":[
+	                         {"bSortable": true},	
+	                         {"bSortable": false,"sClass": "checkbox-column"},
+	                         {"bSortable": true},
+	                         {"bSortable": true},
+	                         {"bSortable": true},
+	                         {"bSortable": true},
+	                         {"bSortable": true},
+	                         {"bSortable": true},
+	                         {"bSortable": true},
+	                         {"bSortable": true},
+	                         {"bSortable": true}],
+	                    "sPaginationType": "full_numbers",
 
-                    "bprocessing": true,
-                    "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_layanan2.php?<?php echo $par_data_table?>"
-               }
-                  );
-      });
-    </script>
-    <form name="myform" ID="Form2" method="POST" action="<?php echo "$url_rewrite/module/layanan/"; ?>hapus_aset.php" onsubmit="return checkBefore()">
+	                    "bprocessing": true,
+	                    "bServerSide": true,
+	                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_layanan2.php?<?php echo $par_data_table?>"
+		               	}
+                    );
+			      });
+    		</script>
+
+    	<form name="myform" id="Form2" method="POST" action="<?php echo "$url_rewrite/module/layanan/"; ?>hapus_aset.php" onsubmit="return checkBefore()">
 			<?php 
 			// pr($_SESSION);
 			if ($_SESSION['ses_ujabatan']==1):
@@ -179,26 +112,27 @@ include"$path/menu.php";
 			<a href="<?php echo "$url_rewrite/report/template/PEROLEHAN/liat_dftr_aset.php?$param"; ?>" target="blank">
 			   <input type="button" name="cetak" class="btn btn-info" value="Cetak Aset" >
 			</a>
-
+			<li>&nbsp;</li>
 			<div id="demo">
-			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="usulan_pmd_table">
+			<table cellpadding="0" cellspacing="0" border="0" class="display  table-checkable" id="layanan">
 				<thead>
 					<tr>
-						<th>No Register</th>
+						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
+						<th>No Register</th>
 						<th>No Kontrak</th>
 						<th>Kode / Uraian</th>
 						<th>Satker</th>
+						<th>Tgl Perolehan / Tgl Pembukuan</th>
+						<th>Nilai Perolehan</th>
 						<th>Info</th>
-						<th>Tgl Perolehan</th>
-						<th >Nilai Perolehan</th>
 						<th>Note Sistem</th>
 						<th>Detail</th>
 					</tr>
 				</thead>
 				<tbody>		
 					 <tr>
-                        <td colspan="9">Data Tidak di temukkan</td>
+                        <td colspan="11">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
@@ -211,18 +145,17 @@ include"$path/menu.php";
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
 					</tr>
 				</tfoot>
 			</table>
 			</div>
-
 		</form>
-			<div class="spacer"></div>
-			    
+			<div class="spacer"></div> 
 		</section> 
-		     
 	</section>
-	
 <?php
 	include"$path/footer.php";
 ?>
