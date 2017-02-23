@@ -609,6 +609,10 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
                 } else {
                     $data[ 'koreksi_penyusutan_kurang' ] = 0;
+                    $data[ 'Saldo_akhir_jml' ] = 1;
+                    $data[ 'NilaiPerolehan' ] = $NilaiPerolehan;
+                    $data[ 'NilaiBuku' ] = $NilaiBuku;
+                    $data[ 'AkumulasiPenyusutan' ] = $AkumulasiPenyusutan;
                 }
                 $data[ 'bp_penyusutan_kurang' ] = 0;
                 $data[ 'bp_berjalan' ] = 0;
