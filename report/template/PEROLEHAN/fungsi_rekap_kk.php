@@ -303,6 +303,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         $cek_77=cek_log_77_hapus_admin($tabel_log,$Aset_ID);
         if($cek_77=="1"){
             $status_masuk=0;
+            $Kd_Riwayat=77;
         }
         // echo "$Aset_ID --$kodeKa( $noKontrak, $kondisi_aset )Kd_Riwayat==$Kd_Riwayat && Status_Validasi_Barang=$Status_Validasi_Barang && StatusValidasi==$StatusValidasi && StatusTampil==$StatusTampil<br/>";
         if($Kd_Riwayat == "0" && $Status_Validasi_Barang == 1 && $StatusValidasi == 1 && $StatusTampil == 1 && $TglPembukuan != 0) {
