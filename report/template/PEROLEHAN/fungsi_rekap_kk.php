@@ -271,11 +271,13 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             echo "<br/>masukk==kondisi_next=$kondisi_next=kondisi-skrg= $kondisi ==$log_id ==$Aset_ID==$final_gol ";
         }
         $status_kondisi = 0;
+        $kondisi_next=trim($kondisi_next);
+        $kondisi=trim($kondisi);
         if(($kondisi_next == "1" || $kondisi_next == "2 ") && $kondisi == "3") {
             echo "masuk kondisi tambah <br>";
             $status_kondisi = 1;
         }else if($kondisi_next == "3" && ($kondisi == "1" || $kondisi == "2")) {
-            echo "masuk kondisi tambah<br>";
+            echo "masuk kondisi kurang<br>";
             $status_kondisi = -7;
         }else if(($kondisi_next == "1" || $kondisi_next == "2") && ($kondisi == "1" || $kondisi == "2")) {
             $status_kondisi = 0;
