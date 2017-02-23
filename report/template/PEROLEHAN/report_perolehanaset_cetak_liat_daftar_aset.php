@@ -11,43 +11,73 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
 // pr($_GET);
-$no_kontrak = $_GET['no_kontrak]'];
 $tahun = $_GET['tahun'];
-$Satker_ID = $_GET['Satker_ID'];
-$status = $_GET['status'];
-$jns_aset = $_GET['jns_aset'];
-$tipe=$_GET['tipe'];
+$jenisaset = $_GET['jenisaset'];
+$kodeSatker = $_GET['kodeSatker'];
+$kodepemilik = $_GET['kodepemilik'];
+$kodeKelompok= $_GET['kodeKelompok'];
+$statusaset=$_GET['statusaset'];
 
 $REPORT=new report_engine();
 
 $gambar = $FILE_GAMBAR_KABUPATEN;
+$sWhere = "";
 
-if($no_kontrak !=''){
-	$query_noKontrak = "noKontrak='{$no_kontrak}' AND";
-}else{
-	$query_noKontrak="";
+if ($tahun != "") {
+     if ($sWhere != "")
+          $sWhere.=" and tahun ='$tahun' ";
+     else
+          $sWhere = "Where tahun ='$tahun' ";
+     
+}
+if ($jenisaset != "") {
+     if ($sWhere != "")
+          $sWhere.=" and TipeAset='$jenisaset' ";
+     else
+          $sWhere = "Where TipeAset='$jenisaset'  ";
 }
 
-if($tahun!=''){
-	$query_tahun = "tahun='{$tahun}' AND";
-}else{ 
-	$query_tahun="";
+if ($kodeSatker != "") {
+     if ($sWhere != "")
+          $sWhere.=" and kodeSatker like '%$kodeSatker%' ";
+     else
+          $sWhere = "Where kodeSatker like '%$kodeSatker%' ";
+}
+if ($kodeKelompok != "") {
+     if ($sWhere != "")
+          $sWhere.=" and kodeKelompok like '%$kodeKelompok%' ";
+     else
+          $sWhere = "Where kodeKelompok like '%$kodeKelompok%' ";
 }
 
-if($Satker_ID != ""){
-	$query_satker="kodeSatker = '{$Satker_ID}' AND";
-}else{
-	$query_satker="";
-}
-
-if($status != ''){
-	if($status == 0){
-		$query_status="(Status_Validasi_Barang IS NULL OR Status_Validasi_Barang = '{$status}') AND";
-	}elseif($status == 1){
-		$query_status="Status_Validasi_Barang = '{$status}' AND StatusValidasi = '{$status}' AND";
-	}
-}else{
-	$query_status="";
+if($statusaset!=""){
+  switch ($statusaset) {
+    case "1":
+      // code... 
+      //masuk neraca  StatusValidasi=1 dan Status_Validasi_Barang=1
+      $aset_status= " (StatusValidasi=1 and Status_Validasi_Barang=1)";
+      break;
+    case "0":
+      // code...
+      //baru masuk kontrak atau inventarisasi  StatusValidasi=1 dan Status_Validasi_Barang=0
+      $aset_status= " (StatusValidasi=1 and Status_Validasi_Barang=0)";
+      break;
+    case "27":
+      // code...
+      //baru masuk kontrak atau inventarisasi  StatusValidasi=0 dan Status_Validasi_Barang=0;
+      $aset_status= " (StatusValidasi=0 and Status_Validasi_Barang=0)";
+      break;
+    case "13":
+      // code...
+      //baru masuk kontrak atau inventarisasi  StatusValidasi not in (0,1) dan Status_Validasi_Barang not in (0,1)
+      $aset_status= " (StatusValidasi not in(0,1) or Status_Validasi_Barang not in(0,1)";
+      break;
+    
+   }
+   if ($sWhere != "")
+          $sWhere.=" and $aset_status ";
+     else
+          $sWhere = "Where $aset_status ";
 }
 
 $expld = explode(',',$jns_aset);
@@ -63,8 +93,8 @@ for ($i = 0; $i < $count; $i++){
 	}
 	
 	$query = "SELECT noKontrak,noRegister,kodeKelompok,kodeSatker,Info,TglPerolehan,TglPembukuan,Tahun,NilaiPerolehan,Status_Validasi_Barang 
-			  from aset where {$query_noKontrak} {$query_tahun} {$query_satker} {$query_status} {$query_kodekelompok} order by kodeKelompok,noRegister asc";
-
+			  from aset $sWhere order by kodeKelompok,noRegister asc";
+    	
 	$exe = mysql_query($query);
 	while ($data = mysql_fetch_object($exe))
 	{
@@ -76,7 +106,7 @@ for ($i = 0; $i < $count; $i++){
 // exit;
 //mendeklarasikan report_engine. FILE utama untuk reporting
 // pr($gambar);
-$html=$REPORT->retrieve_html_liat_dftr_aset($dataArr,$Satker_ID,$gambar,$tipe);
+$html=$REPORT->retrieve_html_liat_dftr_aset($dataArr,$kodeSatker,$gambar,$tipe);
 
 /*$count = count($html);
 for ($i = 0; $i < $count; $i++) {

@@ -48,7 +48,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 	
 	
 	$dataParam = $SESSION->smartFilter('layanan');
-
+	pr($dataParam );
 	$par_data_table= "data=".encode($dataParam);//{$dataParam['kd_nokontrak']}&jenisaset={$dataParam['jenisaset']}&kodeSatker={$dataParam['kodeSatker']}&kd_tahun={$dataParam['kd_tahun']}&statusaset={$dataParam['statusaset']}&page={$dataParam['page']}";
 
 	
