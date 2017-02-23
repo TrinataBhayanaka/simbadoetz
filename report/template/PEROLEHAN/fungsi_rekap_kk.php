@@ -267,9 +267,25 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
         $status_masuk = 0;
 
-        if($Kd_Riwayat == "0"){
-            list($Status_Validasi_Barang,$StatusValidasi,$StatusTampil,$TglPembukuan)=get_log_status_validasi($tabel_log, $log_id, $Aset_ID,$final_gol);
+        if($Kd_Riwayat == "0" || $Kd_Riwayat == "1"){
+            list($Status_Validasi_Barang,$StatusValidasi,$StatusTampil,$TglPembukuan,$kondisi_next)=get_log_status_validasi($tabel_log, $log_id, $Aset_ID,$final_gol);
         }
+        $status_kondisi=0;
+        if(($kondisi_next == "1" || $kondisi_next == "2 ") and $kondisi == 3)
+        {
+            $status_kondisi = 1;
+        }
+
+        if ($kondisi_next == "3" || ($kondisi == "1" || $kondisi == "2"))
+        {
+            $status_kondisi = -7;
+        }
+
+        if(($kondisi_next = "1" || $kondisi_next = "2") || ($kondisi = "1" || $kondisi = "2"))
+        {
+            $status_kondisi = 0;
+        }
+
         // echo "$Aset_ID --$kodeKa( $noKontrak, $kondisi_aset )Kd_Riwayat==$Kd_Riwayat && Status_Validasi_Barang=$Status_Validasi_Barang && StatusValidasi==$StatusValidasi && StatusTampil==$StatusTampil<br/>";
         if($Kd_Riwayat == "0" && $Status_Validasi_Barang == 1 && $StatusValidasi == 1 && $StatusTampil == 1 && $TglPembukuan != 0) {
 
@@ -412,7 +428,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'Saldo_akhir_jml' ] = 0;
             }
 
-        } else if($Kd_Riwayat == "1" && $final_gol != "tanah") {
+        } else if($Kd_Riwayat == "1" && $final_gol != "tanah" && $status_kondisi>0) {
             // Ubah Kondisi
             $status_masuk = 1;
             if($kodeKa == 1) {
@@ -432,8 +448,10 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 /*
             Penetuan Jenis Kondisi
            */
-                $status_kondisi = 0;
-                list($tmp_nilai_buku_awal, $tmp_akm_awal, $kondisi_awal) =
+
+
+
+                /*list($tmp_nilai_buku_awal, $tmp_akm_awal, $kondisi_awal) =
                     get_log_before_tahun_sblmya ($tabel_log, $log_id, $tglawalperolehan, $Aset_ID);
                 if($kondisi_awal == 0 || $kondisi_awal == "") {
                     $status_masuk = 0;
@@ -445,7 +463,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                     else
                         $status_masuk = 0;
 
-                }
+                }*/
                 /*
             Penetuan Jenis Kondisi
            */
@@ -537,7 +555,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
                 /** Reklas Kurang Aset Tetap */
                 $data[ 'reklas_krg_aset_tetap' ] = 0;
-                if($status_kondisi == -1) {
+                if($status_kondisi == -7) {
                     $data[ 'reklas_krg_aset_lain' ] = $NilaiPerolehan;
                     $data[ 'reklas_krg_jml' ] = 1;
                     $data[ 'reklas_krg_nilai' ] = $NilaiPerolehan;
@@ -564,7 +582,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 /** AKHIR JUMLAH MUTASI KURANG */
 
                 /** PENYUSUTAN - */
-                if($status_kondisi == -1) {
+                if($status_kondisi == -7) {
                     $data[ 'koreksi_penyusutan_kurang' ] = $AkumulasiPenyusutan;
                     $data[ 'Saldo_akhir_jml' ] = 0;
                     $data[ 'NilaiPerolehan' ] = 0;
@@ -3073,7 +3091,7 @@ function get_log_before($log, $log_id, $aset_id)
     while ($data = mysql_fetch_array ($result, MYSQL_ASSOC)) {
         $NilaiBuku = $data[ 'NilaiBuku' ];
         $AkumulasiPenyusutan = $data[ 'AkumulasiPenyusutan' ];
-        $kondisi = $data[ 'kondisi' ];
+        $kondisi = $data[ 'kondisi' ]; 
     }
     return array( $NilaiBuku, $AkumulasiPenyusutan, $kondisi );
 }
@@ -3081,7 +3099,7 @@ function get_log_before($log, $log_id, $aset_id)
 function get_log_status_validasi($log, $log_id, $aset_id,$final_gol)
 {
 
-    $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil,TglPembukuan from $log where log_id>$log_id 
+    $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil,TglPembukuan,kondisi from $log where log_id>$log_id 
           and aset_id='$aset_id' and TglPerubahan!=''";
     //echo $query;
     $result = mysql_query ($query) or die(mysql_error ());
@@ -3092,10 +3110,11 @@ function get_log_status_validasi($log, $log_id, $aset_id,$final_gol)
         $StatusValidasi=$data['StatusValidasi'];
         $StatusTampil=$data['StatusTampil'];
         $TglPembukuan=$data['TglPembukuan'];
+        $kondisi=$data['kondisi'];
         $query_cek=1;
     }
     if($query_cek==0){
-        $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil,TglPembukuan from $final_gol where aset_id='$aset_id' ";
+        $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil,TglPembukuan,kondisi from $final_gol where aset_id='$aset_id' ";
         //echo $query;
         $result = mysql_query ($query) or die(mysql_error ());
         while ($data = mysql_fetch_array ($result, MYSQL_ASSOC)) {
@@ -3103,9 +3122,10 @@ function get_log_status_validasi($log, $log_id, $aset_id,$final_gol)
             $StatusValidasi = $data[ 'StatusValidasi' ];
             $StatusTampil = $data[ 'StatusTampil' ];
             $TglPembukuan=$data['TglPembukuan'];
+            $kondisi=$data['kondisi'];
         }
     }
-    return array($Status_Validasi_barang,$StatusValidasi,$StatusTampil,$TglPembukuan);
+    return array($Status_Validasi_barang,$StatusValidasi,$StatusTampil,$TglPembukuan,$kondisi);
 }
 
 /** fungis untuk melihat data log untuk tahun sebelumnya
