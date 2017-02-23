@@ -271,11 +271,11 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             echo "<br/>masukk===$kondisi_next== $kondisi ==$log_id ==$Aset_ID==$final_gol ";
         }
         $status_kondisi = 0;
-        if(($kondisi_next == "1" || $kondisi_next == "2 ") and $kondisi == "3") {
+        if(($kondisi_next == "1" || $kondisi_next == "2 ") && $kondisi == "3") {
             $status_kondisi = 1;
-        }else if($kondisi_next == "3" || ($kondisi == "1" || $kondisi == "2")) {
+        }else if($kondisi_next == "3" && ($kondisi == "1" || $kondisi == "2")) {
             $status_kondisi = -7;
-        }else if(($kondisi_next == "1" || $kondisi_next == "2") || ($kondisi == "1" || $kondisi == "2")) {
+        }else if(($kondisi_next == "1" || $kondisi_next == "2") && ($kondisi == "1" || $kondisi == "2")) {
             $status_kondisi = 0;
         }
         if( $Kd_Riwayat == "1")
