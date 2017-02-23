@@ -140,6 +140,22 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             $kodeKa = 1;
             // echo "masuk22";
         }
+        //cek kodeKA
+        if($kodeKa==0 ){
+            $tmp_kode=explode(".",$kodeKelompok);
+            if($tmp_kode[0]=="02")
+            {
+                if($Tahun>=2008 && $NilaiPerolehan>=300000){
+                    $kodeKa=1;
+                } else $kodeKa=0;
+            }else if($tmp_kode[0]=="03"){
+                if($Tahun>=2008 && $NilaiPerolehan>=1000000){
+                    $kodeKa=1;
+                } else $kodeKa=0;
+            }
+
+        }
+
         if($final_gol == "tanah" || $final_gol == "kdp" || $final_gol == "asetlain") {
             $NilaiBuku = $NilaiPerolehan;
             $NilaiBuku_Awal = $NilaiPerolehan_Awal;
@@ -1321,6 +1337,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 /** UPDATE DATA AKHIR */
                 $data[ 'NilaiPerolehan' ] = 0;
                 $data[ 'NilaiBuku' ] = 0;
+                $data[ 'AkumulasiPenyusutan' ] = 0;
                 $data[ 'PenyusutanPerTahun' ] = 0;
                 $data[ 'Saldo_akhir_jml' ] = 0;
             }
