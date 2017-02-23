@@ -8,7 +8,7 @@
  * @param unknown $tglawalperolehan
  * @param unknown $tglakhirperolehan
  * @param unknown $TAHUN_AKTIF
- * @return array
+ * @return array 
  */
 function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $TAHUN_AKTIF)
 {
@@ -101,7 +101,11 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         $TglPerolehan = $data[ 'TglPerolehan' ];
         $TglPembukuan = $data[ 'TglPembukuan' ];
         $StatusValidasi = $data[ 'StatusValidasi' ];
+
         $Status_Validasi_Barang = $data[ 'Status_Validasi_Barang' ];
+
+
+
         $StatusTampil = $data[ 'StatusTampil' ];
         $Tahun = $data[ 'Tahun' ];
         $NilaiPerolehan = $data[ 'NilaiPerolehan' ];
@@ -263,6 +267,9 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
         $status_masuk = 0;
 
+        if($Kd_Riwayat == "0"){
+            list($Status_Validasi_Barang,$StatusValidasi,$StatusTampil)=get_log_status_validasi($tabel_log, $log_id, $Aset_ID);
+        }
         // echo "$Aset_ID --$kodeKa( $noKontrak, $kondisi_aset )Kd_Riwayat==$Kd_Riwayat && Status_Validasi_Barang=$Status_Validasi_Barang && StatusValidasi==$StatusValidasi && StatusTampil==$StatusTampil<br/>";
         if($Kd_Riwayat == "0" && $Status_Validasi_Barang == 1 && $StatusValidasi == 1 && $StatusTampil == 1 && $TglPembukuan != 0) {
 
@@ -3069,6 +3076,34 @@ function get_log_before($log, $log_id, $aset_id)
         $kondisi = $data[ 'kondisi' ];
     }
     return array( $NilaiBuku, $AkumulasiPenyusutan, $kondisi );
+}
+
+function get_log_status_validasi($log, $log_id, $aset_id)
+{
+
+    $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil from $log where log_id>$log_id 
+          and aset_id='$aset_id' and TglPerubahan!=''";
+    //echo $query;
+    $result = mysql_query ($query) or die(mysql_error ());
+
+    $query_cek=0;
+    while ($data = mysql_fetch_array ($result, MYSQL_ASSOC)) {
+        $Status_Validasi_barang = $data[ 'Status_Validasi_barang' ];
+        $StatusValidasi=$data['StatusValidasi'];
+        $StatusTampil=$data['StatusTampil'];
+        $query_cek==1;
+    }
+    if($query_cek==0){
+        $query = "select Status_Validasi_barang from aset where aset_id='$aset_id' ";
+        //echo $query;
+        $result = mysql_query ($query) or die(mysql_error ());
+        while ($data = mysql_fetch_array ($result, MYSQL_ASSOC)) {
+            $Status_Validasi_barang = $data[ 'Status_Validasi_barang' ];
+            $StatusValidasi = $data[ 'StatusValidasi' ];
+            $StatusTampil = $data[ 'StatusTampil' ];
+        }
+    }
+    return array($Status_Validasi_barang,$StatusValidasi,$StatusTampil);
 }
 
 /** fungis untuk melihat data log untuk tahun sebelumnya
