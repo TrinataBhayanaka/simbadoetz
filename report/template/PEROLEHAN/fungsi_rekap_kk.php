@@ -3091,7 +3091,7 @@ function get_log_status_validasi($log, $log_id, $aset_id,$final_gol)
         $Status_Validasi_barang = $data[ 'Status_Validasi_barang' ];
         $StatusValidasi=$data['StatusValidasi'];
         $StatusTampil=$data['StatusTampil'];
-        $query_cek==1;
+        $query_cek=1;
     }
     if($query_cek==0){
         $query = "select Status_Validasi_barang,StatusValidasi,StatusTampil from $final_gol where aset_id='$aset_id' ";
