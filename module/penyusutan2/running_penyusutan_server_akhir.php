@@ -966,30 +966,40 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3, $persen, $DBVAR)
     //echo "<pre> ";
     // print($prosentase3);
     if($prosentase4 != 0) {
-        //echo " masuk 11 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
+        echo " masuk 11 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
         if($persen > $prosentase4) {
             //  echo "0 =4";
             $hasil = $penambahan4;
         } else if($persen > $prosentase3 && $persen <= $prosentase4) {
             // echo "0 =3";
-            $hasil = $penambahan3;
+            $hasil = $penambahan4;
         } else if($persen > $prosentase2 && $persen <= $prosentase3) {
             // echo "0 =2";
+            $hasil = $penambahan3;
+        } 
+        else if($persen > $prosentase1 && $persen <= $prosentase2) {
+            // echo "0 =2";
             $hasil = $penambahan2;
-        } else if($persen <= $prosentase1) {
+        }else if($persen <= $prosentase1) {
             //echo "0 =1";
             $hasil = $penambahan1;
         }
-    } else {
+    } else { 
+      
+      echo " masuk 00 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
+
         if($persen > $prosentase3) {
-            //   echo "1 =3";
+               echo "1 =3";
 
             $hasil = $penambahan3;
+        } else if($persen > $prosentase2 && $persen <= $prosentase3) {
+             echo "1 =2 ";
+            $hasil = $penambahan3;
         } else if($persen > $prosentase1 && $persen <= $prosentase2) {
-            // echo "1 =2 ";
+             echo "1 =3 ";
             $hasil = $penambahan2;
-        } else if($persen <= $prosentase1) {
-            // echo "1 = 5 ";
+        } else if($persen < $prosentase1) {
+            echo "1 ";
             $hasil = $penambahan1;
         }
 
