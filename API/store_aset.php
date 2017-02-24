@@ -1608,11 +1608,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             $query = "INSERT INTO aset ({$field}) VALUES ({$value})";
             $execquery = mysql_query($query);
             // logFile($query);
-            if(!$execquery){
+            /*if(!$execquery){
               $this->rollback();
               echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
               exit;
-            }
+            }*/
 
             $query_id = "SELECT Aset_ID FROM aset WHERE kodeKelompok = '{$tblAset['kodeKelompok']}' AND kodeLokasi='{$tblAset['kodeLokasi']}' AND noRegister = '{$tblAset['noRegister']}' LIMIT 1";
             $exec = mysql_query($query_id);
@@ -1744,11 +1744,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             
                 $execquery = mysql_query($query);
                 // logFile($query);
-                if(!$execquery){
+                /*if(!$execquery){
                   $this->rollback();
                   echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                   exit;
-                }
+                }*/
         }
 
         //@revisi untuk reklas
@@ -1827,11 +1827,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 
                     $query = "INSERT INTO {$tabel} ({$fields}) VALUES ({$values})";
                     $execquery = mysql_query($query);
-                    if(!$execquery){
+                    /*if(!$execquery){
                       $this->rollback();
                       echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
                       exit;
-                    }
+                    }*/
 
             }
                 
@@ -1877,12 +1877,18 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 $counter = 0;
                 sleep(1);
             }
-
         }
-        $this->commit();
-        if(isset($data['xls'])) return true;
-        echo "<script>alert('Data berhasil disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
-        exit;
+        if(!$execquery){
+          $this->rollback();
+          echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+          exit;
+        }else{
+            $this->commit();
+            if(isset($data['xls'])) return true;
+            echo "<script>alert('Data berhasil disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
+            exit;    
+        }
+        
     }
 
     public function store_sp2d($data,$id)

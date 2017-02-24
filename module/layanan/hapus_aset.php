@@ -22,7 +22,7 @@ if(isset($_POST)){
 	//exit;
 	$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	$kodeSatker = $_POST['kodeSatker'];
-	$date = date("Y-m-d");
+	$date = date("Y-m-d_H:i:s");
 	$log = "hapus_aset_".$kodeSatker.'_'.$date;
 	//pr($log);
 	//exit;
