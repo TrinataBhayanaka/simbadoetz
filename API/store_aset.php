@@ -1878,12 +1878,12 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 sleep(1);
             }*/
         }
-        /*if(!$execquery){
+        if(!$execquery){
           $this->rollback();
           echo "<script>alert('Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
           exit;
-        }else{*/
-        //$this->commit();
+        }else{
+        $this->commit();
         if(isset($data['xls'])) return true;
         echo "<script>alert('Data berhasil disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang.php?id={$data['id']}\">";
         exit;    
