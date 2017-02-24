@@ -1618,7 +1618,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'bp_penyusutan_kurang' ] = 0;
                 /** AKHIR PENYUSUTAN - */
                 $data[ 'Saldo_akhir_jml' ] = 1;
-                $data[ 'bp_berjalan' ] = $PenyusutanPerTahun - $PenyusutanPerTahun_Awal;
+                $data[ 'bp_berjalan' ] = $AkumulasiPenyusutan - $AkumulasiPenyusutan_Awal;
             }
         } else if($Kd_Riwayat == "281" || $Kd_Riwayat == "282") {
             // code REKLAS KOREKSI KAPITALISAI, REKLAS TRANSFER KAPITALISASI
