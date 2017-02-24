@@ -1577,8 +1577,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             while ($row = mysql_fetch_assoc($query)){
             $startreg = $row['noRegister'];
         }
-
-        $loops = $startreg+$data['Kuantitas'];
+        if($startreg == ''){
+            $startreg = 0; 
+        }
+        $loops = intval($startreg)+intval($data['Kuantitas']);
+        //$loops = $startreg+$data['Kuantitas'];
         $counter = 0;
         $xlsxount = 0;
         if(isset($data['xls'])) {$nilaisisa = $data['NilaiTotal'];}
@@ -1783,9 +1786,11 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             if($tabel != 'aset'){
                 
                 $query = mysql_query("SELECT noRegister FROM aset WHERE kodeKelompok = '{$data['kodeKelompokTujuan']}' AND kodeLokasi = '{$tblAset['kodeLokasi']}' ORDER BY noRegister DESC LIMIT 1");
-
                 while ($row = mysql_fetch_assoc($query)){
                     $startreg = $row['noRegister'];
+                }
+                if($startreg == ''){
+                    $startreg = 0;   
                 }
                 $noreg = intval($startreg)+1; 
                 //@kodereklas (tujuan)
@@ -1836,7 +1841,6 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
             }
                 
         }
-            
             
             if(isset($data['xls'])){
                 //log
