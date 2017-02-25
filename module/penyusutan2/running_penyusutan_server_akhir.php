@@ -984,7 +984,8 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3, $persen, $DBVAR)
             //echo "0 =1";
             $hasil = $penambahan1;
         }
-    } else {
+    } else { 
+      
       echo " masuk 00 $persen====$prosentase1 $prosentase2 $prosentase3 $prosentase4 \n";
 
         if($persen > $prosentase3) {
