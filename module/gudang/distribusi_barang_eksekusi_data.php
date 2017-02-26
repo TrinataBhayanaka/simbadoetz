@@ -54,7 +54,7 @@ if($_GET['id']){
 							</li>
 							<li>
 								<span class="span2">Tanggal Proses</span>
-								<input type="text" placeholder="yyyy-mm-dd" id="datepicker" name="tglDistribusi" value="<?=(isset($dataArr) ? $dataArr['tglDistribusi'] : '')?>" style="width:205px;" required>
+								<input readonly type="text" placeholder="yyyy-mm-dd" id="datepicker" name="tglDistribusi" value="<?=(isset($dataArr) ? $dataArr['tglDistribusi'] : '')?>" style="width:205px;" required>
 							</li>
 							<li>
 								<span class="span2">Alasan</span>

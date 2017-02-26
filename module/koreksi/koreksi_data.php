@@ -140,7 +140,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" name="tglPerubahan" id="datepicker2" value="<?=$dataArr['aset']['tglPerubahan']?>" required/>
+										<input readonly type="text" class="span2" name="tglPerubahan" id="datepicker2" value="<?=$dataArr['aset']['tglPerubahan']?>" required/>
 									</div>
 								</div>
 							</li>

@@ -103,7 +103,7 @@ include "../../config/config.php";
 					<div class="control">
 						<div class="input-prepend">
 							<span class="add-on"><i class="fa fa-calendar"></i></span>
-							<input type="text" id="datepicker" class="span2 full" name="tglPerubahan" value=""  required="required"/>
+							<input readonly type="text" id="datepicker" class="span2 full" name="tglPerubahan" value=""  required="required"/>
 							<!--<input type="text" class="span2 full" name="tglPerubahan" id="tglPerubahan" value="<?=date("Y-m-d")?>" readonly/>-->
 						</div>
 					</div>

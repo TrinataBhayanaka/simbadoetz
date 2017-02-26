@@ -101,7 +101,7 @@ $menu_id = 10;
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input type="text" class="span2" placeholder="yyyy-mm-dd" name="tglPembukuan" id="datepicker" required/>
+										<input readonly type="text" class="span2" placeholder="yyyy-mm-dd" name="tglPembukuan" id="datepicker" required/>
 									</div>
 								</div>
 							</li>

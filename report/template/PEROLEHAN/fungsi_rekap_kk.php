@@ -2574,7 +2574,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level_aset[ $key_baru ][ 'NilaiPerolehan' ] = $value[ 'NilaiPerolehan' ];
         $data_level_aset[ $key_baru ][ 'Saldo_akhir_jml' ] = $value[ 'Saldo_akhir_jml' ];
         $data_level_aset[ $key_baru ][ 'AkumulasiPenyusutan' ] = $value[ 'AkumulasiPenyusutan' ];
-        if(($tmp[0]=="01"||$tmp[0]=="05"||$tmp[0]=="06")&&($value[ 'NilaiBuku' ]==""||$value[ 'NilaiBuku' ]==0))
+        if(($tmp[0]=="01"||$tmp[0]=="05"||$tmp[0]=="06"))
             $data_level_aset[ $key_baru ][ 'NilaiBuku' ] = $value[ 'NilaiPerolehan' ];
         else
             $data_level_aset[ $key_baru ][ 'NilaiBuku' ] = $value[ 'NilaiBuku' ];
