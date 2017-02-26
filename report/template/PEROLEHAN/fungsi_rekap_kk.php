@@ -2541,6 +2541,7 @@ function group_data($data_awal_perolehan, $data_log)
         $index_aset_id = $index_aset_id[ 0 ];
         $log_id = $value[ 'log_id' ];
         $key_baru = "{$tmp[0]}.{$tmp[1]}.{$tmp[2]}.{$tmp[3]}.{$tmp[4]}.{$index_aset_id}";
+
         //echo "key==$key_baru=={$value['Kd_Riwayat']}<br/>";
         $URAIAN = get_uraian ($key_baru, 5);
 
@@ -2573,7 +2574,10 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level_aset[ $key_baru ][ 'NilaiPerolehan' ] = $value[ 'NilaiPerolehan' ];
         $data_level_aset[ $key_baru ][ 'Saldo_akhir_jml' ] = $value[ 'Saldo_akhir_jml' ];
         $data_level_aset[ $key_baru ][ 'AkumulasiPenyusutan' ] = $value[ 'AkumulasiPenyusutan' ];
-        $data_level_aset[ $key_baru ][ 'NilaiBuku' ] = $value[ 'NilaiBuku' ];
+        if(($tmp[0]=="01"||$tmp[0]=="05"||$tmp[0]=="06")&&($value[ 'NilaiBuku' ]==""||$value[ 'NilaiBuku' ]==0))
+            $data_level_aset[ $key_baru ][ 'NilaiBuku' ] = $value[ 'NilaiPerolehan' ];
+        else
+            $data_level_aset[ $key_baru ][ 'NilaiBuku' ] = $value[ 'NilaiBuku' ];
 
 
         $data_level_aset[ $key_baru ][ 'koreksi_tambah_nilai' ] += $value[ 'koreksi_tambah_nilai' ];
