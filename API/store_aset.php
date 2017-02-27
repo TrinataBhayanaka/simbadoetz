@@ -2729,6 +2729,54 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
         exit;
     }  
 
+    public function store_trs_validasi_cli($data)
+    {
+      //  unset($data['example_length']);
+        // pr($data);
+
+        foreach ($data['aset'] as $key => $value) {
+            $sqlupd = "UPDATE transfer SET n_status = '2' WHERE id = '$value';";
+            echo "\n Distribusi Barang  dng no transfer $value \n";
+            echo ("$sqlupd\n");
+            $result=  $this->query($sqlupd) or die($this->error());   
+            
+            unset($aset);
+            $sqltrsR = mysql_query("SELECT * FROM transferaset WHERE transfer_id = '$value';");
+
+            while ($row = mysql_fetch_assoc($sqltrsR)){
+                $aset[] = $row;
+            }
+
+
+            // pr($aset);
+            foreach ($aset as $key => $val) {
+
+                $sqltrsR = mysql_query("SELECT tglDistribusi FROM transfer WHERE id = '$value' LIMIT 1;");
+                while ($row = mysql_fetch_assoc($sqltrsR)){
+                    $tglDist = $row['tglDistribusi'];
+                } 
+
+                $sqlupd = "UPDATE {$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}';";
+                 echo("$sqlupd \n");
+                $result=  $this->query($sqlupd) or die($this->error());
+
+                 $sqlupd = "UPDATE log_{$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}' and Kd_Riwayat=0";
+                echo("$sqlupd \n");
+                $result=  $this->query($sqlupd) or die($this->error());
+                
+                $sqlupd = "UPDATE aset SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}';";
+                echo("$sqlupd\n\n");
+                $result=  $this->query($sqlupd) or die($this->error());
+            }
+            $sqlupd = "UPDATE transfer SET n_status = '1' WHERE id = '$value';";
+            echo ("$sqlupd\n");
+            $result=  $this->query($sqlupd) or die($this->error());   
+        }
+
+        return true;
+        exit;
+    } 
+
     public function store_inventarisasi($data)
     {
 

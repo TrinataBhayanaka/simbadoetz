@@ -13,7 +13,18 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 	include"$path/menu.php";
 	
 	if(isset($_POST['aset'])){
-	    $dataArr = $STORE->store_trs_validasi($_POST);
+		$no_transfer="";
+		$count=0;
+		foreach ($_POST['aset'] as $key => $value) {
+			if ($count==0)
+				$no_transfer="$value";
+			else
+				$no_transfer="$no_transfer,$value";
+			$count++;
+		}
+		$tgl=date('Y-m-d-H-i');
+		$status=exec("php validasi_gudang_cli.php $no_transfer >> $path/log/$tgl-gudang-$no_transfer.txt &");
+	   // $dataArr = $STORE->store_trs_validasi($_POST);
     	echo "<meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/gudang/validasi.php\">";
     	exit;
 	  }
@@ -88,7 +99,17 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 						$i = 1;
 						if($get_data_filter['data'])
 						{
+							$text_status=array();
+							$lbl=array();
 							foreach ($get_data_filter['data'] as $key => $value) {
+								$text_status[0]='Belum';
+								$text_status[1]='Sudah';
+								$text_status[2]='Proses';
+								$lbl[0]="default";
+								$lbl[0]="success";
+								$lbl[2]="info";
+
+
 					?>
 							<tr class="gradeA">
 								<td class="checkbox-column">
@@ -104,8 +125,14 @@ $get_data_filter = $RETRIEVE->retrieve_validasiBarang($_POST);
 								<td><?=$value['toSatker']?></td>
 								<td><?=$value['tglDistribusi']?></td>
 								<td><?=$value['alasan']?></td>
-								<td class="text-center"><?=($value['n_status']==1) ? '<span class="label label-success">SUDAH</span>' : '<span class="label label-Default">BELUM</span>'?></td>
 								<td class="text-center">
+									<?php
+										$status=$value['n_status'];
+										$label=$lbl[$status];
+										$text=$text_status[$status];
+										echo "<span class=\"label label-$label\">$text</span>";
+									?>
+									<td class="text-center">
 									<a href="distribusi_rinc.php?id=<?=$value['id']?>" class="btn btn-info btn-small" ><i class="fa fa-eye"></i>&nbsp;View</a>
 								</td>
 							</tr>

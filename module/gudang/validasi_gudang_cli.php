@@ -10,7 +10,7 @@ echo "Tanggal Validasi Gudang ";
 $no_transfer = $argv[1];
 $data_aset=array();
 $data_aset['aset']=explode(",",$no_transfer);
-
+  
 $dataArr = $STORE->store_trs_validasi_cli($data_aset);
 
 $time_end = microtime(true);
