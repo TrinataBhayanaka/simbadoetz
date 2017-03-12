@@ -513,7 +513,7 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
         $QueryLogSelect = "select kodeKelompok,PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,"
                 . "MasaManfaat,UmurEkonomis,NilaiBuku,AkumulasiPenyusutan,PenyusutanPerTahun "
                 . " from $tableLog where Aset_ID = {$Aset_ID} "
-                . " and TahunPenyusutan='$tahun_sblm' and Kd_Riwayat=50 order by log_id desc limit 1";
+                . " and TahunPenyusutan='$tahun_sblm' and Kd_Riwayat in (50,51,52) order by log_id desc limit 1";
         $exeQueryLogSelect = $DBVAR->query($QueryLogSelect) or die($DBVAR->error());
         $resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
 
@@ -585,7 +585,7 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
         $QueryLog = "DELETE FROM $tableLog WHERE  Aset_ID = '{$Aset_ID}' and Kd_Riwayat  IN ('49','50','51','52')  and kodeSatker = '{$Data[kodeSatker]}' and action ='{$action}' ";
         $exeQueryLog = $DBVAR->query($QueryLog);
 
-        $QueryKib = "UPDATE $tableLog SET MasaManfaat = '{$MasaManfaat_Awal}',
+        /*$QueryKib = "UPDATE $tableLog SET MasaManfaat = '{$MasaManfaat_Awal}',
 												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
 												 NilaiBuku = '{$NilaiBuku_Awal}',
@@ -596,7 +596,7 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
                                                                                                   $TahunPenyusutan 
                                                                                                      
 										WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
-        $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
+        $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());*/
         //untuk mengecek bila ada trasaksi
         $TglPerubahan_awal = $tahun . "-01" . "-01";
         $query_perubahan = "select kd_riwayat,log_id,kodeKelompok,kodeSatker,Aset_ID,NilaiPerolehan,NilaiPerolehan_Awal,Tahun,Kd_Riwayat,"
