@@ -344,8 +344,7 @@ for ($i = 0; $i < 2; $i++) {
     switch ($i) {
         case 0:
             //kondisi untuk barang yang belum pernah penyusutan
-            $sWhere = " WHERE $status 
-                ((a.AkumulasiPenyusutan IS NULL AND a.PenyusutanPerTahun IS NULL) or (a.AkumulasiPenyusutan =0 AND a.PenyusutanPerTahun =0) )
+            $sWhere = " WHERE $status ((a.AkumulasiPenyusutan IS NULL AND a.PenyusutanPerTahun IS NULL) or (a.AkumulasiPenyusutan =0 AND a.PenyusutanPerTahun =0) )
 
                                       AND a.kodeSatker like '$kodeSatker%' AND a.kodeKelompok like '$flagKelompok%' ";
             break;
@@ -356,6 +355,7 @@ for ($i = 0; $i < 2; $i++) {
 			  AND a.kodeSatker like '$kodeSatker%' AND a.kodeKelompok like '$flagKelompok%' and a.TahunPenyusutan='$thn_sblm' ";
             break;
     }
+    echo "masuk duli";
 
     if($kib == 'B' || $kib == 'C') {
         $sQuery = "
@@ -379,9 +379,9 @@ for ($i = 0; $i < 2; $i++) {
                             $AddCondtn_1";
     }
 
-
+    echo "$i === $sQuery\n shwere=$sWhere \n $AddCondtn_1";
     $ExeQuery = $DBVAR->query ($sQuery) or die($DBVAR->error ());
-    //echo "$i === $sQuery\n";
+    
     if($i == 0) {
         echo "Penyusutan tahun berjalan untuk tahun $newTahun $kodeSatker dengan kondisi penyusutan pertama kali \n"
             . "Aset_ID \t kodeKelompok  \t NilaiPerolehan \t Tahun \t masa_manfaat \t AkumulasiPenyusutan \t NilaiBuku  \t penyusutan_per_tahun \n";
@@ -776,6 +776,7 @@ for ($i = 0; $i < 2; $i++) {
                         . "NilaiPerolehan \t=$NP\n"
                         . "TahunPerolehan \t=$Tahun\n"
                         . "MasaManfaat \t=$MasaManfaat_Final\n"
+                        . "Umur_Ekonomis_Final \t=$Umur_Ekonomis_Final\n"
                         . "AkumulasiPenyusutan \t=$AkumulasiPenyusutan_hasil\n"
                         . "AkumulasiPenyusutan_lama=$AkumulasiPenyusutan\n"
                         . "NilaiBUku \t= $NilaiBuku_hasil\n"

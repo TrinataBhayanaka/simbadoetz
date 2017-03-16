@@ -569,6 +569,10 @@ for ($i = 0; $i < 2; $i++) {
 
                     $NilaiPerolehan_Awal = $resultqueryKibSelect->NilaiPerolehan;
 
+                    $Kd_Riwayat = '49';
+                    //insert log
+                    $QueryLog = "INSERT INTO $tableLog ($implodeField__lama,$AddField) VALUES ($implodeVal_lama,'$action','$changeDate','$TglPerubahan_temp','$NilaiPerolehan_Awal','$Kd_Riwayat')";
+
                     $ceck = $tahun - 2015;
                     if($ceck < 1) {
                         $QueryLogSelect = "select PenyusutanPerTahun,AkumulasiPenyusutan,NilaiBuku from $tableLog where Aset_ID = {$Aset_ID} order by log_id desc limit 1";
