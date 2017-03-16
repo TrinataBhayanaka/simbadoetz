@@ -43,10 +43,12 @@ $REPORT_RETRIEVE=new RETRIEVE_REPORT();
 //pengadaan kontrak aset non kapitalisasi
 $data_non_kapitalisasi=$REPORT_RETRIEVE->daftar_pengadaan_berdasarkan_skpd($skpd_id,$tglawalperolehan,$tglakhirperolehan);
 //pr($data_non_kapitalisasi);
-
+//exit;
 //pengadaan kontrak aset kapitalisasi
 $data_kapitalisasi=$REPORT_RETRIEVE->daftar_pengadaan_kapitalisasi_berdasarkan_skpd($skpd_id,$tglawalperolehan,$tglakhirperolehan);
 //pr($data_kapitalisasi);
+
+//exit();
 $data =array();
 if($data_non_kapitalisasi != '' && $data_kapitalisasi != ''){
 	$data = array_merge($data_non_kapitalisasi,$data_kapitalisasi);

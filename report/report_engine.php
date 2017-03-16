@@ -10337,7 +10337,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 										<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
 										<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
 										<td style=\"width: 69; text-align: center;\">
-										$Info_AsalUsul
+										$Info_AsalUsul 
 										</td>
 										<td style=\"width: 81px; text-align: center;\">$hit</td>
 										<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
@@ -10940,6 +10940,17 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 									list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
 									$tgl = "$tanggal/$bulan/$tahun";
 								}
+
+								//revisi asal usul
+								$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+								//pr($AsalUsul);
+								if($AsalUsul['1'] == 0){
+									$Info_AsalUsul = $AsalUsul['0']; 	
+								}else{
+									$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+								}	
+
+
 								$html.="
 								<tr>
 									<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -10955,7 +10966,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 									<td style=\"width: 79px; \">$row->NoDokumen</td>
 									<td style=\"width: 66px;  \">$row->StatusTanah</td>
 									<td style=\"width: 66px; \"></td>
-									<td style=\"width: 67px; text-align: center;\">$row->AsalUsul</td>
+									<td style=\"width: 67px; text-align: center;\">$Info_AsalUsul</td>
 									<td style=\"width: 80px; text-align: right;\">$perolehan</td>
 									<td style=\"width: 80px; text-align: center;\">$ketKondisi</td>
 									<td style=\"width: 60px; \">$row->Info</td>
@@ -11178,6 +11189,14 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 							list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
 							$tgl = "$tanggal/$bulan/$tahun";
 						}
+						//revisi asal usul
+						$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+						//pr($AsalUsul);
+						if($AsalUsul['1'] == 0){
+							$Info_AsalUsul = $AsalUsul['0']; 	
+						}else{
+							$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+						}	
 								$html.="
 									<tr align=\"center\">
 										<td style=\"width: 30px;font-weight: \">$no</td>
@@ -11192,7 +11211,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 										<td style=\"width: 78px; font-weight: \">$tgl</td>
 										<td style=\"width: 80px;font-weight: \">$row->StatusTanah</td>
 										<td style=\"width: 90px; font-weight: \"></td>
-										<td style=\"width: 79px;font-weight: \">$row->AsalUsul</td>
+										<td style=\"width: 79px;font-weight: \">$Info_AsalUsul</td>
 										<td style=\"width: 80px;font-weight: \">$perolehan</td>
 										<td style=\"width: 90px;font-weight: \">$row->Info</td>
 									</tr>";
@@ -11572,6 +11591,14 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 					$data = $row->noReg;
 					$ex = explode(',',$data);
 					$hit = count($ex);
+					//revisi asal usul
+					$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+					//pr($AsalUsul);
+					if($AsalUsul['1'] == 0){
+						$Info_AsalUsul = $AsalUsul['0']; 	
+					}else{
+						$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+					}	
 						   $html.="
 								<tr>
 									<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -11587,7 +11614,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 									<td style=\"width: 70px; \">$mix</td>
 									<td style=\"width: 51px; text-align: center;\">$hasil</td>
 									<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
-									<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+									<td style=\"width: 69px; text-align: center;\">$Info_AsalUsul</td>
 									<td style=\"width: 80px; text-align: center;\">$hit</td>
 									<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
 									<td style=\"width: 60px;\">$row->Info</td>
@@ -12931,7 +12958,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 						<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
 						<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
 						<td style=\"width: 69; text-align: center;\">
-						Info_AsalUsul</td>
+						$Info_AsalUsul</td>
 						<td style=\"width: 81px; text-align: center;\">$hit</td>
 						<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
 						<td style=\"width: 69px;font-weight: \">$row->Info</td>
@@ -14385,6 +14412,16 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
 														$tgl = "$tanggal/$bulan/$tahun";
 													}
+
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}
+
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -14400,7 +14437,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 79px; \">$row->NoDokumen</td>
 																	<td style=\"width: 66px;  \">$row->StatusTanah</td>
 																	<td style=\"width: 66px; \"></td>
-																	<td style=\"width: 67px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 67px; text-align: center;\">$Info_AsalUsul</td>
 																	<td style=\"width: 80px; text-align: right;\">$perolehan</td>
 																	
 																	<td style=\"width: 80px; text-align: center;\">$ketKondisi</td>
@@ -15135,6 +15172,15 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 													$ex = explode(',',$data);
 													$hit = count($ex);
 													// $perolehanTotal = $perolehanTotal + $nilaiPerolehan;
+
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}	
 													       $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -15150,7 +15196,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 70px; \">$mix</td>
 																	<td style=\"width: 51px; text-align: center;\">$hasil</td>
 																	<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
-																	<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 69px; text-align: center;\">$Info_AsalUsul</td>
 																	<td style=\"width: 80px; text-align: center;\">$hit</td>
 																	<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
 																	<td style=\"width: 60px;\">$row->Info</td>
@@ -15848,6 +15894,15 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
 														$tgl = "$tanggal/$bulan/$tahun";
 													}
+
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}	
                                                             $body.="
 																<tr align=\"center\">
 																	<td style=\"width: 30px;font-weight: \">$no</td>
@@ -15862,7 +15917,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 78px; font-weight: \">$tgl</td>
 																	<td style=\"width: 80px;font-weight: \">$row->StatusTanah</td>
 																	<td style=\"width: 90px; font-weight: \"></td>
-																	<td style=\"width: 79px;font-weight: \">$row->AsalUsul</td>
+																	<td style=\"width: 79px;font-weight: \">$Info_AsalUsul</td>
 																	<td style=\"width: 80px;font-weight: \">$perolehan</td>
 																	<td style=\"width: 90px;font-weight: \">$row->Info</td>
 																</tr>";
@@ -17333,7 +17388,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 											<td style=\"width: 72px; text-align: center;\">$row->NoMesin</td>
 											<td style=\"width: 72px; text-align: center;\">$row->NoSTNK</td>
 											<td style=\"width: 72px; text-align: center;\">$row->NoBPKB</td>
-											<td style=\"width: 69; text-align: center;\">Info_AsalUsul</td>
+											<td style=\"width: 69; text-align: center;\">$Info_AsalUsul</td>
 											<td style=\"width: 81px; text-align: right;\">$nilaiPrlhnFix</td>
 											<td style=\"width: 70px;font-weight: \">$row->Info</td>
 											<td style=\"width: 70px;font-weight: \"></td>
@@ -18860,6 +18915,16 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														list($tahun, $bulan, $tanggal)= explode('-', $row->TglPerolehan);
 														$tglPrlhn = "$tanggal/$bulan/$tahun";
 													}
+
+
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}	
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -18875,7 +18940,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 79px; \">$row->NoDokumen</td>
 																	<td style=\"width: 66px;  \">$row->StatusTanah</td>
 																	<td style=\"width: 66px; \"></td>
-																	<td style=\"width: 67px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 67px; text-align: center;\">$Info_AsalUsul</td>
 																	<td style=\"width: 67px; text-align: center;\">$tglPrlhn</td>
 																	<td style=\"width: 80px; text-align: right;\">$perolehan</td>
 																	
@@ -19638,7 +19703,15 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														$tglPrlhn = "$tanggal/$bulan/$tahun";
 													}
 													$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
-													$ketRuangan = $this->get_Ruangan($thnRuangan,$row->kodeSatker,$row->kodeRuangan);										
+													$ketRuangan = $this->get_Ruangan($thnRuangan,$row->kodeSatker,$row->kodeRuangan);	
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}										
 											       $body.="
 														<tr>
 															<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -19654,7 +19727,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 															<td style=\"width: 70px; \">$mix</td>
 															<td style=\"width: 51px; text-align: center;\">$hasil</td>
 															<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
-															<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+															<td style=\"width: 69px; text-align: center;\">$Info_AsalUsul</td>
 															<td style=\"width: 69px; text-align: center;\">$tglPrlhn</td>
 															<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
 															<td style=\"width: 70px;\">$row->Info</td>
@@ -20376,6 +20449,14 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
 														$tgl = "$tanggal/$bulan/$tahun";
 													}
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}	
                                                             $body.="
 																<tr align=\"center\">
 																	<td style=\"width: 30px;font-weight: \">$no</td>
@@ -20390,7 +20471,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 78px; font-weight: \">$tgl</td>
 																	<td style=\"width: 80px;font-weight: \">$row->StatusTanah</td>
 																	<td style=\"width: 90px; font-weight: \"></td>
-																	<td style=\"width: 79px;font-weight: \">$row->AsalUsul</td>
+																	<td style=\"width: 79px;font-weight: \">$Info_AsalUsul</td>
 																	<td style=\"width: 80px;font-weight: \">$perolehan</td>
 																	<td style=\"width: 90px;font-weight: \">$row->Info</td>
 																	<td style=\"width: 70px;font-weight: \"></td>
@@ -23328,6 +23409,16 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														list($tahun, $bulan, $tanggal)= explode('-', $row->TglDokumen);
 														$tgl = "$tanggal/$bulan/$tahun";
 													}
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}	
+
+
                                                             $body.="
 																<tr>
 																	<td style=\"width: 30px; text-align: center;\">$no</td>
@@ -23343,7 +23434,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 79px; \">$row->NoDokumen</td>
 																	<td style=\"width: 66px;  \">$row->StatusTanah</td>
 																	<td style=\"width: 66px; \"></td>
-																	<td style=\"width: 67px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 67px; text-align: center;\">$Info_AsalUsul</td>
 																	<td style=\"width: 80px; text-align: right;\">$perolehan</td>
 																	
 																	<td style=\"width: 80px; text-align: center;\">$ketKondisi</td>
@@ -24091,7 +24182,14 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														$judulHewan = $row->Judul;
 													}
 													$mix = $row->Ukuran."&nbsp;".$row->Material;
-													
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}
 													// $perolehanTotal = $perolehanTotal + $nilaiPerolehan;
 													       $body.="
 																<tr>
@@ -24108,7 +24206,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 70px; \">$mix</td>
 																	<td style=\"width: 51px; text-align: center;\">$hasil</td>
 																	<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
-																	<td style=\"width: 69px; text-align: center;\">$row->AsalUsul</td>
+																	<td style=\"width: 69px; text-align: center;\">$Info_AsalUsul</td>
 																	<td style=\"width: 80px; text-align: right;\">$hit</td>
 																	<td style=\"width: 80px; text-align: right;\">$nilaiPrlhnFix</td>
 																	
@@ -24821,6 +24919,14 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 														list($tahun, $bulan, $tanggal)= explode('-', $row->TglSertifikat);
 														$tgl = "$tanggal/$bulan/$tahun";
 													}
+													//revisi asal usul
+													$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+													//pr($AsalUsul);
+													if($AsalUsul['1'] == 0){
+														$Info_AsalUsul = $AsalUsul['0']; 	
+													}else{
+														$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+													}	
                                                             $body.="
 																<tr align=\"center\">
 																	<td style=\"width: 30px;font-weight: \">$no</td>
@@ -24835,7 +24941,7 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 																	<td style=\"width: 78px; font-weight: \">$tgl</td>
 																	<td style=\"width: 80px;font-weight: \">$row->StatusTanah</td>
 																	<td style=\"width: 90px; font-weight: \"></td>
-																	<td style=\"width: 79px;font-weight: \">$row->AsalUsul</td>
+																	<td style=\"width: 79px;font-weight: \">$Info_AsalUsul</td>
 																	<td style=\"width: 80px;font-weight: \">$perolehan</td>
 																	<td style=\"width: 90px;font-weight: \">$row->Info</td>
 																</tr>";

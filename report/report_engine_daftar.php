@@ -779,12 +779,12 @@ $head = "
                               </tr>
                               <tr>
                                    <td colspan='2' style=\"width: 10%;text-align:left;font-weight:bold;\">Kab/Kota</td>
-                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: Kotawaringin Timur</td>
+                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: $this->NAMA_KABUPATEN</td>
 
                               </tr>
                                <tr>
                                    <td colspan='2' style=\"width: 10%;text-align:left;font-weight:bold;\">Provinsi</td>
-                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: Kalimantan Tengah</td>
+                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: $this->NAMA_PROVINSI</td>
 
                               </tr>
                          </table><br/>";
@@ -846,12 +846,12 @@ $head = "
                               </tr>
                               <tr>
                                    <td colspan='2' style=\"width: 10%;text-align:left;font-weight:bold;\">Kab/Kota</td>
-                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: Kotawaringin Timur</td>
+                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: $this->NAMA_KABUPATEN</td>
 
                               </tr>
                                <tr>
                                    <td colspan='2' style=\"width: 10%;text-align:left;font-weight:bold;\">Provinsi</td>
-                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: Kalimantan Tengah</td>
+                                   <td style=\"width: 90%;text-align:left;font-weight:bold;\">: $this->NAMA_PROVINSI</td>
 
                               </tr>
                          </table><br/>";
