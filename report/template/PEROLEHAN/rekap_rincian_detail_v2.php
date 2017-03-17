@@ -1313,9 +1313,9 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
         $data_gabungan[ $tipe ][ 'nilai_akhir' ] = $data_akhir[ $tipe ][ 'nilai' ];
         $data_gabungan[ $tipe ][ 'jml_akhir' ] = $data_akhir[ $tipe ][ 'jml' ];
-        $data_gabungan[ $tipe ][ 'ap_akhir' ] = $data_akhir[ $tipe ][ 'AP' ];
-        $data_gabungan[ $tipe ][ 'pp_akhir' ] = $data_akhir[ $tipe ][ 'PP' ];
-        $data_gabungan[ $tipe ][ 'nb_akhir' ] = $data_akhir[ $tipe ][ 'NB' ];
+        $data_gabungan[ $tipe ][ 'ap_akhir' ] = round($data_akhir[ $tipe ][ 'AP' ],2);
+        $data_gabungan[ $tipe ][ 'pp_akhir' ] = round($data_akhir[ $tipe ][ 'PP' ],2);
+        $data_gabungan[ $tipe ][ 'nb_akhir' ] = round($data_akhir[ $tipe ][ 'NB' ],2);
 
 
     }
