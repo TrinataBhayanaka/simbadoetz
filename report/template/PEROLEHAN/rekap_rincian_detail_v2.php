@@ -1478,9 +1478,9 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
         $data_akhir[ $tipe ][ 'nilai_akhir' ] = $value[ 'nilai' ];
         $data_akhir[ $tipe ][ 'jml_akhir' ] = $value[ 'jml' ];
-        $data_akhir[ $tipe ][ 'ap_akhir' ] = $value[ 'AP' ];
-        $data_akhir[ $tipe ][ 'pp_akhir' ] = $value[ 'PP' ];
-        $data_akhir[ $tipe ][ 'nb_akhir' ] = $value[ 'NB' ];
+        $data_akhir[ $tipe ][ 'ap_akhir' ] = round($value[ 'AP' ],2);
+        $data_akhir[ $tipe ][ 'pp_akhir' ] = round($value[ 'PP' ],2);
+        $data_akhir[ $tipe ][ 'nb_akhir' ] = round($value[ 'NB' ],2);
 
 
     }
