@@ -1117,7 +1117,7 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
         }
     }
 
-//echo "$gol == $sql";
+//echo "$gol == $sql<br/>";
     $resultparentSubSub = mysql_query ($sql) or die(mysql_error());
     $data = array();
     while ($data_subsub = mysql_fetch_array ($resultparentSubSub, MYSQL_ASSOC)) {
@@ -1535,11 +1535,11 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
         $data_level5[ $key_baru ][ 'Uraian' ] = $URAIAN;
         $data_level5[ $key_baru ][ 'Kelompok' ] = $key_baru;
-        $data_level5[ $key_baru ][ 'nilai' ] += $data_gabungan[ $key ][ 'nilai' ];
-        $data_level5[ $key_baru ][ 'jml' ] += $data_gabungan[ $key ][ 'jml' ];
-        $data_level5[ $key_baru ][ 'ap' ] += $data_gabungan[ $key ][ 'ap' ];
-        $data_level5[ $key_baru ][ 'pp' ] += $data_gabungan[ $key ][ 'pp' ];
-        $data_level5[ $key_baru ][ 'nb' ] += $data_gabungan[ $key ][ 'nb' ];
+        $data_level5[ $key_baru ][ 'nilai' ] += round($data_gabungan[ $key ][ 'nilai' ],2);
+        $data_level5[ $key_baru ][ 'jml' ] += round($data_gabungan[ $key ][ 'jml' ],2);
+        $data_level5[ $key_baru ][ 'ap' ] += round($data_gabungan[ $key ][ 'ap' ],2);
+        $data_level5[ $key_baru ][ 'pp' ] += round($data_gabungan[ $key ][ 'pp' ],2);
+        $data_level5[ $key_baru ][ 'nb' ] += round($data_gabungan[ $key ][ 'nb' ],2);
         $data_level5[ $key_baru ][ 'mutasi_jml_tambah' ] += $data_gabungan[ $key ][ 'mutasi_jml_tambah' ];
         $data_level5[ $key_baru ][ 'mutasi_nilai_tambah' ] += $data_gabungan[ $key ][ 'mutasi_nilai_tambah' ];
         $data_level5[ $key_baru ][ 'mutasi_ap_tambah' ] += $data_gabungan[ $key ][ 'mutasi_ap_tambah' ];
@@ -1554,11 +1554,11 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_level5[ $key_baru ][ 'mutasi_pp_kurang' ] += $data_gabungan[ $key ][ 'mutasi_pp_kurang' ];
         $data_level5[ $key_baru ][ 'mutasi_nb_kurang' ] += $data_gabungan[ $key ][ 'mutasi_nb_kurang' ];
 
-        $data_level5[ $key_baru ][ 'nilai_akhir' ] += $data_gabungan[ $key ][ 'nilai_akhir' ];
-        $data_level5[ $key_baru ][ 'jml_akhir' ] += $data_gabungan[ $key ][ 'jml_akhir' ];
-        $data_level5[ $key_baru ][ 'ap_akhir' ] += $data_gabungan[ $key ][ 'ap_akhir' ];
-        $data_level5[ $key_baru ][ 'pp_akhir' ] += $data_gabungan[ $key ][ 'pp_akhir' ];
-        $data_level5[ $key_baru ][ 'nb_akhir' ] += $data_gabungan[ $key ][ 'nb_akhir' ];
+        $data_level5[ $key_baru ][ 'nilai_akhir' ] += round($data_gabungan[ $key ][ 'nilai_akhir' ],2);
+        $data_level5[ $key_baru ][ 'jml_akhir' ] += round($data_gabungan[ $key ][ 'jml_akhir' ],2);
+        $data_level5[ $key_baru ][ 'ap_akhir' ] += round($data_gabungan[ $key ][ 'ap_akhir' ],2);
+        $data_level5[ $key_baru ][ 'pp_akhir' ] += round($data_gabungan[ $key ][ 'pp_akhir' ],2);
+        $data_level5[ $key_baru ][ 'nb_akhir' ] += round($data_gabungan[ $key ][ 'nb_akhir' ],2);
 
 
     }
@@ -1836,6 +1836,13 @@ function get_akumulasi_sblm($Aset_ID, $TahunPenyusutan, $kelompok)
  */
 function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperolehan, $tglpembukuan, $kodeKelompok)
 {
+   $query_riwayat = "select * from ref_riwayat order by kd_riwayat asc";
+    $RIWAYAT = array();
+    $sql_riwayat = mysql_query ($query_riwayat);
+    while ($row = mysql_fetch_array ($sql_riwayat)) {
+        $RIWAYAT[ $row[ Kd_Riwayat ] ] = $row[ Nm_Riwayat ];
+    }
+
     if($aset_id != "") {
         $ex = explode ('.', $kodeKelompok);
         $param = $ex[ '0' ];
@@ -1892,7 +1899,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
             }*/
             //echo "--$aset_id--$paramKd_Rwyt <br/>";
 
-            if($paramKd_Rwyt == 0 || $paramKd_Rwyt == 30|| $paramKd_Rwyt == 2||$paramKd_Rwyt == 281 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29) {
+            if($paramKd_Rwyt == 0 ||$paramKd_Rwyt == 30|| $paramKd_Rwyt == 2||$paramKd_Rwyt == 281 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29) {
                 /*
                 Kode Riwayat
                 0 = Data baru
@@ -2419,6 +2426,51 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
 
                 $umurEkonomis = $valRwyt->UmurEkonomis;
             } //tambahan
+            elseif($paramKd_Rwyt == 36 ) {
+                $flag = "(-)";
+                //SALDO AWAL
+                $nilaiAwalPrlhn = 0;
+                $nilaiAwalPerolehanFix = ($nilaiAwalPrlhn);
+
+                $AkumulasiPenyusutan = 0;
+                $AkumulasiPenyusutanFix = ($AkumulasiPenyusutan);
+
+                 $NilaiBuku = 0;
+                 $NilaiBukuFix = ($NilaiBuku);
+
+
+                //MUTASI ASET (Bertambah)
+                $nilaiPrlhnMutasiTambah = $valRwyt->NilaiPerolehan;
+                $nilaiPrlhnMutasiTambahFix = ($nilaiPrlhnMutasiTambah);
+
+                //MUTASI ASET (Berkurang)
+                $nilaiPrlhnMutasiKurang = $valRwyt->NilaiPerolehan;
+                $nilaiPrlhnMutasiKurangFix = ($nilaiPrlhnMutasiKurang);
+
+                //MUTASI PENYUSUTAN (Berkurang)
+                $penyusutanBerkurang = 0;
+                $penyusutanBerkurangFix = ($penyusutanBerkurang);
+
+                //MUTASI PENYUSUTAN (Bertambah)
+                $penyusutanBertambah = 0;
+                $penyusutanBertambahFix = ($penyusutanBertambah);
+
+                //SALDO AKHIR
+                $nilaiPerolehanHasilMutasi = 0;
+                $nilaiPerolehanHasilMutasiFix = ($nilaiPerolehanHasilMutasi);
+
+                $AkumulasiPenyusutanHasilMutasi =0;
+                $AkumulasiPenyusutanHasilMutasiFix = ($AkumulasiPenyusutanHasilMutasi);
+
+                $nilaibukuHasilMutasi = 0;
+                $nilaibukuHasilMutasiFix = ($nilaibukuHasilMutasi);
+
+                //PENYUSUTAN
+                $PenyusutanPerTahun = 0;
+                $PenyusutanPerTahunFix = ($PenyusutanPerTahun);
+
+                $umurEkonomis = 0;
+            }
             elseif(($paramKd_Rwyt == 50 || $paramKd_Rwyt == 51) && $status_masuk_penyusutan != 1) {
                 $flag = "";
 
@@ -2577,7 +2629,7 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
          order by l.Aset_ID ASC";*/
 
     $paramLog = "l.TglPerubahan >'$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'  
-         AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281) and l.Kd_Riwayat != 77 
+         AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281,36) and l.Kd_Riwayat != 77 
          and l.Aset_ID = '{$AsetId}' 
          order by l.Aset_ID ASC";
 
