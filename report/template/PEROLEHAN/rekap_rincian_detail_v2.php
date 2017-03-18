@@ -226,8 +226,8 @@ $head = "<head>
     $csv.="Jml Akhir"."|";
     $csv.="Nilai Akhir"."|";
     $csv.="Akumulasi Penyusutan Akhir"."|";
-    $csv.="Keterangan "."|";
-     $csv.="Nilai Buku Akhir"."\n";
+    $csv.="Nilai Buku Akhir "."|";
+     $csv.="Keterangan"."\n";
 $head .= " <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
 	<tr>
 		<td rowspan='2' colspan='5' style=\" text-align: center; font-weight: bold; width: \">Kode</td>
@@ -1892,7 +1892,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
             $paramKd_Rwyt = $valRwyt->Kd_Riwayat;
             $kodeKelompok = $valRwyt->kodeKelompok;
 
-            $info = $valRwyt->info;
+            $info = $valRwyt->Info;
             //cek tgl u/info
             /*$ex_tgl_filter = explode('-',$valRwyt->TglPerubahan);
             $tahun = $ex_tgl_filter[0];
