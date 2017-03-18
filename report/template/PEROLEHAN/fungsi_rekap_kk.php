@@ -60,7 +60,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
     $paramLog = "l.TglPerubahan >='$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'
        and $paramSatker
-         AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,35,36,37,281,282,77)
+         AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,30,50,51,29,35,36,37,281,29,291,77)
          order by l.tglPerubahan,l.log_id DESC";
 
     $log_data = "select l.* ,(select Uraian from kelompok
@@ -131,11 +131,12 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
         $Uraian = $data[ 'Uraian' ];
         $AsalUsul = $data[ 'AsalUsul' ];
         $kodeKa = $data[ 'kodeKA' ];
+        //echo "00$Aset_ID --$kodeKa $Tahun $kodeKelompok<br/>";
         //echo "sblm $final_gol -----log_id $log_id aset_id $Aset_ID kodeKa $kodeKa <br/> ";
         if($Kd_Riwayat == "1" || $Kd_Riwayat == "35" || $Kd_Riwayat == "36" || $Kd_Riwayat == "0") {
             list($noKontrak, $kondisi_aset, $kodeKa, $TipeAset) = get_aset ($Aset_ID);
         }
-
+        //echo "11$Aset_ID --$kodeKa $Tahun $kodeKelompok<br/>";
         if($final_gol == "tanah" || $final_gol == "kdp" || $final_gol == "asetlain" || $final_gol == "jaringan") {
             $kodeKa = 1;
             // echo "masuk22";
@@ -149,13 +150,13 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                     $kodeKa=1;
                 } else $kodeKa=0;
             }else if($tmp_kode[0]=="03"){
-                if($Tahun>=2008 && $NilaiPerolehan>=1000000){
+                if($Tahun>=2008 && $NilaiPerolehan>=10000000){
                     $kodeKa=1;
                 } else $kodeKa=0;
             }
 
         }
-
+        //echo "22$Aset_ID --$kodeKa<br/>";
         if($final_gol == "tanah" || $final_gol == "kdp" || $final_gol == "asetlain") {
             $NilaiBuku = $NilaiPerolehan;
             $NilaiBuku_Awal = $NilaiPerolehan_Awal;
@@ -445,6 +446,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'NilaiBuku' ] = 0;
                 $data[ 'PenyusutanPerTahun' ] = 0;
                 $data[ 'Saldo_akhir_jml' ] = 0;
+                $data[ 'AkumulasiPenyusutan' ] =0;
             }
 
         } else if($Kd_Riwayat == "1" && $final_gol != "tanah" && $status_kondisi > 0) {
@@ -618,7 +620,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'bp_berjalan' ] = 0;
                 /** PENYUSUTAN - */
             }
-        } else if($Kd_Riwayat == "2" || $Kd_Riwayat == "29") {
+        } else if($Kd_Riwayat == "2" ) {
             // code... KAPITALISASI dan KAPITALISASI VIA TRANSFER
             if($kodeKa == 1) {
                 $status_masuk = 1;
@@ -644,14 +646,14 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                     /** BELANJA jASA */
                     $data[ 'bj_aset_baru' ] = 0;
                     $data[ 'bj_aset_kapitalisasi' ] = $NilaiPerolehan - $NilaiPerolehan_Awal;
-                    $data[ 'bj_total_brg' ] = 1;
+                    $data[ 'bj_total_brg' ] = 0;
                     $data[ 'bj_total_nilai' ] = $NilaiPerolehan - $NilaiPerolehan_Awal;;
                     /** AKHIR BELANJA JASA */
                 } else {
                     /** BELANJA MODAL */
                     $data[ 'bm_aset_baru' ] = 0;
                     $data[ 'bm_aset_kapitalisasi' ] = $NilaiPerolehan - $NilaiPerolehan_Awal;
-                    $data[ 'bm_total_brg' ] = 1;
+                    $data[ 'bm_total_brg' ] = 0;
                     $data[ 'bm_total_nilai' ] = $NilaiPerolehan - $NilaiPerolehan_Awal;;
                     /** AKHIR BELANJA MODAL */
                 }
@@ -968,8 +970,8 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
                 /** ------------------------------MUTASI KURANG--------------------------------------- */
                 /** Koreksi Saldo Awal  */
-                $data[ 'koreksi_kurang_nilai' ] = $NilaiPerolehan - $NilaiPerolehan_Awal;
-                $data[ 'koreksi_kurang_jml' ] = 1;
+                $data[ 'koreksi_kurang_nilai' ] = abs($NilaiPerolehan - $NilaiPerolehan_Awal);
+                $data[ 'koreksi_kurang_jml' ] = 0;
                 /**  Akhir Koreksi Saldo Awal */
 
                 /** PENGHAPUSAN */
@@ -1015,7 +1017,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'Saldo_akhir_jml' ] = 0;
                 $data[ 'bp_berjalan' ] = 0;
             }
-        } else if($Kd_Riwayat == "21" || $Kd_Riwayat == "28") {
+        } else if($Kd_Riwayat == "21" ) {
             // code... KOREKSI NILAI dan KOREKSI KAPITALISASI
             $selisih = $NilaiPerolehan - $NilaiPerolehan_Awal;
             if($kodeKa == 1) {
@@ -1158,7 +1160,195 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'Saldo_akhir_jml' ] = 1;
                 $data[ 'bp_berjalan' ] = 0;
             }
-        } else if($Kd_Riwayat == "26" || $Kd_Riwayat == "27") {
+        }else if($Kd_Riwayat == "28" || $Kd_Riwayat == "29" ) {
+            // code... PENGHAPUSAN VIA KAPITALISAI
+            if($kodeKa == 1) {
+                $status_masuk = 1;
+                /** ----------------------------MUTASI TAMBAH---------------------------------- */
+                if($Tahun == $TAHUN_AKTIF) {
+                    $data[ 'saldo_awal_nilai' ] = 0;
+                    $data[ 'saldo_awal_akm' ] = 0;
+                    $data[ 'saldo_awal_nilaibuku' ] = 0;
+                    $data[ 'saldo_awal_jml' ] = 0;
+                } else {
+                    $data[ 'saldo_awal_nilai' ] = $NilaiPerolehan;
+                    $data[ 'saldo_awal_akm' ] = $AkumulasiPenyusutan;
+                    $data[ 'saldo_awal_nilaibuku' ] = $NilaiBuku;
+                    $data[ 'saldo_awal_jml' ] = 1;
+                }
+                /** Koreksi Saldo Awal  */
+                $data[ 'koreksi_tambah_nilai' ] = 0;
+                $data[ 'koreksi_tambah_jml' ] = 0;
+                /**  Akhir Koreksi Saldo Awal */
+
+
+                /** BELANJA jASA */
+                $data[ 'bj_aset_baru' ] = 0;
+                $data[ 'bj_aset_kapitalisasi' ] = 0;
+                $data[ 'bj_total_brg' ] = 0;
+                $data[ 'bj_total_nilai' ] = 0;;
+                /** AKHIR BELANJA JASA */
+
+                /** BELANJA MODAL */
+                $data[ 'bm_aset_baru' ] = 0;
+                $data[ 'bm_aset_kapitalisasi' ] = 0;
+                $data[ 'bm_total_brg' ] = 0;
+                $data[ 'bm_total_nilai' ] = 0;;
+                /** AKHIR BELANJA MODAL */
+
+
+                /** HIBAH */
+                $data[ 'hibah_jml' ] = 0;
+                $data[ 'hibah_nilai' ] = 0;
+                /** AKHIR HIBAH */
+
+
+                /** Inventarisasi */
+                $data[ 'inventarisasi_jml' ] = 0;
+                $data[ 'inventarisasi_nilai' ] = 0;
+                /** Inventarisasi */
+
+
+                /** Transfer SKPD */
+                $data[ 'transfer_skpd_tambah_nilai' ] = 0;
+                $data[ 'transfer_skpd_tambah_jml' ] = 0;
+                /** AkhirTransfer SKPD */
+
+                /** Reklasi Aset Tetap Tambah */
+                $data[ 'reklas_aset_tambah_nilai' ] = 0;
+                $data[ 'reklas_aset_tambah_jml' ] = 0;
+                /** AkhirTransfer SKPD */
+
+                /** JUMLAH MUTASI TAMBAH */
+                $data[ 'jumlah_mutasi_tambah_jml' ] =0;
+
+                $data[ 'jumlah_mutasi_tambah_nilai' ] =0;
+
+
+                /** AKHIR JUMLAH MUTASI TAMBAH */
+
+                /** PENYUSUTAN + */
+                $data[ 'koreksi_penyusutan_tambah' ] = 0;
+                $data[ 'bp_penyusutan_tambah' ] = 0;
+                /** AKHIR PENYUSUTAN + */
+
+                /** ------------------------------MUTASI KURANG--------------------------------------- */
+                /** Koreksi Saldo Awal  */
+
+                $data[ 'koreksi_kurang_nilai' ] = 0;
+                $data[ 'koreksi_kurang_jml' ] = 0;
+
+                /**  Akhir Koreksi Saldo Awal */
+
+                /** PENGHAPUSAN */
+                switch ($jenis_hapus) {
+                    case 'jual beli':
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = 0;
+                        $data[ 'hapus_lelang_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = 0;
+                        $data[ 'hapus_total_jml' ] = 1;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+                    case 'dihibahkan':
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_lelang_nilai' ] = 0;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = 0;
+                        $data[ 'hapus_total_jml' ] = 1;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+                    case 'dilelang':
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = 0;
+                        $data[ 'hapus_lelang_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = 0;
+                        $data[ 'hapus_total_jml' ] = 1;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+                    case 'tukar menukar':
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = 0;
+                        $data[ 'hapus_lelang_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = 0;
+                        $data[ 'hapus_total_jml' ] = 1;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+                    case 'hilang':
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = 0;
+                        $data[ 'hapus_lelang_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = 0;
+                        $data[ 'hapus_total_jml' ] = 1;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+                    case 'pemusnahan':
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = 0;
+                        $data[ 'hapus_lelang_nilai' ] = 0;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_total_jml' ] = 1;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+                    case 'alasan lain':
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = 0;
+                        $data[ 'hapus_lelang_nilai' ] = 0;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_total_jml' ] = 0;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+
+                    default:
+                        // code...
+                        $data[ 'hapus_hibah_nilai' ] = $NilaiPerolehan;
+                        $data[ 'hapus_lelang_nilai' ] = 0;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = 0;
+                        $data[ 'hapus_total_jml' ] = 1;
+                        $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
+                        break;
+                }
+                /** AKHIR PENGHAPUSAN */
+
+                /** Transfer SKPD */
+                $data[ 'transfer_skpd_kurang_nilai' ] = 0;
+                $data[ 'transfer_skpd_kurang_jml' ] = 0;
+                /** AkhirTransfer SKPD */
+
+                /** Reklas Kurang Aset Tetap */
+                $data[ 'reklas_krg_aset_tetap' ] = 0;
+                $data[ 'reklas_krg_aset_lain' ] = 0;
+                $data[ 'reklas_krg_jml' ] = 0;
+                $data[ 'reklas_krg_nilai' ] = 0;
+
+                $data[ 'reklas_krg_ekstra' ] = 0;
+                $data[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = 0;
+                $data[ 'reklas_krg_aset_lain' ] = 0;
+
+
+                /** Akhir Reklas Kurang Aset Tetap */
+                /** JUMLAH MUTASI KURANG */
+                $data[ 'jumlah_mutasi_kurang_jml' ] = $data[ 'koreksi_kurang_jml' ] + $data[ 'hapus_total_jml' ] +
+                    $data[ 'transfer_skpd_kurang_jml' ] + $data[ 'reklas_krg_jml' ];
+
+                $data[ 'jumlah_mutasi_kurang_nilai' ] = $data[ 'koreksi_kurang_nilai' ] + $data[ 'hapus_total_nilai' ] +
+                    $data[ 'reklas_krg_nilai' ];
+
+                /** AKHIR JUMLAH MUTASI KURANG */
+                /** PENYUSUTAN - */
+                $data[ 'koreksi_penyusutan_kurang' ] = $AkumulasiPenyusutan;
+                $data[ 'bp_penyusutan_kurang' ] = 0;
+                /** AKHIR PENYUSUTAN - */
+
+                /** UPDATE DATA AKHIR */
+                $data[ 'NilaiPerolehan' ] = 0;
+                $data[ 'NilaiBuku' ] = 0;
+                $data[ 'AkumulasiPenyusutan' ] = 0;
+                $data[ 'PenyusutanPerTahun' ] = 0;
+                $data[ 'Saldo_akhir_jml' ] = 0;
+            }
+        }  
+        else if($Kd_Riwayat == "26" || $Kd_Riwayat == "27") {
             // code... PENGHAPUSAN DAN PEMINDAHTANGANAN
             if($kodeKa == 1) {
                 $status_masuk = 1;
@@ -1847,8 +2037,8 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             /** Akhir Reklas Kurang Aset Tetap */
 
             /** JUMLAH MUTASI KURANG */
-            $data[ 'jumlah_mutasi_kurang_jml' ] = 0;
-            $data[ 'jumlah_mutasi_kurang_nilai' ] = 0;
+            $data[ 'jumlah_mutasi_kurang_jml' ] = 1;
+            $data[ 'jumlah_mutasi_kurang_nilai' ] = $NilaiPerolehan;
             $data[ 'NilaiPerolehan' ] = 0;
             $data[ 'NilaiBuku' ] = 0;
             $data[ 'PenyusutanPerTahun' ] = 0;
@@ -1983,7 +2173,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             /** AKHIR PENYUSUTAN - */
 
             /** UPDATE AKHIR */
-            if($kodeKa != 1) {
+            /*if($kodeKa != 1) {
                 $data[ 'NilaiPerolehan' ] = 0;
                 $data[ 'NilaiBuku' ] = 0;
                 $data[ 'PenyusutanPerTahun' ] = 0;
@@ -1991,7 +2181,12 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'bp_berjalan' ] = 0;
             } else {
                 $data[ 'Saldo_akhir_jml' ] = 1;
-            }
+            }*/
+            $data[ 'NilaiPerolehan' ] = 0;
+                $data[ 'NilaiBuku' ] = 0;
+                $data[ 'PenyusutanPerTahun' ] = 0;
+                $data[ 'Saldo_akhir_jml' ] = 0;
+                $data[ 'bp_berjalan' ] = 0;
 
         }
         if($status_masuk == 1) {
@@ -2285,9 +2480,9 @@ function group_data($data_awal_perolehan, $data_log)
 {
 
     //tes
-    // echo "Data log:";
-    //pr($data_log);
-    //exit();
+     /*echo "Data log:";
+    pr($data_awal_perolehan);
+    exit();*/
     $data_awal = array();
 
     foreach ($data_awal_perolehan as $arg) {
@@ -2555,6 +2750,7 @@ function group_data($data_awal_perolehan, $data_log)
             $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
             $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
             $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
+             $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
             //echo "masukk==".$value[ 'Aset_ID' ]. "==saldo-awal==".$value[ 'saldo_awal_nilai' ]."<br/>";
         } else {
             //echo $value[ 'Aset_ID' ]. "==".$value[ 'log_id' ]."==".$value[ 'Kd_Riwayat' ]."<br/>";
@@ -2568,7 +2764,7 @@ function group_data($data_awal_perolehan, $data_log)
         /* $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
          $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
         */
-        $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
+        //$data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
 
 
         $data_level_aset[ $key_baru ][ 'NilaiPerolehan' ] = $value[ 'NilaiPerolehan' ];

@@ -154,7 +154,7 @@ and t.Aset_ID is not null and t.Aset_ID != 0
     $AddCondtn_1 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND a.kodeKA = '1'
 					AND a.TglPerolehan >='0000-00-00' AND a.TglPerolehan <= '2008-01-01'";
 
-    $AddCondtn_2 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND (a.NilaiPerolehan >=0 OR kodeKA = '1') 
+    $AddCondtn_2 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND (a.NilaiPerolehan >=300000 OR kodeKA = '1') 
 					AND a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <= '$TglPerubahan_temp'";
 } elseif($kib == 'C') {
     $queryKib = "create temporary table aset_tmp  as
@@ -276,7 +276,7 @@ where a.TglPerolehan <='$tgl_perubahan' AND a.TglSKKDH >'$TglPerubahan_temp' AND
     $AddCondtn_1 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND a.kodeKA = '1'
 					AND a.TglPerolehan >='0000-00-00' AND a.TglPerolehan <= '2008-01-01'";
 
-    $AddCondtn_2 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND (a.NilaiPerolehan >=0 OR kodeKA = '1') 
+    $AddCondtn_2 = "AND a.kodeLokasi like '12%' AND a.kondisi !='3' AND (a.NilaiPerolehan >=10000000 OR kodeKA = '1') 
 					AND a.TglPerolehan >='2008-01-01' AND a.TglPerolehan <= '$TglPerubahan_temp'";
 } elseif($kib == 'D') {
     $queryKib = "create temporary table aset_tmp as
