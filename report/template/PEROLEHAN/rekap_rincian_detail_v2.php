@@ -1929,6 +1929,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 27 = Penghapusan Pemusnahan
                 30 = reklas
                 */
+               $tambahan_keterangan_riwayat="";
                if($paramKd_Rwyt == 0){
                       if($noKontrak != "") {
                           if($jenis_belanja == 0) {
@@ -1943,11 +1944,19 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                       } else {
                           if($AsalUsul != "Inventarisasi" && $AsalUsul != "Pembelian" && $AsalUsul != "perolehan sah lainnya") {
                               /** HIBAH */
+                              if($AsalUsul==""){
+                                  $info=strtoupper($info);
+                                  $pos = strpos($info, 'BOS');
+                                  if($pos!=false){
+                                      $AsalUsul="BOS";
+                                  }
+                              }
                              $tambahan_keterangan_riwayat="[$AsalUsul]";
+
                               /** AKHIR HIBAH */
                           } else {
                               /** Inventarisasi */
-                              $tambahan_keterangan_riwayat="[Inventarisasi]";
+                              $tambahan_keterangan_riwayat="[Inventarisasi-$AsalUsul]";
                               /** Inventarisasi */
                           }
                       }
