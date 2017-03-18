@@ -1944,7 +1944,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                       } else {
                           if($AsalUsul != "Inventarisasi" && $AsalUsul != "Pembelian" && $AsalUsul != "perolehan sah lainnya") {
                               /** HIBAH */
-                              if($AsalUsul==""){
+                              if(trim($AsalUsul)==""){
                                   $info=strtoupper($info);
                                   $pos = strpos($info, 'BOS');
                                   if($pos!=false){
