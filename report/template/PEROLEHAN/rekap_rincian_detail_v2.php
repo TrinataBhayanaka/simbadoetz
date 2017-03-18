@@ -1892,6 +1892,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
             $paramKd_Rwyt = $valRwyt->Kd_Riwayat;
             $kodeKelompok = $valRwyt->kodeKelompok;
 
+            $info = $valRwyt->info;
             //cek tgl u/info
             /*$ex_tgl_filter = explode('-',$valRwyt->TglPerubahan);
             $tahun = $ex_tgl_filter[0];
@@ -1949,6 +1950,14 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                               $tambahan_keterangan_riwayat="[Inventarisasi]";
                               /** Inventarisasi */
                           }
+                      }
+                      if($tambahan_keterangan_riwayat==""){
+                        $info=strtoupper($info);
+                        $pos = strpos($info, 'BOS');
+                        if($pos!=false){
+                            $tambahan_keterangan_riwayat="BOS";
+                        }
+
                       }
                 }
 
