@@ -28,7 +28,7 @@ include "fungsi_rekap_kk.php";
 $TBS = new clsTinyButStrong; // new instance of TBS
 $TBS->SetOption('noerr', true);
 $TBS->Plugin( TBS_INSTALL, OPENTBS_PLUGIN ); // load the OpenTBS plugin
-$template = "revisi-template_kk_v4.xlsx";
+$template = "revisi-template_kk_v5.xlsx";
 $TBS->LoadTemplate( $template, OPENTBS_ALREADY_UTF8 ); // Also merge some [onload] automatic fields (depends of the type of document).
 
 
