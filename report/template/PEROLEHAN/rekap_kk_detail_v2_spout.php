@@ -84,7 +84,7 @@ use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Common\Type;
 
 $waktu = date ("d-m-y_h:i:s");
-$filename = "$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
+$filename = "$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$tipeAset-$skpd_id-$tahun_neraca.xlsx";
 $reader = ReaderFactory::create (Type::XLSX);
 $reader->open ($template);
 $reader->setShouldFormatDates (true); // this is to be able to copy dates
@@ -426,7 +426,7 @@ echo '<b>Total Execution Time:</b> ' . $execution_time . ' Mins\n\n';
 $TBS->MergeBlock( 'a', $DATA_FINAL );
 $filename = "$path/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
 $TBS->Show( OPENTBS_FILE, $filename );*/
-$namafile_web = "$url_rewrite" . "/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca.xlsx";
+$namafile_web = "$url_rewrite" . "/report/output/Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$tipeAset-$skpd_id-$tahun_neraca.xlsx";
 echo "<script>window.location.href='$namafile_web';</script>";
 
 
