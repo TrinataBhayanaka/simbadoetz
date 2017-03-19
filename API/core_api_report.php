@@ -6267,6 +6267,8 @@ class core_api_report extends DB {
 		//12 : Mutasi Berkurang
 		//13 : Transfer Kapitalisasi Bertambah 
 		//14 : Transfer Kapitalisasi Berkurang 
+		//15 : Belanja Modal Reklas Bertambah 
+		//16 : Belanja Modal Reklas Berkurang 
 
 		//$param_Filter =  '5';
 		/*echo "paramater = ".$param_Filter;
@@ -6424,6 +6426,22 @@ class core_api_report extends DB {
 						   AND l.Kd_Riwayat = '28' and l.$paramSatker 
 						   and l.Aset_ID_Penambahan != '0' and action like 'Sukses kapitalisasi Mutasi%'
 						   order by l.Aset_ID ASC";
+		}elseif ($param_Filter == 15) {
+			//15 : belanja modal reklas tambah
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 35 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND t.jenis_belanja = 0
+						    AND ast.noKontrak is not null						   	
+						    order by l.Aset_ID ASC";
+		}elseif ($param_Filter == 16) {
+			//16 : belanja modal reklas kurang
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 36 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 0 AND t.StatusTampil = 0 
+						    AND t.jenis_belanja = 0
+						    AND ast.noKontrak is not null						   	
+						    order by l.Aset_ID ASC";
 		}
 
 		/*
@@ -6600,11 +6618,13 @@ class core_api_report extends DB {
 
 					
 					
-		if($param_Filter == 1 || $param_Filter == 2 || $param_Filter == 3 || $param_Filter == 4){
+		if($param_Filter == 1 || $param_Filter == 2 || $param_Filter == 3 || $param_Filter == 4 || $param_Filter == 15 || $param_Filter == 16){
 			//1 : belanja modal aset baru
 			//2 : belanja jasa aset baru
 			//3 : hibah
 			//4 : inventarisasi
+			//15 : belanja modal reklas tambah
+			//16 : belanja modal reklas kurang
 
 			$queryALL = array($log_tanah,$log_mesin,$log_bangunan,$log_jaringan,$log_asetlain,$log_kdp);
 		
