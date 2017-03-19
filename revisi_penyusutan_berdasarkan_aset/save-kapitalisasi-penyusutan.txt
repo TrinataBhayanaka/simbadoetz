@@ -1,0 +1,1 @@
+INSERT INTO `penyusutan_tahun_berjalan` (`id`, `kodeSatker`, `KelompokAset`, `Tahun`, `StatusRunning`, `UserNm`) VALUES (NULL, 'KAPITALISASI', 'Gedung dan Bangunan (C)', '2016', '2', '0');

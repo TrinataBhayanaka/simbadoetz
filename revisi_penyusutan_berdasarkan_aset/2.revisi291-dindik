@@ -1,0 +1,76 @@
+ 
+                                 
+
+                                                
+                                
+
+                                
+
+ 
+                
+
+        /*Data Perbaikan Log bangunan 291 untuk perhitungan penyusutan 2016:*/
+/* kodeSatker =08.01.01.01:*/ 
+
+/*1--Aset_ID=200937--*/
+update log_bangunan set NilaiBuku='1996251152.0000',NilaiBuku_Awal='1854803490.0000',
+                                        NilaiPerolehan='1996251152.0000' where log_id='29406'; 
+update bangunan set NilaiBuku='1996251152.0000'  where Aset_ID='200937'; 
+update aset set NilaiBuku='1996251152.0000'  where Aset_ID='200937'; 
+/* kodeSatker =08.01.01.01:*/ 
+
+/*2--Aset_ID=200937--*/
+update log_bangunan set NilaiBuku='2135182490.0000',NilaiBuku_Awal='1996251152.0000',
+                                        NilaiPerolehan='2135182490.0000' where log_id='29408'; 
+update bangunan set NilaiBuku='2135182490.0000'  where Aset_ID='200937'; 
+update aset set NilaiBuku='2135182490.0000'  where Aset_ID='200937'; 
+/* kodeSatker =08.01.04.01:*/ 
+
+/*3--Aset_ID=2643984--*/
+update log_bangunan set NilaiBuku='205462256.0000',NilaiBuku_Awal='155462256.0000',
+                                        NilaiPerolehan='205462256.0000' where log_id='30003'; 
+update bangunan set NilaiBuku='205462256.0000'  where Aset_ID='2643984'; 
+update aset set NilaiBuku='205462256.0000'  where Aset_ID='2643984'; 
+/* kodeSatker =08.01.01.77:*/ 
+
+/*4--Aset_ID=201271--*/
+update log_bangunan set NilaiBuku='483132331.0000',NilaiBuku_Awal='402859080.0000',
+                                        NilaiPerolehan='483132331.0000' where log_id='32369'; 
+update bangunan set NilaiBuku='483132331.0000'  where Aset_ID='201271'; 
+update aset set NilaiBuku='483132331.0000'  where Aset_ID='201271'; 
+/* kodeSatker =08.01.01.30:*/ 
+
+/*5--Aset_ID=201071--*/
+update log_bangunan set NilaiBuku='470063875.2300',NilaiBuku_Awal='400485832.2300',
+                                        NilaiPerolehan='470063875.2300' where log_id='32371'; 
+update bangunan set NilaiBuku='470063875.2300'  where Aset_ID='201071'; 
+update aset set NilaiBuku='470063875.2300'  where Aset_ID='201071'; 
+/* kodeSatker =08.01.01.28:*/ 
+
+/*6--Aset_ID=201055--*/
+update log_bangunan set NilaiBuku='284649686.0000',NilaiBuku_Awal='205075621.0000',
+                                        NilaiPerolehan='284649686.0000' where log_id='32373'; 
+update bangunan set NilaiBuku='284649686.0000'  where Aset_ID='201055'; 
+update aset set NilaiBuku='284649686.0000'  where Aset_ID='201055'; 
+/* kodeSatker =08.01.08.01:*/ 
+
+/*7--Aset_ID=201500--*/
+update log_bangunan set NilaiBuku='272293361.0000',NilaiBuku_Awal='251293361.0000',
+                                        NilaiPerolehan='272293361.0000' where log_id='32377'; 
+update bangunan set NilaiBuku='272293361.0000'  where Aset_ID='201500'; 
+update aset set NilaiBuku='272293361.0000'  where Aset_ID='201500'; 
+/* kodeSatker =08.01.08.01:*/ 
+
+/*8--Aset_ID=201499--*/
+update log_bangunan set NilaiBuku='144921714.0000',NilaiBuku_Awal='115921714.0000',
+                                        NilaiPerolehan='144921714.0000' where log_id='32379'; 
+update bangunan set NilaiBuku='144921714.0000'  where Aset_ID='201499'; 
+update aset set NilaiBuku='144921714.0000'  where Aset_ID='201499'; 
+/* kodeSatker =08.01.08.01:*/ 
+
+/*9--Aset_ID=2644124--*/
+update log_bangunan set NilaiBuku='348482916.0000',NilaiBuku_Awal='208729453.0000',
+                                        NilaiPerolehan='348482916.0000' where log_id='32381'; 
+update bangunan set NilaiBuku='348482916.0000'  where Aset_ID='2644124'; 
+update aset set NilaiBuku='348482916.0000'  where Aset_ID='2644124'; 
+ 
