@@ -6230,12 +6230,13 @@ class core_api_report extends DB {
 	}
 	
 	//revisi
-	public function MutasiBarangSmplCustome($skpd_id,$tglawalperolehan,$tglakhirperolehan,$param_Filter){
+	public function MutasiBarangSmplCustome($skpd_id,$tglawalperolehan,$tglakhirperolehan,$param_Filter,$param_Filter_detail){
 		
-		pr($skpd_id);
+		/*pr($skpd_id);
 		pr($tglawalperolehan);
 		pr($tglakhirperolehan);
 		pr($param_Filter);
+		pr($param_Filter_detail);*/
 		//exit;
 		//cek kodesatker
 		$splitKodeSatker = explode ('.',$skpd_id);
@@ -6268,9 +6269,10 @@ class core_api_report extends DB {
 		//14 : Transfer Kapitalisasi Berkurang 
 
 		//$param_Filter =  '5';
-		echo "paramater = ".$param_Filter;
+		/*echo "paramater = ".$param_Filter;
 		echo "<br>";
-		echo "<br>";
+		echo "paramater detail = ".$param_Filter_detail;
+		echo "<br>";*/
 		if($param_Filter == 1){
 			//1 : belanja modal aset baru
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
@@ -6289,20 +6291,62 @@ class core_api_report extends DB {
 						    order by l.Aset_ID ASC";
 		}elseif($param_Filter == 3){
 			//3 : hibah
-			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+			if($param_Filter_detail == 1){
+				//Hibah BOS
+				$param_ext = " AND t.AsalUsul = 'Hibah BOS' "; 
+			}elseif ($param_Filter_detail == 2) {
+				//Hibah Komite
+				$param_ext = " AND t.AsalUsul = 'Hibah Komite' ";
+			}elseif ($param_Filter_detail == 3) {
+				//Hibah Pusat
+				$param_ext = " AND t.AsalUsul = 'Hibah Pusat' ";
+			}elseif ($param_Filter_detail == 4) {
+				//Hibah Provinsi 
+				$param_ext = " AND t.AsalUsul = 'Hibah Provinsi' ";
+			}elseif ($param_Filter_detail == 5) {
+				//Hibah Pihak ke-3
+				$param_ext = " AND t.AsalUsul = 'Hibah Pihak ke-3' "; 
+			}elseif ($param_Filter_detail == 6) {
+				//Sitaan / Rampasan
+				$param_ext = " AND t.AsalUsul = 'Sitaan/ Rampasan' "; 
+			}else{
+				$param_ext = "";
+			}
+			/*$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND ast.noKontrak is null 
 						    AND	t.AsalUsul != 'Inventarisasi' AND t.AsalUsul != 'Pembelian'  AND t.AsalUsul != 'perolehan sah lainnya'		   	
-						    order by l.Aset_ID ASC";
-		}elseif($param_Filter == 4){
-			//4 : inventarisasi
+						    order by l.Aset_ID ASC";*/
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND ast.noKontrak is null 
-						    AND	t.AsalUsul = 'Inventarisasi' AND t.AsalUsul = 'Pembelian'  AND t.AsalUsul = 'perolehan sah lainnya'		   	
-						    order by l.Aset_ID ASC";
+						    $param_ext
+						    order by l.Aset_ID ASC";			    
+		}elseif($param_Filter == 4){
+			//4 : inventarisasi
+			if($param_Filter_detail == 1){
+				//Inventarisasi
+				$param_ext = "AND (t.AsalUsul = 'Pembelian' OR t.AsalUsul = 'Inventarisasi')"; 
+			}elseif ($param_Filter_detail == 2) {
+				//perolehan sah lainnya
+				$param_ext = "AND t.AsalUsul = 'perolehan sah lainnya' ";
+			}else{
+				$param_ext = "";
+			}
+			/*$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND ast.noKontrak is null 
+						    AND	(t.AsalUsul = 'Inventarisasi' OR t.AsalUsul = 'Pembelian'  OR t.AsalUsul = 'perolehan sah lainnya')		   	
+						    order by l.Aset_ID ASC";*/
+
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND ast.noKontrak is null  $param_ext		   	
+						    order by l.Aset_ID ASC";			    
 		}elseif($param_Filter == 5){
 			//5 : belanja modal kapitalisasi
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
@@ -6599,10 +6643,10 @@ class core_api_report extends DB {
 					
 		for ($i = 0; $i < count($queryALL); $i++)
 			{
-				echo "<br>";
+				/*echo "<br>";
 				echo "query_$i =".$queryALL[$i];
 				echo "<br>";
-				echo "<br>";
+				echo "<br>";*/
 				// exit;
 				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
 				
@@ -6617,7 +6661,7 @@ class core_api_report extends DB {
 				}
 			}
 		
-		pr($getdata);
+		//pr($getdata);
 		//exit;
 		if($getdata){ 
 			return $getdata;

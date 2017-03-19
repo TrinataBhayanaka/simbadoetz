@@ -24,6 +24,7 @@ $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 $tglcetak=$_GET['tglcetak'];
 $param_Filter=$_GET['param_Filter'];
+$param_Filter_detail=$_GET['param_Filter_detail'];
 //pr($_GET);
 //exit;
 $REPORT=new report_engine();
@@ -54,7 +55,7 @@ $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan
 //$result=$REPORT->MutasiBarangSmpl($skpd_id,$tglawalperolehan,$tglakhirperolehan);
 
 //custome
-$result=$REPORT->MutasiBarangSmplCustome($skpd_id,$tglawalperolehan,$tglakhirperolehan,$param_Filter);
+$result=$REPORT->MutasiBarangSmplCustome($skpd_id,$tglawalperolehan,$tglakhirperolehan,$param_Filter,$param_Filter_detail);
 
 
 // pr($result);
@@ -77,14 +78,14 @@ if($tglawalperolehan != '' && $tglakhirperolehan){
 
 // pr($result);
 // exit;
-$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat,$param_Filter);
-$count = count($html);
+$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat,$param_Filter,$param_Filter_detail);
+/*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
-exit;
+exit;*/
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

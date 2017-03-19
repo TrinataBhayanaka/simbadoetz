@@ -30562,7 +30562,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 }	
 	
 //mutasi
-    public function  retrieve_html_laporan_mutasi($dataArr,$skpdfiltr,$gambar,$tglawal,$tglakhir,$tanggalCetak,$thnPejabat,$param_Filter){
+    public function  retrieve_html_laporan_mutasi($dataArr,$skpdfiltr,$gambar,$tglawal,$tglakhir,$tanggalCetak,$thnPejabat,$param_Filter,$param_Filter_detail){
          
 if($dataArr!="")
 {
@@ -31155,9 +31155,40 @@ $body="
 					}elseif ($param_Filter == 2) {
 						$info = 'Belanja Jasa Aset Baru';
 					}elseif ($param_Filter == 3) {
-						$info = 'Hibah';
+						//$info = 'Hibah';
+						if($param_Filter_detail == 1){
+							//Hibah BOS
+							$info = "Hibah BOS"; 
+						}elseif ($param_Filter_detail == 2) {
+							//Hibah Komite
+							$info = "Hibah Komite";
+						}elseif ($param_Filter_detail == 3) {
+							//Hibah Pusat
+							$info = "Hibah Pusat";
+						}elseif ($param_Filter_detail == 4) {
+							//Hibah Provinsi 
+							$info = "Hibah Provinsi";
+						}elseif ($param_Filter_detail == 5) {
+							//Hibah Pihak ke-3
+							$info = "Hibah Pihak ke-3"; 
+						}elseif ($param_Filter_detail == 6) {
+							//Sitaan / Rampasan
+							$info = "Sitaan/ Rampasan"; 
+						}else{
+							$info = "";
+						}
+
 					}elseif ($param_Filter == 4) {
-						$info = 'Inventarisasi';
+						//$info = 'Inventarisasi';
+						if($param_Filter_detail == 1){
+						//Inventarisasi
+							$info = $row->AsalUsul; 
+						}elseif ($param_Filter_detail == 2) {
+							//perolehan sah lainnya
+							$info = "Perolehan Sah Lainnya";
+						}else{
+							$info = "";
+						}
 					}elseif ($param_Filter == 5) {
 						$info = 'Belanja Modal Kapitalisasi';
 					}elseif ($param_Filter == 6) {
@@ -31219,7 +31250,7 @@ $body="
 									<td style=\"width: 71px;\">$konstruksi</td>
 									<td style=\"width: 81px;\">$ketKondisi</td>
 									<td style=\"width: 60px; text-align:center;\">$Ket_Riwayat $flag</td>
-									<td style=\"width: 60px; text-align:center;\">$info</td>
+									<td style=\"width: 80px; text-align:center;\">$info</td>
 									<td style=\"width: 60px; text-align:right;\">$AkumulasiPenyusutan</td>
 									<td style=\"width: 60px; text-align:right;\">$NilaiBuku</td>
 									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
@@ -31253,6 +31284,7 @@ $body="
                             <td  style=\"text-align: right;\">$printperolehanTotalTambah</td>
 							<td>&nbsp;</td>
                             <td style=\"text-align: right;\">$printperolehanTotalMutasi</td>
+                            <td>&nbsp;</td>
 						</tr></table>"; 
 						
 											  $foot="<table border=\"0\">
