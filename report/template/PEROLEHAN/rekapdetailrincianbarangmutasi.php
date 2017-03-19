@@ -17,7 +17,7 @@ $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&levelAset=$le
 // exit;
 $REPORT=new report_engine();
 $url = "rekap_rincian_detail_v2.php?$paramater_url";
-$REPORT->show_pilih_download($url);  
+$REPORT->show_pilih_download_detail($url);  
 
 
 

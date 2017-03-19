@@ -4317,6 +4317,56 @@ class core_api_report extends DB {
         </html>
         <?php
     }
+     public function show_pilih_download_detail($url)
+    {
+		$paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tahun=$tahun&kib=$kib&tipe_file=";
+        ?>
+        <html>
+        <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <title><?php echo $this->config->app_title?></title>
+                <!-- include css file -->
+                
+                <link rel="stylesheet" href="<?php echo $this->url_rewrite?>/css/simbada.css" type="text/css" media="screen" />
+                <link rel="stylesheet" href="<?php echo $this->url_rewrite?>/css/jquery-ui.css" type="text/css">
+                <link rel="stylesheet" href="<?php echo $this->url_rewrite?>/css/example.css" TYPE="text/css" MEDIA="screen">
+        
+        </head>
+        <body>
+        <div id="frame_header">
+                <div id="header"></div>
+        </div>
+        <!-- <div id="list_header"> 
+           
+        </div>-->
+        <div style="border-style:solid; width:40%; margin:20px auto; border-width:1px; box-shadow:5px 5px 5px #ccd" align="center">
+            <table border="0">
+                <tr>
+                    <th height="50px" valign=""><p style="font-size:25px;">Download Laporan tersedia dalam bentuk:</p><hr></th>
+                </tr>
+				<tr>
+                    <td><p style="font-size: 12px; color: blue">1. <a href="<?php echo "$url"."1"?>" target="_blank">PDF</a><br/></p></td>
+                </tr>
+
+               <tr>
+                    <td><p style="font-size: 12px; color: blue">2. <a href="<?php echo "$url"."2"?>" target="_blank">Micorosoft Excel</a></p></td>
+                </tr>
+                <tr>
+                    <td><p style="font-size: 12px; color: blue">2. <a href="<?php echo "$url"."4"?>" target="_blank">CSV <i><b>(Bila File Berukuran Besar)</b></i></a></p></td>
+                </tr>
+                
+                <tr>
+                    <td><p style="font-size: 12px; color: red">Cat : Bila file tidak bisa di download, kemungkinan data tidak ditemukan</p></td>
+                </tr>
+                <tr>
+                    <td align="center" height="50px"><input type="button" value="Kembali ke halaman sebelumnya" onclick="history.back(-1);"></td>
+                </tr>
+            </table>
+        
+        </body>
+        </html>
+        <?php
+    }
     
 	//pilih download 
     public function show_pilih_download_cstm($url)

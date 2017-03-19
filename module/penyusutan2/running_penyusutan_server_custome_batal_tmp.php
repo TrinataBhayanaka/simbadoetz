@@ -513,7 +513,7 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
         $QueryLogSelect = "select kodeKelompok,PenyusutanPerTahun_Awal,AkumulasiPenyusutan_Awal,NilaiBuku_Awal,"
                 . "MasaManfaat,UmurEkonomis,NilaiBuku,AkumulasiPenyusutan,PenyusutanPerTahun "
                 . " from $tableLog where Aset_ID = {$Aset_ID} "
-                . " and TahunPenyusutan='$tahun_sblm' and Kd_Riwayat in (50,51,52) order by log_id desc limit 1";
+                . " and TahunPenyusutan='$tahun_sblm' and Kd_Riwayat in (49) order by log_id desc limit 1";
         $exeQueryLogSelect = $DBVAR->query($QueryLogSelect) or die($DBVAR->error());
         $resultQueryLogSelect = $DBVAR->fetch_array($exeQueryLogSelect);
 
@@ -598,7 +598,7 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
 										WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
         $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());*/
         //untuk mengecek bila ada trasaksi
-        $TglPerubahan_awal = $tahun . "-01" . "-01";
+        /*$TglPerubahan_awal = $tahun . "-01" . "-01";
         $query_perubahan = "select kd_riwayat,log_id,kodeKelompok,kodeSatker,Aset_ID,NilaiPerolehan,NilaiPerolehan_Awal,Tahun,Kd_Riwayat,"
                 . "(NilaiPerolehan-NilaiPerolehan_Awal) as selisih,AkumulasiPenyusutan,NilaiBuku,MasaManfaat,UmurEkonomis,TahunPenyusutan "
                 . " from $tableLog where TglPerubahan>'$TglPerubahan_awal' and kd_riwayat in (2,21,28,7) "
@@ -620,7 +620,7 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
                                             $TahunPenyusutan 
                                             WHERE Aset_ID = '$Aset_ID' and log_id='$log_id' ";
             $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
-        }
+        }*/
     }
 }
 
