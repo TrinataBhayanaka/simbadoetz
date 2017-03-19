@@ -18,6 +18,7 @@ $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&levelAset=$le
 $REPORT=new report_engine();
 $url = "rekap_kk_detail_v2.php?$paramater_url";
 $url2 = "rekap_kk_detail_v2_spout.php?$paramater_url";
+$url3 = "rekap_kk_background.php?$paramater_url";
 //$REPORT->show_pilih_download($url);  
 
 
@@ -53,6 +54,9 @@ $url2 = "rekap_kk_detail_v2_spout.php?$paramater_url";
                 </tr>
                 <tr>
                     <td><p style="font-size: 12px; color: blue">1. <a href="<?php echo "$url2"."2"?>" target="_blank">Micorosoft Excel(Speed proses)</a></p></td>
+                </tr>
+                <tr>
+                    <td><p style="font-size: 12px; color: blue">1. <a href="<?php echo "$url3"."2"?>" target="_blank">Background Proses</a></p></td>
                 </tr>
                 
                 <tr>
