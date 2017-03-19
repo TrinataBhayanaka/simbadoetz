@@ -34,22 +34,32 @@ $template = "spout.xlsx";
 $TBS->LoadTemplate ($template, OPENTBS_ALREADY_UTF8); // Also merge some [onload] automatic fields (depends of the type of document).
 include "../../../function/spout/src/Spout/Autoloader/autoload.php";
 
-
-$modul = $_GET[ 'menuID' ];
-$mode = $_GET[ 'mode' ];
-$tab = $_GET[ 'tab' ];
-$tglawal = $_GET[ 'tglawalperolehan' ];
-if($tglawal != '') {
-    $tglawalperolehan = $tglawal;
-} else {
-    $tglawalperolehan = '0000-00-00';
+$mode_download=$argv[ 1 ];
+if($mode_download==1){
+       
+        $tglakhirperolehan = $argv[2];
+        $skpd_id = $argv[ 3];
+        $levelAset = $argv[4];
+        $tipeAset = $argv[ 5 ];
+        $tipe = 2;
+}else{
+    $modul = $_GET[ 'menuID' ];
+    $mode = $_GET[ 'mode' ];
+    $tab = $_GET[ 'tab' ];
+    $tglawal = $_GET[ 'tglawalperolehan' ];
+    if($tglawal != '') {
+        $tglawalperolehan = $tglawal;
+    } else {
+        $tglawalperolehan = '0000-00-00';
+    }
+    $tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
+    $tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
+    $skpd_id = $_GET[ 'skpd_id' ];
+    $levelAset = $_GET[ 'levelAset' ];
+    $tipeAset = $_GET[ 'tipeAset' ];
+    $tipe = $_GET[ 'tipe_file' ];
 }
-$tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
-$tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
-$skpd_id = $_GET[ 'skpd_id' ];
-$levelAset = $_GET[ 'levelAset' ];
-$tipeAset = $_GET[ 'tipeAset' ];
-$tipe = $_GET[ 'tipe_file' ];
+
 // pr($_REQUEST);
 // exit;
 $ex = explode ('-', $tglakhirperolehan);
