@@ -3223,10 +3223,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level5[ $key_baru ][ 'koreksi_penyusutan_kurang' ] += $value[ 'koreksi_penyusutan_kurang' ];
         $data_level5[ $key_baru ][ 'bp_penyusutan_kurang' ] += $value[ 'bp_penyusutan_kurang' ];
         $data_level5[ $key_baru ][ 'bp_berjalan' ] += $value[ 'bp_berjalan' ];
-        if($value[ 'Kd_Riwayat' ] != "")
+        /*if($value[ 'Kd_Riwayat' ] != "")
             $data_level5[ $key_baru ][ 'Kd_Riwayat' ] .= $value[ 'Kd_Riwayat' ] . " , ";
         else
-            $data_level5[ $key_baru ][ 'Kd_Riwayat' ] .= "";
+            $data_level5[ $key_baru ][ 'Kd_Riwayat' ] .= "";*/
+        $data_level5[ $key_baru ][ 'Kd_Riwayat' ] .= "";
         $data_level5[ $key_baru ][ 'Detail' ][ $key ] = $data_level_aset[ $key ];
     }
     //echo "data";
