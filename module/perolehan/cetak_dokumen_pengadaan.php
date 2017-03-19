@@ -891,7 +891,8 @@ selectAllSatker( 'kodeSatker14', '255', true, false, false, true );
 									<option value="12">Transfer Mutasi Berkurang</option>
 									<option value="13">Transfer Kapitalisasi Bertambah </option>
 									<option value="14">Transfer Kapitalisasi Berkurang </option>
-									
+									<option value="15">Belanja Modal Reklas Bertambah</option>
+									<option value="16">Belanja Modal Reklas Berkurang</option>								
 								</select>
 							</li>
 							<br/>

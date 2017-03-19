@@ -30602,7 +30602,8 @@ $thn="";
 $status_print=0;
 $barangTotal=0;
 //$panjangTotal=0;
-$perolehanTotal=0;
+
+$perolehanTotal=0; 
 $perolehanTotalKurang =0;
 $perolehanTotalTambah =0;
 $perolehanTotalMutasi=0;
@@ -30846,7 +30847,11 @@ $body="
 
                                              //udah dites
 					// $barangTotal = $barangTotal + $row->Kuantitas;
-					$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan_Awal;
+					if($row->Kd_Riwayat == '35' || $row->Kd_Riwayat == '36' || $row->Kd_Riwayat == '0'){
+						$perolehanTotal = 0;
+					}else{
+						$perolehanTotal = $perolehanTotal + $row->NilaiPerolehan_Awal;
+					}
 					// $perolehan = number_format($row->NilaiPerolehan);
 					
 					// $konstruksi_tanah= $this->get_konstruksi($row->Konstruksi);
@@ -30871,7 +30876,14 @@ $body="
 					$noReg = sprintf("%04s", $row->noRegister);
 					$nilaiPrlhn = $row->NilaiPerolehan_Awal;
 
-					$AkumulasiPenyusutan = number_format($row->AkumulasiPenyusutan,2,",",".");
+					//cek error belanja modal reklas tambah
+					if($param_Filter == 15 || $param_Filter == 16){
+						$AkumulasiPenyusutan = number_format(0,2,",","."); 
+					}else{
+						$AkumulasiPenyusutan = number_format($row->AkumulasiPenyusutan,2,",",".");
+					}
+
+					//$AkumulasiPenyusutan = number_format($row->AkumulasiPenyusutan,2,",",".");
 					if($AkumulasiPenyusutan != 0 || $AkumulasiPenyusutan != ''){
 						$NilaiBuku = number_format($row->NilaiBuku,2,",",".");
 					}else{
@@ -31073,8 +31085,26 @@ $body="
 						$nilaiPerolehanHasilMutasi = $nilaiPrlhnMutasiTambah + $nilaiPrlhnMutasiKurang;
 						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
 					
+					}elseif ($row->Kd_Riwayat == '36') {
+						//Belanja Modal Reklas Kurang
+						$flag = "(+)";
+						$nilaiAwalPrlhn = 0;
+						$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
+						$kuantitas = 0;	
+
+						$jmlTambah = 1;
+						$nilaiPrlhnMutasiTambah =  $row->NilaiPerolehan;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+
+						$jmlKurang = 1;
+						$nilaiPrlhnMutasiKurang = $row->NilaiPerolehan;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
+						$jmlHasilMutasi = 0;	
+						$nilaiPerolehanHasilMutasi = 0;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");		
 					}else{
-						// echo "OTHER";
+						// echo "OTHER"; + Belanja Modal Reklas Tambah 
 						$cekSelisih =($row->NilaiPerolehan - $row->NilaiPerolehan_Awal);  
 							// echo "selisih".$cekSelisih;
 							if($cekSelisih >= 0){
@@ -31091,7 +31121,7 @@ $body="
 									$nilaiAwalPerolehan = number_format($nilaiAwalPrlhn,2,",",".");
 									$kuantitas = 1;		
 								}
-								$flag = "(+)";
+								$flag = "(+)";	
 								$jmlTambah = 1;
 								$nilaiPrlhnMutasiTambah =  $valAdd;
 								$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
@@ -31135,7 +31165,13 @@ $body="
 					$perolehanTotalTambah = $perolehanTotalTambah + $nilaiPrlhnMutasiTambah;
 					$perolehanTotalMutasi = $perolehanTotalMutasi + $nilaiPerolehanHasilMutasi;
 					$Uraian =$this->get_NamaKelompok($row->kodeKelompok);
-					$Ket_Riwayat = $this->get_NamaRiwayat($row->Kd_Riwayat);
+					//untuk koderiwayat 35 dan 36
+					if($row->Kd_Riwayat == '35' || $row->Kd_Riwayat == '36'){
+						$Ket_Riwayat = 'Data baru';
+					}else{
+						$Ket_Riwayat = $this->get_NamaRiwayat($row->Kd_Riwayat);
+					}
+
 					if($row->Konstruksi != 0 && $row->Konstruksi != ''){
 						$konstruksi = $row->Konstruksi;
 					}
@@ -31235,7 +31271,16 @@ $body="
 					}elseif ($param_Filter == 14) {
 						//Transfer Kapitalisasi Bertambah
 						$info = '';
+					}elseif ($param_Filter == 15) {
+						//Belanja Modal Reklas Tambah
+						$info = 'Belanja Modal Reklas Tambah';
+					}elseif ($param_Filter == 16) {
+						//Belanja Modal Reklas Kurang
+						$info = 'Belanja Modal Reklas Kurang';
+					
 					}
+
+
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
@@ -31276,7 +31321,7 @@ $body="
 						
 						$tabletotal="
 						<tr>
-							<td colspan=\"15\" style=\"text-align: center;\">Jumlah</td>
+							<td colspan=\"16\" style=\"text-align: center;\">Jumlah</td>
 							<td style=\"text-align: right;\">$printperolehanTotal</td>
                             <td>&nbsp;</td>
                             <td  style=\"text-align: right;\">$printperolehanTotalKurang</td>
@@ -31284,7 +31329,7 @@ $body="
                             <td  style=\"text-align: right;\">$printperolehanTotalTambah</td>
 							<td>&nbsp;</td>
                             <td style=\"text-align: right;\">$printperolehanTotalMutasi</td>
-                            <td>&nbsp;</td>
+                            
 						</tr></table>"; 
 						
 											  $foot="<table border=\"0\">
