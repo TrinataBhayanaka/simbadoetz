@@ -6229,6 +6229,448 @@ class core_api_report extends DB {
 	
 	}
 	
+	//revisi
+	public function MutasiBarangSmplCustome($skpd_id,$tglawalperolehan,$tglakhirperolehan,$param_Filter,$param_Filter_detail){
+		
+		/*pr($skpd_id);
+		pr($tglawalperolehan);
+		pr($tglakhirperolehan);
+		pr($param_Filter);
+		pr($param_Filter_detail);*/
+		//exit;
+		//cek kodesatker
+		$splitKodeSatker = explode ('.',$skpd_id);
+		if(count($splitKodeSatker) == 4){	
+			$paramSatker = "kodeSatker = '$skpd_id'";
+			$paramSatker_mts_tr = "SatkerAwal = '$skpd_id'";
+			$paramSatker_mts_rc = "SatkerTujuan = '$skpd_id'";
+			
+		}else{
+			$paramSatker = "kodeSatker like '$skpd_id%'";
+			$paramSatker_mts_tr = "SatkerAwal like '$skpd_id%'";
+			$paramSatker_mts_rc = "SatkerTujuan like '$skpd_id%'";
+			
+		}	
+		
+		//param filter 
+		//1 : belanja modal aset baru
+		//2 : belanja jasa aset baru
+		//3 : hibah
+		//4 : inventarisasi
+		//5 : belanja modal kapitalisasi
+		//6 : belanja jasa kapitalisasi
+		//7 : koreksi
+		//8 : penghapusan sebagian
+		//9 : Penghapusan Pemindahtanganan
+		//10 : Penghapusan Pemusnahan
+		//11 : Mutasi Bertambah
+		//12 : Mutasi Berkurang
+		//13 : Transfer Kapitalisasi Bertambah 
+		//14 : Transfer Kapitalisasi Berkurang 
+
+		//$param_Filter =  '5';
+		/*echo "paramater = ".$param_Filter;
+		echo "<br>";
+		echo "paramater detail = ".$param_Filter_detail;
+		echo "<br>";*/
+		if($param_Filter == 1){
+			//1 : belanja modal aset baru
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND t.jenis_belanja = 0
+						    AND ast.noKontrak is not null						   	
+						    order by l.Aset_ID ASC";
+		}elseif($param_Filter == 2){
+			//2 : belanja jasa aset baru
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND t.jenis_belanja = 1
+						    AND ast.noKontrak is not null						   	
+						    order by l.Aset_ID ASC";
+		}elseif($param_Filter == 3){
+			//3 : hibah
+			if($param_Filter_detail == 1){
+				//Hibah BOS
+				$param_ext = " AND t.AsalUsul = 'Hibah BOS' "; 
+			}elseif ($param_Filter_detail == 2) {
+				//Hibah Komite
+				$param_ext = " AND t.AsalUsul = 'Hibah Komite' ";
+			}elseif ($param_Filter_detail == 3) {
+				//Hibah Pusat
+				$param_ext = " AND t.AsalUsul = 'Hibah Pusat' ";
+			}elseif ($param_Filter_detail == 4) {
+				//Hibah Provinsi 
+				$param_ext = " AND t.AsalUsul = 'Hibah Provinsi' ";
+			}elseif ($param_Filter_detail == 5) {
+				//Hibah Pihak ke-3
+				$param_ext = " AND t.AsalUsul = 'Hibah Pihak ke-3' "; 
+			}elseif ($param_Filter_detail == 6) {
+				//Sitaan / Rampasan
+				$param_ext = " AND t.AsalUsul = 'Sitaan/ Rampasan' "; 
+			}else{
+				$param_ext = "";
+			}
+			/*$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND ast.noKontrak is null 
+						    AND	t.AsalUsul != 'Inventarisasi' AND t.AsalUsul != 'Pembelian'  AND t.AsalUsul != 'perolehan sah lainnya'		   	
+						    order by l.Aset_ID ASC";*/
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND ast.noKontrak is null 
+						    $param_ext
+						    order by l.Aset_ID ASC";			    
+		}elseif($param_Filter == 4){
+			//4 : inventarisasi
+			if($param_Filter_detail == 1){
+				//Inventarisasi
+				$param_ext = "AND (t.AsalUsul = 'Pembelian' OR t.AsalUsul = 'Inventarisasi')"; 
+			}elseif ($param_Filter_detail == 2) {
+				//perolehan sah lainnya
+				$param_ext = "AND t.AsalUsul = 'perolehan sah lainnya' ";
+			}else{
+				$param_ext = "";
+			}
+			/*$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND ast.noKontrak is null 
+						    AND	(t.AsalUsul = 'Inventarisasi' OR t.AsalUsul = 'Pembelian'  OR t.AsalUsul = 'perolehan sah lainnya')		   	
+						    order by l.Aset_ID ASC";*/
+
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND ast.noKontrak is null  $param_ext		   	
+						    order by l.Aset_ID ASC";			    
+		}elseif($param_Filter == 5){
+			//5 : belanja modal kapitalisasi
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 2 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND (l.GUID = '' OR l.GUID = 'Modal')   
+						    order by l.Aset_ID ASC";
+		}elseif($param_Filter == 6){
+			//6 : belanja jasa kapitalisasi
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 2 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    AND l.GUID = 'Jasa'   
+						    order by l.Aset_ID ASC";
+		}elseif($param_Filter == 7){
+			//7 : koreksi
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 21 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    order by l.Aset_ID ASC";
+		}elseif($param_Filter == 8){
+			//8: penghapusan sebagian
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 7 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
+						    order by l.Aset_ID ASC";
+		}elseif($param_Filter == 9){
+			//9: Penghapusan Pemindahtanganan
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 26 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 0 AND t.StatusTampil = 0 
+						    order by l.Aset_ID ASC";
+		}elseif($param_Filter == 10){
+			//10: Penghapusan Pemusnahan
+			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						    AND l.Kd_Riwayat = 27 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
+						    AND t.Status_Validasi_Barang = 0 AND t.StatusTampil = 0 
+						    order by l.Aset_ID ASC";
+		}elseif ($param_Filter == 11) {
+			/*
+			11 : Mutasi Bertambah
+			Kode Riwayat
+			3 = Pindah SKPD (+) SatkerTujuan = KodeSatker
+			parameter dengan SatkerTujuan(view mutasi) untuk barang bertambah
+			*/
+			$paramLog_mts_rc =  "l.TglPerubahan >'$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						   AND l.Kd_Riwayat = 3 and l.Kd_Riwayat != 77 and mt.$paramSatker_mts_rc";
+		
+		}elseif ($param_Filter == 12) {
+			/*
+			12 : Mutasi Berkurang
+			Kode Riwayat
+			3 = Pindah SKPD (-) SatkerAwal != KodeSatker
+			parameter dengan SatkerAwal(view mutasi) untuk barang berkurang
+			*/
+			$paramLog_mts_tr = "l.TglPerubahan >'$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						   AND l.Kd_Riwayat = 3 and l.Kd_Riwayat != 77 and mt.$paramSatker_mts_tr";
+		
+		}elseif ($param_Filter == 13) {
+			/*
+			13 : Transfer Kapitalisasi Bertambah
+			Kode Riwayat
+			28 = Transfer Kapitalisasi (+) jika Aset_ID_Penambahan ==0
+			*/
+			$paramLogTransferKapitalisasiTambah =  "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						   AND l.Kd_Riwayat = '28' and l.$paramSatker 
+						   and l.Aset_ID_Penambahan = '0' and action like 'Aset Penambahan kapitalisasi Mutasi%' order by l.Aset_ID ASC";
+		}elseif ($param_Filter == 14) {
+			/*
+			14 : Transfer Kapitalisasi Berkurang
+			Kode Riwayat
+			28 = Transfer Kapitalisasi (-) jika Aset_ID_Penambahan !=0
+			*/
+			$paramLogTransferKapitalisasiKurang =  "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
+						   AND l.Kd_Riwayat = '28' and l.$paramSatker 
+						   and l.Aset_ID_Penambahan != '0' and action like 'Sukses kapitalisasi Mutasi%'
+						   order by l.Aset_ID ASC";
+		}
+
+		/*
+		Kode Riwayat
+		0 = Data Baru
+		*/ 
+		$log_tanah = "select l.*,ast.noKontrak from log_tanah as l 
+							inner join tanah as t on l.Aset_ID = t.Aset_ID 
+							inner join aset as ast on ast.Aset_ID = l.Aset_ID
+							where $paramLog";
+
+		$log_mesin = "select l.*,ast.noKontrak from log_mesin as l
+						inner join mesin as t on l.Aset_ID = t.Aset_ID 
+						inner join aset as ast on ast.Aset_ID = l.Aset_ID
+						where $paramLog";			    
+
+		$log_bangunan = "select l.*,ast.noKontrak from log_bangunan as l 
+						inner join bangunan as t on l.Aset_ID = t.Aset_ID 
+						inner join aset as ast on ast.Aset_ID = l.Aset_ID
+						where $paramLog ";
+						
+		$log_jaringan = "select l.*,ast.noKontrak from log_jaringan as l 
+						inner join jaringan as t on l.Aset_ID = t.Aset_ID 
+						inner join aset as ast on ast.Aset_ID = l.Aset_ID
+						where $paramLog ";
+						
+		$log_asetlain = "select l.*,ast.noKontrak from log_asetlain as l 
+						inner join asetlain as t on l.Aset_ID = t.Aset_ID 
+						inner join aset as ast on ast.Aset_ID = l.Aset_ID
+						where $paramLog";
+						
+		$log_kdp = "select l.*,ast.noKontrak from log_kdp as l 
+						inner join kdp as t on l.Aset_ID = t.Aset_ID 
+						inner join aset as ast on ast.Aset_ID = l.Aset_ID
+						where $paramLog";			
+		//====================================================================
+							
+		/*
+		Kode Riwayat
+		2  = kapitalisasi
+		7  = Penghapusan Sebagian
+		21 = Koreksi Nilai
+		26 = Penghapusan Pemindahtanganan
+		27 = Penghapusan Pemusnahan
+		*/
+		$log_tanah_kp = "select l.* from log_tanah as l 
+							inner join tanah as t on l.Aset_ID = t.Aset_ID 
+							where $paramLog";
+
+		$log_mesin_kp = "select l.* from log_mesin as l
+						inner join mesin as t on l.Aset_ID = t.Aset_ID 
+						where $paramLog";			    
+
+		$log_bangunan_kp = "select l.* from log_bangunan as l 
+						inner join bangunan as t on l.Aset_ID = t.Aset_ID 
+						where $paramLog ";
+						
+		$log_jaringan_kp = "select l.* from log_jaringan as l 
+						inner join jaringan as t on l.Aset_ID = t.Aset_ID 
+						where $paramLog ";
+						
+		$log_asetlain_kp = "select l.* from log_asetlain as l 
+						inner join asetlain as t on l.Aset_ID = t.Aset_ID 
+						where $paramLog";
+						
+		$log_kdp_kp = "select l.* from log_kdp as l 
+						inner join kdp as t on l.Aset_ID = t.Aset_ID 
+						where $paramLog";					
+		//====================================================================				
+		
+		/*
+		Kode Riwayat
+		3 = Pindah SKPD (+) SatkerTujuan = KodeSatker
+		*/
+		$log_tanah_rc="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_tanah as l 
+					inner join view_mutasi_tanah as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_rc group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_mesin_rc="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_mesin as l 
+					inner join view_mutasi_mesin as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_rc group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_bangunan_rc="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_bangunan as l 
+					inner join view_mutasi_bangunan as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_rc group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_jaringan_rc="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_jaringan as l 
+					inner join view_mutasi_jaringan as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_rc group by l.Aset_ID order by l.Aset_ID ASC";	
+			
+		$log_asetlain_rc="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_asetlain as l 
+					inner join view_mutasi_asetlain as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_rc group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_kdp_rc="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_kdp as l 
+					inner join view_mutasi_kdp as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_rc group by l.Aset_ID order by l.Aset_ID ASC";	
+		//====================================================================
+		
+		/*
+		Kode Riwayat
+		3 = Pindah SKPD (-) SatkerAwal != KodeSatker
+		*/
+		$log_tanah_tr="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_tanah as l 
+					inner join view_mutasi_tanah as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_tr group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_mesin_tr="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_mesin as l 
+					inner join view_mutasi_mesin as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_tr group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_bangunan_tr="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_bangunan as l 
+					inner join view_mutasi_bangunan as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_tr group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_jaringan_tr="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_jaringan as l 
+					inner join view_mutasi_jaringan as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_tr group by l.Aset_ID order by l.Aset_ID ASC";	
+			
+		$log_asetlain_tr="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_asetlain as l 
+					inner join view_mutasi_asetlain as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_tr group by l.Aset_ID order by l.Aset_ID ASC";
+		
+		$log_kdp_tr="select l.*,mt.SatkerAwal,mt.SatkerTujuan from log_kdp as l 
+					inner join view_mutasi_kdp as mt on l.Aset_ID = mt.Aset_ID 
+					where $paramLog_mts_tr group by l.Aset_ID order by l.Aset_ID ASC";	
+		//====================================================================
+		
+		/*
+		Kode Riwayat
+		28 = Transfer Kapitalisasi (+) jika Aset_ID_Penambahan ==0
+		*/
+		$log_tanah_tr_kp="select l.* from log_tanah as l 
+					where $paramLogTransferKapitalisasiTambah ";
+		
+		$log_mesin_tr_kp="select l.* from log_mesin as l 
+					where $paramLogTransferKapitalisasiTambah ";
+		
+		$log_bangunan_tr_kp="select l.*  from log_bangunan as l 
+					where $paramLogTransferKapitalisasiTambah";
+		
+		$log_jaringan_tr_kp="select l.* from log_jaringan as l 
+					where $paramLogTransferKapitalisasiTambah";	
+			
+		$log_asetlain_tr_kp="select l.* from log_asetlain as l 
+					where $paramLogTransferKapitalisasiTambah";
+		
+		$log_kdp_tr_kp="select l.* from log_kdp as l 
+					where $paramLogTransferKapitalisasiTambah";			
+		//====================================================================
+		
+		/*
+		Kode Riwayat
+		28 = Transfer Kapitalisasi (-) jika Aset_ID_Penambahan !=0
+		*/
+		
+		$log_tanah_rc_kp="select l.* from log_tanah as l 
+					where $paramLogTransferKapitalisasiKurang ";
+		
+		$log_mesin_rc_kp="select l.* from log_mesin as l 
+					where $paramLogTransferKapitalisasiKurang ";
+		
+		$log_bangunan_rc_kp="select l.*  from log_bangunan as l 
+					where $paramLogTransferKapitalisasiKurang";
+		
+		$log_jaringan_rc_kp="select l.* from log_jaringan as l 
+					where $paramLogTransferKapitalisasiKurang";	
+			
+		$log_asetlain_rc_kp="select l.* from log_asetlain as l 
+					where $paramLogTransferKapitalisasiKurang";
+		
+		$log_kdp_rc_kp="select l.* from log_kdp as l 
+					where $paramLogTransferKapitalisasiKurang";	
+
+					
+					
+		if($param_Filter == 1 || $param_Filter == 2 || $param_Filter == 3 || $param_Filter == 4){
+			//1 : belanja modal aset baru
+			//2 : belanja jasa aset baru
+			//3 : hibah
+			//4 : inventarisasi
+
+			$queryALL = array($log_tanah,$log_mesin,$log_bangunan,$log_jaringan,$log_asetlain,$log_kdp);
+		
+		}elseif ($param_Filter == 5 || $param_Filter == 6 || $param_Filter == 7 || $param_Filter == 8 || $param_Filter == 9 || $param_Filter == 10) {
+			
+			//5 : belanja modal kapitalisasi
+			//6 : belanja jasa kapitalisasi
+			//7 : koreksi
+			//8 : penghapusan sebagian
+			//9 : Penghapusan Pemindahtanganan
+			//10 : Penghapusan Pemusnahan
+
+			$queryALL = array($log_tanah_kp,$log_mesin_kp,$log_bangunan_kp,$log_jaringan_kp,$log_asetlain_kp,$log_kdp_kp);
+
+		}elseif ($param_Filter == 11) {
+			//11 : Mutasi Bertambah
+		
+			$queryALL = array($log_tanah_rc,$log_mesin_rc,$log_bangunan_rc,$log_jaringan_rc,$log_asetlain_rc,$log_kdp_rc);
+
+		}elseif ($param_Filter == 12) {
+			//12 : Mutasi Berkurang
+		
+			$queryALL = array($log_tanah_tr,$log_mesin_tr,$log_bangunan_tr,$log_jaringan_tr,$log_asetlain_tr,$log_kdp_tr);
+
+		}elseif ($param_Filter == 13) {
+			//13 : Transfer Kapitalisasi Bertambah
+		
+			$queryALL = array($log_tanah_tr_kp,$log_mesin_tr_kp,$log_bangunan_tr_kp,$log_jaringan_tr_kp,$log_asetlain_tr_kp,$log_kdp_tr_kp);
+
+		}elseif ($param_Filter == 14) {
+			//14 : Transfer Kapitalisasi Berkurang
+		
+			$queryALL = array($log_tanah_rc_kp,$log_mesin_rc_kp,$log_bangunan_rc_kp,$log_jaringan_rc_kp,$log_asetlain_rc_kp,$log_kdp_rc_kp);
+
+		}			
+					
+		for ($i = 0; $i < count($queryALL); $i++)
+			{
+				/*echo "<br>";
+				echo "query_$i =".$queryALL[$i];
+				echo "<br>";
+				echo "<br>";*/
+				// exit;
+				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
+				
+				if($result){
+					// $i = 0;
+					while ($dataAll = $this->fetch_object($result))
+					{
+						
+						// $getdata[$dataBrkrngSatkerAwal[0]][]= $dataAll;
+						$getdata[]= $dataAll;
+					}
+				}
+			}
+		
+		//pr($getdata);
+		//exit;
+		if($getdata){ 
+			return $getdata;
+		}		
+
+		exit();
+	}
+
+
 	//cara sederhana mutasi barang dari ka andreas
 	public function MutasiBarangSmpl($skpd_id,$tglawalperolehan,$tglakhirperolehan){
 		//new code
@@ -6512,10 +6954,10 @@ class core_api_report extends DB {
 		
 		for ($i = 0; $i < count($queryALL); $i++)
 			{
-				/*echo "<br>";
+				echo "<br>";
 				echo "query_$i =".$queryALL[$i];
 				echo "<br>";
-				echo "<br>";*/
+				echo "<br>";
 				// exit;
 				$result = $this->query($queryALL[$i]) or die ($this->error('error dataQuery'));
 				
