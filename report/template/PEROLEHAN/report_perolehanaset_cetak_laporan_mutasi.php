@@ -23,8 +23,9 @@ $tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 $tglcetak=$_GET['tglcetak'];
-// pr($_GET);
-// exit;
+$param_Filter=$_GET['param_Filter'];
+//pr($_GET);
+//exit;
 $REPORT=new report_engine();
 
 $data=array(
@@ -50,7 +51,12 @@ $Info = 'mutasi';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id);*/
 // exit;
 //mendapatkan jenis query yang digunakan
-$result=$REPORT->MutasiBarangSmpl($skpd_id,$tglawalperolehan,$tglakhirperolehan);
+//$result=$REPORT->MutasiBarangSmpl($skpd_id,$tglawalperolehan,$tglakhirperolehan);
+
+//custome
+$result=$REPORT->MutasiBarangSmplCustome($skpd_id,$tglawalperolehan,$tglakhirperolehan,$param_Filter);
+
+
 // pr($result);
 // exit;
 //set gambar untuk laporan
@@ -71,14 +77,14 @@ if($tglawalperolehan != '' && $tglakhirperolehan){
 
 // pr($result);
 // exit;
-$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat);
-/*$count = count($html);
+$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat,$param_Filter);
+$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
-exit;*/
+exit;
 if($tipe==1){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

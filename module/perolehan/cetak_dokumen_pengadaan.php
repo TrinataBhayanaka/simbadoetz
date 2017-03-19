@@ -32,21 +32,8 @@ include"$path/menu.php";
 		<section class="formLegend">
 			<script>
 				$(document).ready(function() {
-					/*$('#tahun_tanah,#tahun_mesin,#tahun_bangunan,#tahun_jaringan,#tahun_tetaplainnya,#tahun_kdp,#tahun_lainnya,#tahun_neraca').keydown(function (e) {
-						// Allow: backspace, delete, tab, escape, enter and .
-						if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-							 // Allow: Ctrl+A
-							(e.keyCode == 65 && e.ctrlKey === true) ||
-							 // Allow: home, end, left, right
-							(e.keyCode >= 35 && e.keyCode <= 39)) {
-								 // let it happen, don't do anything
-								 return;
-						}
-						// Ensure that it is a number and stop the keypress
-						if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-							e.preventDefault();
-						}
-					});*/
+				$("select").select2();	
+				
 $("#tglPerolehan_awal_intra,#tglPerolehan_akhir_intra,#tglPerolehan_awal_ekstra,#tglPerolehan_akhir_ekstra,#tglPerolehanAwalTanah,#tglPerolehanAkhirTanah,#tglPerolehanAwalMesin,#tglPerolehanAkhirMesin,#tglPerolehanAwalGedung,#tglPerolehanAkhirGedung,#tglPerolehanAwalJIJ,#tglPerolehanAkhirJIJ,#tglPerolehanAwalAst,#tglPerolehanAkhirAst,#tglPerolehanAwalKdp,#tglPerolehanAkhirKdp,#tglPerolehanAwalLainnya,#tglPerolehanAkhirLainnya,\n\
 #tglPerolehanAwalNeraca,#tglPerolehanAkhirNeraca,#tglCetakIntra,#tglCetakEkstra,\n\
 #tglPerolehanAwalrbp,#tglPerolehanAkhirrbp,#tglPerolehanAwalrbupb,#tglPerolehanAkhirrbupb,\n\
@@ -846,9 +833,30 @@ selectAllSatker( 'kodeSatker14', '255', true, false, false, true );
 							</li>
 							<?php //selectAllSatker('kodeSatker9','255',true,false);
 
-selectAllSatker( 'kodeSatker9', '255', true, false, false, true );
+							selectAllSatker( 'kodeSatker9', '255', true, false, false, true );
 
-?>
+							?>
+							<br>
+							<li>
+								<span class="span2">Jenis Transaksi</span>
+								<select name="param_Filter" id="param_Filter" style="width:270px">
+									<option value="1">Belanja Modal Aset Baru</option>
+									<option value="2">Belanja jasa Aset Baru</option>
+									<option value="3">Hibah</option>
+									<option value="4">Inventarisasi</option>
+									<option value="5">Belanja Modal Kapitalisasi</option>
+									<option value="6">Belanja Jasa Kapitalisasi</option>
+									<option value="7">Koreksi Nilai</option>
+									<option value="8">Penghapusan Sebagian</option>
+									<option value="9">Penghapusan Pemindahtanganan</option>
+									<option value="10">Penghapusan Pemusnahan</option>
+									<option value="11">Transfer Mutasi Bertambah</option>
+									<option value="12">Transfer Mutasi Berkurang</option>
+									<option value="13">Transfer Kapitalisasi Bertambah </option>
+									<option value="14">Transfer Kapitalisasi Berkurang </option>
+									
+								</select>
+							</li>
 							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>

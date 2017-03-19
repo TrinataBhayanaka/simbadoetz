@@ -30562,7 +30562,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 }	
 	
 //mutasi
-    public function  retrieve_html_laporan_mutasi($dataArr,$skpdfiltr,$gambar,$tglawal,$tglakhir,$tanggalCetak,$thnPejabat){
+    public function  retrieve_html_laporan_mutasi($dataArr,$skpdfiltr,$gambar,$tglawal,$tglakhir,$tanggalCetak,$thnPejabat,$param_Filter){
          
 if($dataArr!="")
 {
@@ -30783,8 +30783,9 @@ $body="
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">Ukuran / Konstruksi (P,S,D)</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 81px;\">Kondisi</td>
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Keterangan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Info</td>
 
-                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Akumulasi Penyusutan</td>
+                <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight	: bold;  width: 60px;\">Akumulasi Penyusutan</td>
 
 
                 <td colspan=\"1\" rowspan=\"3\" style=\"text-align:center; font-weight: bold;  width: 60px;\">Nilai Buku</td>
@@ -30830,14 +30831,15 @@ $body="
                 <td style=\"text-align:center; font-weight: bold; width: 81px;\">12</td>
                 <td style=\"text-align:center; font-weight: bold; width: 81px;\">13</td>
                 <td style=\"text-align:center; font-weight: bold; width: 81px;\">14</td>
-                <td style=\"text-align:center; font-weight: bold;\">15</td>
+                <td style=\"text-align:center; font-weight: bold; width: 81px;\">15</td>
                 <td style=\"text-align:center; font-weight: bold;\">16</td>
-                <td style=\"text-align:center; font-weight: bold; width: 60px;\">17</td>
+                <td style=\"text-align:center; font-weight: bold;\">17</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">18</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">19</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">20</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">21</td>
                 <td style=\"text-align:center; font-weight: bold; width: 60px;\">22</td>
+                <td style=\"text-align:center; font-weight: bold; width: 60px;\">23</td>
             </tr></thead>";
 																					  
 		}
@@ -31138,6 +31140,71 @@ $body="
 						$konstruksi = $row->Konstruksi;
 					}
 					
+					//revisi asal usul
+					$AsalUsul =$this->get_AsalUsul($row->AsalUsul);
+					//pr($AsalUsul);
+					if($AsalUsul['1'] == 0){
+						$Info_AsalUsul = $AsalUsul['0']; 	
+					}else{
+						$Info_AsalUsul = $AsalUsul['0']." (".$row->AsalUsul.")"; 
+					}
+					//info
+					$info = '';
+					if($param_Filter == 1){
+						$info =  'Belanja Modal Aset Baru';
+					}elseif ($param_Filter == 2) {
+						$info = 'Belanja Jasa Aset Baru';
+					}elseif ($param_Filter == 3) {
+						$info = 'Hibah';
+					}elseif ($param_Filter == 4) {
+						$info = 'Inventarisasi';
+					}elseif ($param_Filter == 5) {
+						$info = 'Belanja Modal Kapitalisasi';
+					}elseif ($param_Filter == 6) {
+						$info = 'Belanja Jasa Kapitalisasi';
+					}elseif ($param_Filter == 7) {
+						//koreksi nilai
+						$info = '';
+					}elseif ($param_Filter == 8) {
+						//penghapusan sebagian
+						$info = '';
+					}elseif ($param_Filter == 9) {
+						//Penghapusan Pemindahtanganan
+						if($row->jenis_hapus == '' || $row->jenis_hapus == 'dihibahkan'){
+							$info = 'Dihibahkan';		
+						}elseif ($row->jenis_hapus == 'jual beli') {
+							$info = 'Jual Beli';	
+						}elseif ($row->jenis_hapus == 'dilelang') {
+							$info = 'Dilelang';	
+						}elseif ($row->jenis_hapus == 'tukar menukar') {
+							$info = 'Tukar Menukar';	
+						}else{
+							$info = '';
+						}
+					}elseif ($param_Filter == 10) {
+						//Penghapusan Pemusnahan
+						if($row->jenis_hapus == '' || $row->jenis_hapus == 'pemusnahan'){
+							$info = 'Pemusnahan';		
+						}elseif ($row->jenis_hapus == 'hilang') {
+							$info = 'Hilang';	
+						}elseif ($row->jenis_hapus == 'alasan lain') {
+							$info = 'Alasan lain sesuai dengan ketentuan Perundang-undangan';	
+						}else{
+							$info = '';
+						}
+					}elseif ($param_Filter == 11) {
+						//Mutasi Bertambah (Pindah SKPD)
+						$info = '';
+					}elseif ($param_Filter == 12) {
+						//Mutasi Bertambah (Pindah SKPD)
+						$info = '';
+					}elseif ($param_Filter == 13) {
+						//Transfer Kapitalisasi Bertambah
+						$info = '';
+					}elseif ($param_Filter == 14) {
+						//Transfer Kapitalisasi Bertambah
+						$info = '';
+					}
 					$body.="
                                 <tr>
 									<td style=\"width: 47px; text-align:center;\">$no</td>
@@ -31147,11 +31214,12 @@ $body="
 									<td style=\"width: 45px; \">$row->Merk</td>
 									<td style=\"width: 119px;\">$dataRangka/"."$dataMesin/"."$dataBPKB</td>
 									<td style=\"width: 56x; \">$row->Material</td>
-									<td style=\"width: 70px; \">$row->AsalUsul </td>
+									<td style=\"width: 70px; \">$Info_AsalUsul</td>
 									<td style=\"width: 71px; text-align:center;\">$row->Tahun</td>
 									<td style=\"width: 71px;\">$konstruksi</td>
 									<td style=\"width: 81px;\">$ketKondisi</td>
 									<td style=\"width: 60px; text-align:center;\">$Ket_Riwayat $flag</td>
+									<td style=\"width: 60px; text-align:center;\">$info</td>
 									<td style=\"width: 60px; text-align:right;\">$AkumulasiPenyusutan</td>
 									<td style=\"width: 60px; text-align:right;\">$NilaiBuku</td>
 									<td style=\"width: 71px; text-align:center;\">$kuantitas</td>
