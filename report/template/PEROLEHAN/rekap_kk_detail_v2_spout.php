@@ -23,7 +23,7 @@ $JpgUseSVGFormat = true;
 define ('_MPDF_URI', "$url_rewrite/function/mpdf/");  // must be  a relative or absolute URI - not a file system path
 include "../../report_engine.php";
 require '../../../function/mpdf/mpdf.php';
-include "fungsi_rekap_kk.php";
+include "fungsi_rekap_kk_v2.php";
 
 // Initialize the TBS instance
 
@@ -203,26 +203,25 @@ foreach ($data as $gol) {
 
 
     $data_awal = subsub_awal ($kode_golongan, $q_gol_final, $ps, $pt);
+   
     $data_log = history_log ($kode_golongan, $q_gol_final, $ps, $pt, "$tahun_neraca-12-31", $TAHUN_AKTIF,$data_awal);
-    unset($data_awal);
+
+   /* echo  "<pre>";
+    print_r($data_awal);
+    echo "masuk";*/
+    //exit();
   
    //exit();
     /*$data_akhir = subsub( $kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31" );
     $data_hilang = subsub_hapus( $kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt );
     */
     //$hasil = group_data ($data_awal, $data_log);
-   //echo "<pre>";
-     //echo  json_encode($data_log);;
-   //print_r($data_log);
-   //exit();
+   
 
-     $hasil=group_data($data_log);
+     $hasil=group_data($data_awal);
    
   
-/*    echo "<pre>";
-    print_r($hasil);
-    exit();
-*/
+
     foreach ($hasil as $gol) {
 
         /**
