@@ -2817,10 +2817,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'riwayat' ] = "";
 
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
+        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_akm' ] = $arg[ 'saldo_awal_akm' ];
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_nilaibuku' ] = $arg[ 'saldo_awal_nilaibuku' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
+        
         /** Koreksi Saldo Awal  */
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_tambah_nilai' ] = $arg[ 'koreksi_tambah_nilai' ];
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_tambah_jml' ] = $arg[ 'koreksi_tambah_jml' ];
@@ -2928,10 +2929,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'riwayat' ] = $arg[ 'Kd_Riwayat' ];
 
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
+        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_akm' ] = $arg[ 'saldo_awal_akm' ];
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilaibuku' ] = $arg[ 'saldo_awal_nilaibuku' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
+        
 
         /** Koreksi Saldo Awal  */
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_tambah_nilai' ] = $arg[ 'koreksi_tambah_nilai' ];
@@ -3070,10 +3072,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level_aset[ $key_baru ][ 'no_aset' ] = $value[ 'Aset_ID' ];
 
         if($log_id == "") {
+             $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
             $data_level_aset[ $key_baru ][ 'saldo_awal_nilai' ] = $value[ 'saldo_awal_nilai' ];
             $data_level_aset[ $key_baru ][ 'saldo_awal_akm' ] = $value[ 'saldo_awal_akm' ];
             $data_level_aset[ $key_baru ][ 'saldo_awal_nilaibuku' ] = $value[ 'saldo_awal_nilaibuku' ];
-             $data_level_aset[ $key_baru ][ 'saldo_awal_jml' ] = $value[ 'saldo_awal_jml' ];
+            
             //echo "masukk==".$value[ 'Aset_ID' ]. "==saldo-awal==".$value[ 'saldo_awal_nilai' ]."<br/>";
         } else {
             //echo $value[ 'Aset_ID' ]. "==".$value[ 'log_id' ]."==".$value[ 'Kd_Riwayat' ]."<br/>";
@@ -3170,11 +3173,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level5[ $key_baru ][ 'no_aset' ] = "";
         $data_level5[ $key_baru ][ 'riwayat' ] = "";
 
+        $data_level5[ $key_baru ][ 'saldo_awal_jml' ] += $value[ 'saldo_awal_jml' ];
         $data_level5[ $key_baru ][ 'saldo_awal_nilai' ] += $value[ 'saldo_awal_nilai' ];
         $data_level5[ $key_baru ][ 'saldo_awal_akm' ] += $value[ 'saldo_awal_akm' ];
         $data_level5[ $key_baru ][ 'saldo_awal_nilaibuku' ] += $value[ 'saldo_awal_nilaibuku' ];
-        $data_level5[ $key_baru ][ 'saldo_awal_jml' ] += $value[ 'saldo_awal_jml' ];
-
+        
 
         $data_level5[ $key_baru ][ 'NilaiPerolehan' ] += $value[ 'NilaiPerolehan' ];
         $data_level5[ $key_baru ][ 'Saldo_akhir_jml' ] += $value[ 'Saldo_akhir_jml' ];
@@ -3249,10 +3252,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level4[ $key_baru ][ 'no_aset' ] = "";
         $data_level4[ $key_baru ][ 'riwayat' ] = "";
 
+         $data_level4[ $key_baru ][ 'saldo_awal_jml' ] += $value5[ 'saldo_awal_jml' ];
         $data_level4[ $key_baru ][ 'saldo_awal_nilai' ] += $value5[ 'saldo_awal_nilai' ];
         $data_level4[ $key_baru ][ 'saldo_awal_akm' ] += $value5[ 'saldo_awal_akm' ];
         $data_level4[ $key_baru ][ 'saldo_awal_nilaibuku' ] += $value5[ 'saldo_awal_nilaibuku' ];
-        $data_level4[ $key_baru ][ 'saldo_awal_jml' ] += $value5[ 'saldo_awal_jml' ];
+       
         $data_level4[ $key_baru ][ 'koreksi_tambah_nilai' ] += $value5[ 'koreksi_tambah_nilai' ];
         $data_level4[ $key_baru ][ 'koreksi_tambah_jml' ] += $value5[ 'koreksi_tambah_jml' ];
         $data_level4[ $key_baru ][ 'bj_aset_baru' ] += $value5[ 'bj_aset_baru' ];
@@ -3320,10 +3324,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level3[ $key_baru ][ 'no_aset' ] = "";
         $data_level3[ $key_baru ][ 'riwayat' ] = "";
 
+        $data_level3[ $key_baru ][ 'saldo_awal_jml' ] += $value4[ 'saldo_awal_jml' ];
         $data_level3[ $key_baru ][ 'saldo_awal_nilai' ] += $value4[ 'saldo_awal_nilai' ];
         $data_level3[ $key_baru ][ 'saldo_awal_akm' ] += $value4[ 'saldo_awal_akm' ];
         $data_level3[ $key_baru ][ 'saldo_awal_nilaibuku' ] += $value4[ 'saldo_awal_nilaibuku' ];
-        $data_level3[ $key_baru ][ 'saldo_awal_jml' ] += $value4[ 'saldo_awal_jml' ];
+        
         $data_level3[ $key_baru ][ 'koreksi_tambah_nilai' ] += $value4[ 'koreksi_tambah_nilai' ];
         $data_level3[ $key_baru ][ 'koreksi_tambah_jml' ] += $value4[ 'koreksi_tambah_jml' ];
         $data_level3[ $key_baru ][ 'bj_aset_baru' ] += $value4[ 'bj_aset_baru' ];
@@ -3393,10 +3398,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level2[ $key_baru ][ 'no_aset' ] = "";
         $data_level2[ $key_baru ][ 'riwayat' ] = "";
 
+        $data_level2[ $key_baru ][ 'saldo_awal_jml' ] += $value3[ 'saldo_awal_jml' ];
         $data_level2[ $key_baru ][ 'saldo_awal_nilai' ] += $value3[ 'saldo_awal_nilai' ];
         $data_level2[ $key_baru ][ 'saldo_awal_akm' ] += $value3[ 'saldo_awal_akm' ];
         $data_level2[ $key_baru ][ 'saldo_awal_nilaibuku' ] += $value3[ 'saldo_awal_nilaibuku' ];
-        $data_level2[ $key_baru ][ 'saldo_awal_jml' ] += $value3[ 'saldo_awal_jml' ];
+        
         $data_level2[ $key_baru ][ 'koreksi_tambah_nilai' ] += $value3[ 'koreksi_tambah_nilai' ];
         $data_level2[ $key_baru ][ 'koreksi_tambah_jml' ] += $value3[ 'koreksi_tambah_jml' ];
         $data_level2[ $key_baru ][ 'bj_aset_baru' ] += $value3[ 'bj_aset_baru' ];
@@ -3468,10 +3474,11 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level[ $key_baru ][ 'no_aset' ] = "";
         $data_level[ $key_baru ][ 'riwayat' ] = "";
 
+         $data_level[ $key_baru ][ 'saldo_awal_jml' ] += $value2[ 'saldo_awal_jml' ];
         $data_level[ $key_baru ][ 'saldo_awal_nilai' ] += $value2[ 'saldo_awal_nilai' ];
         $data_level[ $key_baru ][ 'saldo_awal_akm' ] += $value2[ 'saldo_awal_akm' ];
         $data_level[ $key_baru ][ 'saldo_awal_nilaibuku' ] += $value2[ 'saldo_awal_nilaibuku' ];
-        $data_level[ $key_baru ][ 'saldo_awal_jml' ] += $value2[ 'saldo_awal_jml' ];
+       
 
         $data_level[ $key_baru ][ 'koreksi_tambah_nilai' ] += $value2[ 'koreksi_tambah_nilai' ];
         $data_level[ $key_baru ][ 'koreksi_tambah_jml' ] += $value2[ 'koreksi_tambah_jml' ];

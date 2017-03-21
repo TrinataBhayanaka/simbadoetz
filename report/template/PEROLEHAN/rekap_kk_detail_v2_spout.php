@@ -208,10 +208,10 @@ foreach ($data as $gol) {
     $data_hilang = subsub_hapus( $kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt );
     */
     $hasil = group_data ($data_awal, $data_log);
-    unset($data_awal);
+  /*  unset($data_awal);
     unset($data_log);
     echo "<pre>";
-    print_r($hasil);
+    print_r($hasil);*/
 //    exit();
 
     foreach ($hasil as $gol) {
