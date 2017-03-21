@@ -2917,6 +2917,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'log_id' ] = "";
 
     }
+    unset($data_awal_perolehan);
     $data_log_full = array();
     foreach ($data_log as $arg) {
         $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'kelompok' ] = $arg[ 'kodeKelompok' ];
@@ -3030,7 +3031,7 @@ function group_data($data_awal_perolehan, $data_log)
 
 
     }
-
+    unset($data_log);
     /**
      * Bentuk array history
      */
@@ -3150,6 +3151,7 @@ function group_data($data_awal_perolehan, $data_log)
         } else $data_level_aset[ $key_baru ][ 'Kd_Riwayat' ] .= "";
         //echo "Text Riwayat==$text_riwayat<br/>";
     }
+    unset($data_gabungan);
     //pr($data_level_aset);
     //exit();
     $data_level5 = array();
@@ -3230,6 +3232,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level5[ $key_baru ][ 'Kd_Riwayat' ] .= "";
         $data_level5[ $key_baru ][ 'Detail' ][ $key ] = $data_level_aset[ $key ];
     }
+    unset($data_level_aset);
     //echo "data";
     // pr($data_level5);
     //exit();
@@ -3300,7 +3303,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level4[ $key_baru ][ 'Kd_Riwayat' ] = "";
         $data_level4[ $key_baru ][ 'SubSub' ][ $key ] = $data_level5[ $key ];
     }
-
+    unset($data_level5);
     //echo "array level 4:<br/><pre>";
     //print_r($data_level4);//data-sub
 //exit();
@@ -3373,7 +3376,7 @@ function group_data($data_awal_perolehan, $data_log)
 
         $data_level3[ $key_baru ][ 'Sub' ][ $key ] = $data_level4[ $key ];
     }
-
+    unset($data_level4);
     //echo "array level 3:<br/><pre>";
     //print_r($data_level3);//data-sub-sub
 
@@ -3447,7 +3450,7 @@ function group_data($data_awal_perolehan, $data_log)
         $data_level2[ $key_baru ][ 'Kel' ][ $key ] = $data_level3[ $key ];
         // echo "<pre>";print_r($data_level3[$key]);
     }
-
+    unset($data_level3);
     //echo "array level 2:<br/><pre>";
     //print_r($data_level2);//data-sub-sub
 
@@ -3522,7 +3525,7 @@ function group_data($data_awal_perolehan, $data_log)
 
         $data_level[ $key_baru ][ 'Bidang' ][ $key ] = $data_level2[ $key ];
     }
-
+    unset($data_level2);
     //echo "array level :<br/><pre>";
     //print_r($data_level);//data-sub-sub
 
