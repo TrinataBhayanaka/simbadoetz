@@ -6683,11 +6683,11 @@ class core_api_report extends DB {
 		
 		//pr($getdata);
 		//exit;
-		if($getdata){ 
+		//if($getdata){ 
 			return $getdata;
-		}		
+		//}		
 
-		exit();
+		//exit();
 	}
 
 
