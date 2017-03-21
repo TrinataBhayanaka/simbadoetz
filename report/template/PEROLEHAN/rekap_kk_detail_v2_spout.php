@@ -210,9 +210,7 @@ foreach ($data as $gol) {
     $hasil = group_data ($data_awal, $data_log);
     unset($data_awal);
     unset($data_log);
-    echo "masuk";
-    $data[ $i ] = $hasil;
-
+    
 
     foreach ($hasil as $gol) {
 
