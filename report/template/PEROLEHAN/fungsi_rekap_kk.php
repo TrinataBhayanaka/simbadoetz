@@ -10,7 +10,7 @@
  * @param unknown $TAHUN_AKTIF
  * @return array
  */
-function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $TAHUN_AKTIF)
+function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $TAHUN_AKTIF,&$data_gabungan)
 {
     $param_satker = $ps;
     $splitKodeSatker = explode ('.', $param_satker);
@@ -2512,11 +2512,121 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
         }
         if($status_masuk == 1) {
-            $data_final[] = $data;
+            //$data_final[] = $data;
+            $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'kelompok' ] = $data[ 'kodeKelompok' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'Aset_ID' ] = $data[ 'Aset_ID' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'log_id' ] = $data[ 'log_id' ];
+
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'no_aset' ] = $data[ 'Aset_ID' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'riwayat' ] = $data[ 'Kd_Riwayat' ];
+
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'Uraian' ] = $data[ 'Uraian' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'saldo_awal_jml' ] = $data[ 'saldo_awal_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'saldo_awal_nilai' ] = $data[ 'saldo_awal_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'saldo_awal_akm' ] = $data[ 'saldo_awal_akm' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'saldo_awal_nilaibuku' ] = $data[ 'saldo_awal_nilaibuku' ];
+        
+
+        /** Koreksi Saldo Awal  */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'koreksi_tambah_nilai' ] = $data[ 'koreksi_tambah_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'koreksi_tambah_jml' ] = $data[ 'koreksi_tambah_jml' ];
+        /** BELANJA jASA */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bj_aset_baru' ] = $data[ 'bj_aset_baru' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bj_aset_kapitalisasi' ] = $data[ 'bj_aset_kapitalisasi' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bj_total_brg' ] = $data[ 'bj_total_brg' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bj_total_nilai' ] = $data[ 'bj_total_nilai' ];
+        /** AKHIR BELANJA JASA */
+
+        /** BELANJA MODAL */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bm_aset_baru' ] = $data[ 'bm_aset_baru' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bm_aset_kapitalisasi' ] = $data[ 'bm_aset_kapitalisasi' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bm_total_brg' ] = $data[ 'bm_total_brg' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bm_total_nilai' ] = $data[ 'bm_total_nilai' ];
+        /** AKHIR BELANJA MODAL */
+
+        /** HIBAH */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'hibah_jml' ] = $data[ 'hibah_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'hibah_nilai' ] = $data[ 'hibah_nilai' ];
+        /** AKHIR HIBAH */
+
+        /** Inventarisasi */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'inventarisasi_jml' ] = $data[ 'inventarisasi_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'inventarisasi_nilai' ] = $data[ 'inventarisasi_nilai' ];
+        /** Inventarisasi */
+        /** Transfer SKPD */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'transfer_skpd_tambah_nilai' ] = $data[ 'transfer_skpd_tambah_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'transfer_skpd_tambah_jml' ] = $data[ 'transfer_skpd_tambah_jml' ];
+        /** AkhirTransfer SKPD */
+        /** Reklasi Aset Tetap Tambah */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_aset_tambah_nilai' ] = $data[ 'reklas_aset_tambah_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_aset_tambah_jml' ] = $data[ 'reklas_aset_tambah_jml' ];
+        /** AkhirTransfer SKPD */
+
+        /** JUMLAH MUTASI TAMBAH */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'jumlah_mutasi_tambah_jml' ] = $data[ 'jumlah_mutasi_tambah_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'jumlah_mutasi_tambah_nilai' ] = $data[ 'jumlah_mutasi_tambah_nilai' ];
+
+        /** AKHIR JUMLAH MUTASI TAMBAH */
+
+        /** PENYUSUTAN + */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'koreksi_penyusutan_tambah' ] = $data[ 'koreksi_penyusutan_tambah' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bp_penyusutan_tambah' ] = $data[ 'bp_penyusutan_tambah' ];
+        /** AKHIR PENYUSUTAN + */
+
+        /** ------------------------------MUTASI KURANG--------------------------------------- */
+        /** Koreksi Saldo Awal  */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'koreksi_kurang_nilai' ] = $data[ 'koreksi_kurang_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'koreksi_kurang_jml' ] = $data[ 'koreksi_kurang_jml' ];
+        /**  Akhir Koreksi Saldo Awal */
+
+        /** PENGHAPUSAN */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'hapus_hibah_nilai' ] = $data[ 'hapus_hibah_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'hapus_lelang_nilai' ] = $data[ 'hapus_lelang_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'hapus_hilang_musnah_nilai' ] = $data[ 'hapus_hilang_musnah_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'hapus_total_jml' ] = $data[ 'hapus_total_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'hapus_total_nilai' ] = $data[ 'hapus_total_nilai' ];
+        /** AKHIR PENGHAPUSAN */
+
+        /** Transfer SKPD */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'transfer_skpd_kurang_nilai' ] = $data[ 'transfer_skpd_kurang_nilai' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'transfer_skpd_kurang_jml' ] = $data[ 'transfer_skpd_kurang_jml' ];
+        /** AkhirTransfer SKPD */
+
+        /** Reklas Kurang Aset Tetap */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_krg_aset_tetap' ] = $data[ 'reklas_krg_aset_tetap' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_krg_aset_lain' ] = $data[ 'reklas_krg_aset_lain' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_krg_jml' ] = $data[ 'reklas_krg_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_krg_nilai' ] = $data[ 'reklas_krg_nilai' ];
+
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_krg_ekstra' ] = $data[ 'reklas_krg_ekstra' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = $data[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'reklas_krg_aset_lain' ] = $data[ 'reklas_krg_aset_lain' ];
+        /** Akhir Reklas Kurang Aset Tetap */
+
+        /** JUMLAH MUTASI KURANG */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'jumlah_mutasi_kurang_jml' ] = $data[ 'jumlah_mutasi_kurang_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'jumlah_mutasi_kurang_nilai' ] = $data[ 'jumlah_mutasi_kurang_nilai' ];
+
+        /** AKHIR JUMLAH MUTASI KURANG */
+
+        /** PENYUSUTAN - */
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'koreksi_penyusutan_kurang' ] = $data[ 'koreksi_penyusutan_kurang' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bp_penyusutan_kurang' ] = $data[ 'bp_penyusutan_kurang' ];
+
+
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'NilaiPerolehan' ] = $data[ 'NilaiPerolehan' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'Saldo_akhir_jml' ] = $data[ 'Saldo_akhir_jml' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'AkumulasiPenyusutan' ] = $data[ 'AkumulasiPenyusutan' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'NilaiBuku' ] = $data[ 'NilaiBuku' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'bp_berjalan' ] = $data[ 'bp_berjalan' ];
+
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'Kd_Riwayat' ] = $data[ 'Kd_Riwayat' ];
+        $data_final[ $data[ 'kodeKelompok' ] . '.' . $data[ 'Aset_ID' ] . '-' . $data[ 'Tahun' ] . "-" . $data[ 'log_id' ] ][ 'log_id' ] = $data[ 'log_id' ];
+        array_push($data_gabungan, $data_final);
         }
         //$data_final["$Aset_ID-$Kd_Riwayat-$log_id"]=$data;
     }
-    return $data_final;
+    return $data_gabungan;
 }
 
 /** untuk mendapatkan detail dari aset
@@ -2685,7 +2795,7 @@ function subsub_awal($kode, $gol, $ps, $pt)
     }
     //echo "$gol == $sql<br/>";
     $resultparentSubSub = mysql_query ($sql) or die(mysql_error ());
-    $data = array();
+    //$data = array();
     while ($data_subsub = mysql_fetch_array ($resultparentSubSub, MYSQL_ASSOC)) {
         $data_subsub[ 'saldo_awal_nilai' ] = $data_subsub[ 'nilai' ];
         $data_subsub[ 'saldo_awal_akm' ] = $data_subsub[ 'AP' ];
@@ -2784,7 +2894,116 @@ function subsub_awal($kode, $gol, $ps, $pt)
         $data_subsub[ 'AkumulasiPenyusutan' ] = $data_subsub[ 'AP' ];;
         $data_subsub[ 'NilaiBuku' ] = $data_subsub[ 'NB' ];;
         $data_subsub[ 'bp_berjalan' ] = 0;
-        $data[] = $data_subsub;
+        //$data[] = $data_subsub;
+
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'kelompok' ] = $data_subsub[ 'kelompok' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'Aset_ID' ] = $data_subsub[ 'Aset_ID' ];
+
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'log_id' ] = "";
+
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'no_aset' ] = $data_subsub[ 'no_aset' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'riwayat' ] = "";
+
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'Uraian' ] = $data_subsub[ 'Uraian' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'saldo_awal_jml' ] = $data_subsub[ 'saldo_awal_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'saldo_awal_nilai' ] = $data_subsub[ 'saldo_awal_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'saldo_awal_akm' ] = $data_subsub[ 'saldo_awal_akm' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'saldo_awal_nilaibuku' ] = $data_subsub[ 'saldo_awal_nilaibuku' ];
+        
+        /** Koreksi Saldo Awal  */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'koreksi_tambah_nilai' ] = $data_subsub[ 'koreksi_tambah_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'koreksi_tambah_jml' ] = $data_subsub[ 'koreksi_tambah_jml' ];
+        /** BELANJA jASA */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bj_aset_baru' ] = $data_subsub[ 'bj_aset_baru' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bj_aset_kapitalisasi' ] = $data_subsub[ 'bj_aset_kapitalisasi' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bj_total_brg' ] = $data_subsub[ 'bj_total_brg' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bj_total_nilai' ] = $data_subsub[ 'bj_total_nilai' ];
+        /** AKHIR BELANJA JASA */
+
+        /** BELANJA MODAL */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bm_aset_baru' ] = $data_subsub[ 'bm_aset_baru' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bm_aset_kapitalisasi' ] = $data_subsub[ 'bm_aset_kapitalisasi' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bm_total_brg' ] = $data_subsub[ 'bm_total_brg' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bm_total_nilai' ] = $data_subsub[ 'bm_total_nilai' ];
+        /** AKHIR BELANJA MODAL */
+
+        /** HIBAH */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'hibah_jml' ] = $data_subsub[ 'hibah_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'hibah_nilai' ] = $data_subsub[ 'hibah_nilai' ];
+        /** AKHIR HIBAH */
+
+        /** Inventarisasi */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'inventarisasi_jml' ] = $data_subsub[ 'inventarisasi_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'inventarisasi_nilai' ] = $data_subsub[ 'inventarisasi_nilai' ];
+        /** Inventarisasi */
+        /** Transfer SKPD */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'transfer_skpd_tambah_nilai' ] = $data_subsub[ 'transfer_skpd_tambah_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'transfer_skpd_tambah_jml' ] = $data_subsub[ 'transfer_skpd_tambah_jml' ];
+        /** AkhirTransfer SKPD */
+        /** Reklasi Aset Tetap Tambah */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_aset_tambah_nilai' ] = $data_subsub[ 'reklas_aset_tambah_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_aset_tambah_jml' ] = $data_subsub[ 'reklas_aset_tambah_jml' ];
+        /** AkhirTransfer SKPD */
+
+        /** JUMLAH MUTASI TAMBAH */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'jumlah_mutasi_tambah_jml' ] = $data_subsub[ 'jumlah_mutasi_tambah_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'jumlah_mutasi_tambah_nilai' ] = $data_subsub[ 'jumlah_mutasi_tambah_nilai' ];
+
+        /** AKHIR JUMLAH MUTASI TAMBAH */
+
+        /** PENYUSUTAN + */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'koreksi_penyusutan_tambah' ] = $data_subsub[ 'koreksi_penyusutan_tambah' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bp_penyusutan_tambah' ] = $data_subsub[ 'bp_penyusutan_tambah' ];
+        /** AKHIR PENYUSUTAN + */
+
+        /** ------------------------------MUTASI KURANG--------------------------------------- */
+        /** Koreksi Saldo Awal  */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'koreksi_kurang_nilai' ] = $data_subsub[ 'koreksi_kurang_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'koreksi_kurang_jml' ] = $data_subsub[ 'koreksi_kurang_jml' ];
+        /**  Akhir Koreksi Saldo Awal */
+
+        /** PENGHAPUSAN */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'hapus_hibah_nilai' ] = $data_subsub[ 'hapus_hibah_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'hapus_lelang_nilai' ] = $data_subsub[ 'hapus_lelang_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'hapus_hilang_musnah_nilai' ] = $data_subsub[ 'hapus_hilang_musnah_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'hapus_total_jml' ] = $data_subsub[ 'hapus_total_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'hapus_total_nilai' ] = $data_subsub[ 'hapus_total_nilai' ];
+        /** AKHIR PENGHAPUSAN */
+
+        /** Transfer SKPD */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'transfer_skpd_kurang_nilai' ] = $data_subsub[ 'transfer_skpd_kurang_nilai' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'transfer_skpd_kurang_jml' ] = $data_subsub[ 'transfer_skpd_kurang_jml' ];
+        /** AkhirTransfer SKPD */
+
+        /** Reklas Kurang Aset Tetap */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_krg_aset_tetap' ] = $data_subsub[ 'reklas_krg_aset_tetap' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_krg_aset_lain' ] = $data_subsub[ 'reklas_krg_aset_lain' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_krg_jml' ] = $data_subsub[ 'reklas_krg_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_krg_nilai' ] = $data_subsub[ 'reklas_krg_nilai' ];
+
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_krg_ekstra' ] = $data_subsub[ 'reklas_krg_ekstra' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = $data_subsub[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'reklas_krg_aset_lain' ] = $data_subsub[ 'reklas_krg_aset_lain' ];
+        /** Akhir Reklas Kurang Aset Tetap */
+
+        /** JUMLAH MUTASI KURANG */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'jumlah_mutasi_kurang_jml' ] = $data_subsub[ 'jumlah_mutasi_kurang_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'jumlah_mutasi_kurang_nilai' ] = $data_subsub[ 'jumlah_mutasi_kurang_nilai' ];
+
+        /** AKHIR JUMLAH MUTASI KURANG */
+
+        /** PENYUSUTAN - */
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'koreksi_penyusutan_kurang' ] = $data_subsub[ 'koreksi_penyusutan_kurang' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bp_penyusutan_kurang' ] = $data_subsub[ 'bp_penyusutan_kurang' ];
+
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'NilaiPerolehan' ] = $data_subsub[ 'NilaiPerolehan' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'Saldo_akhir_jml' ] = $data_subsub[ 'Saldo_akhir_jml' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'AkumulasiPenyusutan' ] = $data_subsub[ 'AkumulasiPenyusutan' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'NilaiBuku' ] = $data_subsub[ 'NilaiBuku' ];
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'bp_berjalan' ] = $data_subsub[ 'bp_berjalan' ];
+
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'Kd_Riwayat' ] = "";
+        $data[ $data_subsub[ 'kelompok' ] . '.' . $data_subsub[ 'Aset_ID' ] . '-' . $data_subsub[ 'Tahun' ] ][ 'log_id' ] = "";
 
 
     }
@@ -2798,242 +3017,244 @@ function subsub_awal($kode, $gol, $ps, $pt)
  * @param string $tgl_awal
  * @return array
  */
-function group_data($data_awal_perolehan, $data_log)
+//function group_data($data_awal_perolehan, $data_log)
+function group_data($data_gabungan)
 {
+
 
     //tes
      /*echo "Data log:";
     pr($data_awal_perolehan);
     exit();*/
-    $data_awal = array();
+    // $data_awal = array();
 
-    foreach ($data_awal_perolehan as $arg) {
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'kelompok' ] = $arg[ 'kelompok' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Aset_ID' ] = $arg[ 'Aset_ID' ];
+    // foreach ($data_awal_perolehan as $arg) {
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'kelompok' ] = $arg[ 'kelompok' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Aset_ID' ] = $arg[ 'Aset_ID' ];
 
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'log_id' ] = "";
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'log_id' ] = "";
 
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'no_aset' ] = $arg[ 'no_aset' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'riwayat' ] = "";
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'no_aset' ] = $arg[ 'no_aset' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'riwayat' ] = "";
 
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_akm' ] = $arg[ 'saldo_awal_akm' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_nilaibuku' ] = $arg[ 'saldo_awal_nilaibuku' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_akm' ] = $arg[ 'saldo_awal_akm' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'saldo_awal_nilaibuku' ] = $arg[ 'saldo_awal_nilaibuku' ];
         
-        /** Koreksi Saldo Awal  */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_tambah_nilai' ] = $arg[ 'koreksi_tambah_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_tambah_jml' ] = $arg[ 'koreksi_tambah_jml' ];
-        /** BELANJA jASA */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_aset_baru' ] = $arg[ 'bj_aset_baru' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_aset_kapitalisasi' ] = $arg[ 'bj_aset_kapitalisasi' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_total_brg' ] = $arg[ 'bj_total_brg' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_total_nilai' ] = $arg[ 'bj_total_nilai' ];
-        /** AKHIR BELANJA JASA */
+    //     /** Koreksi Saldo Awal  */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_tambah_nilai' ] = $arg[ 'koreksi_tambah_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_tambah_jml' ] = $arg[ 'koreksi_tambah_jml' ];
+    //     /** BELANJA jASA */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_aset_baru' ] = $arg[ 'bj_aset_baru' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_aset_kapitalisasi' ] = $arg[ 'bj_aset_kapitalisasi' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_total_brg' ] = $arg[ 'bj_total_brg' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bj_total_nilai' ] = $arg[ 'bj_total_nilai' ];
+    //     /** AKHIR BELANJA JASA */
 
-        /** BELANJA MODAL */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_aset_baru' ] = $arg[ 'bm_aset_baru' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_aset_kapitalisasi' ] = $arg[ 'bm_aset_kapitalisasi' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_total_brg' ] = $arg[ 'bm_total_brg' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_total_nilai' ] = $arg[ 'bm_total_nilai' ];
-        /** AKHIR BELANJA MODAL */
+    //     /** BELANJA MODAL */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_aset_baru' ] = $arg[ 'bm_aset_baru' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_aset_kapitalisasi' ] = $arg[ 'bm_aset_kapitalisasi' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_total_brg' ] = $arg[ 'bm_total_brg' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bm_total_nilai' ] = $arg[ 'bm_total_nilai' ];
+    //     /** AKHIR BELANJA MODAL */
 
-        /** HIBAH */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hibah_jml' ] = $arg[ 'hibah_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hibah_nilai' ] = $arg[ 'hibah_nilai' ];
-        /** AKHIR HIBAH */
+    //     /** HIBAH */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hibah_jml' ] = $arg[ 'hibah_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hibah_nilai' ] = $arg[ 'hibah_nilai' ];
+    //     /** AKHIR HIBAH */
 
-        /** Inventarisasi */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'inventarisasi_jml' ] = $arg[ 'inventarisasi_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'inventarisasi_nilai' ] = $arg[ 'inventarisasi_nilai' ];
-        /** Inventarisasi */
-        /** Transfer SKPD */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_tambah_nilai' ] = $arg[ 'transfer_skpd_tambah_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_tambah_jml' ] = $arg[ 'transfer_skpd_tambah_jml' ];
-        /** AkhirTransfer SKPD */
-        /** Reklasi Aset Tetap Tambah */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_aset_tambah_nilai' ] = $arg[ 'reklas_aset_tambah_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_aset_tambah_jml' ] = $arg[ 'reklas_aset_tambah_jml' ];
-        /** AkhirTransfer SKPD */
+    //     /** Inventarisasi */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'inventarisasi_jml' ] = $arg[ 'inventarisasi_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'inventarisasi_nilai' ] = $arg[ 'inventarisasi_nilai' ];
+    //     /** Inventarisasi */
+    //     /** Transfer SKPD */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_tambah_nilai' ] = $arg[ 'transfer_skpd_tambah_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_tambah_jml' ] = $arg[ 'transfer_skpd_tambah_jml' ];
+    //     /** AkhirTransfer SKPD */
+    //     /** Reklasi Aset Tetap Tambah */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_aset_tambah_nilai' ] = $arg[ 'reklas_aset_tambah_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_aset_tambah_jml' ] = $arg[ 'reklas_aset_tambah_jml' ];
+    //     /** AkhirTransfer SKPD */
 
-        /** JUMLAH MUTASI TAMBAH */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_tambah_jml' ] = $arg[ 'jumlah_mutasi_tambah_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_tambah_nilai' ] = $arg[ 'jumlah_mutasi_tambah_nilai' ];
+    //     /** JUMLAH MUTASI TAMBAH */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_tambah_jml' ] = $arg[ 'jumlah_mutasi_tambah_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_tambah_nilai' ] = $arg[ 'jumlah_mutasi_tambah_nilai' ];
 
-        /** AKHIR JUMLAH MUTASI TAMBAH */
+    //     /** AKHIR JUMLAH MUTASI TAMBAH */
 
-        /** PENYUSUTAN + */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_penyusutan_tambah' ] = $arg[ 'koreksi_penyusutan_tambah' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bp_penyusutan_tambah' ] = $arg[ 'bp_penyusutan_tambah' ];
-        /** AKHIR PENYUSUTAN + */
+    //     /** PENYUSUTAN + */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_penyusutan_tambah' ] = $arg[ 'koreksi_penyusutan_tambah' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bp_penyusutan_tambah' ] = $arg[ 'bp_penyusutan_tambah' ];
+    //     /** AKHIR PENYUSUTAN + */
 
-        /** ------------------------------MUTASI KURANG--------------------------------------- */
-        /** Koreksi Saldo Awal  */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_kurang_nilai' ] = $arg[ 'koreksi_kurang_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_kurang_jml' ] = $arg[ 'koreksi_kurang_jml' ];
-        /**  Akhir Koreksi Saldo Awal */
+    //     /** ------------------------------MUTASI KURANG--------------------------------------- */
+    //     /** Koreksi Saldo Awal  */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_kurang_nilai' ] = $arg[ 'koreksi_kurang_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_kurang_jml' ] = $arg[ 'koreksi_kurang_jml' ];
+    //     /**  Akhir Koreksi Saldo Awal */
 
-        /** PENGHAPUSAN */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_hibah_nilai' ] = $arg[ 'hapus_hibah_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_lelang_nilai' ] = $arg[ 'hapus_lelang_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_hilang_musnah_nilai' ] = $arg[ 'hapus_hilang_musnah_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_total_jml' ] = $arg[ 'hapus_total_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_total_nilai' ] = $arg[ 'hapus_total_nilai' ];
-        /** AKHIR PENGHAPUSAN */
+    //     /** PENGHAPUSAN */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_hibah_nilai' ] = $arg[ 'hapus_hibah_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_lelang_nilai' ] = $arg[ 'hapus_lelang_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_hilang_musnah_nilai' ] = $arg[ 'hapus_hilang_musnah_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_total_jml' ] = $arg[ 'hapus_total_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'hapus_total_nilai' ] = $arg[ 'hapus_total_nilai' ];
+    //     /** AKHIR PENGHAPUSAN */
 
-        /** Transfer SKPD */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_kurang_nilai' ] = $arg[ 'transfer_skpd_kurang_nilai' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_kurang_jml' ] = $arg[ 'transfer_skpd_kurang_jml' ];
-        /** AkhirTransfer SKPD */
+    //     /** Transfer SKPD */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_kurang_nilai' ] = $arg[ 'transfer_skpd_kurang_nilai' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'transfer_skpd_kurang_jml' ] = $arg[ 'transfer_skpd_kurang_jml' ];
+    //     /** AkhirTransfer SKPD */
 
-        /** Reklas Kurang Aset Tetap */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_tetap' ] = $arg[ 'reklas_krg_aset_tetap' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_jml' ] = $arg[ 'reklas_krg_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_nilai' ] = $arg[ 'reklas_krg_nilai' ];
+    //     /** Reklas Kurang Aset Tetap */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_tetap' ] = $arg[ 'reklas_krg_aset_tetap' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_jml' ] = $arg[ 'reklas_krg_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_nilai' ] = $arg[ 'reklas_krg_nilai' ];
 
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_ekstra' ] = $arg[ 'reklas_krg_ekstra' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = $arg[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
-        /** Akhir Reklas Kurang Aset Tetap */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_ekstra' ] = $arg[ 'reklas_krg_ekstra' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = $arg[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
+    //     /** Akhir Reklas Kurang Aset Tetap */
 
-        /** JUMLAH MUTASI KURANG */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_kurang_jml' ] = $arg[ 'jumlah_mutasi_kurang_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_kurang_nilai' ] = $arg[ 'jumlah_mutasi_kurang_nilai' ];
+    //     /** JUMLAH MUTASI KURANG */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_kurang_jml' ] = $arg[ 'jumlah_mutasi_kurang_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'jumlah_mutasi_kurang_nilai' ] = $arg[ 'jumlah_mutasi_kurang_nilai' ];
 
-        /** AKHIR JUMLAH MUTASI KURANG */
+    //     /** AKHIR JUMLAH MUTASI KURANG */
 
-        /** PENYUSUTAN - */
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_penyusutan_kurang' ] = $arg[ 'koreksi_penyusutan_kurang' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bp_penyusutan_kurang' ] = $arg[ 'bp_penyusutan_kurang' ];
+    //     /** PENYUSUTAN - */
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'koreksi_penyusutan_kurang' ] = $arg[ 'koreksi_penyusutan_kurang' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bp_penyusutan_kurang' ] = $arg[ 'bp_penyusutan_kurang' ];
 
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'NilaiPerolehan' ] = $arg[ 'NilaiPerolehan' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Saldo_akhir_jml' ] = $arg[ 'Saldo_akhir_jml' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'AkumulasiPenyusutan' ] = $arg[ 'AkumulasiPenyusutan' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'NilaiBuku' ] = $arg[ 'NilaiBuku' ];
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bp_berjalan' ] = $arg[ 'bp_berjalan' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'NilaiPerolehan' ] = $arg[ 'NilaiPerolehan' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Saldo_akhir_jml' ] = $arg[ 'Saldo_akhir_jml' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'AkumulasiPenyusutan' ] = $arg[ 'AkumulasiPenyusutan' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'NilaiBuku' ] = $arg[ 'NilaiBuku' ];
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'bp_berjalan' ] = $arg[ 'bp_berjalan' ];
 
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Kd_Riwayat' ] = "";
-        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'log_id' ] = "";
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'Kd_Riwayat' ] = "";
+    //     $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] ][ 'log_id' ] = "";
 
-    }
-    unset($data_awal_perolehan);
-    $data_log_full = array();
-    foreach ($data_log as $arg) {
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'kelompok' ] = $arg[ 'kodeKelompok' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Aset_ID' ] = $arg[ 'Aset_ID' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'log_id' ] = $arg[ 'log_id' ];
+    // }
+    // unset($data_awal_perolehan);
+    // $data_log_full = array();
+    // foreach ($data_log as $arg) {
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'kelompok' ] = $arg[ 'kodeKelompok' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Aset_ID' ] = $arg[ 'Aset_ID' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'log_id' ] = $arg[ 'log_id' ];
 
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'no_aset' ] = $arg[ 'Aset_ID' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'riwayat' ] = $arg[ 'Kd_Riwayat' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'no_aset' ] = $arg[ 'Aset_ID' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'riwayat' ] = $arg[ 'Kd_Riwayat' ];
 
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_akm' ] = $arg[ 'saldo_awal_akm' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilaibuku' ] = $arg[ 'saldo_awal_nilaibuku' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_jml' ] = $arg[ 'saldo_awal_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilai' ] = $arg[ 'saldo_awal_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_akm' ] = $arg[ 'saldo_awal_akm' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'saldo_awal_nilaibuku' ] = $arg[ 'saldo_awal_nilaibuku' ];
         
 
-        /** Koreksi Saldo Awal  */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_tambah_nilai' ] = $arg[ 'koreksi_tambah_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_tambah_jml' ] = $arg[ 'koreksi_tambah_jml' ];
-        /** BELANJA jASA */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_aset_baru' ] = $arg[ 'bj_aset_baru' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_aset_kapitalisasi' ] = $arg[ 'bj_aset_kapitalisasi' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_total_brg' ] = $arg[ 'bj_total_brg' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_total_nilai' ] = $arg[ 'bj_total_nilai' ];
-        /** AKHIR BELANJA JASA */
+    //     /** Koreksi Saldo Awal  */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_tambah_nilai' ] = $arg[ 'koreksi_tambah_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_tambah_jml' ] = $arg[ 'koreksi_tambah_jml' ];
+    //     /** BELANJA jASA */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_aset_baru' ] = $arg[ 'bj_aset_baru' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_aset_kapitalisasi' ] = $arg[ 'bj_aset_kapitalisasi' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_total_brg' ] = $arg[ 'bj_total_brg' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bj_total_nilai' ] = $arg[ 'bj_total_nilai' ];
+    //     /** AKHIR BELANJA JASA */
 
-        /** BELANJA MODAL */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_aset_baru' ] = $arg[ 'bm_aset_baru' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_aset_kapitalisasi' ] = $arg[ 'bm_aset_kapitalisasi' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_total_brg' ] = $arg[ 'bm_total_brg' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_total_nilai' ] = $arg[ 'bm_total_nilai' ];
-        /** AKHIR BELANJA MODAL */
+    //     /** BELANJA MODAL */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_aset_baru' ] = $arg[ 'bm_aset_baru' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_aset_kapitalisasi' ] = $arg[ 'bm_aset_kapitalisasi' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_total_brg' ] = $arg[ 'bm_total_brg' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bm_total_nilai' ] = $arg[ 'bm_total_nilai' ];
+    //     /** AKHIR BELANJA MODAL */
 
-        /** HIBAH */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hibah_jml' ] = $arg[ 'hibah_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hibah_nilai' ] = $arg[ 'hibah_nilai' ];
-        /** AKHIR HIBAH */
+    //     /** HIBAH */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hibah_jml' ] = $arg[ 'hibah_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hibah_nilai' ] = $arg[ 'hibah_nilai' ];
+    //     /** AKHIR HIBAH */
 
-        /** Inventarisasi */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'inventarisasi_jml' ] = $arg[ 'inventarisasi_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'inventarisasi_nilai' ] = $arg[ 'inventarisasi_nilai' ];
-        /** Inventarisasi */
-        /** Transfer SKPD */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_tambah_nilai' ] = $arg[ 'transfer_skpd_tambah_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_tambah_jml' ] = $arg[ 'transfer_skpd_tambah_jml' ];
-        /** AkhirTransfer SKPD */
-        /** Reklasi Aset Tetap Tambah */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_aset_tambah_nilai' ] = $arg[ 'reklas_aset_tambah_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_aset_tambah_jml' ] = $arg[ 'reklas_aset_tambah_jml' ];
-        /** AkhirTransfer SKPD */
+    //     /** Inventarisasi */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'inventarisasi_jml' ] = $arg[ 'inventarisasi_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'inventarisasi_nilai' ] = $arg[ 'inventarisasi_nilai' ];
+    //     /** Inventarisasi */
+    //     /** Transfer SKPD */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_tambah_nilai' ] = $arg[ 'transfer_skpd_tambah_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_tambah_jml' ] = $arg[ 'transfer_skpd_tambah_jml' ];
+    //     /** AkhirTransfer SKPD */
+    //     /** Reklasi Aset Tetap Tambah */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_aset_tambah_nilai' ] = $arg[ 'reklas_aset_tambah_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_aset_tambah_jml' ] = $arg[ 'reklas_aset_tambah_jml' ];
+    //     /** AkhirTransfer SKPD */
 
-        /** JUMLAH MUTASI TAMBAH */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_tambah_jml' ] = $arg[ 'jumlah_mutasi_tambah_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_tambah_nilai' ] = $arg[ 'jumlah_mutasi_tambah_nilai' ];
+    //     /** JUMLAH MUTASI TAMBAH */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_tambah_jml' ] = $arg[ 'jumlah_mutasi_tambah_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_tambah_nilai' ] = $arg[ 'jumlah_mutasi_tambah_nilai' ];
 
-        /** AKHIR JUMLAH MUTASI TAMBAH */
+    //     /** AKHIR JUMLAH MUTASI TAMBAH */
 
-        /** PENYUSUTAN + */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_penyusutan_tambah' ] = $arg[ 'koreksi_penyusutan_tambah' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bp_penyusutan_tambah' ] = $arg[ 'bp_penyusutan_tambah' ];
-        /** AKHIR PENYUSUTAN + */
+    //     /** PENYUSUTAN + */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_penyusutan_tambah' ] = $arg[ 'koreksi_penyusutan_tambah' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bp_penyusutan_tambah' ] = $arg[ 'bp_penyusutan_tambah' ];
+    //     /** AKHIR PENYUSUTAN + */
 
-        /** ------------------------------MUTASI KURANG--------------------------------------- */
-        /** Koreksi Saldo Awal  */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_kurang_nilai' ] = $arg[ 'koreksi_kurang_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_kurang_jml' ] = $arg[ 'koreksi_kurang_jml' ];
-        /**  Akhir Koreksi Saldo Awal */
+    //     /** ------------------------------MUTASI KURANG--------------------------------------- */
+    //     /** Koreksi Saldo Awal  */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_kurang_nilai' ] = $arg[ 'koreksi_kurang_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_kurang_jml' ] = $arg[ 'koreksi_kurang_jml' ];
+    //     /**  Akhir Koreksi Saldo Awal */
 
-        /** PENGHAPUSAN */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_hibah_nilai' ] = $arg[ 'hapus_hibah_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_lelang_nilai' ] = $arg[ 'hapus_lelang_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_hilang_musnah_nilai' ] = $arg[ 'hapus_hilang_musnah_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_total_jml' ] = $arg[ 'hapus_total_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_total_nilai' ] = $arg[ 'hapus_total_nilai' ];
-        /** AKHIR PENGHAPUSAN */
+    //     /** PENGHAPUSAN */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_hibah_nilai' ] = $arg[ 'hapus_hibah_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_lelang_nilai' ] = $arg[ 'hapus_lelang_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_hilang_musnah_nilai' ] = $arg[ 'hapus_hilang_musnah_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_total_jml' ] = $arg[ 'hapus_total_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'hapus_total_nilai' ] = $arg[ 'hapus_total_nilai' ];
+    //     /** AKHIR PENGHAPUSAN */
 
-        /** Transfer SKPD */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_kurang_nilai' ] = $arg[ 'transfer_skpd_kurang_nilai' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_kurang_jml' ] = $arg[ 'transfer_skpd_kurang_jml' ];
-        /** AkhirTransfer SKPD */
+    //     /** Transfer SKPD */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_kurang_nilai' ] = $arg[ 'transfer_skpd_kurang_nilai' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'transfer_skpd_kurang_jml' ] = $arg[ 'transfer_skpd_kurang_jml' ];
+    //     /** AkhirTransfer SKPD */
 
-        /** Reklas Kurang Aset Tetap */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_tetap' ] = $arg[ 'reklas_krg_aset_tetap' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_jml' ] = $arg[ 'reklas_krg_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_nilai' ] = $arg[ 'reklas_krg_nilai' ];
+    //     /** Reklas Kurang Aset Tetap */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_tetap' ] = $arg[ 'reklas_krg_aset_tetap' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_jml' ] = $arg[ 'reklas_krg_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_nilai' ] = $arg[ 'reklas_krg_nilai' ];
 
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_ekstra' ] = $arg[ 'reklas_krg_ekstra' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = $arg[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
-        /** Akhir Reklas Kurang Aset Tetap */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_ekstra' ] = $arg[ 'reklas_krg_ekstra' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = $arg[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'reklas_krg_aset_lain' ] = $arg[ 'reklas_krg_aset_lain' ];
+    //     /** Akhir Reklas Kurang Aset Tetap */
 
-        /** JUMLAH MUTASI KURANG */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_kurang_jml' ] = $arg[ 'jumlah_mutasi_kurang_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_kurang_nilai' ] = $arg[ 'jumlah_mutasi_kurang_nilai' ];
+    //     /** JUMLAH MUTASI KURANG */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_kurang_jml' ] = $arg[ 'jumlah_mutasi_kurang_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'jumlah_mutasi_kurang_nilai' ] = $arg[ 'jumlah_mutasi_kurang_nilai' ];
 
-        /** AKHIR JUMLAH MUTASI KURANG */
+    //     /** AKHIR JUMLAH MUTASI KURANG */
 
-        /** PENYUSUTAN - */
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_penyusutan_kurang' ] = $arg[ 'koreksi_penyusutan_kurang' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bp_penyusutan_kurang' ] = $arg[ 'bp_penyusutan_kurang' ];
-
-
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'NilaiPerolehan' ] = $arg[ 'NilaiPerolehan' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Saldo_akhir_jml' ] = $arg[ 'Saldo_akhir_jml' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'AkumulasiPenyusutan' ] = $arg[ 'AkumulasiPenyusutan' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'NilaiBuku' ] = $arg[ 'NilaiBuku' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bp_berjalan' ] = $arg[ 'bp_berjalan' ];
-
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Kd_Riwayat' ] = $arg[ 'Kd_Riwayat' ];
-        $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'log_id' ] = $arg[ 'log_id' ];
+    //     /** PENYUSUTAN - */
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'koreksi_penyusutan_kurang' ] = $arg[ 'koreksi_penyusutan_kurang' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bp_penyusutan_kurang' ] = $arg[ 'bp_penyusutan_kurang' ];
 
 
-    }
-    unset($data_log);
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'NilaiPerolehan' ] = $arg[ 'NilaiPerolehan' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Saldo_akhir_jml' ] = $arg[ 'Saldo_akhir_jml' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'AkumulasiPenyusutan' ] = $arg[ 'AkumulasiPenyusutan' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'NilaiBuku' ] = $arg[ 'NilaiBuku' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'bp_berjalan' ] = $arg[ 'bp_berjalan' ];
+
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'Kd_Riwayat' ] = $arg[ 'Kd_Riwayat' ];
+    //     $data_log_full[ $arg[ 'kodeKelompok' ] . '.' . $arg[ 'Aset_ID' ] . '-' . $arg[ 'Tahun' ] . "-" . $arg[ 'log_id' ] ][ 'log_id' ] = $arg[ 'log_id' ];
+
+
+    // }
+    // unset($data_log);
     /**
      * Bentuk array history
      */
@@ -3044,7 +3265,7 @@ function group_data($data_awal_perolehan, $data_log)
         $RIWAYAT[ $row[ Kd_Riwayat ] ] = $row[ Nm_Riwayat ];
     }
     /** Proses Menggabungkan data */
-    $data_gabungan = array_merge ($data_awal, $data_log_full);
+   // $data_gabungan = array_merge ($data_awal, $data_log_full);
     /** Proses Menggabungkan data */
     // pr($data_log_full);
     //exit();
@@ -3055,8 +3276,14 @@ function group_data($data_awal_perolehan, $data_log)
     $data_level_aset = array();
     $count = 0;
     $aset_tmp = 0;
+   
+
     foreach ($data_gabungan as $key => $value) {
+       
         $tmp = explode (".", $key);
+        if(count($tmp)==1){
+            continue;
+        }
         $index_aset_id = explode ("-", $tmp[ 5 ]);
         $index_aset_id = $index_aset_id[ 0 ];
         $log_id = $value[ 'log_id' ];
@@ -3148,6 +3375,7 @@ function group_data($data_awal_perolehan, $data_log)
         $text_riwayat = $RIWAYAT[ $value[ 'Kd_Riwayat' ] ];
         if($value[ 'Kd_Riwayat' ] != "") {
             $data_level_aset[ $key_baru ][ 'Kd_Riwayat' ] .= $text_riwayat . "({$value['Kd_Riwayat']})";
+            echo "masukk==$key<br/>";
             $data_gabungan[ $key ][ 'Uraian' ] = '';
             $data_gabungan[ $key ][ 'no_aset' ] = '';
             $data_level_aset[ $key_baru ][ 'log_data' ][] = $data_gabungan[ $key ];
@@ -3720,4 +3948,14 @@ function get_log_before_tahun_sblmya($log, $log_id, $tglPerubahan, $Aset_ID)
     return array( $NilaiBuku, $AkumulasiPenyusutan, $kondisi );
 }
 
+
+function mergeArrays(&$sourceArray, &$copyArray){
+        //merge copy array into source array
+                $i = 0;
+        while (isset($copyArray[$i])){
+            $sourceArray[] = $copyArray[$i];
+            unset($copyArray[$i]);
+            $i++;
+        }
+    }
 ?>

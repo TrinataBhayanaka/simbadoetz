@@ -203,17 +203,26 @@ foreach ($data as $gol) {
 
 
     $data_awal = subsub_awal ($kode_golongan, $q_gol_final, $ps, $pt);
-    $data_log = history_log ($kode_golongan, $q_gol_final, $ps, $pt, "$tahun_neraca-12-31", $TAHUN_AKTIF);
+    $data_log = history_log ($kode_golongan, $q_gol_final, $ps, $pt, "$tahun_neraca-12-31", $TAHUN_AKTIF,$data_awal);
+    unset($data_awal);
+  
+   //exit();
     /*$data_akhir = subsub( $kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31" );
     $data_hilang = subsub_hapus( $kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt );
     */
-    $hasil = group_data ($data_awal, $data_log);
-  /*  unset($data_awal);
-    unset($data_log);
-    echo "<pre>";
-    print_r($hasil);*/
-//    exit();
+    //$hasil = group_data ($data_awal, $data_log);
+   //echo "<pre>";
+     //echo  json_encode($data_log);;
+   //print_r($data_log);
+   //exit();
 
+     $hasil=group_data($data_log);
+   
+  
+/*    echo "<pre>";
+    print_r($hasil);
+    exit();
+*/
     foreach ($hasil as $gol) {
 
         /**
