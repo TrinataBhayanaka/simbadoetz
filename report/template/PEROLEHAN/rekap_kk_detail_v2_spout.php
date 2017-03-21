@@ -210,7 +210,9 @@ foreach ($data as $gol) {
     $hasil = group_data ($data_awal, $data_log);
     unset($data_awal);
     unset($data_log);
-    
+    echo "<pre>";
+    print_r($hasil);
+//    exit();
 
     foreach ($hasil as $gol) {
 
@@ -453,57 +455,74 @@ function konversi_data($spout, $status = 0)
         $spout_log[ no_aset ] = ($spout[ Aset_ID ]);
         $spout_log[ riwayat ] = ($spout[ log_id ]);
     }
-
+    $spout_log[ saldo_awal_jml ] = abs ($spout[ saldo_awal_jml ]);
     $spout_log[ saldo_awal_nilai ] = abs ($spout[ saldo_awal_nilai ]);
     $spout_log[ saldo_awal_akm ] = abs ($spout[ saldo_awal_akm ]);
     $spout_log[ saldo_awal_nilaibuku ] = abs ($spout[ saldo_awal_nilaibuku ]);
-    $spout_log[ saldo_awal_jml ] = abs ($spout[ saldo_awal_jml ]);
-    $spout_log[ NilaiPerolehan ] = abs ($spout[ NilaiPerolehan ]);
-    $spout_log[ Saldo_akhir_jml ] = abs ($spout[ Saldo_akhir_jml ]);
-    $spout_log[ AkumulasiPenyusutan ] = abs ($spout[ AkumulasiPenyusutan ]);
-    $spout_log[ NilaiBuku ] = abs ($spout[ NilaiBuku ]);
-    $spout_log[ koreksi_tambah_nilai ] = abs ($spout[ koreksi_tambah_nilai ]);
+
     $spout_log[ koreksi_tambah_jml ] = abs ($spout[ koreksi_tambah_jml ]);
+    $spout_log[ koreksi_tambah_nilai ] = abs ($spout[ koreksi_tambah_nilai ]);
+    
     $spout_log[ bj_aset_baru ] = abs ($spout[ bj_aset_baru ]);
     $spout_log[ bj_aset_kapitalisasi ] = abs ($spout[ bj_aset_kapitalisasi ]);
+
     $spout_log[ bj_total_brg ] = abs ($spout[ bj_total_brg ]);
     $spout_log[ bj_total_nilai ] = abs ($spout[ bj_total_nilai ]);
+
     $spout_log[ bm_aset_baru ] = abs ($spout[ bm_aset_baru ]);
     $spout_log[ bm_aset_kapitalisasi ] = abs ($spout[ bm_aset_kapitalisasi ]);
-    $spout_log[ bm_total_brg ] = abs ($spout[ bm_total_brg ]);
     $spout_log[ bm_total_nilai ] = abs ($spout[ bm_total_nilai ]);
+    $spout_log[ bm_total_brg ] = abs ($spout[ bm_total_brg ]);
+    
     $spout_log[ hibah_jml ] = abs ($spout[ hibah_jml ]);
     $spout_log[ hibah_nilai ] = abs ($spout[ hibah_nilai ]);
+    $spout_log[ transfer_skpd_tambah_jml ] = abs ($spout[ transfer_skpd_tambah_jml ]);
+    $spout_log[ transfer_skpd_tambah_nilai ] = abs ($spout[ transfer_skpd_tambah_nilai ]);
+
+    $spout_log[ reklas_aset_tambah_jml ] = abs ($spout[ reklas_aset_tambah_jml ]);
+    $spout_log[ reklas_aset_tambah_nilai ] = abs ($spout[ reklas_aset_tambah_nilai ]);
+
+
     $spout_log[ inventarisasi_jml ] = abs ($spout[ inventarisasi_jml ]);
     $spout_log[ inventarisasi_nilai ] = abs ($spout[ inventarisasi_nilai ]);
-    $spout_log[ transfer_skpd_tambah_nilai ] = abs ($spout[ transfer_skpd_tambah_nilai ]);
-    $spout_log[ transfer_skpd_tambah_jml ] = abs ($spout[ transfer_skpd_tambah_jml ]);
-    $spout_log[ reklas_aset_tambah_nilai ] = abs ($spout[ reklas_aset_tambah_nilai ]);
-    $spout_log[ reklas_aset_tambah_jml ] = abs ($spout[ reklas_aset_tambah_jml ]);
+    
     $spout_log[ jumlah_mutasi_tambah_jml ] = abs ($spout[ jumlah_mutasi_tambah_jml ]);
     $spout_log[ jumlah_mutasi_tambah_nilai ] = abs ($spout[ jumlah_mutasi_tambah_nilai ]);
     $spout_log[ koreksi_penyusutan_tambah ] = abs ($spout[ koreksi_penyusutan_tambah ]);
     $spout_log[ bp_penyusutan_tambah ] = abs ($spout[ bp_penyusutan_tambah ]);
-    $spout_log[ koreksi_kurang_nilai ] = abs ($spout[ koreksi_kurang_nilai ]);
+    $spout_log[ bp_berjalan ] = abs ($spout[ bp_berjalan ]);
+
     $spout_log[ koreksi_kurang_jml ] = abs ($spout[ koreksi_kurang_jml ]);
+    $spout_log[ koreksi_kurang_nilai ] = abs ($spout[ koreksi_kurang_nilai ]);
+    
     $spout_log[ hapus_hibah_nilai ] = abs ($spout[ hapus_hibah_nilai ]);
     $spout_log[ hapus_lelang_nilai ] = abs ($spout[ hapus_lelang_nilai ]);
     $spout_log[ hapus_hilang_musnah_nilai ] = abs ($spout[ hapus_hilang_musnah_nilai ]);
     $spout_log[ hapus_total_jml ] = abs ($spout[ hapus_total_jml ]);
     $spout_log[ hapus_total_nilai ] = abs ($spout[ hapus_total_nilai ]);
-    $spout_log[ transfer_skpd_kurang_nilai ] = abs ($spout[ transfer_skpd_kurang_nilai ]);
+    
     $spout_log[ transfer_skpd_kurang_jml ] = abs ($spout[ transfer_skpd_kurang_jml ]);
+    $spout_log[ transfer_skpd_kurang_nilai ] = abs ($spout[ transfer_skpd_kurang_nilai ]);
+
     $spout_log[ reklas_krg_aset_tetap ] = abs ($spout[ reklas_krg_aset_tetap ]);
+    $spout_log[ reklas_krg_ekstra ] = abs ($spout[ reklas_krg_ekstra ]);
     $spout_log[ reklas_krg_aset_lain ] = abs ($spout[ reklas_krg_aset_lain ]);
+    $spout_log[ reklas_krg_aset_bm_tdk_dikapitalisasi ] = abs ($spout[ reklas_krg_aset_bm_tdk_dikapitalisasi ]);
+
     $spout_log[ reklas_krg_jml ] = abs ($spout[ reklas_krg_jml ]);
     $spout_log[ reklas_krg_nilai ] = abs ($spout[ reklas_krg_nilai ]);
-    $spout_log[ reklas_krg_ekstra ] = abs ($spout[ reklas_krg_ekstra ]);
-    $spout_log[ reklas_krg_aset_bm_tdk_dikapitalisasi ] = abs ($spout[ reklas_krg_aset_bm_tdk_dikapitalisasi ]);
+    
     $spout_log[ jumlah_mutasi_kurang_jml ] = abs ($spout[ jumlah_mutasi_kurang_jml ]);
     $spout_log[ jumlah_mutasi_kurang_nilai ] = abs ($spout[ jumlah_mutasi_kurang_nilai ]);
     $spout_log[ koreksi_penyusutan_kurang ] = abs ($spout[ koreksi_penyusutan_kurang ]);
     $spout_log[ bp_penyusutan_kurang ] = abs ($spout[ bp_penyusutan_kurang ]);
-    $spout_log[ bp_berjalan ] = abs ($spout[ bp_berjalan ]);
+    
+    $spout_log[ NilaiPerolehan ] = abs ($spout[ NilaiPerolehan ]);
+    $spout_log[ Saldo_akhir_jml ] = abs ($spout[ Saldo_akhir_jml ]);
+    $spout_log[ AkumulasiPenyusutan ] = abs ($spout[ AkumulasiPenyusutan ]);
+    $spout_log[ NilaiBuku ] = abs ($spout[ NilaiBuku ]);
+
+
     $spout_log[ Kd_Riwayat ] = ($spout[ Kd_Riwayat ]);
     $spout_log[ log_data ] = ($spout[ log_data ]);
     return $spout_log;
