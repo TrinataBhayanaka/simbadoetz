@@ -689,7 +689,7 @@ for ($i = 0; $i < 2; $i++) {
                 . "sum((NilaiPerolehan-NilaiPerolehan_Awal)) as selisih,AkumulasiPenyusutan,"
                 . "PenyusutanPerTahun,NilaiBuku,MasaManfaat,UmurEkonomis,TahunPenyusutan "
                 . " from $tableLog where TglPerubahan>'$TglPerubahan_awal' "
-                . "and kd_riwayat in (2,29) "
+                . "and kd_riwayat in (2,291) "
                 . " "
                 . "and Aset_ID='$Aset_ID'";
 
