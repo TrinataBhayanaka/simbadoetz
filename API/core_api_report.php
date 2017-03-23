@@ -6282,7 +6282,7 @@ class core_api_report extends DB {
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND t.jenis_belanja = 0
 						    AND ast.noKontrak is not null						   	
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif($param_Filter == 2){
 			//2 : belanja jasa aset baru
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
@@ -6290,7 +6290,7 @@ class core_api_report extends DB {
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND t.jenis_belanja = 1
 						    AND ast.noKontrak is not null						   	
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif($param_Filter == 3){
 			//3 : hibah
 			if($param_Filter_detail == 1){
@@ -6325,7 +6325,7 @@ class core_api_report extends DB {
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND ast.noKontrak is null 
 						    $param_ext
-						    order by l.Aset_ID ASC";			    
+						    order by l.kodeSatker,l.kodeKelompok ASC";			    
 		}elseif($param_Filter == 4){
 			//4 : inventarisasi
 			if($param_Filter_detail == 1){
@@ -6348,45 +6348,45 @@ class core_api_report extends DB {
 						    AND l.Kd_Riwayat = 0 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND ast.noKontrak is null  $param_ext		   	
-						    order by l.Aset_ID ASC";			    
+						    order by l.kodeSatker,l.kodeKelompok ASC";			    
 		}elseif($param_Filter == 5){
 			//5 : belanja modal kapitalisasi
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 2 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND (l.GUID = '' OR l.GUID = 'Modal')   
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.Aset_ID,l.kodeKelompok ASC";
 		}elseif($param_Filter == 6){
 			//6 : belanja jasa kapitalisasi
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 2 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND l.GUID = 'Jasa'   
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.Aset_ID,kodeKelompok ASC";
 		}elseif($param_Filter == 7){
 			//7 : koreksi
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 21 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif($param_Filter == 8){
 			//8: penghapusan sebagian
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 7 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif($param_Filter == 9){
 			//9: Penghapusan Pemindahtanganan
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 26 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 0 AND t.StatusTampil = 0 
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif($param_Filter == 10){
 			//10: Penghapusan Pemusnahan
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						    AND l.Kd_Riwayat = 27 AND l.Kd_Riwayat != 77 AND l.$paramSatker 
 						    AND t.Status_Validasi_Barang = 0 AND t.StatusTampil = 0 
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif ($param_Filter == 11) {
 			/*
 			11 : Mutasi Bertambah
@@ -6395,7 +6395,8 @@ class core_api_report extends DB {
 			parameter dengan SatkerTujuan(view mutasi) untuk barang bertambah
 			*/
 			$paramLog_mts_rc =  "l.TglPerubahan >'$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
-						   AND l.Kd_Riwayat = 3 and l.Kd_Riwayat != 77 and mt.$paramSatker_mts_rc";
+						   AND l.Kd_Riwayat = 3 and l.Kd_Riwayat != 77 and mt.$paramSatker_mts_rc
+						   order by l.kodeSatker,l.kodeKelompok ASC";
 		
 		}elseif ($param_Filter == 12) {
 			/*
@@ -6405,7 +6406,8 @@ class core_api_report extends DB {
 			parameter dengan SatkerAwal(view mutasi) untuk barang berkurang
 			*/
 			$paramLog_mts_tr = "l.TglPerubahan >'$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
-						   AND l.Kd_Riwayat = 3 and l.Kd_Riwayat != 77 and mt.$paramSatker_mts_tr";
+						   AND l.Kd_Riwayat = 3 and l.Kd_Riwayat != 77 and mt.$paramSatker_mts_tr
+						   order by l.kodeSatker,l.kodeKelompok ASC";
 		
 		}elseif ($param_Filter == 13) {
 			/*
@@ -6415,7 +6417,8 @@ class core_api_report extends DB {
 			*/
 			$paramLogTransferKapitalisasiTambah =  "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						   AND l.Kd_Riwayat = '28' and l.$paramSatker 
-						   and l.Aset_ID_Penambahan = '0' and action like 'Aset Penambahan kapitalisasi Mutasi%' order by l.Aset_ID ASC";
+						   and l.Aset_ID_Penambahan = '0' and action like 'Aset Penambahan kapitalisasi Mutasi%' order by 
+						   l.kodeSatker,l.kodeKelompok ASC";
 		}elseif ($param_Filter == 14) {
 			/*
 			14 : Transfer Kapitalisasi Berkurang
@@ -6425,7 +6428,7 @@ class core_api_report extends DB {
 			$paramLogTransferKapitalisasiKurang =  "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
 						   AND l.Kd_Riwayat = '28' and l.$paramSatker 
 						   and l.Aset_ID_Penambahan != '0' and action like 'Sukses kapitalisasi Mutasi%'
-						   order by l.Aset_ID ASC";
+						   order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif ($param_Filter == 15) {
 			//15 : belanja modal reklas tambah
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
@@ -6433,7 +6436,7 @@ class core_api_report extends DB {
 						    AND t.Status_Validasi_Barang = 1 AND t.StatusTampil = 1 
 						    AND t.jenis_belanja = 0
 						    AND ast.noKontrak is not null						   	
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}elseif ($param_Filter == 16) {
 			//16 : belanja modal reklas kurang
 			$paramLog = "l.TglPerubahan >='$tglawalperolehan' AND l.TglPerubahan <='$tglakhirperolehan' 
@@ -6441,7 +6444,7 @@ class core_api_report extends DB {
 						    AND t.Status_Validasi_Barang = 0 AND t.StatusTampil = 0 
 						    AND t.jenis_belanja = 0
 						    AND ast.noKontrak is not null						   	
-						    order by l.Aset_ID ASC";
+						    order by l.kodeSatker,l.kodeKelompok ASC";
 		}
 
 		/*

@@ -58,7 +58,7 @@ $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan
 $result=$REPORT->MutasiBarangSmplCustome($skpd_id,$tglawalperolehan,$tglakhirperolehan,$param_Filter,$param_Filter_detail);
 
 
-// pr($result);
+//pr($result);
 // exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
@@ -78,10 +78,10 @@ if($tglawalperolehan != '' && $tglakhirperolehan){
 
 // pr($result);
 // exit;
-$html=$REPORT->retrieve_html_laporan_mutasi($result,$skpd_id,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat,$param_Filter,$param_Filter_detail);
-/*$count = count($html);
+$html=$REPORT->retrieve_html_laporan_mutasi_rev($result,$skpd_id,$gambar,$tanggalAwal,$tanggalAkhir,$tanggalCetak,$thnPejabat,$param_Filter,$param_Filter_detail,$tipe);
+$count = count($html);
 
-	 for ($i = 0; $i < $count; $i++) {
+	 /*for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
