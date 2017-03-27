@@ -5206,12 +5206,21 @@ class core_api_report extends DB {
 										WHERE kdp.kodeKelompok =k.Kode and kdp.kodeKelompok like '$data%' and kdp.kodeSatker = '$Satker_ID' and kdp.TglPerolehan >= '$tglAwalDefault' and kdp.TglPerolehan <= '$tglAkhirDefault' and kdp.TglPembukuan >= '$tglAwalDefault' and kdp.TglPembukuan <= '$tglAkhirDefault' and kdp.Status_Validasi_Barang =1 and kdp.StatusTampil = 1 and kdp.kodeLokasi like '12%'
 										$KodeKa_kdp order by kdp.kodeKelompok ";
 						}elseif($paramGol == 'Lain'){
-							$queryok="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian,a.PenyusutanPerTaun,a.AkumulasiPenyusutan,a.NilaiBuku  
+							/*$queryok="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian,a.PenyusutanPerTaun,a.AkumulasiPenyusutan,a.NilaiBuku  
 										FROM aset_lain_3 as a, kelompok as k 
 										WHERE a.kodeKelompok = k.Kode and a.kodeSatker LIKE '$Satker_ID' 
 										AND a.kondisi = 3 AND a.kodeKelompok like '$data%' and a.TglPerolehan >= '$tglAwalDefault' and a.TglPerolehan <= '$tglAkhirDefault' and a.TglPembukuan >= '$tglAwalDefault' and a.TglPembukuan <= '$tglAkhirDefault' and a.	Status_Validasi_Barang = 1 and a.kodeLokasi like '12%' 
 										$KodeKa_lain
-										group by a.kodeKelompok";
+										group by a.kodeKelompok";*/
+
+							$queryok="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian,
+									  sum(a.PenyusutanPerTaun) as PP,sum(a.AkumulasiPenyusutan) as AP,sum(a.NilaiBuku) as NB  
+										FROM aset_lain_3 as a, kelompok as k 
+										WHERE a.kodeKelompok = k.Kode and a.kodeSatker LIKE '$Satker_ID' 
+										AND a.kondisi = 3 AND a.kodeKelompok like '$data%' and a.TglPerolehan >= '$tglAwalDefault' and a.TglPerolehan <= '$tglAkhirDefault' and a.TglPembukuan >= '$tglAwalDefault' and a.TglPembukuan <= '$tglAkhirDefault' and a.	Status_Validasi_Barang = 1 and a.kodeLokasi like '12%' 
+										$KodeKa_lain
+										group by a.kodeKelompok";	
+
 							//	Status_Validasi_Barang = 1		
 						}elseif($paramGol == 'NonAset'){
 							$queryok_non_1="SELECT a.kodeKelompok, count(a.Aset_ID) as jml, sum(a.NilaiPerolehan) as Nilai,k.Uraian 
@@ -5230,9 +5239,9 @@ class core_api_report extends DB {
 										 and a.StatusTampil=1 
 										group by a.kodeKelompok";
 						}
-						// echo $queryok ; 	
-						// echo "<br>";
-						// echo "<br>";
+						/*echo $queryok ; 	
+						echo "<br>";
+						echo "<br>";*/
 						// exit;
 						
 						
@@ -5308,7 +5317,7 @@ class core_api_report extends DB {
 						// exit;
 					}
 				}
-				// pr($getdata);
+				//pr($getdata);
 				// exit;
 		return 	$getdata;
 	}

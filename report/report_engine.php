@@ -8761,20 +8761,20 @@ foreach ($dataArr as $satker_id => $value)
                         <td style=\"text-align: ;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- $value->Uraian</td>
                         <td style=\"text-align: center;\">&nbsp;$value->jml</td>
                         <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->AkumulasiPenyusutan,2,",",".")."</td>
-                        <td style=\"text-align: right;\">".number_format($value->Nilai,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->AP,2,",",".")."</td>
+                        <td style=\"text-align: right;\">".number_format($value->NB,2,",",".")."</td>
                       </tr>";
                             	
                 $total += ($value->jml);
                 $total_perolehan += ($value->Nilai);
 				$total_kel += ($value->jml);
-                $total_akm+=$value->AkumulasiPenyusutan;
+                $total_akm+=$value->AP;
                 //$total_nb +=$value->NilaiBuku;
-                $total_nb +=$value->Nilai;
+                $total_nb +=$value->NB;
                 $total_perolehan_kel += ($value->Nilai);
-                $total_akm_kel+=$value->AkumulasiPenyusutan;
+                $total_akm_kel+=$value->AP;
                 //$total_nb_kel +=$value->NilaiBuku;
-                $total_nb_kel +=$value->Nilai;
+                $total_nb_kel +=$value->NB;
 				// $tot_perkel=
         }
 		$html .="<tr>
@@ -41864,7 +41864,7 @@ return $hasil_html;
 				}
 				$jml=$value->jml;
 				
-				if($gol == '02' || $gol == '03' || $gol == '04'){
+				//if($gol == '02' || $gol == '03' || $gol == '04'){
 					if($value->NilaiPP == NULL || $value->NilaiPP == ''){
 						$NilaiPP=0;
 					}else{
@@ -41882,7 +41882,7 @@ return $hasil_html;
 					}else{
 						$NilaiBuku=$value->NilaiBuku;
 					}
-				}
+				//}
 				$jmlFix += $jml;
 				$NilaiFix += $Nilai;
 				$NilaiPPFix += $NilaiPP;
@@ -41894,11 +41894,12 @@ return $hasil_html;
 		// echo "NilaiFix =".$NilaiFix;
 		// echo "<br>";
 		// echo "jmlFix =".$jmlFix;
-		if($gol == '02' || $gol == '03' || $gol == '04'){
+		//if($gol == '02' || $gol == '03' || $gol == '04'){
 			return array($NilaiFix,$jmlFix,$NilaiPPFix,$NilaiAPFix,$NilaiBukuFix);
-		}else{
+		/*}else{
 			return array($NilaiFix,$jmlFix);
-		}
+			//return array($NilaiFix,$jmlFix,,$NilaiPPFix,$NilaiAPFix,$NilaiBukuFix);
+		}*/
 	
 	
 	}
