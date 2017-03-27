@@ -221,7 +221,7 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 							</li>
 							<li>
 								<span class="span2">Info</span>
-								<textarea name="Info" class="span3 kapitalisasi" readonly><?=$dataArr['aset']['Info']?></textarea>
+								<textarea name="Info" class="span3 kapitalisasi" ><?=$dataArr['aset']['Info']?></textarea>
 							</li>
 						</ul>
 							
