@@ -58,11 +58,11 @@ try {
 	$hitung = count($POST_data);
 	for($i = 0; $i < $hitung; $i++){
 		$Aset_ID = $POST_data[$i];
-		$queryTipeAset = "SELECT TipeAset FROM aset WHERE Aset_ID = '$Aset_ID'";
+		$queryTipeAset = "SELECT TipeAset,kodeKelompok FROM aset WHERE Aset_ID = '$Aset_ID'";
 		$exequeryTipeAset = $DBVAR->query($queryTipeAset);
 		$resultqueryTipeAset = $DBVAR->fetch_array($exequeryTipeAset);
 		
-		if($resultqueryTipeAset['TipeAset'] == 'A'){
+		/*if($resultqueryTipeAset['TipeAset'] == 'A'){
 			$tableKib = 'tanah';
 			$tableLog = 'log_tanah';
 		}elseif($resultqueryTipeAset['TipeAset'] == 'B'){
@@ -78,6 +78,28 @@ try {
 			$tableKib = 'asetlain';
 			$tableLog = 'log_asetlain';
 		}elseif($resultqueryTipeAset['TipeAset'] == 'F'){
+			$tableKib = 'kdp';
+			$tableLog = 'log_kdp';
+		}*/
+		
+		//revisi
+		$tipe = explode('.', $resultqueryTipeAset['kodeKelompok']);
+		if($tipe['0'] == '01'){
+			$tableKib = 'tanah';
+			$tableLog = 'log_tanah';
+		}elseif($tipe['0'] == '02'){
+			$tableKib = 'mesin';
+			$tableLog = 'log_mesin';
+		}elseif($tipe['0'] == '03'){
+			$tableKib = 'bangunan';
+			$tableLog = 'log_bangunan';
+		}elseif($tipe['0'] == '04'){
+			$tableKib = 'jaringan';
+			$tableLog = 'log_jaringan';
+		}elseif($tipe['0'] == '05'){
+			$tableKib = 'asetlain';
+			$tableLog = 'log_asetlain';
+		}elseif($tipe['0'] == '06'){
 			$tableKib = 'kdp';
 			$tableLog = 'log_kdp';
 		}
