@@ -181,7 +181,25 @@ elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != ''
 elseif($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $reg_aw  != '' AND $reg_ak  != '' AND $kd_ruangan == '' AND $kodeLokasi !=''){
 	
 	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%'";
-	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
+	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)	
+}
+//revisi
+elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $kd_ruangan == '' AND $kodeLokasi !='') {
+	# code...
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%'";
+	
+}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $kd_ruangan == '' AND $kodeLokasi !='') {
+	# code...
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%'";
+	
+}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $kd_ruangan != '' AND $kodeLokasi !='') {
+	# code...
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND kodeRuangan ='$kd_ruangan' AND a.kodeLokasi LIKE '$kodeLokasi%'";
+	
+}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $kd_ruangan != '' AND $kodeLokasi !='') {
+	# code...
+	$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND kodeRuangan ='$kd_ruangan' AND a.kodeLokasi LIKE '$kodeLokasi%'";
+	
 }
 
 if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
@@ -204,6 +222,24 @@ if (isset($_GET['sSearch']) && $_GET['sSearch'] != "") {
 		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%'AND a.noRegister BETWEEN '$reg_aw' AND '$reg_ak' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan))  AND a.kodeLokasi LIKE '$kodeLokasi%' AND (";
 
 	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
+	}
+	//revisi
+	elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $kd_ruangan == '' AND $kodeLokasi !='') {
+		# code...
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%' AND (";
+		
+	}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $kd_ruangan == '' AND $kodeLokasi !='') {
+		# code...
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%' AND (";
+		
+	}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $kd_ruangan != '' AND $kodeLokasi !='') {
+		# code...
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND kodeRuangan ='$kd_ruangan' AND a.kodeLokasi LIKE '$kodeLokasi%' AND (";
+		
+	}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $kd_ruangan != '' AND $kodeLokasi !='') {
+		# code...
+		$sWhere=" WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND kodeRuangan ='$kd_ruangan' AND a.kodeLokasi LIKE '$kodeLokasi%' AND (";
+		
 	}
 	 
      // $sWhere.="(";
@@ -245,7 +281,7 @@ $sQuery = "
 		FROM   $sTable 
 		INNER JOIN $sTable_inner_join_kelompok ON $cond_kelompok
 		INNER JOIN $sTable_inner_join_kib ON $cond_kib
-		$sWhere
+		$sWhere	
 		$sOrder
 		$sLimit
 		";
@@ -308,6 +344,37 @@ if($satker != '' AND $tahun_aw != '' AND $tahun_ak != ''  AND $tipeAset != '' AN
 		AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%'";
 		
 	//or a.kodeRuangan NOT in (1,2,3,4,5,6,7,8,9,10,11,12,13)
+}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $kd_ruangan == '' AND $kodeLokasi !='') {
+	# code...
+	$sQuery = "
+		SELECT COUNT(" . $sIndexColumn . ")
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%'";
+
+	
+}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $kd_ruangan == '' AND $kodeLokasi !='') {
+	# code...
+	$sQuery = "
+		SELECT COUNT(" . $sIndexColumn . ")
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND (a.kodeRuangan='' or a.kodeRuangan=0 or a.kodeRuangan is null or a.kodeRuangan NOT in ($listRuangan)) AND a.kodeLokasi LIKE '$kodeLokasi%'";
+	
+	
+	
+}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok == '' AND $kd_ruangan != '' AND $kodeLokasi !='') {
+	# code...
+	$sQuery = "
+		SELECT COUNT(" . $sIndexColumn . ")
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok like '$tipe%' AND kodeRuangan ='$kd_ruangan' AND a.kodeLokasi LIKE '$kodeLokasi%'";
+	
+	
+	
+}elseif ($satker != '' AND $tahun_aw != '' AND $tahun_ak != '' AND $tipeAset != '' AND $kodeKelompok != '' AND $kd_ruangan != '' AND $kodeLokasi !='') {
+	# code...
+	$sQuery = "
+		SELECT COUNT(" . $sIndexColumn . ")
+		FROM   $sTable WHERE $status a.Tahun >='$tahun_aw' AND a.Tahun <='$tahun_ak' AND a.kodeSatker='$satker' AND a.kodeKelompok='$kodeKelompok' AND kodeRuangan ='$kd_ruangan' AND a.kodeLokasi LIKE '$kodeLokasi%'";
+
+	
+	
 }
 //echo $sQuery;
 $rResultTotal = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
