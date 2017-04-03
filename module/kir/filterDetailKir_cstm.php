@@ -8,7 +8,7 @@ $SESSION = new Session();
 $menu_id = 59;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-	// pr($_POST);
+	pr($_POST);
 	// $asetList=implode(',',$_POST['id_aset']);
 	include"$path/meta.php";
 	include"$path/header.php";
@@ -103,7 +103,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 			<?php //$_SESSION['ses_filter_ruangan_kir'] = $_POST;?>
 			<input type="hidden" name ="kodeSatker" id="" value="<?=$kodeSatker?>">
 			<input type="hidden" name ="tahunRuangan" id="" value="<?=$tahunRuangan?>">
-			<!--<input type="hidden" name ="kodeRuangan" id="" value="<?//=$kodeRuangan?>">-->
+			<input type="hidden" name ="oldkodeRuangan" id="" value="<?=$kodeRuangan?>">
 			<!--<input type="hidden" name ="asetList" id="" value="<?//=$asetList?>">-->
 			
 			<ul>

@@ -15,6 +15,11 @@ try {
 	$DBVAR->begin();
     $PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
 	// pr($_POST);
+	//add
+	$kdS = $_POST['kodeSatker'];
+	$kdR = $_POST['kodeRuang'];
+	$thn = $_POST['tahunRuangan'];
+
 	$kodeRuangan = $_POST['kodeRuang'];
 	if($kodeRuangan){
 		$kodeRuang = trim($kodeRuangan);
@@ -162,19 +167,32 @@ try {
 	 $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("KIRASET");
 	}
 	// exit;
- 	 echo "<script>
+ 	 /*echo "<script>
 			alert('Data Berhasil Disimpan');
 		</script>";	
-	redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+	redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');*/
+
+	$url = "kdS=".$kdS."&kdR=".$kdR."&thn=".$thn;
+	echo "<script>
+			alert('Data Berhasil Disimpan');
+		</script>";	
+	redirect($url_rewrite.'/module/kir/dftr_ruangan_kir_detail.php?'.$url); 
 } catch (Exception $e) {
     /*// An exception has been thrown
     // We must rollback the transaction
     $db->rollback();*/
     $DBVAR->rollback();
+    
+    $kdS = $_POST['kodeSatker'];
+	$kdR = $_POST['kodeRuang'];
+	$thn = $_POST['tahunRuangan'];
+
+	$url = "kdS=".$kdS."&kdR=".$kdR."&thn=".$thn;
     echo "<script>
 		alert('Data gagal masuk #999. Silahkan coba lagi');
 	</script>";	
-	redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+	//redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php');
+	redirect($url_rewrite.'/module/kir/filter_ruangan_kir.php'.$url);
 	exit();
 }
 ?>

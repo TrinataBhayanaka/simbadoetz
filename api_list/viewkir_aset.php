@@ -19,17 +19,30 @@ $id=$_SESSION['user_id'];//Nanti diganti
 /* Array of database columns which should be read and sent back to DataTables. Use a space where
  * you want to insert a non-database field (for example a counter or static image)
  */
- /*SELECT a.Aset_ID,a.kodeKelompok,a.kodeSatker,a.Tahun,k.Uraian,s.NamaSatker from aset a 
- inner join kelompok as k on k.Kode = a.kodeKelompok 
- inner join satker as s on s.kode = a.kodeSatker 
- where a.tahun = '2014' and a.kodeSatker = '01.01.01.01' and a.kodekelompok like '02%' limit 1 */
- 
+$tahun_aw 		= $_GET['tahun_aw'];
+$tahun_ak 		= $_GET['tahun_ak'];
+$reg_aw 		= $_GET['Reg_aw'];
+$reg_ak 		= $_GET['Reg_ak'];
+$satker 		= $_GET['satker'];
+$kodeKelompok	= $_GET['kodeKelompok'];
+$kodeLokasi		= $_GET['kodeLokasi'];
+$tipeAset		= $_GET['tipeAset'];
+$thnR			= $_GET['thnR'];
+$kd_ruangan		= $_GET['ruangan'];
  // echo "masuk aja dulu";
- // pr($_GET);
+ //pr($_GET);
  // exit;
-$aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.kodeSatker',
-				 'a.kodeLokasi','a.Status_Validasi_Barang','a.NilaiPerolehan','a.noRegister','a.kodeRuangan','a.TipeAset');
-$test = count($aColumns);
+ if($tipeAset == 'mesin'){
+ 	$aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.kodeSatker',
+				 'a.NilaiPerolehan','a.noRegister','kib.Merk','a.kodeLokasi',
+				 'a.kodeRuangan','a.TipeAset','a.Status_Validasi_Barang',);
+ 	
+ }else{
+	$aColumns = array('a.Aset_ID','a.kodeKelompok','k.Uraian','a.Tahun','a.kodeSatker',
+				 'a.kodeLokasi','a.NilaiPerolehan','a.noRegister','a.kodeRuangan','a.TipeAset','a.Status_Validasi_Barang');
+
+ }
+//$test = count($aColumns);
   
 // echo $aColumns; 
 /* Indexed column (used for fast and accurate table cardinality) */
@@ -42,16 +55,7 @@ $cond_kelompok ="k.Kode = a.kodeKelompok ";
 //$status = "a.StatusValidasi = 1 AND a.Status_Validasi_Barang = 1 AND";
 $status = "a.Status_Validasi_Barang = 1 AND";
 //variabel ajax
-$tahun_aw 		= $_GET['tahun_aw'];
-$tahun_ak 		= $_GET['tahun_ak'];
-$reg_aw 		= $_GET['Reg_aw'];
-$reg_ak 		= $_GET['Reg_ak'];
-$satker 		= $_GET['satker'];
-$kodeKelompok	= $_GET['kodeKelompok'];
-$kodeLokasi		= $_GET['kodeLokasi'];
-$tipeAset		= $_GET['tipeAset'];
-$thnR			= $_GET['thnR'];
-$kd_ruangan		= $_GET['ruangan'];
+
 // pr($_GET);
 
 if($tipeAset == 'tanah'){
