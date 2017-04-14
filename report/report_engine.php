@@ -573,6 +573,9 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 						<td style=\" width: 30px;text-align:center ; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">No<br>Urut</td>
 						<td style=\"width: 150px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Jenis Barang / <br>Nama Barang</td>
 						<td style=\"text-align: center; font-weight: bold; width: 145px;\"colspan=\"2\" rowspan=\"1\">Nomor</td>
+						
+						<td style=\"width: 70px; text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Tahun<br>Perolehan</td>
+						
 						<td style=\"width: 70px; text-align: center; font-weight: bold;\" colspan=\"1\" rowspan=\"2\">Kondisi<br>Bangunan<br>(B,KB,RB)</td>
 						<td style=\"text-align: center; font-weight: bold;\"colspan=\"2\" rowspan=\"1\">Konstruksi<br>Bangunan</td>
 						<td style=\"width: 50px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Luas<br>Lantai <br>(m2)</td>
@@ -608,7 +611,7 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 					  <td style=\"text-align: center; font-weight: bold; width: 80px;\">3</td>
 					  <td style=\"text-align: center; font-weight: bold; width: 65px;\">4</td>
 					  <td style=\"width: 70px; text-align: center; font-weight: bold;\">5</td>
-					  <td style=\"text-align: center; font-weight: bold;\">6</td>
+					  <td style=\"width: 70px; text-align: center; font-weight: bold;\">6</td>
 					  <td style=\"text-align: center; font-weight: bold;\">7</td>
 					  <td style=\"text-align: center; font-weight: bold;\">8</td>
 					  <td style=\"text-align: center; font-weight: bold;\">9</td>
@@ -626,6 +629,7 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 					  <td style=\"text-align: center; font-weight: bold;\">21</td>
 					  <td style=\"text-align: center; font-weight: bold;\">22</td>
 					  <td style=\"text-align: center; font-weight: bold;\">23</td>
+					  <td style=\"text-align: center; font-weight: bold;\">24</td>
 				   	</tr>
 			  		</thead>";
 		$no = 1;
@@ -648,7 +652,7 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 		foreach ($dataArr as $satker_id => $value){
 			$NamaSatker = $this->get_NamaSatker($satker_id);
 			$html.= "<tr>
-					<td colspan =\"23\" style=\"text-align: left; font-weight: bold;\">$NamaSatker </td>
+					<td colspan =\"24\" style=\"text-align: left; font-weight: bold;\">$NamaSatker </td>
 				</tr>";
 			
 			$perolehanTotal = 0;
@@ -732,6 +736,7 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 							<td style=\"width: 150px\">$row->Uraian</td>
 							<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
 							<td style=\"width: 65px; text-align: center;\">$noReg</td>
+							<td style=\"width: 70px; text-align: center;\">$row->Tahun</td>
 							<td style=\"width: 70px;\">$ketKondisi</td>
 							<td style=\"width: 67px; text-align: center;\">$bertingkat</td>
 							<td style=\"width: 65px; text-align: center;\">$beton</td>
@@ -760,7 +765,7 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 			$printPPTotal = number_format($PPTotal,2,",",".");
 
 			$html.="<tr>
-						<td style=\"text-align: center;\" colspan=\"15\">SubTotal</td>
+						<td style=\"text-align: center;\" colspan=\"16\">SubTotal</td>
 						<td style=\"text-align: right;\">$printperolehanTotal</td>
 						<td style=\"text-align: right;\">$printAPTotal</td>
 						<td style=\"text-align: right;\">$printNBTotal</td>
@@ -950,6 +955,7 @@ public function retrieve_rekap_jaringan($dataArr,$gambar,$skpd_id,$tglawalperole
 						<td style=\"width: 30px;text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">No<br>Urut<br></td>
 						<td colspan=\"1\" rowspan=\"2\" style=\"text-align: center; font-weight: bold; width: 106px;\">Nama Barang /<br>Jenis Barang</td>
 						<td colspan=\"2\" rowspan=\"1\" style=\" text-align: center; font-weight: bold; width: 130px;\">Nomor</td>
+						<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Tahun<br/>Perolehan</td>
 						<td style=\"text-align: center; font-weight: bold;\"colspan=\"1\" rowspan=\"2\">Konstruksi</td>
 						<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Panjang<br>(km)</td>
 						<td colspan=\"1\" rowspan=\"2\" style=\"width: 50px; text-align: center; font-weight: bold;\">Lebar<br>(m2)</td>
@@ -1001,6 +1007,7 @@ public function retrieve_rekap_jaringan($dataArr,$gambar,$skpd_id,$tglawalperole
 					  <td style=\"text-align: center; font-weight: bold;\">21</td>
 					  <td style=\"text-align: center; font-weight: bold;\">22</td>
 					  <td style=\"text-align: center; font-weight: bold;\">23</td>
+					  <td style=\"text-align: center; font-weight: bold;\">24</td>
 				   	</tr>
 			  		</thead>";
 		$no = 1;
@@ -1110,6 +1117,7 @@ public function retrieve_rekap_jaringan($dataArr,$gambar,$skpd_id,$tglawalperole
 							<td style=\"width: 106px;\">$row->Uraian</td>
 							<td style=\"width: 80px; text-align: center;\">$row->Kode</td>
 							<td style=\"width: 50px; text-align: center;\">$noReg</td>
+							<td style=\"width: 66px;  text-align: center;\">$row->Tahun</td>
 							<td style=\"width: 66px;  \">$row->Konstruksi</td>
 							<td style=\"width: 50px; text-align: right;\">$panjang</td>
 							<td style=\"width: 50px; text-align: right;\">$lebar</td>
