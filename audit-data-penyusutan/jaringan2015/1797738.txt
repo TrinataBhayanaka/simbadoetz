@@ -1,0 +1,93 @@
+/*Aset_ID=1797738*/
+ delete from log_jaringan where log_id=114165;
+
+            delete from log_jaringan where log_id=114164;
+update log_jaringan set NilaiBuku_Awal=806649480.0000,
+                          NilaiBuku='1476443480' where log_id=64586;
+update log_jaringan set NilaiBuku_Awal=1476443480,
+                          NilaiBuku='1696855480' where log_id=64592;
+update log_jaringan set NilaiBuku_Awal=1696855480,
+                          NilaiBuku='2004115480' where log_id=64598;
+update log_jaringan set NilaiBuku_Awal=2004115480,
+                          NilaiBuku='2428642480' where log_id=64599;
+update log_jaringan set NilaiBuku_Awal=2428642480
+                              where log_id=84283;
+update log_jaringan set NilaiBuku_Awal=2428642480,
+                          NilaiBuku='2428642480.0000' where log_id=103260;
+update log_jaringan set log_id=114165 where log_id=106116;
+
+INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
+        `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`,
+            `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`,
+             `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, 
+             `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, `TanggalPemakaian`, `LuasJaringan`,
+             `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,`TahunPenyusutan`,
+             `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
+             `kd_riwayat`,`log_id`,`AkumulasiPenyusutan`,`AkumulasiPenyusutan_Awal`,`NilaiBuku`,
+             `NilaiBuku_Awal`,`UmurEkonomis`,`MasaManfaat`,`TglPerubahan`,`PenyusutanPerTahun`)
+
+select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
+  `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`,`kodeRuangan`, `StatusValidasi`,
+   `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`,`CaraPerolehan`, `Konstruksi`, 
+   `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
+    `TglSertifikat`, `Tanah_ID`,  `KelompokTanah_ID`, `GUID`, `TanggalPemakaian`, `LuasJaringan`,
+    `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,`TahunPenyusutan`,
+     `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
+'55','106116','332491968','332491968.0000','3206557232',
+             '3206557232.0000','9','10','2016-01-02','242864248' from log_jaringan where log_id='103261';
+update log_jaringan set NilaiBuku_Awal=3206557232,
+                          NilaiBuku='3400453232',AkumulasiPenyusutan='332491968',
+                          AkumulasiPenyusutan_Awal='332491968.0000',
+                          umurekonomis='9',MasaManfaat='10',
+                          PenyusutanPerTahun='242864248'
+                          where log_id=114165;
+INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                        `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
+                        `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
+                        `TahunPenyusutan`, `nilai_kapitalisasi`, `prosentase`,
+                         `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,
+                          `kodeKelompokReklasTujuan`,`AkumulasiPenyusutan_Awal`,
+                          `NilaiPerolehan_Awal`,`NilaiBuku_Awal`,`kd_riwayat`,`TglPerubahan`)
+                          select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, 
+                          `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, 
+                          `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+                          `Status_Validasi_Barang`, `StatusTampil`, `Tahun`,
+                           `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`,
+                            `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`,
+                             `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
+                              `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                              `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
+                              `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, 
+                              `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`,
+                               `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
+                               `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
+                               `AkumulasiPenyusutan_Awal`,`NilaiPerolehan_Awal`,`NilaiBuku_Awal`,
+                               '49','2016-12-31' from log_jaringan where log_id=114165;
+INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                        `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
+                        `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
+                        `TahunPenyusutan`, `nilai_kapitalisasi`, `prosentase`,
+                         `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,
+                          `kodeKelompokReklasTujuan`,`AkumulasiPenyusutan_Awal`,
+                          `NilaiPerolehan_Awal`,`NilaiBuku_Awal`,`kd_riwayat`,`TglPerubahan`)
+                          select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, 
+                          `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, 
+                          `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+                          `Status_Validasi_Barang`, `StatusTampil`, `Tahun`,
+                           `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`,
+                            `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`,
+                             `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
+                              `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                              `TanggalPemakaian`, `LuasJaringan`, '10', 
+                              '672537291', '3060407909', '340045323', 
+                              '9', '2016', `nilai_kapitalisasi`,
+                               `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
+                               `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
+                               '332491968',`NilaiPerolehan_Awal`,'3400453232',
+                               '51','2016-12-31' from log_jaringan where log_id=114165;
+update aset set NilaiBuku='3060407909',AkumulasiPenyusutan='672537291',
+                                              PenyusutanPerTaun='340045323',UmurEkonomis='9',
+                                               MasaManfaat='10' where Aset_ID='1797738'; 
+update jaringan set NilaiBuku='3060407909',AkumulasiPenyusutan='672537291',
+                                              PenyusutanPerTahun='340045323',UmurEkonomis='9',
+                                               MasaManfaat='10' where Aset_ID='1797738'; 

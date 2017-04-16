@@ -1,0 +1,1 @@
+UPDATE `log_jaringan` SET `TglPerubahan` = '2015-12-31 00:00:00' WHERE `log_jaringan`.`log_id` = 79850; 

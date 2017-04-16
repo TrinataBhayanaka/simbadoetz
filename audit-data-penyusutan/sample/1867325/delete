@@ -1,0 +1,4 @@
+delete from aset where aset_id=1867325;
+delete from jaringan where aset_id=1867325;
+delete from log_jaringan where aset_id=1867325;
+

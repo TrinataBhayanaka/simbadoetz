@@ -1,0 +1,1 @@
+INSERT INTO `ref_riwayat` (`Kd_Riwayat`, `Nm_Riwayat`) VALUES ('55', 'Koreksi Penyusutan');

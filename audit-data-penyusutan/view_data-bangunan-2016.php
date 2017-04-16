@@ -2,16 +2,19 @@
 error_reporting (0);
 include "../config/config.php";
 
-$text_cari=$_GET['cari'];
-$log_table=$text_cari;
-echo "Cari data Selisih di $log_table<br/>";
 
+$text_cari=$_GET['cari'];
+$log_table="log_bangunan";
+echo "Cari data Selisih di $log_table<br/>";
 /*$query_data = "SELECT aset_id FROM log_jaringan WHERE kd_riwayat=51 AND
                 tglperubahan='2015-12-31 00:00:00' AND kodesatker ='05.01.01.01' AND
                  aset_id IN (SELECT aset_id FROM log_jaringan WHERE kd_riwayat=50 AND 
                  tglperubahan LIKE '2015-01-01%' AND kodesatker ='05.01.01.01' AND NilaiBuku=0)";*/
-$query_data = "SELECT aset_id FROM $log_table WHERE kd_riwayat=51 AND 
-                tglperubahan='2016-12-31 00:00:00'  ";
+$myfile = fopen ("data-selisih-bangunan-2016", "r") or die("Unable to open file!");
+$aset_id_cek = fread ($myfile, filesize ("data-selisih-bangunan-2016"));
+fclose ($myfile);
+$query_data = "SELECT aset_id FROM $log_table WHERE kd_riwayat in(51,50) AND 
+                tglperubahan='2015-12-31 00:00:00' and aset_id in ($aset_id_cek) ";
 
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih="";
@@ -29,7 +32,8 @@ while ($row = $DBVAR->fetch_array ($result)) {
     while ($row_log = $DBVAR->fetch_array ($result_log)) {
         $log_id_start = $row_log[ log_id ];
     }
-
+    if($log_id_start==""||$log_id_start==0)
+        $log_id_start=0;
     $query_jaringan = "select log_id,kodekelompok,kodeSatker,tahun,noregister,kd_riwayat,umurekonomis,MasaManfaat,tglperubahan,NilaiPerolehan,
                     NilaiPerolehan_Awal,(NilaiPerolehan-Nilaiperolehan_awal)as NP,
                     AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,
@@ -38,7 +42,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
                     from $log_table where aset_id=$Aset_ID and log_id>=$log_id_start
                      ";
     $result_jaringan = $DBVAR->query ($query_jaringan) or die($DBVAR->error ());
-    echo "Data Aset==$Aset_ID<br/>";
+    echo "$total == Data Aset==$Aset_ID<br/>";
     echo "<table border='1' style='border: 1px solid black;'>
             <tr>
                 <td>Log_ID</td>
@@ -199,7 +203,7 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3, $persen, $DBVAR)
         } else if($persen > $prosentase1 && $persen <= $prosentase2) {
             echo "1 =3 ";
             $hasil = $penambahan2;
-        } else if($persen < $prosentase1) {
+        } else if($persen <= $prosentase1) {
             echo "1 ";
             $hasil = $penambahan1;
         }
