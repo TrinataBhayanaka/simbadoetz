@@ -1,0 +1,3 @@
+delete from aset where aset_id=202339;
+delete from jaringan where aset_id=202339;
+delete from log_jaringan where aset_id=202339; 
