@@ -1,0 +1,56 @@
+/*Aset_ID=202057*/
+ delete from log_bangunan where log_id=32698;
+
+            delete from log_bangunan where log_id=32697;
+update log_bangunan set NilaiBuku_Awal=889207427.0000,
+                          NilaiBuku='915617427' where log_id=29923;
+INSERT INTO `log_bangunan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                        `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
+                        `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
+                        `TahunPenyusutan`, `nilai_kapitalisasi`, `prosentase`,
+                         `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,
+                          `kodeKelompokReklasTujuan`,`AkumulasiPenyusutan_Awal`,
+                          `NilaiPerolehan_Awal`,`NilaiBuku_Awal`,`kd_riwayat`,`TglPerubahan`)
+                          select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, 
+                          `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, 
+                          `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+                          `Status_Validasi_Barang`, `StatusTampil`, `Tahun`,
+                           `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`,
+                            `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`,
+                             `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
+                              `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                              `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
+                              `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, 
+                              `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`,
+                               `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
+                               `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
+                               `AkumulasiPenyusutan_Awal`,`NilaiPerolehan_Awal`,`NilaiBuku_Awal`,
+                               '49','2016-12-31' from log_bangunan where log_id=29923;
+INSERT INTO `log_bangunan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                        `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
+                        `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
+                        `TahunPenyusutan`, `nilai_kapitalisasi`, `prosentase`,
+                         `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,
+                          `kodeKelompokReklasTujuan`,`AkumulasiPenyusutan_Awal`,
+                          `NilaiPerolehan_Awal`,`NilaiBuku_Awal`,`kd_riwayat`,`TglPerubahan`)
+                          select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, 
+                          `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, 
+                          `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+                          `Status_Validasi_Barang`, `StatusTampil`, `Tahun`,
+                           `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`,
+                            `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`,
+                             `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
+                              `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
+                              `TanggalPemakaian`, `LuasJaringan`, '50', 
+                              '188854062', '896136205', '19481222', 
+                              '46', '2016', `nilai_kapitalisasi`,
+                               `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
+                               `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
+                               '169372840.0000',`NilaiPerolehan_Awal`,'915617427',
+                               '51','2016-12-31' from log_bangunan where log_id=29923;
+update aset set NilaiBuku='896136205',AkumulasiPenyusutan='188854062',
+                                              PenyusutanPerTaun='19481222',UmurEkonomis='46',
+                                               MasaManfaat='50' where Aset_ID='202057'; 
+update jaringan set NilaiBuku='896136205',AkumulasiPenyusutan='188854062',
+                                              PenyusutanPerTahun='19481222',UmurEkonomis='46',
+                                               MasaManfaat='50' where Aset_ID='202057'; 

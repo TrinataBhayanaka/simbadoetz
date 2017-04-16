@@ -1,0 +1,5 @@
+update log_bangunan set TglPerubahan='0000-00-00 00:00:00' where log_id=28224;
+
+update log_bangunan set TglPerubahan='0000-00-00 00:00:00' where log_id=28256;
+update log_bangunan set TglPerubahan='0000-00-00 00:00:00' where log_id=28307;
+update log_bangunan set TglPerubahan='0000-00-00 00:00:00' where log_id=28244;

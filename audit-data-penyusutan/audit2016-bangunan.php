@@ -8,15 +8,15 @@ $log_table = "log_bangunan";
                 tglperubahan='2015-12-31 00:00:00' AND kodesatker ='05.01.01.01' AND
                  aset_id IN (SELECT aset_id FROM log_bangunan WHERE kd_riwayat=50 AND
                  tglperubahan LIKE '2015-01-01%' AND kodesatker ='05.01.01.01' AND NilaiBuku=0)";*/
-$myfile = fopen ("data-selisih-bangunan-2015", "r") or die("Unable to open file!");
-$aset_id_cek = fread ($myfile, filesize ("data-selisih-bangunan-2015"));
+$myfile = fopen ("data-selisih-bangunan-2016", "r") or die("Unable to open file!");
+$aset_id_cek = fread ($myfile, filesize ("data-selisih-bangunan-2016"));
 fclose ($myfile);
 
 //$aset_id_cek = "1797738";
 //$aset_id_cek="202383";
 //$aset_id_cek="1867325";
-//$aset_id_cek="1842396";
-$query_data = "SELECT aset_id FROM `log_bangunan` WHERE kd_riwayat=51 AND tglperubahan='2015-12-31 00:00:00' and aset_id in($aset_id_cek) ";
+//$aset_id_cek="2668813";
+$query_data = "SELECT aset_id FROM `log_bangunan` WHERE kd_riwayat in (50,51) AND tglperubahan='2015-12-31 00:00:00' and aset_id in($aset_id_cek) ";
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih = "";
 $satker = array();
@@ -26,16 +26,16 @@ while ($row = $DBVAR->fetch_array ($result)) {
     $total++;
 
     $Aset_ID = $row[ 'aset_id' ];
-
+    $status_revisi_2015=0;
     //get log_id starting from audit
-    $query_log = "SELECT log_id FROM $log_table WHERE aset_id=$Aset_ID AND kd_riwayat=50
-                     AND TglPerubahan LIKE '2015-01-01%'";
+    $query_log = "SELECT log_id FROM $log_table WHERE aset_id=$Aset_ID AND kd_riwayat in(50,51)
+                     AND TglPerubahan LIKE '2015-12-31%'";
     $result_log = $DBVAR->query ($query_log) or die($DBVAR->error ());
     while ($row_log = $DBVAR->fetch_array ($result_log)) {
         $log_id_start = $row_log[ log_id ];
     }
-     if($log_id_start==""||$log_id_start==0)
-        $log_id_start=0;
+
+
     $query_jaringan = "select log_id,kodekelompok,kodeSatker,tahun,noregister,kd_riwayat,umurekonomis,MasaManfaat,tglperubahan,NilaiPerolehan,
                     NilaiPerolehan_Awal,(NilaiPerolehan-Nilaiperolehan_awal)as NP,
                     AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,
@@ -62,6 +62,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
     while ($row_log = $DBVAR->fetch_array ($result_log)) {
         array_push ($data_log, $row_log);
     }
+   // pr($data_log);
     $panjang = count ($data_log);
     $log_id_penyusutan_2016 = $data_log[ $panjang - 1 ][ log_id ];
     $log_id_49_penyusutan_2016 = $data_log[ $panjang - 2 ][ log_id ];
@@ -228,7 +229,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
                           NilaiBuku='$nb_seharusnya' where log_id=$log_id;";
         }
         else if($kd_riwayat == "49" && $tahun_pelaporan == "2016"){
-            $index=$count;
+            $index=$count-1;
             $umurekonomis=$data[ $index ][ umurekonomis ];
             $MasaManfaat=$data[ $index ][ MasaManfaat ];
             $AkumulasiPenyusutan=$data[ $index ][ AkumulasiPenyusutan ];
@@ -270,7 +271,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
 
 
         }else if(($kd_riwayat=="50"||$kd_riwayat=="51")&& $tahun_pelaporan>2015){
-            $index=$count;
+            $index=$count-1;
             $umurekonomis=$data[ $index ][ umurekonomis ];
             $MasaManfaat=$data[ $index ][ MasaManfaat ];
             $AkumulasiPenyusutan=$data[ $index ][ AkumulasiPenyusutan ];
@@ -459,7 +460,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
                 <td>$selisih_nb_perbaikan</td>
                 <td>$text_status</td>
             </tr>";
-            if($kd_riwayat == "51" && $tahun_pelaporan == "2015") {
+            if($kd_riwayat == "51" && $tahun_pelaporan == "2015" &&$status_revisi_2015==1) {
                 //geser log
                 $query_geser = "";
                 $flag = 1;
@@ -618,7 +619,7 @@ select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
                 //hitung penyusutan
             }
             $data_plain=str_replace("<br/>", "\n", $text_status);
-            logFile($data_plain,"bangunan2015/$Aset_ID.txt");
+            logFile($data_plain,"bangunan2016/$Aset_ID.txt");
             $count++;
         }
 
