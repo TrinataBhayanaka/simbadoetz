@@ -30302,6 +30302,68 @@ foreach ($dataArr as $asetID => $value)
 						$PenyusutanPerTahunFix = number_format($PenyusutanPerTahun,2,",",".");
 						
 						$umurEkonomis = $valRwyt->UmurEkonomis;
+				}//koreksi penyusutan
+				elseif($paramKd_Rwyt == 55){
+						$flag = "";
+						//SALDO AWAL
+						$nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
+						$nilaiAwalPerolehanFix = number_format($nilaiAwalPrlhn,2,",",".");
+						
+						$AkumulasiPenyusutan_Awal = $valRwyt->AkumulasiPenyusutan_Awal;
+						$AkumulasiPenyusutan = $valRwyt->AkumulasiPenyusutan;
+						
+						$selisih=$AkumulasiPenyusutan-$AkumulasiPenyusutan_Awal;
+						$akm_kurang=0;
+						$akm_tambah=0;
+						if($selisih<0){
+							$akm_kurang=abs($selisih);	
+						}else{
+							$akm_tambah=abs($selisih);	
+						}
+						$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan_Awal,2,",",".");
+						$NilaiBuku = $valRwyt->NilaiBuku_Awal;
+						$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
+							
+						/*	if($AkumulasiPenyusutan != 0 && $AkumulasiPenyusutan !=''){
+								$NilaiBuku = $valRwyt->NilaiBuku;
+								$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
+							}else{
+								$NilaiBuku = $valRwyt->NilaiPerolehan_Awal;
+								$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
+							}*/
+						
+						
+						//MUTASI ASET (Bertambah)
+						$nilaiPrlhnMutasiTambah = 0;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						
+						//MUTASI ASET (Berkurang)
+						$nilaiPrlhnMutasiKurang = 0;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
+						//MUTASI PENYUSUTAN (Berkurang)
+						$penyusutanBerkurang = $akm_kurang;
+						$penyusutanBerkurangFix = number_format($penyusutanBerkurang,2,",",".");
+						
+						//MUTASI PENYUSUTAN (Bertambah)
+						$penyusutanBertambah = $akm_tambah;
+						$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
+						
+						//SALDO AKHIR
+						$nilaiPerolehanHasilMutasi = $valRwyt->NilaiPerolehan;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+						
+						$AkumulasiPenyusutanHasilMutasi = $valRwyt->AkumulasiPenyusutan;
+						$AkumulasiPenyusutanHasilMutasiFix = number_format($AkumulasiPenyusutanHasilMutasi,2,",",".");
+						
+						$nilaibukuHasilMutasi = $valRwyt->NilaiBuku;
+						$nilaibukuHasilMutasiFix = number_format($nilaibukuHasilMutasi,2,",",".");
+						
+						//PENYUSUTAN
+						$PenyusutanPerTahun = $valRwyt->PenyusutanPerTahun;
+						$PenyusutanPerTahunFix = number_format($PenyusutanPerTahun,2,",",".");
+						
+						$umurEkonomis = $valRwyt->UmurEkonomis;
 				}
 				//tambahan
 				elseif(($paramKd_Rwyt == 50 ||$paramKd_Rwyt == 51  )&& $status_masuk_penyusutan!=1){
@@ -30468,7 +30530,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 	*/
 	$paramLog = "l.TglPerubahan <='$tglakhirperolehan' 
 			     and (l.TglPerubahan != '0000-00-00 00:00:00' or l.TglPerubahan is null)
-				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29) and l.Kd_Riwayat != 77 
+				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,55) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}'
 				 order by l.Aset_ID ASC";
 					   
