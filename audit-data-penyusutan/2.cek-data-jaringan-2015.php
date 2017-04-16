@@ -11,12 +11,12 @@ $log_table = "log_jaringan";
 $myfile = fopen ("data-selisih-jaringan-2015", "r") or die("Unable to open file!");
 $aset_id_cek = fread ($myfile, filesize ("data-selisih-jaringan-2015"));
 fclose ($myfile);
-///$aset_id_cek = "1797738";
-$aset_id_cek="202339";
-//$aset_id_cek="1867325";
-$query_data = "SELECT aset_id FROM $log_table WHERE kd_riwayat=51 AND 
-                tglperubahan='2015-12-31 00:00:00' and aset_id in ($aset_id_cek) ";
 
+//$aset_id_cek = "1797738";
+//$aset_id_cek="202383";
+//$aset_id_cek="1867325";
+//$aset_id_cek="202379,202339";
+$query_data = "SELECT aset_id FROM `log_jaringan` WHERE kd_riwayat=51 AND tglperubahan='2015-12-31 00:00:00' and aset_id in($aset_id_cek) ";
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih = "";
 $satker = array();
@@ -43,6 +43,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
                      NilaiBuku,NilaiBuku_Awal,(NilaiBuku-NilaiBuku_Awal) as NB,MasaManfaat,umurekonomis 
                     from $log_table where aset_id=$Aset_ID and log_id>=$log_id_start and tglperubahan!='0000-00-00 00:00:00'
                      ";
+    echo "$query_jaringan<br/>";
     $result_jaringan = $DBVAR->query ($query_jaringan) or die($DBVAR->error ());
     echo "$total == Data Aset==$Aset_ID<br/>";
 
@@ -65,7 +66,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
     $log_id_49_penyusutan_2016 = $data_log[ $panjang - 2 ][ log_id ];
     //tahap persiapan
 
-    $delete = "delete from log_jaringan where log_id=$log_id_penyusutan_2016;<br/>
+    $delete = "/*Aset_ID=$Aset_ID*/\n delete from log_jaringan where log_id=$log_id_penyusutan_2016;<br/>
             delete from log_jaringan where log_id=$log_id_49_penyusutan_2016;";
 
     echo "$panjang $delete<br/>";
@@ -102,6 +103,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
             ";
     $status_koreksi_kapitalisasi=0;
     $log_geser=array();
+
     $log_final_2016=0;
     // while ($row_jaringan = $DBVAR->fetch_array ($result_jaringan)) {
     foreach ($data_log as $key => $row_jaringan) {
@@ -190,7 +192,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
             $nb_seharusnya = $NilaiBuku;
             if($status_koreksi_kapitalisasi==0)
                 $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya
-                              where log_id=$log_id";
+                              where log_id=$log_id;";
             else{
                 $index=$count;
                 $umurekonomis=$data[ $index ][ umurekonomis ];
@@ -355,7 +357,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
                                               PenyusutanPerTaun='$PenyusutanPerTahun_hasil',UmurEkonomis='$Sisa_Masa_Manfaat',
                                                MasaManfaat='$MasaManfaat' where Aset_ID='$Aset_ID'; ";
             $nb_seharusnya=$NilaiBuku_hasil;
-            $text_status="$kapitalisasi=$query_penyusutan_2016<br/>$query_aset_2016<br/>$query_jaringan_2016";
+            $text_status="$query_penyusutan_2016<br/>$query_aset_2016<br/>$query_jaringan_2016";
             $data[]= array( "log_id" => $log_id,
                 "kodekelompok" => $kodekelompok,
                 "kodesatker" => $kodeSatker,
@@ -466,7 +468,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
                     $log_id_asal = $data_log[ $j ][ log_id ];
 
                     $data_log[ $j ][ log_id ]=$log_id_tujuan;
-                    pr( $data_log[ $j ]);
+                    //pr( $data_log[ $j ]);
                     if($flag == 1)
                         $id_log_koreksi = "$log_id_asal";
                     $query_geser .= "update log_jaringan set log_id=$log_id_tujuan where log_id=$log_id_asal;<br/>";
@@ -552,7 +554,7 @@ select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
     `TglSertifikat`, `Tanah_ID`,  `KelompokTanah_ID`, `GUID`, `TanggalPemakaian`, `LuasJaringan`,
     `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,`TahunPenyusutan`,
      `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
-'28','$id_log_koreksi','$AkumulasiPenyusutan_hasil','$AkumulasiPenyusutan','$NilaiBuku_hasil',
+'55','$id_log_koreksi','$AkumulasiPenyusutan_hasil','$AkumulasiPenyusutan','$NilaiBuku_hasil',
              '$NilaiBuku','$Sisa_Masa_Manfaat','$MasaManfaat','2016-01-02','$PenyusutanPerTahun_hasil' from log_jaringan where log_id='$log_id';";
                     $text_status="$query_geser<br/>$query_update_koreksi_penyusutan";
                     $kapitalisasi = 0;
@@ -561,7 +563,7 @@ select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
                         "kodesatker" => $kodeSatker,
                         "tahun" => $tahun,
                         "register" => $register,
-                        "kd_riwayat" => 28,
+                        "kd_riwayat" => 55,
                         "umurekonomis" => $Sisa_Masa_Manfaat,
                         "MasaManfaat" => $MasaManfaat,
                         "TglPerubahan" => '2016-01-02',
@@ -614,15 +616,18 @@ select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
                 }
                 //hitung penyusutan
             }
-
+            $data_plain=str_replace("<br/>", "\n", $text_status);
+            logFile($data_plain,"jaringan2015/$Aset_ID.txt");
             $count++;
         }
-
 
     }
     echo "</table>";
     echo "hasil rekonstruksi ====<br/>";
     pr($data);
+    unset($data);
+    $tahun_pelaporan=0;
+    $status_selesai=0;
 }
 echo ($data_selisih);
 echo "<br/> Jumlah Selisih ==$i dari $total. Satker yang terkena: <br/>";
