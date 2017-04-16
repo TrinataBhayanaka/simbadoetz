@@ -15,7 +15,7 @@ fclose ($myfile);
 //$aset_id_cek = "1797738";
 //$aset_id_cek="202383";
 //$aset_id_cek="1867325";
-$aset_id_cek="2668813";
+//$aset_id_cek="2668813";
 $query_data = "SELECT aset_id FROM `log_jaringan` WHERE kd_riwayat in (50,51) AND tglperubahan='2015-12-31 00:00:00' and aset_id in($aset_id_cek) ";
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih = "";
@@ -399,7 +399,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
 
             $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya,
                               NilaiBuku='$nb_seharusnya',
-                              ,AkumulasiPenyusutan='$AkumulasiPenyusutan',
+                              AkumulasiPenyusutan='$AkumulasiPenyusutan',
                           AkumulasiPenyusutan_Awal='$AkumulasiPenyusutan_Awal',
                           umurekonomis='$umurekonomis',MasaManfaat='$MasaManfaat',
                           PenyusutanPerTahun='$PenyusutanPerTahun'
@@ -467,6 +467,9 @@ while ($row = $DBVAR->fetch_array ($result)) {
                 $id_log_koreksi = "";
                 for ($j = $panjang - 3; $j > $count; $j--) {
                     $log_id_tujuan = $data_log[ $panjang - $flag ][ log_id ];
+                     if($j==$count &&$flag==1)
+                    $log_id_asal = $data_log[ $j+1 ][ log_id ];
+                        else
                     $log_id_asal = $data_log[ $j ][ log_id ];
 
                     $data_log[ $j ][ log_id ]=$log_id_tujuan;

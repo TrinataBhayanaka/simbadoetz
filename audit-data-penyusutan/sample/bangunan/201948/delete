@@ -1,0 +1,5 @@
+delete from aset where aset_id=201948;
+delete from bangunan where aset_id=201948;
+delete from log_bangunan where aset_id=201948;
+
+

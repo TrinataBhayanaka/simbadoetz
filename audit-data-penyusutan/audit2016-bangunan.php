@@ -245,26 +245,25 @@ while ($row = $DBVAR->fetch_array ($result)) {
             //pr($log_geser);
 
 
-            $query_49_kapitalisasi_2016="INSERT INTO `log_bangunan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
-                        `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
-                        `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
-                        `TahunPenyusutan`, `nilai_kapitalisasi`, `prosentase`,
-                         `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,
-                          `kodeKelompokReklasTujuan`,`AkumulasiPenyusutan_Awal`,
+            $query_49_kapitalisasi_2016="INSERT INTO `log_bangunan` (`Bangunan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`,
+`TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`,
+ `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, 
+ `TglPakai`, `Konstruksi`, `Beton`, `JumlahLantai`, `LuasLantai`, `Dinding`, `Lantai`, `LangitLangit`,
+  `Atap`, `NoSurat`, `TglSurat`, `NoIMB`, `TglIMB`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, 
+  `Tanah_ID`, `Tmp_Tingkat`, `Tmp_Beton`, `Tmp_Luas`, `KelompokTanah_ID`, `GUID`, `TglPembangunan`,
+  `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, `TahunPenyusutan`,
+   `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`,
+    `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,`AkumulasiPenyusutan_Awal`,
                           `NilaiPerolehan_Awal`,`NilaiBuku_Awal`,`kd_riwayat`,`TglPerubahan`)
-                          select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, 
-                          `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, 
-                          `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
-                          `Status_Validasi_Barang`, `StatusTampil`, `Tahun`,
-                           `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`,
-                            `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`,
-                             `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
-                              `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
-                              `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
-                              `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, 
-                              `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`,
-                               `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
-                               `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
+                          select `Bangunan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`,
+`TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`,
+ `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, 
+ `TglPakai`, `Konstruksi`, `Beton`, `JumlahLantai`, `LuasLantai`, `Dinding`, `Lantai`, `LangitLangit`,
+  `Atap`, `NoSurat`, `TglSurat`, `NoIMB`, `TglIMB`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, 
+  `Tanah_ID`, `Tmp_Tingkat`, `Tmp_Beton`, `Tmp_Luas`, `KelompokTanah_ID`, `GUID`, `TglPembangunan`,
+  `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, `TahunPenyusutan`,
+   `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`,
+    `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
                                `AkumulasiPenyusutan_Awal`,`NilaiPerolehan_Awal`,`NilaiBuku_Awal`,
                                '49','2016-12-31' from log_bangunan where log_id=$log_id;";
             $text_status="$query_49_kapitalisasi_2016";
@@ -330,28 +329,32 @@ while ($row = $DBVAR->fetch_array ($result)) {
             if($status_koreksi_kapitalisasi==1)
                 $log_id=$log_geser[$log_sblm];
 
-            $query_penyusutan_2016="INSERT INTO `log_bangunan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
-                        `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
-                        `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
-                        `TahunPenyusutan`, `nilai_kapitalisasi`, `prosentase`,
-                         `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,
-                          `kodeKelompokReklasTujuan`,`AkumulasiPenyusutan_Awal`,
+            $query_penyusutan_2016="INSERT INTO `log_bangunan`(`Bangunan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`,
+`TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`,
+ `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, 
+ `TglPakai`, `Konstruksi`, `Beton`, `JumlahLantai`, `LuasLantai`, `Dinding`, `Lantai`, `LangitLangit`,
+  `Atap`, `NoSurat`, `TglSurat`, `NoIMB`, `TglIMB`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, 
+  `Tanah_ID`, `Tmp_Tingkat`, `Tmp_Beton`, `Tmp_Luas`, `KelompokTanah_ID`, `GUID`, `TglPembangunan`,
+  `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, `TahunPenyusutan`,
+   `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`,
+    `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
+
+                          `AkumulasiPenyusutan_Awal`,
                           `NilaiPerolehan_Awal`,`NilaiBuku_Awal`,`kd_riwayat`,`TglPerubahan`)
-                          select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, 
-                          `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, 
-                          `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
-                          `Status_Validasi_Barang`, `StatusTampil`, `Tahun`,
-                           `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`,
-                            `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`,
-                             `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
-                              `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
-                              `TanggalPemakaian`, `LuasJaringan`, '$MasaManfaat', 
-                              '$AkumulasiPenyusutan_hasil', '$NilaiBuku_hasil', '$PenyusutanPerTahun_hasil', 
-                              '$Sisa_Masa_Manfaat', '$tahun_pelaporan', `nilai_kapitalisasi`,
-                               `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
-                               `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
-                               '$AkumulasiPenyusutan',`NilaiPerolehan_Awal`,'$nb_awal_seharusnya',
-                               '$riwayat','2016-12-31' from log_bangunan where log_id=$log_final_2016;";
+                          select `Bangunan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`,
+`TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`,
+ `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, 
+ `TglPakai`, `Konstruksi`, `Beton`, `JumlahLantai`, `LuasLantai`, `Dinding`, `Lantai`, `LangitLangit`,
+  `Atap`, `NoSurat`, `TglSurat`, `NoIMB`, `TglIMB`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, 
+  `Tanah_ID`, `Tmp_Tingkat`, `Tmp_Beton`, `Tmp_Luas`, `KelompokTanah_ID`, `GUID`, `TglPembangunan`,
+  '$MasaManfaat', '$AkumulasiPenyusutan_hasil', '$NilaiBuku_hasil', '$PenyusutanPerTahun_hasil',  '$Sisa_Masa_Manfaat', '$tahun_pelaporan',
+   `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`,
+    `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
+'$AkumulasiPenyusutan',`NilaiPerolehan_Awal`,'$nb_awal_seharusnya',
+                               '$riwayat','2016-12-31' from log_bangunan where log_id=$log_final_2016;
+
+
+                       ";
             $query_jaringan_2016="update jaringan set NilaiBuku='$NilaiBuku_hasil',AkumulasiPenyusutan='$AkumulasiPenyusutan_hasil',
                                               PenyusutanPerTahun='$PenyusutanPerTahun_hasil',UmurEkonomis='$Sisa_Masa_Manfaat',
                                                MasaManfaat='$MasaManfaat' where Aset_ID='$Aset_ID'; ";
@@ -399,7 +402,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
 
             $text_status = "update log_bangunan set NilaiBuku_Awal=$nb_awal_seharusnya,
                               NilaiBuku='$nb_seharusnya',
-                              ,AkumulasiPenyusutan='$AkumulasiPenyusutan',
+                              AkumulasiPenyusutan='$AkumulasiPenyusutan',
                           AkumulasiPenyusutan_Awal='$AkumulasiPenyusutan_Awal',
                           umurekonomis='$umurekonomis',MasaManfaat='$MasaManfaat',
                           PenyusutanPerTahun='$PenyusutanPerTahun'
@@ -465,8 +468,11 @@ while ($row = $DBVAR->fetch_array ($result)) {
                 $query_geser = "";
                 $flag = 1;
                 $id_log_koreksi = "";
-                for ($j = $panjang - 3; $j > $count; $j--) {
+                for ($j = $panjang - 3; $j >= $count; $j--) {
                     $log_id_tujuan = $data_log[ $panjang - $flag ][ log_id ];
+                    if($j==$count &&$flag==1)
+                    $log_id_asal = $data_log[ $j+1 ][ log_id ];
+                        else
                     $log_id_asal = $data_log[ $j ][ log_id ];
 
                     $data_log[ $j ][ log_id ]=$log_id_tujuan;
@@ -539,25 +545,34 @@ while ($row = $DBVAR->fetch_array ($result)) {
             </tr>";
 
 
-                    $query_update_koreksi_penyusutan = "INSERT INTO `log_bangunan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
-        `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`,
-            `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`,
-             `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, 
-             `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, `TanggalPemakaian`, `LuasJaringan`,
-             `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,`TahunPenyusutan`,
-             `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
+                    $query_update_koreksi_penyusutan = "INSERT INTO `log_bangunan`
+(`Bangunan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`,
+`TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`,
+ `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, 
+ `TglPakai`, `Konstruksi`, `Beton`, `JumlahLantai`, `LuasLantai`, `Dinding`, `Lantai`, `LangitLangit`,
+  `Atap`, `NoSurat`, `TglSurat`, `NoIMB`, `TglIMB`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, 
+  `Tanah_ID`, `Tmp_Tingkat`, `Tmp_Beton`, `Tmp_Luas`, `KelompokTanah_ID`, `GUID`, `TglPembangunan`,
+   `TahunPenyusutan`,
+   `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`,
+    `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
              `kd_riwayat`,`log_id`,`AkumulasiPenyusutan`,`AkumulasiPenyusutan_Awal`,`NilaiBuku`,
              `NilaiBuku_Awal`,`UmurEkonomis`,`MasaManfaat`,`TglPerubahan`,`PenyusutanPerTahun`)
 
-select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
-  `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`,`kodeRuangan`, `StatusValidasi`,
-   `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`,`CaraPerolehan`, `Konstruksi`, 
-   `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
-    `TglSertifikat`, `Tanah_ID`,  `KelompokTanah_ID`, `GUID`, `TanggalPemakaian`, `LuasJaringan`,
-    `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,`TahunPenyusutan`,
-     `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
+                
+
+select `Bangunan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`,
+`TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`,
+ `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, 
+ `TglPakai`, `Konstruksi`, `Beton`, `JumlahLantai`, `LuasLantai`, `Dinding`, `Lantai`, `LangitLangit`,
+  `Atap`, `NoSurat`, `TglSurat`, `NoIMB`, `TglIMB`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, 
+  `Tanah_ID`, `Tmp_Tingkat`, `Tmp_Beton`, `Tmp_Luas`, `KelompokTanah_ID`, `GUID`, `TglPembangunan`,
+   `TahunPenyusutan`,
+   `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`,
+    `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
 '55','$id_log_koreksi','$AkumulasiPenyusutan_hasil','$AkumulasiPenyusutan','$NilaiBuku_hasil',
              '$NilaiBuku','$Sisa_Masa_Manfaat','$MasaManfaat','2016-01-02','$PenyusutanPerTahun_hasil' from log_bangunan where log_id='$log_id';";
+
+
                     $text_status="$query_geser<br/>$query_update_koreksi_penyusutan";
                     $kapitalisasi = 0;
                     $data[]= array( "log_id" => $log_id,

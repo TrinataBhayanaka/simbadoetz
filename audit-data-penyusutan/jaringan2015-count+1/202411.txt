@@ -1,9 +1,46 @@
- delete from log_jaringan where log_id=114181;
-delete from log_jaringan where log_id=114180;
-update log_jaringan set NilaiBuku_Awal=182102400.0000,
-                          NilaiBuku='723513400' where log_id=106141;
-update log_jaringan set NilaiBuku_Awal=723513400,
-                          NilaiBuku='1054858400' where log_id=106144;
+/*Aset_ID=202411*/
+ delete from log_jaringan where log_id=113173;
+
+            delete from log_jaringan where log_id=113172;
+update log_jaringan set NilaiBuku_Awal=0.0000,
+                          NilaiBuku='1423261200' where log_id=64588;
+update log_jaringan set NilaiBuku_Awal=0.0000,
+                          NilaiBuku='1423261200' where log_id=102264;
+update log_jaringan set log_id=113173 where log_id=105922;
+update log_jaringan set log_id=113172 where log_id=105901;
+update log_jaringan set log_id=113173 where log_id=102265;
+
+INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
+        `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`,
+            `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`,
+             `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, 
+             `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, `TanggalPemakaian`, `LuasJaringan`,
+             `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,`TahunPenyusutan`,
+             `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
+             `kd_riwayat`,`log_id`,`AkumulasiPenyusutan`,`AkumulasiPenyusutan_Awal`,`NilaiBuku`,
+             `NilaiBuku_Awal`,`UmurEkonomis`,`MasaManfaat`,`TglPerubahan`,`PenyusutanPerTahun`)
+
+select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
+  `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`,`kodeRuangan`, `StatusValidasi`,
+   `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`,`CaraPerolehan`, `Konstruksi`, 
+   `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
+    `TglSertifikat`, `Tanah_ID`,  `KelompokTanah_ID`, `GUID`, `TanggalPemakaian`, `LuasJaringan`,
+    `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, `kodeKelompokReklasAsal`,`TahunPenyusutan`,
+     `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
+'55','105922','4703473522.4','4845799642.4000','1280935080',
+             '1138608960.0000','9','10','2016-01-02','142326120' from log_jaringan where log_id='102265';
+update log_jaringan set NilaiBuku_Awal=1280935080,
+                          NilaiBuku='3185044080',AkumulasiPenyusutan='4703473522.4',
+                          AkumulasiPenyusutan_Awal='4845799642.4000',
+                          umurekonomis='9',MasaManfaat='10',
+                          PenyusutanPerTahun='142326120'
+                          where log_id=113172;
+update log_jaringan set NilaiBuku_Awal=3185044080,
+                          NilaiBuku='5615213080',AkumulasiPenyusutan='4703473522.4',
+                          AkumulasiPenyusutan_Awal='4845799642.4000',
+                          umurekonomis='9',MasaManfaat='10',
+                          PenyusutanPerTahun='142326120'
+                          where log_id=113173;
 INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
                         `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
                         `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
@@ -25,7 +62,7 @@ INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker
                                `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
                                `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
                                `AkumulasiPenyusutan_Awal`,`NilaiPerolehan_Awal`,`NilaiBuku_Awal`,
-                               '49','2016-12-31' from log_jaringan where log_id=106144;
+                               '49','2016-12-31' from log_jaringan where log_id=113173;
 INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, `Status_Validasi_Barang`, `StatusTampil`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, `kondisi`, `CaraPerolehan`, `Konstruksi`, `Panjang`, `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`, `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
                         `TanggalPemakaian`, `LuasJaringan`, `MasaManfaat`, 
                         `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`, `UmurEkonomis`, 
@@ -42,15 +79,15 @@ INSERT INTO `log_jaringan`(`Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker
                              `Lebar`, `NoDokumen`, `TglDokumen`, `StatusTanah`, `NoSertifikat`,
                               `TglSertifikat`, `Tanah_ID`, `KelompokTanah_ID`, `GUID`, 
                               `TanggalPemakaian`, `LuasJaringan`, '10', 
-                              '131018440', '949372560', '105485840', 
+                              '5264994830.4', '5053691772', '561521308', 
                               '9', '2016', `nilai_kapitalisasi`,
                                `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`, 
                                `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,
-                               '25532600.0000',`NilaiPerolehan_Awal`,'1054858400',
-                               '51','2016-12-31' from log_jaringan where log_id=106144;
-update aset set NilaiBuku='949372560',AkumulasiPenyusutan='131018440',
-                                              PenyusutanPerTaun='105485840',UmurEkonomis='9',
-                                               MasaManfaat='10' where Aset_ID='1842396'; 
-update jaringan set NilaiBuku='949372560',AkumulasiPenyusutan='131018440',
-                                              PenyusutanPerTahun='105485840',UmurEkonomis='9',
-                                               MasaManfaat='10' where Aset_ID='1842396'; 
+                               '4703473522.4',`NilaiPerolehan_Awal`,'5615213080',
+                               '51','2016-12-31' from log_jaringan where log_id=113173;
+update aset set NilaiBuku='5053691772',AkumulasiPenyusutan='5264994830.4',
+                                              PenyusutanPerTaun='561521308',UmurEkonomis='9',
+                                               MasaManfaat='10' where Aset_ID='202411'; 
+update jaringan set NilaiBuku='5053691772',AkumulasiPenyusutan='5264994830.4',
+                                              PenyusutanPerTahun='561521308',UmurEkonomis='9',
+                                               MasaManfaat='10' where Aset_ID='202411'; 
