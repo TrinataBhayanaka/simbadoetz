@@ -1,0 +1,2 @@
+select log_id,kd_riwayat,aset_id,tglperubahan,NilaiBuku,NilaiBuku_Awal,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,(akumulasipenyusutan-akumulasipenyusutan_awal)as bp,PenyusutanPerTahun,UmurEkonomis from log_jaringan where kd_riwayat=55
+ORDER BY `aset_id` ASC 

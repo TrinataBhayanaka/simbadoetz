@@ -1,0 +1,6 @@
+203286,203298,203324,203411,203417,203431,203474,203476,203500,203511
+
+
+--
+update log_jaringan set TglPerubahan='0000-00-00' where aset_id in(203286,203298,203324,203411,203417,203431,203474,203476,203500,203511) and Kd_Riwayat=21 ;
+update log_jaringan set PenyusutanPerTahun=(NilaiPerolehan/MasaManfaat) where aset_id in(203286,203298,203324,203411,203417,203431,203474,203476,203500,203511) and Kd_Riwayat=49 and TglPerubahan='2016-12-31';

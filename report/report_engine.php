@@ -30416,7 +30416,9 @@ foreach ($dataArr as $asetID => $value)
 						
 						$AkumulasiPenyusutan_Akhir = $valRwyt->AkumulasiPenyusutan;
 
-						$beban_penyusutan=$valRwyt->PenyusutanPerTahun;
+						$bp=$valRwyt->AkumulasiPenyusutan-$valRwyt->AkumulasiPenyusutan_Awal;
+						//$beban_penyusutan=$valRwyt->PenyusutanPerTahun;
+						$beban_penyusutan=$bp;
 						$beban_penyusutanFix = number_format($beban_penyusutan,2,",",".");
 
 

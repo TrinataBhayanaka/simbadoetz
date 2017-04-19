@@ -461,9 +461,10 @@ while ($row = $DBVAR->fetch_array ($result)) {
             if($kd_riwayat == "51" && $tahun_pelaporan == "2015") {
                 //geser log
                 $query_geser = "";
+                $status_geser=0;
                 $flag = 1;
                 $id_log_koreksi = "";
-                for ($j = $panjang - 3; $j >= $count; $j--) {
+                for ($j = $panjang - 3; $j > $count; $j--) {
                     $log_id_tujuan = $data_log[ $panjang - $flag ][ log_id ];
                      if($j==$count &&$flag==1)
                     $log_id_asal = $data_log[ $j+1 ][ log_id ];
@@ -477,6 +478,13 @@ while ($row = $DBVAR->fetch_array ($result)) {
                     $query_geser .= "update log_jaringan set log_id=$log_id_tujuan where log_id=$log_id_asal;<br/>";
                     $log_geser[$log_id_asal]=$log_id_tujuan;
                     $flag++;
+                    $status_geser=1;
+                }
+                if($status_geser=="0"){
+                    $log_id_tujuan = $data_log[ $panjang - $flag ][ log_id ];
+                     $log_id_asal = $data_log[ $count ][ log_id ];
+                      $log_geser[$log_id_asal]=$log_id_tujuan;
+
                 }
 
                 echo "<tr> 

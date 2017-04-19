@@ -1,0 +1,5 @@
+select l.aset_id,l.kodeSatker,s.NamaSatker,l.kodeKelompok,l.tahun,l.noregister,l.NilaiPerolehan as NilaiPerolehanAwal,l.AkumulasiPenyusutan,l.AkumulasiPenyusutan_Awal,(l.AkumulasiPenyusutan-l.AkumulasiPenyusutan_Awal)as koreksi,l.NilaiBuku_Awal as NilaiBukuSebelum,l.NilaiBuku as NilaiBukuSesudah from log_jaringan l inner join satker s on s.kode=l.kodeSatker and s.Kd_Ruang is null where kd_riwayat in (50,51) and TglPerubahan='2016-12-31' and aset_id in (1842396,2668813);
+
+
+
+select l.aset_id,l.kodeSatker,s.NamaSatker,l.kodeKelompok,l.tahun,l.noregister,l.NilaiPerolehan as NilaiPerolehanAwal,l.AkumulasiPenyusutan,l.AkumulasiPenyusutan_Awal,(l.AkumulasiPenyusutan-l.AkumulasiPenyusutan_Awal)as koreksi,l.NilaiBuku_Awal as NilaiBukuSebelum,l.NilaiBuku as NilaiBukuSesudah from log_bangunan l inner join satker s on s.kode=l.kodeSatker and s.Kd_Ruang is null where kd_riwayat in (50,51) and TglPerubahan='2016-12-31' and aset_id in (200177,202057);

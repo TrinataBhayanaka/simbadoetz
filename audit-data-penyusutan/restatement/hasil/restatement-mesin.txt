@@ -1,0 +1,2296 @@
+/*1 Aset_ID=12666*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='12666';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '11056429.7143', '4422570.2857', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '2', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370386';  
+
+    update aset set NilaiBuku='4422570.2857',PenyusutanPerTaun='2211285.7143',
+    			AkumulasiPenyusutan='11056429.7143',UmurEkonomis='2',
+    			MasaManfaat='7' where aset_id='12666';
+
+
+    			update mesin set NilaiBuku='4422570.2857',PenyusutanPerTahun='2211285.7143',
+    			AkumulasiPenyusutan='11056429.7143',UmurEkonomis='2',
+    			MasaManfaat='7' where aset_id='12666';
+	
+ 
+/*2 Aset_ID=12667*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='12667';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '11056429.7143', '4422570.2857', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '2', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370388';  
+
+    update aset set NilaiBuku='4422570.2857',PenyusutanPerTaun='2211285.7143',
+    			AkumulasiPenyusutan='11056429.7143',UmurEkonomis='2',
+    			MasaManfaat='7' where aset_id='12667';
+
+
+    			update mesin set NilaiBuku='4422570.2857',PenyusutanPerTahun='2211285.7143',
+    			AkumulasiPenyusutan='11056429.7143',UmurEkonomis='2',
+    			MasaManfaat='7' where aset_id='12667';
+	
+ 
+/*3 Aset_ID=12672*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='12672';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '12457000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370390';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='1779571.4286',
+    			AkumulasiPenyusutan='12457000.0000',UmurEkonomis='0',
+    			MasaManfaat='7' where aset_id='12672';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='1779571.4286',
+    			AkumulasiPenyusutan='12457000.0000',UmurEkonomis='0',
+    			MasaManfaat='7' where aset_id='12672';
+	
+ 
+/*4 Aset_ID=12673*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='12673';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '7657143.7143', '5742856.2857', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370392';  
+
+    update aset set NilaiBuku='5742856.2857',PenyusutanPerTaun='1914285.7143',
+    			AkumulasiPenyusutan='7657143.7143',UmurEkonomis='3',
+    			MasaManfaat='7' where aset_id='12673';
+
+
+    			update mesin set NilaiBuku='5742856.2857',PenyusutanPerTahun='1914285.7143',
+    			AkumulasiPenyusutan='7657143.7143',UmurEkonomis='3',
+    			MasaManfaat='7' where aset_id='12673';
+	
+ 
+/*5 Aset_ID=12675*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='12675';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '6604700.7143', '8806266.2857', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '4', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370394';  
+
+    update aset set NilaiBuku='8806266.2857',PenyusutanPerTaun='2201566.7143',
+    			AkumulasiPenyusutan='6604700.7143',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='12675';
+
+
+    			update mesin set NilaiBuku='8806266.2857',PenyusutanPerTahun='2201566.7143',
+    			AkumulasiPenyusutan='6604700.7143',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='12675';
+	
+ 
+/*6 Aset_ID=12676*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='12676';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '6604700.7143', '8806266.2857', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '4', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370396';  
+
+    update aset set NilaiBuku='8806266.2857',PenyusutanPerTaun='2201566.7143',
+    			AkumulasiPenyusutan='6604700.7143',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='12676';
+
+
+    			update mesin set NilaiBuku='8806266.2857',PenyusutanPerTahun='2201566.7143',
+    			AkumulasiPenyusutan='6604700.7143',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='12676';
+	
+ 
+/*7 Aset_ID=12677*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='12677';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '6604700.7143', '8806266.2857', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '4', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370398';  
+
+    update aset set NilaiBuku='8806266.2857',PenyusutanPerTaun='2201566.7143',
+    			AkumulasiPenyusutan='6604700.7143',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='12677';
+
+
+    			update mesin set NilaiBuku='8806266.2857',PenyusutanPerTahun='2201566.7143',
+    			AkumulasiPenyusutan='6604700.7143',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='12677';
+	
+ 
+/*8 Aset_ID=13223*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='13223';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '5618029.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370636';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='1404507.2500',
+    			AkumulasiPenyusutan='5618029.0000',UmurEkonomis='0',
+    			MasaManfaat='4' where aset_id='13223';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='1404507.2500',
+    			AkumulasiPenyusutan='5618029.0000',UmurEkonomis='0',
+    			MasaManfaat='4' where aset_id='13223';
+	
+ 
+/*9 Aset_ID=13224*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='13224';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '5681250', '1893750', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '1', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1370638';  
+
+    update aset set NilaiBuku='1893750',PenyusutanPerTaun='1893750.0000',
+    			AkumulasiPenyusutan='5681250',UmurEkonomis='1',
+    			MasaManfaat='4' where aset_id='13224';
+
+
+    			update mesin set NilaiBuku='1893750',PenyusutanPerTahun='1893750.0000',
+    			AkumulasiPenyusutan='5681250',UmurEkonomis='1',
+    			MasaManfaat='4' where aset_id='13224';
+	
+ 
+/*10 Aset_ID=29177*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='29177';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '114149428.1429', '85612071.8571', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1383404';  
+
+    update aset set NilaiBuku='85612071.8571',PenyusutanPerTaun='28537357.1429',
+    			AkumulasiPenyusutan='114149428.1429',UmurEkonomis='3',
+    			MasaManfaat='7' where aset_id='29177';
+
+
+    			update mesin set NilaiBuku='85612071.8571',PenyusutanPerTahun='28537357.1429',
+    			AkumulasiPenyusutan='114149428.1429',UmurEkonomis='3',
+    			MasaManfaat='7' where aset_id='29177';
+	
+ 
+/*11 Aset_ID=186586*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='186586';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '1600000', '2400000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '6', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1397212';  
+
+    update aset set NilaiBuku='2400000',PenyusutanPerTaun='400000.0000',
+    			AkumulasiPenyusutan='1600000',UmurEkonomis='6',
+    			MasaManfaat='10' where aset_id='186586';
+
+
+    			update mesin set NilaiBuku='2400000',PenyusutanPerTahun='400000.0000',
+    			AkumulasiPenyusutan='1600000',UmurEkonomis='6',
+    			MasaManfaat='10' where aset_id='186586';
+	
+ 
+/*12 Aset_ID=186587*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='186587';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '1600000', '2400000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '6', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1397214';  
+
+    update aset set NilaiBuku='2400000',PenyusutanPerTaun='400000.0000',
+    			AkumulasiPenyusutan='1600000',UmurEkonomis='6',
+    			MasaManfaat='10' where aset_id='186587';
+
+
+    			update mesin set NilaiBuku='2400000',PenyusutanPerTahun='400000.0000',
+    			AkumulasiPenyusutan='1600000',UmurEkonomis='6',
+    			MasaManfaat='10' where aset_id='186587';
+	
+ 
+/*13 Aset_ID=199690*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199690';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '396000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217800';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199690';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199690';
+	
+ 
+/*14 Aset_ID=199691*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199691';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '396000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217802';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199691';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199691';
+	
+ 
+/*15 Aset_ID=199692*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199692';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '396000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217804';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199692';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199692';
+	
+ 
+/*16 Aset_ID=199693*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199693';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '396000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217806';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199693';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199693';
+	
+ 
+/*17 Aset_ID=199694*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199694';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '396000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217808';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199694';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199694';
+	
+ 
+/*18 Aset_ID=199695*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199695';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '396000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217810';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199695';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='79200.0000',
+    			AkumulasiPenyusutan='396000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199695';
+	
+ 
+/*19 Aset_ID=199842*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199842';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217816';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199842';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199842';
+	
+ 
+/*20 Aset_ID=199843*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199843';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217818';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199843';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199843';
+	
+ 
+/*21 Aset_ID=199844*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199844';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217820';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199844';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199844';
+	
+ 
+/*22 Aset_ID=199845*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199845';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217822';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199845';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199845';
+	
+ 
+/*23 Aset_ID=199846*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199846';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217824';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199846';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199846';
+	
+ 
+/*24 Aset_ID=199847*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199847';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217826';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199847';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199847';
+	
+ 
+/*25 Aset_ID=199848*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199848';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217828';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199848';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199848';
+	
+ 
+/*26 Aset_ID=199849*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199849';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217830';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199849';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199849';
+	
+ 
+/*27 Aset_ID=199850*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199850';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217832';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199850';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199850';
+	
+ 
+/*28 Aset_ID=199851*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199851';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217834';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199851';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199851';
+	
+ 
+/*29 Aset_ID=199852*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199852';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217836';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199852';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199852';
+	
+ 
+/*30 Aset_ID=199853*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199853';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217838';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199853';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199853';
+	
+ 
+/*31 Aset_ID=199854*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199854';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217840';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199854';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199854';
+	
+ 
+/*32 Aset_ID=199855*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199855';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217842';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199855';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199855';
+	
+ 
+/*33 Aset_ID=199856*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199856';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217844';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199856';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199856';
+	
+ 
+/*34 Aset_ID=199857*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199857';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217846';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199857';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199857';
+	
+ 
+/*35 Aset_ID=199858*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199858';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217848';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199858';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199858';
+	
+ 
+/*36 Aset_ID=199859*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199859';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217850';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199859';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199859';
+	
+ 
+/*37 Aset_ID=199860*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199860';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217852';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199860';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199860';
+	
+ 
+/*38 Aset_ID=199861*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199861';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217854';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199861';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199861';
+	
+ 
+/*39 Aset_ID=199862*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199862';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217856';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199862';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199862';
+	
+ 
+/*40 Aset_ID=199863*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199863';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217858';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199863';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199863';
+	
+ 
+/*41 Aset_ID=199864*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199864';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217860';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199864';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199864';
+	
+ 
+/*42 Aset_ID=199865*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199865';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '358000.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217862';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199865';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='71600.0000',
+    			AkumulasiPenyusutan='358000.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199865';
+	
+ 
+/*43 Aset_ID=199886*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='199886';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '745250.0000', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '0', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1217868';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='149050.0000',
+    			AkumulasiPenyusutan='745250.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199886';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='149050.0000',
+    			AkumulasiPenyusutan='745250.0000',UmurEkonomis='0',
+    			MasaManfaat='5' where aset_id='199886';
+	
+ 
+/*44 Aset_ID=712909*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='712909';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '6626217', '8834959', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '4', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1236977';  
+
+    update aset set NilaiBuku='8834959',PenyusutanPerTaun='2208739.0000',
+    			AkumulasiPenyusutan='6626217',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='712909';
+
+
+    			update mesin set NilaiBuku='8834959',PenyusutanPerTahun='2208739.0000',
+    			AkumulasiPenyusutan='6626217',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='712909';
+	
+ 
+/*45 Aset_ID=720457*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='720457';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '4462500', '1487500', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '1', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1385970';  
+
+    update aset set NilaiBuku='1487500',PenyusutanPerTaun='1487500.0000',
+    			AkumulasiPenyusutan='4462500',UmurEkonomis='1',
+    			MasaManfaat='4' where aset_id='720457';
+
+
+    			update mesin set NilaiBuku='1487500',PenyusutanPerTahun='1487500.0000',
+    			AkumulasiPenyusutan='4462500',UmurEkonomis='1',
+    			MasaManfaat='4' where aset_id='720457';
+	
+ 
+/*46 Aset_ID=1497512*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='1497512';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '6626217.4286', '8834958.5714', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '4', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1386440';  
+
+    update aset set NilaiBuku='8834958.5714',PenyusutanPerTaun='2208739.4286',
+    			AkumulasiPenyusutan='6626217.4286',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='1497512';
+
+
+    			update mesin set NilaiBuku='8834958.5714',PenyusutanPerTahun='2208739.4286',
+    			AkumulasiPenyusutan='6626217.4286',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='1497512';
+	
+ 
+/*47 Aset_ID=1498905*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='1498905';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '6626222.5714', '8834961.4286', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '4', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1386442';  
+
+    update aset set NilaiBuku='8834961.4286',PenyusutanPerTaun='2208740.5714',
+    			AkumulasiPenyusutan='6626222.5714',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='1498905';
+
+
+    			update mesin set NilaiBuku='8834961.4286',PenyusutanPerTahun='2208740.5714',
+    			AkumulasiPenyusutan='6626222.5714',UmurEkonomis='4',
+    			MasaManfaat='7' where aset_id='1498905';
+	
+ 
+/*48 Aset_ID=2542542*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2542542';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '0', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '1', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1638093';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='0.0000',
+    			AkumulasiPenyusutan='0',UmurEkonomis='1',
+    			MasaManfaat='5' where aset_id='2542542';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='0.0000',
+    			AkumulasiPenyusutan='0',UmurEkonomis='1',
+    			MasaManfaat='5' where aset_id='2542542';
+	
+ 
+/*49 Aset_ID=2542543*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2542543';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '0', '0', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '1', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1638095';  
+
+    update aset set NilaiBuku='0',PenyusutanPerTaun='0.0000',
+    			AkumulasiPenyusutan='0',UmurEkonomis='1',
+    			MasaManfaat='5' where aset_id='2542543';
+
+
+    			update mesin set NilaiBuku='0',PenyusutanPerTahun='0.0000',
+    			AkumulasiPenyusutan='0',UmurEkonomis='1',
+    			MasaManfaat='5' where aset_id='2542543';
+	
+ 
+/*50 Aset_ID=2668672*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2668672';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '4482204.1429', '11205510.8571', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '5', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1389040';  
+
+    update aset set NilaiBuku='11205510.8571',PenyusutanPerTaun='2241102.1429',
+    			AkumulasiPenyusutan='4482204.1429',UmurEkonomis='5',
+    			MasaManfaat='7' where aset_id='2668672';
+
+
+    			update mesin set NilaiBuku='11205510.8571',PenyusutanPerTahun='2241102.1429',
+    			AkumulasiPenyusutan='4482204.1429',UmurEkonomis='5',
+    			MasaManfaat='7' where aset_id='2668672';
+	
+ 
+/*51 Aset_ID=2768038*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2768038';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '1260000', '1890000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1389502';  
+
+    update aset set NilaiBuku='1890000',PenyusutanPerTaun='630000.0000',
+    			AkumulasiPenyusutan='1260000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768038';
+
+
+    			update mesin set NilaiBuku='1890000',PenyusutanPerTahun='630000.0000',
+    			AkumulasiPenyusutan='1260000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768038';
+	
+ 
+/*52 Aset_ID=2768039*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2768039';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '800000', '1200000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1389504';  
+
+    update aset set NilaiBuku='1200000',PenyusutanPerTaun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768039';
+
+
+    			update mesin set NilaiBuku='1200000',PenyusutanPerTahun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768039';
+	
+ 
+/*53 Aset_ID=2768040*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2768040';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '800000', '1200000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1389506';  
+
+    update aset set NilaiBuku='1200000',PenyusutanPerTaun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768040';
+
+
+    			update mesin set NilaiBuku='1200000',PenyusutanPerTahun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768040';
+	
+ 
+/*54 Aset_ID=2768041*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2768041';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '800000', '1200000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1389508';  
+
+    update aset set NilaiBuku='1200000',PenyusutanPerTaun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768041';
+
+
+    			update mesin set NilaiBuku='1200000',PenyusutanPerTahun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768041';
+	
+ 
+/*55 Aset_ID=2768042*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2768042';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '800000', '1200000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1389510';  
+
+    update aset set NilaiBuku='1200000',PenyusutanPerTaun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768042';
+
+
+    			update mesin set NilaiBuku='1200000',PenyusutanPerTahun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768042';
+	
+ 
+/*56 Aset_ID=2768043*/
+ delete from log_mesin where kd_riwayat=50 AND 
+                tglperubahan='2016-12-31' and aset_id='2768043';
+ INSERT INTO `log_mesin`(`log_id`, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    `TglPerubahan`, `NilaiPerolehan_Awal`, `Kd_Riwayat`, `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, `AkumulasiPenyusutan`, `NilaiBuku`, `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, `UmurEkonomis`, `TahunPenyusutan`, `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus`)
+		    select NULL, `Mesin_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`,
+	 `noRegister`, `TglPerolehan`, `TglPembukuan`, `kodeData`, `kodeKA`, `kodeRuangan`, `StatusValidasi`, 
+	 `Status_Validasi_Barang`, `Tahun`, `NilaiPerolehan`, `Alamat`, `Info`, `AsalUsul`, 
+	 `kondisi`, `CaraPerolehan`, `Merk`, `Model`, `Ukuran`, `Silinder`, `MerkMesin`, 
+	 `JumlahMesin`, `Material`, `NoSeri`, `NoRangka`, `NoMesin`, `NoSTNK`, `TglSTNK`, `NoBPKB`,
+	  `TglBPKB`, `NoDokumen`, `TglDokumen`, `Pabrik`, `TahunBuat`, `BahanBakar`, `NegaraAsal`,
+	   `NegaraRakit`, `Kapasitas`, `Bobot`, `GUID`, `changeDate`, `action`, `operator`,
+	    '2016-12-31', `NilaiPerolehan_Awal`, '50', `No_Dokumen`, `StatusTampil`,
+	     `MasaManfaat`, '800000', '1200000', `PenyusutanPerTahun`,
+	      `AkumulasiPenyusutan_Awal`, `NilaiBuku_Awal`, `PenyusutanPerTahun_Awal`, 
+	      `Aset_ID_Penambahan`, '3', '2016', `nilai_kapitalisasi`, 
+	      `prosentase`, `penambahan_masa_manfaat`, `mutasi_ak_tambah`, `mutasi_ak_kurang`, 
+	      `jenis_belanja`, `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`, `jenis_hapus` from log_mesin 
+		     where log_id='1389512';  
+
+    update aset set NilaiBuku='1200000',PenyusutanPerTaun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768043';
+
+
+    			update mesin set NilaiBuku='1200000',PenyusutanPerTahun='400000.0000',
+    			AkumulasiPenyusutan='800000',UmurEkonomis='3',
+    			MasaManfaat='5' where aset_id='2768043';
+	
+ 

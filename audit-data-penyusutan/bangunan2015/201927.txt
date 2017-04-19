@@ -42,7 +42,7 @@ select `Bangunan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`, `kodeLokasi`, `no
    `nilai_kapitalisasi`, `prosentase`, `penambahan_masa_manfaat`, `jenis_belanja`,
     `kodeKelompokReklasAsal`, `kodeKelompokReklasTujuan`,`NilaiPerolehan_Awal`,
 '55','32485','294755825.4','294755825.4000','341875164.6',
-             '341875164.6000','49','50','2016-01-02','6977044' from log_bangunan where log_id='28512';
+             '341875164.6000','49','50','2016-01-02','6977044' from log_bangunan where log_id='32505';
 update log_bangunan set NilaiBuku_Awal=341875164.6,
                           NilaiBuku='354162164.6',AkumulasiPenyusutan='294755825.4',
                           AkumulasiPenyusutan_Awal='294755825.4000',

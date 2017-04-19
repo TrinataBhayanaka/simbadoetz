@@ -1,0 +1,16 @@
+Tahapan perbaiakan log penyusutan:
+1. Update data dengan menggunakan script yang telah di buat pada folder audit-data-penyusutan/
+-----> untuk permasalahan nilai buku yang di tahun 2015 sudah kosong dan nilainya kelebihan sebanyak kapitalisasi posisi data pembetulannya terdapat pada folder:
+  -bangunan2015
+  -jaringan2015
+
+--> untuk perbaikan data yang selisihnya karena kapitalisasi di tahun 2016 posisis foldernya terdapat di folder:
+  -bangunan2016
+  -jaringan2016
+
+2. Untuk perbaikan data restament terdapat pada folder:
+   restament/hasi
+   
+3. Rekonstruksi koreksi dengan database baru yang belum di update data penyusutannya.
+
+
