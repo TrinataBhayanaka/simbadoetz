@@ -30305,6 +30305,7 @@ foreach ($dataArr as $asetID => $value)
 				}//koreksi penyusutan
 				elseif($paramKd_Rwyt == 55){
 						$flag = "";
+						$Riwayat=" $Riwayat $valRwyt->TahunPenyusutan";
 						//SALDO AWAL
 						$nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
 						$nilaiAwalPerolehanFix = number_format($nilaiAwalPrlhn,2,",",".");
