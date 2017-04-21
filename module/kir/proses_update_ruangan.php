@@ -153,6 +153,7 @@ try {
 		$QueryLog  = "INSERT INTO $tableLog ($implodeField,$AddField)
 					VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
 		pr($QueryLog);
+		exit;
 		$exeQueryLog = $DBVAR->query($QueryLog);
 		if(!$exeQueryLog){
 			$DBVAR->rollback();
