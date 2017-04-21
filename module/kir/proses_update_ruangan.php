@@ -46,7 +46,7 @@ try {
 	//sql sementara
 	//update ruangan di tabel aset
 	$QueryAset	  = "UPDATE aset SET kodeRuangan = $kodeRuang WHERE Aset_ID in ($implodeAset_ID)";
-	pr($QueryAset);
+	//pr($QueryAset);
 	//exit();
 	$ExeQueryAset = $DBVAR->query($QueryAset);
 	if(!$ExeQueryAset){
@@ -138,7 +138,6 @@ try {
 		
 		//update ruangan di tabel kib
 		$QueryKib	  = "UPDATE $tableKib SET kodeRuangan = $kodeRuang WHERE Aset_ID = '$Aset_ID'";
-		pr($QueryKib);
 		$ExeQueryKib = $DBVAR->query($QueryKib);
 		if(!$ExeQueryKib){
 			$DBVAR->rollback();
@@ -152,8 +151,7 @@ try {
 		//insert log
 		$QueryLog  = "INSERT INTO $tableLog ($implodeField,$AddField)
 					VALUES ($implodeVal,'$action','$changeDate','$TglPerubahan','$NilaiPerolehan_Awal','$Kd_Riwayat')";
-		pr($QueryLog);
-		exit;
+	
 		$exeQueryLog = $DBVAR->query($QueryLog);
 		if(!$exeQueryLog){
 			$DBVAR->rollback();
@@ -164,7 +162,6 @@ try {
 			exit();
 		}
 	}
-	exit;
 	$DBVAR->commit();
 	if($data_post){
 	 $data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("KIRASET");
