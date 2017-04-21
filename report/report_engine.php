@@ -30173,6 +30173,9 @@ foreach ($dataArr as $asetID => $value)
 						
 						//MUTASI ASET (Bertambah)
 						$addValueKptls = $this->get_NP_Aset_ID_Penambahan($valRwyt->Aset_ID,$valRwyt->log_id);
+						if($addValueKptls==0){
+							$addValueKptls=$valRwyt->NilaiPerolehan-$valRwyt->NilaiPerolehan_Awal;
+						}
 						$nilaiPrlhnMutasiTambah = $addValueKptls;
 						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
 						
