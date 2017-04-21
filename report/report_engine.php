@@ -30369,7 +30369,13 @@ foreach ($dataArr as $asetID => $value)
 				//tambahan
 				elseif(($paramKd_Rwyt == 50 ||$paramKd_Rwyt == 51  )&& $status_masuk_penyusutan!=1){
 						$flag = "";
-						
+						if($valRwyt->TahunPenyusutan=="2014")
+						{
+							$txt_penyusutan="restatement";
+						}else{
+							$txt_penyusutan=($valRwyt->TahunPenyusutan;
+						}
+						$Riwayat=" $Riwayat $txt_penyusutan";
 						/*(if($flag_penyusutan==0)
 						{
 							$akumulasi_penyusutan_awal=0;
