@@ -162,9 +162,17 @@ while ($row = $DBVAR->fetch_array ($result)) {
             $kapitalisasi += $selisih_np;
 
             if($status_koreksi_kapitalisasi==0)
-            $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya,
+            {$text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya,
                           NilaiBuku='$nb_seharusnya' where log_id=$log_id;";
-            else{
+                       if($tahun_pelaporan=="2016"){
+                 $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya,
+                          NilaiBuku='$nb_seharusnya' where log_id=$log_id;";
+
+                  $hasil="/*aset_id==$Aset_ID*/\n$text_status\n";
+                  $data_plain=str_replace("<br/>", "\n", $hasil);
+                  logFile($data_plain,"data-audit-jaringan2016.txt");
+              }
+            }else{
 
                 $index=$count;
                 $umurekonomis=$data[ $index ][ umurekonomis ];
@@ -193,8 +201,11 @@ while ($row = $DBVAR->fetch_array ($result)) {
                 $nb_awal_seharusnya = 0;
             $nb_seharusnya = $NilaiBuku;
             if($status_koreksi_kapitalisasi==0)
-                $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya
+            {    $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya
                               where log_id=$log_id;";
+
+               
+            }
             else{
                 $index=$count;
                 $umurekonomis=$data[ $index ][ umurekonomis ];
@@ -621,8 +632,7 @@ select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
                 }
                 //hitung penyusutan
             }
-            $data_plain=str_replace("<br/>", "\n", $text_status);
-            logFile($data_plain,"jaringan2016/$Aset_ID.txt");
+            
             $count++;
         }
 

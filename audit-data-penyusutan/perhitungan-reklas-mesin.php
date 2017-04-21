@@ -3,22 +3,21 @@ error_reporting (0);
 include "../config/config.php";
 
 
-$log_table = "log_jaringan";
-$table="jaringan";
-$myfile = fopen ("all-kasus-jaringan", "r") or die("Unable to open file!");
-$aset_id_cek = fread ($myfile, filesize ("all-kasus-jaringan"));
+$log_table = "log_mesin";
+$table="mesin";
+$myfile = fopen ("all-kasus-mesin", "r") or die("Unable to open file!");
+$aset_id_cek = fread ($myfile, filesize ("all-kasus-mesin"));
 fclose ($myfile);
-/*
-$aset_id_cek="2674584,2674612,2674743,718911,203125,203130,202339,202340,202343,202344,202345,202357,202360,202367,202372,202374,202375,202378,202379,202384,202395,202397,202401,202402,202411,202414,202419,202427,202437,202438,202443,202448,202453,202455,202465,202466,202469,202476,202564,1797736,1797738,1836906,1842396,1845548,1867535,1867542,2634289,2634775,2634792,2634936,2635000,2635029,2635030,2635157,2635158,2635159,2635160,2635161,2635162,2635163,2635166,2635167,2635168,2635169,2635170,2635171,2635172,2635173,2635174,2635175,2635176,2635180,2635184,2635187,2635188,2635189,2635190,2635191,2635193,2635194,2635195,2635196,2635197,202778,2668813,1774301 
-";*/
-$aset_id_cek="202437";
+
 $query_data = "SELECT aset_id,umurekonomis,MasaManfaat,kodeKelompok,kodeSatker,NilaiPerolehan FROM `$table`
         WHERE aset_id in($aset_id_cek) ";
+        //echo $query_data;
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih = "";
 $satker = array();
 $i = 0;
 $total = 0;
+
 
 while ($row = $DBVAR->fetch_array ($result)) {
     $total++;
@@ -33,7 +32,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
     $tmp_kode_log = explode (".", $kodeKelompok_log);
 
     $info="/*Penelusuran kodekelompok reklas untuk aset_id=$Aset_ID*/\n\n";
-    logfile($info,'data-reklas-jaringan.txt');
+    logfile($info,'data-reklas-mesin.txt');
 
     $query_history="select log_id,NilaiPerolehan,NilaiPerolehan_Awal,Kd_Riwayat,TglPerubahan,
                     (NilaiPerolehan-NilaiPerolehan_Awal) as selisih,TahunPenyusutan,TglPerolehan,
@@ -43,8 +42,8 @@ while ($row = $DBVAR->fetch_array ($result)) {
                     kodeKA,kodeRuangan,UmurEkonomis,MasaManfaat,
                      StatusValidasi, Status_Validasi_Barang,StatusTampil,
                     PenyusutanPerTahun,Tahun,jenis_hapus
-                    from $log_table where aset_id='$Aset_ID' and Kd_Riwayat in (7,21,29,28,50,51,2)
-                    and TglPerubahan!='0000-00-00' and TglPerubahan>='2015-01-01'";
+                    from $log_table where aset_id='$Aset_ID' and Kd_Riwayat in (7,21,29,28,50,51,2,291)
+                    and TglPerubahan!='0000-00-00'";
     $result_log = $DBVAR->query ($query_history) or die($DBVAR->error ());
     $data_log = array();
    while ($row_log = $DBVAR->fetch_array ($result_log)) {
@@ -61,7 +60,6 @@ $i=0;
     $result_history=$DBVAR->query ($query_history) or die($DBVAR->error ());
     while($row_history=$DBVAR->fetch_array ($result_history)){
             /**Data Primer**/
-            echo "$i===$Aset_ID<br/>";
             $log_id=$row_history['log_id'];
             $kodeSatker=$row_history['kodeSatker'];
             $kodeLokasi=$row_history['kodeLokasi'];
@@ -101,7 +99,6 @@ $i=0;
 
             if($Kd_Riwayat=="50"){
                 $np_awal=$NilaiPerolehan;
-                
                 if($status_pertama==0){
                     $status_penyusutan_pertama=cek_penyusutan_tahun_pertama($Aset_ID,$log_table,$log_id,$DBVAR);
                     if($status_penyusutan_pertama==1)
@@ -138,7 +135,7 @@ $i=0;
                     if($UmurEkonomis<=0)
                         $bp=0;
                     else
-                        $bp=$PenyusutanPerTahun;
+                    $bp=$PenyusutanPerTahun;
                 }
                 $status_pertama=1;
                  /*  echo "Rentang penyusutan dgn Aset_ID=$Aset_ID dan $Kd_Riwayatm $TglPerubahan-->$rentang_penyusutan<br/>
@@ -159,24 +156,21 @@ $i=0;
                         $selisih_np_koreksi=$np_next-$NilaiPerolehan;
                         $NilaiPerolehan_Awal=$NilaiPerolehan;
                         $NilaiPerolehan=$np_next;
-                        echo "np_next==$np_next<br/>";
-                        $update_kd28="update log_jaringan set 
-                                    NilaiPerolehan_Awal='$NilaiPerolehan_Awal',
-                                    NilaiPerolehan='$NilaiPerolehan' 
-                                    where log_id='$log_id' and aset_id='$Aset_ID';\n";
-                        logfile("$update_kd28","data-kd-28-jaringan.txt");
+                        
                         $selisih_akm=(($TahunPenyusutan-$TahunPerolehan)+1)*($selisih_np_koreksi/$MasaManfaat);
                     }else{
-                        echo "gak masukk 28<br/>";
+                        echo "gak masukk";
                     }
                 }                
                     $AkumulasiPenyusutan=$AkumulasiPenyusutan+$selisih_akm;
                     $NilaiBuku=$NilaiPerolehan-$AkumulasiPenyusutan;
-                   if($PenyusutanPerTahun!=0)
+
+                 if($PenyusutanPerTahun!=0)
                  {
                     $pp_pengurang=(($NilaiPerolehan-$NilaiPerolehan_Awal)/$MasaManfaat);
                             $PenyusutanPerTahun=$PenyusutanPerTahun+$pp_pengurang;
                  }
+
                 
 
             }else if($Kd_Riwayat=="2"||$Kd_Riwayat=="29"||$Kd_Riwayat=="291")
@@ -187,15 +181,12 @@ $i=0;
             }else if($Kd_Riwayat=="51"){
                 if($kapitalisasi>0){
                     $persen=($kapitalisasi/$np_awal)*100;
-                    
                     $penambahan_masa_manfaat = overhaul ($tmp_kode_log[ 0 ], $tmp_kode_log[ 1 ], $tmp_kode_log[ 2 ], $persen, $DBVAR);
                     $UmurEkonomis=$UmurEkonomis+$penambahan_masa_manfaat;
-                    echo "$persen=($kapitalisasi/$np_awal)*100;-->tambah=$penambahan_masa_manfaat-->umur=$UmurEkonomis<br/>";
                     if($UmurEkonomis>$MasaManfaat){
                         $UmurEkonomis=$MasaManfaat;
                     }
                     $PenyusutanPerTahun=$NilaiBuku/$UmurEkonomis;
-                    echo "pp=$PenyusutanPerTahun=$NilaiBuku/$UmurEkonomis;<br/>";
                     $AkumulasiPenyusutan=$AkumulasiPenyusutan+$PenyusutanPerTahun;
                     $NilaiBuku=$NilaiPerolehan-$AkumulasiPenyusutan;
                     $UmurEkonomis=$UmurEkonomis-1;
@@ -236,7 +227,7 @@ $i=0;
                                 '$PenyusutanPerTahun', '$AkumulasiPenyusutan_log',
                                  '$NilaiBuku_log', '$PenyusutanPerTahun_log', 
                                  '$UmurEkonomis', '$TahunPenyusutan', '$jenis_hapus','$bp_log','$bp','$UmurEkonomis_log','$MasaManfaat_log');\n\n";
-        logfile($query,'data-reklas-jaringan.txt');
+        logfile($query,'data-reklas-mesin.txt');
         $i++;
 
     }

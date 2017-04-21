@@ -153,7 +153,10 @@ while ($row = $DBVAR->fetch_array ($result)) {
         if($kd_riwayat == "2" || $kd_riwayat == "29") {
             ///echo "masukk1231<br/>$log_id $np_awal";
             if($status_koreksi_kapitalisasi==0)
-                $nb_awal_seharusnya = $data[ $count - 1 ][ NilaiBuku ];
+            {    $nb_awal_seharusnya = $data[ $count - 1 ][ NilaiBuku ];
+
+         
+            }
             else
                 $nb_awal_seharusnya = $data[ $count ][ NilaiBuku ];
             if($nb_awal_seharusnya == "")
@@ -162,8 +165,17 @@ while ($row = $DBVAR->fetch_array ($result)) {
             $kapitalisasi += $selisih_np;
 
             if($status_koreksi_kapitalisasi==0)
-            $text_status = "update log_bangunan set NilaiBuku_Awal=$nb_awal_seharusnya,
+            {$text_status = "update log_bangunan set NilaiBuku_Awal=$nb_awal_seharusnya,
                           NilaiBuku='$nb_seharusnya' where log_id=$log_id;";
+                                 if($tahun_pelaporan=="2016"){
+                 $text_status = "update log_bangunan set NilaiBuku_Awal=$nb_awal_seharusnya,
+                          NilaiBuku='$nb_seharusnya' where log_id=$log_id;";
+
+                  $hasil="/*aset_id==$Aset_ID*/\n$text_status\n";
+                  $data_plain=str_replace("<br/>", "\n", $hasil);
+                logFile($data_plain,"data-audit-bangunan2016.txt");
+            }
+            }
             else{
 
                 $index=$count;
