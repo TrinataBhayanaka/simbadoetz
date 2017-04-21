@@ -30376,7 +30376,7 @@ foreach ($dataArr as $asetID => $value)
 						{
 							$txt_penyusutan="restatement";
 						}else{
-							$txt_penyusutan=($valRwyt->TahunPenyusutan;
+							$txt_penyusutan=$valRwyt->TahunPenyusutan;
 						}
 						$Riwayat=" $Riwayat $txt_penyusutan";
 						/*(if($flag_penyusutan==0)
