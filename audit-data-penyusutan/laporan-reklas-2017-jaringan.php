@@ -31,11 +31,17 @@ foreach ($data as $key => $val) {
             $counter++;
             $newdata[$index] = $tmp;
             $newdata[$index]['umurekonomis'] = $val['umurekonomis'];
+            $newdata[$index]['NilaiPerolehan_Awal'] = $val['NilaiPerolehan_Awal'];
             $newdata[$index]['NilaiPerolehan'] = $val['NilaiPerolehan'];
+            $newdata[$index]['AkumulasiPenyusutan_Awal'] = $val['AkumulasiPenyusutan_Awal'];
             $newdata[$index]['AkumulasiPenyusutan'] = $val['AkumulasiPenyusutan'];
+            $newdata[$index]['NilaiBuku_Awal'] = $val['NilaiBuku_Awal'];
             $newdata[$index]['nilaibuku'] = $val['nilaibuku'];
+            $newdata[$index]['PenyusutanPerTahun_Awal'] = $val['PenyusutanPerTahun_Awal'];
             $newdata[$index]['PenyusutanPerTahun'] = $val['PenyusutanPerTahun'];
+            $newdata[$index]['bp_log'] = $val['bp_log'];
             $newdata[$index]['bp'] = $val['bp'];
+            $newdata[$index]['keterangan'] = $val['TglPerubahan'];
             if ($val['TahunPenyusutan'] == '2014') {
                 $newdata[$index]['akm_tambah_2014'] = $val['selisih'];
             } elseif ($val['TahunPenyusutan'] == '2015') {
@@ -186,7 +192,7 @@ foreach ($newdata as $key => $val) {
             <td valign=middle><?=number_format($val['PenyusutanPerTahun'],4)?></td>
             <td valign=middle><?=$val['umurekonomis']?></td>
             <td valign=middle><?=$val['TahunPenyusutan']?></td>
-            <td valign=middle><br></td>
+            <td valign=middle><?=$val['keterangan']?></td>
         </tr>
     <?php
 
@@ -211,7 +217,7 @@ function getData($DBVAR, $query, $multi=false) {
 function checkNegative($data) {
     if (isset($data)) {
         if ($data < 0) {
-            $akm['min'] = $data;
+            $akm['min'] = abs($data);
             $akm['pos'] = 0;
         } else {
             $akm['pos'] = $data;
