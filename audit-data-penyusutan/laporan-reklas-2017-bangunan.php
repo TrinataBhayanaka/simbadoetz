@@ -23,6 +23,9 @@ foreach ($data as $key => $val) {
                 $tmp['akm_tambah_2016'] = $val['selisih'];
 
             $counter = 1;
+            
+            $tmp['keterangan'] = $val['TglPerubahan']." - ". $counter;
+
             if ($count[$val['Aset_ID']] == $counter) {
                 $newdata[$index] = $tmp;
                 $index++;
@@ -41,7 +44,8 @@ foreach ($data as $key => $val) {
             $newdata[$index]['PenyusutanPerTahun'] = $val['PenyusutanPerTahun'];
             $newdata[$index]['bp_log'] = $val['bp_log'];
             $newdata[$index]['bp'] = $val['bp'];
-            $newdata[$index]['keterangan'] = $val['TglPerubahan'];
+            $newdata[$index]['TahunPenyusutan'] = $val['TahunPenyusutan'];
+            $newdata[$index]['keterangan'] = $val['TglPerubahan']." - ". $counter;
             if ($val['TahunPenyusutan'] == '2014') {
                 $newdata[$index]['akm_tambah_2014'] = $val['selisih'];
             } elseif ($val['TahunPenyusutan'] == '2015') {
@@ -76,6 +80,7 @@ echo "
         <colgroup span=\"5\" width=\"80\"></colgroup>
 	
 	    <tr>
+	        <td rowspan=4 height=\"76\" align=\"center\" valign=middle><b>No</b></td>
             <td rowspan=4 height=\"76\" align=\"center\" valign=middle><b>Aset_ID</b></td>
             <td  colspan=6 rowspan=2 align=\"center\" valign=middle><b>Rekening</b></td>
             <td colspan=4 rowspan=2 align=\"center\" valign=middle ><b>An Auditied</b></td>
@@ -123,6 +128,7 @@ echo "
         </tr>
         <tr>
             <td height=\"29\" align=\"center\" valign=middle><b><br></b></td>
+            <td height=\"29\" align=\"center\" valign=middle><b><br></b></td>
             <td align=\"center\" valign=middle><b><br></b></td>
             <td align=\"center\" valign=middle><b><br></b></td>
             <td align=\"center\" valign=middle><b><br></b></td>
@@ -166,6 +172,7 @@ foreach ($newdata as $key => $val) {
 
     ?>
         <tr>
+            <td valign=middle><?=$key+1?></td>
             <td valign=middle><?=$val['Aset_ID']?></td>
             <td valign=middle><?=$val['KodeSatker']?></td>
             <td valign=middle><?=$nama_satker['NamaSatker']?></td>
