@@ -25,7 +25,7 @@ foreach ($data as $key => $val) {
 
             $counter = 1;
 
-            $tmp['keterangan'] = $val['TglPerubahan']." - ". $counter;
+            $tmp['keterangan'] = $val['TglPerubahan']." - Koreksi sebanyak ". $counter." kali";
 
             if ($count[$val['Aset_ID']] == $counter) {
                 $newdata[$index] = $tmp;
@@ -46,7 +46,7 @@ foreach ($data as $key => $val) {
             $newdata[$index]['bp_log'] = $val['bp_log'];
             $newdata[$index]['bp'] = $val['bp'];
             $newdata[$index]['TahunPenyusutan'] = $val['TahunPenyusutan'];
-            $newdata[$index]['keterangan'] = $val['TglPerubahan']." - ". $counter;
+            $newdata[$index]['keterangan'] = $val['TglPerubahan']." - Koreksi sebanyak ". $counter." kali";
             if ($val['TahunPenyusutan'] == '2014') {
                 $newdata[$index]['akm_tambah_2014'] = $val['selisih'];
             } elseif ($val['TahunPenyusutan'] == '2015') {
