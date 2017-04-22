@@ -23,7 +23,7 @@ foreach ($data as $key => $val) {
                 $tmp['akm_tambah_2016'] = $val['selisih'];
 
             $counter = 1;
-            
+
             $tmp['keterangan'] = $val['TglPerubahan']." - ". $counter;
 
             if ($count[$val['Aset_ID']] == $counter) {
@@ -180,23 +180,23 @@ foreach ($newdata as $key => $val) {
             <td valign=middle><?=$nama_barang['Uraian']?></td>
             <td valign=middle><?=$val['Tahun']?></td>
             <td valign=middle><?=$val['NoRegister']?></td>
-            <td valign=middle><?=number_format($val['bp_log'],4)?></td>
-            <td valign=middle><?=number_format($val['NilaiPerolehan_Awal'],4)?></td>
-            <td valign=middle><?=number_format($val['AkumulasiPenyusutan_Awal'],4)?></td>
-            <td valign=middle><?=number_format($val['NilaiBuku_Awal'],4)?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['bp_log'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['NilaiPerolehan_Awal'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['AkumulasiPenyusutan_Awal'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['NilaiBuku_Awal'],4))?></td>
             <td valign=middle><br></td>
             <td valign=middle><br></td>
-            <td valign=middle><?=number_format($akm_2014['pos'],4)?></td>
-            <td valign=middle><?=number_format($akm_2015['pos'],4)?></td>
-            <td valign=middle><?=number_format($akm_2014['min'],4)?></td>
-            <td valign=middle><?=number_format($akm_2015['min'],4)?></td>
-            <td valign=middle><?=number_format($akm_2016['pos'],4)?></td>
-            <td valign=middle><?=number_format($akm_2016['min'],4)?></td>
-            <td valign=middle><?=number_format($val['bp'],4)?></td>
-            <td valign=middle><?=number_format($val['NilaiPerolehan'],4)?></td>
-            <td valign=middle><?=number_format($val['AkumulasiPenyusutan'],4)?></td>
-            <td valign=middle><?=number_format($val['nilaibuku'],4)?></td>
-            <td valign=middle><?=number_format($val['PenyusutanPerTahun'],4)?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($akm_2014['pos'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($akm_2015['pos'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($akm_2014['min'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($akm_2015['min'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($akm_2016['pos'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($akm_2016['min'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['bp'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['NilaiPerolehan'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['AkumulasiPenyusutan'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['nilaibuku'],4))?></td>
+            <td valign=middle><?=str_replace(".0000", "", (string)number_format($val['PenyusutanPerTahun'],4))?></td>
             <td valign=middle><?=$val['umurekonomis']?></td>
             <td valign=middle><?=$val['TahunPenyusutan']?></td>
             <td valign=middle><?=$val['keterangan']?></td>
