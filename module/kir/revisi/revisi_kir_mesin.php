@@ -14,9 +14,9 @@ $password = 'margonda100';
 $conn = mysql_connect($hostname,$username,$password);
 
 //source db
-$db1 = "simbada_2014_full_v1";
+$db1 = "simbada_pekalongan_2016_20170224";
 //destination db
-$db2 = "simbada_pekalongan_2016";	
+$db2 = "simbada_pekalongan_2017_20170327";	
 
 $link_db1 = mysql_select_db($db1,$conn);
 $link_db2 =  mysql_select_db($db2,$conn);
@@ -32,14 +32,17 @@ function db($data,$exit=1){
 	// if($exit == 1) exit;
 }
 
-//example : RSUD BENDAN
-$skpd 			= "50.04.08.01";
+//Badan Lingkungan Hidup
+$skpd 			= "16.01.01.01";
+//Kelurahan soko duwet 
+//$skpd 	    = "50.04.10.01";
+
 //$exp = explode(".", $skpd);
 //$KodeSektor 	= $exp[0];
 //$KodeSatker 	= $exp[0].'.'.$exp[1];
 //$KodeUnit		= $exp[2];
 //$Gudang			= $exp[3];
-$tahun 			= "2016";
+$tahun 			= "2017";
 
 //log (function logfile)
 include "../../../config/config.php";
@@ -153,7 +156,7 @@ while($row_kib = mysql_fetch_assoc($exe_select_kib)) {
 	$AddField = "action,changeDate,TglPerubahan,NilaiPerolehan_Awal,Kd_Riwayat";
 	$action = "Rev_Ruangan_".$row_kib[kodeSatker].'_'.$row_kib[kodeRuangan];
 	$changeDate = date('Y-m-d');
-	$tgl = '2016-11-21';
+	$tgl = '2016-12-31';
 	$TglPerubahan = $tgl;
 	$NilaiPerolehan_Awal = $row_kib[NilaiPerolehan];
 	$Kd_Riwayat = '4';
