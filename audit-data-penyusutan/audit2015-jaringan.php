@@ -160,8 +160,14 @@ while ($row = $DBVAR->fetch_array ($result)) {
             $kapitalisasi += $selisih_np;
 
             if($status_koreksi_kapitalisasi==0)
-            $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya,
+            {
+                $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya,
                           NilaiBuku='$nb_seharusnya' where log_id=$log_id;";
+
+            $hasil="/*aset_id==$Aset_ID*/\n$text_status\n";
+              $data_plain=str_replace("<br/>", "\n", $hasil);
+            logFile($data_plain,"data-audit-jaringan2015.txt");
+            }
             else{
 
                 $index=$count;
@@ -179,7 +185,8 @@ while ($row = $DBVAR->fetch_array ($result)) {
                           PenyusutanPerTahun='$PenyusutanPerTahun'
                           where log_id=$log_id_geser;";
             }
-
+           
+          
         } else if($kd_riwayat == "7" || $kd_riwayat == "21" || $kd_riwayat == "28") {
 
             if($status_koreksi_kapitalisasi==0)
@@ -225,6 +232,13 @@ while ($row = $DBVAR->fetch_array ($result)) {
                           NilaiBuku='$nb_seharusnya' where log_id=$log_id";*/
             $text_status = "update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya,
                           NilaiBuku='$nb_seharusnya' where log_id=$log_id;";
+
+
+            $text_status_penyama="update log_jaringan set NilaiBuku_Awal=$nb_awal_seharusnya
+                           where log_id=$log_id;";
+                 $hasil="/*aset_id==$Aset_ID*/\n$text_status_penyama\n";
+               $data_plain=str_replace("<br/>", "\n", $hasil);
+            logFile($data_plain,"data-audit-jaringan2015.txt");
         }
         else if($kd_riwayat == "49" && $tahun_pelaporan == "2016"){
             $index=$count;
@@ -627,8 +641,6 @@ select `Jaringan_ID`, `Aset_ID`, `kodeKelompok`, `kodeSatker`,
                 }
                 //hitung penyusutan
             }
-            $data_plain=str_replace("<br/>", "\n", $text_status);
-            logFile($data_plain,"jaringan2015/$Aset_ID.txt");
             $count++;
         }
 

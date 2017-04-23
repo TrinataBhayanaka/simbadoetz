@@ -16,6 +16,7 @@ fclose ($myfile);
 $query_data = "SELECT aset_id FROM $log_table WHERE kd_riwayat in(51,50) AND 
                 tglperubahan='2015-12-31 00:00:00' and aset_id in ($aset_id_cek) ";
 
+//echo $query_data;
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih="";
 $satker=array();
