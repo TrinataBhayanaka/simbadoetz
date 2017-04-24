@@ -10,7 +10,7 @@ $query_data = "SELECT  aset_id,umurekonomis,MasaManfaat,kd_riwayat,TglPerubahan,
 (NilaiPerolehan-NilaiPerolehan_Awal)as np,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,
 (AkumulasiPenyusutan-AkumulasiPenyusutan_Awal)as akm,nilaibuku,NilaiBuku_Awal, PenyusutanPerTahun,
 PenyusutanPerTahun_Awal,bp_log,bp,(bp-bp_log)as selisih FROM `perhitungan_reklas_bangunan` 
-where ((bp_log-bp)>2 or (bp_log-bp)<-2) and Kd_Riwayat in(50,51) and aset_id=2644060 group by aset_id ";
+where ((bp_log-bp)>2 or (bp_log-bp)<-2) and Kd_Riwayat in(50,51)  and aset_id=718888 group by aset_id ";
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih = "";
 $satker = array();
@@ -30,7 +30,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
     kodeKelompok,kodeRuangan,
         Tahun,TglPerolehan,TglPembukuan,kodeKA,StatusValidasi,Status_Validasi_Barang,StatusTampil,jenis_hapus,
         MasaManfaat,kd_riwayat,TglPerubahan,NilaiPerolehan,NilaiPerolehan_Awal,(NilaiPerolehan-NilaiPerolehan_Awal)as np,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,(AkumulasiPenyusutan-AkumulasiPenyusutan_Awal)as akm,NilaiBuku,NilaiBuku_Awal, PenyusutanPerTahun,PenyusutanPerTahun_Awal,bp_log,bp,(bp-bp_log)as selisih FROM `perhitungan_reklas_bangunan` where ((bp_log-bp)>2 or (bp_log-bp)<-2) and Kd_Riwayat in(50,51)
-        and aset_id='$Aset_ID' and TglPerubahan!='2015-01-01' ;";
+        and aset_id='$Aset_ID' ;";
    
     $NilaibUku=0;
     $AkumulasiPenyusutan=0;
@@ -165,7 +165,8 @@ while ($row = $DBVAR->fetch_array ($result)) {
                                 '$PenyusutanPerTahun', '$AkumulasiPenyusutan_log',
                                  '$NilaiBuku_log', '$PenyusutanPerTahun_log', 
                                  '$UmurEkonomis', '$TahunPenyusutan', '$jenis_hapus');\n\n";
-
+            if($TahunPenyusutan=="2016")
+            {
                $query_aset="update aset set NilaiBuku='$NilaiBuku',AkumulasiPenyusutan='$AkumulasiPenyusutan',
                                 PenyusutanPerTaun='$PenyusutanPerTahun',
                                 UmurEkonomis='$UmurEkonomis',TahunPenyusutan='$TahunPenyusutan' 
@@ -174,11 +175,14 @@ while ($row = $DBVAR->fetch_array ($result)) {
                                 PenyusutanPerTahun='$PenyusutanPerTahun',
                                 UmurEkonomis='$UmurEkonomis',TahunPenyusutan='$TahunPenyusutan' 
                                 where aset_id='$Aset_ID'; ";
-
+             }else{
+                   $query_aset="";
+               $query_master=""; 
+             }
               $hasil="$query\n$query_aset\n$query_master\n\n";
         
         logfile($hasil,"eksekusiBPK-bangunan/revisi-$Aset_ID.txt");
-
+        echo "$i<br/>";
         $i++;
 
     }

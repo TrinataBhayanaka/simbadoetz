@@ -161,7 +161,8 @@ while ($row = $DBVAR->fetch_array ($result)) {
                                 '$PenyusutanPerTahun', '$AkumulasiPenyusutan_log',
                                  '$NilaiBuku_log', '$PenyusutanPerTahun_log', 
                                  '$UmurEkonomis', '$TahunPenyusutan', '$jenis_hapus');\n\n";
-
+           if($TahunPenyusutan=="2016")
+            {
               $query_aset="update aset set NilaiBuku='$NilaiBuku',AkumulasiPenyusutan='$AkumulasiPenyusutan',
                                 PenyusutanPerTaun='$PenyusutanPerTahun',
                                 UmurEkonomis='$UmurEkonomis',TahunPenyusutan='$TahunPenyusutan' 
@@ -170,7 +171,10 @@ while ($row = $DBVAR->fetch_array ($result)) {
                                 PenyusutanPerTahun='$PenyusutanPerTahun',
                                 UmurEkonomis='$UmurEkonomis',TahunPenyusutan='$TahunPenyusutan' 
                                 where aset_id='$Aset_ID'; ";
-
+            }else{
+              $query_aset="";
+               $query_master=""; 
+            }
              $hasil="$query\n$query_aset\n$query_master\n\n";
         
         logfile($query,"eksekusiBPK-mesin/revisi-$Aset_ID.txt");

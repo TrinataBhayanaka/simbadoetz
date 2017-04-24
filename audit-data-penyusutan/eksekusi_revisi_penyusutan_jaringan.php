@@ -12,7 +12,7 @@ $data_selisih = "";
 $satker = array();
 $i = 0;
 $total = 0;
-$skip_aset_id="202437, 202448,202453,202473,202909";//karena log 28
+//$skip_aset_id="202437, 202448,202453,202473,202909";//karena log 28
 
 while ($row = $DBVAR->fetch_array ($result)) {
     $total++;
@@ -27,7 +27,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
     kodeKelompok,kodeRuangan,
         Tahun,TglPerolehan,TglPembukuan,kodeKA,StatusValidasi,Status_Validasi_Barang,StatusTampil,jenis_hapus,
         MasaManfaat,kd_riwayat,TglPerubahan,NilaiPerolehan,NilaiPerolehan_Awal,(NilaiPerolehan-NilaiPerolehan_Awal)as np,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,(AkumulasiPenyusutan-AkumulasiPenyusutan_Awal)as akm,NilaiBuku,NilaiBuku_Awal, PenyusutanPerTahun,PenyusutanPerTahun_Awal,bp_log,bp,(bp-bp_log)as selisih FROM `perhitungan_reklas_jaringan` where ((bp_log-bp)>2 or (bp_log-bp)<-2) and Kd_Riwayat in(50,51)
-        and aset_id='$Aset_ID' and aset_id not in($skip_aset_id);";
+        and aset_id='$Aset_ID';";
    
     $NilaibUku=0;
     $AkumulasiPenyusutan=0;
@@ -77,7 +77,7 @@ while ($row = $DBVAR->fetch_array ($result)) {
 
 
 
-             $query_log="SELECT aset_id,UmurEkonomis,kodeSatker,kodeLokasi,noRegister,Kd_Riwayat,TahunPenyusutan,
+             $query_log="SELECT aset_id,TahunPenyusutan,UmurEkonomis,kodeSatker,kodeLokasi,noRegister,Kd_Riwayat,TahunPenyusutan,
         Tahun,TglPerolehan,TglPembukuan,kodeKA,StatusValidasi,Status_Validasi_Barang,StatusTampil,jenis_hapus,
         MasaManfaat,kd_riwayat,TglPerubahan,NilaiPerolehan,NilaiPerolehan_Awal,(NilaiPerolehan-NilaiPerolehan_Awal)as np,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,(AkumulasiPenyusutan-AkumulasiPenyusutan_Awal)as akm,NilaiBuku,NilaiBuku_Awal, PenyusutanPerTahun,PenyusutanPerTahun_Awal FROM `log_jaringan` where Kd_Riwayat in(50,51) and TglPerubahan='2016-12-31'
         and aset_id='$Aset_ID' limit 1;";
@@ -163,6 +163,8 @@ while ($row = $DBVAR->fetch_array ($result)) {
                                  '$NilaiBuku_log', '$PenyusutanPerTahun_log', 
                                  '$UmurEkonomis', '$TahunPenyusutan', '$jenis_hapus');\n\n";
 
+              if($TahunPenyusutan=="2016")
+              {
                $query_aset="update aset set NilaiBuku='$NilaiBuku',AkumulasiPenyusutan='$AkumulasiPenyusutan',
                                 PenyusutanPerTaun='$PenyusutanPerTahun',
                                 UmurEkonomis='$UmurEkonomis',TahunPenyusutan='$TahunPenyusutan' 
@@ -171,6 +173,10 @@ while ($row = $DBVAR->fetch_array ($result)) {
                                 PenyusutanPerTahun='$PenyusutanPerTahun',
                                 UmurEkonomis='$UmurEkonomis',TahunPenyusutan='$TahunPenyusutan' 
                                 where aset_id='$Aset_ID'; ";
+              }else{
+               $query_aset="";
+               $query_master=""; 
+              }
 
               $hasil="$query\n$query_aset\n$query_master\n\n";
         

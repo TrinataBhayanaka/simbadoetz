@@ -8,7 +8,7 @@ $table="mesin";
 $myfile = fopen ("all-kasus-mesin", "r") or die("Unable to open file!");
 $aset_id_cek = fread ($myfile, filesize ("all-kasus-mesin"));
 fclose ($myfile);
-
+//$aset_id_cek="10580";
 $query_data = "SELECT aset_id,umurekonomis,MasaManfaat,kodeKelompok,kodeSatker,NilaiPerolehan FROM `$table`
         WHERE aset_id in($aset_id_cek) ";
         //echo $query_data;
@@ -202,7 +202,7 @@ $i=0;
                     exit();
                 }
             }
-            echo "$Kd_Riwayat==$bp_log-->$AkumulasiPenyusutan-$AkumulasiPenyusutan_log<br/>";
+            echo "$Kd_Riwayat==$bp_log-->$AkumulasiPenyusutan-$AkumulasiPenyusutan_log<br/>PenyusutanPerTahun==$PenyusutanPerTahun<br/>";
             
             $query="INSERT INTO `perhitungan_reklas`(`log_id`, `Aset_ID`, `kodeKelompok`,
                              `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, 
