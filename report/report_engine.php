@@ -30544,7 +30544,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 			     and (l.TglPerubahan != '0000-00-00 00:00:00' or l.TglPerubahan is null)
 				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,55) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}'
-				 order by l.Aset_ID ASC";
+				 order by l.TglPerubahan ASC";
 					   
 	$log_data = "select l.* from {$tabel_log} as l 
 						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
@@ -42039,6 +42039,8 @@ return $hasil_html;
 				}else{
 					$paramSatker = "kodeSatker like '$satker_id%'";
 				}
+		}else{
+				$paramSatker = "kodeSatker like '%'";
 		}
 		
 		if($gol == '01'){
