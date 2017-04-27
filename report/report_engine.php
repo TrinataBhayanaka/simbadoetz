@@ -29756,7 +29756,7 @@ foreach ($dataArr as $asetID => $value)
 					$Info = "";
 				}
 				
-				if($paramKd_Rwyt == 0 || $paramKd_Rwyt == 2  ||$paramKd_Rwyt == 291 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29 ){
+				if($paramKd_Rwyt == 0 || $paramKd_Rwyt == 2  || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29 ){
 					/*
 					Kode Riwayat
 					0 = Data baru
@@ -30314,7 +30314,72 @@ foreach ($dataArr as $asetID => $value)
 						$PenyusutanPerTahunFix = number_format($PenyusutanPerTahun,2,",",".");
 						
 						$umurEkonomis = $valRwyt->UmurEkonomis;
-				}//koreksi penyusutan
+				}//koreksi kapitalisasi transfer
+				elseif($paramKd_Rwyt == 291){
+						$flag = "";
+						$Riwayat=" $Riwayat (+)";
+						//SALDO AWAL
+						$nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
+						$nilaiAwalPerolehanFix = number_format($nilaiAwalPrlhn,2,",",".");
+						
+						$AkumulasiPenyusutan_Awal = $valRwyt->AkumulasiPenyusutan;
+						$AkumulasiPenyusutan = $valRwyt->AkumulasiPenyusutan;
+						
+						$selisih=$AkumulasiPenyusutan-$AkumulasiPenyusutan_Awal;
+						$akm_kurang=0;
+						$akm_tambah=0;
+						if($selisih<0){
+							$akm_kurang=abs($selisih);	
+						}else{
+							$akm_tambah=abs($selisih);	
+						}
+						$AkumulasiPenyusutanFix = number_format($AkumulasiPenyusutan_Awal,2,",",".");
+						$NilaiBuku = $valRwyt->NilaiBuku_Awal;
+						$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
+							
+						/*	if($AkumulasiPenyusutan != 0 && $AkumulasiPenyusutan !=''){
+								$NilaiBuku = $valRwyt->NilaiBuku;
+								$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
+							}else{
+								$NilaiBuku = $valRwyt->NilaiPerolehan_Awal;
+								$NilaiBukuFix = number_format($NilaiBuku,2,",",".");
+							}*/
+						
+						
+						//MUTASI ASET (Bertambah)
+						$nilaiPrlhnMutasiTambah = $valRwyt->NilaiPerolehan-$valRwyt->NilaiPerolehan_Awal;
+						$nilaiPrlhnMutasiTambahFix = number_format($nilaiPrlhnMutasiTambah,2,",",".");
+						
+						//MUTASI ASET (Berkurang)
+						$nilaiPrlhnMutasiKurang = 0;
+						$nilaiPrlhnMutasiKurangFix = number_format($nilaiPrlhnMutasiKurang,2,",",".");
+						
+						//MUTASI PENYUSUTAN (Berkurang)
+						$penyusutanBerkurang = $akm_kurang;
+						$penyusutanBerkurangFix = number_format($penyusutanBerkurang,2,",",".");
+						
+						//MUTASI PENYUSUTAN (Bertambah)
+						$penyusutanBertambah = $akm_tambah;
+						$penyusutanBertambahFix = number_format($penyusutanBertambah,2,",",".");
+						
+						//SALDO AKHIR
+						$nilaiPerolehanHasilMutasi = $valRwyt->NilaiPerolehan;
+						$nilaiPerolehanHasilMutasiFix = number_format($nilaiPerolehanHasilMutasi,2,",",".");
+						
+						$AkumulasiPenyusutanHasilMutasi = $valRwyt->AkumulasiPenyusutan;
+						$AkumulasiPenyusutanHasilMutasiFix = number_format($AkumulasiPenyusutanHasilMutasi,2,",",".");
+						
+						$nilaibukuHasilMutasi = $valRwyt->NilaiBuku;
+						$nilaibukuHasilMutasiFix = number_format($nilaibukuHasilMutasi,2,",",".");
+						
+						//PENYUSUTAN
+						$PenyusutanPerTahun = $valRwyt->PenyusutanPerTahun;
+						$PenyusutanPerTahunFix = number_format($PenyusutanPerTahun,2,",",".");
+						
+						$umurEkonomis = $valRwyt->UmurEkonomis;
+				}
+
+				//koreksi penyusutan
 				elseif($paramKd_Rwyt == 55){
 						$flag = "";
 						$Riwayat=" $Riwayat $valRwyt->TahunPenyusutan";
