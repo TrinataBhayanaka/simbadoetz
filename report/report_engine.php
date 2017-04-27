@@ -307,7 +307,9 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 			$PPTotal = 0;
 			$no = 1;
 			foreach ($value as $key => $row) {
-				$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+				//$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+				$nilaiPrlhnFix =$row->NilaiPerolehan;
+
 				$nilaiPerolehan = $row->NilaiPerolehan;
 				$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
 				$perolehanTotalAll = $perolehanTotalAll + $nilaiPerolehan;
@@ -316,22 +318,29 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 				//$hit = 1;												
 				
 				$AP = $row->AkumulasiPenyusutan;
-				$APFix = number_format($row->AkumulasiPenyusutan,2,",",".");
+				//$APFix = number_format($row->AkumulasiPenyusutan,2,",",".");
+				$APFix = $row->AkumulasiPenyusutan;
+				
 				$APTotal = $APTotal + $AP;
 				$APTotalAll = $APTotalAll + $AP;
 				
 				if($row->AkumulasiPenyusutan != 0 && $row->AkumulasiPenyusutan !=''){
 					$NB = $row->NilaiBuku;
-					$NBFix = number_format($NB,2,",",".");
+					//$NBFix = number_format($NB,2,",",".");
+					$NBFix = $NB;
+
 				}else{
 					$NB = $row->NilaiPerolehan;
-					$NBFix = number_format($NB,2,",",".");
+					//$NBFix = number_format($NB,2,",",".");
+					$NBFix = $NB;
 				}
 				$NBTotal = $NBTotal + $NB;
 				$NBTotalAll = $NBTotalAll + $NB;
 
 				$PP = $row->PenyusutanPerTahun;
-				$PPFix = number_format($row->PenyusutanPerTahun,2,",",".");
+				
+				//$PPFix = number_format($row->PenyusutanPerTahun,2,",",".");
+				$PPFix = $row->PenyusutanPerTahun;
 				$PPTotal = $PPTotal + $PP;
 				$PPTotalAll = $PPTotalAll + $PP;
 
@@ -29747,7 +29756,7 @@ foreach ($dataArr as $asetID => $value)
 					$Info = "";
 				}
 				
-				if($paramKd_Rwyt == 0 || $paramKd_Rwyt == 2 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29 ){
+				if($paramKd_Rwyt == 0 || $paramKd_Rwyt == 2  ||$paramKd_Rwyt == 291 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29 ){
 					/*
 					Kode Riwayat
 					0 = Data baru
@@ -30542,7 +30551,7 @@ public function getdataRwyt($skpd_id,$AsetId,$tglakhirperolehan,$param){
 	*/
 	$paramLog = "l.TglPerubahan <='$tglakhirperolehan' 
 			     and (l.TglPerubahan != '0000-00-00 00:00:00' or l.TglPerubahan is null)
-				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,55) and l.Kd_Riwayat != 77 
+				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,55,291) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}'
 				 order by l.TglPerubahan ASC";
 					   

@@ -3,25 +3,59 @@ error_reporting (0);
 include "../config/config.php";
 
 
-$log_table = "log_mesin";
-$table="mesin";
-$myfile = fopen ("all-kasus-mesin", "r") or die("Unable to open file!");
-$aset_id_cek = fread ($myfile, filesize ("all-kasus-mesin"));
+$log_table = "log_bangunan";
+$table="bangunan";
+$myfile = fopen ("all-kasus-bangunan", "r") or die("Unable to open file!");
+$aset_id_cek = fread ($myfile, filesize ("all-kasus-bangunan"));
 fclose ($myfile);
-//$aset_id_cek="10580";
-$query_data = "SELECT aset_id,umurekonomis,MasaManfaat,kodeKelompok,kodeSatker,NilaiPerolehan FROM `$table`
+//$aset_id_cek='2644060';
+$query_data = "SELECT t.aset_id as aset_id,t.umurekonomis as umurekonomis,
+        t.MasaManfaat as MasaManfaat, t.kodeKelompok as kodeKelompok,
+        t.kodeSatker as kodeSatker,
+        t.NilaiPerolehan as NilaiPerolehan,
+        t.noRegister as noRegister,
+        t.Tahun as Tahun,
+        k.Uraian as Uraian FROM `$table` as t 
+        inner join kelompok as k on k.Kode=t.kodeKelompok
         WHERE aset_id in($aset_id_cek) ";
-        //echo $query_data;
+
+//echo "$query_data<br/>";
+
+
+$query_uraian="select Kd_Riwayat,Nm_Riwayat from ref_riwayat ";
+$result_riwayat=$DBVAR->query ($query_uraian) or die($DBVAR->error ());
+$RIWAYAT=array();
+while ($row_riwayat = $DBVAR->fetch_object ($result_riwayat)) {
+    $RIWAYAT[$row_riwayat->Kd_Riwayat]=$row_riwayat->Nm_Riwayat;
+
+}
+
+
+$head = "
+        <html>
+        <head>
+            <meta content=\"text/html; charset=UTF-8\" http-equiv=\"content-type\">
+        <title></title>
+        </head>
+        <body>
+        <table style=\"font-size:; border-collapse: collapse; text-align: left; width: 100%;\" border=\"0\"cellpadding=\"0\" cellspacing=\"0\">
+            <tr>
+                <td style=\"width: 150px; text-align: center;\">-</td>
+                <td style=\"width: 902px; text-align: center;\">
+                    <h3>KARTU BARANG $table</h3>
+                </td>
+            </tr>
+        </table>
+        <br>";
+
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih = "";
 $satker = array();
 $i = 0;
 $total = 0;
-
-
 while ($row = $DBVAR->fetch_array ($result)) {
     $total++;
-    echo "masuk";
+    //echo "masuk";
     $Aset_ID = $row[ 'aset_id' ];
     $UmurEkonomis=$row['umurekonomis'];
     $MasaManfaat=$row['MasaManfaat'];
@@ -29,10 +63,135 @@ while ($row = $DBVAR->fetch_array ($result)) {
     $kodeSatker=$row['kodeSatker'];
     $NilaiPerolehan_akhir=$row['NilaiPerolehan'];
     $kodeKelompok_log = $kodeKelompok;
+    $noReg=$row['noRegister'];
+    $Tahun_Aset=$row['Tahun'];
     $tmp_kode_log = explode (".", $kodeKelompok_log);
 
+    //untuk view
+    $body.="<table style=\"font-size:; border-colslapse: collapse; text-align: left; width: 100%;\" border=\"0\"cellpadding=\"0\" cellspacing=\"0\">
+                <tr>
+                  <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
+                  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+                  <td style=\"width: 873px; font-weight: bold;\">$kodeSatker</td>
+                </tr>
+                <tr>
+                  <td style=\"width: 200px; font-weight: bold; text-align: left;\">Kode Barang / No Register</td>
+                  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+                  <td style=\"width: 873px; font-weight: bold;\">$kodeKelompok / $noReg</td>
+                </tr>
+                <tr>
+                  <td style=\"width: 200px; font-weight: bold; text-align: left;\">Tahun</td>
+                  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+                  <td style=\"width: 873px; font-weight: bold;\">$Tahun_Aset</td>
+                </tr>
+                <tr>
+                  <td style=\"width: 200px; font-weight: bold; text-align: left;\">Nama Barang</td>
+                  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+                  <td style=\"width: 873px; font-weight: bold;\">$kodeKelompok / $Uraian</td>
+                </tr>
+                <tr>
+                  <td style=\"width: 200px; font-weight: bold; text-align: left;\">Nilai Perolehan</td>
+                  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+                  <td style=\"width: 873px; font-weight: bold;\">".number_format($NilaiPerolehan_akhir,2,",",".")."</td>
+                </tr>
+                 <tr>
+                  <td style=\"width: 200px; font-weight: bold; text-align: left;\">Aset_ID</td>
+                  <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
+                  <td style=\"width: 873px; font-weight: bold;\">$Aset_ID</td>
+                </tr>
+            </table><br>";
+        $body.="<table  style=\"width: 100%; height: ; text-align: left; margin-left: auto; margin-right: auto;\"border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+                <thead>
+                    <tr>
+                        <td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Tgl Transaksi</td>
+                        <td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: ;\">Transaksi</td>
+                        <td colspan=\"6\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AWAL</td>
+                        
+                         <td colspan=\"8\" rowspan=\"\" style=\"text-align:center; font-weight: bold; width: ;\">MUTASI</td>
+                        
+                        
+                        <td colspan=\"2\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">Beban Penyusutan</td>
+                        <td colspan=\"6\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: ;\">SALDO AKHIR</td>
+                        <td colspan=\"3\" rowspan=\"2\" style=\"text-align:center; font-weight: bold; width: 72px;\">PENYUSUTAN</td>
+                        <td colspan=\"\" rowspan=\"3\" style=\"text-align:center; font-weight: bold; width: 72px;\">KETERANGAN</td>
+                    </tr>
+                    <tr>
+                        <td colspan=\"4\" style=\"text-align:center; font-weight: bold; width: ;\">ASET</td>
+                        <td colspan=\"4\" style=\"text-align:center; font-weight: bold; width: ;\">PENYUSUTAN</td>
+                    </tr>
+                    <tr>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan Awal Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan Awal Revisi</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan Awal Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan Awal Revisi</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku Awal Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku Awal Revisi</td>
+                        
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah Revisi</td>
+
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang Revisi</td>
+
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Bertambah Revisi</td>
+
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Berkurang Revisi</td>
+
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Revisi</td> 
+                        
+
+                         <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan Akhir Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Perolehan Akhir Revisi</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan Akhir Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Akumulasi Penyusutan Akhir Revisi</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku Akhir Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Nilai Buku Akhir Revisi</td>
+
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Sisa Masa Manfaat Sistem</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Sisa Masa Manfaat Revisi</td>
+                        <td style=\"text-align:center; font-weight: bold; width: ;\">Tahun<br/>Penyusutan</td>
+                    </tr>
+                    <tr>
+                        <td style=\"text-align:center; font-weight: bold;\">1</td>
+                        <td style=\"text-align:center; font-weight: bold;\">2</td>
+                        <td style=\"text-align:center; font-weight: bold;\">3</td>
+                        <td style=\"text-align:center; font-weight: bold;\">4</td>
+                        <td style=\"text-align:center; font-weight: bold;\">5</td>
+                        <td style=\"text-align:center; font-weight: bold;\">6</td>
+                        <td style=\"text-align:center; font-weight: bold;\">7</td>
+                        <td style=\"text-align:center; font-weight: bold;\">8</td>
+                        
+                        <td style=\"text-align:center; font-weight: bold;\">9</td>
+                        <td style=\"text-align:center; font-weight: bold;\">10</td>
+                        <td style=\"text-align:center; font-weight: bold;\">11</td>
+                        <td style=\"text-align:center; font-weight: bold;\">12</td>
+                        <td style=\"text-align:center; font-weight: bold;\">13</td>
+                        <td style=\"text-align:center; font-weight: bold;\">14</td>
+                        <td style=\"text-align:center; font-weight: bold;\">15</td>
+                        <td style=\"text-align:center; font-weight: bold;\">17</td>
+                        <td style=\"text-align:center; font-weight: bold;\">18</td>
+                        
+                        <td style=\"text-align:center; font-weight: bold;\">19</td>
+                        <td style=\"text-align:center; font-weight: bold;\">20</td>
+                        <td style=\"text-align:center; font-weight: bold;\">21</td>
+                        <td style=\"text-align:center; font-weight: bold;\">22</td>
+                        <td style=\"text-align:center; font-weight: bold;\">23</td>
+                        <td style=\"text-align:center; font-weight: bold;\">24</td>
+                        <td style=\"text-align:center; font-weight: bold;\">25</td>
+                        <td style=\"text-align:center; font-weight: bold;\">26</td>
+                        <td style=\"text-align:center; font-weight: bold;\">27</td>
+                        <td style=\"text-align:center; font-weight: bold;\">28</td>
+                        <td style=\"text-align:center; font-weight: bold;\">29</td>
+                      
+                      </tr>
+                 </thead>";
+
+   
     $info="/*Penelusuran kodekelompok reklas untuk aset_id=$Aset_ID*/\n\n";
-    logfile($info,'data-reklas-mesin.txt');
+    logfile($info,'data-reklas-bangunan.txt');
 
     $query_history="select log_id,NilaiPerolehan,NilaiPerolehan_Awal,Kd_Riwayat,TglPerubahan,
                     (NilaiPerolehan-NilaiPerolehan_Awal) as selisih,TahunPenyusutan,TglPerolehan,
@@ -41,9 +200,10 @@ while ($row = $DBVAR->fetch_array ($result)) {
                     (AkumulasiPenyusutan-AkumulasiPenyusutan_Awal) as selisih_akm,
                     kodeKA,kodeRuangan,UmurEkonomis,MasaManfaat,
                      StatusValidasi, Status_Validasi_Barang,StatusTampil,
-                    PenyusutanPerTahun,Tahun,jenis_hapus
+                    PenyusutanPerTahun,Tahun,jenis_hapus,
+                    NilaiBuku_Awal
                     from $log_table where aset_id='$Aset_ID' and Kd_Riwayat in (7,21,29,28,50,51,2,291)
-                    and TglPerubahan!='0000-00-00'";
+                    and TglPerubahan!='0000-00-00' and TglPerubahan>='2015-01-01'";
     $result_log = $DBVAR->query ($query_history) or die($DBVAR->error ());
     $data_log = array();
    while ($row_log = $DBVAR->fetch_array ($result_log)) {
@@ -70,6 +230,7 @@ $i=0;
             $selisih_akm=$row_history['selisih_akm'];
             $Kd_Riwayat=$row_history['Kd_Riwayat'];
             $NilaiBuku_log=$row_history['NilaiBuku'];
+
             $AkumulasiPenyusutan_log=$row_history['AkumulasiPenyusutan'];
            /* if($AkumulasiPenyusutan_log==NULL)
                 $AkumulasiPenyusutan_log=0;
@@ -97,15 +258,36 @@ $i=0;
             $jenis_hapus=$row_history['jenis_hapus'];
              /**Data Sekunder**/
 
+             /*tambahan untuk riwayat*/
+            $NilaiPerolehan_3=$NilaiPerolehan_Awal;
+            $AkumulasiPenyusutan_awal_5=$AkumulasiPenyusutan_log_awal;
+            $NilaiBuku_Awal_log=$row_history['NilaiBuku_Awal'];
+            $bp_log=0;
+            $bp=0;
+            if($i==0){
+                $NilaiBuku_awal_revisi=$NilaiBuku_Awal_log;
+                $NilaiPerolehan_awal_revisi=$NilaiPerolehan_Awal;
+                $AkumulasiPenyusutan_awal_revisi=$AkumulasiPenyusutan_log_awal;
+
+             }else{
+                $NilaiBuku_awal_revisi=$NilaiBuku;
+                $NilaiPerolehan_awal_revisi=$NilaiPerolehan;
+                $AkumulasiPenyusutan_awal_revisi=$AkumulasiPenyusutan;
+
+             }
+             /*tambahan untuk riwayat*/
+
             if($Kd_Riwayat=="50"){
                 $np_awal=$NilaiPerolehan;
-                if($status_pertama==0){
+                //echo "$status_pertama<br/>";
+                 if($status_pertama==0){
                     $status_penyusutan_pertama=cek_penyusutan_tahun_pertama($Aset_ID,$log_table,$log_id,$DBVAR);
                     if($status_penyusutan_pertama==1)
                         $AkumulasiPenyusutan=0;
                  }   
 
                 if($AkumulasiPenyusutan==0){
+                   // echo "masuk pertama";
                     $PenyusutanPerTahun=$NilaiPerolehan/$MasaManfaat;
                     $rentang_penyusutan=($TahunPenyusutan-$TahunPerolehan)+1;
                     $UmurEkonomis=$MasaManfaat-$rentang_penyusutan;
@@ -138,7 +320,7 @@ $i=0;
                     $bp=$PenyusutanPerTahun;
                 }
                 $status_pertama=1;
-                 /*  echo "Rentang penyusutan dgn Aset_ID=$Aset_ID dan $Kd_Riwayatm $TglPerubahan-->$rentang_penyusutan<br/>
+                /*  echo "Rentang penyusutan dgn Aset_ID=$Aset_ID dan $Kd_Riwayatm $TglPerubahan-->$rentang_penyusutan<br/>
                         
                         PenyusutanPerTahun=$PenyusutanPerTahun-->($NilaiPerolehan/$MasaManfaat)<br/>
                         $AkumulasiPenyusutan=AkumulasiPenyusutan<br/>
@@ -151,31 +333,38 @@ $i=0;
                 if($Kd_Riwayat=="28"){
                     $np_next=0;
                     if($NilaiPerolehan==$NilaiPerolehan_Awal){
-                        echo "masuk kesini <br/>";
+                       // echo "masuk kesini <br/>";
                         $np_next=$data_log[$i+1]['NilaiPerolehan'];
                         $selisih_np_koreksi=$np_next-$NilaiPerolehan;
                         $NilaiPerolehan_Awal=$NilaiPerolehan;
                         $NilaiPerolehan=$np_next;
-                        
+                        // echo "np_next==$np_next<br/>";
+                        $update_kd28="update log_bangunan set 
+                                    NilaiPerolehan_Awal='$NilaiPerolehan_Awal',
+                                    NilaiPerolehan='$NilaiPerolehan' 
+                                    where log_id='$log_id' and aset_id='$Aset_ID';\n";
+                        logfile("$update_kd28","data-kd-28-bangunan.txt");
                         $selisih_akm=(($TahunPenyusutan-$TahunPerolehan)+1)*($selisih_np_koreksi/$MasaManfaat);
+
                     }else{
-                        echo "gak masukk";
+                      //  echo "gak masukk";
+                        
                     }
                 }                
                     $AkumulasiPenyusutan=$AkumulasiPenyusutan+$selisih_akm;
                     $NilaiBuku=$NilaiPerolehan-$AkumulasiPenyusutan;
-
+              //  echo "Perhitungannyasblm ==$PenyusutanPerTahun<br/>";
                  if($PenyusutanPerTahun!=0)
                  {
                     $pp_pengurang=(($NilaiPerolehan-$NilaiPerolehan_Awal)/$MasaManfaat);
                             $PenyusutanPerTahun=$PenyusutanPerTahun+$pp_pengurang;
                  }
-
-                
+               // echo "Perhitungannya==$PenyusutanPerTahun-->$pp_pengurang;";
 
             }else if($Kd_Riwayat=="2"||$Kd_Riwayat=="29"||$Kd_Riwayat=="291")
             {   
                 //kapitalisasi
+               // echo "$Kd_Riwayat==$selisih<br/>";
                 $kapitalisasi+=$selisih;
                 $NilaiBuku=$NilaiBuku+$selisih;
             }else if($Kd_Riwayat=="51"){
@@ -198,13 +387,47 @@ $i=0;
                      $bp=$PenyusutanPerTahun;
                      $kapitalisasi=0;
                 }else{
-                    echo "gagal kapitalisasi---";
+                    echo "$Aset_ID===<br/>$TglPerubahan<br/>gagal kapitalisasi---";
                     exit();
                 }
-                 $np_awal=$NilaiPerolehan;
             }
-            echo "$Kd_Riwayat==$bp_log-->$AkumulasiPenyusutan-$AkumulasiPenyusutan_log<br/>PenyusutanPerTahun==$PenyusutanPerTahun<br/>";
-            
+ //           echo "$Kd_Riwayat==$bp_log-->$AkumulasiPenyusutan-$AkumulasiPenyusutan_log<br/>";
+            $txt_uraian=$RIWAYAT[$Kd_Riwayat];
+            $txt_tgl_perubahan= date('d/m/y ', strtotime($TglPerubahan));
+            $body.=" <tr>
+                        <td style=\"text-align:center; \">$txt_tgl_perubahan</td>
+                        <td style=\"text-align:center; \">$txt_uraian($Kd_Riwayat)</td>
+                        <td style=\"text-align:center; \">".number_format($NilaiPerolehan_3,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($NilaiPerolehan_awal_revisi,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($AkumulasiPenyusutan_awal_5,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($AkumulasiPenyusutan_awal_revisi,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($NilaiBuku_Awal_log,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($NilaiBuku_awal_revisi,2,",",".")."</td>
+                       
+                        <td style=\"text-align:center; \"></td>
+                        <td style=\"text-align:center; \"></td>
+                        <td style=\"text-align:center; \"></td>
+                        <td style=\"text-align:center; \"></td>
+                        <td style=\"text-align:center; \"></td>
+                        <td style=\"text-align:center; \"></td>
+                        <td style=\"text-align:center; \"></td>
+                        <td style=\"text-align:center; \"></td>
+
+                        <td style=\"text-align:center; \">".number_format($bp_log,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($bp,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($NilaiPerolehan,2,",",".")."</td>
+                        <td style=\"text-align:center; \">".number_format($bp_log,2,",",".")."<</td>
+                        <td style=\"text-align:center; \">22</td>
+                        <td style=\"text-align:center; \">23</td>
+                        <td style=\"text-align:center; \">24</td>
+                        <td style=\"text-align:center; \">25</td>
+                        <td style=\"text-align:center; \">26</td>
+                        <td style=\"text-align:center; \">27</td>
+                        <td style=\"text-align:center; \">28</td>
+                        <td style=\"text-align:center; \">29</td>
+                        
+                      </tr>";
+
             $query="INSERT INTO `perhitungan_reklas`(`log_id`, `Aset_ID`, `kodeKelompok`,
                              `kodeSatker`, `kodeLokasi`, `noRegister`, `TglPerolehan`, 
                              `TglPembukuan`, `TglPerubahan`,
@@ -228,15 +451,19 @@ $i=0;
                                 '$PenyusutanPerTahun', '$AkumulasiPenyusutan_log',
                                  '$NilaiBuku_log', '$PenyusutanPerTahun_log', 
                                  '$UmurEkonomis', '$TahunPenyusutan', '$jenis_hapus','$bp_log','$bp','$UmurEkonomis_log','$MasaManfaat_log');\n\n";
-        logfile($query,'data-reklas-mesin.txt');
+       
+        logfile($query,'data-reklas-bangunan.txt');
         $i++;
 
     }
+    $body.="</table><br/><br/>";
+    
 
 
 
 }
-
+ echo "$head $body Total=$total</html>";
+  
 function cek_masamanfaat($kd_aset1, $kd_aset2, $kd_aset3, $DBVAR)
 {
     $query = "select * from ref_masamanfaat where kd_aset1='$kd_aset1' "
@@ -311,7 +538,7 @@ function overhaul($kd_aset1, $kd_aset2, $kd_aset3, $persen, $DBVAR)
     }
     if($hasil == "")
         $hasil = 0;
-    echo " prosentase $persen====$hasil \n";
+   // echo " prosentase $persen====$hasil \n";
 
     return $hasil;
 }

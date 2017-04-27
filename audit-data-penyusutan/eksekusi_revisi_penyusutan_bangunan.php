@@ -10,7 +10,7 @@ $query_data = "SELECT  aset_id,umurekonomis,MasaManfaat,kd_riwayat,TglPerubahan,
 (NilaiPerolehan-NilaiPerolehan_Awal)as np,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,
 (AkumulasiPenyusutan-AkumulasiPenyusutan_Awal)as akm,nilaibuku,NilaiBuku_Awal, PenyusutanPerTahun,
 PenyusutanPerTahun_Awal,bp_log,bp,(bp-bp_log)as selisih FROM `perhitungan_reklas_bangunan` 
-where ((bp_log-bp)>2 or (bp_log-bp)<-2) and Kd_Riwayat in(50,51)  and aset_id=718888 group by aset_id ";
+where ((bp_log-bp)>30 or (bp_log-bp)<-30) and Kd_Riwayat in(50,51)   group by aset_id ";
 $result = $DBVAR->query ($query_data) or die($DBVAR->error ());
 $data_selisih = "";
 $satker = array();

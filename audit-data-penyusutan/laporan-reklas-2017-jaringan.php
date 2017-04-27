@@ -3,7 +3,7 @@ error_reporting (0);
 include "../config/config.php";
 
 
-$query_data = "SELECT Aset_ID,KodeSatker,KodeKelompok,Tahun,NoRegister,TahunPenyusutan,umurekonomis,MasaManfaat,kd_riwayat,TglPerubahan,NilaiPerolehan,NilaiPerolehan_Awal,(NilaiPerolehan-NilaiPerolehan_Awal)as np,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,(AkumulasiPenyusutan-AkumulasiPenyusutan_Awal)as akm,nilaibuku,NilaiBuku_Awal, PenyusutanPerTahun,PenyusutanPerTahun_Awal,bp_log,bp,(bp-bp_log)as selisih FROM perhitungan_reklas_jaringan where ((bp_log-bp)>2 or (bp_log-bp)<-2) and Kd_Riwayat in(50,51) ORDER BY Aset_ID";
+$query_data = "SELECT Aset_ID,KodeSatker,KodeKelompok,Tahun,NoRegister,TahunPenyusutan,umurekonomis,MasaManfaat,kd_riwayat,TglPerubahan,NilaiPerolehan,NilaiPerolehan_Awal,(NilaiPerolehan-NilaiPerolehan_Awal)as np,AkumulasiPenyusutan,AkumulasiPenyusutan_Awal,(AkumulasiPenyusutan-AkumulasiPenyusutan_Awal)as akm,nilaibuku,NilaiBuku_Awal, PenyusutanPerTahun,PenyusutanPerTahun_Awal,bp_log,bp,(bp-bp_log)as selisih FROM perhitungan_reklas_jaringan where ((bp_log-bp)>30 or (bp_log-bp)<-30) and Kd_Riwayat in(50,51) ORDER BY Aset_ID";
 
 $data = getData($DBVAR, $query_data, true);
 $count = array_count_values(array_column($data, 'Aset_ID'));
