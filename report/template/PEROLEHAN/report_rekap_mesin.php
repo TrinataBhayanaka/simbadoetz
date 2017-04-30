@@ -60,7 +60,7 @@ $resultParamGol = $REPORT->ceckRekap($get_satker,$tglawalperolehan,$tglakhirpero
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_rekap_mesin($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+list($html,$csv)=$REPORT->retrieve_rekap_mesin($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 echo $html[$i];     
@@ -70,7 +70,18 @@ exit;*/
 if($tipe=="3"){
 	echo $serviceJson;
 	exit;
-}elseif($tipe!="2"){
+}elseif($tipe=="4")
+{
+
+
+  $waktu=date("d-m-y_h:i:s");
+	$filename ="Rekap_Mesin_$waktu.csv";
+  header('Content-type: text/csv');
+  header('Content-Disposition: attachment; filename='.$filename);
+  echo $csv; 
+}
+
+elseif($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');
 $mpdf->AddPage('L','','','','',15,15,16,16,9,9);

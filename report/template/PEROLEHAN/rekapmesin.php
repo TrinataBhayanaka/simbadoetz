@@ -14,7 +14,7 @@ $paramater_url="menuID=$modul&mode=$mode&tab=$tab&skpd_id=$skpd_id&tglawalperole
 // exit;
 $REPORT=new report_engine();
 $url = "report_rekap_mesin.php?$paramater_url";
-$REPORT->show_pilih_download($url);  
+$REPORT->show_pilih_download_detail($url);  
 
 
 

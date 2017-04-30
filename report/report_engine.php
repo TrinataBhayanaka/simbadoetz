@@ -186,6 +186,7 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 		          <td width=\"20%\">&nbsp;</td>
 		        </tr>";
 		}
+		
 
 		$html = "<body>
 			 	<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
@@ -278,6 +279,16 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 						<td style=\"font-weight: bold; text-align: center;\">22</td>
 				   	</tr>
 			  		</thead>";
+			  $nama_prov=$this->NAMA_PROVINSI;
+			  $nama_kab=$this->NAMA_KABUPATEN;
+
+			  $head_csv="$Bidang\n$UnitOrganisasi\n$SubUnitOrganisasi\n$UPB";
+			 $csv.= "REKAPITULASI PENYUSUTAN B\nPERALATAN DAN MESIN
+			    	\n$tahun_neraca\n$nama_kab\n$nama_prov\n$head_csv\n\n";
+			  $csv.="No Urut|Kode Barang|Nama Barang|Nomor Register|Merk/Type|Ukuran/CC|Bahan|Tahun Perolehan|Nomor Pabrik|NO Rangka|No Mesin|NO Polisi|NO BPKB|Asal Usul|Nilai Perolehan|AkumulasiPenyusutan|NilaiBuku|Penyusutan Pertahun|Masa MAnfaat|Sisa Masa Manfaat|Ket|NO Register|\n";
+			 $csv.="1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|\n";
+		
+		
 		$no = 1;
 		$perolehanTotalAll = 0;
 		$printperolehanTotal = 0;
@@ -300,6 +311,7 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 			$html.= "<tr>
 					<td colspan =\"22\" style=\"text-align: left; font-weight: bold;\">$NamaSatker </td>
 				</tr>";
+			$csv.="$NamaSatker\n";
 			
 			$perolehanTotal = 0;
 			$APTotal = 0;
@@ -383,6 +395,7 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 						<td style=\"width: 69px;font-weight: \">$row->Info</td>
 						<td style=\"width: 69px;font-weight: \">$row->Aset_ID</td>
 					</tr>";
+				$csv.="$no|$row->Kode|$row->Uraian|$noReg|$row->Merk|$row->Ukuran|$row->Material|$row->Tahun|$row->NoSeri|$row->NoRangka|$row->NoMesin|$row->NoSTNK|$row->NoBPKB|$row->AsalUsul|$nilaiPrlhnFix|$APFix|$NBFix|$PPFix|$row->MasaManfaat|$umurekonomis|$row->Info|$row->Aset_ID\n";
 						   
 				$no++;	
 			}
@@ -399,6 +412,7 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 						<td style=\"text-align: right;\">$printPPTotal</td>
 						<td colspan=\"4\">&nbsp;</td>
 					</tr>";
+			 $csv.="||||||||||||||||SubTotal|$printperolehanTotal|$printAPTotal|$printNBTotal|$printPPTotal||\n";
 			$printperolehanTotal = 0;			 
 			$printAPTotal = 0;			 
 			$printNBTotal = 0;			 
@@ -419,14 +433,14 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 					<td colspan=\"4\">&nbsp;</td>
 				</tr>
 			</table>";
-
+		$csv.="||||||||||||||||Total|$printperolehanTotalAll|$printAPTotalAll|$printNBTotalAll|$printPPTotalAll||\n";
 		$html.="<table border=\"0\">
 					<tr>
 						<td colspan=\"22\">&nbsp;</td>
 					</tr>
 			</table></body></html>";			  			
 	$get_html[]=$header.$html;
-  	return $get_html;
+  	return array($get_html,$csv);
 	}
 }			
 
@@ -30319,7 +30333,7 @@ foreach ($dataArr as $asetID => $value)
 						$flag = "";
 						$Riwayat=" $Riwayat (+)";
 						//SALDO AWAL
-						$nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
+						$nilaiAwalPrlhn = $valRwyt->NilaiPerolehan_Awal;
 						$nilaiAwalPerolehanFix = number_format($nilaiAwalPrlhn,2,",",".");
 						
 						$AkumulasiPenyusutan_Awal = $valRwyt->AkumulasiPenyusutan;
