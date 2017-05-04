@@ -41991,7 +41991,7 @@ return $hasil_html;
 			FROM $paramGol
 			WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
-			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan < '$tglakhirperolehan' 
+			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan <= '$tglakhirperolehan' 
 			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' ";
 		}elseif($gol == 'NonAset'){
 			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml FROM $paramGol 
