@@ -32,8 +32,8 @@ function db($data,$exit=1){
 	// if($exit == 1) exit;
 }
 
-//Badan Lingkungan Hidup
-$skpd 			= "16.01.01.01";
+//RSUD
+$skpd 			= "07.02.01.01";
 //Kelurahan soko duwet 
 //$skpd 	    = "50.04.10.01";
 
@@ -42,7 +42,7 @@ $skpd 			= "16.01.01.01";
 //$KodeSatker 	= $exp[0].'.'.$exp[1];
 //$KodeUnit		= $exp[2];
 //$Gudang			= $exp[3];
-$tahun 			= "2017";
+$tahun 			= "2016";
 
 //log (function logfile)
 include "../../../config/config.php";
@@ -156,7 +156,7 @@ while($row_kib = mysql_fetch_assoc($exe_select_kib)) {
 	$AddField = "action,changeDate,TglPerubahan,NilaiPerolehan_Awal,Kd_Riwayat";
 	$action = "Rev_Ruangan_".$row_kib[kodeSatker].'_'.$row_kib[kodeRuangan];
 	$changeDate = date('Y-m-d');
-	$tgl = '2017-01-01';
+	$tgl = '2016-12-31';
 	$TglPerubahan = $tgl;
 	$NilaiPerolehan_Awal = $row_kib[NilaiPerolehan];
 	$Kd_Riwayat = '4';
