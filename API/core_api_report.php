@@ -6008,30 +6008,109 @@ class core_api_report extends DB {
 			$splitKodeSatker = explode ('.',$satker_id);
 				if(count($splitKodeSatker) == 4){	
 					$paramSatker = "kode = '$satker_id'";
+					$paramSatker_rev = "kodeSatker = '$satker_id'";
 				}else{
 					$paramSatker = "kode like '$satker_id%'";
+					$paramSatker_rev = "kodeSatker like '$satker_id%'";
 				}
 			$qsat = "SELECT kode,NamaSatker FROM satker where $paramSatker and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
+			$rsat = $this->query($qsat) or die ($this->error());
+			//list satker
+			/*while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					// $satker[] = $dtrsat->kode;
+					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}*/
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					$satker[] = $dtrsat->kode;
+					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker]= $dtrsat->kode;
+				}	
+			}
+			/*pr("list array skpd");
+			pr($satker);*/
+			//list satker yg ada datanya Status_Validasi_Barang = 1 AND kodeSatker LIKE '04%' GROUP BY kodeSatker
+			$qsatcmpr = "SELECT kodeSatker FROM aset where $paramSatker_rev and Status_Validasi_Barang = 1 
+						GROUP BY kodeSatker";
+			//pr($qsatdat);
+			$rsatcmpr = $this->query($qsatcmpr) or die ($this->error());
+			while($dtrsatcmpr = $this->fetch_object($rsatcmpr)){
+				if($dtrsatcmpr != ''){
+					$satkercmpr[] = $dtrsatcmpr->kodeSatker;
+					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker]= $dtrsat->kode;
+				}	
+			}
+			/*pr("list array skpd fix");
+			pr($satkercmpr);*/
+			//compare array
+			$result=array_intersect($satkercmpr,$satker);
+			//pr($result);
+			foreach ($result as $key => $value) {
+				# code...
+				/*pr($key);
+				pr($value);*/
+				$qrstker = "SELECT kode,NamaSatker FROM satker where kode = '{$value}' and KodeUnit is not null 
+							and Gudang is not null and Kd_Ruang is NULL";
+				$exeqrstker = $this->query($qrstker) or die ($this->error());
+				$dtrsat = $this->fetch_object($exeqrstker);
+				$satker2[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				//exit;
+			}
+			//pr($satker2);
+			//exit;
+		}else{
+			//pr("here");
+			/*$qsat = "SELECT kode,NamaSatker FROM satker where kode is not null and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL ";
 			$rsat = $this->query($qsat) or die ($this->error());
 			while($dtrsat = $this->fetch_object($rsat)){
 				if($dtrsat != ''){
 					// $satker[] = $dtrsat->kode;
 					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
 				}	
-			}
-		}else{
+			}*/
+			//list all satker
 			$qsat = "SELECT kode,NamaSatker FROM satker where kode is not null and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL ";
 			$rsat = $this->query($qsat) or die ($this->error());
 			while($dtrsat = $this->fetch_object($rsat)){
 				if($dtrsat != ''){
 					// $satker[] = $dtrsat->kode;
-					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+					$satker[] = $dtrsat->kode;
 				}	
+			}
+			//pr("list array skpd");
+			//pr($satker);
+			//list satker yg ada datanya Status_Validasi_Barang = 1  GROUP BY kodeSatker
+			$qsatcmpr = "SELECT kodeSatker FROM aset where Status_Validasi_Barang = 1 GROUP BY kodeSatker";
+			//pr($qsatdat);
+			$rsatcmpr = $this->query($qsatcmpr) or die ($this->error());
+			while($dtrsatcmpr = $this->fetch_object($rsatcmpr)){
+				if($dtrsatcmpr != ''){
+					$satkercmpr[] = $dtrsatcmpr->kodeSatker;
+					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker]= $dtrsat->kode;
+				}	
+			}
+			//pr("list array skpd fix");
+			//pr($satkercmpr);
+			$result=array_intersect($satkercmpr,$satker);
+			//pr($result);
+			//pr("result");
+			//pr($result);
+			foreach ($result as $key => $value) {
+				# code...
+				/*pr($key);
+				pr($value);*/
+				$qrstker = "SELECT kode,NamaSatker FROM satker where kode = '{$value}' and KodeUnit is not null 
+							and Gudang is not null and Kd_Ruang is NULL";
+				$exeqrstker = $this->query($qrstker) or die ($this->error());
+				$dtrsat = $this->fetch_object($exeqrstker);
+				$satker2[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				//exit;
 			}
 		
 		}
-		// pr($satker);
-		// exit;
+		//pr($satker2);
+		//exit;
 		$tglDefault_Extra = '2008-01-01';
 		$tglDefault = '2008-01-01';
 		$thnDefault ="2008";
@@ -6047,7 +6126,7 @@ class core_api_report extends DB {
 		$KodeKa = "OR kodeKA = 1";
 		$KodeKaCondt1 = "AND kodeKA = 1";
 		
-		foreach ($satker as $data=>$satker_id){
+		foreach ($satker2 as $data=>$satker_id){
 		
 			$query_01 = "SELECT sum(NilaiPerolehan) as nilai FROM tanahView
 							WHERE kodeSatker = '$satker_id'  
