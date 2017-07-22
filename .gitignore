@@ -20,3 +20,4 @@ module/regrouping/log/*
 /page_admin/css/
 services/cache/*
 services/logs/*
+sync_simbada-2016-2017/output/*
