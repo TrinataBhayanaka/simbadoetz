@@ -159,7 +159,9 @@ $sQuery = "
 		$sLimit
 		";
 // echo $sQuery;
-$rResult = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
+//$rResult = $DBVAR->query($sQuery) or fatal_error('MySQL Error: ' . mysql_errno());
+$rResultGetDataApluserlist = $DBVAR->fetch($sQuery,1);
+
 
 /* Data set length after filtering */
 $sQuery = "
@@ -192,7 +194,48 @@ $output = array(
 );
 $no=$_GET['iDisplayStart']+1;
 
-while ($aRow = $DBVAR->fetch_array($rResult)) {
+//ini buat apluserlist
+$PENGHAPUSAN = new RETRIEVE_PENGHAPUSAN;
+$data_post=$PENGHAPUSAN->apl_userasetlistHPS("KIRASETEXP");
+$POST=$PENGHAPUSAN->apl_userasetlistHPS_filter($data_post);
+
+
+if($POST){
+      foreach ($rResultGetDataApluserlist as $key => $value) {
+        if(!in_array($value['Satker_ID'], $POST)){
+          $data[]=$value;
+          $data[$key]['checked']="";
+        }else{
+          $data[]=$value;
+          $data[$key]['checked']="checked";
+        }
+      }
+}else{
+      $data=$rResultGetDataApluserlist;
+}
+if (!empty($data)){
+  foreach ($data as $key => $aRow)
+  {
+    // pr($aRow);
+    $row = array();
+    $id =  $aRow['Satker_ID'];
+    $Tahun = $aRow['Tahun'];
+    $Kd_Ruang = $aRow['Kd_Ruang'];
+    $NamaSatker = $aRow['NamaSatker'];
+
+    $checkbox   = "<input type=\"checkbox\" class =\"icheck-input checkbox\" name=\"id_tahun[]\" value=\"$id\" onchange=\"return AreAnyCheckboxesChecked();\" $aRow[checked]>";
+    
+             
+    $row[] ="<center>".$no."<center>";
+    $row[] ="<center>".$checkbox."<center>";
+    $row[] ="<center>".$Tahun."<center>";
+    $row[] =$Kd_Ruang."&nbsp;".$NamaSatker;
+     
+    $no++;
+     $output['aaData'][] = $row;
+  }
+}
+/*while ($aRow = $DBVAR->fetch_array($rResult)) {
     
 	//DAFTAR FIELD
 	 // array('Satker_ID','Tahun','Kd_Ruang','NamaSatker')
@@ -209,7 +252,8 @@ while ($aRow = $DBVAR->fetch_array($rResult)) {
 	  
 	$no++;
      $output['aaData'][] = $row;
-}
+}*/
+
 
 echo json_encode($output);
 

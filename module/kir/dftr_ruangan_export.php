@@ -44,7 +44,7 @@ include "../../config/config.php";
 	   $("select").select2();
 	});
 	
-	function selectAll(source) {
+	/*function selectAll(source) {
 			checkboxes = document.getElementsByName('id_tahun[]');
 			for(var i in checkboxes){
 				checkboxes[i].checked = source.checked;
@@ -64,8 +64,22 @@ include "../../config/config.php";
 			alert('Ceklis Pilihan Terlebih Dahulu!');
 		}
 		return checked;
-	}
+	}*/
 	
+	function AreAnyCheckboxesChecked () 
+		{
+			setTimeout(function() {
+		  if ($("#Form2 input:checkbox:checked").length > 0)
+			{
+			    $("#submit").removeAttr("disabled");
+			    updDataCheckbox('KIRASETEXP');
+			}
+			else
+			{
+			   $('#submit').attr("disabled","disabled");
+			    updDataCheckbox('KIRASETEXP');
+			}}, 200);
+		}
 	</script>
 
 	<section id="main">
@@ -105,7 +119,7 @@ include "../../config/config.php";
 		</div>		
 		
 		<section class="formLegend">
-			<form id="userForm" name="myform" method="POST" action ="<?=$url_rewrite?>/module/kir/proses_export.php">
+			<form id="Form2" name="myform" method="POST" action ="<?=$url_rewrite?>/module/kir/proses_export.php">
 			<div class="detailLeft">
 			<ul>
 				<li>
@@ -117,7 +131,7 @@ include "../../config/config.php";
 					<input type="text" value="<?=$dataSesi['Tahun2']?>" disabled/>
 				</li>
 				<li>
-					<input type="submit" class="btn btn-info btn-small" id= "export" value="Export" name="export"  onclick="return check_pilihan();"/>
+					<input type="submit" class="btn btn-info btn-small" id= "submit" value="Export" name="export"  onclick="return check_pilihan();" disabled/>
 					<input type="hidden" name="TahunAsal" value="<?=$dataSesi['Tahun']?>">
 					<input type="hidden" name="TahunTujuan" value="<?=$dataSesi['Tahun2']?>">
 					<input type="hidden" name="kodeSatker" value="<?=$dataSesi['kodeSatker']?>">
@@ -133,7 +147,7 @@ include "../../config/config.php";
 							],
 							"aoColumns":[
 								 {"bSortable": false},
-								 {"bSortable": false},
+								 {"bSortable": false,"sClass": "checkbox-column" },
 								 {"bSortable": true},
 								 {"bSortable": true}],
 							"sPaginationType": "full_numbers",
@@ -150,11 +164,12 @@ include "../../config/config.php";
 			<!--</div>-->	
 				
 			<div id="demo">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="kir_export">
+			<table cellpadding="0" cellspacing="0" border="0" class="display table-checkable" id="kir_export">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th align = "center"><input type="checkbox" class ="pilihan" id="id_tahun" onClick="return selectAll(this)"/> Pilih Semua</th>
+						<!--<th align = "center"><input type="checkbox" class ="pilihan" id="id_tahun" onClick="return selectAll(this)"/> Pilih Semua</th>-->
+						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>Tahun</th>
 						<th>Nama Ruangan</th>
 					</tr>

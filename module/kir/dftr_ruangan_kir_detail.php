@@ -62,14 +62,14 @@ include "../../config/config.php";
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link " href="<?=$url_rewrite?>/module/">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/filter_ruangan.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Daftar Ruangan UPB</span>
 				</a>
-				<a class="shortcut-link " href="<?=$url_rewrite?>/module/">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/filter_ruangan_export.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
