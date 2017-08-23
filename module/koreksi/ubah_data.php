@@ -128,10 +128,19 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input readonly type="text" class="span2" name="tglPerubahan" id="datepicker2" value="<?=$dataArr['aset']['tglPerubahan']?>" required/>
+										<input readonly type="text" class="span2" name="tglPerubahan" id="tglPerubahan" value="<?=$dataArr['aset']['tglPerubahan']?>" required/>
 									</div>
 								</div>
 							</li>
+
+                            <script type="text/javascript">
+                                $(document).on('submit',function(){
+                                    if($("#tglPerubahan").val() == ""){
+                                        alert("Tgl Perubahan tidak boleh kosong");
+                                        return false;
+                                    }
+                                })
+                            </script>
 							<li>
 								<span class="span2">Keterangan Koreksi</span>
 								<textarea name="GUID" class="span3" id="ketkor"><?=$dataArr['aset']['GUID']?></textarea>
