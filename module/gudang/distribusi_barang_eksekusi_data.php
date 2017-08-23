@@ -54,8 +54,16 @@ if($_GET['id']){
 							</li>
 							<li>
 								<span class="span2">Tanggal Proses</span>
-								<input readonly type="text" placeholder="yyyy-mm-dd" id="datepicker" name="tglDistribusi" value="<?=(isset($dataArr) ? $dataArr['tglDistribusi'] : '')?>" style="width:205px;" required>
+								<input readonly type="text" placeholder="yyyy-mm-dd" id="tglDistribusi" name="tglDistribusi" value="<?=(isset($dataArr) ? $dataArr['tglDistribusi'] : '')?>" style="width:205px;" required>
 							</li>
+                <script type="text/javascript">
+                    $(document).on('submit',function(){
+                        if($("#tglDistribusi").val() == ""){
+                            alert("Tgl Distribusi tidak boleh kosong");
+                            return false;
+                        }
+                    })
+                </script>
 							<li>
 								<span class="span2">Alasan</span>
 								<textarea name="alasan" cols="90" rows="5"><?=(isset($dataArr) ? $dataArr['alasan'] : '')?></textarea>
