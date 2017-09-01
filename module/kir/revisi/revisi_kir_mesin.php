@@ -14,9 +14,11 @@ $password = 'margonda100';
 $conn = mysql_connect($hostname,$username,$password);
 
 //source db
+//simbada_pekalongan_2016_20170224
 $db1 = "simbada_pekalongan_2016_20170224";
 //destination db
-$db2 = "simbada_pekalongan_2017_20170327";	
+//simbada_pekalongan_20170721_hasil_sync
+$db2 = "simbada_pekalongan_20170721_hasil_sync";	
 
 $link_db1 = mysql_select_db($db1,$conn);
 $link_db2 =  mysql_select_db($db2,$conn);
@@ -156,7 +158,8 @@ while($row_kib = mysql_fetch_assoc($exe_select_kib)) {
 	$AddField = "action,changeDate,TglPerubahan,NilaiPerolehan_Awal,Kd_Riwayat";
 	$action = "Rev_Ruangan_".$row_kib[kodeSatker].'_'.$row_kib[kodeRuangan];
 	$changeDate = date('Y-m-d');
-	$tgl = '2016-12-31';
+	$tgl = $changeDate;
+	//$tgl = '2016-12-31';
 	$TglPerubahan = $tgl;
 	$NilaiPerolehan_Awal = $row_kib[NilaiPerolehan];
 	$Kd_Riwayat = '4';
