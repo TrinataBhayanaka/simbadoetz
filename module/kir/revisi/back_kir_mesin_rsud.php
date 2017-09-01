@@ -8,7 +8,7 @@ $time_start = microtime(true);
 
 //ambil Aset_ID
 $sqllistAset_ID = "SELECT Aset_ID FROM `log_mesin` WHERE `kodeSatker` LIKE '07.02.01.01' AND `action` LIKE 'Rev_Ruangan_%' 
-	            AND `Kd_Riwayat` = 4 AND TglPerubahan = '2017-09-01' limit 2";
+	            AND `Kd_Riwayat` = 4 AND TglPerubahan = '2017-09-01'";
 
 echo "Query : ".$sqllistAset_ID."\n\n";
 
