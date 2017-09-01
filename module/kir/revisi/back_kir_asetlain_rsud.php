@@ -1,4 +1,4 @@
-<?phpNULL
+<?php
 include "../../../config/database.php";
 
 $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user'],$CONFIG['default']['db_pass'],$CONFIG['default']['db_name']) or die("Error " . mysqli_error($link)); 
