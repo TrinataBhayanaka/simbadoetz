@@ -35,7 +35,7 @@ function db($data,$exit=1){
 }
 
 //RSUD
-$skpd 			= "07.02.01.01";
+$skpd 			= "07.01.01.01";
 //Kelurahan soko duwet 
 //$skpd 	    = "50.04.10.01";
 
