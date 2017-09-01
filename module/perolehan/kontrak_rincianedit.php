@@ -382,11 +382,20 @@ $menu_id = 10;
 								<div class="control">
 									<div class="input-prepend">
 										<span class="add-on"><i class="fa fa-calendar"></i></span>
-										<input readonly type="text" class="span2 datepicker" placeholder="yyyy-mm-dd" id="datepicker" name="TglPerolehan" value="<?=($kontrak[0]['tipeAset'] == '3')? $aset[0]['TglPerolehan'] : ''?>" required <?=($kontrak[0]['tipeAset'] == '3')? readonly : ''?>/>
+										<input readonly type="text" class="span2 datepicker" placeholder="yyyy-mm-dd" id="TglPerolehan" name="TglPerolehan" value="<?=($kontrak[0]['tipeAset'] == '3')? $aset[0]['TglPerolehan'] : ''?>" required <?=($kontrak[0]['tipeAset'] == '3')? readonly : ''?>/>
 									</div>
 								</div>
 							</li>
-							<li>
+                            <script type="text/javascript">
+                                $(document).on('submit',function(){
+                                    if($("#TglPerolehan").val() == ""){
+                                        alert("Tgl Perolehan tidak boleh kosong");
+                                        return false;
+                                    }
+                                })
+                            </script>
+
+                            <li>
 								<span class="span2">Alamat</span>
 								<textarea name="Alamat" class="span3" ><?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['Alamat'] : ''?></textarea>
 							</li>
