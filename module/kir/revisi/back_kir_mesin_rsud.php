@@ -41,7 +41,7 @@ while($row = mysqli_fetch_assoc($result)) {
   					SET TglPerubahan = null
 					WHERE Aset_ID = {$Aset_ID} AND 
 						 `Kd_Riwayat` = 4 AND TglPerubahan = '2017-09-01'" or die("Error in the consult.." . mysqli_error($link));	
-		$execMSN = $link->query($quertMesin);	
+		$execMSN = $link->query($quertLogMesin);	
 		echo "quertMSN : ".$quertLogMesin."\n\n";
 
 	}
