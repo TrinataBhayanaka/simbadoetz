@@ -9769,7 +9769,7 @@ $offset = @$_POST['record'];
         }
         $setval = implode(' AND ', $tmpsetval);
 
-        $sql = mysql_query("SELECT NilaiPerolehan,Tahun,kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(CAST(noRegister AS SIGNED)) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND (Status_Validasi_Barang IS NULL) GROUP BY  kodeKelompok ,  kodeLokasi, NilaiPerolehan");
+        $sql = mysql_query("SELECT NilaiPerolehan,Tahun,kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(CAST(noRegister AS SIGNED)) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND (Status_Validasi_Barang IS NULL or Status_Validasi_Barang=0) GROUP BY  kodeKelompok ,  kodeLokasi, NilaiPerolehan");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
@@ -9791,7 +9791,7 @@ $offset = @$_POST['record'];
     function retrieve_searchAsetDist_detail($data)
     {
         
-        $sql = mysql_query("SELECT Tahun,kodeKelompok,kodeSatker,kodeLokasi,NilaiPerolehan,noRegister FROM {$data['tbl']} WHERE Tahun = '{$data['th']}' AND kodeKelompok = '{$data['kel']}' AND kodelokasi = '{$data['lok']}' AND StatusTampil='1' AND Status_Validasi_Barang IS NULL ORDER BY noRegister");
+        $sql = mysql_query("SELECT Tahun,kodeKelompok,kodeSatker,kodeLokasi,NilaiPerolehan,noRegister FROM {$data['tbl']} WHERE Tahun = '{$data['th']}' AND kodeKelompok = '{$data['kel']}' AND kodelokasi = '{$data['lok']}' AND StatusTampil='1' AND (Status_Validasi_Barang IS NULL or Status_Validasi_Barang=0) IS NULL ORDER BY noRegister");
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
