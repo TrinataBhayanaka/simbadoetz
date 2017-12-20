@@ -23,7 +23,6 @@ $sqlPenghapusan = "SELECT Usulan_ID,Penghapusan_ID FROM `penghapusan` WHERE Satk
 $execPenghapusan =  $link->query($sqlPenghapusan);
 while($rowPenghapusan = $execPenghapusan->fetch_assoc()) {
 	$tempPenghapusanID[] = $rowPenghapusan['Penghapusan_ID'];
-	$tempUsulanID[] 	 = $rowPenghapusan['Usulan_ID'];
 }
 //echo "Penghapusan_ID"."\n\n";
 foreach ($tempPenghapusanID as $key => $value) {
@@ -112,6 +111,12 @@ foreach ($tempPenghapusanID as $key => $value) {
 	*/
 //echo "=============="."\n\n";
 //echo "Usulan_ID"."\n\n";
+$sqlUsulan = "SELECT * FROM `usulan` WHERE SatkerUsul LIKE '08%' AND (Jenis_Usulan = 'PMS' OR Jenis_Usulan = 'PMD') 
+			  AND TglUpdate >='2017-01-01'";
+$execUsulan =  $link->query($sqlUsulan);
+while($rowUsulan = $execUsulan->fetch_assoc()) {
+	$tempUsulanID[] = $rowUsulan['Usulan_ID'];
+}	
 foreach ($tempUsulanID as $key => $value) {
 	$Usulan_ID = $value; 
 	//print_r($Usulan_ID);
