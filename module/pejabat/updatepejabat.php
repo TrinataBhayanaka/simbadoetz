@@ -2,7 +2,6 @@
 include "../../config/config.php";
 //update pejabat
 $query	  = "UPDATE pejabat SET 
-				NamaJabatan 	= '$_POST[NamaJabatan]',
 				NIPPejabat 		= '$_POST[NIPPejabat]',
 				NamaPejabat 	= '$_POST[NamaPejabat]',
 				GUID 			= '$_POST[GUID]'

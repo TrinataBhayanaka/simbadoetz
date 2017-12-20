@@ -9638,7 +9638,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 								  </tr>
 							  </thead>";
 						
-							
+							$totalNP = 0;
+							$totalHS = 0;
 							$no = 1;
 							foreach ($value as $keys => $data)
 							{	
@@ -9646,6 +9647,8 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 								$Kuantitas = 1;
 								$HargaSatuan = number_format($data->NilaiPerolehan,2,",",".");
 								$HargaPemeliharaan = number_format($data->HargaSatuan,2,",",".");
+								$totalNP += $data->NilaiPerolehan;
+								$totalHS += $data->HargaSatuan;
 								$html.="
 								<tr>
 									 <td style=\"text-align: center; width: 30px;font-weight: \">$no</td>
@@ -9662,7 +9665,17 @@ public function retrieve_html_rencana_pemeliharaan_barang($dataArr,$gambar,$skpd
 								</tr>
 								";
 								$no++;
-							}	
+							}
+							$totalNPNF = number_format($totalNP,2,",",".");
+							$totalHSNF = number_format($totalHS,2,",",".");
+							$html.="
+								<tr>
+									 <td style=\"text-align: center; font-weight: \" colspan=\"6\">Jumlah</td>
+									 <td style=\"text-align: right; font-weight: \" >$totalNPNF</td>
+									 <td style=\"text-align: right; font-weight: \" >$totalHSNF</td>
+									 <td style=\"text-align: center; font-weight: \" colspan=\"2\">&nbsp;</td>
+								</tr>
+								";	
 					}
                                          
 						// $printperolehanTotal=number_format($perolehanTotal,2,",",".");
@@ -29519,7 +29532,7 @@ if($dataArr!="")
 												<td>&nbsp;</td>";
 										$i++;
 										$j++;
-										if($i>2 || $j>$total){
+										if($i>3 || $j>$total){
 											$body.="</tr>";
 											$i=1;
 										}
