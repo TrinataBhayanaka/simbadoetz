@@ -885,6 +885,7 @@ class core_api_report extends DB {
 				}	
 			}
 			
+			//$query_tahun = " $param.Tahun = '$tahun' ";
 			if($label == 'label'){
 				// if($tahun !='' && $skpd_id == ""){
 				if($tglawalperolehan !='' && $tglakhirperolehan !='' && $skpd_id == "" && $kodeRuangan == ""){
@@ -896,9 +897,9 @@ class core_api_report extends DB {
 					
 				// }elseif($tahun !='' && $skpd_id != ""){
 				
-				}elseif($tglawalperolehan !='' && $tglakhirperolehan !=''&& $skpd_id != "" && $kodeRuangan != ""){
+				}elseif($tglawalperolehan !='' && $tglakhirperolehan !=''&& $skpd_id != "" && $kodeRuangan != "" && $tahun !=''){
 				
-					// $query_tahun=" Tahun = '$tahun' ";
+					$query_tahun=" Tahun = '$tahun' ";
 					
 					$query_tgl_awal = " TglPembukuan >= '$tglawalperolehan' ";
 					$query_tgl_akhir = " TglPembukuan <= '$tglakhirperolehan' ";
@@ -914,9 +915,26 @@ class core_api_report extends DB {
 					// $query_satker_fix = " kodeSatker LIKE '$skpd_id%'";
 					
 					$query_satker_fix = $paramSatker;
-				}elseif($tglawalperolehan !='' && $tglakhirperolehan !=''&& $skpd_id != "" && $kodeRuangan == ""){
+				}elseif($tglawalperolehan !='' && $tglakhirperolehan !=''&& $skpd_id != "" && $kodeRuangan == "" && $tahun ==''){
 				
-					// $query_tahun=" Tahun = '$tahun' ";
+					//$query_tahun=" Tahun = '$tahun' ";
+					
+					$query_tgl_awal = " TglPembukuan >= '$tglawalperolehan' ";
+					$query_tgl_akhir = " TglPembukuan <= '$tglakhirperolehan' ";
+					
+					$splitKodeSatker = explode ('.',$skpd_id);
+						if(count($splitKodeSatker) == 4){	
+							$paramSatker = "kodeSatker = '$skpd_id'";
+						}else{
+							$paramSatker = "kodeSatker like '$skpd_id%'";
+						}
+						
+					// $query_satker_fix = " kodeSatker LIKE '$skpd_id%'";
+					
+					$query_satker_fix = $paramSatker;
+				}elseif($tglawalperolehan !='' && $tglakhirperolehan !=''&& $skpd_id != "" && $kodeRuangan == "" && $tahun !=''){
+				
+					$query_tahun=" Tahun = '$tahun' ";
 					
 					$query_tgl_awal = " TglPembukuan >= '$tglawalperolehan' ";
 					$query_tgl_akhir = " TglPembukuan <= '$tglakhirperolehan' ";

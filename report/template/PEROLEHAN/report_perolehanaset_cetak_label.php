@@ -8,12 +8,14 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
-
+//pr($_REQUEST);
+//exit();
 $modul = $_REQUEST['menuID'];
 $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
 $skpd_id = $_REQUEST['kodeSatker8'];
 $tahun = $_REQUEST['tahun_label'];
+$tahunAset = $_REQUEST['tahun_aset'];
 $tglawal = $_REQUEST['tglawalLabel'];
 if($tglawal != ''){
 	$tglawalperolehan = $tglawal;
@@ -36,6 +38,7 @@ $data=array(
     "skpd_id"=>$skpd_id,
 	"tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
+    "tahun"=>$tahunAset,
 	"kodeRuangan"=>$kodeRuangan,
     "gol"=>$gol,
     "tab"=>$tab,
@@ -50,8 +53,8 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query();
-// pr($query);
-// exit;
+//pr($query);
+//exit;
 $hit = count($query);
 if($gol == 01){
 	$flag = 'A';
@@ -75,7 +78,7 @@ $skpd_id);
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
 // pr($result_query);
-// exit;
+// exit;	
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
