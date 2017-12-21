@@ -3349,6 +3349,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
 
               }
+
               if($data['koreksinilai']){
                   $kib['Kd_Riwayat'] = 21;
 
@@ -3368,9 +3369,15 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                          $rentang_penyusutan=$MasaManfaat;
                       }
                       $selisih_akumulasi=$beban_penyusutan*$rentang_penyusutan;
-                      
-                      $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
-                      $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
+
+                     /**
+                      * Revisi : Bayu
+                      * Desc : Kondisi Revisi Dari Andreas jika Akumulasi penyusutan = 0, maka tidak ada update akumulasi
+                      */
+                      if ($kib['AkumulasiPenyusutan'] != 0 && !empty($kib['AkumulasiPenyusutan']) && $kib['AkumulasiPenyusutan'] != null) {
+                          $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
+                          $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
+                      }
                       $kib['NilaiBuku']=$data['Satuan']-$kib['AkumulasiPenyusutan'];
                       if($kib['NilaiBuku']<=0){
                           $kib['NilaiBuku']=0;
@@ -3636,6 +3643,45 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
             exit;
         }
+    }
+
+    public function store_upd_asetdetail_rincian($data)
+    {
+        global $url_rewrite;
+
+        $data['kib']['Alamat'] = $data['Alamat'];
+        $data['kib']['NilaiPerolehan'] = $data['NilaiPerolehan'];
+        $data['kib']['Info'] = $data['Info'];
+
+        $data['aset']['Alamat'] = $data['Alamat'];
+        $data['aset']['Satuan'] = $data['Satuan'];
+        $data['aset']['NilaiPerolehan'] = $data['NilaiPerolehan'];
+        $data['aset']['Info'] = $data['Info'];
+
+        foreach ($data['aset'] as $key => $val) {
+            $tmpfield[] = $key."='$val'";
+        }
+        $field = implode(',', $tmpfield);
+
+        $query = "UPDATE aset SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}'";
+        // pr($query);
+        $result=  $this->query($query) or die($this->error());
+        unset($tmpfield);
+        unset($field);
+
+        foreach ($data['kib'] as $key => $val) {
+            $tmpfield[] = $key."='$val'";
+        }
+        $field = implode(',', $tmpfield);
+
+        $query = "UPDATE {$data['tabel']} SET {$field} WHERE Aset_ID = '{$data['Aset_ID']}' ";
+//         pr($query);
+        $result=  $this->query($query) or die($this->error());
+
+        echo "<script>alert('Data berhasil disimpan');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_barang_detail.php?id={$data['id']}\">";
+
+        exit;
+
     }
 
     public function store_upd_asetdetail($data){

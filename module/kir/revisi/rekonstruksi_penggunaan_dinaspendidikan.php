@@ -15,11 +15,11 @@ $link = mysqli_connect($CONFIG['default']['db_host'],$CONFIG['default']['db_user
 $time_start = microtime(true); 
 $data = array();
 //buat dokumen penggunaan;
-$NoSKKDH = '26/10/2017/import';
-$TglSKKDH = '2017-10-26';
+$NoSKKDH = '12/12/2017/fixPenggunaan';
+$TglSKKDH = '2017-12-12';
 $Keterangan = 'All Import Dinas Pendidikan';
 $NotUse = '0';
-$TglUpdate = '2017-10-26';
+$TglUpdate = '2017-12-12';
 $UserNm = '1';
 $FixPenggunaan = '1';
 $Status = '1';
@@ -30,7 +30,7 @@ $exeSqlCreateDataPenggunaan =  $link->query($sqlCreateDataPenggunaan);
 
 
 //Id Dokumen Penggunaan
-$sqlSelectId = "SELECT Penggunaan_ID FROM `penggunaan` WHERE NoSKKDH = '26/10/2017/import'";
+$sqlSelectId = "SELECT Penggunaan_ID FROM `penggunaan` WHERE NoSKKDH = '12/12/2017/fixPenggunaan'";
 $exesqlSelectId =  $link->query($sqlSelectId);
 //while($row = mysql_fetch_assoc($exesqlSelectId)) {
 while($row = $exesqlSelectId->fetch_assoc()) {
@@ -39,7 +39,9 @@ while($row = $exesqlSelectId->fetch_assoc()) {
 echo "Penggunaan_ID = ".$Penggunaan_ID;
 
 //select data aset
-$sqlSelectData = "SELECT * FROM `aset` WHERE kodeSatker LIKE '08%' AND Status_Validasi_Barang = 1 AND Info LIKE '%import%'";
+//$sqlSelectData = "SELECT * FROM `aset` WHERE kodeSatker LIKE '08%' AND Status_Validasi_Barang = 1 AND Info LIKE '%import%'";
+$sqlSelectData = "SELECT * FROM `aset` WHERE kodeKelompok is NOT null AND kodeSatker LIKE '08%' AND Status_Validasi_Barang = 1 
+				AND fixPenggunaan != 1";
 $execaset =  $link->query($sqlSelectData);
 //while($rowaset = mysql_fetch_assoc($execaset)) {
 while($rowaset = $execaset->fetch_assoc()) {
