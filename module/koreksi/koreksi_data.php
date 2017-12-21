@@ -184,29 +184,60 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 						<ul>
 							<li>
 								<span class="span2">Asal Usul</span>
-								<select id="asalusul" name="asalusul" style="width:255px" class="koreksi">
-									<option></option>
-									<optgroup label="Pembelian">
-										<option value="Inventarisasi" <?=$dataArr['aset']['AsalUsul'] == 'Inventarisasi' ? 'selected' : ''?>>Inventarisasi</option>
-										<option value="perolehan sah lainnya" <?=$dataArr['aset']['AsalUsul'] == 'perolehan sah lainnya' ? 'selected' : ''?>>perolehan sah lainnya</option>
-									</optgroup>
+                                <?php
+                                if (!empty($dataArr['aset']['noKontrak'])) {
+                                ?>
+                                    <select id="asalusul" name="asalusul" class="koreksi" style="width: 255px">
+                                        <option selected value="Pembelian">Pembelian</option>
+                                    </select>
+                                <?php
+                                } else {
+                                    ?>
+                                    <select id="asalusul" name="asalusul" style="width:255px" class="koreksi">
+                                        <option></option>
+                                        <optgroup label="Pembelian">
+                                            <option value="Inventarisasi" <?= $dataArr['aset']['AsalUsul'] == 'Inventarisasi' ? 'selected' : '' ?>>
+                                                Inventarisasi
+                                            </option>
+                                            <option value="perolehan sah lainnya" <?= $dataArr['aset']['AsalUsul'] == 'perolehan sah lainnya' ? 'selected' : '' ?>>
+                                                perolehan sah lainnya
+                                            </option>
+                                        </optgroup>
 
-									<optgroup label="Hibah">
-												<option value="Hibah" <?=$dataArr['aset']['AsalUsul'] == 'Hibah' ? 'selected' : ''?>>Hibah</option>
-											<option value="BOS" <?=$dataArr['aset']['AsalUsul'] == 'BOS' ? 'selected' : ''?>>BOS</option>
-											<option value="Hibah BOS" <?=$dataArr['aset']['AsalUsul'] == 'Hibah BOS' ? 'selected' : ''?>>Hibah BOS</option>
-											<option value="Hibah Komite" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Komite' ? 'selected' : ''?>>Hibah Komite</option>
-											<option value="Hibah Pusat" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Pusat' ? 'selected' : ''?>>Hibah Pusat</option>
-											<option value="Hibah Provinsi" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Provinsi' ? 'selected' : ''?>>Hibah Provinsi</option>
-											<option value="Hibah Pihak ke-3" <?=$dataArr['aset']['AsalUsul'] == 'Hibah Pihak ke-3' ? 'selected' : ''?>>Hibah Pihak ke-3</option>
-									</optgroup>
-									<optgroup label="Sitaan/ Rampasan">
-										<option value="Sitaan/ Rampasan" <?=$dataArr['aset']['AsalUsul'] == 'Sitaan/ Rampasan' ? 'selected' : ''?>>Sitaan/ Rampasan</option>
-									</optgroup>
-									
-									
-								
-								</select>
+                                        <optgroup label="Hibah">
+                                            <option value="Hibah" <?= $dataArr['aset']['AsalUsul'] == 'Hibah' ? 'selected' : '' ?>>
+                                                Hibah
+                                            </option>
+                                            <option value="BOS" <?= $dataArr['aset']['AsalUsul'] == 'BOS' ? 'selected' : '' ?>>
+                                                BOS
+                                            </option>
+                                            <option value="Hibah BOS" <?= $dataArr['aset']['AsalUsul'] == 'Hibah BOS' ? 'selected' : '' ?>>
+                                                Hibah BOS
+                                            </option>
+                                            <option value="Hibah Komite" <?= $dataArr['aset']['AsalUsul'] == 'Hibah Komite' ? 'selected' : '' ?>>
+                                                Hibah Komite
+                                            </option>
+                                            <option value="Hibah Pusat" <?= $dataArr['aset']['AsalUsul'] == 'Hibah Pusat' ? 'selected' : '' ?>>
+                                                Hibah Pusat
+                                            </option>
+                                            <option value="Hibah Provinsi" <?= $dataArr['aset']['AsalUsul'] == 'Hibah Provinsi' ? 'selected' : '' ?>>
+                                                Hibah Provinsi
+                                            </option>
+                                            <option value="Hibah Pihak ke-3" <?= $dataArr['aset']['AsalUsul'] == 'Hibah Pihak ke-3' ? 'selected' : '' ?>>
+                                                Hibah Pihak ke-3
+                                            </option>
+                                        </optgroup>
+                                        <optgroup label="Sitaan/ Rampasan">
+                                            <option value="Sitaan/ Rampasan" <?= $dataArr['aset']['AsalUsul'] == 'Sitaan/ Rampasan' ? 'selected' : '' ?>>
+                                                Sitaan/ Rampasan
+                                            </option>
+                                        </optgroup>
+
+
+                                    </select>
+                                    <?php
+                                }
+                                ?>
 							</li>
 							<li>&nbsp;</li>
 							<li>
