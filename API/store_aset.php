@@ -3349,6 +3349,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
 
 
               }
+
               if($data['koreksinilai']){
                   $kib['Kd_Riwayat'] = 21;
 
@@ -3368,9 +3369,15 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                          $rentang_penyusutan=$MasaManfaat;
                       }
                       $selisih_akumulasi=$beban_penyusutan*$rentang_penyusutan;
-                      
-                      $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
-                      $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
+
+                     /**
+                      * Revisi : Bayu
+                      * Desc : Kondisi Revisi Dari Andreas jika Akumulasi penyusutan = 0, maka tidak ada update akumulasi
+                      */
+                      if ($kib['AkumulasiPenyusutan'] != 0 && !empty($kib['AkumulasiPenyusutan']) && $kib['AkumulasiPenyusutan'] != null) {
+                          $kib['AkumulasiPenyusutan']=$kib_old['AkumulasiPenyusutan']+$selisih_akumulasi;
+                          $kib['AkumulasiPenyusutan_Awal']=$kib_old['AkumulasiPenyusutan'];
+                      }
                       $kib['NilaiBuku']=$data['Satuan']-$kib['AkumulasiPenyusutan'];
                       if($kib['NilaiBuku']<=0){
                           $kib['NilaiBuku']=0;
