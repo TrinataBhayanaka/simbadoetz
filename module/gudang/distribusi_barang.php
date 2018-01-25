@@ -34,7 +34,7 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 				<ul>
 					<li>
 						<span class="span2">Tanggal Distribusi</span>
-						<input id="datepicker-other" type="text" name="tglDistribusi"value="" style="width:205px;">
+						<input id="tanggalDistribusi" type="text" name="tglDistribusi"value="" style="width:205px;">
 					</li>
 					<li>
 						<span class="span2">Nomor Dokumen</span>
@@ -57,3 +57,17 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 <?php
 	include"$path/footer.php";
 ?>
+
+<script>
+    $(document).on('submit', function(){
+        var tgl= $("#tanggalDistribusi").val();
+
+        if (tgl == "") {
+            alert("Tgl Perolehan tidak boleh kosong");
+            return false;
+        } else if (tgl == "0000-00-00") {
+            alert("Tgl Perolehan tidak boleh kosong");
+            return false;
+        }
+    })
+</script>
