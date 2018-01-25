@@ -472,6 +472,15 @@ $dataArr = $RETRIEVE->retrieve_editkontrak($_GET);
 		var spk = $("#spk").val();
 		var str = parseInt(spk.replace(/[^0-9\.]+/g, ""));
 		var rb = parseInt(total.replace(/[^0-9\.]+/g, ""));
+		var tgl= $("#TglPerolehan").val();
+
+		if (tgl == "") {
+            alert("Tgl Perolehan tidak boleh kosong");
+            return false;
+        } else if (tgl == "0000-00-00") {
+            alert("Tgl Perolehan tidak boleh kosong");
+            return false;
+        }
 
 		var diff = parseInt(perolehan) + parseInt(rb);
 
