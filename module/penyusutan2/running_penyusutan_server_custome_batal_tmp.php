@@ -500,13 +500,13 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
         $exeQueryLog = $DBVAR->query($QueryLog);
 
         //update untuk mereset akumulasi penyusutan untuk diatas tanggal penyusutan
-        $QueryKib = "UPDATE $tableLog SET MasaManfaat = NULL,
-											 AkumulasiPenyusutan = NULL,	
+       /* $QueryKib = "UPDATE $tableLog SET MasaManfaat = NULL,
+											 AkumulasiPenyusutan = NULL,
 											 PenyusutanPerTahun = NULL,
 											 NilaiBuku = NULL,
 											 UmurEkonomis = NULL,
                                                                    TahunPenyusutan=NULL
-										WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
+										WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";*/
         $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());
     } elseif ($tahun >= 2015) {
         $tahun_sblm = $tahun - 1;
@@ -586,17 +586,20 @@ while ($Data = $DBVAR->fetch_array($ExeQuery)) {
         $exeQueryLog = $DBVAR->query($QueryLog);
 
         /*$QueryKib = "UPDATE $tableLog SET MasaManfaat = '{$MasaManfaat_Awal}',
-												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',	
+												 AkumulasiPenyusutan = '{$AkumulasiPenyusutan_Awal}',
 												 PenyusutanPerTahun = '{$PenyusutanPerTahun_Awal}',
 												 NilaiBuku = '{$NilaiBuku_Awal}',
-                                                                                                 AkumulasiPenyusutan_Awal = '{$AkumulasiPenyusutan_Awal2}',	
+                        AkumulasiPenyusutan_Awal = '{$AkumulasiPenyusutan_Awal2}',
 												 PenyusutanPerTahun_Awal = '{$PenyusutanPerTahun_Awal2}',
-												 NilaiBuku_Awal = '{$NilaiBuku_Awal2}',   
-												 UmurEkonomis = '{$UmurEkonomis}' 
-                                                                                                  $TahunPenyusutan 
-                                                                                                     
+												 NilaiBuku_Awal = '{$NilaiBuku_Awal2}',
+												 UmurEkonomis = '{$UmurEkonomis}'
+                                                                                                  $TahunPenyusutan
+
 										WHERE Aset_ID = '$Aset_ID' and TglPerubahan > '$TglPerubahan' ";
         $ExeQueryKib = $DBVAR->query($QueryKib) or die($DBVAR->error());*/
+
+
+
         //untuk mengecek bila ada trasaksi
         /*$TglPerubahan_awal = $tahun . "-01" . "-01";
         $query_perubahan = "select kd_riwayat,log_id,kodeKelompok,kodeSatker,Aset_ID,NilaiPerolehan,NilaiPerolehan_Awal,Tahun,Kd_Riwayat,"

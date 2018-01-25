@@ -42,7 +42,7 @@ class DB
 			$this->open_connection_log();
 		}
 		$this->query = mysql_query($data);// or die (mysql_error());
-		logFile($data,'Log-query-'.date('Y-m-d'));
+		logFile("$data;",'Log-query-'.date('Y-m-d'));
 		return $this->query;
 	}
 	
@@ -143,8 +143,8 @@ class DB
 	
 	public function error()
 	{
-
-		$message = 'Your query error, please check again';
+		$message=mysql_error();
+//		$message = 'Your query error, please check again';
 		return $message;
 	}
 	
@@ -550,7 +550,7 @@ class DB
 	}
 
 	function logItHPS($table=array(),$Aset_ID=false,$action=1, $No_Dokumen=false, $tgl=false,$Nilai_awal=false,
-                            $AkumulasiPenyusutan=false,$AkumulasiPenyusutan_Awal=false,$NilaiBuku=false,$debug=false)
+                            $AkumulasiPenyusutan=false,$AkumulasiPenyusutan_Awal=false,$NilaiBuku=false,$NilaiBuku_Awal=false,$debug=false)
 	{
 		/*pr($table);
 		pr($Aset_ID);
@@ -602,7 +602,10 @@ class DB
 	    				'Kd_Riwayat'=>$action,
 	    				'No_Dokumen'=>$noDok,
 	    				'NilaiPerolehan_Awal'=>$Nilai_awal,
+                        'AkumulasiPenyusutan'=>$AkumulasiPenyusutan,
                         'AkumulasiPenyusutan_Awal'=>$AkumulasiPenyusutan_Awal,
+                        'NilaiBuku'=>$NilaiBuku,
+                        'NilaiBuku_Awal'=>$NilaiBuku_Awal,
                         'jenis_hapus'=>$jenis_penghapusan,
                         );
 

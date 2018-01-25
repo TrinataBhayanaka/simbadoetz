@@ -560,7 +560,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             $dataArr[]=$asetid[Aset_ID];
                         }
                         $aset_id=implode(', ',array_values($dataArr));
-                        $condition="ast.Aset_ID NOT IN ($aset_id) AND ast.fixPenggunaan=1 AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
+                        $condition=" ast.fixPenggunaan=1 AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
                         
                     }else{
                         $condition="ast.fixPenggunaan=1 AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
@@ -574,7 +574,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             'joinmethod' => ' LEFT JOIN ',
                             'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                              );
-                    $resAset = $this->db->lazyQuery($sqlAset,$debug);
+                    $resAset = $this->db->lazyQuery($sqlAset,1);
                     $res3[]=$resAset;
                 }
                 //pr($res3);
@@ -9218,7 +9218,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $dataArr[]=$asetid[Aset_ID];
                         $sql_tipe = array(
                             'table'=>'Aset',
-                            'field'=>"Aset_ID,TipeAset,NilaiPerolehan,kondisi,AkumulasiPenyusutan,MasaManfaat,TahunPenyusutan,Tahun",
+                            'field'=>"Aset_ID,TipeAset,NilaiPerolehan,kondisi,AkumulasiPenyusutan,MasaManfaat,TahunPenyusutan,Tahun,NilaiBuku",
                             'condition' => "Aset_ID='$asetid[Aset_ID]'",
                             );
                         $res_tipe = $this->db->lazyQuery($sql_tipe,$debug);
@@ -9230,6 +9230,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                                 
                         //untuk penyusutan
                                 $AkumulasiPenyusutan=$res_tipe[0][AkumulasiPenyusutan];
+                                $NilaiBuku_Awal=$res_tipe[0][NilaiBuku];
                                 $MasaManfaat=$res_tipe[0][MasaManfaat];
                                 $TahunPenyusutan=$res_tipe[0][TahunPenyusutan];
                                 $Tahun=$res_tipe[0][Tahun];
@@ -9310,7 +9311,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 }
                 logFile('log data penghapusan, Aset_ID ='.$asetid[Aset_ID],'penghapusan.txt');
                 $this->db->logItHPS($tabel=array($tabel), $Aset_ID=$asetid[Aset_ID], 7,$resPeng[0][NoSKHapus],$resPeng[0][TglHapus],$aset_idNilai,
-                        $AkumulasiPenyusutan,$AkumulasiPenyusutan_Awal,$NilaiBuku);
+                        $AkumulasiPenyusutan,$AkumulasiPenyusutan_Awal,$NilaiBuku,$NilaiBuku_Awal);
 
                 $sqlUsulan_valid = array(
                     'table'=>"usulanaset",
