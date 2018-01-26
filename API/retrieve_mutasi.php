@@ -8,6 +8,77 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                 $this->db = new DB;
 	}
 	
+    //revisi
+     public function retrieve_daftar_usulan($data,$debug=false)
+    {
+        //pr($data);
+        $tahun = $data['tahun'];
+        $cndtn = trim($data['condition']);
+        $limit= $data['limit'];
+        $order= $data['order'];
+        $paramWhere = '';
+        $filter = "";
+        
+        if($cndtn != ''){
+            $paramWhere = "AND $cndtn";
+        }else{
+            $paramWhere = "";
+        }
+         
+        if($_SESSION['ses_uaksesadmin']==1){
+
+            $kodeSatker = $_SESSION['ses_satkerkode'];
+            $filter .= " AND YEAR(TglUpdate) ='{$tahun}' $paramWhere";
+        }else{
+            $UserName=$_SESSION['ses_uoperatorid'];
+            $kodeSatker = $_SESSION['ses_satkerkode'];
+           
+            if ($kodeSatker) $filter .= " AND Usl.SatkerUsul LIKE '{$kodeSatker}%' AND YEAR(TglUpdate) ='{$tahun}' $paramWhere";
+        }
+        $sql = array(
+                'table'=>'usulan as Usl,satker AS s',
+                'field'=>"SQL_CALC_FOUND_ROWS Usl.*,s.NamaSatker",
+                'condition' => "Usl.FixUsulan=1 AND Usl.Jenis_Usulan='MTS'{$filter} GROUP BY Usl.Usulan_ID $order ",
+                'joinmethod' => ' INNER JOIN ',
+                'limit'=>"$limit",
+                'join' => 'Usl.SatkerUsul=s.kode'
+                );
+        $res = $this->db->lazyQuery($sql,1);
+        if ($res) return $res;
+        return false;
+    
+    }
+
+    public function countUsulan($id){
+        
+        $daftarAset = array();
+        $Fixdata = array();
+        $count = '';
+        $listAsetid = '';
+
+        $query = "SELECT Aset_ID FROM usulanaset WHERE Usulan_ID = '{$id}'";
+        $exec = $this->query($query) or die($this->error());
+        while ($data = mysql_fetch_assoc($exec)) {
+            $daftarAset[] = $data['Aset_ID'];
+        }
+        if($daftarAset){
+            $count = count($daftarAset);
+            $listAsetid = implode(",", $daftarAset);
+            $query2 = "SELECT SUM(NilaiPerolehan) as nilai FROM aset WHERE 
+                Aset_ID IN ($listAsetid)";
+            $data = $this->fetch($query2);
+            $Fixdata = array('count'=>$count,'nilai'=>$data['nilai']);
+            //pr($Fixdata);
+            return $Fixdata;    
+        }else{
+            $Fixdata = array('count'=>0,'nilai'=>0);
+            return $Fixdata;
+        }
+        
+    }
+    
+
+
     function removeAsetList($action)
     {
         $userid = $_SESSION['ses_uoperatorid'];
