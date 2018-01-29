@@ -391,6 +391,9 @@ $menu_id = 10;
                                     if($("#TglPerolehan").val() == ""){
                                         alert("Tgl Perolehan tidak boleh kosong");
                                         return false;
+                                    } else if ($("#TglPerolehan").val() == "0000-00-00") {
+                                        alert("Tgl Perolehan tidak boleh kosong");
+                                        return false;
                                     }
                                 })
                             </script>
@@ -497,8 +500,8 @@ $menu_id = 10;
 
 	$(document).on('change','#jumlah', function(){
 		//@revisi
-		var jumlah = $(this).val(); 
-		var TipeAsetKontrak = $('#TipeAsetKontrak').val(); 
+		var jumlah = $(this).val();
+		var TipeAsetKontrak = $('#TipeAsetKontrak').val();
 		if(TipeAsetKontrak == '2' && jumlah > 1){
 		 	//show that the value is NOT available
 		 	alert("Untuk Kapitilasi Jumlah Aset tidak boleh > 1");
@@ -512,11 +515,11 @@ $menu_id = 10;
 
 	$(document).on('change','#kodeKelompok', function(){
 		//@revisi
-		var tmp = $(this).val(); 
-                
-        var kodeKelompok = tmp.split("."); 
-        var kategori_belanja = $('#kategori_belanja').val(); 
-        var tipeAset = $('#tipeAset').val(); 
+		var tmp = $(this).val();
+
+        var kodeKelompok = tmp.split(".");
+        var kategori_belanja = $('#kategori_belanja').val();
+        var tipeAset = $('#tipeAset').val();
         if(tipeAset == 1 || tipeAset == 2){
         	//untuk belnja modal dan kapitalisasi
         	if(kategori_belanja){
@@ -531,10 +534,10 @@ $menu_id = 10;
         		$('#flag').val("0");
         		$('.reklasAset').hide(400);
         	}
-        	
+
         }else{
-        	/*var kodeKelompokKapitalisasi = $('#kodeKelompokKapitalisasi').val(); 
-        	var temp = kodeKelompokKapitalisasi.split("."); 
+        	/*var kodeKelompokKapitalisasi = $('#kodeKelompokKapitalisasi').val();
+        	var temp = kodeKelompokKapitalisasi.split(".");
         	if(temp[0] != kodeKelompok[0]){
         		alert("Jenis Aset tidak sesuai dengan Aset Kapitalisasi");
             	$('#submit').attr("disabled","disabled");
@@ -543,7 +546,7 @@ $menu_id = 10;
         	}
         	$('.reklasAset').hide(400);*/
         }
-        
+
       	$('.infoReklas').hide();
       	
 

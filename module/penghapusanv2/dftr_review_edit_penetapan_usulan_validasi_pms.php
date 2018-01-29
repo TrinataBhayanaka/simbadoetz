@@ -120,7 +120,7 @@ if (isset($id)){
 				<thead>
 					<tr>
 						<td colspan="10" align="right">
-							<a href="dftr_validasi_pmd.php" class="btn btn-success " /><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali Ke Daftar Usulan</a>	
+							<a href="dftr_validasi_pms.php" class="btn btn-success " /><i class="fa fa-reply"></i>&nbsp;&nbsp;Kembali Ke Daftar Usulan</a>	
 						</td>
 					</tr>
 					<tr>
