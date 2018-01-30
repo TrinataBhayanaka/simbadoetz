@@ -24,7 +24,7 @@ $id = $argv[ 4 ];
 
 $newTahun = $tahun;
 // $newTahun = $tahun - 1; 
-$aColumns = array( 'a.Aset_ID', 'a.kodeKelompok', 'k.Uraian', 'a.Tahun', 'a.Info', 'a.NilaiPerolehan', 'a.noRegister', 'a.PenyusutanPerTahun', 'a.AkumulasiPenyusutan', 'a.TipeAset', 'a.kodeSatker', 'a.Status_Validasi_Barang', 'a.MasaManfaat', 'a.NilaiBuku' );
+$aColumns = array( 'a.Aset_ID', 'a.kodeKelompok', 'k.Uraian', 'a.Tahun', 'a.Info', 'a.NilaiPerolehan', 'a.noRegister', 'a.PenyusutanPerTahun', 'a.AkumulasiPenyusutan', 'a.TipeAset', 'a.kodeSatker', 'a.Status_Validasi_Barang', 'a.MasaManfaat', 'a.NilaiBuku','a.UmurEkonomis' );
 $fieldCustom = str_replace (" , ", " ", implode (", ", $aColumns));
 $sTable = "aset_tmp as a";
 $sTable2 = "aset_tmp2 as a";
