@@ -133,7 +133,7 @@ while ($dataSP2D = mysql_fetch_assoc($sql)){
       } 
       
       //update kib
-      $sql = "UPDATE {$tabel} SET jenis_belanja='{$jenis_belanja}',NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$satuan}' {$tampil}, StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
+      $sql = "UPDATE {$tabel} SET jenis_belanja='{$jenis_belanja}',NilaiBuku='{$NilaiPerolehan}',NilaiPerolehan = '{$NilaiPerolehan}' {$tampil}, StatusValidasi = '1' WHERE Aset_ID = '{$data['Aset_ID']}'";
     
       $execquery = mysql_query($sql);
       logFile($sql);
