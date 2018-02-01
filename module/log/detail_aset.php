@@ -27,6 +27,8 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 	$rollbackID = array(28,21,1,3);
 	if (in_array($operator, $allowUser)) $allow = true;
 	else $allow = false;
+
+	$data_kondisi=array("0"=>"-","1"=>"baik","2"=>"rusak ringan","3"=>"berat","4"=>"-",""=>"");
 ?>
 	
 	<!-- End Sql -->
@@ -63,6 +65,14 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<span class="labelInfo">Nilai Perolehan</span>
 						<input type="text" value="<?=number_format($data['aset'][0]['NilaiPerolehan'])?>" disabled/>
 					</li>
+                    <li>
+                        <span  class="labelInfo">Tgl Perolehan</span>
+                        <input type="text" value="<?=$data['aset'][0]['TglPerolehan']?>" disabled/>
+                    </li>
+                    <li>
+                        <span  class="labelInfo">Tgl Pembukuan</span>
+                        <input type="text" value="<?=$data['aset'][0]['TglPembukuan']?>" disabled/>
+                    </li>
 				</ul>
 			</div>
 			<div class="detailRight">
@@ -75,6 +85,19 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<span  class="labelInfo">SKPD</span>
 						<input type="text" value="<?=$data['aset'][0]['kodeSatker']?>" disabled/>
 					</li>
+                    <li>
+                        <span  class="labelInfo">Kondisi</span>
+                        <input type="text" value="<?=$data_kondisi[$data['aset'][0]['kondisi']]?>" disabled/>
+                    </li>
+                    <li>
+                        <span  class="labelInfo">MasaManfaat</span>
+                        <input type="text" value="<?=$data['aset'][0]['MasaManfaat']?>" disabled/>
+                    </li>
+                    <li>
+                        <span  class="labelInfo">Info</span>
+                        <input type="text" value="<?=$data['aset'][0]['Info']?>" disabled/>
+                    </li>
+
 				</ul>
 							
 			</div>
@@ -85,7 +108,7 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 				<thead>
 					<tr>
 						<th>Log ID</th>
-						<th>Informasi Tambahan</th>
+<!--						<th>Informasi Tambahan</th>-->
 						<th>Tanggal Perubahan</th>
 						<th>Keterangan Log</th>
 						<th>Nilai Perolehan Awal</th>
@@ -95,17 +118,17 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<th>AkumulasiPenyusutan</th>
 						<th>PenyusutanPertahun</th>
 						<th>TahunPenyusutan</th>
-						<th>Masa Manfaat</th>
 						<th>Umur Ekonomis</th>
 
 
-						<th>Kondisi</th>
+						<!--<th>Kondisi</th>
 						<th>Kode KA</th>
 						<th>Tanggal Perolehan</th>
-						<th>Tanggal Pembukuan</th>
-						
-						<th>Info</th>
-						<th>Aksi</th>
+						<th>Tanggal Pembukuan</th>-->
+
+						<!--<th>Info</th>-->
+                        <th>Perhitungan Penyusutan</th>
+<!--						<th>Aksi</th>-->
 					</tr>
 				</thead>
 				<tbody>
@@ -120,9 +143,9 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 				?>
 					<tr class="gradeA">
 						<td><?=$value['log_id']?></td>
-						<td><?=$value['data_awal'][0]['kodeSatker']. " - " .$value['data_awal'][0]['Uraian']?><br/>
-								<?=$value['kodeSatker']?>
-							</td>
+						<!--<td><?/*=$value['data_awal'][0]['kodeSatker']. " - " .$value['data_awal'][0]['Uraian']*/?><br/>
+								<?/*=$value['kodeSatker']*/?>
+							</td>-->
 						<td><?=$value['TglPerubahan']?></td>
 						<td><?="[Kode ". $value['Kd_Riwayat'] .'] - '. $value['Nm_Riwayat']?></td>
 						
@@ -140,21 +163,22 @@ $LAYANAN = new RETRIEVE_LAYANAN;
 						<td><?=number_format($value['AkumulasiPenyusutan'])?></td>
 						<td><?=number_format($value['PenyusutanPerTahun'])?></td>
 						<td><?=$value['TahunPenyusutan']?></td>
-						<td><?=$value['MasaManfaat']?></td>
+
 						<td><?=$value['UmurEkonomis']?></td>
 
-						<td><?=$value['kondisi']?></td>
-						<td><?=$value['kodeKA']?></td>
-						<td><?=$value['TglPerolehan']?></td>
-						<td><?=$value['TglPembukuan']?></td>
+						<!--<td><?/*=$value['kondisi']*/?></td>
+						<td><?/*=$value['kodeKA']*/?></td>
+						<td><?/*=$value['TglPerolehan']*/?></td>
+						<td><?/*=$value['TglPembukuan']*/?></td>-->
 						
-						<td><?=$value['Info']?></td>
-						<td>
-							<?php if (in_array($value['Kd_Riwayat'], $rollbackID)):?>
-							<?php if ($allow):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=2"?>'><input class="btn btn-warning" type="button" value="Edit"></a><?php endif;?>
-							<?php if ($key==0):?><a href='<?php echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}&kodeSatker={$value['kodeSatker']}"?>' onclick="return confirmBox('Rollback Data ?')"><input class="btn btn-danger" type="button" value="Rollback"></a><?php endif;?>
-							<?php endif;?>
-						</td>
+						<!--<td><?/*=$value['Info']*/?></td>-->
+                        <td><?=str_replace("\n","<br/>",$value['perhitungan_penyusutan'])?></td>
+						<!--<td>
+							<?php /*if (in_array($value['Kd_Riwayat'], $rollbackID)):*/?>
+							<?php /*if ($allow):*/?><a href='<?php /*echo "$url_rewrite/module/layanan/pemeriksaan_edit.php?logid={$value['log_id']}&id={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=1&tabel=2"*/?>'><input class="btn btn-warning" type="button" value="Edit"></a><?php /*endif;*/?>
+							<?php /*if ($key==0):*/?><a href='<?php /*echo "$url_rewrite/module/layanan/pemeriksaan_aksi.php?logid={$value['log_id']}&idaset={$value['Aset_ID']}&jenisaset={$_GET['jenisaset']}&act=2&kd_riwayat={$value['Kd_Riwayat']}&kodeSatker={$value['kodeSatker']}"*/?>' onclick="return confirmBox('Rollback Data ?')"><input class="btn btn-danger" type="button" value="Rollback"></a><?php /*endif;*/?>
+							<?php /*endif;*/?>
+						</td>-->
 					</tr>
 				<?php
 					}

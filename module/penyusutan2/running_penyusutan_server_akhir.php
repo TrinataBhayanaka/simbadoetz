@@ -24,7 +24,7 @@ $id = $argv[ 4 ];
 
 $newTahun = $tahun;
 // $newTahun = $tahun - 1; 
-$aColumns = array( 'a.Aset_ID', 'a.kodeKelompok', 'k.Uraian', 'a.Tahun', 'a.Info', 'a.NilaiPerolehan', 'a.noRegister', 'a.PenyusutanPerTahun', 'a.AkumulasiPenyusutan', 'a.TipeAset', 'a.kodeSatker', 'a.Status_Validasi_Barang', 'a.MasaManfaat', 'a.NilaiBuku' );
+$aColumns = array( 'a.Aset_ID', 'a.kodeKelompok', 'k.Uraian', 'a.Tahun', 'a.Info', 'a.NilaiPerolehan', 'a.noRegister', 'a.PenyusutanPerTahun', 'a.AkumulasiPenyusutan', 'a.TipeAset', 'a.kodeSatker', 'a.Status_Validasi_Barang', 'a.MasaManfaat', 'a.NilaiBuku','a.UmurEkonomis' );
 $fieldCustom = str_replace (" , ", " ", implode (", ", $aColumns));
 $sTable = "aset_tmp as a";
 $sTable2 = "aset_tmp2 as a";
@@ -724,7 +724,7 @@ for ($i = 0; $i < 2; $i++) {
                 }
 
 
-                $cetak_informasi="\n------AWAL KAPITALISASI------\n".
+                $cetak_informasi="\n------AWAL KAPITALISASI TahunPenyusutan $newTahun------\n".
                     "Data Kapitalisasi untuk Aset_ID=$Aset_ID\n Data Awal \n"
                     . "NilaiPerolehan = $NilaiPerolehan_Awal\n"
                     . "Masa Manfaat= $MasaManfaat\n"
@@ -752,7 +752,11 @@ for ($i = 0; $i < 2; $i++) {
                                             PenyusutanPerTaun = '$PenyusutanPerTahun_hasil',
                                             NilaiBuku = '$NilaiBuku_hasil',
                                             UmurEkonomis = '$Sisa_Masa_Manfaat',
-                                             TahunPenyusutan='$newTahun'     
+                                             TahunPenyusutan='$newTahun',
+                                            perhitungan_penyusutan='$cetak_informasi',
+                                            nilai_kapitalisasi='$selisih',
+                                            penambahan_masa_manfaat='$penambahan_masa_manfaat',
+                                            prosentase='$persen'    
                                             WHERE Aset_ID = '$Aset_ID'";
                 $ExeQueryAset = $DBVAR->query ($QueryAset) or die($DBVAR->error ());;
                 $QueryKib = "UPDATE $tableKib SET MasaManfaat = '$MasaManfaat' ,
@@ -760,7 +764,12 @@ for ($i = 0; $i < 2; $i++) {
                                             PenyusutanPerTahun = '$PenyusutanPerTahun_hasil',
                                             NilaiBuku = '$NilaiBuku_hasil',
                                             UmurEkonomis = '$Sisa_Masa_Manfaat',
-                                            TahunPenyusutan='$newTahun'
+                                            TahunPenyusutan='$newTahun',
+                                            perhitungan_penyusutan='$cetak_informasi',
+                                            nilai_kapitalisasi='$selisih',
+                                            penambahan_masa_manfaat='$penambahan_masa_manfaat',
+                                            prosentase='$persen'    
+                                          
                                             WHERE Aset_ID = '$Aset_ID'";
                 $ExeQueryKib = $DBVAR->query ($QueryKib) or die($DBVAR->error ());;
                 //akhir update aset dan update log untuk kapitalisasi
