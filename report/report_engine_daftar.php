@@ -595,6 +595,290 @@ class report_engine_daftar extends report_engine {
           return $html;
      }
 
+     public function retrieve_daftar_usulan_mutasi($dataArr, $gambar, $sk, $tanggalCetak,$TitleSk) {
+          if ($dataArr != "") {
+               
+               $no = 1;
+               $skpdeh = "";
+               $thn = "";
+               $status_print = 0;
+               $perolehanTotal = 0;
+//pr($data);
+
+               $head ="
+			     <html>
+			     <head>
+	               	<style>
+                      table
+						{
+                            font-size:10pt;
+                            font-family:Arial;
+                            border-collapse: collapse;											
+                            border-spacing:0;
+			            }
+    	                h3   
+						{
+							font-family:Arial;	
+							font-size:13pt;
+							color:#000;
+						}
+						p
+						{
+							font-size:10pt;
+							font-family:Arial;
+							font-weight:bold;
+						}
+					</style>
+				</head>";
+
+               $body ="
+              	<body>
+			    	<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+						<tr>
+				           <td style=\"width: 10%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
+				           <td colspan=\"2\" style=\";width: 70%; text-align: center;\">
+				                <h3>LAMPIRAN {$TitleSk}</h3>
+				                <h3>PEMERINTAH $this->NAMA_KABUPATEN </h3>
+				           </td>
+			          	</tr>
+			          	<tr>
+			            	<td>&nbsp;</td>
+			            	<td style=\"width: 50%;text-align:right\">&nbsp;</td>
+	                        <td>&nbsp;</td>
+			          	</tr>
+          				<tr>
+		                    <td>&nbsp;</td>
+		                    <td style=\"width: 20%;text-align:right\">&nbsp;</td>
+		                         <td align=\"right\">
+		                            <table style=\"font-weight:bold;\">
+	                                   <tr>
+	                                        <td align=\"left\">Nomor</td>
+	                                        <td> : </td>
+	                                        <td align=\"left\">$sk</td>
+	                                   </tr>
+	                                   <tr>
+	                                        <td align=\"left\">Tanggal</td>
+	                                        <td> : </td>
+	                                        <td align=\"left\">$tanggalCetak</td>
+	                                   </tr>
+		                            </table>
+                         	</td>
+					    </tr>
+					</table>";
+               $body.="<table style=\"text-align: left; width: 100%; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+												 
+          		<thead>
+               <tr style=\"text-align:center;font-weight:bold;\">
+                         <td style=\"width:5%;text-align:center;font-weight:bold;\">No<br/> Urut </td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Kode Barang</td>
+                         <td style=\"width:20%;text-align:center;font-weight:bold;\">Nama Barang</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Tanggal Perolehan</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Tanggal Pembukuan</td>
+                         <td style=\"width:5%;text-align:center;font-weight:bold;\">No Register</td>
+                         <td style=\"width:20%;text-align:center;font-weight:bold;\">Nama Unit</td>
+                         <td style=\"width:5%;text-align:center;font-weight:bold;\">Tahun</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Kondisi</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Akumulasi Penyusutan</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Nilai Buku</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Nilai Perolehan</td>
+                         <td style=\"width:20%;text-align:center;font-weight:bold;\">Keterangan</td>
+               </tr>
+             </thead>";
+
+               foreach ($dataArr as $key => $value) {
+                    $perolehan = number_format($value[NilaiPerolehan], 2, ",", ".");
+                    $AkumulasiPenyusutan=number_format($value[AkumulasiPenyusutan], 2, ",", ".");
+                    $NilaiBuku=number_format($value[NilaiBuku], 2, ",", ".");
+                    // pr($value['noRegister']);
+                    $Satker=$this->getNamaSatker($value['kodeSatker']);
+                    $NamaSatker=$Satker[0]->NamaSatker;
+                    $kodeNoReg=sprintf("%04s",$value['noRegister']);
+                    // pr();
+
+                    $body.="<tbody>
+               <tr>
+                         <td style=\"width:5%;text-align:center\">$no</td>
+                         <td style=\"width:10%;text-align:center\">{$value[kodeKelompok]}</td>
+                         <td style=\"width:20%\">{$value[Kelompok]}</td>
+                         <td style=\"width:10%;text-align:center\">{$value[TglPerolehan]}</td>
+                         <td style=\"width:10%;text-align:center\">{$value[TglPembukuan]}</td>
+                         <td style=\"width:5%;text-align:center\">{$kodeNoReg}</td>
+                         <td style=\"width:20%;text-align:center\">{$NamaSatker}</td>
+                         <td style=\"width:5%;text-align:center\">{$value[Tahun]}</td>
+                         <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
+                         <td style=\"width:10%;text-align:right\">{$AkumulasiPenyusutan}</td>
+                         <td style=\"width:10%;text-align:right\">{$NilaiBuku}</td>
+                         <td style=\"width:10%;text-align:right\">{$perolehan}</td>
+                         <td style=\"width:20%\">{$value[Info]}</td>
+               </tr>
+             </tbody>";
+                    $perolehanTotal+=$value[NilaiPerolehan];
+                    $akumalasiTotal+=$value[AkumulasiPenyusutan];
+                    $nilaiBukuTotal+=$value[NilaiBuku];
+                    $no++;
+               }
+               $perolehanTotal = number_format($perolehanTotal, 2, ",", ".");
+               $akumalasiTotal = number_format($akumalasiTotal, 2, ",", ".");
+               $nilaiBukuTotal = number_format($nilaiBukuTotal, 2, ",", ".");
+
+               $body.="<tbody>
+               <tr>
+                         <td colspan=\"9\" style=\"text-align:center;font-weight:bold;\">Jumlah</td>
+                         <td style=\"width:20%;text-align:right\">{$akumalasiTotal}</td>
+                         <td style=\"width:20%;text-align:right\">{$nilaiBukuTotal}</td>
+                         <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
+                         <td style=\"width:15%\"></td>
+               </tr>
+             </tbody></table>";
+
+               $html[] = $head . $body;
+          }
+
+          return $html;
+     }
+
+     public function retrieve_daftar_penetapan_mutasi($dataArr, $gambar, $sk, $tanggalCetak,$TitleSk) {
+          if ($dataArr != "") {
+               
+               $no = 1;
+               $skpdeh = "";
+               $thn = "";
+               $status_print = 0;
+               $perolehanTotal = 0;
+//pr($data);
+
+               $head ="
+			     <html>
+			     <head>
+	               	<style>
+                      table
+						{
+                            font-size:10pt;
+                            font-family:Arial;
+                            border-collapse: collapse;											
+                            border-spacing:0;
+			            }
+    	                h3   
+						{
+							font-family:Arial;	
+							font-size:13pt;
+							color:#000;
+						}
+						p
+						{
+							font-size:10pt;
+							font-family:Arial;
+							font-weight:bold;
+						}
+					</style>
+				</head>";
+
+               $body ="
+              	<body>
+			    	<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+						<tr>
+				           <td style=\"width: 10%;\"><img style=\"width: 80px;\" alt=\"\" src=\"$gambar\"></td>
+				           <td colspan=\"2\" style=\";width: 70%; text-align: center;\">
+				                <h3>LAMPIRAN {$TitleSk}</h3>
+				                <h3>PEMERINTAH $this->NAMA_KABUPATEN </h3>
+				           </td>
+			          	</tr>
+			          	<tr>
+			            	<td>&nbsp;</td>
+			            	<td style=\"width: 50%;text-align:right\">&nbsp;</td>
+	                        <td>&nbsp;</td>
+			          	</tr>
+          				<tr>
+		                    <td>&nbsp;</td>
+		                    <td style=\"width: 20%;text-align:right\">&nbsp;</td>
+		                         <td align=\"right\">
+		                            <table style=\"font-weight:bold;\">
+	                                   <tr>
+	                                        <td align=\"left\">Nomor</td>
+	                                        <td> : </td>
+	                                        <td align=\"left\">$sk</td>
+	                                   </tr>
+	                                   <tr>
+	                                        <td align=\"left\">Tanggal</td>
+	                                        <td> : </td>
+	                                        <td align=\"left\">$tanggalCetak</td>
+	                                   </tr>
+		                            </table>
+                         	</td>
+					    </tr>
+					</table>";
+               $body.="<table style=\"text-align: left; width: 100%; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">
+												 
+          		<thead>
+               <tr style=\"text-align:center;font-weight:bold;\">
+                         <td style=\"width:5%;text-align:center;font-weight:bold;\">No<br/> Urut </td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Kode Barang</td>
+                         <td style=\"width:20%;text-align:center;font-weight:bold;\">Nama Barang</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Tanggal Perolehan</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Tanggal Pembukuan</td>
+                         <td style=\"width:5%;text-align:center;font-weight:bold;\">No Register</td>
+                         <td style=\"width:20%;text-align:center;font-weight:bold;\">Nama Unit</td>
+                         <td style=\"width:5%;text-align:center;font-weight:bold;\">Tahun</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Kondisi</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Akumulasi Penyusutan</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Nilai Buku</td>
+                         <td style=\"width:10%;text-align:center;font-weight:bold;\">Nilai Perolehan</td>
+                         <td style=\"width:20%;text-align:center;font-weight:bold;\">Keterangan</td>
+               </tr>
+             </thead>";
+
+               foreach ($dataArr as $key => $value) {
+                    $perolehan = number_format($value[NilaiPerolehan], 2, ",", ".");
+                    $AkumulasiPenyusutan=number_format($value[AkumulasiPenyusutan], 2, ",", ".");
+                    $NilaiBuku=number_format($value[NilaiBuku], 2, ",", ".");
+                    // pr($value['noRegister']);
+                    $Satker=$this->getNamaSatker($value['kodeSatker']);
+                    $NamaSatker=$Satker[0]->NamaSatker;
+                    $kodeNoReg=sprintf("%04s",$value['noRegister']);
+                    // pr();
+
+                    $body.="<tbody>
+               <tr>
+                         <td style=\"width:5%;text-align:center\">$no</td>
+                         <td style=\"width:10%;text-align:center\">{$value[kodeKelompok]}</td>
+                         <td style=\"width:20%\">{$value[Kelompok]}</td>
+                         <td style=\"width:10%;text-align:center\">{$value[TglPerolehan]}</td>
+                         <td style=\"width:10%;text-align:center\">{$value[TglPembukuan]}</td>
+                         <td style=\"width:5%;text-align:center\">{$kodeNoReg}</td>
+                         <td style=\"width:20%;text-align:center\">{$NamaSatker}</td>
+                         <td style=\"width:5%;text-align:center\">{$value[Tahun]}</td>
+                         <td style=\"width:10%;text-align:center\">{$value[Kondisi]}</td>
+                         <td style=\"width:10%;text-align:right\">{$AkumulasiPenyusutan}</td>
+                         <td style=\"width:10%;text-align:right\">{$NilaiBuku}</td>
+                         <td style=\"width:10%;text-align:right\">{$perolehan}</td>
+                         <td style=\"width:20%\">{$value[Info]}</td>
+               </tr>
+             </tbody>";
+                    $perolehanTotal+=$value[NilaiPerolehan];
+                    $akumalasiTotal+=$value[AkumulasiPenyusutan];
+                    $nilaiBukuTotal+=$value[NilaiBuku];
+                    $no++;
+               }
+               $perolehanTotal = number_format($perolehanTotal, 2, ",", ".");
+               $akumalasiTotal = number_format($akumalasiTotal, 2, ",", ".");
+               $nilaiBukuTotal = number_format($nilaiBukuTotal, 2, ",", ".");
+
+               $body.="<tbody>
+               <tr>
+                         <td colspan=\"9\" style=\"text-align:center;font-weight:bold;\">Jumlah</td>
+                         <td style=\"width:20%;text-align:right\">{$akumalasiTotal}</td>
+                         <td style=\"width:20%;text-align:right\">{$nilaiBukuTotal}</td>
+                         <td style=\"width:20%;text-align:right\">{$perolehanTotal}</td>
+                         <td style=\"width:15%\"></td>
+               </tr>
+             </tbody></table>";
+
+               $html[] = $head . $body;
+          }
+
+          return $html;
+     }
+
       public function report_daftar_pengadaan($dataArr, $gambar, $tglawalperolehan, $tglakhirperolehan,$tglcetak) {
           if ($dataArr != "") {
 

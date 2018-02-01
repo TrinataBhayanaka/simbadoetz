@@ -1,7 +1,7 @@
 
 <?php
 
-function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
+function selectSatker($name,$size=300,$br=false,$upd=false,$status=false,$ParamNamaSatker=false){
 
 	global $url_rewrite;
 	// pr($status);
@@ -72,7 +72,8 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 	} );
 	</script>
 	<li>
-		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
+		<!--<span class="<?=$span?>">Kode Satker </span><?=$enter?>-->
+		<span class="<?=$span?>"><?=($ParamNamaSatker) ? $ParamNamaSatker : 'Kode Satker' ?></span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return newruangan();"/>
 	</li>
 	
@@ -81,7 +82,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false){
 
 }
 
-function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$sess=true,$free=0){
+function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$sess=true,$free=0,$ParamNamaSatker=false){
 
 	global $url_rewrite;
 	// pr($_SESSION);
@@ -146,7 +147,7 @@ function selectAllSatker($name,$size=300,$br=false,$upd=false,$status=false,$ses
 	} );
 	</script>
 	<li>
-		<span class="<?=$span?>">Kode Satker </span><?=$enter?>
+		<span class="<?=$span?>"><?=($ParamNamaSatker) ? $ParamNamaSatker : 'Kode Satker' ?></span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?>/>
 	</li>
 	
