@@ -146,8 +146,8 @@ $no=$_GET['iDisplayStart']+1;
 foreach ($data as $key => $value)
 						{
 							
-              $SatkerAsal="[".$value[SatkerUsul]."]"."&nbsp;".$value[NamaSatker];
-              $SatkerTujuan="[".$value[SatkerTujuan]."]";
+              $SatkerAsal="[".$value[SatkerUsul]."]"."&nbsp;".$value[NamaSatkerAsal];
+              $SatkerTujuan="[".$value[SatkerTujuan]."]"."&nbsp;".$value[NamaSatkerTujuan];
               
               //countUsulan
               $count = $MUTASI->countUsulan($value[Usulan_ID]);
@@ -167,36 +167,34 @@ foreach ($data as $key => $value)
                   $text="<span class=\"label label-{$label}\" >sudah ditetapkan</span>";
                 }
                 
-                if($value['Penetapan_ID']==0){
+                if($value['Penetapan_ID'] == 0){
                   $textvalid="";
                 }else{
                    $textvalid="<span class=\"label\" style=\"margin-top:3px\">Belum Validasi</span>";
-                   if($value['Penetapan_ID']){
-                     /*$datastatus=$MUTASI->DataPenetapan($value['Penetapan_ID']);
-                      if($datastatus[0]['Status']==1){
+                   if($value['Status'] == 1){
                         $textvalid="<span class=\"label label-success\" style=\"margin-top:3px\">Sudah Validasi</span>";
-                   
-                      }*/
                    }
                 }
 							
               if($value['StatusPenetapan']==0){
               
                   
-              $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/penghapusan_usulan_daftar_proses_hapus_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\" style=\"margin-top:3px\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
-              <a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\"style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
+              $tindakan="<a href=\"{$url_rewrite}/module/mutasiSkpd/penghapusan_usulan_daftar_proses_hapus.php?id={$value[Usulan_ID]}\" class=\"btn btn-danger btn-small\" onclick=\"return confirm('Hapus Data');\" style=\"margin-top:3px\"><i class=\"fa fa-trash\"></i>&nbsp;Hapus</a>
+              
+              <a href=\"{$url_rewrite}/module/mutasiSkpd/dftr_review_edit_aset_usulan.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
 
-            <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
-             <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}&tipe_file=2\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
+            <a target=\"_blank\" href=\"{$url_rewrite}/report/template/MUTASI/cetak_usulan_mutasi.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
+             <a target=\"_blank\" href=\"{$url_rewrite}/report/template/MUTASI/cetak_usulan_mutasi.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}&tipe_file=2\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
                   
                  
                     
                     
               }elseif($value['StatusPenetapan']==1){
                
-                 $tindakan="<a href=\"{$url_rewrite}/module/penghapusanv2/dftr_review_edit_aset_usulan_pmd.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" onclick=\"return confirm('View Data');\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
-                  <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
-                   <a target=\"_blank\" href=\"{$url_rewrite}/report/template/PENGHAPUSAN/cetak_usulan_penghapusan.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}&tipe_file=2\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
+                 $tindakan="<a href=\"{$url_rewrite}/module/mutasiSkpd/dftr_review_edit_aset_usulan.php?id={$value[Usulan_ID]}\" class=\"btn btn-success btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>
+
+                  <a target=\"_blank\" href=\"{$url_rewrite}/report/template/MUTASI/cetak_usulan_mutasi.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-pdf-o\"></i> Pdf</a>&nbsp
+                   <a target=\"_blank\" href=\"{$url_rewrite}/report/template/MUTASI/cetak_usulan_mutasi.php?idusulan={$value[Usulan_ID]}&noUsul={$value[NoUsulan]}&tglHapus={$value[TglUpdate]}&tipe_file=2\" class=\"btn btn-info btn-small\" style=\"margin-top:3px\"><i class=\"fa fa-file-excel-o\"></i> Excel</a>&nbsp";
               
              
               }  

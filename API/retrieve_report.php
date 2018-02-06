@@ -74,6 +74,36 @@ class RETRIEVE_REPORT extends DB {
           }
           return $dataArr;
      }
+     public function daftar_barang_berdasarkan_sk_mutasi($no_sk) {
+          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.NilaiBuku,A.Tahun,A.AkumulasiPenyusutan,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister,A.TglPerolehan,A.TglPembukuan,
+          P.Mutasi_ID,A.Aset_ID
+          from mutasiaset PA 
+          left join mutasi P on P.Mutasi_ID=PA.Mutasi_ID 
+          left join Aset A on PA.Aset_ID=A.Aset_ID
+          where P.Mutasi_ID='$no_sk' ";
+            // echo $query;
+      // exit;
+          $result = $this->query($query) or die($this->error());
+          $check = $this->num_rows($result);
+          while ($data = $this->fetch_array($result)) {
+               switch ($data[Kondisi]) {
+                    case 1:
+                         $data[Kondisi] = "Baik";
+                         break;
+                    case 2:
+                         $data[Kondisi] = "Rusak Ringan";
+                         break;
+                    case 3:
+                         $data[Kondisi] = "Rusak Berat";
+                         break;
+               }
+               $data[Satker] = $this->get_skpd($data[kodeSatker]);
+               $data[Kelompok] = $this->get_kelompok($data[kodeKelompok]);
+               $dataArr[] = $data;
+          }
+          return $dataArr;
+     }
+
       public function daftar_barang_berdasarkan_usulan_penghapusan($no_usulan) {
           $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.NilaiBuku,A.Tahun,A.AkumulasiPenyusutan,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister,
 							US.Penetapan_ID,US.Aset_ID,US.NilaiPerolehanTmp
@@ -83,6 +113,35 @@ class RETRIEVE_REPORT extends DB {
                     where U.Usulan_ID='$no_usulan' ";
             // echo $query;
 			// exit;
+          $result = $this->query($query) or die($this->error());
+          $check = $this->num_rows($result);
+          while ($data = $this->fetch_array($result)) {
+               switch ($data[Kondisi]) {
+                    case 1:
+                         $data[Kondisi] = "Baik";
+                         break;
+                    case 2:
+                         $data[Kondisi] = "Rusak Ringan";
+                         break;
+                    case 3:
+                         $data[Kondisi] = "Rusak Berat";
+                         break;
+               }
+               // $data[Satker] = $this->get_skpd($data[kodeSatker]);
+               $data[Kelompok] = $this->get_kelompok($data[kodeKelompok]);
+               $dataArr[] = $data;
+          }
+          return $dataArr;
+     }
+     public function daftar_barang_berdasarkan_usulan_mutasi($no_usulan) {
+          $query = "select  A.kodeLokasi,A.kodeSatker,A.kodeKelompok,A.NilaiBuku,A.Tahun,A.AkumulasiPenyusutan,A.Kondisi,A.NilaiPerolehan,A.Info,A.noRegister,A.TglPerolehan,A.TglPembukuan,
+              US.Penetapan_ID,US.Aset_ID,US.NilaiPerolehanTmp
+          from usulanaset US 
+          left join usulan U on U.Usulan_ID=US.Usulan_ID 
+                    left join Aset A on US.Aset_ID=A.Aset_ID
+                    where U.Usulan_ID='$no_usulan' ";
+            // echo $query;
+      // exit;
           $result = $this->query($query) or die($this->error());
           $check = $this->num_rows($result);
           while ($data = $this->fetch_array($result)) {

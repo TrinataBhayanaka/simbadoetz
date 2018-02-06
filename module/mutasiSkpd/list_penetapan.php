@@ -22,23 +22,23 @@ $par_data_table="tahun=$tahun";
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
 			  <li><a href="#">Transfer SKPD</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Transfer SKPD</li>
+			  <li class="active">Daftar Penetapan Transfer SKPD</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Transfer SKPD</div>
-				<div class="subtitle">Daftar Usulan Transfer SKPD</div>
+				<div class="title">Penetapan Transfer SKPD</div>
+				<div class="subtitle">Daftar Penetapan Transfer SKPD</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/mutasiSkpd/list_usulan.php">
+				<a class="shortcut-link " href="<?=$url_rewrite?>/module/mutasiSkpd/list_usulan.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
 					<span class="text">Usulan Transfer SKPD</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/mutasiSkpd/list_penetapan.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/mutasiSkpd/list_penetapan.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
@@ -64,25 +64,30 @@ $par_data_table="tahun=$tahun";
                     ],
                     "aoColumns":[
                          {"bSortable": false},
-                         {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true},
                          {"bSortable": false},
                          {"bSortable": true},
                          {"bSortable": false},
+                         {"bSortable": false},
+                         {"bSortable": false},
                          {"bSortable": true},
+                         {"bSortable": false},
+                         {"bSortable": false},
                          {"bSortable": false},
                          {"bSortable": false}],
                     "sPaginationType": "full_numbers",
 
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/list_usulan.php?<?php echo $par_data_table?>"
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/list_penetapan_mutasi.php?<?php echo $par_data_table?>"
                }
                   );
       });
     </script>
-    		<p><a href="<?=$url_rewrite?>/module/mutasiSkpd/tambah_usulan.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Usulan</a>
+    		<?php
+				if($_SESSION['ses_ujabatan']==1){
+			?>
+    		<p><a href="<?=$url_rewrite?>/module/mutasiSkpd/tambah_penetapan.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Penetapan</a>
+    		<?php } ?>
 			<p>Tahun Usulan:
 				<?=$tahun?>
 			</p>
@@ -102,9 +107,10 @@ $par_data_table="tahun=$tahun";
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Nomor Usulan</th>
+						<th>Nomor Penetapan</th>
 						<th>Satker Asal</th>
 						<th>Satker Tujuan</th>
+						<th>Jumlah Usulan</th>
 						<th>Jumlah Aset</th>
 						<th>Tgl Usulan</th>
 						<th>Nilai</th>
@@ -115,11 +121,12 @@ $par_data_table="tahun=$tahun";
 				</thead>
 				<tbody>			
 					 <tr>
-                        <td colspan="10">Data Tidak di temukkan</td>
+                        <td colspan="11">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
+						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
