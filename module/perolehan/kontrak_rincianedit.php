@@ -53,9 +53,7 @@ $menu_id = 10;
 	<!-- End Sql -->
 	<script>
     jQuery(function($) {
-        $('#hrgmask,#total').autoNumeric('init', {
-            aPad: true
-        });
+        $('#hrgmask,#total').autoNumeric('init',{vMin: '0', vMax: '999999999999999' });
         $("select").select2({});
         $( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ format: 'yyyy-mm-dd' });
 		$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('0000-00-00');  
@@ -410,7 +408,7 @@ $menu_id = 10;
 							</li>
 							<li>
 								<span class="span2">Harga Satuan</span>
-								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="null" data-a-sep="." value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
+								<input type="text" class="span3" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" onkeyup="return getCurrency(this);" onchange="return totalHrg();" required/>
 								<input type="hidden" name="Satuan" id="hrgSatuan" value="<?=($kontrak[0]['tipeAset'] == 3)? $aset[0]['NilaiPerolehan'] : ''?>" >
 							</li>
 							<li>
