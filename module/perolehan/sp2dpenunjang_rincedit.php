@@ -88,7 +88,7 @@ $menu_id = 1;
 							<?php selectRekening('kdRekening','205',true,(isset($rinc) ? $rinc['kdRekening'] : false)); ?><br />
 							<li>
 								<span class="span2">Nilai</span>
-								<input type="text" data-a-sign="Rp " id="hrgmask" data-a-dec="," data-a-sep="." value="<?=(isset($rinc)) ? $rinc['jumlah'] : ''?>" onkeyup="return getCurrency(this);" required />
+								<input type="text" data-a-sign="Rp " id="hrgmask" data-a-dec="null" data-a-sep="." value="<?=(isset($rinc)) ? $rinc['jumlah'] : ''?>" onkeyup="return getCurrency(this);" required />
 								<input type="hidden" name="jumlah" id="jumlah" value="<?=(isset($rinc)) ? $rinc['jumlah'] : ''?>">
 							</li>
 							<li>

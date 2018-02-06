@@ -123,7 +123,7 @@ $menu_id = 1;
 							</li>
 							<li>
 								<span  class="span2">Nilai</span>
-								<input type="text" id="totalmask" data-a-sign="Rp " data-a-dec="," data-a-sep="." value="<?=(isset($sp2d)) ? $sp2d['nilai'] : '' ?>" onkeyup="return getCurrency(this);" required/>
+								<input type="text" id="totalmask" data-a-sign="Rp " data-a-dec="null" data-a-sep="." value="<?=(isset($sp2d)) ? $sp2d['nilai'] : '' ?>" onkeyup="return getCurrency(this);" required/>
 								<input type="hidden" name="nilai" id="total" value="<?=(isset($sp2d)) ? $sp2d['nilai'] : '' ?>" />
 							</li>
 							<li>
