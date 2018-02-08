@@ -31,8 +31,8 @@ if($_GET['jenisaset']=="2")
 }
 else
 {     $merk="ast.Aset_ID";
-    $NoMesin="NULL";
-    $NoRangka="NULL";
+    $NoMesin="ast.Aset_ID";
+    $NoRangka="ast.Aset_ID";
 
 }
 // $aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
