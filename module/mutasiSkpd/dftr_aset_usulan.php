@@ -193,7 +193,7 @@ include"$path/menu.php";
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>No Polisi</th>
 						<th>Merk / Type</th>
 					</tr>
 				</thead>

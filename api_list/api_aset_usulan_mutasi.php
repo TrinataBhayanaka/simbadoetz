@@ -208,8 +208,8 @@ foreach ($data as $key => $value)
                  $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                  $row[]="<center>".$TglPerolehan."</center>";
                  $row[]=number_format($value[NilaiPerolehan],4);
-                 $row[]=$kondisi. ' - ' .$value[AsalUsul];
-                 //$row[]=$value[NoRangka];
+                 //$row[]=$kondisi. ' - ' .$value[AsalUsul];
+                 $row[]=$value[NoSeri];
                  $row[]="{$value[Merk]}$value[Model] ";
                  
                  $output['aaData'][] = $row;

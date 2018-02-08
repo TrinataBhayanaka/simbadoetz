@@ -213,7 +213,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
         $listTableField = array(
                         1=>'t.NoSertifikat',
-                        2=>'m.Merk,m.Model,m.NoMesin,m.NoRangka',
+                        2=>'m.Merk,m.Model,m.NoMesin,m.NoRangka,m.NoSeri',
                         3=>'b.TglPakai',
                         4=>'j.Konstruksi,j.NoDokumen',
                         5=>'al.Pengarang,al.Penerbit,al.TahunTerbit,al.ISBN',
