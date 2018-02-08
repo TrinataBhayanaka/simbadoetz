@@ -213,7 +213,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
 
         $listTableField = array(
                         1=>'t.NoSertifikat',
-                        2=>'m.Merk,m.Model',
+                        2=>'m.Merk,m.Model,m.NoMesin,m.NoRangka',
                         3=>'b.TglPakai',
                         4=>'j.Konstruksi,j.NoDokumen',
                         5=>'al.Pengarang,al.Penerbit,al.TahunTerbit,al.ISBN',
@@ -364,7 +364,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         'joinmethod' => ' LEFT JOIN ',
                         'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                          );
-                    
+             
                 $resAset = $this->db->lazyQuery($sql2,$debug);
                 //pr($resAset);
                 if($resAset){
