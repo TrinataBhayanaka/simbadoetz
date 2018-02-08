@@ -194,12 +194,14 @@ foreach ($data as $key => $value)
                  $row[]=$no;
                  $row[]=$checkbox;
                  $row[]="<center>".$value['noRegister']."</center>" ;
-                 $row[]=$value['noKontrak'];
+                 //$row[]=$value['noKontrak'];
+                 $row[]=$value['NoMesin'];
                  $row[]="[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
                  $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                  $row[]="<center>".$TglPerolehan."</center>";
                  $row[]=number_format($value[NilaiPerolehan],4);
-                 $row[]=$kondisi. ' - ' .$value[AsalUsul];
+                 //$row[]=$kondisi. ' - ' .$value[AsalUsul];
+                 $row[]=$value['NoRangka'];
                  $row[]="{$value[Merk]}$value[Model] ";
                  
                  $output['aaData'][] = $row;
