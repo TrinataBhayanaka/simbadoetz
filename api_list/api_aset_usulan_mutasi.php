@@ -145,7 +145,7 @@ if($dataSESSION[count]){
 }
 
 
-//echo "$sQuery";
+echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
 $iTotal = $aResultTotal[0];
