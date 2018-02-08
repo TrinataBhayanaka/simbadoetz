@@ -35,8 +35,8 @@ else
     $NoRangka="ast.Aset_ID";
 
 }
-// $aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
-$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister',$NoMesin,'k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$NoRangka);
+ $aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+/*$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister',$NoMesin,'k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$NoRangka);*/
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
