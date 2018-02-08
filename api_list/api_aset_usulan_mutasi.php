@@ -24,10 +24,19 @@ $id=$_SESSION['user_id'];//Nanti diganti
 
 $dataParam['jenisaset']=$_GET['jenisaset'];
 if($_GET['jenisaset']=="2")
-     $merk="m.Merk";
+{     $merk="m.Merk";
+    $NoMesin="m.NoMesin";
+    $NoRangka="m.NoRangka";
+
+}
 else
-     $merk="ast.Aset_ID";
-$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+{     $merk="ast.Aset_ID";
+    $NoMesin="NULL";
+    $NoRangka="NULL";
+
+}
+// $aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister',$NoMesin,'k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$NoRangka);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
