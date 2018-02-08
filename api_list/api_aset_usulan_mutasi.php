@@ -24,19 +24,10 @@ $id=$_SESSION['user_id'];//Nanti diganti
 
 $dataParam['jenisaset']=$_GET['jenisaset'];
 if($_GET['jenisaset']=="2")
-{     $merk="m.Merk";
-    $NoMesin="m.NoMesin";
-    $NoRangka="m.NoRangka";
-
-}
+     $merk="m.Merk";
 else
-{     $merk="ast.Aset_ID";
-    $NoMesin="ast.Aset_ID";
-    $NoRangka="ast.Aset_ID";
-
-}
- $aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
-/*$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister',$NoMesin,'k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$NoRangka);*/
+     $merk="ast.Aset_ID";
+$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -145,7 +136,7 @@ if($dataSESSION[count]){
 }
 
 
-echo "$sQuery";
+//echo "$sQuery";
 $rResultTotal = $DBVAR->query($sQuery);
 $aResultTotal = $DBVAR->fetch_array($rResultTotal);
 $iTotal = $aResultTotal[0];
@@ -210,7 +201,7 @@ foreach ($data as $key => $value)
                  $row[]="<center>".$TglPerolehan."</center>";
                  $row[]=number_format($value[NilaiPerolehan],4);
                  //$row[]=$kondisi. ' - ' .$value[AsalUsul];
-                 $row[]=$value['NoRangka'];
+                 $row[]=$value['NoMesin'];
                  $row[]="{$value[Merk]}$value[Model] ";
                  
                  $output['aaData'][] = $row;
