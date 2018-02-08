@@ -366,7 +366,7 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                          );
                 //$debug=2;
                 $resAset = $this->db->lazyQuery($sql2,$debug);
-                pr($resAset);
+                //pr($resAset);
                 if($resAset){
                     //list Usulan Aset
                     if($ListUsul){
