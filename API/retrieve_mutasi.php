@@ -364,9 +364,9 @@ class RETRIEVE_MUTASI extends RETRIEVE{
                         'joinmethod' => ' LEFT JOIN ',
                         'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                          );
-             
+                //$debug=2;
                 $resAset = $this->db->lazyQuery($sql2,$debug);
-                //pr($resAset);
+                pr($resAset);
                 if($resAset){
                     //list Usulan Aset
                     if($ListUsul){

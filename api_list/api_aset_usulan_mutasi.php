@@ -123,6 +123,7 @@ $dataSESSION = $MUTASI->retrieve_usulan($dataParam);
 $sQuery = "
 		SELECT FOUND_ROWS()
 	";
+
 $rResultFilterTotal = $DBVAR->query($sQuery);
 $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
@@ -202,13 +203,13 @@ foreach ($data as $key => $value)
                  $row[]=$checkbox;
                  $row[]="<center>".$value['noRegister']."</center>" ;
                  //$row[]=$value['noKontrak'];
-                 $row[]=$value['NoMesin'];
+                 $row[]=$value[NoMesin];
                  $row[]="[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
                  $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                  $row[]="<center>".$TglPerolehan."</center>";
                  $row[]=number_format($value[NilaiPerolehan],4);
                  //$row[]=$kondisi. ' - ' .$value[AsalUsul];
-                 $row[]=$value['NoMesin'];
+                 $row[]=$value[NoRangka];
                  $row[]="{$value[Merk]}$value[Model] ";
                  
                  $output['aaData'][] = $row;
