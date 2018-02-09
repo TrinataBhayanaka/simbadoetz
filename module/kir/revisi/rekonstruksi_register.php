@@ -96,10 +96,10 @@ if($tempMutasi_ID){
 						$tableKib = 'kdp';
 						$tableLog = 'log_kdp';
 					}
-					$sqlUpNoReg_3  = "UPDATE {$tableKib}} SET noRegister = '{$NomorRegBaru}' WHERE Aset_ID = '{$Aset_ID}'" or die("Error in the consult.." . mysqli_error($link));
+					$sqlUpNoReg_3  = "UPDATE {$tableKib} SET noRegister = '{$NomorRegBaru}' WHERE Aset_ID = '{$Aset_ID}'" or die("Error in the consult.." . mysqli_error($link));
 					$execUpNoReg_3 = $link->query($sqlUpNoReg_3);
 
-					$sqlUpNoReg_4  = "UPDATE {$tableLog}} SET noRegister = '{$NomorRegBaru}' WHERE Aset_ID = '{$Aset_ID}' AND Kd_Riwayat = '3' AND action = 'Sukses Mutasi'" or die("Error in the consult.." . mysqli_error($link));
+					$sqlUpNoReg_4  = "UPDATE {$tableLog} SET noRegister = '{$NomorRegBaru}' WHERE Aset_ID = '{$Aset_ID}' AND Kd_Riwayat = '3' AND action = 'Sukses Mutasi'" or die("Error in the consult.." . mysqli_error($link));
 					$execUpNoReg_3 = $link->query($sqlUpNoReg_4);
 
 				}else{
