@@ -24,7 +24,7 @@ $time_start = microtime(true);
 
 */
 
-$sqlMutasi = "SELECT * FROM `mutasi` WHERE SatkerUsul IS not null AND SatkerTujuan IS not null AND Mutasi_ID = '3052'";
+$sqlMutasi = "SELECT * FROM `mutasi` WHERE SatkerUsul IS not null AND SatkerTujuan IS not null";
 $execMutasi =  $link->query($sqlMutasi);
 while($rowMutasi = $execMutasi->fetch_assoc()) {
 	$tempMutasi_ID[] = $rowMutasi['Mutasi_ID'];
@@ -61,7 +61,7 @@ if($tempMutasi_ID){
 					$sqlAsetNew = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$kodeKelompok}' AND kodeLokasi = '{$kodeLokasi}' ORDER BY noRegister DESC LIMIT 1";
 					$resultAsetNew = $link->query($sqlAsetNew);
 					$detailAsetNew = mysqli_fetch_assoc($resultAsetNew);
-					echo $detailAsetNew['noRegister']."\n\n";
+					//echo $detailAsetNew['noRegister']."\n\n";
 					if($detailAsetNew['noRegister'] == ''){
 				        $startreg = 0; 
 				        $NomorRegBaru = $startreg + 1;
