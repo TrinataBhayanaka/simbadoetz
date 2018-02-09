@@ -50,14 +50,23 @@ if($tempMutasi_ID){
 				$tmpkodeKelompok[]  = $rowMutasiAset['kodeKelompok'];
 				$tmpkodeLokasi[] 	= $rowMutasiAset['kodeLokasi'];
 			}else{
-				echo $kodeKelompok."\n\n";
+				/*echo $kodeKelompok."\n\n";
 				echo end($tmpkodeKelompok)."\n\n";
 				echo $kodeLokasi."\n\n";
-				echo end($tmpkodeLokasi)."\n\n";
+				echo end($tmpkodeLokasi)."\n\n";*/
 				if($kodeKelompok == end($tmpkodeKelompok) && $kodeLokasi == end($tmpkodeLokasi)){
 					//noregister +1
 					//NomorRegBaru
-					$NomorRegBaru = intval($noRegister) + 1;	
+					//$NomorRegBaru = intval($noRegister) + 1;	
+					$sqlAsetNew = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$detailAset['kodeKelompok']}' AND kodeLokasi = '{$kodeLokasi}' ORDER BY noRegister DESC LIMIT 1";
+					$resultAsetNew = $link->query($sqlAsetNew);
+					$detailAsetNew = mysqli_fetch_assoc($resultAsetNew);
+					if($detailAsetNew['noRegister'] == ''){
+				        $startreg = 0; 
+				        $NomorRegBaru = $startreg + 1;
+				    }else{
+				    	$NomorRegBaru = intval($detailAsetNew['noRegister']) + 1;
+				    }
 					$sqlUpNoReg  = "UPDATE mutasiaset SET NomorRegBaru = '{$NomorRegBaru}' WHERE Mutasi_ID = '{$Mutasi_ID}' AND Aset_ID = '{$Aset_ID}'" or die("Error in the consult.." . mysqli_error($link));
 					$execUpNoReg = $link->query($sqlUpNoReg);
 					/*$sqlUpNoReg  = "UPDATE mutasiaset SET NomorRegBaru = '{$NomorRegBaru}' WHERE Mutasi_ID = '{$Mutasi_ID}' AND Aset_ID = '{$Aset_ID}'";
