@@ -61,6 +61,7 @@ if($tempMutasi_ID){
 					$sqlAsetNew = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$detailAset['kodeKelompok']}' AND kodeLokasi = '{$kodeLokasi}' ORDER BY noRegister DESC LIMIT 1";
 					$resultAsetNew = $link->query($sqlAsetNew);
 					$detailAsetNew = mysqli_fetch_assoc($resultAsetNew);
+					echo $detailAsetNew['noRegister']."\n\n";
 					if($detailAsetNew['noRegister'] == ''){
 				        $startreg = 0; 
 				        $NomorRegBaru = $startreg + 1;
@@ -111,8 +112,8 @@ if($tempMutasi_ID){
 		}	
 	}
 }
-print_r($tmpkodeKelompok);
-print_r($tmpkodeLokasi);
+//print_r($tmpkodeKelompok);
+//print_r($tmpkodeLokasi);
 //echo "Total Data List Aset : ".count($data)."\n\n";
 $time_end = microtime(true);
 //dividing with 60 will give the execution time in minutes other wise seconds
