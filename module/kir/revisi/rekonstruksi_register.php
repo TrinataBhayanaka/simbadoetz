@@ -58,7 +58,7 @@ if($tempMutasi_ID){
 					//noregister +1
 					//NomorRegBaru
 					//$NomorRegBaru = intval($noRegister) + 1;	
-					$sqlAsetNew = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$detailAset['kodeKelompok']}' AND kodeLokasi = '{$kodeLokasi}' ORDER BY noRegister DESC LIMIT 1";
+					$sqlAsetNew = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$kodeKelompok}' AND kodeLokasi = '{$kodeLokasi}' ORDER BY noRegister DESC LIMIT 1";
 					$resultAsetNew = $link->query($sqlAsetNew);
 					$detailAsetNew = mysqli_fetch_assoc($resultAsetNew);
 					echo $detailAsetNew['noRegister']."\n\n";
