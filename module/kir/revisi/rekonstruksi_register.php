@@ -33,8 +33,9 @@ while($rowMutasi = $execMutasi->fetch_assoc()) {
 if($tempMutasi_ID){
 	foreach ($tempMutasi_ID as $key => $value) {
 		$Mutasi_ID = $value;
-		
-		$sqlMutasiAset "SELECT ast.*,mts.* FROM aset as ast INNER JOIN mutasiaset as mts on mts.Aset_ID = ast.Aset_ID WHERE mts.Mutasi_ID = '{$Mutasi_ID}' ORDER BY ast.Aset_ID,ast.kodeKelompok";
+		$sqlMutasiAset = "SELECT ast.*,mts.* FROM aset as ast 
+						INNER JOIN mutasiaset as mts on mts.Aset_ID = ast.Aset_ID 
+						WHERE mts.Mutasi_ID = '{$Mutasi_ID}' ORDER BY ast.Aset_ID,ast.kodeKelompok";
 		$execMutasiAset =  $link->query($sqlMutasiAset);
 		$tmpkodeKelompok = array();
 		$tmpkodeLokasi = array();
