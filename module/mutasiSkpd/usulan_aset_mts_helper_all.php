@@ -15,7 +15,7 @@ echo "param : ".$param."\n\n";
 $condition = '';
     //get param filter
     $exp = explode('-', $param);
-    print_r($exp);
+    //print_r($exp);
     foreach ($exp as $value) {
         # code...
         $exp2 = explode('=', $value);
@@ -44,23 +44,24 @@ $condition = '';
             $param = "=";
             $ext ='';
             $val = $exp2['1'];
+            $val1 = "ast.".$exp2['0'];
             if($val == '1'){
-                $paramTipe = $val;
+                $val2 = 'A';
                 $JoinTabel = 'tanah as a';
             }elseif($val == '2'){
-                $paramTipe = $val;
+                $val2 = 'B';    
                 $JoinTabel = 'mesin as a';
             }elseif($val == '3'){
-                $paramTipe = $val;
+                $val2 = 'C';
                 $JoinTabel = 'bangunan as a';
             }elseif($val == '4'){
-                $paramTipe = $val;
+                $val2 = 'D';
                 $JoinTabel = 'jaringan as a';
             }elseif($val == '5'){
-                $paramTipe = $val;
+                $val2 = 'E';
                 $JoinTabel = 'asetlain as a';
             }elseif($val == '6'){
-                $paramTipe = $val;
+                $val2 = 'F';
                 $JoinTabel = 'kdp as a';
             }
         }
