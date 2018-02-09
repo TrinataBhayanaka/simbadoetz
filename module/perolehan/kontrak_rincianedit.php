@@ -53,7 +53,7 @@ $menu_id = 10;
 	<!-- End Sql -->
 	<script>
     jQuery(function($) {
-        $('#hrgmask,#total').autoNumeric('init');
+        $('#hrgmask,#total').autoNumeric('init',{vMin: '0', vMax: '999999999999999' });
         $("select").select2({});
         $( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen" ).datepicker({ format: 'yyyy-mm-dd' });
 		$( "#tglPerolehan,#tglPembukuan,#tglSurat,#tglDokumen,#datepicker" ).mask('0000-00-00');  

@@ -110,7 +110,7 @@ $menu_id = 1;
 	</section>
 	<script type="text/javascript">
 	    jQuery(function($) {
-	        $('#hrgmask').autoNumeric('init');  
+	        $('#hrgmask').autoNumeric('init', {vMin: '0', vMax: '999999999999999' });
 	    });
 
 	    function getCurrency(item){

@@ -54,7 +54,7 @@ foreach ($kapital as $key => $value) {
   while ($dataAset = mysql_fetch_assoc($sqlquery)){
           $kib = $dataAset;
       }  
-  $sql = mysql_query("UPDATE bangunan SET NilaiBuku = NilaiBuku + {$kib['NilaiBuku']}, NilaiPerolehan = NilaiPerolehan + {$kib['NilaiPerolehan']}, StatusTampil = '1' WHERE Aset_ID = '{$value['asetKapitalisasi']}'");
+  $sql = mysql_query("UPDATE bangunan SET NilaiBuku = NilaiBuku + {$kib['NilaiBuku']}, NilaiPerolehan = {$NilaiPerolehan} + {$kib['NilaiPerolehan']}, StatusTampil = '1' WHERE Aset_ID = '{$value['asetKapitalisasi']}'");
   $sql = mysql_query("UPDATE aset SET NilaiBuku = NilaiBuku + {$kib['NilaiBuku']},NilaiPerolehan = NilaiPerolehan + {$kib['NilaiPerolehan']}, Satuan = Satuan + {$kib['NilaiPerolehan']} WHERE Aset_ID = '{$value['asetKapitalisasi']}'");
   $sql = mysql_query("UPDATE kdp SET StatusTampil = '0', StatusValidasi = '0', Status_Validasi_Barang = '0' WHERE Aset_ID = '{$value['Aset_ID']}'");
   $sql = mysql_query("UPDATE aset SET StatusValidasi = '0', Status_Validasi_Barang = '0' WHERE Aset_ID = '{$value['Aset_ID']}'");

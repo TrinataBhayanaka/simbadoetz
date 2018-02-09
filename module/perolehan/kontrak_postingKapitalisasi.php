@@ -59,7 +59,7 @@ while ($dataKapital = mysql_fetch_assoc($sql)){
         }
 // pr($kapital);
 foreach ($kapital as $key => $value) {
-  $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET NilaiPerolehan = if(NilaiPerolehan is null,0,{$NilaiPerolehan})+{$value['nilai']},NilaiBuku = if(NilaiBuku is null,0,NilaiBuku)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
+  $sqlkib = mysql_query("UPDATE {$value['tipeAset']} SET NilaiPerolehan = if(NilaiPerolehan is null,0,NilaiPerolehan)+{$value['nilai']},NilaiBuku = if(NilaiBuku is null,0,NilaiBuku)+{$value['nilai']} WHERE Aset_ID = '{$value['Aset_ID']}' AND noRegister = '{$value['noRegister']}'");
   
   if(!$sqlkib){
     $DBVAR->rollback();
@@ -74,6 +74,7 @@ foreach ($kapital as $key => $value) {
   echo "<script>alert('ERROR #003 :Data gagal masuk. Silahkan coba lagi');</script><meta http-equiv=\"Refresh\" content=\"0; url={$url_rewrite}/module/perolehan/kontrak_posting.php\">";
   exit;
   }
+
   //log
   $sqlkib = "SELECT * FROM {$value['tipeAset']} WHERE Aset_ID = '{$value['Aset_ID']}'";
   $sqlquery = mysql_query($sqlkib);

@@ -188,12 +188,12 @@ include"$path/menu.php";
 						<th>No</th>
 						<th class="checkbox-column"><input type="checkbox" class="icheck-input" onchange="return AreAnyCheckboxesChecked();"></th>
 						<th>No Register</th>
-						<th>No Kontrak</th>
+						<th>No Mesin / No Rangka</th>
 						<th>Kode / Uraian</th>
 						<th>Satker</th>
 						<th>Tanggal Perolehan</th>
 						<th>Nilai Perolehan</th>
-						<th>Status</th>
+						<th>No Polisi</th>
 						<th>Merk / Type</th>
 					</tr>
 				</thead>

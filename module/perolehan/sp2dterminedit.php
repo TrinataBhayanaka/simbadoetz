@@ -50,7 +50,7 @@ $menu_id = 1;
 ?>
 	<script>
     jQuery(function($) {
-        $('#totalmask').autoNumeric('init');   
+        $('#totalmask').autoNumeric('init', {vMin: '0', vMax: '999999999999999' });
         //$("#datepicker").attr('readonly',true);
         $("#datepicker").mask("0000-00-00");
     });
