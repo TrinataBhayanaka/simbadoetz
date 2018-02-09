@@ -50,6 +50,10 @@ if($tempMutasi_ID){
 				$tmpkodeKelompok[]  = $rowMutasiAset['kodeKelompok'];
 				$tmpkodeLokasi[] 	= $rowMutasiAset['kodeLokasi'];
 			}else{
+				echo $kodeKelompok."\n\n";
+				echo end($tmpkodeKelompok)."\n\n";
+				echo $kodeLokasi."\n\n";
+				echo end($tmpkodeLokasi)."\n\n";
 				if($kodeKelompok == end($tmpkodeKelompok) && $kodeLokasi == end($tmpkodeLokasi)){
 					//noregister +1
 					//NomorRegBaru
@@ -98,6 +102,8 @@ if($tempMutasi_ID){
 		}	
 	}
 }
+print_r($tmpkodeKelompok);
+print_r($tmpkodeLokasi);
 //echo "Total Data List Aset : ".count($data)."\n\n";
 $time_end = microtime(true);
 //dividing with 60 will give the execution time in minutes other wise seconds
