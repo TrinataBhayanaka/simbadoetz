@@ -2381,7 +2381,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             $data[ 'bp_berjalan' ] = 0;
             //}
         } else if($Kd_Riwayat == "35") {
-            // code  REKLAS kontrak KURANG
+            // code  REKLAS kontrak TAMBAH
             //echo "Aset_ID=$Aset_ID kodeKa $kodeKa <br/>";
             $status_masuk = 1;
             /** ----------------------------MUTASI TAMBAH---------------------------------- */
