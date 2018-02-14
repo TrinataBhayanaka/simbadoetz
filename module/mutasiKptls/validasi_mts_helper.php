@@ -235,7 +235,7 @@ foreach ($data as $val) {
 		$No_Dokumen = $NoSKKDH;
 		
 		$QueryLogAST  = "INSERT INTO {$tableLog2} ($implodeFieldAST,$AddFieldAST)
-						VALUES ($implodeValAST,'$action','$changeDate','$TglPerubahan','$Kd_Riwayat','$NilaiPerolehan_Awal','$No_Dokumen',$NilaiBuku_Awal)" or die("Error in the consult.." . mysqli_error($link));
+						VALUES ($implodeValAST,'$action','$changeDate','$TglPerubahan','$Kd_Riwayat','$NilaiPerolehan_Awal','$No_Dokumen','$NilaiBuku_Awal')" or die("Error in the consult.." . mysqli_error($link));
 		
 		$execLog = $link->query($QueryLogAST);	
 		echo "query Log Tujuan : ".$QueryLogAST."\n\n";
@@ -379,7 +379,7 @@ foreach ($data as $val) {
 		$No_Dokumen = $NoSKKDH;
 		
 		$QueryLogAST  = "INSERT INTO {$tableLog2} ($implodeFieldAST,$AddFieldAST)
-						VALUES ($implodeValAST,'$action','$changeDate','$TglPerubahan','$Kd_Riwayat','$NilaiPerolehan_Awal','$No_Dokumen',$AkumulasiPenyusutan_Awal,$PenyusutanPerTahun_Awal,$NilaiBuku_Awal)" or die("Error in the consult.." . mysqli_error($link));
+						VALUES ($implodeValAST,'$action','$changeDate','$TglPerubahan','$Kd_Riwayat','$NilaiPerolehan_Awal','$No_Dokumen','$AkumulasiPenyusutan_Awal','$PenyusutanPerTahun_Awal','$NilaiBuku_Awal')" or die("Error in the consult.." . mysqli_error($link));
 		
 		$execLog = $link->query($QueryLogAST);	
 		echo "query Log Tujuan : ".$QueryLogAST."\n\n";
