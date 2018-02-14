@@ -218,12 +218,18 @@ include"$path/menu.php";
 			</div>	
 
 		<section class="formLegend">
-			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>usul_proses.php"> 
-			<div class="detailLeft">
+			
+			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>usul_proses.php">
+
+			<div style="margin-left: 10%; margin-top: 2%">
+			
+			<div class="formKontrak" style="outline: ridge;outline-color: #eee; margin: 0 20px 0 0;padding: 10px 20px 20px 20px">
+				<div>
+					<h3><i class="fa fa-group"></i> Detail Aset Tujuan</h3>
+				</div>
+				<hr style="height:1px;border:none;color:#aaa;background-color:#aaa;margin-top: -2px">
 				<div class="row">
 					<ul>
-						<?=selectSatker('SatkerUsul','260',true,false,'required','Kode Satker Asal');?>
-						<br/>
 						<?=selectAllSatker('SatkerTujuan','260',true,false,'required',false,1,'Kode Satker Tujuan');?>
 						<br/>
 						<?php selectAset('kodeKelompok','255',true,false,'required'); ?>
@@ -282,9 +288,15 @@ include"$path/menu.php";
 					</ul>
 				</div>
 			</div>
-			<div class="detailRight">
+			<div class="formPerusahaan" style="outline: ridge;outline-color: #eee; margin: 0 20px 0 0;padding: 10px 20px 20px 20px">
+				<div>
+					<h3><i class="fa fa-file"></i> Dokumen</h3>
+				</div>
+				<hr style="height:1px;border:none;color:#aaa;background-color:#aaa;margin-top: -2px">
 				<div class="row">
 					<ul>
+						<?=selectSatker('SatkerUsul','260',true,false,'required','Kode Satker Asal');?>
+						<br/>
 						<li>
 							<span  class="labelInfo span2">No Usulan</span>
 							<input type="text" class="span3" name="NoUsulan" value="" required/>
@@ -303,6 +315,7 @@ include"$path/menu.php";
 						</li>
 					</ul>			
 				</div>
+			</div>
 			</div>
 			</form>
 

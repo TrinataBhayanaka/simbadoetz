@@ -369,8 +369,13 @@ if (isset($id)){
 			</div>		
 
 		<section class="formLegend">
-			<form method="POST" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>dftr_asetid_usulan_proses_upd.php"> 
-				<div class="detailLeft">
+			<form method="POST" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>dftr_asetid_usulan_proses_upd.php">
+        <div style="margin-left: 10%; margin-top: 2%"> 
+				<div class="formKontrak" style="outline: ridge;outline-color: #eee; margin: 0 20px 0 0;padding: 10px 20px 20px 20px">
+            <div>
+              <h3><i class="fa fa-group"></i> Detail Aset Tujuan</h3>
+            </div>
+        <hr style="height:1px;border:none;color:#aaa;background-color:#aaa;margin-top: -2px">
 					<div class="row">
 						<?php
 							if($row['StatusPenetapan']==0){
@@ -383,8 +388,6 @@ if (isset($id)){
 							$TglUsulan=$TglUsulanTmp[1]."/".$TglUsulanTmp[2]."/".$TglUsulanTmp[0];
 						?>
 						<ul>
-							<?=selectSatker('SatkerUsul','260',true,$row['SatkerUsul'],'required','Kode Satker Asal');?>
-							<br/>
 							<?=selectAllSatker('SatkerTujuan','260',true,$row['SatkerTujuan'],'required',false,1,'Kode Satker Tujuan');?>
 							<br/>
 								<?php selectAset('kodeKelompok','255',true,$row['kodeKelompok'],'required'); ?>
@@ -444,9 +447,15 @@ if (isset($id)){
 				</div>
 				</div>
 
-				<div class="detailRight">
+				<div class="formPerusahaan" style="outline: ridge;outline-color: #eee; margin: 0 20px 0 0;padding: 10px 20px 20px 20px">
+        <div>
+          <h3><i class="fa fa-file"></i> Dokumen</h3>
+        </div>
+        <hr style="height:1px;border:none;color:#aaa;background-color:#aaa;margin-top: -2px">
 				<div class="row">
 					<ul>
+            <?=selectSatker('SatkerUsul','260',true,$row['SatkerUsul'],'required','Kode Satker Asal');?>
+            <br/>
 						<li>
 							<span  class="labelInfo span2">No Usulan</span>
 							<input type="text" class="span3" name="NoUsulan" value="<?=$row['NoUsulan']?>" <?=$disabled?> required/>
@@ -473,6 +482,7 @@ if (isset($id)){
 				</div>
 			 
 				<div style="height:5px;width:100%;clear:both"></div>
+        </div>
 			</form>
 
 			<form method="POST" ID="Form3" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>dftr_asetid_usulan_proses_hapus.php" onsubmit="return confirmValidate()" > 

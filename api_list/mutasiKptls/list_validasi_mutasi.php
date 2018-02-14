@@ -160,7 +160,7 @@ foreach ($data as $key => $value)
               $fixCount = count($clearArr);
 
               /*<a href="<?php echo "$url_rewrite/module/penghapusan/"; ?>dftr_review_edit_penetapan_usulan_validasi_pmd.php?id=<?php echo "$row[Penghapusan_ID]";?>" class="btn btn-success"><i class="fa fa-pencil-square-o"></i> View</a>&nbsp;*/
-              $tindakan = "<a href=\"{$url_rewrite}/module/mutasiSkpd/dftr_review_edit_penetapan_validasi.php?id={$value[Mutasi_ID]}\" class=\"btn btn-success btn-small\" \"style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>";
+              $tindakan = "<a href=\"{$url_rewrite}/module/mutasiKptls/dftr_review_edit_aset_penetapan.php?id={$value[Mutasi_ID]}\" class=\"btn btn-success btn-small\" \"style=\"margin-top:3px\"><i class=\"fa fa-pencil-square-o\"></i>&nbsp;View</a>";
 
               $row[]=$no;
               $row[]=$value['NoSKKDH'];

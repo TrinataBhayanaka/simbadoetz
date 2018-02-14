@@ -156,10 +156,7 @@ if (isset($id)){
 						</li>
 						<li>
 							<span  class="labelInfo">Tanggal Penetapan</span>
-								<div class="input-prepend">
-									<span class="add-on"><i class="fa fa-calendar"></i></span>
-									<input name="TglSKKDH" type="text" id="tanggal1" <?=$disabled?>  value="<?=$row['TglSKKDH']?>" required/>
-								</div>
+								<input name="TglSKKDH" type="text" id="tanggal1" <?=$disabled?>  value="<?=$row['TglSKKDH']?>" required/>
 							
 						</li>
 						<li>
