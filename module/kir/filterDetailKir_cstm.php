@@ -8,7 +8,7 @@ $SESSION = new Session();
 $menu_id = 59;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
-	pr($_POST);
+	//pr($_POST);
 	// $asetList=implode(',',$_POST['id_aset']);
 	include"$path/meta.php";
 	include"$path/header.php";

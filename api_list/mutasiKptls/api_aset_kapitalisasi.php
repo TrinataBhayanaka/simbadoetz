@@ -30,7 +30,7 @@ $kodeKelompok = $_GET['kodeKelompok'];
 $sTable = "aset as a";
 $sTable_inner_join_kelompok = "kelompok as k";
 $cond_kelompok ="k.Kode = a.kodeKelompok ";
-$status = "a.Status_Validasi_Barang = 1 AND";
+$status = "a.Status_Validasi_Barang = 1 AND a.kodeLokasi like '12%' AND";
 
 $tipeAset = explode('.', $kodeKelompok);
 if($tipeAset['0'] == '01'){
