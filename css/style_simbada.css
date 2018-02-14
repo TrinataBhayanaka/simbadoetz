@@ -622,7 +622,7 @@ nav li h3{
 }
 nav li li{
 
-	background-color:#635247;
+	background-color:#215e3c;
 	border-top:1px solid #756155;
 	border-bottom:1px solid #8a5d54;
 	border-left:2px solid #B1B3B2;
@@ -634,7 +634,7 @@ nav li li table{
 	color:#fff;
 }
 nav li li table a{
-	background-color:#635247;
+	background-color:#215e3c;
 
 }
 nav li a{
@@ -679,7 +679,7 @@ aside{
 }
 footer{
 	margin-top:30px;
-	background-color:#635247;
+	background-color:#215e3c;
 	height:50px;
 	clear:both;
 }
