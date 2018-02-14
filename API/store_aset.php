@@ -2655,7 +2655,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
               exit;
             }
 
-            $sqlupd = "UPDATE {$dataArr['tipeaset']} SET Status_Validasi_Barang = '0' WHERE kodeKelompok = '{$dataArr['kodeKelompok']}' AND kodeLokasi = '{$dataArr['kodeLokasi']}' AND noRegister BETWEEN {$dataArr['noReg_awal']} AND {$dataArr['noReg_akhir']} AND NilaiPerolehan = '{$dataArr['NilaiPerolehan']}'";
+            $sqlupd = "UPDATE {$dataArr['tipeaset']} SET Status_Validasi_Barang = '0', GUID = '1' WHERE kodeKelompok = '{$dataArr['kodeKelompok']}' AND kodeLokasi = '{$dataArr['kodeLokasi']}' AND noRegister BETWEEN {$dataArr['noReg_awal']} AND {$dataArr['noReg_akhir']} AND NilaiPerolehan = '{$dataArr['NilaiPerolehan']}'";
             // pr($sqlupd);
             $result=  $this->query($sqlupd) or die($this->error());
             if(!$result){
@@ -2756,7 +2756,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     $tglDist = $row['tglDistribusi'];
                 } 
 
-                $sqlupd = "UPDATE {$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}';";
+                $sqlupd = "UPDATE {$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}', GUID = NULL WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}';";
                  echo("$sqlupd \n");
                 $result=  $this->query($sqlupd) or die($this->error());
 
