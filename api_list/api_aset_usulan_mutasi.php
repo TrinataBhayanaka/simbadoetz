@@ -24,10 +24,17 @@ $id=$_SESSION['user_id'];//Nanti diganti
 
 $dataParam['jenisaset']=$_GET['jenisaset'];
 if($_GET['jenisaset']=="2")
-     $merk="m.Merk";
+{     $merk="m.Merk";
+    $NoRangka="m.NoRangka";
+    $NoMesin="m.NoMesin";
+}
 else
-     $merk="ast.Aset_ID";
-$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);
+{     $merk="ast.Aset_ID";
+  $NoRangka="NULl";
+    $NoMesin="NULL";
+}
+/*$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister','ast.noKontrak','k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$merk);*/
+$aColumns = array('ast.Aset_ID','ast.kodeKelompok','ast.noRegister',$NoRangka,'k.Uraian','ast.kodeSatker','ast.TglPerolehan','ast.NilaiPerolehan','ast.AsalUsul',$NoMesin);
 
 /* Indexed column (used for fast and accurate table cardinality) */
 $sIndexColumn = "Aset_ID";
@@ -116,6 +123,7 @@ $dataSESSION = $MUTASI->retrieve_usulan($dataParam);
 $sQuery = "
 		SELECT FOUND_ROWS()
 	";
+
 $rResultFilterTotal = $DBVAR->query($sQuery);
 $aResultFilterTotal = $DBVAR->fetch_array($rResultFilterTotal);
 $iFilteredTotal = $aResultFilterTotal[0];
@@ -194,12 +202,14 @@ foreach ($data as $key => $value)
                  $row[]=$no;
                  $row[]=$checkbox;
                  $row[]="<center>".$value['noRegister']."</center>" ;
-                 $row[]=$value['noKontrak'];
+                 //$row[]=$value['noKontrak'];
+                 $row[]=$value[NoMesin]. " / ".$value[NoRangka];
                  $row[]="[{$value[kodeKelompok]}]<br/>{$value[Uraian]}";
                  $row[]="[".$value[kodeSatker] ."]<br/>". $NamaSatker[0]['NamaSatker'];
                  $row[]="<center>".$TglPerolehan."</center>";
                  $row[]=number_format($value[NilaiPerolehan],4);
-                 $row[]=$kondisi. ' - ' .$value[AsalUsul];
+                 //$row[]=$kondisi. ' - ' .$value[AsalUsul];
+                 $row[]=$value[NoSeri];
                  $row[]="{$value[Merk]}$value[Model] ";
                  
                  $output['aaData'][] = $row;

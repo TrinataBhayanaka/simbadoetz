@@ -54,14 +54,6 @@ foreach ($data as $val) {
     /*echo "jenis_hapus : ".$jenis_hapus."\n\n";
     echo "tgl_hapus : ".$tgl_hapus."\n\n";*/
     
-    //update mutasiaset			
-	$queryPA = "UPDATE mutasiaset SET Status = '1'
-				WHERE Mutasi_ID = '{$idmutasi}' 
-						AND Aset_ID = '{$Aset_ID}'" 
-				or die("Error in the consult.." . mysqli_error($link));
-	$execPA = $link->query($queryPA);	
-	//echo "queryPA : ".$queryPA."\n\n";
-
     //update usulan aset
 	$quertUSA = "UPDATE usulanaset SET StatusValidasi='1'
 			WHERE Aset_ID = '{$Aset_ID}' AND Penetapan_ID = '{$idmutasi}'" or die("Error in the consult.." . mysqli_error($link));	
@@ -117,9 +109,31 @@ foreach ($data as $val) {
 
 	$SatkerTujuan = $val['SatkerTujuan']; 
     $kodeSatker = explode('.', $SatkerTujuan);
-	$kodeLokasi = "12.11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($ListParam['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
-    $NomorRegBaru = $val['NomorRegBaru'];   
-    
+    $kodePemilik = substr($ListParam['kodeLokasi'], 0,3);
+	$kodeLokasi = $kodePemilik."11.33.".$kodeSatker[0].".".$kodeSatker[1].".".substr($ListParam['Tahun'],-2).".".$kodeSatker[2].".".$kodeSatker[3];
+    //$NomorRegBaru = $val['NomorRegBaru'];  
+
+    //NomorRegBaru
+	$sqlAsetNew = "SELECT noRegister FROM aset WHERE kodeKelompok = '{$ListParam['kodeKelompok']}' AND kodeLokasi = '{$kodeLokasi}' ORDER BY noRegister DESC LIMIT 1";
+	//echo "queryPA : ".$sqlAsetNew."\n\n";
+	$resultAsetNew = $link->query($sqlAsetNew);
+	$detailAsetNew = mysqli_fetch_assoc($resultAsetNew);
+	//print_r($detailAsetNew);
+	if($detailAsetNew['noRegister'] == ''){
+        $startreg = 0; 
+        $NomorRegBaru = $startreg + 1;
+    }else{
+    	$NomorRegBaru = intval($detailAsetNew['noRegister']) + 1;
+    }
+
+      //update mutasiaset			
+	$queryPA = "UPDATE mutasiaset SET Status = '1',NomorRegBaru = '{$NomorRegBaru}'
+				WHERE Mutasi_ID = '{$idmutasi}' 
+						AND Aset_ID = '{$Aset_ID}'" 
+				or die("Error in the consult.." . mysqli_error($link));
+	$execPA = $link->query($queryPA);	
+	//echo "queryPA : ".$queryPA."\n\n";
+
 	//update aset
 	$quertAST = "UPDATE aset SET kodeLokasi = '{$kodeLokasi}' ,kodeSatker='{$SatkerTujuan}',noRegister = '{$NomorRegBaru}',TglPembukuan = '{$tgl_mutasi}'
 		WHERE Aset_ID = '{$Aset_ID}'" or die("Error in the consult.." . mysqli_error($link));	
