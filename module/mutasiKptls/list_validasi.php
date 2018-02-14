@@ -1,8 +1,8 @@
 <?php
 include "../../config/config.php";
 
-//$PENGHAPUSAN = new RETRIEVE_MUTASI;
-$menu_id = 78;
+//$MUTASI = new RETRIEVE_MUTASI;
+$menu_id = 79;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
@@ -21,38 +21,38 @@ $par_data_table="tahun=$tahun";
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Transfer SKPD</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Transfer SKPD</li>
+			  <li><a href="#">Transfer Kapitalisasi SKPD</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Daftar Usulan Transfer Kapitalisasi SKPD</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Transfer SKPD</div>
-				<div class="subtitle">Daftar Usulan Transfer SKPD</div>
+				<div class="title">Usulan Transfer Kapitalisasi SKPD</div>
+				<div class="subtitle">Daftar Usulan Transfer Kapitalisasi SKPD</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
-				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/mutasiKptls/list_usulan.php">
+				<a class="shortcut-link" href="<?=$url_rewrite?>/module/mutasiKptls/list_usulan.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
-					<span class="text">Usulan Transfer SKPD</span>
+					<span class="text">Usulan Transfer Kapitalisasi SKPD</span>
 				</a>
 				<a class="shortcut-link" href="<?=$url_rewrite?>/module/mutasiKptls/list_penetapan.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
-					<span class="text">Penetapan Transfer SKPD</span>
+					<span class="text">Penetapan Transfer Kapitalisasi SKPD</span>
 				</a>
-				<a class="shortcut-link" href="<?=$url_rewrite?>/module/mutasiKptls/list_validasi.php">
+				<a class="shortcut-link active" href="<?=$url_rewrite?>/module/mutasiKptls/list_validasi.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
 				    </span>
-					<span class="text">Validasi Transfer SKPD</span>
+					<span class="text">Validasi Transfer Kapitalisasi SKPD</span>
 				</a>
-			</div>		
+			</div>			
 
 		<section class="formLegend">
 			<script>
@@ -66,23 +66,27 @@ $par_data_table="tahun=$tahun";
                          {"bSortable": false},
                          {"bSortable": true},
                          {"bSortable": true},
-                         {"bSortable": true},
                          {"bSortable": false},
                          {"bSortable": true},
-                         {"bSortable": false},
                          {"bSortable": true},
-                         {"bSortable": false},
+                         {"bSortable": true},
                          {"bSortable": false}],
                     "sPaginationType": "full_numbers",
 
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/list_usulan.php?<?php echo $par_data_table?>"
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/mutasiKptls/list_validasi_mutasi.php?<?php echo $par_data_table?>"
                }
                   );
       });
     </script>
-    		<p><a href="<?=$url_rewrite?>/module/mutasiSkpd/tambah_usulan.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Usulan</a>
+    		<?php
+				if($_SESSION['ses_ujabatan']==1){
+			?>
+    		<p><a href="<?=$url_rewrite?>/module/mutasiKptls/dftr_penetapan_validasi.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Validasi Penetapan</a>
+			<?php
+				}
+			?>
 			<p>Tahun Usulan:
 				<?=$tahun?>
 			</p>
@@ -102,26 +106,22 @@ $par_data_table="tahun=$tahun";
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Nomor Usulan</th>
-						<th>Satker Asal</th>
+						<th>Nomor SK Mutasi</th>
+						<th>Satker Usul</th>
 						<th>Satker Tujuan</th>
-						<th>Jumlah Aset</th>
-						<th>Tgl Usulan</th>
-						<th>Nilai</th>
+						<th>Jumlah Usulan</th>
+						<th>Tgl Penetapan</th>
 						<th>Keterangan</th>
-						<th>Status</th>
 						<th>Tindakan</th>
 					</tr>
 				</thead>
 				<tbody>			
 					 <tr>
-                        <td colspan="10">Data Tidak di temukkan</td>
+                        <td colspan="8">Data Tidak di temukkan</td>
                      </tr>
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>&nbsp;</th>
-						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>
 						<th>&nbsp;</th>

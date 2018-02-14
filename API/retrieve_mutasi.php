@@ -812,7 +812,6 @@ class RETRIEVE_MUTASI extends RETRIEVE{
         $limit= $data['limit'];
         $order= $data['order'];
         $filter = "";
-        $jenis_hapus = 'PMD';
         if($cndtn != ''){
             $filter = "AND $cndtn";
         }else{

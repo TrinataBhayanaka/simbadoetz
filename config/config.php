@@ -43,6 +43,8 @@ require_once "$path/API/retrieve_inventarisasi.php";
 require_once "$path/API/retrieve_gudang.php";
 require_once "$path/API/retrieve_penyusutan.php";
 require_once "$path/function/helper_filter.php";
+//Add New
+require_once "$path/API/retrieve_mutasi_kapitalisasi.php";
 /* End Add */
 
 /* Dropdown*/

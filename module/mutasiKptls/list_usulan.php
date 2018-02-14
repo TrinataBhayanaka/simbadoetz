@@ -2,7 +2,7 @@
 include "../../config/config.php";
 
 //$PENGHAPUSAN = new RETRIEVE_MUTASI;
-$menu_id = 78;
+$menu_id = 79;
 ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
@@ -21,13 +21,13 @@ $par_data_table="tahun=$tahun";
 	<section id="main">
 		<ul class="breadcrumb">
 			  <li><a href="#"><i class="fa fa-home fa-2x"></i>  Home</a> <span class="divider"><b>&raquo;</b></span></li>
-			  <li><a href="#">Transfer SKPD</a><span class="divider"><b>&raquo;</b></span></li>
-			  <li class="active">Daftar Usulan Transfer SKPD</li>
+			  <li><a href="#">Transfer Kapitalisasi SKPD</a><span class="divider"><b>&raquo;</b></span></li>
+			  <li class="active">Daftar Usulan Transfer Kapitalisasi SKPD</li>
 			  <?php SignInOut();?>
 			</ul>
 			<div class="breadcrumb">
-				<div class="title">Usulan Transfer SKPD</div>
-				<div class="subtitle">Daftar Usulan Transfer SKPD</div>
+				<div class="title">Usulan Transfer Kapitalisasi SKPD</div>
+				<div class="subtitle">Daftar Usulan Transfer Kapitalisasi SKPD</div>
 			</div>	
 
 		<div class="grey-container shortcut-wrapper">
@@ -36,21 +36,21 @@ $par_data_table="tahun=$tahun";
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">1</i>
 				    </span>
-					<span class="text">Usulan Transfer SKPD</span>
+					<span class="text">Usulan Transfer Kapitalisasi SKPD</span>
 				</a>
 				<a class="shortcut-link" href="<?=$url_rewrite?>/module/mutasiKptls/list_penetapan.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">2</i>
 				    </span>
-					<span class="text">Penetapan Transfer SKPD</span>
+					<span class="text">Penetapan Transfer Kapitalisasi SKPD</span>
 				</a>
 				<a class="shortcut-link" href="<?=$url_rewrite?>/module/mutasiKptls/list_validasi.php">
 					<span class="fa-stack fa-lg">
 				      <i class="fa fa-circle fa-stack-2x"></i>
 				      <i class="fa fa-inverse fa-stack-1x">3</i>
 				    </span>
-					<span class="text">Validasi Transfer SKPD</span>
+					<span class="text">Validasi Transfer Kapitalisasi SKPD</span>
 				</a>
 			</div>		
 
@@ -77,12 +77,11 @@ $par_data_table="tahun=$tahun";
 
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/list_usulan.php?<?php echo $par_data_table?>"
-               }
-                  );
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/mutasiKptls/list_usulan.php?<?php echo $par_data_table?>"
+               });
       });
     </script>
-    		<p><a href="<?=$url_rewrite?>/module/mutasiSkpd/tambah_usulan.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Usulan</a>
+    		<p><a href="<?=$url_rewrite?>/module/mutasiKptls/tambah_usulan.php" class="btn btn-info btn-small"><i class="icon-plus-sign icon-white"></i>&nbsp;&nbsp;Tambah Usulan</a>
 			<p>Tahun Usulan:
 				<?=$tahun?>
 			</p>
