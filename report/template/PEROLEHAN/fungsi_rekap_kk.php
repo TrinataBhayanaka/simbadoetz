@@ -2381,7 +2381,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             $data[ 'bp_berjalan' ] = 0;
             //}
         } else if($Kd_Riwayat == "35") {
-            // code  REKLAS kontrak KURANG
+            // code  REKLAS kontrak TAMBAH
             //echo "Aset_ID=$Aset_ID kodeKa $kodeKa <br/>";
             $status_masuk = 1;
             /** ----------------------------MUTASI TAMBAH---------------------------------- */
@@ -2464,7 +2464,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'reklas_krg_ekstra' ] = 0;
             } else {
                 $data[ 'reklas_krg_aset_tetap' ] = 0;
-                $data[ 'reklas_krg_ekstra' ] = $NilaiPerolehan;
+                $data[ 'reklas_krg_ekstra' ] = 0;//$NilaiPerolehan;
             }
 
             if($kodeKa == 1) {
@@ -2472,7 +2472,7 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                 $data[ 'reklas_krg_nilai' ] = 0;
             } else {
                 $data[ 'reklas_krg_jml' ] = 1;
-                $data[ 'reklas_krg_nilai' ] = $NilaiPerolehan;
+                $data[ 'reklas_krg_nilai' ] = 0;//$NilaiPerolehan;
             }
 
             $data[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = 0;
@@ -2504,8 +2504,8 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
             } else {
                 $data[ 'Saldo_akhir_jml' ] = 1;
             }*/
-            $data[ 'NilaiPerolehan' ] = 0;
-                $data[ 'NilaiBuku' ] = 0;
+            $data[ 'NilaiPerolehan' ] = $NilaiPerolehan;//0;
+                $data[ 'NilaiBuku' ] = $NilaiBuku;//0;
                 $data[ 'PenyusutanPerTahun' ] = 0;
                 $data[ 'Saldo_akhir_jml' ] = 0;
                 $data[ 'bp_berjalan' ] = 0;
