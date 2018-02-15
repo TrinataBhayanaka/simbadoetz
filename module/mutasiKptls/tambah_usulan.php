@@ -221,7 +221,7 @@ include"$path/menu.php";
 			
 			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>usul_proses.php">
 
-			<div style=" margin-top: 2%;position: absolute;top: 50%; left: 25%;width: 100%">
+			<div style=" margin-top: 2%;top: 50%; left: 25%;width: 100%">
 			
 			<div class="formKontrak" style="outline: ridge;outline-color: #eee; margin: 0 10px 0 0;padding: 10px 10px 10px 10px">
 				<div>

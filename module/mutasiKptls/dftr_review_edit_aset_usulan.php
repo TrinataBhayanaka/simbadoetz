@@ -370,7 +370,7 @@ if (isset($id)){
 
 		<section class="formLegend">
 			<form method="POST" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>dftr_asetid_usulan_proses_upd.php">
-                <div style=" margin-top: 2%;position: absolute;top: 50%; left: 25%;width: 100%">
+                <div style=" margin-top: 2%;top: 50%; left: 25%;width: 100%">
                     <div class="formKontrak" style="outline: ridge;outline-color: #eee; margin: 0 10px 0 0;padding: 10px 10px 10px 10px">
             <div>
               <h3><i class="fa fa-group"></i> Detail Aset Tujuan</h3>
