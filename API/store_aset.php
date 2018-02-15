@@ -3289,7 +3289,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                     $delsql = "UPDATE {$_GET['tbl']} SET StatusValidasi = 0, Status_Validasi_Barang = 0, StatusTampil = 0 WHERE Aset_ID = '{$data['Aset_ID']}'";
                     // pr($delsql);exit;
                     $result=  $this->query($delsql) or die($this->error());
-
+                        $tblKib['NilaiBuku'] = $tblKib['NilaiPerolehan'] - $tblKib['AkumulasiPenyusutan'];
                         unset($tmpField);
                         unset($tmpValue);
                         foreach ($tblKib as $key => $val) {
