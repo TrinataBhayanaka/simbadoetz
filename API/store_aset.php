@@ -2764,7 +2764,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                 echo("$sqlupd \n");
                 $result=  $this->query($sqlupd) or die($this->error());
                 
-                $sqlupd = "UPDATE aset SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}';";
+                $sqlupd = "UPDATE aset SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}', fixPenggunaan = 1 WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}';";
                 echo("$sqlupd\n\n");
                 $result=  $this->query($sqlupd) or die($this->error());
             }

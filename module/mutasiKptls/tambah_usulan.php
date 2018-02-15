@@ -221,9 +221,9 @@ include"$path/menu.php";
 			
 			<form method="POST" ID="Form2" action="<?php echo "$url_rewrite/module/mutasiKptls/"; ?>usul_proses.php">
 
-			<div style="margin-left: 10%; margin-top: 2%">
+			<div style=" margin-top: 2%;position: absolute;top: 50%; left: 25%;width: 100%">
 			
-			<div class="formKontrak" style="outline: ridge;outline-color: #eee; margin: 0 20px 0 0;padding: 10px 20px 20px 20px">
+			<div class="formKontrak" style="outline: ridge;outline-color: #eee; margin: 0 10px 0 0;padding: 10px 10px 10px 10px">
 				<div>
 					<h3><i class="fa fa-group"></i> Detail Aset Tujuan</h3>
 				</div>
@@ -288,7 +288,7 @@ include"$path/menu.php";
 					</ul>
 				</div>
 			</div>
-			<div class="formPerusahaan" style="outline: ridge;outline-color: #eee; margin: 0 20px 0 0;padding: 10px 20px 20px 20px">
+			<div class="formPerusahaan" style="outline: ridge;outline-color: #eee; margin: 0 0 0 0;padding: 10px 10px 10px 10px">
 				<div>
 					<h3><i class="fa fa-file"></i> Dokumen</h3>
 				</div>
