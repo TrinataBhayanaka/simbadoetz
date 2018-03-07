@@ -626,7 +626,7 @@ for ($i = 0; $i < 2; $i++) {
                 "PenyusutanPerTahun" => $PenyusutanPerTahun,
                 "AkumulasiPenyusutan_Awal" => $AkumulasiPenyusutan,
                 "PenyusutanPerTahun_Awal" => $PenyusutanPerTahun,
-                "NilaiBuku_Awal" => $NilaiPerolehan,
+                "NilaiBuku_Awal" => $NilaiBuku,
                 "NilaiBuku" => $NilaiBuku,
                 "kodeSatker" => $kodeSatker );
             log_penyusutan ($Aset_ID, $tableKib, 49, $newTahun-1, $data_log, $DBVAR);
