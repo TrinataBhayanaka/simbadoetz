@@ -15,6 +15,7 @@ $mode = $_REQUEST['mode'];
 $tab = $_REQUEST['tab'];
 $skpd_id = $_REQUEST['kodeSatker8'];
 $tahun = $_REQUEST['tahun_label'];
+//pr($tahun);
 $tahunAset = $_REQUEST['tahun_aset'];
 $tglawal = $_REQUEST['tglawalLabel'];
 if($tglawal != ''){
@@ -39,6 +40,7 @@ $data=array(
 	"tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
     "tahun"=>$tahunAset,
+    "tahun2"=>$tahun,
 	"kodeRuangan"=>$kodeRuangan,
     "gol"=>$gol,
     "tab"=>$tab,
@@ -77,7 +79,7 @@ $skpd_id);
 // exit;
 //mengenerate query
 $result_query=$REPORT->retrieve_query($query);
-// pr($result_query);
+//pr($result_query);
 // exit;	
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
