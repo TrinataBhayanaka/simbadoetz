@@ -1899,7 +1899,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
             }*/
             //echo "--$aset_id--$paramKd_Rwyt <br/>";
 
-            if($paramKd_Rwyt == 0 ||$paramKd_Rwyt == 30|| $paramKd_Rwyt == 2||$paramKd_Rwyt == 281 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29) {
+            if($paramKd_Rwyt == 0 ||$paramKd_Rwyt == 30|| $paramKd_Rwyt == 2||$paramKd_Rwyt == 281 ||$paramKd_Rwyt == 291 || $paramKd_Rwyt == 7 || $paramKd_Rwyt == 21 || $paramKd_Rwyt == 29) {
                 /*
                 Kode Riwayat
                 0 = Data baru
@@ -2629,7 +2629,7 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
          order by l.Aset_ID ASC";*/
 
     $paramLog = "l.TglPerubahan >'$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'  
-         AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281,36) and l.Kd_Riwayat != 77 
+         AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281,291,36) and l.Kd_Riwayat != 77 
          and l.Aset_ID = '{$AsetId}' 
          order by l.Aset_ID ASC";
 

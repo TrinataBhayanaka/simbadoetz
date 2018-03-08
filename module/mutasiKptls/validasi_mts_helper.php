@@ -175,18 +175,36 @@ foreach ($data as $val) {
 		//Hitung penyusutan
 		$kapitalisasi = $ListParam['NilaiPerolehan'];
 		echo "kapitalisasi : ".$kapitalisasi."\n\n";
-		
-		$nilaiBukuOld = $ListParam2['NilaiBuku'];
-		echo "nilaiBukuOld : ".$nilaiBukuOld."\n\n";
 
-		$nilaiBukuNew = $kapitalisasi + $nilaiBukuOld;
-		echo "nilaiBukuNew : ".$nilaiBukuNew."\n\n";
-		
 		$NilaiPerolehanOld = $ListParam2['NilaiPerolehan'];
 		echo "NilaiPerolehanOld : ".$NilaiPerolehanOld."\n\n";
+			
 		
-		$NilaiPerolehanNew = $NilaiPerolehanOld + $kapitalisasi;
-		echo "NilaiPerolehanNew : ".$NilaiPerolehanNew."\n\n";
+		if ($ListParam2['AkumulasiPenyusutan'] =='' || $ListParam2['AkumulasiPenyusutan'] == NULL || $ListParam2['AkumulasiPenyusutan'] == 0){
+			
+			$NilaiPerolehanNew = $NilaiPerolehanOld + $kapitalisasi;
+			echo "NilaiPerolehanNew : ".$NilaiPerolehanNew."\n\n";
+
+			$nilaiBukuNew = $NilaiPerolehanNew;
+			echo "nilaiBukuNew : ".$nilaiBukuNew."\n\n";
+					
+		}else{
+			
+			$NilaiPerolehanNew = $NilaiPerolehanOld + $kapitalisasi;
+			echo "NilaiPerolehanNew : ".$NilaiPerolehanNew."\n\n";
+			
+			$tmpnilaiBukuOld = $ListParam2['NilaiBuku'];
+			echo "nilaiBukuOld : ".$nilaiBukuOld."\n\n";
+
+			if($tmpnilaiBukuOld == NULL){
+				$nilaiBukuOld = 0;
+			}else{
+				$nilaiBukuOld = $tmpnilaiBukuOld;
+			}
+			$nilaiBukuNew = $kapitalisasi + $nilaiBukuOld;
+			echo "nilaiBukuNew : ".$nilaiBukuNew."\n\n";
+			
+		}
 		
 		//update aset Tujuan
 		$quertASTTujuan = "UPDATE aset SET NilaiBuku = '{$nilaiBukuNew}', NilaiPerolehan = '{$NilaiPerolehanNew}'
@@ -297,34 +315,50 @@ foreach ($data as $val) {
 		$NilaiPerolehanOld = $ListParam2['NilaiPerolehan'];
 		echo "NilaiPerolehanOld : ".$NilaiPerolehanOld."\n\n";
 		
-		$NilaiPerolehanNew = $NilaiPerolehanOld + $koreksi;
-		echo "NilaiPerolehanNew : ".$NilaiPerolehanNew."\n\n";
-		
-		$MasaManfaat = $ListParam2['MasaManfaat'];
-		echo "MasaManfaat : ".$MasaManfaat."\n\n";
-		
-		$tmpPPKoreksi = $koreksi / $MasaManfaat;
-		echo "tmpPPKoreksi : ".$tmpPPKoreksi."\n\n";
-		
-		$PPKoreksi = round($tmpPPKoreksi);
-		echo "PPKoreksi : ".$PPKoreksi."\n\n";
-		
-		$tmpAkmKoreksi = $tahunFlag - $TahunAsetIdAsal;
-		echo "tahunFlag : ".$tahunFlag."\n\n";
-		echo "TahunAsetIdAsal : ".$TahunAsetIdAsal."\n\n";
-		echo "tmpAkmKoreksi : ".$tmpAkmKoreksi."\n\n";
-		
-		$AkmKoreksi = $tmpAkmKoreksi * $PPKoreksi;
-		echo "AkmKoreksi : ".$AkmKoreksi."\n\n";
-		
-		$AkumulasiNew = $ListParam2['AkumulasiPenyusutan'] + $AkmKoreksi;
-		echo "AkumulasiNew : ".$AkumulasiNew."\n\n";
-		
-		$PPNew = $ListParam2['PenyusutanPerTahun'] + $PPKoreksi;
-		echo "PPNew : ".$PPNew."\n\n";
-		
-		$NilaiBukuNew = $NilaiPerolehanNew - $AkumulasiNew;
-		echo "NilaiBukuNew : ".$NilaiBukuNew."\n\n";
+		if ($ListParam2['AkumulasiPenyusutan'] =='' || $ListParam2['AkumulasiPenyusutan'] == NULL || $ListParam2['AkumulasiPenyusutan'] == 0){
+			$NilaiPerolehanNew = $NilaiPerolehanOld + $koreksi;
+			echo "NilaiPerolehanNew : ".$NilaiPerolehanNew."\n\n";
+			
+			$AkumulasiNew = $ListParam2['AkumulasiPenyusutan'];
+			echo "AkumulasiNew : ".$AkumulasiNew."\n\n";
+			
+			$PPNew = $ListParam2['PenyusutanPerTahun'];
+			echo "PPNew : ".$PPNew."\n\n";
+			
+			$NilaiBukuNew = $NilaiPerolehanNew;
+			echo "NilaiBukuNew : ".$NilaiBukuNew."\n\n";
+
+		}else{
+			$NilaiPerolehanNew = $NilaiPerolehanOld + $koreksi;
+			echo "NilaiPerolehanNew : ".$NilaiPerolehanNew."\n\n";
+			
+			$MasaManfaat = $ListParam2['MasaManfaat'];
+			echo "MasaManfaat : ".$MasaManfaat."\n\n";
+			
+			$tmpPPKoreksi = $koreksi / $MasaManfaat;
+			echo "tmpPPKoreksi : ".$tmpPPKoreksi."\n\n";
+			
+			$PPKoreksi = round($tmpPPKoreksi);
+			echo "PPKoreksi : ".$PPKoreksi."\n\n";
+			
+			$tmpAkmKoreksi = $tahunFlag - $TahunAsetIdAsal;
+			echo "tahunFlag : ".$tahunFlag."\n\n";
+			echo "TahunAsetIdAsal : ".$TahunAsetIdAsal."\n\n";
+			echo "tmpAkmKoreksi : ".$tmpAkmKoreksi."\n\n";
+			
+			$AkmKoreksi = $tmpAkmKoreksi * $PPKoreksi;
+			echo "AkmKoreksi : ".$AkmKoreksi."\n\n";
+			
+			$AkumulasiNew = $ListParam2['AkumulasiPenyusutan'] + $AkmKoreksi;
+			echo "AkumulasiNew : ".$AkumulasiNew."\n\n";
+			
+			$PPNew = $ListParam2['PenyusutanPerTahun'] + $PPKoreksi;
+			echo "PPNew : ".$PPNew."\n\n";
+			
+			$NilaiBukuNew = $NilaiPerolehanNew - $AkumulasiNew;
+			echo "NilaiBukuNew : ".$NilaiBukuNew."\n\n";
+			
+		}
 		
 		//update aset Tujuan
 		$quertASTTujuan = "UPDATE aset SET NilaiPerolehan = '{$NilaiPerolehanNew}' , AkumulasiPenyusutan = '{$AkumulasiNew}', PenyusutanPertaun = '{$PPNew}', NilaiBuku = '{$NilaiBukuNew}'
