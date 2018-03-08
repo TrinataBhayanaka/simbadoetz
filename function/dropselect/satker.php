@@ -463,6 +463,7 @@ function selectRekening2($name,$size=300,$br=false,$upd=false){
 function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false){
 
 	global $url_rewrite;
+	global $TAHUN_AKTIF;
 	// pr($_SESSION);
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
 	?>
@@ -559,7 +560,7 @@ function selectRuang($name,$satker,$size=300,$br=false,$upd=false,$status=false)
 	</style>
 	<li>
 		<span class="<?=$span?>">Tahun Ruangan</span><?=$enter?>
-		<input type="text" name="tahun" class="span1 full" id="tahunRuangan" onchange="return newruangan();" <?=$status?>/><br>
+		<input type="text" name="tahun" value="<?=$TAHUN_AKTIF?>" class="span1 full" id="tahunRuangan" onchange="return newruangan();" <?=$status?>/><br>
 		<span class="<?=$span?>">Kode Ruangan</span><?=$enter?>
 		<input id="<?=$name?>" name="<?=$name?>" type="hidden" style="width:<?=$size?>px" <?=$status?> onchange="return editruang();"/>&nbsp;
 		<a style="display:none" data-toggle="modal" href="#addruang" class="btn btn-success btn-circle" id="addruangan" title="Tambah"><i class="fa fa-plus simbol"></i></a>
