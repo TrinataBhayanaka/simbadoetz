@@ -2422,7 +2422,9 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 $LastSatker = $valRwyt->kodeSatker;
                 $action_riwayat=$valRwyt->action;
                 $FirstSatker = $kodesatker;
-                if($LastSatker == $FirstSatker && $action_riwayat=="Sukses Mutasi") {
+                $status_satker=strpos($LastSatker,$FirstSatker );
+                if($status_satker!== false && $action_riwayat=="Sukses Mutasi") {
+               //  if( $action_riwayat=="Sukses Mutasi") {
                     //echo "masuk tambah =$status=".$valRwyt->Aset_ID." $kodesatker=={$valRwyt->kodeSatker}<br>";
                     $flag = "(+)";
 
@@ -2889,20 +2891,23 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
 				 order by l.Aset_ID ASC";*/
 
     $paramLog = "l.TglPerubahan >'$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'  
-				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281,291,36) and l.Kd_Riwayat != 77 
+				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281,291,36,55) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}' 
 				 order by l.Aset_ID ASC";
    // echo "$status--$AsetId <br/>";
-    if($status==1){
-        $log_data = "select l.* from {$tabel_log} as l 
-						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
+   /* if($status==1){
+        $log_data = "select l.* from {$tabel_log} as l
+						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID
 						where $paramLog";
     }else{
-        $log_data = "select l.* from {$tabel_log} as l 
-						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
+        $log_data = "select l.* from {$tabel_log} as l
+						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID
 						where l.kodesatker  like '$skpd_id%' and $paramLog ";
         //echo "$status--$AsetId <br/>$log_data<br/>";
-    }
+    }*/
+    $log_data = "select l.* from {$tabel_log} as l 
+						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
+						where l.kodesatker  like '$skpd_id%' and $paramLog ";
 
 
     //pr($log_data);
