@@ -330,12 +330,36 @@ foreach ($data as $gol) {
     }*/
     //echo "$gol<br/>";
     $data_awal = subsub_awal ($kode_golongan, $q_gol_final, $ps, $pt);
+    $data_aset_awal=array();
+    foreach ($data_awal as $key=>$value){
+        $data_aset_awal[]=$value['Aset_ID'];
+    }
+    $q_data_aset_awal=implode(",",$data_aset_awal);
+   // echo "masuk0";
     $data_akhir = subsub ($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31");
-    //echo "masuk222<br/>";
-    $data_hilang = subsub_hapus ($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt);
+
+    $data_aset_akhir=array();
+    foreach ($data_akhir as $key=>$value){
+        $data_aset_akhir[]=$value['Aset_ID'];
+    }
+    $q_data_aset_akhir=implode(",",$data_aset_akhir);
+  // echo "masuk";
+    $data_hilang = subsub_hapus_v2($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt,$q_data_aset_awal,$q_data_aset_akhir);
+    $data_aset_hilang=array();
+    foreach ($data_hilang as $key=>$value){
+        $data_aset_hilang[]=$value['Aset_ID'];
+    }
+    $key_data_hilang=array_unique($data_aset_hilang);
+    //pr($key_data_hilang);
+    $data_hilang_filter=array();//menghilangkan yang data yang duplikat
+    foreach($key_data_hilang as $key=>$value){
+
+        $data_hilang_filter[]=$data_hilang[$key];
+    }
     //echo "111masuk123<br/>";
+    //pr($data_hilang_filter);
     //exit();
-    $hasil = group_data ($data_awal, $data_akhir, $data_hilang, "$tahun_neraca-12-31", "$tahun_neraca-01-02");
+    $hasil = group_data ($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02");
     //echo "<br/>hasil2131<br/>";
     //echo "<pre>";
     //print_r($hasil);
@@ -787,9 +811,9 @@ echo "<script>window.location.href='$namafile_web';</script>";*/
  */
 else {
    $waktu = date ("d-m-y_h:i:s");
-    $filename = "Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca-$waktu.xls";
-    header ('Content-type: application/ms-excel');
-    header ('Content-Disposition: attachment; filename=' . $filename);
+   $filename = "Rekapitulasi-Detail-Rincian-Mutasi-Barang-Ke-Neraca_$skpd_id-$tahun_neraca-$waktu.xls";
+   header ('Content-type: application/ms-excel');
+   header ('Content-Disposition: attachment; filename=' . $filename);
     echo $html;
 }
 
@@ -1131,6 +1155,124 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
     return $data;
 }
 
+function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_akhir)
+{
+    $param_satker = $ps;
+    $splitKodeSatker = explode ('.', $param_satker);
+    if(count ($splitKodeSatker) == 4) {
+        $paramSatker = "m.kodeSatker = '$param_satker'";
+    } else {
+        $paramSatker = "m.kodeSatker like '$param_satker%'";
+    }
+    $param_tgl = $pt;
+    if($gol == 'mesin_ori') {
+        $gol = "mesin";
+        //cek kapitalisasi
+        $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+
+        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and m.kondisi != '3'  and 
+				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
+				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl'  and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan >=300000 or m.kodeKa=1)))
+				 and $paramSatker";
+
+
+        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
+               m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+               m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
+               m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
+               (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from log_$gol m 
+                  
+                where m.kodeKelompok like '$kode_sub%' and m.kd_riwayat in (3) and TglPerubahan >'$tgl_pem' and
+                 $param_where $kondisi_transfer   
+               order by kelompok asc";
+    } elseif($gol == 'bangunan_ori') {
+        $gol = "bangunan";
+        //cek kapitalisasi
+        $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+
+        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and m.kondisi != '3'  and 
+				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
+				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and (m.NilaiPerolehan >=10000000  or m.kodeKa=1)))
+				 and $paramSatker";
+
+        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
+               m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+               m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
+               m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
+               (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from log_$gol m 
+                    where m.kodeKelompok like '$kode_sub%' and m.kd_riwayat in (3) and TglPerubahan >'$tgl_pem' and
+                 $param_where   $kondisi_transfer 
+               order by kelompok asc";
+    } else {
+        if($gol != "tanahView")
+            $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1  
+					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
+					 and m.TglPembukuan <='$param_tgl' 
+					 and m.kodeLokasi like '12%' 
+					 and m.kondisi != '3'					 
+					 and $paramSatker";
+        else
+            $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1  
+					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
+					 and m.TglPembukuan <='$param_tgl' 
+					 and m.kodeLokasi like '12%' 
+					 and $paramSatker";
+
+        if($gol == 'jaringan_ori') {
+
+            $gol = "jaringan";
+            //cek kapitalisasi
+            $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+            $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
+               m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+               m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
+               m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
+               (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from log_$gol m 
+                   where m.kodeKelompok like '$kode_sub%' and m.kd_riwayat in (3) and TglPerubahan >'$tgl_pem' and
+                 $param_where    $kondisi_transfer
+               order by kelompok asc";
+        } else {
+            if($gol == "kdp_ori")
+                $gol = "kdp";
+            else if($gol == "tanahView")
+                $gol = "tanah";
+            else  $gol = "asetlain";
+
+            //cek kapitalisasi
+            $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+            $sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,
+                    m.Aset_ID,
+               m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
+                (select Uraian from kelompok 
+               where kode= m.kodeKelompok 
+               ) as Uraian,
+               m.Status_Validasi_barang,m.kodeSatker from log_$gol m 
+                     where m.kodeKelompok like '$kode_sub%' and m.kd_riwayat in (3) and TglPerubahan >'$tgl_pem' and
+                 $param_where    $kondisi_transfer
+               order by kelompok asc";
+        }
+    }
+
+//echo "$gol == $sql<br/>";
+//    echo $sql;
+//    exit();
+    $resultparentSubSub = mysql_query ($sql) or die(mysql_error());
+    $data = array();
+    while ($data_subsub = mysql_fetch_array ($resultparentSubSub, MYSQL_ASSOC)) {
+        $data[] = $data_subsub;
+    }
+    return $data;
+}
+
 
 /** Fungsi untuk menggabungkan data dari hasil fungsi subsub_awal + subsub+ subsub_hapus
  * @param $data_awal_perolehan == data dari hasil  fungsi subsub_awal
@@ -1193,7 +1335,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
     foreach ($data_hapus_awal as $arg) {
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'Kelompok' ] += $arg[ 'kelompok' ];
-        $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'Uraian' ] += $arg[ 'Uraian' ];
+        $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'Uraian' ] = $arg[ 'Uraian' ];
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'nilai' ] += $arg[ 'nilai' ];
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'PP' ] += $arg[ 'PP' ];
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'AP' ] += $arg[ 'AP' ];
@@ -1207,6 +1349,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'jml' ] += 1;
     }
+
 
 
     $result = array_intersect ($data_awal, $data_akhir);
@@ -1254,7 +1397,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
             $tglpembukuan = $data_selisih[ $tipe ][ 'TglPembukuan' ];
             list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
-                history_aset ($kodesatker, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodeKelompok);
+                history_aset ($kodesatker, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodeKelompok,1);
         }
 
 
@@ -1446,7 +1589,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
        echo "Aset=$tglperolehan==$tipe==$Aset_ID==$tglpembukuan==$kodekelompok<br/>";
        // exit();*/
         list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
-            history_aset ($kodesatker, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok);
+            history_aset ($kodesatker, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,1);
         if($bp == 0) {
             $selisih_jml_tambah = $value[ 'jml' ];
             $selisih_ap_tambah = $value[ 'AP' ];
@@ -1494,7 +1637,9 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
     }
 
     $data_hapus = array();
+    //pr($data_hapus_tmp);
     foreach ($data_hapus_tmp as $tipe => $value) {
+
         $data_hapus[ $tipe ][ 'Kelompok' ] = $tipe;
         $data_hapus[ $tipe ][ 'Uraian' ] = $value[ 'Uraian' ];
 
@@ -1503,19 +1648,58 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_hapus[ $tipe ][ 'ap' ] = 0;
         $data_hapus[ $tipe ][ 'pp' ] = 0;
         $data_hapus[ $tipe ][ 'nb' ] = 0;
-        $data_hapus[ $tipe ][ 'mutasi_jml_tambah' ] = $value[ 'jml' ];
-        $data_hapus[ $tipe ][ 'mutasi_nilai_tambah' ] = $value[ 'nilai' ];
-        $data_hapus[ $tipe ][ 'mutasi_ap_tambah' ] = $value[ 'AP' ];
-        $data_hapus[ $tipe ][ 'mutasi_pp_tambah' ] = $value[ 'PP' ];
-        $data_hapus[ $tipe ][ 'mutasi_nb_tambah' ] = $value[ 'NB' ];
 
-        $data_hapus[ $tipe ][ 'mutasi_jml_kurang' ] = $value[ 'jml' ];
-        $data_hapus[ $tipe ][ 'mutasi_nilai_kurang' ] = $value[ 'nilai' ];
-        $data_hapus[ $tipe ][ 'mutasi_ap_kurang' ] = $value[ 'AP' ];
-        $data_hapus[ $tipe ][ 'mutasi_pp_kurang' ] = $value[ 'PP' ];
-        $data_hapus[ $tipe ][ 'mutasi_nb_kurang' ] = $value[ 'NB' ];
 
-        $data_hapus[ $tipe ][ 'bp' ] = 0;//$value['AP'];
+        $selisih_nilai_tambah = 0;
+        $selisih_nilai_kurang = 0;
+        $selisih_jml_tambah = 0;
+        $selisih_jml_kurang = 0;
+        $selisih_ap_tambah = 0;
+        $selisih_ap_kurang = 0;
+        $selisih_nb_tambah = 0;
+        $selisih_nb_kurang = 0;
+        $bp = 0;
+
+        /*$selisih_pp_tambah=0;
+        $selisih_pp_kurang=0;*/
+
+        $kodesatker = $value[ 'kodeSatker' ];
+        $Aset_ID = $value[ 'Aset_ID' ];
+        $kodekelompok = $value[ 'kodeKelompok' ];
+        $tglperolehan = $tgl_akhir;
+        $tglpembukuan = $value[ 'TglPembukuan' ];
+        list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
+            history_aset ($kodesatker, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,0);
+
+
+
+        /*if($selisih_nilai<0)
+            $selisih_nilai_kurang=abs($selisih_nilai);
+        else $selisih_nilai_tambah=$selisih_nilai;*/
+
+        if($selisih_jml < 0)
+            $selisih_jml_kurang = abs ($selisih_jml);
+        else $selisih_jml_tambah = $selisih_jml;
+
+
+
+        $data_hapus[ $tipe ][ 'mutasi_jml_tambah' ] = $selisih_jml_tambah;
+        $data_hapus[ $tipe ][ 'mutasi_jml_kurang' ] = $selisih_jml_kurang;
+
+        $data_hapus[ $tipe ][ 'mutasi_ap_tambah' ] = $selisih_ap_tambah;
+        $data_hapus[ $tipe ][ 'mutasi_ap_kurang' ] = $selisih_ap_kurang;
+
+        /* $data_hapus[$tipe]['mutasi_pp_tambah']=$selisih_pp_tambah;
+         $data_hapus[$tipe]['mutasi_pp_kurang']=$selisih_pp_kurang;*/
+
+        $data_hapus[ $tipe ][ 'mutasi_nb_tambah' ] = $selisih_nb_tambah;
+        $data_hapus[ $tipe ][ 'mutasi_nb_kurang' ] = $selisih_nb_kurang;
+
+        $data_hapus[ $tipe ][ 'bp' ] = $bp;
+
+
+        $data_hapus[ $tipe ][ 'mutasi_nilai_tambah' ] = $selisih_nilai_tambah;
+        $data_hapus[ $tipe ][ 'mutasi_nilai_kurang' ] = $selisih_nilai_kurang;
 
         $data_hapus[ $tipe ][ 'nilai_akhir' ] = 0;
         $data_hapus[ $tipe ][ 'jml_akhir' ] = 0;
@@ -1523,6 +1707,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_hapus[ $tipe ][ 'pp_akhir' ] = 0;
         $data_hapus[ $tipe ][ 'nb_akhir' ] = 0;
         $data_akhir[ $tipe ][ 'riwayat' ] = "";
+        $data_hapus[ $tipe ][ 'riwayat' ] = $text_riwayat;
 
     }
 
@@ -1842,7 +2027,7 @@ function get_akumulasi_sblm($Aset_ID, $TahunPenyusutan, $kelompok)
  * @param $kodeKelompok
  * @return array
  */
-function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperolehan, $tglpembukuan, $kodeKelompok)
+function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperolehan, $tglpembukuan, $kodeKelompok,$status)
 {
    $query_riwayat = "select * from ref_riwayat order by kd_riwayat asc";
     $RIWAYAT = array();
@@ -1850,12 +2035,13 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
     while ($row = mysql_fetch_array ($sql_riwayat)) {
         $RIWAYAT[ $row[ Kd_Riwayat ] ] = $row[ Nm_Riwayat ];
     }
+    //echo "$status<br/>";
 
     if($aset_id != "") {
         $ex = explode ('.', $kodeKelompok);
         $param = $ex[ '0' ];
 
-        $getdataRwyt = getdataRwyt ($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperolehan, $param, $tglpembukuan);
+        $getdataRwyt = getdataRwyt ($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperolehan, $param, $tglpembukuan,$status);
         //pr($getdataRwyt);
 
         $status_masuk_penyusutan = 0;
@@ -2234,8 +2420,10 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 }
             } elseif($paramKd_Rwyt == 3) {
                 $LastSatker = $valRwyt->kodeSatker;
+                $action_riwayat=$valRwyt->action;
                 $FirstSatker = $kodesatker;
-                if($LastSatker == $FirstSatker) {
+                if($LastSatker == $FirstSatker && $action_riwayat=="Sukses Mutasi") {
+                    //echo "masuk tambah =$status=".$valRwyt->Aset_ID." $kodesatker=={$valRwyt->kodeSatker}<br>";
                     $flag = "(+)";
 
                     //SALDO AWAL
@@ -2287,6 +2475,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
 
                     $umurEkonomis = $valRwyt->UmurEkonomis;
                 } else {
+                   // echo "masuk krg =$status=".$valRwyt->Aset_ID."<br>";
                     $flag = "(-)";
                     //SALDO AWAL
                     $nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
@@ -2656,7 +2845,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
  * @param $tglpembukuan
  * @return array
  */
-function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $param, $tglpembukuan)
+function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $param, $tglpembukuan,$status)
 {
 
     if($param == '01') {
@@ -2703,11 +2892,19 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
 				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281,291,36) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}' 
 				 order by l.Aset_ID ASC";
-
-
-    $log_data = "select l.* from {$tabel_log} as l 
+   // echo "$status--$AsetId <br/>";
+    if($status==1){
+        $log_data = "select l.* from {$tabel_log} as l 
 						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
 						where $paramLog";
+    }else{
+        $log_data = "select l.* from {$tabel_log} as l 
+						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
+						where l.kodesatker  like '$skpd_id%' and $paramLog ";
+        //echo "$status--$AsetId <br/>$log_data<br/>";
+    }
+
+
     //pr($log_data);
     $splitKodeSatker = explode ('.', $skpd_id);
     if(count ($splitKodeSatker) == 4) {
