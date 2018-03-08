@@ -763,7 +763,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							<br>
 							<li>
 								<span class="span2">Tahun Ruangan</span>
-								<input name="tahun_label" id="tahun_label" maxlength='4' width="10px" type="text" value="<?php //echo date('Y')?>" onblur="return newruangan2();">
+								<input name="tahun_label" id="tahun_label" maxlength='4' width="10px" type="text" required onblur="return newruangan2();">
 							</li>
 								<?=selectRuangKir('kodeRuangan2','kodeSatker8','255',true,false,false,'tahun_label');?>
 							<br>
