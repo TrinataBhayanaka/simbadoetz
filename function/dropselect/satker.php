@@ -4,6 +4,7 @@
 function selectSatker($name,$size=300,$br=false,$upd=false,$status=false,$ParamNamaSatker=false){
 
 	global $url_rewrite;
+	global $TAHUN_AKTIF;
 	// pr($status);
 	if($br) $span = "span2"; else {$span="";$enter="<br>";}
 
@@ -22,7 +23,7 @@ function selectSatker($name,$size=300,$br=false,$upd=false,$status=false,$ParamN
 	?>
 	<script type="text/javascript">
 	function newruangan(){
-				if($("#<?=$name?>").val() != "" && $("#tahunRuangan").val() != ""){
+				if($("#<?=$name?>").val() != "" && $("#tahunRuangan").val() != "" && $("#tahunRuangan").val() == <?=$TAHUN_AKTIF?>){
 					$('#addruangan').css("display","");
 				} else {
 					$('#addruangan').css("display","none");
