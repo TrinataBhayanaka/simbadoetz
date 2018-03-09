@@ -2345,6 +2345,29 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
               $data['reklas_krg_aset_tetap']=0;
               $data['reklas_krg_ekstra']=$NilaiPerolehan;
            }*/
+             $status_bm_tdk_dikapitalisasi=strpos("08",$data[ 'kodeKelompokReklasTujuan' ]);
+             if($status_bm_tdk_dikapitalisasi!==false){
+                 $data[ 'reklas_krg_aset_tetap' ] =0 ;
+                 $data[ 'reklas_krg_ekstra' ] = 0;
+                 $data[ 'reklas_krg_aset_lain' ] = 0;
+                 $data[ 'reklas_krg_jml' ] = 1;
+                 $data[ 'reklas_krg_nilai' ] = $NilaiPerolehan;
+
+
+                 $data[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = $NilaiPerolehan;
+                 $data[ 'reklas_krg_aset_lain' ] = 0;
+             }else{
+                 $data[ 'reklas_krg_aset_tetap' ] = $NilaiPerolehan;
+                 $data[ 'reklas_krg_ekstra' ] = 0;
+                 $data[ 'reklas_krg_aset_lain' ] = 0;
+                 $data[ 'reklas_krg_jml' ] = 1;
+                 $data[ 'reklas_krg_nilai' ] = $NilaiPerolehan;
+
+
+                 $data[ 'reklas_krg_aset_bm_tdk_dikapitalisasi' ] = 0;
+                 $data[ 'reklas_krg_aset_lain' ] = 0;
+             }
+
             $data[ 'reklas_krg_aset_tetap' ] = $NilaiPerolehan;
             $data[ 'reklas_krg_ekstra' ] = 0;
             $data[ 'reklas_krg_aset_lain' ] = 0;
