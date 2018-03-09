@@ -359,7 +359,7 @@ foreach ($data as $gol) {
     //echo "111masuk123<br/>";
     //pr($data_hilang_filter);
     //exit();
-    $hasil = group_data ($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02");
+    $hasil = group_data ($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02",$ps);
     //echo "<br/>hasil2131<br/>";
     //echo "<pre>";
     //print_r($hasil);
@@ -1282,7 +1282,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
  * @param string $tgl_awal
  * @return array
  */
-function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awal, $tgl_akhir = "", $tgl_awal = "")
+function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awal, $tgl_akhir = "", $tgl_awal = "",$ps)
 {
 
     //tes
@@ -1352,7 +1352,14 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
 
 
-    $result = array_intersect ($data_awal, $data_akhir);
+    $result = array_intersect_key ($data_awal, $data_akhir);
+
+ /* pr($data_awal);
+    echo "data akhir ==14445===";
+    pr($data_akhir);
+    echo "data gabungan ==";
+    pr($result);
+    exit();*/
 //memasukan nilai selisih
     $data_gabungan = array();
     foreach ($result as $key => $value) {
@@ -1373,7 +1380,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $selisih_nb_tambah = 0;
         $selisih_nb_kurang = 0;
         $bp = 0;
-
+        $text_riwayat="";
         /*$selisih_pp_tambah=0;
         $selisih_pp_kurang=0;*/
         if($data_akhir[ $tipe ][ kodeSatker ] == "") {
@@ -1390,14 +1397,14 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 
         } else {
             $data_selisih = $data_akhir;
-            $kodesatker = $data_selisih[ $tipe ][ kodeSatker ];
+           // $kodesatker = $data_selisih[ $tipe ][ kodeSatker ];
             $aset_id = $data_selisih[ $tipe ][ Aset_ID ];
             $kodeKelompok = $data_selisih[ $tipe ][ 'kodeKelompok' ];
             $tglperolehan = $tgl_akhir;
 
             $tglpembukuan = $data_selisih[ $tipe ][ 'TglPembukuan' ];
             list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
-                history_aset ($kodesatker, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodeKelompok,1);
+                history_aset ($ps, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodeKelompok,1);
         }
 
 
@@ -1477,6 +1484,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
 //print_r($data_awal_alone);
 
     $data_awal = array();
+    $cek_data_awal=array();
     foreach ($data_awal_alone as $tipe => $value) {
         $data_awal[ $tipe ][ 'Kelompok' ] = $tipe;
         $data_awal[ $tipe ][ 'Uraian' ] = $value[ 'Uraian' ];
@@ -1517,6 +1525,25 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_awal[ $tipe ][ 'pp_akhir' ] = 0;
         $data_awal[ $tipe ][ 'nb_akhir' ] = 0;
         $data_awal[ $tipe ][ 'riwayat' ] = "";
+
+
+        $selisih_nilai_tambah = 0;
+        $selisih_nilai_kurang = 0;
+        $selisih_jml_tambah = 0;
+        $selisih_jml_kurang = 0;
+        $selisih_ap_tambah = 0;
+        $selisih_ap_kurang = 0;
+        $selisih_nb_tambah = 0;
+        $selisih_nb_kurang = 0;
+        $bp = 0;
+        $text_riwayat="";
+        $aset_id=$value[ 'Aset_ID' ];
+
+        $cek_data_awal[$aset_id]=1; // untuk menandakan data awal telah ada
+
+        list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
+            history_aset ($ps, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodeKelompok,1);
+        $data_awal[ $tipe ][ 'riwayat' ] = $text_riwayat;
 
 
     }
@@ -1574,11 +1601,11 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $selisih_nb_tambah = 0;
         $selisih_nb_kurang = 0;
         $bp = 0;
-
+        $text_riwayat="";
         /*$selisih_pp_tambah=0;
         $selisih_pp_kurang=0;*/
 
-        $kodesatker = $value[ 'kodeSatker' ];
+        //$kodesatker = $value[ 'kodeSatker' ];
         $aset_id = $value[ 'Aset_ID' ];
         $kodekelompok = $value[ 'kodeKelompok' ];
         $tglperolehan = $tgl_akhir;
@@ -1589,13 +1616,19 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
        echo "Aset=$tglperolehan==$tipe==$Aset_ID==$tglpembukuan==$kodekelompok<br/>";
        // exit();*/
         list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
-            history_aset ($kodesatker, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,1);
+            history_aset ($ps, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,1);
         if($bp == 0) {
             $selisih_jml_tambah = $value[ 'jml' ];
             $selisih_ap_tambah = $value[ 'AP' ];
             $selisih_nilai_tambah = $value[ 'nilai' ];
         }
 
+        if($cek_data_awal[$Aset_ID]==1)
+        {
+            $selisih_jml_kurang=0;
+            $selisih_ap_kurang=0;
+            $selisih_nilai_kurang=0;
+        }
         /*  $data_akhir[$tipe]['mutasi_jml_tambah']=$value['jml'];
           $data_akhir[$tipe]['mutasi_nilai_tambah']=$value['nilai'];
           $data_akhir[$tipe]['mutasi_ap_tambah']=$akumulasi_sblm;//$value['AP'];
@@ -1619,7 +1652,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
          $data_gabungan[$tipe]['mutasi_pp_kurang']=$selisih_pp_kurang;*/
 
         $data_akhir[ $tipe ][ 'mutasi_nilai_tambah' ] = $selisih_nilai_tambah;
-        $data_akhir[ $tipe ][ 'mutasi_nilai_kurang' ] = 0;
+        $data_akhir[ $tipe ][ 'mutasi_nilai_kurang' ] = $selisih_nilai_kurang;
 
         $data_akhir[ $tipe ][ 'mutasi_nb_tambah' ] = $selisih_nb_tambah;
         $data_akhir[ $tipe ][ 'mutasi_nb_kurang' ] = $selisih_nb_kurang;
@@ -1659,17 +1692,17 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $selisih_nb_tambah = 0;
         $selisih_nb_kurang = 0;
         $bp = 0;
-
+        $text_riwayat="";
         /*$selisih_pp_tambah=0;
         $selisih_pp_kurang=0;*/
 
-        $kodesatker = $value[ 'kodeSatker' ];
+        //$kodesatker = $value[ 'kodeSatker' ];
         $Aset_ID = $value[ 'Aset_ID' ];
         $kodekelompok = $value[ 'kodeKelompok' ];
         $tglperolehan = $tgl_akhir;
         $tglpembukuan = $value[ 'TglPembukuan' ];
         list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
-            history_aset ($kodesatker, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,0);
+            history_aset ($ps, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,0);
 
 
 
@@ -2212,8 +2245,10 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                     //echo "<br/>tambah $aset_id ==$valAdd {$valRwyt->NilaiPerolehan} - {$valRwyt->NilaiPerolehan_Awal}<br/>";
                     //MUTASI ASET (Bertambah)
                     $flag = "(+)";
-                    if($paramKd_Rwyt == 0 && $valRwyt->kodeSatker!=$kodesatker)
+                    $tambahan_keterangan_riwayat="(+)";
+                    if($paramKd_Rwyt == 0 && strpos($valRwyt->kodeSatker,$kodesatker)=== false)
                     {  $nilaiPrlhnMutasiTambah = 0;
+                        //$tambahan_keterangan_riwayat="(+)masukk{$valRwyt->kodeSatker} dan {$kodesatker} dan {$paramKd_Rwyt}";
                     }
                     else{
                        $nilaiPrlhnMutasiTambah = $valAdd;
@@ -2259,6 +2294,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                     $umurEkonomis = $valRwyt->UmurEkonomis;
                 } else {
                     $flag = "(-)";
+                    $tambahan_keterangan_riwayat="(-)";
                     $valSubstAp = $valRwyt->AkumulasiPenyusutan_Awal - $valRwyt->AkumulasiPenyusutan;
                     //SALDO AWAL
                     $nilaiAwalPrlhn = $valRwyt->NilaiPerolehan_Awal;
@@ -2319,8 +2355,8 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 // $LastSatker = $valRwyt->kodeSatker;
                 // $FirstSatker = $skpd_id;
                 if($valRwyt->kondisi == 1 || $valRwyt->kondisi == 2) {
-                    $flag = "";
-
+                    $flag = "+";
+                    $tambahan_keterangan_riwayat="(+)";
                     //SALDO AWAL
                     $nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
                     $nilaiAwalPerolehanFix = ($nilaiAwalPrlhn);
@@ -2369,6 +2405,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                     $umurEkonomis = $valRwyt->UmurEkonomis;
                 } else {
                     $flag = "(-)";
+                    $tambahan_keterangan_riwayat="(+)";
                     //SALDO AWAL
                     $nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
                     $nilaiAwalPerolehanFix = ($nilaiAwalPrlhn);
@@ -2427,7 +2464,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                //  if( $action_riwayat=="Sukses Mutasi") {
                     //echo "masuk tambah =$status=".$valRwyt->Aset_ID." $kodesatker=={$valRwyt->kodeSatker}<br>";
                     $flag = "(+)";
-
+                    $tambahan_keterangan_riwayat= "(+)";
                     //SALDO AWAL
                     $nilaiAwalPrlhn = 0;
                     $nilaiAwalPerolehanFix = ($nilaiAwalPrlhn);
@@ -2479,6 +2516,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 } else {
                    // echo "masuk krg =$status=".$valRwyt->Aset_ID."<br>";
                     $flag = "(-)";
+
                     //SALDO AWAL
                     $nilaiAwalPrlhn = $valRwyt->NilaiPerolehan;
                     $nilaiAwalPerolehanFix = ($nilaiAwalPrlhn);
@@ -2502,7 +2540,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                     //MUTASI ASET (Berkurang)
                     $nilaiPrlhnMutasiKurang = $valRwyt->NilaiPerolehan;
                     $nilaiPrlhnMutasiKurangFix = ($nilaiPrlhnMutasiKurang);
-
+                    $tambahan_keterangan_riwayat="(-)";
                     //MUTASI PENYUSUTAN (Berkurang)
                     $penyusutanBerkurang = $AkumulasiPenyusutan;
                     $penyusutanBerkurangFix = ($penyusutanBerkurang);
@@ -2821,9 +2859,9 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
                 $MUTASI_AKM_PENGURANG += $penyusutanBerkurangFix;
                 $sejarah=$RIWAYAT[$paramKd_Rwyt];
                  if($TEXT_RIWAYAT!="")
-                  $TEXT_RIWAYAT.=",$sejarah($paramKd_Rwyt) $tambahan_keterangan_riwayat";
+                  $TEXT_RIWAYAT.=",$sejarah($paramKd_Rwyt) $tambahan_keterangan_riwayat ";
                 else
-                  $TEXT_RIWAYAT.="$sejarah($paramKd_Rwyt) $tambahan_keterangan_riwayat";
+                  $TEXT_RIWAYAT.="$sejarah($paramKd_Rwyt) $tambahan_keterangan_riwayat ";
 
             }
 
@@ -2893,7 +2931,7 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
     $paramLog = "l.TglPerubahan >'$tglawalperolehan' and l.TglPerubahan <='$tglakhirperolehan'  
 				 AND l.Kd_Riwayat in (0,1,2,3,7,21,26,27,28,50,51,29,30,281,291,36,55) and l.Kd_Riwayat != 77 
 				 and l.Aset_ID = '{$AsetId}' 
-				 order by l.Aset_ID ASC";
+				 order by l.log_id ASC";
    // echo "$status--$AsetId <br/>";
    /* if($status==1){
         $log_data = "select l.* from {$tabel_log} as l
@@ -2909,8 +2947,9 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
 						inner join {$tabel} as t on l.Aset_ID = t.Aset_ID 
 						where l.kodesatker  like '$skpd_id%' and $paramLog ";
 
-
-    //pr($log_data);
+//
+//    pr($log_data);
+//    exit();
     $splitKodeSatker = explode ('.', $skpd_id);
     if(count ($splitKodeSatker) == 4) {
         $paramSatker = "kodeSatker = '$skpd_id'";
@@ -2928,11 +2967,9 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
         $result = mysql_query ($queryALL[ $i ]) or die ($param."---".$queryALL[ $i ]." ".mysql_error());
         if($result) {
             while ($dataAll = mysql_fetch_object ($result)) {
-                if($dataAll->Kd_Riwayat == 3 && $dataAll->kodeSatker != $skpd_id) {
 
-                } else {
                     $getdata[] = $dataAll;
-                }
+
 
             }
         }
