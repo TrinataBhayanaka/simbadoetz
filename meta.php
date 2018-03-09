@@ -7,7 +7,7 @@ if ($u_sess) $isLogin = true;
 <html>
 <head>
 	<title> <?=$title?></title>
-	<link rel="shortcut icon" href="<?php echo "$url_rewrite/"; ?>favicon.png" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo "$url_rewrite/"; ?>favicon.ico" type="image/x-icon" />
 	<!--<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>-->
     <link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/font-awesome.min.css"/>
     <link rel="stylesheet" href="<?php echo "$url_rewrite/"; ?>css/form_wizard.css"/>
