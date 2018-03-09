@@ -319,8 +319,8 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 			$PPTotal = 0;
 			$no = 1;
 			foreach ($value as $key => $row) {
-				//$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
-				$nilaiPrlhnFix =$row->NilaiPerolehan;
+				$nilaiPrlhnFix = number_format($row->NilaiPerolehan,2,",",".");
+				//$nilaiPrlhnFix =$row->NilaiPerolehan; 
 
 				$nilaiPerolehan = $row->NilaiPerolehan;
 				$perolehanTotal = $perolehanTotal + $nilaiPerolehan;
@@ -330,29 +330,29 @@ public function retrieve_rekap_mesin($dataArr,$gambar,$skpd_id,$tglawalperolehan
 				//$hit = 1;												
 				
 				$AP = $row->AkumulasiPenyusutan;
-				//$APFix = number_format($row->AkumulasiPenyusutan,2,",",".");
-				$APFix = $row->AkumulasiPenyusutan;
+				$APFix = number_format($row->AkumulasiPenyusutan,2,",",".");
+				//$APFix = $row->AkumulasiPenyusutan;
 				
 				$APTotal = $APTotal + $AP;
 				$APTotalAll = $APTotalAll + $AP;
 				
 				if($row->AkumulasiPenyusutan != 0 && $row->AkumulasiPenyusutan !=''){
 					$NB = $row->NilaiBuku;
-					//$NBFix = number_format($NB,2,",",".");
-					$NBFix = $NB;
+					$NBFix = number_format($NB,2,",",".");
+					//$NBFix = $NB;
 
 				}else{
 					$NB = $row->NilaiPerolehan;
-					//$NBFix = number_format($NB,2,",",".");
-					$NBFix = $NB;
+					$NBFix = number_format($NB,2,",",".");
+					//$NBFix = $NB;
 				}
 				$NBTotal = $NBTotal + $NB;
 				$NBTotalAll = $NBTotalAll + $NB;
 
 				$PP = $row->PenyusutanPerTahun;
 				
-				//$PPFix = number_format($row->PenyusutanPerTahun,2,",",".");
-				$PPFix = $row->PenyusutanPerTahun;
+				$PPFix = number_format($row->PenyusutanPerTahun,2,",",".");
+				//$PPFix = $row->PenyusutanPerTahun;
 				$PPTotal = $PPTotal + $PP;
 				$PPTotalAll = $PPTotalAll + $PP;
 
@@ -807,7 +807,7 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 		$printPPTotalAll = number_format($PPTotalAll,2,",",".");
 
 		$html.="<tr>
-					<td style=\"text-align: center;\" colspan=\"15\">Total</td>
+					<td style=\"text-align: center;\" colspan=\"16\">Total</td>
 					<td style=\"text-align: right;\">$printperolehanTotalAll</td>
 					<td style=\"text-align: right;\">$printAPTotalAll</td>
 					<td style=\"text-align: right;\">$printNBTotalAll</td>
@@ -818,7 +818,7 @@ public function retrieve_rekap_bangunan($dataArr,$gambar,$skpd_id,$tglawalperole
 
 		$html.="<table border=\"0\">
 					<tr>
-						<td colspan=\"23\">&nbsp;</td>
+						<td colspan=\"24\">&nbsp;</td>
 					</tr>
 			</table></body></html>";			  			
 	$get_html[]=$header.$html;
@@ -1174,7 +1174,7 @@ public function retrieve_rekap_jaringan($dataArr,$gambar,$skpd_id,$tglawalperole
 						<td style=\"text-align: right;\">$printAPTotal</td>
 						<td style=\"text-align: right;\">$printNBTotal</td>
 						<td style=\"text-align: right;\">$printPPTotal</td>
-						<td colspan=\"4\">&nbsp;</td>
+						<td colspan=\"5\">&nbsp;</td>
 					</tr>";
 			$printperolehanTotal = 0;			 
 			$printAPTotal = 0;			 
@@ -1193,7 +1193,7 @@ public function retrieve_rekap_jaringan($dataArr,$gambar,$skpd_id,$tglawalperole
 					<td style=\"text-align: right;\">$printAPTotalAll</td>
 					<td style=\"text-align: right;\">$printNBTotalAll</td>
 					<td style=\"text-align: right;\">$printPPTotalAll</td>
-					<td colspan=\"4\">&nbsp;</td>
+					<td colspan=\"5\">&nbsp;</td>
 				</tr>
 			</table>";
 
@@ -5463,7 +5463,7 @@ foreach ($dataArr as $asetID => $value)
 	
 	
 		
-public function retrieve_html_rekap_barang_skpd($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_rekap_barang_skpd($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF)
 {	
 	// pr($dataArr);
 	// exit;
@@ -5889,7 +5889,7 @@ if($skpd_id != ''){
 return $hasil_html;
 }		
 
-public function retrieve_html_rekap_barang_upb($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_rekap_barang_upb($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF)
 {	
 	// pr($dataArr);
 	// exit;
@@ -6310,7 +6310,7 @@ if($skpd_id != ''){
 return $hasil_html;
 }		
 		
-public function retrieve_html_neraca($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca)
+public function retrieve_html_neraca($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca,$TAHUN_AKTIF)
 {
 // pr($dataArr);
 // exit;
@@ -6474,7 +6474,7 @@ foreach ($dataArr as $satker_id => $value)
 		$kode_2_parent = end($exp);
 		if($kode_1_parent != 07){
 			
-			$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan);
+			$TotalNilai = $this->get_TotalNilaiNeraca($skpd_id,$kode_1_parent,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
 			//nilai perolehan
 			$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 			//jumlah barang
@@ -7354,7 +7354,7 @@ $html .="
 
 }		
 
-public function retrieve_html_asetTetapMesin($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_asetTetapMesin($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF)
 {
 
 $detailSatker=$this->get_satker($skpd_id);
@@ -7500,7 +7500,7 @@ foreach ($dataArr as $satker_id => $value)
 {
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= '02';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
 	// pr($TotalNilai);
 	//jumlah
 	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
@@ -7635,7 +7635,7 @@ return $hasil_html;
 
 }		
 
-public function retrieve_html_asetTetapGedung($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_asetTetapGedung($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF)
 {
 // pr($dataArr);
 // exit;
@@ -7785,7 +7785,7 @@ foreach ($dataArr as $satker_id => $value)
 {
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= '03';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
 	
 	/*$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
@@ -7913,7 +7913,7 @@ $html .="
 	return $hasil_html;
 }		
 		
-public function retrieve_html_asetTetapJaringan($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan)
+public function retrieve_html_asetTetapJaringan($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF)
 {
 // pr($dataArr);
 // exit;
@@ -8063,7 +8063,7 @@ foreach ($dataArr as $satker_id => $value)
 {
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= '04';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
 	/*$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	$TotalNilaiFixPP=number_format($TotalNilai[2],2,",",".");
@@ -41871,7 +41871,7 @@ return $hasil_html;
 		return $NPKptls;					
 	}
 	
-	public function get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
+	public function get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
 		if($gol == '01'){
 			$paramGol ="tanahView";
 			$kondisi ="";
@@ -41922,26 +41922,44 @@ return $hasil_html;
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'";
 		}elseif($gol == '02'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+				/*$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
 						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3'
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1";
+						$KodeKaCondt1";*/
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
+						WHERE kodeSatker = '$satker_id' and kondisi != '3'
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";		
 			
 			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+				/*$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
 						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 300000 $KodeKa)";
-			}else{
+						and (NilaiPerolehan >= 300000 $KodeKa)";*/
 				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
+						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 300000 $KodeKa)";		
+			}else{
+				/*$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
 						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
@@ -41957,30 +41975,66 @@ return $hasil_html;
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault'
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and (NilaiPerolehan >= 300000 $KodeKa) and kodeLokasi like '12%' ";
+						and (NilaiPerolehan >= 300000 $KodeKa) and kodeLokasi like '12%' ";*/
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
+						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
+						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+						$KodeKaCondt1
+						union all 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol2 
+						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault'
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and (NilaiPerolehan >= 300000 $KodeKa) and kodeLokasi like '12%' ";		
 			}
 		}elseif($gol == '03'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+				/*$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
 						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3'
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1";
-			
-			}elseif($thnceck >= $thnDefault){
+						$KodeKaCondt1";*/
 				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
+						WHERE kodeSatker = '$satker_id' and kondisi != '3'
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 						
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";
+			}elseif($thnceck >= $thnDefault){
+				/*$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
 						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 10000000 $KodeKa)";
-			}else{
+						and (NilaiPerolehan >= 10000000 $KodeKa)";*/
 				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
+						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 10000000 $KodeKa)";		
+			}else{
+				/*$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
 						FROM $paramGol
 						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
@@ -41996,11 +42050,38 @@ return $hasil_html;
 						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
-						and (NilaiPerolehan >= 10000000 $KodeKa) and kodeLokasi like '12%' ";
+						and (NilaiPerolehan >= 10000000 $KodeKa) and kodeLokasi like '12%' ";*/
+				$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol
+						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
+						and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+						$KodeKaCondt1
+						union all 
+						SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+						FROM $paramGol2 
+						WHERE kodeSatker = '$satker_id' and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and (NilaiPerolehan >= 10000000 $KodeKa) and kodeLokasi like '12%' ";		
 			}
 		}elseif($gol == '04' || $gol == '05' || $gol == '06' ){
-			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+			/*$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
 			sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
+			FROM $paramGol
+			WHERE kodeSatker = '$satker_id' and kondisi != '3' 
+			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
+			and TglPembukuan >= '$tglawalperolehan' AND TglPembukuan <= '$tglakhirperolehan' 
+			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' ";*/
+			$query = "SELECT sum(NilaiPerolehan) as Nilai, count(Aset_ID) as jml,
+			SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+			sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NilaiBuku
 			FROM $paramGol
 			WHERE kodeSatker = '$satker_id' and kondisi != '3' 
 			and TglPerolehan >= '$tglawalperolehan' AND TglPerolehan <='$tglakhirperolehan' 
@@ -42087,7 +42168,7 @@ return $hasil_html;
 	
 	}
 
-    public function get_TotalNilaiNeraca($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan){
+    public function get_TotalNilaiNeraca($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
 		if($gol == '01'){
 			$paramGol ="tanahView";
 			$kondisi ="";
@@ -42153,25 +42234,41 @@ return $hasil_html;
 						";
 		}elseif($gol == '02'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
 						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1";
+						$KodeKaCondt1";*/
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+						FROM $paramGol
+						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";		
 			}elseif($thnceck >= $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
 						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						and (NilaiPerolehan >= 300000 $KodeKa)";
-			}else{
+						and (NilaiPerolehan >= 300000 $KodeKa)";*/
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+						FROM $paramGol
+						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						and (NilaiPerolehan >= 300000 $KodeKa)";		
+			}else{
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
 						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
@@ -42188,29 +42285,65 @@ return $hasil_html;
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and kodeLokasi like '12%' 
-						and (NilaiPerolehan >= 300000 $KodeKa)";
+						and (NilaiPerolehan >= 300000 $KodeKa)";*/
+
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+						FROM $paramGol
+						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1
+						union all 
+						SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+						FROM $paramGol2 
+						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglakhirperolehan' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and kodeLokasi like '12%' 
+						and (NilaiPerolehan >= 300000 $KodeKa)";		
 			}
 		}elseif($gol == '03'){
 			if($thnFix < $thnDefault){
-				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
 						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker' and kondisi != '3' 
 						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-						$KodeKaCondt1";
-			}elseif($thnceck >= $thnDefault){
+						$KodeKaCondt1";*/
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+						FROM $paramGol
+						WHERE $kodeKelompok $paramSatker' and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1";		
+			}elseif($thnceck >= $thnDefault){
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
 					sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
 					FROM $paramGol
 					WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 					and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
 					and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
 					and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
-					and (NilaiPerolehan >= 10000000 $KodeKa)";
-			}else{
+					and (NilaiPerolehan >= 10000000 $KodeKa)";*/
 				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+					SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+					sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+					FROM $paramGol
+					WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+					and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault' 
+					and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+					and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+					and (NilaiPerolehan >= 10000000 $KodeKa)";	
+			}else{
+				/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
 						sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
 						FROM $paramGol
 						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
@@ -42227,11 +42360,40 @@ return $hasil_html;
 						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
 						and Status_Validasi_Barang =1 and StatusTampil = 1 
 						and kodeLokasi like '12%' 
-						and (NilaiPerolehan >= 10000000 $KodeKa)";
+						and (NilaiPerolehan >= 10000000 $KodeKa)";*/
+				$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+						FROM $paramGol
+						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+						and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan < '$tglDefault' 
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 
+						and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%'
+						$KodeKaCondt1
+						union all 
+						SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+						SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+						sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+						FROM $paramGol2 
+						WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+						and TglPerolehan >= '$tglDefault' AND TglPerolehan <='$tglAkhirDefault'
+						and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <= '$tglAkhirDefault' 						
+						and Status_Validasi_Barang =1 and StatusTampil = 1 
+						and kodeLokasi like '12%' 
+						and (NilaiPerolehan >= 10000000 $KodeKa)";		
 			}
 		}elseif($gol == '04'){
-			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+			/*$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
 					sum(PenyusutanPerTahun) as NilaiPP,sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
+			FROM $paramGol
+			WHERE $kodeKelompok $paramSatker and kondisi != '3' 
+			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'
+			and TglPembukuan >= '$tglAwalDefault' AND TglPembukuan <='$tglAkhirDefault' 
+			and Status_Validasi_Barang =1 and StatusTampil = 1 and kodeLokasi like '12%' 
+			";*/
+			$query = "SELECT sum(NilaiPerolehan) as nilai, count(Aset_ID) as jml,
+					SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS NilaiPP,
+					sum(AkumulasiPenyusutan) as NilaiAP,sum(NilaiBuku) as NB 
 			FROM $paramGol
 			WHERE $kodeKelompok $paramSatker and kondisi != '3' 
 			and TglPerolehan >= '$tglAwalDefault' AND TglPerolehan <= '$tglAkhirDefault'

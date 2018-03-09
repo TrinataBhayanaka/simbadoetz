@@ -53,14 +53,16 @@ $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan
 $skpd_id);
 // exit;	
 $paramGol = '04';
-$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
+$paramTgl = explode('-', $tglakhirperolehan);
+$TAHUN_AKTIF = $paramTgl[0];
+$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF);
 // pr($resultParamGol);
 $serviceJson=json_encode($resultParamGol);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_asetTetapJaringan($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_asetTetapJaringan($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

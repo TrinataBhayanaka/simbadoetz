@@ -52,7 +52,9 @@ $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan
 $skpd_id);
 // exit;	
 $paramGol = '03';
-$resultParamGol = $REPORT->ceckRekap($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
+$paramTgl = explode('-', $tglakhirperolehan);
+$TAHUN_AKTIF = $paramTgl[0];
+$resultParamGol = $REPORT->ceckRekap($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF);
 //pr($resultParamGol);
 //exit;
 //$serviceJson=json_encode($resultParamGol);
