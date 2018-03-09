@@ -1667,8 +1667,8 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
                     case 'hilang':
                         // code...
                         $data[ 'hapus_hibah_nilai' ] = 0;
-                        $data[ 'hapus_lelang_nilai' ] = $NilaiPerolehan;
-                        $data[ 'hapus_hilang_musnah_nilai' ] = 0;
+                        $data[ 'hapus_lelang_nilai' ] =0 ;
+                        $data[ 'hapus_hilang_musnah_nilai' ] = $NilaiPerolehan;
                         $data[ 'hapus_total_jml' ] = 1;
                         $data[ 'hapus_total_nilai' ] = $NilaiPerolehan;
                         break;
