@@ -19,7 +19,6 @@ if($tglawal != ''){
 	$tglawalperolehan = '0000-00-00';
 }
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
-$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
@@ -58,14 +57,16 @@ $Info = '';
 
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
-// exit;
-$resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan);	
+//exit;
+$paramTgl = explode('-', $tglakhirperolehan);
+$TAHUN_AKTIF = $paramTgl[0];
+$resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);	
 // pr($resultParamGol);
 // exit;	
 
 $serviceJson=json_encode($resultParamGol);
 //retrieve html
-$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca);
+$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca,$TAHUN_AKTIF);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 

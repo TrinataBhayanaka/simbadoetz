@@ -19,7 +19,6 @@ if($tglawal != ''){
 	$tglawalperolehan = '0000-00-00';
 }
 $tglakhirperolehan = $_GET['tglakhirperolehan'];
-$tglakhirperolehan = $_GET['tglakhirperolehan'];
 $skpd_id = $_GET['skpd_id'];
 $tipe=$_GET['tipe_file'];
 // pr($_REQUEST);
@@ -46,11 +45,13 @@ $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
 // exit;
-$result = $REPORT->barangskpd($skpd_id,$tglawalperolehan,$tglakhirperolehan);	
+$paramTgl = explode('-', $tglakhirperolehan);
+$TAHUN_AKTIF = $paramTgl[0];
+$result = $REPORT->barangskpd($skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);	
 // pr($result);
 // exit;	
 //retrieve html
-$html=$REPORT->retrieve_html_rekap_barang_skpd($result,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_rekap_barang_skpd($result,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 

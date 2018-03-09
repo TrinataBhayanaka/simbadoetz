@@ -83,6 +83,7 @@ foreach ($cleardata as $key => $val) {
 	$data['Tahun'] = $datatmp['Tahun'];
 	$data['TipeAset'] = $datatmp['TipeAset'];
 	$data['AsalUsul'] = 'Pembelian';
+	$data['FixPenggunaan'] = 1;
 	$data['GUID'] = $datatmp['GUID'];
 	$data['xls'] = 1;
 
@@ -105,6 +106,8 @@ $exec = $link->query($sql);
 // echo "Commit data\n";
 // $command = "COMMIT;";
 // $exec = $link->query($command);
+
+$status=exec("php import_kibe_usulan.php $argv[2] > ../../../log/import_kib_e_usulan.txt 2>&1 &");
 
 
 
@@ -134,6 +137,7 @@ function store_aset($data,$link,$totaldata)
         $tblAset['Alamat'] = $data['Alamat'];
         $tblAset['UserNm'] = $data['UserNm'];
         $tblAset['TipeAset'] = $data['TipeAset'];
+        $tblAset['FixPenggunaan'] = $data['FixPenggunaan'];
         $tblAset['GUID'] = $data['GUID'];
         if(intval($tblAset['Tahun']) < 2008){
             $tblAset['kodeKA'] = 1;
