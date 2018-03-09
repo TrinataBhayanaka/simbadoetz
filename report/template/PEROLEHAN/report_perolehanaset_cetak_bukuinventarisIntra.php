@@ -27,7 +27,10 @@ $tipe=$_GET['tipe_file'];
 // pr($_GET);
 // exit;
 $REPORT=new report_engine();
-
+$paramTgl = explode('-', $tglakhirperolehan);
+$TAHUN_AKTIF = $paramTgl[0];
+//pr($TAHUN_AKTIF);
+// /exit();
 $data=array(
     "modul"=>$modul,
 	"tglawalperolehan"=>$tglawalperolehan,
@@ -35,7 +38,8 @@ $data=array(
     "skpd_id"=>$skpd_id,
     "mode"=>$mode,
     "tab"=>$tab,
-    "intra"=>"intra"
+    "intra"=>"intra",
+    "TAHUN_AKTIF"=>$TAHUN_AKTIF
 );
 
 function arrayToObject($result_query) {
@@ -67,7 +71,7 @@ $REPORT->set_data($data);
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
 // pr($query);
-// exit;
+//exit;
 $hit = count($query);
 $flag = '';
 $TypeRprtr = 'intra';
