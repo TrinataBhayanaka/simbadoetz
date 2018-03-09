@@ -74,7 +74,7 @@ foreach ($kapital as $key => $value) {
   $kib['NilaiBuku'] = $kib['NilaiBuku'] + $value['nilai'];
   
   $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
-  $kib['Kd_Riwayat'] = 35;    
+  $kib['Kd_Riwayat'] = 39;
   
   
         unset($tmpField);
@@ -101,7 +101,7 @@ foreach ($kapital as $key => $value) {
   $kib['operator'] = $_SESSION['ses_uoperatorid'];
   $kib['NilaiPerolehan_Awal'] = $kib['NilaiPerolehan'] - $value['nilai'];
   $kib['NilaiPerolehan'] = $kib['NilaiPerolehan'];
-  $kib['Kd_Riwayat'] = 36;    
+  $kib['Kd_Riwayat'] = 40;
   
   
         unset($tmpField);
