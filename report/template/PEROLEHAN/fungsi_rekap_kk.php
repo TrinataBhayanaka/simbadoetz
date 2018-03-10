@@ -970,13 +970,13 @@ function history_log($kode, $gol, $ps, $tglawalperolehan, $tglakhirperolehan, $T
 
                 /** ------------------------------MUTASI KURANG--------------------------------------- */
                 /** Koreksi Saldo Awal  */
-                $data[ 'koreksi_kurang_nilai' ] = abs($NilaiPerolehan - $NilaiPerolehan_Awal);
+                $data[ 'koreksi_kurang_nilai' ] = 0;
                 $data[ 'koreksi_kurang_jml' ] = 0;
                 /**  Akhir Koreksi Saldo Awal */
 
                 /** PENGHAPUSAN */
                 $data[ 'hapus_hibah_nilai' ] = 0;
-                $data[ 'hapus_lelang_nilai' ] = 0;
+                $data[ 'hapus_lelang_nilai' ] = abs($NilaiPerolehan - $NilaiPerolehan_Awal);
                 $data[ 'hapus_hilang_musnah_nilai' ] = 0;
                 $data[ 'hapus_total_jml' ] = 0;
                 $data[ 'hapus_total_nilai' ] = 0;
