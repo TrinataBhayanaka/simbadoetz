@@ -1514,7 +1514,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
     $data_awal_alone = array_diff_assoc ($data_awal, $data_gabungan);
 //echo "array awal sendiri:<br/><pre>";
 //print_r($data_awal_alone);
-
+//exit();
     $data_awal = array();
     $cek_data_awal=array();
     foreach ($data_awal_alone as $tipe => $value) {
@@ -1572,9 +1572,10 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $aset_id=$value[ 'Aset_ID' ];
 
         $cek_data_awal[$aset_id]=1; // untuk menandakan data awal telah ada
+        $kodekelompok = $value[ 'kodeKelompok' ];
 
         list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
-            history_aset ($ps, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodeKelompok,1);
+            history_aset ($ps, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,"$kodekelompok");
         $data_awal[ $tipe ][ 'riwayat' ] = $text_riwayat;
         $data_awal[ $tipe ][ 'kodeSatker' ] = $value['kodeSatker'];
 
@@ -1649,7 +1650,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
        echo "Aset=$tglperolehan==$tipe==$Aset_ID==$tglpembukuan==$kodekelompok<br/>";
        // exit();*/
         list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
-            history_aset ($ps, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,1);
+            history_aset ($ps, $Aset_ID, $tglperolehan, $tgl_awal, $tglpembukuan, $kodekelompok,3);
         if($bp == 0) {
             $selisih_jml_tambah = $value[ 'jml' ];
             $selisih_ap_tambah = $value[ 'AP' ];
@@ -2923,6 +2924,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
 function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $param, $tglpembukuan,$status)
 {
 
+    echo "$param===ASet_ID=$AsetId<br/>";
     if($param == '01') {
         $tabel_log = 'log_tanah';
 
@@ -2999,7 +3001,7 @@ function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $
     }
     $queryALL = array( $log_data );
     for ($i = 0; $i < count ($queryALL); $i++) {
-        $result = mysql_query ($queryALL[ $i ]) or die ($param."---".$queryALL[ $i ]." ".mysql_error());
+        $result = mysql_query ($queryALL[ $i ]) or die ($param."-$status--".$queryALL[ $i ]." ".mysql_error());
         if($result) {
             while ($dataAll = mysql_fetch_object ($result)) {
 
