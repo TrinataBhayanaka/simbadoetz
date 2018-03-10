@@ -273,7 +273,8 @@ echo "SATKER AWAL : ".$rowKontrak['kodeSatker']."\n\n";
 				$no++;
 				}
 			}
-			echo "Jumlah Aset : ".$no."\n\n";
+			$jml = $no - 1;
+			echo "Jumlah Aset : ".$jml."\n\n";
 			$DetailListAsset = implode(',', $listAsset);
 			echo "List Aset : ".$DetailListAsset."\n\n";
 			
