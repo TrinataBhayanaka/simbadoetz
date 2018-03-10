@@ -2760,7 +2760,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
                  echo("$sqlupd \n");
                 $result=  $this->query($sqlupd) or die($this->error());
 
-                 $sqlupd = "UPDATE log_{$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}' and Kd_Riwayat=0";
+                 $sqlupd = "UPDATE log_{$val['tipeaset']} SET Status_Validasi_Barang = '1', TglPembukuan = '{$tglDist}', TglPerubahan = '{$tglDist}' WHERE kodeKelompok = '{$val['kodeKelompok']}' AND kodeLokasi = '{$val['kodeLokasi']}' AND noRegister BETWEEN {$val['noReg_awal']} AND {$val['noReg_akhir']} AND NilaiPerolehan = '{$val['NilaiPerolehan']}' and Kd_Riwayat=0";
                 echo("$sqlupd \n");
                 $result=  $this->query($sqlupd) or die($this->error());
                 
