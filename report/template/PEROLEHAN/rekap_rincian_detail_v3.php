@@ -374,10 +374,7 @@ foreach ($data as $gol) {
     //pr($data_hilang_filter);
     //exit();
     $hasil = group_data ($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02",$ps);
-    //echo "<br/>hasil2131<br/>";
-    //echo "<pre>";
-    //print_r($hasil);
-    // exit();
+
     $data[ $i ] = $hasil;
     //head asal
 
@@ -471,7 +468,9 @@ foreach ($data as $gol) {
 					<td style=\"font-weight: bold; text-align: right;\">" . number_format ($gol[ nb_akhir ], 2, ",", ".") . "</td> 
 				</tr>";
         if($levelAset >= 3 || $levelAset == 1)
-            foreach ($gol[ 'Bidang' ] as $bidang) {
+            $bidang_sort=$gol[ 'Bidang' ];
+            ksort($bidang_sort);
+            foreach ($bidang_sort as $bidang) {
                 if($bidang[ ap ] == "" || $bidang[ ap ] == 0)
                     $bidang[ nb ] = $bidang[ nilai ];
 
@@ -531,7 +530,9 @@ foreach ($data as $gol) {
                                 <td style=\"font-weight: bold; text-align: right;\">" . number_format ($bidang[ nb_akhir ], 2, ",", ".") . "</td> 
 							</tr>";
                 if($levelAset >= 4 || $levelAset == 1)
-                    foreach ($bidang[ 'Kel' ] as $Kelompok) {
+                    $kel_sort=$bidang[ 'Kel' ];
+                    ksort($kel_sort);
+                    foreach ($kel_sort as $Kelompok) {
                         if($Kelompok[ ap ] == "" || $Kelompok[ ap ] == 0)
                             $Kelompok[ nb ] = $Kelompok[ nilai ];
 
@@ -586,7 +587,9 @@ foreach ($data as $gol) {
                                     <td style=\"font-weight: bold; text-align: right;\">" . number_format ($Kelompok[ nb_akhir ], 2, ",", ".") . "</td> 
                                 </tr>";
                         if($levelAset >= 5 || $levelAset == 1)
-                            foreach ($Kelompok[ 'Sub' ] as $Sub) {
+                        $sub_sort=$Kelompok[ 'Sub' ];
+                        ksort($sub_sort);
+                            foreach ($sub_sort as $Sub) {
                                 if($Sub[ ap ] == "" || $Sub[ ap ] == 0)
                                     $Sub[ nb ] = $Sub[ nilai ];
 
@@ -641,7 +644,9 @@ foreach ($data as $gol) {
                                             <td style=\"font-weight: bold; text-align: right;\">" . number_format ($Sub[ nb_akhir ], 2, ",", ".") . "</td> 
     									</tr>";
                                 if($levelAset == 6 || $levelAset == 1)
-                                    foreach ($Sub[ 'SubSub' ] as $SubSub) {
+                                    $subsub_sort=$Sub[ 'SubSub' ];
+                                    ksort($subsub_sort);
+                                    foreach ($subsub_sort as $SubSub) {
                                         if($SubSub[ ap ] == "" || $SubSub[ ap ] == 0)
                                             $SubSub[ nb ] = $SubSub[ nilai ];
 
