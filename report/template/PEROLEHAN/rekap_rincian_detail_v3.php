@@ -237,7 +237,8 @@ $head .= " <table style=\"width: 100%; text-align: left; margin-left: auto; marg
                 <td colspan='2' style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
                 <td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Beban Penyusutan Tahun Berjalan</td>
                 <td colspan='4' style=\" text-align: center; font-weight: bold; width: \">31 Desember $tahun_neraca</td>
-     <td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Keterangan</td>           
+     <td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Keterangan</td>  
+              <td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Kode Satker</td> 
 	</tr>
         <tr>
             <td  style=\" text-align: center; font-weight: bold; width: \">Jumlah</td>
@@ -280,6 +281,8 @@ $head .= " <table style=\"width: 100%; text-align: left; margin-left: auto; marg
                    
                    
                    <td style=\" text-align: center; font-weight: bold; width: \">19</td>
+                    <td style=\" text-align: center; font-weight: bold; width: \">20</td>
+                    <td style=\" text-align: center; font-weight: bold; width: \">21</td>
                    
 	</tr>";
 //foreach ($data as $gol) {
@@ -671,6 +674,7 @@ $csv.=""."|";
     $csv.=$SubSub[ap_akhir]."|";
     $csv.=$SubSub[nb_akhir]."|";
     $csv.=$SubSub[riwayat]."\n";
+    $csv.=$SubSub[kodeSatker]."\n";
 
 
                                         $body .= "<tr>
@@ -694,6 +698,7 @@ $csv.=""."|";
                                             <td style=\"font-weight: bold; text-align: right;\">" . number_format ($SubSub[ ap_akhir ], 2, ",", ".") . "</td>
                                             <td style=\"font-weight: bold; text-align: right;\">" . number_format ($SubSub[ nb_akhir ], 2, ",", ".") . "</td> 
                                             <td>{$SubSub[riwayat]}</td>
+                                            <td>{$SubSub[kodeSatker]}</td>
 										</tr>";
                                     }
                             }
@@ -1493,6 +1498,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_gabungan[ $tipe ][ 'pp_akhir' ] = round($data_akhir[ $tipe ][ 'PP' ],2);
         $data_gabungan[ $tipe ][ 'nb_akhir' ] = round($data_akhir[ $tipe ][ 'NB' ],2);
         $data_gabungan[ $tipe ][ 'riwayat' ] = $text_riwayat;
+        $data_gabungan[ $tipe ][ 'kodeSatker' ] = $value['kodeSatker'];
 
 
     }
@@ -1565,6 +1571,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         list($bp, $selisih_nilai_tambah, $selisih_nilai_kurang, $selisih_ap_tambah, $selisih_ap_kurang,$text_riwayat) =
             history_aset ($ps, $aset_id, $tglperolehan, $tgl_awal, $tglpembukuan, $kodeKelompok,1);
         $data_awal[ $tipe ][ 'riwayat' ] = $text_riwayat;
+        $data_awal[ $tipe ][ 'kodeSatker' ] = $value['kodeSatker'];
 
 
     }
@@ -1686,6 +1693,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_akhir[ $tipe ][ 'pp_akhir' ] = round($value[ 'PP' ],2);
         $data_akhir[ $tipe ][ 'nb_akhir' ] = round($value[ 'NB' ],2);
         $data_akhir[ $tipe ][ 'riwayat' ] = $text_riwayat;
+        $data_akhir[ $tipe ][ 'kodeSatker' ] = $value['kodeSatker'];
 
 
     }
@@ -1760,8 +1768,9 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_hapus[ $tipe ][ 'ap_akhir' ] = 0;
         $data_hapus[ $tipe ][ 'pp_akhir' ] = 0;
         $data_hapus[ $tipe ][ 'nb_akhir' ] = 0;
-        $data_akhir[ $tipe ][ 'riwayat' ] = "";
+        $data_hapus[ $tipe ][ 'riwayat' ] = "";
         $data_hapus[ $tipe ][ 'riwayat' ] = $text_riwayat;
+        $data_hapus[ $tipe ][ 'kodeSatker' ] = $value['kodeSatker'];
 
     }
 
