@@ -1,6 +1,7 @@
 <?php
 
 include "../../../config/database.php";
+global $TAHUN_AKTIF;
 // $CONFIG['default']['db_host'] = 'localhost';
 // $CONFIG['default']['db_user'] = 'root';
 // $CONFIG['default']['db_pass'] = 'root123root';
@@ -75,7 +76,7 @@ foreach ($cleardata as $key => $val) {
 	$data['Satuan'] = $datatmp['NilaiPerolehan'];
 	$data['NilaiPerolehan'] = $datatmp['NilaiPerolehan'];
 	$data['NilaiTotal'] = $datatmp['NilaiTotal'];
-	$data['Info'] = "[importing-" .$sum['sumnilai']. "]" . $datatmp['Info'];
+	$data['Info'] = "[importing-" . $TAHUN_AKTIF. "-".  $sum['sumnilai']. "]" . $datatmp['Info'];
 	$data['id'] = $argv[2];
 	$data['noKontrak'] = $datatmp['noKontrak'];
 	$data['kondisi'] = 1;
