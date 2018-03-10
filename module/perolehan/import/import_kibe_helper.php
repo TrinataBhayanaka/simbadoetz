@@ -107,9 +107,12 @@ $exec = $link->query($sql);
 // echo "Commit data\n";
 // $command = "COMMIT;";
 // $exec = $link->query($command);
-$log = "import_kib_e_usulan_".$argv[2];
-//$status=exec("php import_kibe_usulan.php $argv[2] > ../../../log/import_kib_e_usulan.txt 2>&1 &");
-$status=exec("php import_kibe_usulan.php $argv[2] > ../../../log/$log.txt 2>&1 &");
+
+if ($datatmp['TipeAset'] == "E") {
+    $log = "import_kib_e_usulan_".$argv[2];
+    //$status=exec("php import_kibe_usulan.php $argv[2] > ../../../log/import_kib_e_usulan.txt 2>&1 &");
+    $status=exec("php import_kibe_usulan.php $argv[2] > ../../../log/$log.txt 2>&1 &");
+}
 
 
 
