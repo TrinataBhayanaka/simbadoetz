@@ -331,7 +331,9 @@ foreach ($data as $gol) {
     //echo "$gol<br/>";
     $data_awal = subsub_awal ($kode_golongan, $q_gol_final, $ps, $pt);
     $data_aset_awal=array();
+    $status_masuk_hapus_awal=0;
     foreach ($data_awal as $key=>$value){
+      $status_masuk_hapus_awal=1;
         $data_aset_awal[]=$value['Aset_ID'];
     }
     $q_data_aset_awal=implode(",",$data_aset_awal);
@@ -339,13 +341,22 @@ foreach ($data as $gol) {
     $data_akhir = subsub ($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31");
 
     $data_aset_akhir=array();
+    $status_masuk_hapus_akhir=0;
     foreach ($data_akhir as $key=>$value){
+       $status_masuk_hapus_akhir=1;
         $data_aset_akhir[]=$value['Aset_ID'];
     }
     $q_data_aset_akhir=implode(",",$data_aset_akhir);
   // echo "masuk";
-    $data_hilang = subsub_hapus_v2($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt,$q_data_aset_awal,$q_data_aset_akhir);
+    if($status_masuk_hapus_akhir==1||$status_masuk_hapus_awal==1)
+    {
+      $data_hilang = subsub_hapus_v2($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt,$q_data_aset_awal,$q_data_aset_akhir);
+    }else
+    {
+      $data_hilang =array();
+    }
     $data_aset_hilang=array();
+
     foreach ($data_hilang as $key=>$value){
         $data_aset_hilang[]=$value['Aset_ID'];
     }
@@ -1164,11 +1175,21 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
     } else {
         $paramSatker = "m.kodeSatker like '$param_satker%'";
     }
+    $not_in_aset_hapus="";
+    if($q_data_awal!=""){
+      $not_in_aset_hapus="$q_data_awal";
+    }
+    if($q_data_awal!=""&&$q_data_akhir!=""){
+      $not_in_aset_hapus="$not_in_aset_hapus,$q_data_akhir";
+    }else if(($q_data_awal==""&&$q_data_akhir!="")){
+      $not_in_aset_hapus="$q_data_akhir";
+    }
+
     $param_tgl = $pt;
     if($gol == 'mesin_ori') {
         $gol = "mesin";
         //cek kapitalisasi
-        $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+        $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
 
         $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and m.kondisi != '3'  and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
@@ -1191,7 +1212,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
     } elseif($gol == 'bangunan_ori') {
         $gol = "bangunan";
         //cek kapitalisasi
-        $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+        $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
 
         $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and m.kondisi != '3'  and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodeLokasi like '12%' and m.kodeKa=1) or 
@@ -1228,7 +1249,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
 
             $gol = "jaringan";
             //cek kapitalisasi
-            $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+            $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
             $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
@@ -1248,7 +1269,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
             else  $gol = "asetlain";
 
             //cek kapitalisasi
-            $kondisi_transfer = " and m.Aset_ID not in($q_data_awal,$q_data_akhir) ";
+            $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
             $sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,
                     m.Aset_ID,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
