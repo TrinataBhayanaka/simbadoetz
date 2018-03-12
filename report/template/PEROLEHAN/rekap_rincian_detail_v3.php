@@ -2924,7 +2924,7 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
 function getdataRwyt($skpd_id, $AsetId, $tglakhirperolehan, $tglawalperolehan, $param, $tglpembukuan,$status)
 {
 
-    echo "$param===ASet_ID=$AsetId<br/>";
+    //echo "$param===ASet_ID=$AsetId<br/>";
     if($param == '01') {
         $tabel_log = 'log_tanah';
 
