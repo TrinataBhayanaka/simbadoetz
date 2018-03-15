@@ -269,7 +269,8 @@ foreach ($data as $gol) {
     //pr($hasil);
 //    exit();
 
-    foreach ($hasil as $value) {
+    foreach ($hasil as $key=>$value) {
+        $detail_key=$key;
         $kodekelompok=$value['kodeKelompok'];
         list($table_neraca,$param)=show_table_neraca($kodekelompok);
         $NP=$value['nilai_akhir'];
