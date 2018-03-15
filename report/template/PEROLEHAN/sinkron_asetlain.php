@@ -12,7 +12,7 @@ $query="select * from satker where KodeSatker is NOT NULL AND KodeUnit is NOT NU
 $resultfinal = mysql_query ($query) or die(mysql_error());
 echo $resultfinal;
 
-while ($value = mysql_fetch_key($resultfinal)) {
+while ($value = mysql_fetch_object($resultfinal)) {
 
         $kode = $value->kode;
         echo "kode $kode \n";
