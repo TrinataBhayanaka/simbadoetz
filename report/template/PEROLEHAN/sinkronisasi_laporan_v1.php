@@ -40,12 +40,12 @@ $tipeAset = $_GET[ 'tipeAset' ];
 $tipe = $_GET[ 'tipe_file' ];
 */
 $tipeAset =  $argv[ 1 ];
-$skpd_id= $argv[ 2 ];
+//$skpd_id= $argv[ 2 ];
 
 $query="select * from satker where KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL 
   AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '08%'  ";
 $resultfinal = mysql_query ($query) or die(mysql_error());
-
+echo $resultfinal;
 
 while ($value = mysql_fetch_object($resultfinal)) {
     $skpd_id= $value->kode;
