@@ -294,7 +294,7 @@ foreach ($data as $gol) {
 
 
 
-        $query="replace into $table_neraca set Aset_ID='$Aset_ID',
+        $query="replace into $table_neraca set Aset_ID='$Aset_ID', detail_key='$detail_key',
                 NilaiPerolehan='$NP',AkumulasiPenyusutan='$ap',NilaiBuku='$nb',
                 PenyusutanPertahun='$pp',
                 kodesatker='$kodeSatker',Tahun='$Tahun',kodeKelompok='$kodekelompok',noregister='$noRegister',
