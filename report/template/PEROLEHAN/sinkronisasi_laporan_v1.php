@@ -43,7 +43,7 @@ $tipeAset =  $argv[ 1 ];
 //$skpd_id= $argv[ 2 ];
 
 $query="select * from satker where KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL 
-  AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '08%'  ";
+  AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '%'  ";
 $skpd_data= mysql_query ($query) or die(mysql_error());
 
 while ($data_skpd = mysql_fetch_object($skpd_data)) {
