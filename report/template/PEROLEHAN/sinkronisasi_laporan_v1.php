@@ -209,6 +209,8 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
         $i++;
 
     }
+    $nama_table="$tipeAset"."_ori";
+    $delete_temp=mysql_query("drop table $nama_table");
     echo "selesai \n";
 }
 $html = $head . $body . $foot;
