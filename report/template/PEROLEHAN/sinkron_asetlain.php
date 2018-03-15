@@ -17,7 +17,7 @@ while ($value = mysql_fetch_object($resultfinal)) {
         $kode = $value->kode;
         echo "kode $kode \n";
         exec("php sinkronisasi_laporan_v1.php asetlain $kode > asetlain_$kode &");
-        sleep(120);
+        //sleep(120);
         echo "selesai \n";
     }
 
