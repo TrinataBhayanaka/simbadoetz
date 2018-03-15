@@ -13,7 +13,9 @@ $resultfinal = mysql_query ($query) or die(mysql_error());
 
 foreach ($resultfinal as $value) {
     $kode = $value->kode;
+    echo "kode $kode \n";
     exec("php sinkronisasi_laporan_v1.php asetlain $kode > asetlain_$kode &");
         sleep(120);
+        echo "selesai \n";
 }
 ?>
