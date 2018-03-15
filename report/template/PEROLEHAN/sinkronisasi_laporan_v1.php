@@ -29,14 +29,17 @@ if($tglawal != '') {
 } else {
     $tglawalperolehan = '0000-00-00';
 }
-$tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
+$tglawalperolehan = '0000-00-00';
+$tglakhirperolehan = '2017-12-31';
+
+/*
 $tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
 $skpd_id = $_GET[ 'skpd_id' ];
 $levelAset = $_GET[ 'levelAset' ];
 $tipeAset = $_GET[ 'tipeAset' ];
 $tipe = $_GET[ 'tipe_file' ];
-
-
+*/
+$tipeAset =  $argv[ 1 ];
 
 
 
@@ -312,7 +315,7 @@ foreach ($data as $gol) {
     $i++;
 
 }
-
+echo "selesai ";
 
 $html = $head . $body . $foot;
 
