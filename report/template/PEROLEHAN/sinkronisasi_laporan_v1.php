@@ -44,11 +44,10 @@ $tipeAset =  $argv[ 1 ];
 
 $query="select * from satker where KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL 
   AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '08%'  ";
-$resultfinal = mysql_query ($query) or die(mysql_error());
-echo $resultfinal;
+$skpd_data= mysql_query ($query) or die(mysql_error());
 
-while ($value = mysql_fetch_object($resultfinal)) {
-    $skpd_id= $value->kode;
+while ($data_skpd = mysql_fetch_object($skpd_data)) {
+    $skpd_id= $data_skpd->kode;
     echo "Running $tipeAset ==> $skpd_id \n ";
     $ex = explode('-', $tglakhirperolehan);
     $tahun_neraca = $ex[0];
