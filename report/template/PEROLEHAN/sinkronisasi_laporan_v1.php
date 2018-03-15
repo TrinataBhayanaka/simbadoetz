@@ -40,7 +40,7 @@ $tipeAset = $_GET[ 'tipeAset' ];
 $tipe = $_GET[ 'tipe_file' ];
 */
 $tipeAset =  $argv[ 1 ];
-
+$skpd_id= $argv[ 2 ];
 
 
 $ex = explode ('-', $tglakhirperolehan);
