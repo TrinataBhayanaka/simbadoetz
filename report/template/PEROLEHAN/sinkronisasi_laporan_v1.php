@@ -29,271 +29,169 @@ if($tglawal != '') {
 } else {
     $tglawalperolehan = '0000-00-00';
 }
-$tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
+$tglawalperolehan = '0000-00-00';
+$tglakhirperolehan = '2017-12-31';
+
+/*
 $tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
 $skpd_id = $_GET[ 'skpd_id' ];
 $levelAset = $_GET[ 'levelAset' ];
 $tipeAset = $_GET[ 'tipeAset' ];
 $tipe = $_GET[ 'tipe_file' ];
+*/
+$tipeAset =  $argv[ 1 ];
+//$skpd_id= $argv[ 2 ];
+
+$query="select * from satker where KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL 
+  AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '%'  ";
+$skpd_data= mysql_query ($query) or die(mysql_error());
+
+while ($data_skpd = mysql_fetch_object($skpd_data)) {
+    $skpd_id= $data_skpd->kode;
+    echo "Running $tipeAset ==> $skpd_id \n ";
+    $ex = explode('-', $tglakhirperolehan);
+    $tahun_neraca = $ex[0];
+    $REPORT = new report_engine();
+    $data = array(
+        "modul" => $modul,
+        "mode" => $mode,
+        "tglawalperolehan" => $tglawalperolehan,
+        "tglakhirperolehan" => $tglakhirperolehan,
+        "skpd_id" => $skpd_id,
+        "tab" => $tab
+    );
+    $REPORT->set_data($data);
+    $nama_kab = $NAMA_KABUPATEN;
+    $nama_prov = $NAMA_PROVINSI;
+    $gambar = $FILE_GAMBAR_KABUPATEN;
+    if ($tipe == 1) {
+        $gmbr = "<img style=\"width: 80px; height: 85px;\" src=\"$gambar\">";
+    } else {
+        $gmbr = "";
+    }
+    $hit = 2;
+    $flag = "$tipeAset";
+    $TypeRprtr = 'intra';
+    $Info = '';
+    $exeTempTable = $REPORT->TempTable($hit, $flag, $TypeRprtr, $Info, $tglawalperolehan, $tglakhirperolehan,
+        $skpd_id);
+    $detailSatker = $REPORT->get_satker($skpd_id);
 
 
-
-
-
-$ex = explode ('-', $tglakhirperolehan);
-$tahun_neraca = $ex[ 0 ];
-$REPORT = new report_engine();
-$data = array(
-    "modul" => $modul,
-    "mode" => $mode,
-    "tglawalperolehan" => $tglawalperolehan,
-    "tglakhirperolehan" => $tglakhirperolehan,
-    "skpd_id" => $skpd_id,
-    "tab" => $tab
-);
-$REPORT->set_data ($data);
-$nama_kab = $NAMA_KABUPATEN;
-$nama_prov = $NAMA_PROVINSI;
-$gambar = $FILE_GAMBAR_KABUPATEN;
-if($tipe == 1) {
-    $gmbr = "<img style=\"width: 80px; height: 85px;\" src=\"$gambar\">";
-} else {
-    $gmbr = "";
-}
-$hit = 2;
-$flag = "$tipeAset";
-$TypeRprtr = 'intra';
-$Info = '';
-$exeTempTable = $REPORT->TempTable ($hit, $flag, $TypeRprtr, $Info, $tglawalperolehan, $tglakhirperolehan,
-    $skpd_id);
-$detailSatker = $REPORT->get_satker ($skpd_id);
-$NoBidang = $detailSatker[ 0 ];
-$NoUnitOrganisasi = $detailSatker[ 1 ];
-$NoSubUnitOrganisasi = $detailSatker[ 2 ];
-$NoUPB = $detailSatker[ 3 ];
-if($NoBidang != "") {
-    $paramKodeLokasi = $NoBidang;
-}
-if($NoBidang != "" && $NoUnitOrganisasi != "") {
-    $paramKodeLokasi = $NoUnitOrganisasi;
-}
-if($NoBidang != "" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi != "") {
-    $paramKodeLokasi = $NoUnitOrganisasi . "." . $NoSubUnitOrganisasi;
-}
-if($NoBidang != "" && $NoUnitOrganisasi != "" && $NoSubUnitOrganisasi != "" && $NoUPB != "") {
-    $paramKodeLokasi = $NoUnitOrganisasi . "." . $NoSubUnitOrganisasi . "." . $NoUPB;
-}
-$Bidang = $detailSatker[ 4 ][ 0 ];
-$UnitOrganisasi = $detailSatker[ 4 ][ 1 ];
-$SubUnitOrganisasi = $detailSatker[ 4 ][ 2 ];
-$UPB = $detailSatker[ 4 ][ 3 ];
-
-$ex = explode ('.', $skpd_id);
-$hit = count ($ex);
-if($hit == 1) {
-    $head_csv="$Bidang";
-    $header = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		";
-} elseif($hit == 2) {
-    $head_csv="$Bidang\n$UnitOrganisasi";
-    $header = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>";
-} elseif($hit == 3) {
-    $head_csv="$Bidang\n$UnitOrganisasi\n$SubUnitOrganisasi";
-
-    $header = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>";
-} elseif($hit == 4) {
-    $head_csv="$Bidang\n$UnitOrganisasi\n$SubUnitOrganisasi\n$UPB";
-
-    $header = "<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">BIDANG</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$Bidang</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">SUB UNIT ORGANISASI</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$SubUnitOrganisasi</td>
-        </tr>
-		<tr>
-          <td style=\"width: 200px; font-weight: bold; text-align: left;\">UPB</td>
-          <td style=\"text-align: center; font-weight: bold; width: 10px;\">:</td>
-          <td style=\"width: 873px; font-weight: bold;\">$UPB</td>
-        </tr>";
-}
-
-if($tipeAset == 'all') {
-    $data = array( 'tanahView', 'mesin_ori', 'bangunan_ori', 'jaringan_ori', 'asetlain_ori', 'kdp_ori' );
-} elseif($tipeAset == 'tanah') {
-    $data = array( 'tanahView' );
-} elseif($tipeAset == 'mesin') {
-    $data = array( 'mesin_ori' );
-} elseif($tipeAset == 'bangunan') {
-    $data = array( 'bangunan_ori' );
-} elseif($tipeAset == 'jaringan') {
-    $data = array( 'jaringan_ori' );
-} elseif($tipeAset == 'asetlain') {
-    $data = array( 'asetlain_ori' );
-} elseif($tipeAset == 'kdp') {
-    $data = array( 'kdp_ori' );
-}
+    if ($tipeAset == 'all') {
+        $data = array('tanahView', 'mesin_ori', 'bangunan_ori', 'jaringan_ori', 'asetlain_ori', 'kdp_ori');
+    } elseif ($tipeAset == 'tanah') {
+        $data = array('tanahView');
+    } elseif ($tipeAset == 'mesin') {
+        $data = array('mesin_ori');
+    } elseif ($tipeAset == 'bangunan') {
+        $data = array('bangunan_ori');
+    } elseif ($tipeAset == 'jaringan') {
+        $data = array('jaringan_ori');
+    } elseif ($tipeAset == 'asetlain') {
+        $data = array('asetlain_ori');
+    } elseif ($tipeAset == 'kdp') {
+        $data = array('kdp_ori');
+    }
 //$data = array('tanahView');
 
 //print_r($data);
 //exit();
-$hit_loop = count ($data);
-$i = 0;
+    $hit_loop = count($data);
+    $i = 0;
 //foreach ($data as $gol) {
-$param_satker = $skpd_id;
-$splitKodeSatker = explode ('.', $param_satker);
-if(count ($splitKodeSatker) == 4) {
-    $paramSatker = "kodeSatker = '$param_satker'";
-} else {
-    $paramSatker = "kodeSatker like '$param_satker%'";
-}
-$param_tgl = $tglakhirperolehan;
-
-
-/*		$jml_total=0;
-        $np_total=0;
-        $pp_total=0;
-        $ap_total=0;
-        $nb_total=0;
-        $bp_total=0;
-
-        $mutasi_nilai_tambah=0;
-        $mutasi_nilai_kurang=0;
-
-        $mutasi_jml_tambah=0;
-        $mutasi_jml_kurang=0;
-
-        $mutasi_ap_tambah=0;
-        $mutasi_ap_kurang=0;
-
-        $mutasi_nb_tambah=0;
-        $mutasi_nb_kurang=0;
-
-        $jml_total_akhir=0;
-        $np_total_akhir=0;
-        $pp_total_akhir=0;
-        $ap_total_akhir=0;
-        $nb_total_akhir=0;*/
-
-foreach ($data as $gol) {
-    $q_gol_final = $gol;
-    $kode_golongan = $data_gol;
-    $ps = $param_satker;
-    $pt = $param_tgl;
-    $paramLevelGol = $levelAset;
-    //$data[$i]=$data_gol;
-    /*if($paramLevelGol != 2){
-        $data[$i]['Bidang'] = bidang($kode_golongan,$gol,$ps,$pt,$paramLevelGol);
-    }*/
-    //echo "$gol<br/>";
-    $data_awal = subsub_awal ($kode_golongan, $q_gol_final, $ps, $pt);
-    $data_aset_awal=array();
-    $status_masuk_hapus_awal=0;
-    foreach ($data_awal as $key=>$value){
-        $status_masuk_hapus_awal=1;
-        $data_aset_awal[]=$value['Aset_ID'];
+    $param_satker = $skpd_id;
+    $splitKodeSatker = explode('.', $param_satker);
+    if (count($splitKodeSatker) == 4) {
+        $paramSatker = "kodeSatker = '$param_satker'";
+    } else {
+        $paramSatker = "kodeSatker like '$param_satker%'";
     }
-    $q_data_aset_awal=implode(",",$data_aset_awal);
-    // echo "masuk0";
-    $data_akhir = subsub ($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31");
+    $param_tgl = $tglakhirperolehan;
 
-    $data_aset_akhir=array();
-    $status_masuk_hapus_akhir=0;
-    foreach ($data_akhir as $key=>$value){
-        $status_masuk_hapus_akhir=1;
-        $data_aset_akhir[]=$value['Aset_ID'];
-    }
-    $q_data_aset_akhir=implode(",",$data_aset_akhir);
-    // echo "masuk";
-    if($status_masuk_hapus_akhir==1||$status_masuk_hapus_awal==1)
-    {
-        $data_hilang = subsub_hapus_v2($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt,$q_data_aset_awal,$q_data_aset_akhir);
-    }else
-    {
-        $data_hilang =array();
-    }
-    $data_aset_hilang=array();
 
-    foreach ($data_hilang as $key=>$value){
-        $data_aset_hilang[]=$value['Aset_ID'];
-    }
-    $key_data_hilang=array_unique($data_aset_hilang);
-    //pr($key_data_hilang);
-    $data_hilang_filter=array();//menghilangkan yang data yang duplikat
-    foreach($key_data_hilang as $key=>$value){
+    foreach ($data as $gol) {
+        $q_gol_final = $gol;
+        $kode_golongan = $data_gol;
+        $ps = $param_satker;
+        $pt = $param_tgl;
+        $paramLevelGol = $levelAset;
+        //$data[$i]=$data_gol;
+        /*if($paramLevelGol != 2){
+            $data[$i]['Bidang'] = bidang($kode_golongan,$gol,$ps,$pt,$paramLevelGol);
+        }*/
+        //echo "$gol<br/>";
+        $data_awal = subsub_awal($kode_golongan, $q_gol_final, $ps, $pt);
+        $data_aset_awal = array();
+        $status_masuk_hapus_awal = 0;
+        foreach ($data_awal as $key => $value) {
+            $status_masuk_hapus_awal = 1;
+            $data_aset_awal[] = $value['Aset_ID'];
+        }
+        $q_data_aset_awal = implode(",", $data_aset_awal);
+        // echo "masuk0";
+        $data_akhir = subsub($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31");
 
-        $data_hilang_filter[]=$data_hilang[$key];
-    }
+        $data_aset_akhir = array();
+        $status_masuk_hapus_akhir = 0;
+        foreach ($data_akhir as $key => $value) {
+            $status_masuk_hapus_akhir = 1;
+            $data_aset_akhir[] = $value['Aset_ID'];
+        }
+        $q_data_aset_akhir = implode(",", $data_aset_akhir);
+        // echo "masuk";
+        if ($status_masuk_hapus_akhir == 1 || $status_masuk_hapus_awal == 1) {
+            $data_hilang = subsub_hapus_v2($kode_golongan, $q_gol_final, $ps, "$tahun_neraca-12-31", $pt, $q_data_aset_awal, $q_data_aset_akhir);
+        } else {
+            $data_hilang = array();
+        }
+        $data_aset_hilang = array();
+
+        foreach ($data_hilang as $key => $value) {
+            $data_aset_hilang[] = $value['Aset_ID'];
+        }
+        $key_data_hilang = array_unique($data_aset_hilang);
+        //pr($key_data_hilang);
+        $data_hilang_filter = array();//menghilangkan yang data yang duplikat
+        foreach ($key_data_hilang as $key => $value) {
+
+            $data_hilang_filter[] = $data_hilang[$key];
+        }
 //    echo "111masuk123<br/>";
 //    pr($data_akhir);
 //    exit();
-    $hasil = group_data ($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02",$ps);
+        $hasil = group_data($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02", $ps);
 
-    $data[ $i ] = $hasil;
-    //head asal
-    //pr($hasil);
+        $data[$i] = $hasil;
+        //head asal
+        //pr($hasil);
 //    exit();
 
-    foreach ($hasil as $value) {
-        $kodekelompok=$value['kodeKelompok'];
-        list($table_neraca,$param)=show_table_neraca($kodekelompok);
-        $NP=$value['nilai_akhir'];
-        $jml=$value['jml_akhir'];
-        $ap=$value['ap_akhir'];
-        $pp=$value['bp'];
-        $nb=$value['nb_akhir'];
-        $kodeSatker=$value['kodeSatker'];
-        $noRegister=$value['noRegister'];
-        $status_validasi_barang=$value['status_validasi_barang'];
-        $TglPerolehan=$value['TglPerolehan'];
-        $TglPembukuan=$value['TglPembukuan'];
-        $Tahun=$value['Tahun'];
-        $Aset_ID=$value['Aset_ID'];
-        $kodelokasi=$value['kodelokasi'];
+        foreach ($hasil as $key => $value) {
+            $detail_key = $key;
+            $kodekelompok = $value['kodeKelompok'];
+            list($table_neraca, $param) = show_table_neraca($kodekelompok);
+            $NP = $value['nilai_akhir'];
+            $jml = $value['jml_akhir'];
+            $ap = $value['ap_akhir'];
+            $pp = $value['bp'];
+            $nb = $value['nb_akhir'];
+            $kodeSatker = $value['kodeSatker'];
+            $noRegister = $value['noRegister'];
+            $status_validasi_barang = $value['status_validasi_barang'];
+            $TglPerolehan = $value['TglPerolehan'];
+            $TglPembukuan = $value['TglPembukuan'];
+            $Tahun = $value['Tahun'];
+            $Aset_ID = $value['Aset_ID'];
+            $kodelokasi = $value['kodelokasi'];
 
-        $NP_awal=$value['nilai'];
-        $ap_awal=$value['ap'];
-        $pp_awal=$value['pp'];
-        $nb_awal=$value['nb'];
+            $NP_awal = $value['nilai'];
+            $ap_awal = $value['ap'];
+            $pp_awal = $value['pp'];
+            $nb_awal = $value['nb'];
 
 
-
-        $query="replace into $table_neraca set Aset_ID='$Aset_ID',
+            $query = "replace into $table_neraca set Aset_ID='$Aset_ID', detail_key='$detail_key',
                 NilaiPerolehan='$NP',AkumulasiPenyusutan='$ap',NilaiBuku='$nb',
                 PenyusutanPertahun='$pp',
                 kodesatker='$kodeSatker',Tahun='$Tahun',kodeKelompok='$kodekelompok',noregister='$noRegister',
@@ -305,14 +203,16 @@ foreach ($data as $gol) {
                 ";
 
 
-        $resultfinal = mysql_query ($query) or die(mysql_error());
+            $resultfinal = mysql_query($query) or die(mysql_error());
+
+        }
+        $i++;
 
     }
-    $i++;
-
+    $nama_table="$tipeAset"."_ori";
+    $delete_temp=mysql_query("drop table $nama_table");
+    echo "selesai \n";
 }
-
-
 $html = $head . $body . $foot;
 
 
