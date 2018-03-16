@@ -50,13 +50,30 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 	}*/
 // pr($get_satker);
 // exit;
-$hit = 2;
-$flag = '';
-$TypeRprtr = 'neraca';
-$Info = '';
 
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
+/*
+Add $TAHUN_AKTIF
+*/
+$expld = explode('-', $tglakhirperolehan);
+$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
+	$hit = 1;
+	$flag = 'Lain';
+	$TypeRprtr = 'Lain';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}else{
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'neraca';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}
+
+
+
 //exit;
 $paramTgl = explode('-', $tglakhirperolehan);
 $TAHUN_AKTIF = $paramTgl[0];

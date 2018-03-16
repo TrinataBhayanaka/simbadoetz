@@ -44,12 +44,21 @@ $satker = $skpd_id;
 		$get_satker = $REPORT->validasi_data_satker_id($satker);
 	}
 
-$hit = 1;
-$flag = 'D';
-$TypeRprtr = '';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
+/*
+Add $TAHUN_AKTIF
+*/
+$expld = explode('-', $tglakhirperolehan);
+$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
+
+}else{
+	$hit = 1;
+	$flag = 'D';
+	$TypeRprtr = '';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}
 // exit;	
 $paramGol = '04';
 $paramTgl = explode('-', $tglakhirperolehan);
