@@ -38,13 +38,35 @@ $REPORT->set_data($data);
 
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
-$hit = 2;
-$flag = '';
-$TypeRprtr = 'upb';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
-// exit;
+/*
+Add $TAHUN_AKTIF
+*/
+$expld = explode('-', $tglakhirperolehan);
+$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
+	$hit = 1;
+	$flag = 'Lain';
+	$TypeRprtr = 'Lain';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'ekstraRev';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+
+}else{
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'upb';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}
+
 $paramTgl = explode('-', $tglakhirperolehan);
 $TAHUN_AKTIF = $paramTgl[0];
 $result = $REPORT->barangupb($skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);	

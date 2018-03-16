@@ -48,16 +48,26 @@ $satker = $skpd_id;
 	}
 // pr($get_satker);
 // exit;
-$hit = 1;
-$flag = 'A';
-$TypeRprtr = '';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
 
+/*
+Add $TAHUN_AKTIF
+*/
+$expld = explode('-', $tglakhirperolehan);
+$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
+
+}else{
+	$hit = 1;
+	$flag = 'A';
+	$TypeRprtr = '';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);	
+}
+	
 // exit;	
 $paramGol = '01';
-$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol);
+$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF);
 // pr($resultParamGol);
 // exit;
 
@@ -66,16 +76,14 @@ $serviceJson=json_encode($resultParamGol);
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_asetTetapTanah($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_asetTetapTanah($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
 
 // pr($dt);
-// $count = count($html);
-// 	for ($i = 0; $i < $count; $i++) {
-// 		 echo $html[$i];     
-// 	}
-// exit;
-// pr($dt);
-// exit;
+/*$count = count($html);
+for ($i = 0; $i < $count; $i++) {
+	echo $html[$i];     
+}
+exit;*/
 if($tipe=="3"){
 	echo $serviceJson;
 	exit;

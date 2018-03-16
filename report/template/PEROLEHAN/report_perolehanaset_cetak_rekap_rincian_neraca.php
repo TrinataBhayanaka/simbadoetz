@@ -50,14 +50,87 @@ if($tipe == 1){
 }else{
 	$gmbr ="";
 }
-$hit = 2;
-$flag = '';
-$TypeRprtr = 'intra';
-$Info = '';
-$paramTgl = explode('-', $tglakhirperolehan);
-$TAHUN_AKTIF = $paramTgl[0];
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
+/*
+Add $TAHUN_AKTIF
+*/
+$expld = explode('-', $tglakhirperolehan);
+$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
+
+}else{
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'intra';
+	$Info = '';
+	$paramTgl = explode('-', $tglakhirperolehan);
+	$TAHUN_AKTIF = $paramTgl[0];
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}
+
+$tgldefault = "2008-01-01";
+$thnDefault ="2008";
+
+$tglAwalDefault = $tglawalperolehan;
+$ceckTglAw = explode ('-',$tglAwalDefault);
+$thnceck = $ceckTglAw[0];
+
+$tglAkhirDefault = $tglakhirperolehan;
+$ceckTgl = explode ('-',$tglAkhirDefault);
+$thnFix = $ceckTgl[0];
+
+$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+$expld = explode('-', $tglakhirperolehan);
+if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+		$tableNeracaTanah 		= "tanahView";
+		$tableNeracaMesin 		= 'mesin_ori';
+		$tableNeracaBangunan 	= 'bangunan_ori';
+		$tableNeracaJaringan 	= "jaringan_ori";
+		$tableNeracaAsetLain	= "asetlain_ori";
+		$tableNeracaKdp 		= "kdp_ori";
+}else{
+	if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
+		$tahun = $TAHUN_AKTIF;
+		$tableNeracaTanah 		= "neraca_tanah".$tahun;
+		$tableNeracaMesin 		= "neraca_mesin".$tahun;
+		$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+		$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+		$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+		$tableNeracaKdp 		= "neraca_kdp".$tahun;
+	}else{
+		$tableNeracaTanah 		= "tanahView";
+		$tableNeracaMesin 		= 'mesin_ori';
+		$tableNeracaBangunan 	= 'bangunan_ori';
+		$tableNeracaJaringan 	= "jaringan_ori";
+		$tableNeracaAsetLain	= "asetlain_ori";
+		$tableNeracaKdp 		= "kdp_ori";
+	}	
+}
+
+//start
+if($tipeAset == 'all'){
+	//$data = array('tanahView','mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
+	$data = array($tableNeracaTanah,$tableNeracaMesin,$tableNeracaBangunan,$tableNeracaJaringan,$tableNeracaAsetLain,$tableNeracaKdp);
+}elseif($tipeAset == 'tanah'){
+	//$data = array('tanahView');
+	$data = array($tableNeracaTanah);
+}elseif($tipeAset == 'mesin'){
+	//$data = array('mesin_ori');
+	$data = array($tableNeracaMesin);
+}elseif($tipeAset == 'bangunan'){
+	//$data = array('bangunan_ori');
+	$data = array($tableNeracaBangunan);
+}elseif($tipeAset == 'jaringan'){
+	//$data = array('jaringan_ori');
+	$data = array($tableNeracaJaringan);
+}elseif($tipeAset == 'asetlain'){
+	//$data = array('asetlain_ori');
+	$data = array($tableNeracaAsetLain);
+}elseif($tipeAset == 'kdp'){
+	$data = array($tableNeracaKdp);
+}
+$hit_loop = count($data);
+
 //exit;
 //begin 
 //head satker
@@ -145,23 +218,6 @@ if($hit == 1){
 }
 // echo $head;
 // exit;
-//start
-if($tipeAset == 'all'){
-	$data = array('tanahView','mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
-}elseif($tipeAset == 'tanah'){
-	$data = array('tanahView');
-}elseif($tipeAset == 'mesin'){
-	$data = array('mesin_ori');
-}elseif($tipeAset == 'bangunan'){
-	$data = array('bangunan_ori');
-}elseif($tipeAset == 'jaringan'){
-	$data = array('jaringan_ori');
-}elseif($tipeAset == 'asetlain'){
-	$data = array('asetlain_ori');
-}elseif($tipeAset == 'kdp'){
-	$data = array('kdp_ori');
-}
-$hit_loop = count($data);
 $i = 0;
 $head ="<head>
 			  <meta content=\"text/html; charset=UTF-8\"http-equiv=\"content-type\">
@@ -231,49 +287,33 @@ $splitKodeSatker = explode ('.',$param_satker);
 	}
 // $param_tgl = "2015-01-01";
 $param_tgl = $tglakhirperolehan ;
-	if($gol == 'mesin_ori'){
+	if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 						( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 						(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 						and $paramSatker";
 	 
-		/*$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
+		$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
 				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 				Status_Validasi_barang,kodeSatker from $gol m
 				 where $param_where
-				group by golongan";*/
-		$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
-				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-				SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-				sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
-				Status_Validasi_barang,kodeSatker from $gol m
-				 where $param_where
-				group by golongan";		
+				group by golongan";	
 
-	}elseif($gol == 'bangunan_ori'){
+	}elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
 		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 						( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 						(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 						and $paramSatker";
 		 
-		/*$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
+		$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
 				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 				Status_Validasi_barang,kodeSatker from $gol m
 				 where $param_where
-				group by golongan";*/
-		$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
-				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-				SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-				sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
-				Status_Validasi_barang,kodeSatker from $gol m
-				 where $param_where
-				group by golongan";		
+				group by golongan";	
 	}else{
 		if($gol!="tanahView")
 		  $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
@@ -289,22 +329,14 @@ $param_tgl = $tglakhirperolehan ;
 					 and kodeLokasi like '12%' 
 					 and $paramSatker";
 		 
-		 if($gol == 'jaringan_ori'){
-			/*$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
+		 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
+			$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
 					sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 					sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 					Status_Validasi_barang,kodeSatker from $gol m
 					where $param_where
-					group by golongan";*/
-			$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
-					sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-					SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-					sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
-					Status_Validasi_barang,kodeSatker from $gol m
-					where $param_where
-					group by golongan";		
+					group by golongan";
 		 }else{
 			$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
 					sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
@@ -467,13 +499,13 @@ if(count($splitKodeSatker) == 4){
 	$paramSatker = "kodeSatker like '$param_satker%'";
 }
 $param_tgl = $pt;
-if($gol == 'mesin_ori'){
+if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 					and $paramSatker";
  
-	/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
+	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
 		   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 		   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 		   (select Uraian from kelompok 
@@ -482,26 +514,15 @@ if($gol == 'mesin_ori'){
 		   Status_Validasi_barang,kodeSatker from $gol m
 			where kodeKelompok like '$kode_golongan%' and
 			$param_where    
-		   group by bidang";*/
-	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
-		   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-		   SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-		   sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-		   (select Uraian from kelompok 
-		   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
-		   ) as Uraian,
-		   Status_Validasi_barang,kodeSatker from $gol m
-			where kodeKelompok like '$kode_golongan%' and
-			$param_where    
-		   group by bidang";	   
+		   group by bidang";   
 
-}elseif($gol == 'bangunan_ori'){
+}elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 					and $paramSatker";
 	 
-	/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
+	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
 		   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 		   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 		   (select Uraian from kelompok 
@@ -510,18 +531,7 @@ if($gol == 'mesin_ori'){
 		   Status_Validasi_barang,kodeSatker from $gol m
 			where kodeKelompok like '$kode_golongan%' and
 			 $param_where    
-		   group by bidang";*/
-	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
-		   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-		   SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-		   sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-		   (select Uraian from kelompok 
-		   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
-		   ) as Uraian,
-		   Status_Validasi_barang,kodeSatker from $gol m
-			where kodeKelompok like '$kode_golongan%' and
-			 $param_where    
-		   group by bidang";	   
+		   group by bidang";   
 }else{
 	if($gol!="tanahView")
 		  $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
@@ -537,8 +547,8 @@ if($gol == 'mesin_ori'){
 					 and kodeLokasi like '12%' 
 					 and $paramSatker";
 	 
-	 if($gol == 'jaringan_ori'){
-		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
+	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
+		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
 			   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			   (select Uraian from kelompok 
@@ -547,18 +557,7 @@ if($gol == 'mesin_ori'){
 			   Status_Validasi_barang,kodeSatker from $gol m
 				where kodeKelompok like '$kode_golongan%' and
 				 $param_where    
-			   group by bidang";*/
-		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
-			   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			   SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			   sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-			   (select Uraian from kelompok 
-			   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
-			   ) as Uraian,
-			   Status_Validasi_barang,kodeSatker from $gol m
-				where kodeKelompok like '$kode_golongan%' and
-				 $param_where    
-			   group by bidang";	   
+			   group by bidang";   
 	 }else{
 		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
 			   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
@@ -601,26 +600,15 @@ if(count($splitKodeSatker) == 4){
 	$paramSatker = "kodeSatker like '$param_satker%'";
 }
 $param_tgl = $pt;
-if($gol == 'mesin_ori'){
+if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 					and $paramSatker";
  
-	/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
-			 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-			 (select Uraian from kelompok 
-			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
-			 ) as Uraian,
-			 Status_Validasi_barang,kodeSatker from $gol m
-			  where kodeKelompok like '$kode_bidang%' and
-			   $param_where    
-			 group by kelompok";*/
 	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
 			 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			 SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			 sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			 (select Uraian from kelompok 
 			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
 			 ) as Uraian,
@@ -629,26 +617,15 @@ if($gol == 'mesin_ori'){
 			   $param_where    
 			 group by kelompok";		 
 
-}elseif($gol == 'bangunan_ori'){
+}elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
-	/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
-			 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-			 (select Uraian from kelompok 
-			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
-			 ) as Uraian,
-			 Status_Validasi_barang,kodeSatker from $gol m
-			  where kodeKelompok like '$kode_bidang%' and
-			   $param_where    
-			 group by kelompok";*/
 	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
 			 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			 SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			 sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			 (select Uraian from kelompok 
 			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
 			 ) as Uraian,
@@ -671,8 +648,8 @@ if($gol == 'mesin_ori'){
 					 and kodeLokasi like '12%' 
 					 and $paramSatker";
 	 
-	 if($gol == 'jaringan_ori'){
-		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
+	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
+		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
 			 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			 (select Uraian from kelompok 
@@ -681,18 +658,7 @@ if($gol == 'mesin_ori'){
 			 Status_Validasi_barang,kodeSatker from $gol m
 			  where kodeKelompok like '$kode_bidang%' and
 			   $param_where    
-			 group by kelompok";*/
-		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
-			 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			 SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			 sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-			 (select Uraian from kelompok 
-			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
-			 ) as Uraian,
-			 Status_Validasi_barang,kodeSatker from $gol m
-			  where kodeKelompok like '$kode_bidang%' and
-			   $param_where    
-			 group by kelompok";	 
+			 group by kelompok"; 
 	 }else{
 		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
 				 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
@@ -738,13 +704,13 @@ if(count($splitKodeSatker) == 4){
 	$paramSatker = "kodeSatker like '$param_satker%'";
 }
 $param_tgl = $pt;
-if($gol == 'mesin_ori'){
+if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 					 and $paramSatker";
  
-	/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
+	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
 			sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 			sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			(select Uraian from kelompok 
@@ -753,38 +719,16 @@ if($gol == 'mesin_ori'){
 			Status_Validasi_barang,kodeSatker from $gol m
 			 where kodeKelompok like '$kodeKelompok%' and
 			 $param_where     
-			group by sub";*/
-	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
-			sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-			(select Uraian from kelompok 
-			where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
-			) as Uraian,
-			Status_Validasi_barang,kodeSatker from $gol m
-			 where kodeKelompok like '$kodeKelompok%' and
-			 $param_where     
-			group by sub";		
-}elseif($gol == 'bangunan_ori'){
+			group by sub";	
+}elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
-	/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
-			sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-			(select Uraian from kelompok 
-			where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
-			) as Uraian,
-			Status_Validasi_barang,kodeSatker from $gol m
-			 where kodeKelompok like '$kodeKelompok%' and
-			 $param_where     
-			group by sub";*/
 	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
 			sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+			sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			(select Uraian from kelompok 
 			where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
 			) as Uraian,
@@ -807,8 +751,8 @@ if($gol == 'mesin_ori'){
 					 and kodeLokasi like '12%' 
 					 and $paramSatker";
 				 
-	 if($gol == 'jaringan_ori'){
-		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
+	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
+		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
 				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 				(select Uraian from kelompok 
@@ -817,18 +761,7 @@ if($gol == 'mesin_ori'){
 				Status_Validasi_barang,kodeSatker from $gol m
 				 where kodeKelompok like '$kodeKelompok%' and
 				 $param_where     
-				group by sub";*/
-		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
-				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-				SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-				sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-				(select Uraian from kelompok 
-				where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
-				) as Uraian,
-				Status_Validasi_barang,kodeSatker from $gol m
-				 where kodeKelompok like '$kodeKelompok%' and
-				 $param_where     
-				group by sub";		
+				group by sub";	
 	 }else{
 		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
 				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
@@ -871,13 +804,13 @@ if(count($splitKodeSatker) == 4){
 	$paramSatker = "kodeSatker like '$param_satker%'";
 }
 $param_tgl = $pt;   
-if($gol == 'mesin_ori'){
+if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
  
-      /*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
+      $sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
                sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
                (select Uraian from kelompok 
@@ -886,25 +819,14 @@ if($gol == 'mesin_ori'){
                Status_Validasi_barang,kodeSatker from $gol m
                 where kodeKelompok like '$kode_sub%' and
                  $param_where    
-               group by subsub";*/
-        $sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
-               sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			   SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			   sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-               (select Uraian from kelompok 
-               where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
-               ) as Uraian,
-               Status_Validasi_barang,kodeSatker from $gol m
-                where kodeKelompok like '$kode_sub%' and
-                 $param_where    
-               group by subsub";       
-}elseif($gol == 'bangunan_ori'){
+               group by subsub";    
+}elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
 	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 	 
-	/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
+	$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
                sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
                (select Uraian from kelompok 
@@ -913,18 +835,7 @@ if($gol == 'mesin_ori'){
                Status_Validasi_barang,kodeSatker from $gol m
                 where kodeKelompok like '$kode_sub%' and
                  $param_where    
-               group by subsub";*/
-    $sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
-               sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			   SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			   sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-               (select Uraian from kelompok 
-               where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
-               ) as Uraian,
-               Status_Validasi_barang,kodeSatker from $gol m
-                where kodeKelompok like '$kode_sub%' and
-                 $param_where    
-               group by subsub";           
+               group by subsub";        
 }else{
 	if($gol!="tanahView")
 		  $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
@@ -940,8 +851,8 @@ if($gol == 'mesin_ori'){
 					 and kodeLokasi like '12%' 
 					 and $paramSatker";
 	 
-	 if($gol == 'jaringan_ori'){
-		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
+	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
+		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
                sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
                (select Uraian from kelompok 
@@ -950,18 +861,7 @@ if($gol == 'mesin_ori'){
                Status_Validasi_barang,kodeSatker from $gol m
                 where kodeKelompok like '$kode_sub%' and
                  $param_where    
-               group by subsub";*/
-        $sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
-               sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
-			   SUM(CASE  WHEN TahunPenyusutan = $TAHUN_AKTIF THEN PenyusutanPerTahun ELSE 0 END) AS PP,
-			   sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
-               (select Uraian from kelompok 
-               where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
-               ) as Uraian,
-               Status_Validasi_barang,kodeSatker from $gol m
-                where kodeKelompok like '$kode_sub%' and
-                 $param_where    
-               group by subsub";       
+               group by subsub";     
 	 }else{
 		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
                sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
