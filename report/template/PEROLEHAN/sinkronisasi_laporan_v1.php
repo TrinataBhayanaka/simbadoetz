@@ -42,6 +42,9 @@ $tipe = $_GET[ 'tipe_file' ];
 $tipeAset =  $argv[ 1 ];
 //$skpd_id= $argv[ 2 ];
 
+//start process
+$time_start = microtime(true);
+
 $query="select * from satker where KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL 
   AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '%'  ";
 $skpd_data= mysql_query ($query) or die(mysql_error());
@@ -220,6 +223,16 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
     $delete_temp=mysql_query("drop table $nama_table");
     echo "selesai \n";
 }
+
+$time_end = microtime(true);
+
+//dividing with 60 will give the execution time in minutes other wise seconds
+$execution_time = ($time_end - $time_start)/60;
+
+//execution time of the script
+echo '<b>Total Execution Time:</b> '.$execution_time.' Mins\n\n';
+
+echo "=================== Process Complete. Thank you ===================\n\n";
 $html = $head . $body . $foot;
 
 
