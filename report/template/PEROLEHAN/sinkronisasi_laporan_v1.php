@@ -165,7 +165,7 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
 //    exit();
         $hasil = group_data($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02", $ps);
 
-        $data[$i] = $hasil;
+        //$data[$i] = $hasil;
         //head asal
         //pr($hasil);
 //    exit();
