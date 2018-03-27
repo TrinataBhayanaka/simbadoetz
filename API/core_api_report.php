@@ -6360,7 +6360,24 @@ class core_api_report extends DB {
 			
 	}
 	
+
 	public function barangupb($satker_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
+		
+		//sorting function
+		function sort_subnets ($a, $b) {
+		    $a_arr = explode('.', $a);
+		    $b_arr = explode('.', $b);
+		    foreach (range(0,4) as $i) {
+		        if ( $a_arr[$i] < $b_arr[$i] ) {
+		            return -1;
+		        }
+		        elseif ( $a_arr[$i] > $b_arr[$i] ) {
+		            return 1;
+		        }
+		    }
+		    return -1;
+		}
+
 		if($satker_id){
 			$splitKodeSatker = explode ('.',$satker_id);
 				if(count($splitKodeSatker) == 4){	
@@ -6370,88 +6387,73 @@ class core_api_report extends DB {
 					$paramSatker = "kode like '$satker_id%'";
 					$paramSatker_rev = "kodeSatker like '$satker_id%'";
 				}
+			
+			//list satker
 			$qsat = "SELECT kode,NamaSatker FROM satker where $paramSatker and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
 			$rsat = $this->query($qsat) or die ($this->error());
-			//list satker
-			while($dtrsat = $this->fetch_object($rsat)){
-				if($dtrsat != ''){
-					// $satker[] = $dtrsat->kode;
-					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
-				}	
-			}
-			
-			/*
 			while($dtrsat = $this->fetch_object($rsat)){
 				if($dtrsat != ''){
 					$satker[] = $dtrsat->kode;
+					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
 				}	
 			}
-			//pr("list array skpd");
-			//list satker yg ada datanya Status_Validasi_Barang = 1 AND kodeSatker LIKE '04%' GROUP BY kodeSatker
+
+			//list satker yg ada datanya
 			$qsatcmpr = "SELECT kodeSatker FROM aset where $paramSatker_rev and Status_Validasi_Barang = 1 
 						GROUP BY kodeSatker";
-			//pr($qsatdat);
 			$rsatcmpr = $this->query($qsatcmpr) or die ($this->error());
 			while($dtrsatcmpr = $this->fetch_object($rsatcmpr)){
 				if($dtrsatcmpr != ''){
 					$satkercmpr[] = $dtrsatcmpr->kodeSatker;
-					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker]= $dtrsat->kode;
 				}	
 			}
-			//compare array
+
+			//list array skpd fix
 			$result=array_intersect($satkercmpr,$satker);
-			//pr($result);
+			
+			//sortir
+			usort($result, 'sort_subnets');
+			
 			foreach ($result as $key => $value) {
 				$qrstker = "SELECT kode,NamaSatker FROM satker where kode = '{$value}' and KodeUnit is not null 
 							and Gudang is not null and Kd_Ruang is NULL";
 				$exeqrstker = $this->query($qrstker) or die ($this->error());
 				$dtrsat = $this->fetch_object($exeqrstker);
 				$satker2[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
-				//exit;
-			}*/
+			}
+
 		}else{
-			//pr("here");
+			//list all satker
 			$qsat = "SELECT kode,NamaSatker FROM satker where kode is not null and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL ";
 			$rsat = $this->query($qsat) or die ($this->error());
 			while($dtrsat = $this->fetch_object($rsat)){
 				if($dtrsat != ''){
-					// $satker[] = $dtrsat->kode;
-					$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
-				}	
-			}
-
-			//list all satker
-			/*$qsat = "SELECT kode,NamaSatker FROM satker where kode is not null and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL ";
-			$rsat = $this->query($qsat) or die ($this->error());
-			while($dtrsat = $this->fetch_object($rsat)){
-				if($dtrsat != ''){
-					// $satker[] = $dtrsat->kode;
 					$satker[] = $dtrsat->kode;
+					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
 				}	
 			}
-			//pr("list array skpd");
-			//pr($satker);
-			//list satker yg ada datanya Status_Validasi_Barang = 1  GROUP BY kodeSatker
+			
+			//list satker yg ada datanya
 			$qsatcmpr = "SELECT kodeSatker FROM aset where Status_Validasi_Barang = 1 GROUP BY kodeSatker";
-			//pr($qsatdat);
 			$rsatcmpr = $this->query($qsatcmpr) or die ($this->error());
 			while($dtrsatcmpr = $this->fetch_object($rsatcmpr)){
 				if($dtrsatcmpr != ''){
 					$satkercmpr[] = $dtrsatcmpr->kodeSatker;
-					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker]= $dtrsat->kode;
 				}	
 			}
-			//pr("list array skpd fix");
+			
+			//list array skpd fix
 			$result=array_intersect($satkercmpr,$satker);
+			
+			//sortir
+			usort($result, 'sort_subnets');
 			foreach ($result as $key => $value) {
-				
 				$qrstker = "SELECT kode,NamaSatker FROM satker where kode = '{$value}' and KodeUnit is not null 
 							and Gudang is not null and Kd_Ruang is NULL";
 				$exeqrstker = $this->query($qrstker) or die ($this->error());
 				$dtrsat = $this->fetch_object($exeqrstker);
 				$satker2[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
-				//exit;
-			}*/
+			}
 		
 		}
 		//pr($satker2);
@@ -6503,7 +6505,7 @@ class core_api_report extends DB {
 		$KodeKa = "OR kodeKA = 1";
 		$KodeKaCondt1 = "AND kodeKA = 1";
 		
-		foreach ($satker as $data=>$satker_id){
+		foreach ($satker2 as $data=>$satker_id){
 		
 			$query_01 = "SELECT sum(NilaiPerolehan) as nilai FROM $tableNeracaTanah
 							WHERE kodeSatker = '$satker_id'  
