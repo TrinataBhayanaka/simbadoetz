@@ -2752,6 +2752,19 @@ function history_aset($kodesatker, $aset_id, $tglakhirperolehan, $tglawalperoleh
 
                 $umurEkonomis = $valRwyt->UmurEkonomis;
             } //tambahan
+
+            elseif($paramKd_Rwyt == 55 ) {
+                $flag = "";
+                //SALDO AWAL
+                $akumulasi_penyusutan_awal = $valRwyt->AkumulasiPenyusutan_Awal;
+                $AkumulasiPenyusutan_Akhir = $valRwyt->AkumulasiPenyusutan;
+                $selisih_akm_tes=$AkumulasiPenyusutan_Akhir -$akumulasi_penyusutan_awal;
+                if($selisih_akm_tes>0)
+                    $penyusutanBertambahFix=$selisih_akm_tes;
+                else
+                    $penyusutanBerkurangFix=abs($selisih_akm_tes);
+            }
+
             elseif($paramKd_Rwyt == 36 ) {
                 $flag = "(-)";
                 //SALDO AWAL
