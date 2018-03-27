@@ -30,7 +30,8 @@ if($tglawal != '') {
     $tglawalperolehan = '0000-00-00';
 }
 $tglawalperolehan = '0000-00-00';
-$tglakhirperolehan = '2017-12-31';
+//$tglakhirperolehan = '2017-12-31';
+$tglakhirperolehan = '2017-01-01';
 
 /*
 $tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
@@ -250,7 +251,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
         }
     } elseif($param == '02') {
         $tabel = 'neraca_mesin2017';
-        $query="select  AsalUsul, Info, TglPerolehan,TglPembukuan,Tahun,
+        $query="select  AsalUsul, Info, TglPerolehan,TglPembukuan,Tahun,UmurEkonomis,MasaManfaat,
                         Alamat, Merk,Ukuran,Material,
                         NoSeri,NoRangka,NoMesin,NoSTNK,NoBPKB,
                         Silinder from mesin where Aset_ID='$Aset_ID' order by Mesin_ID desc limit 1";
@@ -267,11 +268,19 @@ function show_table_neraca($kodekelompok,$Aset_ID){
             $NoMesin=addslashes($row->NoMesin);
             $NoSTNK=addslashes($row->NoSTNK);
             $NoBPKB=addslashes($row->NoBPKB);
+
+            $UmurEkonomis=addslashes($row->UmurEkonomis);
+            $MasaManfaat=addslashes($row->MasaManfaat);
+
             $Silinder=addslashes($row->Silinder);
             $keterangan="          , AsalUsul='$AsalUsul',
                                     Info='$Info',
                                     Alamat='$Alamat',
                                     Merk='$Merk',
+                                    
+                                    UmurEkonomis='$UmurEkonomis',
+                                    MasaManfaat='$MasaManfaat',
+                                    
                                     Ukuran='$Ukuran',
                                     Material='$Material',
                                     NoSeri='$NoSeri',
@@ -286,7 +295,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
     } elseif($param == '03') {
 
         $tabel = 'neraca_bangunan2017';
-        $query="select   AsalUsul, Info, TglPerolehan,TglPembukuan,
+        $query="select   AsalUsul, Info, TglPerolehan,TglPembukuan,UmurEkonomis,MasaManfaat,
                       Tahun,Alamat,JumlahLantai, Beton, LuasLantai,NoSurat,
                       TglSurat,StatusTanah 
                     from bangunan where Aset_ID='$Aset_ID' order by Bangunan_ID desc limit 1";
@@ -302,9 +311,15 @@ function show_table_neraca($kodekelompok,$Aset_ID){
             $TglSurat=addslashes($row->TglSurat);
             $StatusTanah=addslashes($row->StatusTanah);
 
+
+            $UmurEkonomis=addslashes($row->UmurEkonomis);
+            $MasaManfaat=addslashes($row->MasaManfaat);
+
             $keterangan=" ,AsalUsul='$AsalUsul',
                 Info='$Info',
                 Alamat='$Alamat',
+                UmurEkonomis='$UmurEkonomis',
+                MasaManfaat='$MasaManfaat',
                 JumlahLantai='$JumlahLantai',
                 Beton='$Beton',
                 LuasLantai='$LuasLantai',
@@ -318,7 +333,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
     } elseif($param == '04') {
 
         $tabel = 'neraca_jaringan2017';
-        $query="select   AsalUsul,Info, TglPerolehan,TglPembukuan,Tahun,Alamat,Konstruksi,
+        $query="select   AsalUsul,Info, TglPerolehan,TglPembukuan,Tahun,Alamat,Konstruksi,UmurEkonomis,MasaManfaat,
                       Panjang, Lebar, TglDokumen, NoDokumen,StatusTanah,LuasJaringan
                     from jaringan where Aset_ID='$Aset_ID' order by Jaringan_ID desc limit 1";
         $result=mysql_query($query);
@@ -335,10 +350,17 @@ function show_table_neraca($kodekelompok,$Aset_ID){
             $LuasJaringan=addslashes($row->LuasJaringan);
 
 
+            $UmurEkonomis=addslashes($row->UmurEkonomis);
+            $MasaManfaat=addslashes($row->MasaManfaat);
+
+
             $keterangan="  ,AsalUsul='$AsalUsul',
             Info='$Info',
             Alamat='$Alamat',
             Konstruksi='$Konstruksi',
+            UmurEkonomis='$UmurEkonomis',
+            MasaManfaat='$MasaManfaat',
+            
             Panjang='$Panjang',
             Lebar='$Lebar',
             TglDokumen='$TglDokumen',
