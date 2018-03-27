@@ -251,7 +251,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
         }
     } elseif($param == '02') {
         $tabel = 'neraca_mesin2017';
-        $query="select  AsalUsul, Info, TglPerolehan,TglPembukuan,Tahun,UmurEkonomis,MasaManfaat,
+        $query="select  AsalUsul, Info, TglPerolehan,TglPembukuan,Tahun,UmurEkonomis,MasaManfaat,TahunPenyusutan,
                         Alamat, Merk,Ukuran,Material,
                         NoSeri,NoRangka,NoMesin,NoSTNK,NoBPKB,
                         Silinder from mesin where Aset_ID='$Aset_ID' order by Mesin_ID desc limit 1";
@@ -271,6 +271,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
 
             $UmurEkonomis=addslashes($row->UmurEkonomis);
             $MasaManfaat=addslashes($row->MasaManfaat);
+            $TahunPenyusutan=addslashes($row->TahunPenyusutan);
 
             $Silinder=addslashes($row->Silinder);
             $keterangan="          , AsalUsul='$AsalUsul',
@@ -280,6 +281,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
                                     
                                     UmurEkonomis='$UmurEkonomis',
                                     MasaManfaat='$MasaManfaat',
+                                    TahunPenyusutan='$TahunPenyusutan',
                                     
                                     Ukuran='$Ukuran',
                                     Material='$Material',
@@ -295,7 +297,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
     } elseif($param == '03') {
 
         $tabel = 'neraca_bangunan2017';
-        $query="select   AsalUsul, Info, TglPerolehan,TglPembukuan,UmurEkonomis,MasaManfaat,
+        $query="select   AsalUsul, Info, TglPerolehan,TglPembukuan,UmurEkonomis,MasaManfaat,TahunPenyusutan,
                       Tahun,Alamat,JumlahLantai, Beton, LuasLantai,NoSurat,
                       TglSurat,StatusTanah 
                     from bangunan where Aset_ID='$Aset_ID' order by Bangunan_ID desc limit 1";
@@ -314,12 +316,14 @@ function show_table_neraca($kodekelompok,$Aset_ID){
 
             $UmurEkonomis=addslashes($row->UmurEkonomis);
             $MasaManfaat=addslashes($row->MasaManfaat);
+            $TahunPenyusutan=addslashes($row->TahunPenyusutan);
 
             $keterangan=" ,AsalUsul='$AsalUsul',
                 Info='$Info',
                 Alamat='$Alamat',
                 UmurEkonomis='$UmurEkonomis',
                 MasaManfaat='$MasaManfaat',
+                TahunPenyusutan='$TahunPenyusutan',
                 JumlahLantai='$JumlahLantai',
                 Beton='$Beton',
                 LuasLantai='$LuasLantai',
@@ -333,7 +337,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
     } elseif($param == '04') {
 
         $tabel = 'neraca_jaringan2017';
-        $query="select   AsalUsul,Info, TglPerolehan,TglPembukuan,Tahun,Alamat,Konstruksi,UmurEkonomis,MasaManfaat,
+        $query="select   AsalUsul,Info, TglPerolehan,TglPembukuan,Tahun,Alamat,Konstruksi,UmurEkonomis,MasaManfaat,TahunPenyusutan,
                       Panjang, Lebar, TglDokumen, NoDokumen,StatusTanah,LuasJaringan
                     from jaringan where Aset_ID='$Aset_ID' order by Jaringan_ID desc limit 1";
         $result=mysql_query($query);
@@ -352,6 +356,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
 
             $UmurEkonomis=addslashes($row->UmurEkonomis);
             $MasaManfaat=addslashes($row->MasaManfaat);
+            $TahunPenyusutan=addslashes($row->TahunPenyusutan);
 
 
             $keterangan="  ,AsalUsul='$AsalUsul',
@@ -360,6 +365,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
             Konstruksi='$Konstruksi',
             UmurEkonomis='$UmurEkonomis',
             MasaManfaat='$MasaManfaat',
+            TahunPenyusutan='$TahunPenyusutan',
             
             Panjang='$Panjang',
             Lebar='$Lebar',
