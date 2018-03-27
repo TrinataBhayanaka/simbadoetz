@@ -818,7 +818,7 @@ for ($i = 0; $i < 2; $i++) {
                 //$AkumulasiPenyusutan_thn_berjalan=$rentang_tahun_penyusutan*$PenyusutanPerTahun;
                 $AkumulasiPenyusutan_akhir = $AkumulasiPenyusutan + $PenyusutanPerTahun;
                 //$NilaiBuku_akhir = $NilaiBuku - $PenyusutanPerTahun;
-                $NilaiBuku_akhir = $NilaiBuku - $AkumulasiPenyusutan_akhir;
+                $NilaiBuku_akhir = $NilaiPerolehan - $AkumulasiPenyusutan_akhir;
                 $Sisa_Masa_Manfaat = $UmurEkonomis - $rentang_tahun_penyusutan;
 
                 if($PenyusutanPerTahun == 0) {
