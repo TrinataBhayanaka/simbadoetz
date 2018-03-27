@@ -40,10 +40,13 @@ $tipeAset = $_GET[ 'tipeAset' ];
 $tipe = $_GET[ 'tipe_file' ];
 */
 $tipeAset =  $argv[ 1 ];
-//$skpd_id= $argv[ 2 ];
+$skpd_id= $argv[ 2 ];
+
+//start process
+$time_start = microtime(true);
 
 $query="select * from satker where KodeSatker is NOT NULL AND KodeUnit is NOT NULL AND Gudang is NOT NULL 
-  AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '%'  ";
+  AND Kd_Ruang is NULL AND Kd_Ruang IS NULL AND kode LIKE '$skpd_id%'  ";
 $skpd_data= mysql_query ($query) or die(mysql_error());
 
 while ($data_skpd = mysql_fetch_object($skpd_data)) {
@@ -162,7 +165,7 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
 //    exit();
         $hasil = group_data($data_awal, $data_akhir, $data_hilang_filter, "$tahun_neraca-12-31", "$tahun_neraca-01-02", $ps);
 
-        $data[$i] = $hasil;
+        //$data[$i] = $hasil;
         //head asal
         //pr($hasil);
 //    exit();
@@ -170,7 +173,7 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
         foreach ($hasil as $key => $value) {
             $detail_key = $key;
             $kodekelompok = $value['kodeKelompok'];
-            list($table_neraca, $param) = show_table_neraca($kodekelompok);
+
             $NP = $value['nilai_akhir'];
             $jml = $value['jml_akhir'];
             $ap = $value['ap_akhir'];
@@ -183,6 +186,8 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
             $TglPembukuan = $value['TglPembukuan'];
             $Tahun = $value['Tahun'];
             $Aset_ID = $value['Aset_ID'];
+            $keterangan="";
+            list($table_neraca, $param,$keterangan) = show_table_neraca($kodekelompok,$Aset_ID);
             $kodelokasi = $value['kodelokasi'];
 
             $NP_awal = $value['nilai'];
@@ -199,7 +204,8 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
                 statusvalidasi='$status_validasi_barang',kodeKa=1,kodelokasi='$kodelokasi',
                 TglPerolehan='$TglPerolehan',TglPembukuan='$TglPembukuan',
                 NilaiPerolehan_awal='$NP_awal',AkumulasiPenyusutan_awal='$ap_awal',NilaiBuku_awal='$nb_awal',
-                PenyusutanPertahun_awal='$pp_awal'
+                PenyusutanPertahun_awal='$pp_awal' 
+                $keterangan
                 ";
 
 
@@ -209,41 +215,160 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
         $i++;
 
     }
-    $nama_table="$tipeAset"."_ori";
+    if($tipeAset=="tanah"){
+        $ekstensi="view";
+    }else
+        $ekstensi="_ori";
+    $nama_table="$tipeAset".$ekstensi;
     $delete_temp=mysql_query("drop table $nama_table");
     echo "selesai \n";
 }
+
+$time_end = microtime(true);
+
+//dividing with 60 will give the execution time in minutes other wise seconds
+$execution_time = ($time_end - $time_start)/60;
+
+//execution time of the script
+echo '<b>Total Execution Time:</b> '.$execution_time.' Mins\n\n';
+
+echo "=================== Process Complete. Thank you ===================\n\n";
 $html = $head . $body . $foot;
 
 
-//}
-
-function show_table_neraca($kodekelompok){
+function show_table_neraca($kodekelompok,$Aset_ID){
     $temp=explode(".",$kodekelompok);
     $param=$temp[0];
     if($param == '01') {
         $tabel = 'neraca_tanah2017';
-
+        $query="select  Alamat, LuasTotal from tanah where Aset_ID='$Aset_ID'  order by Tanah_ID desc limit 1";
+        $result=mysql_query($query);
+        while($row=mysql_fetch_object($result)){
+            $Alamat=addslashes($row->Alamat);
+            $LuasTotal=addslashes($row->LuasTotal);
+            $keterangan=",Alamat='$Alamat',LuasTotal='$LuasTotal'";
+        }
     } elseif($param == '02') {
         $tabel = 'neraca_mesin2017';
+        $query="select  AsalUsul, Info, TglPerolehan,TglPembukuan,Tahun,
+                        Alamat, Merk,Ukuran,Material,
+                        NoSeri,NoRangka,NoMesin,NoSTNK,NoBPKB,
+                        Silinder from mesin where Aset_ID='$Aset_ID' order by Mesin_ID desc limit 1";
+        $result=mysql_query($query);
+        while($row=mysql_fetch_object($result)){
+            $AsalUsul=addslashes($row->AsalUsul);
+            $Info=addslashes($row->Info);
+            $Alamat=addslashes($row->Alamat);
+            $Merk=addslashes($row->Merk);
+            $Ukuran=addslashes($row->Ukuran);
+            $Material=addslashes($row->Material);
+            $NoSeri=addslashes($row->NoSeri);
+            $NoRangka=addslashes($row->NoRangka);
+            $NoMesin=addslashes($row->NoMesin);
+            $NoSTNK=addslashes($row->NoSTNK);
+            $NoBPKB=addslashes($row->NoBPKB);
+            $Silinder=addslashes($row->Silinder);
+            $keterangan="          , AsalUsul='$AsalUsul',
+                                    Info='$Info',
+                                    Alamat='$Alamat',
+                                    Merk='$Merk',
+                                    Ukuran='$Ukuran',
+                                    Material='$Material',
+                                    NoSeri='$NoSeri',
+                                    NoRangka='$NoRangka',
+                                    NoMesin='$NoMesin',
+                                    NoSTNK='$NoSTNK',
+                                    NoBPKB='$NoBPKB',
+                                    Silinder='$Silinder' ";
+
+        }
 
     } elseif($param == '03') {
 
         $tabel = 'neraca_bangunan2017';
+        $query="select   AsalUsul, Info, TglPerolehan,TglPembukuan,
+                      Tahun,Alamat,JumlahLantai, Beton, LuasLantai,NoSurat,
+                      TglSurat,StatusTanah 
+                    from bangunan where Aset_ID='$Aset_ID' order by Bangunan_ID desc limit 1";
+        $result=mysql_query($query);
+        while($row=mysql_fetch_object($result)){
+            $AsalUsul=addslashes($row->AsalUsul);
+            $Info=addslashes($row->Info);
+            $Alamat=addslashes($row->Alamat);
+            $JumlahLantai=addslashes($row->JumlahLantai);
+            $Beton=addslashes($row->Beton);
+            $LuasLantai=addslashes($row->LuasLantai);
+            $NoSurat=addslashes($row->NoSurat);
+            $TglSurat=addslashes($row->TglSurat);
+            $StatusTanah=addslashes($row->StatusTanah);
+
+            $keterangan=" ,AsalUsul='$AsalUsul',
+                Info='$Info',
+                Alamat='$Alamat',
+                JumlahLantai='$JumlahLantai',
+                Beton='$Beton',
+                LuasLantai='$LuasLantai',
+                NoSurat='$NoSurat',
+                TglSurat='$TglSurat',
+                StatusTanah='$StatusTanah'";
+
+
+        }
 
     } elseif($param == '04') {
 
         $tabel = 'neraca_jaringan2017';
+        $query="select   AsalUsul,Info, TglPerolehan,TglPembukuan,Tahun,Alamat,Konstruksi,
+                      Panjang, Lebar, TglDokumen, NoDokumen,StatusTanah,LuasJaringan
+                    from jaringan where Aset_ID='$Aset_ID' order by Jaringan_ID desc limit 1";
+        $result=mysql_query($query);
+        while($row=mysql_fetch_object($result)){
+            $AsalUsul=addslashes($row->AsalUsul);
+            $Info=addslashes($row->Info);
+            $Alamat=addslashes($row->Alamat);
+            $Konstruksi=addslashes($row->Konstruksi);
+            $Panjang=addslashes($row->Panjang);
+            $Lebar=addslashes($row->Lebar);
+            $TglDokumen=addslashes($row->TglDokumen);
+            $NoDokumen=addslashes($row->NoDokumen);
+            $StatusTanah=addslashes($row->StatusTanah);
+            $LuasJaringan=addslashes($row->LuasJaringan);
+
+
+            $keterangan="  ,AsalUsul='$AsalUsul',
+            Info='$Info',
+            Alamat='$Alamat',
+            Konstruksi='$Konstruksi',
+            Panjang='$Panjang',
+            Lebar='$Lebar',
+            TglDokumen='$TglDokumen',
+            NoDokumen='$NoDokumen',
+            StatusTanah='$StatusTanah',
+            LuasJaringan='$LuasJaringan'";
+
+
+
+
+
+        }
 
     } elseif($param == '05') {
 
         $tabel = 'neraca_asetlain2017';
+        $keterangan="";
 
     } elseif($param == '06') {
 
         $tabel = 'neraca_kdp2017';
+        $query="select  Alamat, LuasLantai from kdp where Aset_ID='$Aset_ID'  order by KDP_ID desc limit 1";
+        $result=mysql_query($query);
+        while($row=mysql_fetch_object($result)){
+            $Alamat=addslashes($row->Alamat);
+            $LuasLantai=addslashes($row->LuasLantai);
+            $keterangan=",Alamat='$Alamat',LuasLantai='$LuasLantai'";
+        }
    }
-    return array($tabel,$param);
+    return array($tabel,$param,$keterangan);
 }
 
 
@@ -265,7 +390,7 @@ function subsub_awal($kode, $gol, $ps, $pt)
     }
     $param_tgl = $pt;
     if($gol == 'mesin_ori') {
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi!=3  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodelokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
@@ -282,7 +407,7 @@ function subsub_awal($kode, $gol, $ps, $pt)
                  $param_where    
                order by kelompok asc";
     } elseif($gol == 'bangunan_ori') {
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  and kondisi!=3 and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
@@ -304,7 +429,7 @@ function subsub_awal($kode, $gol, $ps, $pt)
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodelokasi like '12%' 
-					 and kondisi != '3'					 
+					 and kondisi!=3					 
 					 and $paramSatker";
         else
             $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
@@ -366,7 +491,7 @@ function subsub($kode, $gol, $ps, $pt)
     $param_tgl = $pt;
     if($gol == 'mesin_ori') {
         $gol = "mesin";
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi!=3  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodelokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
@@ -384,7 +509,7 @@ function subsub($kode, $gol, $ps, $pt)
                order by kelompok asc";
     } elseif($gol == 'bangunan_ori') {
         $gol = "bangunan";
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi!=3  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
@@ -406,7 +531,7 @@ function subsub($kode, $gol, $ps, $pt)
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodelokasi like '12%' 
-					 and kondisi != '3'					 
+					 and kondisi!=3				 
 					 and $paramSatker";
         else
             $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
@@ -610,7 +735,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
         //cek kapitalisasi
         $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
 
-        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and m.kondisi != '3'  and 
+        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and kondisi!=3  and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and m.kodeKa=1) or 
 				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl'  and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and (m.NilaiPerolehan >=300000 or m.kodeKa=1)))
 				 and $paramSatker";
@@ -633,7 +758,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
         //cek kapitalisasi
         $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
 
-        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and m.kondisi != '3'  and 
+        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and kondisi!=3  and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and m.kodeKa=1) or 
 				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and (m.NilaiPerolehan >=10000000  or m.kodeKa=1)))
 				 and $paramSatker";
@@ -655,7 +780,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
 					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
 					 and m.TglPembukuan <='$param_tgl' 
 					 and m.kodelokasi like '12%' 
-					 and m.kondisi != '3'					 
+					 and kondisi!=3					 
 					 and $paramSatker";
         else
             $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1  
