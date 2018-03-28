@@ -172,7 +172,7 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
 //    exit();
 
         foreach ($hasil as $key => $value) {
-            $detail_key = $key;
+            $detail_key = $key."-".$value['kodeSatker'];
             $kodekelompok = $value['kodeKelompok'];
 
             $NP = $value['nilai_akhir'];
