@@ -749,11 +749,16 @@ selectAllSatker( 'kodeSatker8', '255', true, false, false, true );
 									<option value="6">Sub Sub Kelompok</option>
 								</select>
 							</li>
+							<li>
+								<span class="span2">Kategori</span>
+								<select name="Flag" id="Flag" style="width:170px">
+									<option value="1">-</option>
+									<option value="2">All</option>
+								</select>
+							</li>
 							<?php //selectAllSatker('kodeSatker8','255',true,false);
-
-selectAllSatker( 'kodeSatker18', '255', true, false, false, true );
-
-?>
+								selectAllSatker( 'kodeSatker18', '255', true, false, false, true );
+							?>
 							<br>
 							<li>
 								<span class="span2">&nbsp;</span>
