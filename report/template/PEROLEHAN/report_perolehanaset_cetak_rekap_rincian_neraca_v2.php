@@ -413,7 +413,7 @@ $data=array();
 			$ap_total = $ap_total + $gol[AP];
 			$nb_total = $nb_total + $gol[NB];
 			
-			$mutasi = $gol[nilai] - $gol[nilai];
+			$mutasi = $gol[nilai] - $gol[nilaiAwal];
 			if($mutasi < 0){
 				$mutasiTambah = 0;
 				$mutasiKurang = abs($mutasi);
@@ -463,7 +463,7 @@ $data=array();
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[NB],2,",",".")."</td>
 							</tr>";*/	
 
-					$mutasi = $bidang[nilai] - $bidang[nilai];
+					$mutasi = $bidang[nilai] - $bidang[nilaiAwal];
 					if($mutasi < 0){
 						$mutasiTambah = 0;
 						$mutasiKurang = abs($mutasi);
@@ -511,7 +511,7 @@ $data=array();
 								<td style=\"text-align: right;\">".number_format($Kelompok[AP],2,",",".")."</td>
 								<td style=\"text-align: right;\">".number_format($Kelompok[NB],2,",",".")."</td>
 							</tr>";*/
-					$mutasi = $Kelompok[nilai] - $Kelompok[nilai];
+					$mutasi = $Kelompok[nilai] - $Kelompok[nilaiAwal];
 					if($mutasi < 0){
 						$mutasiTambah = 0;
 						$mutasiKurang = abs($mutasi);
@@ -558,7 +558,7 @@ $data=array();
 										<td style=\"text-align: right;\">".number_format($Sub[AP],2,",",".")."</td>
 										<td style=\"text-align: right;\">".number_format($Sub[NB],2,",",".")."</td>
 									</tr>";*/
-							$mutasi = $Sub[nilai] - $Sub[nilai];
+							$mutasi = $Sub[nilai] - $Sub[nilaiAwal];
 							if($mutasi < 0){
 								$mutasiTambah = 0;
 								$mutasiKurang = abs($mutasi);
@@ -604,7 +604,7 @@ $data=array();
 											<td style=\"text-align: right;\">".number_format($SubSub[AP],2,",",".")."</td>
 											<td style=\"text-align: right;\">".number_format($SubSub[NB],2,",",".")."</td>
 										</tr>";*/
-								$mutasi = $SubSub[nilai] - $SubSub[nilai];
+								$mutasi = $SubSub[nilai] - $SubSub[nilaiAwal];
 								if($mutasi < 0){
 									$mutasiTambah = 0;
 									$mutasiKurang = abs($mutasi);

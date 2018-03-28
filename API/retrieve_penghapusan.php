@@ -596,13 +596,12 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
 
     public function retrieve_usulan_penghapusan_pmd_rev($data,$debug=false)
     {
-        //pr($data);
-        //exit;
         $jenisaset = array($data['jenisaset']);
         $kodeSatker = $data['kodeSatker'];
         $kodePemilik = $data['kodepemilik'].'%';
         $kodeKelompok = $data['kodeKelompok'];
         $tahun = $data['bup_tahun'];
+        $TAHUN_AKTIF= $data['TAHUN_AKTIF'];
         $kondisi= trim($data['condition']);
         $limit= $data['limit'];
         $order= $data['order'];
@@ -625,11 +624,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
         if ($tahun) $filterkontrak .= " AND ast.Tahun = '{$tahun}' ";
         
             foreach ($jenisaset as $value) {
-                //pr($value);
-                //exit;
                 $table = $this->getTableKibAlias($value);
-                //pr($table);
-                //exit;
                 $listTable = $table['listTable'];
                 $listTableAlias = $table['listTableAlias'];
                 $listTableAbjad = $table['listTableAbjad'];
@@ -644,8 +639,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 $sql1 = array(
                         'table'=>'usulanaset',
                         'field'=>"Aset_ID",
-                        'condition' => "(Jenis_Usulan='PMS' OR Jenis_Usulan='PMD' OR Jenis_Usulan='PSB') AND StatusValidasi='0' AND (StatusKonfirmasi='0' OR StatusKonfirmasi='1') ORDER BY Usulan_ID DESC",
-                        //'limit'=>"10",
+                        'condition' => "StatusValidasi='0' AND (StatusKonfirmasi='0' OR StatusKonfirmasi='1') ORDER BY Usulan_ID DESC",
                         );
                 
                 $resUsul = $this->db->lazyQuery($sql1,$debug);
@@ -661,20 +655,19 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $ListUsul[$v] = 1;
                     }
                    
-                    $condition="ast.fixPenggunaan=1 AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";    
+                    $condition="ast.fixPenggunaan=1 AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
                 }else{
                     $condition="ast.fixPenggunaan=1 AND ast.StatusValidasi=1 AND ast.Status_Validasi_Barang=1 AND (ast.kondisi=0 OR ast.kondisi=1 OR ast.kondisi=2 OR ast.kondisi=3)";
                 }
                 
                 //query asetid
-                /*
-                Info : kekurangan penyajian jumlah menjadi tidak akurat
+                //Info : kekurangan penyajian jumlah menjadi tidak akurat
                 $sql2 = array(
                         'table'=>"{$listTable},Aset AS ast,kelompok AS k",
                         'field'=>"SQL_CALC_FOUND_ROWS ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
-                        'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} $kondisi  GROUP BY ast.Aset_ID $order",
+                        'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} {$paramKondisi}  GROUP BY ast.Aset_ID $order",
                         'limit'=>"{$limit}",
-                        'joinmethod' => ' LEFT JOIN ',
+                        'joinmethod' => ' INNER JOIN ',
                         'join' => "{$listTableAlias}.Aset_ID=ast.Aset_ID,ast.kodeKelompok = k.Kode"
                          );
                     
@@ -682,7 +675,7 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                 if($resAset){
                     //list Usulan Aset
                     if($ListUsul){
-                        //pr("here");
+                        $flag = 0;
                         //list Aset
                         foreach($resAset as $asetidAset){
                             //list Aset_ID yang pernah diusulkan
@@ -696,12 +689,25 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                             }                        
                         }      
                     }else{
+                        $flag = 1;
                         $dataArr[] = $resAset;
                     }
+                }
 
-                }*/   
+                //resAsetFix
+                $resAsetFix = array();
+                if($flag == 0){
+                    foreach ($dataArr as $key => $vals) {
+                         # code...
+                        $resAsetFix[] = $vals;
+                    }     
+                }else{
+                    $resAsetFix = $dataArr;
+                }
+                $listAsetid = count($resAsetFix);
+
                 //cara ke dua
-                $sql2 = array(
+                /*$sql2 = array(
                         'table'=>"{$listTable},Aset AS ast,kelompok AS k",
                         'field'=>"ast.Aset_ID,ast.KodeSatker,ast.noKontrak,{$listTableField},{$FieltableGeneral},k.Uraian",
                         'condition' => "ast.TipeAset = '{$listTableAbjad}' AND {$condition} {$filterkontrak} {$paramKondisi} GROUP BY ast.Aset_ID $order",
@@ -746,12 +752,10 @@ class RETRIEVE_PENGHAPUSAN extends RETRIEVE{
                         $resAsetFix = $this->db->lazyQuery($sqlFix,$debug); 
        
                     }      
-                }
-
+                }*/
         }
-        //if ($dataArr) return $dataArr;
-        //if ($resAsetFix) return $resAsetFix;
         if ($resAsetFix) return array("data"=>$resAsetFix,"count"=> $listAsetid);
+
         return false;
     }    
 

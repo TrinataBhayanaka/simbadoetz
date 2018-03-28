@@ -15,8 +15,7 @@ if(isset($_POST)){
 	$kodepemilik 	= $_POST['kodepemilik'];
 	$kodeKelompok 	= $_POST['kodeKelompok'];
 }
-//pr($_POST);
-//exit;
+//$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
 include"$path/meta.php";
 include"$path/header.php";
 include"$path/menu.php";
@@ -51,7 +50,6 @@ include"$path/menu.php";
 		}
 		function AreAnyCheckboxesChecked () 
 		{
-
 			setTimeout(function() {
 		  if ($("#Form2 input:checkbox:checked").length > 0)
 			{
@@ -62,15 +60,16 @@ include"$path/menu.php";
 			else
 			{
 			   $('#submit').attr('disabled','disabled');
-			   updDataCheckbox('RVWUSPMD');
-			    countCheckbox('RVWUSPMD');
+			   //updDataCheckbox('RVWUSPMD');
+			    //countCheckbox('RVWUSPMD');
 			}}, 100);
 		}
 		jQuery(function($) {
-      		AreAnyCheckboxesChecked();
+			/*setTimeout(function() {
+				AreAnyCheckboxesChecked();
+			}, 3000);*/
       		$("#cekAll").click( function(){
    				if($(this).is(':checked')){
-					//alert("checked");
 					$("#submit").removeAttr("disabled");
 				}else{
 					$('#submit').attr('disabled','disabled');
@@ -126,20 +125,23 @@ include"$path/menu.php";
                     "aoColumns":[
                          {"bSortable": false},
                          {"bSortable": false,"sClass": "checkbox-column" },
-                         {"bSortable": false},	
+                         {"bSortable": true},	
                          {"bSortable": true},	
                          {"bSortable": true},
+                         {"bSortable": false},
                          {"bSortable": true},
                          {"bSortable": true},
                          {"bSortable": true},
-                         {"bSortable": true},
-                         {"bSortable": true}],
+                         {"bSortable": false}],
                     "sPaginationType": "full_numbers",
 
                     "bprocessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_aset_usulan_pmd_rev.php?<?php echo $par_data_table?>"
-               }
+                    "sAjaxSource": "<?=$url_rewrite?>/api_list/api_aset_usulan_pmd_rev.php?<?php echo $par_data_table?>",
+                    "fnInitComplete" : function(oSettings, json){
+                    	AreAnyCheckboxesChecked();
+                    	}     
+                	}
                   );
       });
     </script>
