@@ -263,19 +263,25 @@ $head ="<head>
 				<br>";
 $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin-right: auto; border-collapse:collapse\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\; \">
 	<tr>
-		<td colspan='5' style=\" text-align: center; font-weight: bold; width: \">Kode</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Uraian</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Jumlah</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan Awal</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Penyusutan PerTahun Awal</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan Awal</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Nilai Buku Awal</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Mutasi Kurang</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Mutasi Tambah</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Penyusutan PerTahun</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
-		<td style=\" text-align: center; font-weight: bold; width: \">Nilai Buku</td>
+		<td colspan='5' rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Kode</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Uraian</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Jumlah</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan Awal</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Penyusutan PerTahun Awal</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan Awal</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Nilai Buku Awal</td>
+		<td colspan='2' style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan</td>
+		<td colspan='2' style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Nilai Perolehan</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Penyusutan PerTahun</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Akumulasi Penyusutan</td>
+		<td rowspan='2' style=\" text-align: center; font-weight: bold; width: \">Nilai Buku</td>
+	</tr>
+	<tr>
+		<td  style=\" text-align: center; font-weight: bold; width: \">Mutasi Kurang</td>
+		<td  style=\" text-align: center; font-weight: bold; width: \">Mutasi Tambah</td>
+		<td  style=\" text-align: center; font-weight: bold; width: \">Mutasi Kurang</td>
+		<td  style=\" text-align: center; font-weight: bold; width: \">Mutasi Tambah</td>
 	</tr>
 	<tr>
 		   <td style=\" text-align: center; font-weight: bold; width: \">1</td>
@@ -295,6 +301,8 @@ $head.=" <table style=\"width: 100%; text-align: left; margin-left: auto; margin
 		   <td style=\" text-align: center; font-weight: bold; width: \">15</td>
 		   <td style=\" text-align: center; font-weight: bold; width: \">16</td>
 		   <td style=\" text-align: center; font-weight: bold; width: \">17</td>
+		   <td style=\" text-align: center; font-weight: bold; width: \">18</td>
+		   <td style=\" text-align: center; font-weight: bold; width: \">19</td>
 	</tr>";	
 foreach ($data as $gol) {
 // $param_satker = "50.01.08.01";
@@ -367,7 +375,7 @@ $param_tgl = $tglakhirperolehan ;
 					where $param_where
 					group by golongan";
 		 }else{
-			$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
+			/*$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
 					sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 					sum(NilaiPerolehan_Awal)as nilaiAwal,
 					sum(PenyusutanPerTahun_Awal)as PPAwal,
@@ -375,7 +383,17 @@ $param_tgl = $tglakhirperolehan ;
 					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 					Status_Validasi_barang,kodeSatker from $gol m
 					where $param_where
-					group by golongan";
+					group by golongan";*/
+			$sql = "select SUBSTRING_INDEX(kodeKelompok,'.',1) as Golongan,
+					sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
+					sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+					sum(NilaiPerolehan_Awal)as nilaiAwal,
+					sum(PenyusutanPerTahun_Awal)as PPAwal,
+					sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
+					Status_Validasi_barang,kodeSatker from $gol m
+					where $param_where
+					group by golongan";		
 		 }
 	}
 
@@ -423,6 +441,17 @@ $data=array();
 			}
 			$mutasiTambahTot = $mutasiTambahTot + $mutasiTambah;
 			$mutasiKurangTot = $mutasiKurangTot + $mutasiKurang;
+
+			$mutasiAP = $gol[AP] - $gol[APAwal];
+			if($mutasiAP < 0){
+				$mutasiTambahAP = 0;
+				$mutasiKurangAP = abs($mutasiAP);
+			}else{
+				$mutasiTambahAP = abs($mutasiAP);
+				$mutasiKurangAP = 0;	
+			}
+			$mutasiTambahTotAP = $mutasiTambahTotAP + $mutasiTambahAP;
+			$mutasiKurangTotAP = $mutasiKurangTotAP + $mutasiKurangAP;
 		$body.="<tr>
 					<td style=\"font-weight: bold;\">{$gol[Golongan]}</td>
 					<td>&nbsp;</td>
@@ -438,6 +467,9 @@ $data=array();
 
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+					
+					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
+					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
 					
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nilai],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[PP],2,",",".")."</td>
@@ -471,6 +503,14 @@ $data=array();
 						$mutasiTambah = abs($mutasi);
 						$mutasiKurang = 0;	
 					}
+					$mutasiAP = $bidang[AP] - $bidang[APAwal];
+					if($mutasiAP < 0){
+						$mutasiTambahAP = 0;
+						$mutasiKurangAP = abs($mutasiAP);
+					}else{
+						$mutasiTambahAP = abs($mutasiAP);
+						$mutasiKurangAP = 0;	
+					}
 					$body.="<tr>
 							<td>&nbsp;</td>
 							<td style=\"font-weight: bold;\">{$bidang[Bidang]}</td>
@@ -487,6 +527,10 @@ $data=array();
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
 							
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
+							
+
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nilai],2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[PP],2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[AP],2,",",".")."</td>
@@ -519,6 +563,16 @@ $data=array();
 						$mutasiTambah = abs($mutasi);
 						$mutasiKurang = 0;	
 					}
+
+					$mutasiAP = $Kelompok[AP] - $Kelompok[APAwal];
+					if($mutasiAP < 0){
+						$mutasiTambahAP = 0;
+						$mutasiKurangAP = abs($mutasiAP);
+					}else{
+						$mutasiTambahAP = abs($mutasiAP);
+						$mutasiKurangAP = 0;	
+					}
+
 					$body.="<tr>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
@@ -534,6 +588,9 @@ $data=array();
 
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+							
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
 							
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[nilai],2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[PP],2,",",".")."</td>
@@ -566,6 +623,15 @@ $data=array();
 								$mutasiTambah = abs($mutasi);
 								$mutasiKurang = 0;	
 							}
+
+							$mutasiAP = $Sub[AP] - $Sub[APAwal];
+							if($mutasiAP < 0){
+								$mutasiTambahAP = 0;
+								$mutasiKurangAP = abs($mutasiAP);
+							}else{
+								$mutasiTambahAP = abs($mutasiAP);
+								$mutasiKurangAP = 0;	
+							}
 							$body.="<tr>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
@@ -581,6 +647,9 @@ $data=array();
 
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+									
+									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
+									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
 									
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[nilai],2,",",".")."</td>
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[PP],2,",",".")."</td>
@@ -612,6 +681,14 @@ $data=array();
 									$mutasiTambah = abs($mutasi);
 									$mutasiKurang = 0;	
 								}
+								$mutasiAP = $SubSub[AP] - $SubSub[APAwal];
+								if($mutasiAP < 0){
+									$mutasiTambahAP = 0;
+									$mutasiKurangAP = abs($mutasiAP);
+								}else{
+									$mutasiTambahAP = abs($mutasiAP);
+									$mutasiKurangAP = 0;	
+								}
 								$body.="<tr>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
@@ -627,6 +704,9 @@ $data=array();
 
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+
+										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
+										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
 										
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[nilai],2,",",".")."</td>
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[PP],2,",",".")."</td>
@@ -657,6 +737,9 @@ $data=array();
 
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($mutasiKurangTot,2,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($mutasiTambahTot,2,",",".")."</td>
+
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($mutasiKurangTotAP,2,",",".")."</td>
+				<td style=\"text-align: right; font-weight: bold;\">".number_format($mutasiTambahTotAP,2,",",".")."</td>
 
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($np_total,2,",",".")."</td>
 				<td style=\"text-align: right; font-weight: bold;\">".number_format($pp_total,2,",",".")."</td>
@@ -758,7 +841,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 				 $param_where    
 			   group by bidang";   
 	 }else{
-		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
+		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
 			   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 			   sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
@@ -769,7 +852,20 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   Status_Validasi_barang,kodeSatker from $gol m
 				where kodeKelompok like '$kode_golongan%' and
 				 $param_where    
-			   group by bidang";
+			   group by bidang";*/
+		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',2) as Bidang,
+			   sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
+			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+			   sum(NilaiPerolehan_Awal)as nilaiAwal,
+				sum(PenyusutanPerTahun_Awal)as PPAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			   (select Uraian from kelompok 
+			   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
+			   ) as Uraian,
+			   Status_Validasi_barang,kodeSatker from $gol m
+				where kodeKelompok like '$kode_golongan%' and
+				 $param_where    
+			   group by bidang"; 	   
 	 }
 }
  /*echo "<pre>";
@@ -878,7 +974,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   $param_where    
 			 group by kelompok"; 
 	 }else{
-		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
+		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
 				 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 				 sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
@@ -889,7 +985,20 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 				 Status_Validasi_barang,kodeSatker from $gol m
 				  where kodeKelompok like '$kode_bidang%' and
 				   $param_where    
-				 group by kelompok";
+				 group by kelompok";*/
+		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',3) as kelompok,
+			 sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
+			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+			 sum(NilaiPerolehan_Awal)as nilaiAwal,
+			sum(PenyusutanPerTahun_Awal)as PPAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			 (select Uraian from kelompok 
+			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
+			 ) as Uraian,
+			 Status_Validasi_barang,kodeSatker from $gol m
+			  where kodeKelompok like '$kode_bidang%' and
+			   $param_where    
+			 group by kelompok";		 
 	 }
 }
 
@@ -1000,7 +1109,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 				 $param_where     
 				group by sub";	
 	 }else{
-		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
+		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
 				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
 				sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
@@ -1011,7 +1120,20 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 				Status_Validasi_barang,kodeSatker from $gol m
 				 where kodeKelompok like '$kodeKelompok%' and
 				 $param_where     
-				group by sub";
+				group by sub";*/
+		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',4) as sub,
+				sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
+				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+				sum(NilaiPerolehan_Awal)as nilaiAwal,
+				sum(PenyusutanPerTahun_Awal)as PPAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				(select Uraian from kelompok 
+				where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
+				) as Uraian,
+				Status_Validasi_barang,kodeSatker from $gol m
+				 where kodeKelompok like '$kodeKelompok%' and
+				 $param_where     
+				group by sub";		
 	 }
 }
 
@@ -1119,7 +1241,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
                  $param_where    
                group by subsub";     
 	 }else{
-		$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
+		/*$sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
                sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
                sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
@@ -1130,7 +1252,20 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
                Status_Validasi_barang,kodeSatker from $gol m
                 where kodeKelompok like '$kode_sub%' and
                  $param_where    
-               group by subsub";
+               group by subsub";*/
+        $sql = "select  SUBSTRING_INDEX(kodeKelompok,'.',5) as subsub,
+               sum(NilaiPerolehan)as nilai,count(Aset_ID) as jml,
+			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
+			   sum(NilaiPerolehan_Awal)as nilaiAwal,
+				sum(PenyusutanPerTahun_Awal)as PPAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+               (select Uraian from kelompok 
+               where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
+               ) as Uraian,
+               Status_Validasi_barang,kodeSatker from $gol m
+                where kodeKelompok like '$kode_sub%' and
+                 $param_where    
+               group by subsub";       
 	 }
 }
 

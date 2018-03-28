@@ -15,7 +15,7 @@ if(isset($_POST)){
 	$kodepemilik 	= $_POST['kodepemilik'];
 	$kodeKelompok 	= $_POST['kodeKelompok'];
 }
-//$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
+$data_delete=$PENGHAPUSAN->apl_userasetlistHPS_del("RVWUSPMD");
 include"$path/meta.php";
 include"$path/header.php";
 include"$path/menu.php";
