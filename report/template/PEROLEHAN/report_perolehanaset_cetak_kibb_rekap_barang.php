@@ -9,7 +9,6 @@ define('_MPDF_URI',"$url_rewrite/function/mpdf/"); 	// must be  a relative or ab
 
 include "../../report_engine.php";
 require_once('../../../function/mpdf/mpdf.php');
-
 $modul = $_GET['menuID'];
 $mode = $_GET['mode'];
 $tab = $_GET['tab'];
@@ -28,7 +27,7 @@ $data=array(
     "tahun"=>$tahun,
     "skpd_id"=>$skpd_id,
 	"pemilik"=>$pemilik,
-    // "kelompok"=>$kelompok,
+    "TAHUN_AKTIF"=>$TAHUN_AKTIF,
     "tab"=>$tab
 );
 
@@ -65,13 +64,17 @@ $query=$REPORT->list_query($data);
 $tglawalperolehan = '0000-00-00';
 $tglakhirperolehan = $tahun.'-12-31';
 
-$hit = count($query);
-$flag = 'B';
-$TypeRprtr = '';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
-// exit;
+if($TAHUN_AKTIF == $tahun){
+	//pr("sama");
+}else{
+	//pr("tidak sama");
+	$hit = count($query);
+	$flag = 'B';
+	$TypeRprtr = '';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}// exit;
 //mengenerate query
 // $result_query=$REPORT->retrieve_query($query);
 
@@ -92,8 +95,8 @@ $html=$REPORT->retrieve_html_kib_b_rekap_barang($result,$gambar,$skpd_id);
 	for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
-}*/
-// exit;
+}
+exit;*/
 if($tipe!="2"){
 $REPORT->show_status_download_kib();
 $mpdf=new mPDF('','','','',15,15,16,16,9,9,'L');

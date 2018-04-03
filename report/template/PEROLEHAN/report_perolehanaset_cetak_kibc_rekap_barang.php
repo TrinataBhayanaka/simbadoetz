@@ -53,16 +53,23 @@ if ($tahun !='')
 $tglawalperolehan = '0000-00-00';
 $tglakhirperolehan = $tahun.'-12-31';
 
-$hit = count($query);
-$flag = 'C';
-$TypeRprtr = '';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
+if($TAHUN_AKTIF == $tahun){
+	//pr("sama");
+	$flag = '0';
+}else{
+	//pr("tidak sama");
+	$hit = count($query);
+	$flag = 'C';
+	$TypeRprtr = '';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+	$flag = '1';
+}
 // exit;
 //function get data
 $paramKib = '03';
-$resultParamKib = $REPORT->ceckKib($get_satker,$tahun,$paramKib);
+$resultParamKib = $REPORT->ceckKib($get_satker,$tahun,$paramKib,$flag);
 // pr($resultParamKib);
 // exit;
 // mengenerate query

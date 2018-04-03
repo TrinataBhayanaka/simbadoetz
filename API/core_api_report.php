@@ -594,6 +594,12 @@ class core_api_report extends DB {
 			}
 			if($rekap_barang =='RekapBarangKIB-B')
 			{
+				
+				if($TAHUN_AKTIF == $tahun){
+					$paramTable = "mesin";
+				}else{
+					$paramTable = "mesin_ori";
+				}
 				// $query_satker_fix = " M.kodeSatker LIKE '$skpd_id%'";
 				if($skpd_id != ''){
 				$splitKodeSatker = explode ('.',$skpd_id);
@@ -642,6 +648,11 @@ class core_api_report extends DB {
 			}
 			if($rekap_barang =='RekapBarangKIB-E')
 			{
+				if($TAHUN_AKTIF == $tahun){
+					$paramTable = "asetlain";
+				}else{
+					$paramTable = "asetlain_ori";
+				}	
 				// $query_satker_fix = " AL.kodeSatker LIKE '$skpd_id%'";
 				if($skpd_id != ''){
 				$splitKodeSatker = explode ('.',$skpd_id);
@@ -1066,7 +1077,24 @@ class core_api_report extends DB {
 													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
 													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
 												order by 
-													M.kodeSatker,M.kodeKelompok $limit";										
+													M.kodeSatker,M.kodeKelompok $limit";
+
+			$rekap_barang_b_condition_rev ="select SUM(M.NilaiPerolehan) as Nilai, 
+													GROUP_CONCAT(M.noRegister) as noReg,
+													M.kodeSatker,M.kodeKelompok,M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,
+													M.Silinder,M.kodeLokasi, K.Kode, K.Uraian
+												from 
+													$paramTable as M,kelompok as K 
+												where 
+													M.kodeKelompok=K.Kode  
+													 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and $parameter_sql
+												group by 
+													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+													M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+													M.kodeLokasi, M.kondisi,K.Kode, K.Uraian 
+												order by 
+													M.kodeSatker,M.kodeKelompok $limit";																			
 													
 			$rekap_barang_b_condition_sensus ="select M.kodeSatker,M.noRegister,
 													M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
@@ -1129,6 +1157,27 @@ class core_api_report extends DB {
 											AL.kondisi, AL.kodeLokasi,
 											K.Kode, K.Uraian
 											order by AL.kodeSatker,AL.kodeKelompok $limit";
+
+			$rekap_barang_e_condition_rev ="select SUM(AL.NilaiPerolehan) as Nilai, 
+											GROUP_CONCAT(AL.noRegister) as noReg,
+											AL.kodeSatker,											
+											AL.kodeKelompok,AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+											AL.kondisi, AL.kodeLokasi,
+											K.Kode, K.Uraian
+											from 
+											$paramTable as AL,kelompok as K  
+											where
+											AL.kodeKelompok = K.Kode 
+											 and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 
+											and $parameter_sql
+											group by AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+											AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+											AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+											AL.kondisi, AL.kodeLokasi,
+											K.Kode, K.Uraian
+											order by AL.kodeSatker,AL.kodeKelompok $limit";								
 											
 			$rekap_barang_e_condition_sensus="select AL.kodeSatker, AL.noRegister,
 											AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
@@ -3680,7 +3729,7 @@ class core_api_report extends DB {
 														 case 'RekapBarangKIB-B':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $rekap_barang_b_condition;
+																		$query = $rekap_barang_b_condition_rev;
 																						}
 															  if($parameter_sql=="" ) {
 																		$query = $rekap_barang_b_default;
@@ -3711,7 +3760,7 @@ class core_api_report extends DB {
 														 case 'RekapBarangKIB-E':
 														 {
 															  if($parameter_sql!="" ){
-																		$query = $rekap_barang_e_condition;
+																		$query = $rekap_barang_e_condition_rev;
 															   }
 															  if($parameter_sql=="" ){
 																		$query = $rekap_barang_e_default;
@@ -4562,7 +4611,7 @@ class core_api_report extends DB {
 }
 	
     public function QueryKib($query,$tableName){
-		
+		//pr($query);
 		if (!$query) return false;
 	
 		$result=mysql_query($query);
@@ -4656,17 +4705,22 @@ class core_api_report extends DB {
 		
 	}
 	//laporan tambahan
-	public function ceckKib ($satker,$tahun,$paramKib){
+	public function ceckKib ($satker,$tahun,$paramKib,$flag){
 		foreach ($satker as $Satker_ID)
 			{
 					// pr($value);
 					if($paramKib == 01){
 						//KIB-A
+						if($flag == 0){
+							$table = "tanah";
+						}else{
+							$table = "tanahView";
+						}
 						$queryok ="select 
 										T.Aset_ID,T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.noRegister,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
 											K.Kode, K.Uraian
 										from 
-											tanahView as T,kelompok as K
+											$table as T,kelompok as K
 										where
 											T.kodeKelompok=K.Kode  and T.Status_Validasi_Barang =1 and T.StatusTampil =1 
 											and T.kodeSatker = '$Satker_ID' and T.Tahun <= '$tahun'
@@ -4674,13 +4728,18 @@ class core_api_report extends DB {
 											T.kodeSatker,T.kodeKelompok";
 					}elseif($paramKib == 03){
 						//KIB-B
+						if($flag == 0){
+							$table = "bangunan";
+						}else{
+							$table = "bangunan_ori";
+						}
 						$queryok ="select B.Aset_ID, B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
 											B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.noRegister,B.Alamat,
 											B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 											B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
 											K.Kode, K.Uraian
 										from 
-											bangunan_ori as B,kelompok as K  
+											$table as B,kelompok as K  
 										where
 											B.kodeKelompok = K.Kode 
 											and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 
@@ -4688,13 +4747,18 @@ class core_api_report extends DB {
 										order by B.kodeSatker,B.kodeKelompok";
 					}elseif($paramKib == 04){
 						//KIB-D
+						if($flag == 0){
+							$table = "jaringan";
+						}else{
+							$table = "jaringan_ori";
+						}
 						$queryok ="select J.Aset_ID, J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
 											J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.noRegister,J.Alamat,
 											J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 											J.kondisi, J.kodeLokasi,
 											K.Kode, K.Uraian
 										from 
-											jaringan_ori as J,kelompok as K  
+											$table as J,kelompok as K  
 											where
 											J.kodeKelompok = K.Kode 
 											and J.Status_Validasi_Barang =1 and J.StatusTampil =1 
@@ -10649,7 +10713,7 @@ class core_api_report extends DB {
 	//echo "<br>";
 	if(count($query) == 1){
 		//echo "single query";
-		//pr($query);
+		pr($query);
 		$result = $this->query($query) or die ($this->error('error dataQuery'));
 		if ($result)
 		{
@@ -10664,9 +10728,9 @@ class core_api_report extends DB {
 		// pr($query);
 		for ($i = 0; $i < count($query); $i++)
 		{
-			/*echo "query_$i =".$dataQuery[$i];
+			echo "query_$i =".$dataQuery[$i];
 			echo "<br>";
-			echo "<br>";*/
+			echo "<br>";
 			// exit;
 			$result = $this->query($query[$i]) or die ($this->error('error dataQuery'));
 			if ($result)

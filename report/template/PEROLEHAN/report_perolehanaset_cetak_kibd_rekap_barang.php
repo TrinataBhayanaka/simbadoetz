@@ -52,12 +52,19 @@ if ($tahun !='')
 $tglawalperolehan = '0000-00-00';
 $tglakhirperolehan = $tahun.'-12-31';
 
-$hit = count($query);
-$flag = 'D';
-$TypeRprtr = '';
-$Info = '';
-$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-$skpd_id);
+if($TAHUN_AKTIF == $tahun){
+	//pr("sama");
+	$flag = '0';
+}else{
+	//pr("tidak sama");
+	$hit = count($query);
+	$flag = 'D';
+	$TypeRprtr = '';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+	$flag = '1';
+}
 // exit;
 //function get data
 $paramKib = '04';
