@@ -5,7 +5,7 @@ $USERAUTH = new UserAuth();
 
 $SESSION = new Session();
 
-$menu_id = 21;
+$menu_id = 58;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 

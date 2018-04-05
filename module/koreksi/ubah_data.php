@@ -1,6 +1,6 @@
 <?php
 include "../../config/config.php";
-$menu_id = 21;
+$menu_id = 58;
             $SessionUser = $SESSION->get_session_user();
             ($SessionUser['ses_uid']!='') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title'=>'GuestMenu', 'ses_name'=>'menu_without_login')); 
             $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
