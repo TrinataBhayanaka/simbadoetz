@@ -161,10 +161,18 @@ $("#tglPerolehanAkhirLapMutasi,#tglPerolehanAkhirLapMutasiSkpd").mask('9999-12-3
 							</li>
 							<li>
 								<?php
-selectAllSatker( 'kodeSatker11', '255', true, false, false, true );
-?>
+									selectAllSatker( 'kodeSatker11', '255', true, false, false, true );
+									?>
 								<br>
 							</li>
+							<li>
+								<span class="span2">Kategori</span>
+								<select name="Flag2" id="Flag" style="width:170px">
+									<option value="1">Aset Tetap</option>
+									<option value="2">Aset Lainnya</option>
+								</select>
+							</li>
+							<br>
 							<li>
 								<span class="span2">Tanggal Cetak</span>
 								<div class="control">

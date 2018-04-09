@@ -42,7 +42,6 @@ $data=array(
     "intra"=>"intra",
     "TAHUN_AKTIF"=>$TAHUN_AKTIF,
     "FlagAset"=>$FlagAset
-
 );
 
 function arrayToObject($result_query) {
@@ -75,22 +74,12 @@ $REPORT->set_data($data);
 $query=$REPORT->list_query($data);
 //pr($query);
 //exit;
-/*
-Add $TAHUN_AKTIF
-*/
-$expld = explode('-', $tglakhirperolehan);
-$tglCmpr = $TAHUN_AKTIF."-"."12-31";
-if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
-
-}else{
-	$hit = count($query);
-	$flag = '';
-	$TypeRprtr = 'intra';
-	$Info = '';
-	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
-	$skpd_id);
-}
-
+$hit = count($query);
+$flag = '';
+$TypeRprtr = 'intra';
+$Info = '';
+$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+$skpd_id);
 
 // pr($query);
 //exit;
