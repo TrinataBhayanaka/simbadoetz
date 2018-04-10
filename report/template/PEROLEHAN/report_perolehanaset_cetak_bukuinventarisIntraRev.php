@@ -25,14 +25,11 @@ $skpd_id = $_GET['skpd_id'];
 $intra = $_GET['intra'];
 $tipe=$_GET['tipe_file'];
 $FlagAset=$_GET['Flag'];
-//pr($_GET);
-//exit;
+
 $REPORT=new report_engine();
 $paramTgl = explode('-', $tglakhirperolehan);
-$TAHUN_AKTIF = $paramTgl[0];
-//pr($TAHUN_AKTIF);
-// /exit();
-$data=array(
+$TAHUN = $paramTgl[0];
+/*$data=array(
     "modul"=>$modul,
 	"tglawalperolehan"=>$tglawalperolehan,
     "tglakhirperolehan"=>$tglakhirperolehan,
@@ -42,7 +39,8 @@ $data=array(
     "intra"=>"intra",
     "TAHUN_AKTIF"=>$TAHUN_AKTIF,
     "FlagAset"=>$FlagAset
-);
+
+);*/
 
 function arrayToObject($result_query) {
 	if (!is_array($result_query)) {
@@ -63,7 +61,7 @@ function arrayToObject($result_query) {
 		return FALSE;
 	}
 }
-
+/*
 //mendeklarasikan report_engine. FILE utama untuk reporting
 $REPORT=new report_engine();
 
@@ -72,8 +70,12 @@ $REPORT->set_data($data);
 
 //mendapatkan jenis query yang digunakan
 $query=$REPORT->list_query($data);
-//pr($query);
-//exit;
+//pr($query);*/
+
+/*
+Add $TAHUN_AKTIF
+*/
+
 $hit = count($query);
 $flag = '';
 $TypeRprtr = 'intra';
@@ -81,7 +83,7 @@ $Info = '';
 $exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 $skpd_id);
 
-// pr($query);
+
 //exit;
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
@@ -95,15 +97,18 @@ if($tglcetak != ''){
 	$thnPejabat =substr($tglcetak,0,4);	
 }
 
-$result_query=$REPORT->QueryBinv($query);
+//$result_query=$REPORT->QueryBinvRev($query);
 //pr($result_query);
 //exit;
-$result = arrayToObject($result_query);
-// pr($result_query);
-// exit;
+//$result = arrayToObject($result_query);
+//pr($result);
 
+/*Revisi*/
+$resArr =$REPORT->IntraRev($skpd_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$TAHUN_AKTIF);
+//pr($res);
+$resultObjt = arrayToObject($resArr);
 
-$html=$REPORT->retrieve_html_bukuinventaris_intra($result,$gambar,$tanggalCetak,$thnPejabat);
+$html=$REPORT->retrieve_html_bukuinventaris_intra($resultObjt,$gambar,$tanggalCetak,$thnPejabat);
 /*$count = count($html);
 
 	 for ($i = 0; $i < $count; $i++) {

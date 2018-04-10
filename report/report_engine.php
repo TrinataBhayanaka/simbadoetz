@@ -25126,9 +25126,10 @@ $no=1;
 $skpdeh="";
 $thn="";
 $status_print=0;
-$barangTotal=0;
-//$panjangTotal=0;
 $perolehanTotal=0;
+$PenyusutanPerTahunTotal = 0;
+$AkumulasiPenyusutanTotal = 0;
+$NilaiBukuTotal = 0;
 				foreach ($dataArr as $row)
 				{
 					if ($skpdeh == "" && $no==1){
@@ -25167,41 +25168,41 @@ $perolehanTotal=0;
                         list($nip_pengurus,$nama_jabatan_pengurus,$InfoJabatanPengurus)=$this->get_jabatan($satker_id,"3",$thnPejabat);
 						list($nip_pengguna,$nama_jabatan_pengguna,$InfoJabatanPengguna)=$this->get_jabatan($satker_id,"4",$thnPejabat);
 												
-                if($nip_pengurus!="")
-                {
-                    $nip_pengurus_fix=$nip_pengurus;
-                }
-                else
-                {
-                    $nip_pengurus_fix='........................................';
-                }
+		                if($nip_pengurus!="")
+		                {
+		                    $nip_pengurus_fix=$nip_pengurus;
+		                }
+		                else
+		                {
+		                    $nip_pengurus_fix='........................................';
+		                }
 
-                if($nip_pengguna!="")
-                {
-                    $nip_pengguna_fix=$nip_pengguna;
-                }
-                else
-                {
-                    $nip_pengguna_fix='........................................';
-                }
+		                if($nip_pengguna!="")
+		                {
+		                    $nip_pengguna_fix=$nip_pengguna;
+		                }
+		                else
+		                {
+		                    $nip_pengguna_fix='........................................';
+		                }
 
-                if($nama_jabatan_pengguna!="")
-                {
-                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
-                }
-                else
-                {
-                    $nama_jabatan_pengguna_fix='........................................';
-                }
+		                if($nama_jabatan_pengguna!="")
+		                {
+		                    $nama_jabatan_pengguna_fix=$nama_jabatan_pengguna;
+		                }
+		                else
+		                {
+		                    $nama_jabatan_pengguna_fix='........................................';
+		                }
 
-                if($nama_jabatan_pengurus!="")
-                {
-                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
-                }
-                else
-                {
-                    $nama_jabatan_pengurus_fix='........................................';
-                }
+		                if($nama_jabatan_pengurus!="")
+		                {
+		                    $nama_jabatan_pengurus_fix=$nama_jabatan_pengurus;
+		                }
+		                else
+		                {
+		                    $nama_jabatan_pengurus_fix='........................................';
+		                }
                         
 
 
@@ -25429,9 +25430,10 @@ $footer ="
 </html>";       
                                                 //udah dites footer
 // cek 2
-			    $barangTotal=0;
-						//$panjangTotal=0;
 			    $perolehanTotal=0;
+				$PenyusutanPerTahunTotal = 0;
+				$AkumulasiPenyusutanTotal = 0;
+				$NilaiBukuTotal = 0;
 			    $no=1;
 
 				if($status_print==0)

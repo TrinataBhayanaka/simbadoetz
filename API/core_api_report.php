@@ -2876,7 +2876,9 @@ class core_api_report extends DB {
 												  case '7':
 												  {
 												  //intra
-												  pr($FlagAset);
+												  //pr($FlagAset);
+												  //pr($parameter_sql);
+												  //exit();
 												  if($parameter_sql != ''){
 														// $Tgl = $tglperolehan;
 														$thnIntraDefault ="2008";
@@ -2943,7 +2945,6 @@ class core_api_report extends DB {
 																$param_05[]="AL.".$pecah[$q];
 																$param_06[]="KDPA.".$pecah[$q];
 														}
-														
 														$newparameter_sql_01 = implode('AND ', $param_01);
 														$newparameter_sql_02 = implode('AND ', $param_02);
 														$newparameter_sql_03 = implode('AND ', $param_03);
@@ -3157,7 +3158,7 @@ class core_api_report extends DB {
 																			T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.kondisi,
 																			K.Kode, K.Uraian
 																		order by 
-																			T.kodeKelompok";
+																			T.kodeSatker,T.kodeKelompok";
 															
 															$query_02_default = "select SUM(M.NilaiPerolehan) as Nilai,
 																			SUM(M.PenyusutanPerTahun) as Ppt,
@@ -3178,7 +3179,7 @@ class core_api_report extends DB {
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
 																			M.kodeLokasi,M.kondisi, K.Kode, K.Uraian 
 																		order by 
-																			M.kodeKelompok";
+																			M.kodeSatker,M.kodeKelompok";
 
 
 															$query_02_condt = "select  SUM(M.NilaiPerolehan) as Nilai,
@@ -3200,7 +3201,7 @@ class core_api_report extends DB {
 																			M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
 																			M.kodeLokasi,M.kondisi, K.Kode, K.Uraian 
 																		order by 
-																			M.kodeKelompok";				
+																			M.kodeSatker,M.kodeKelompok";				
 															
 															$query_03_default = "select SUM(B.NilaiPerolehan) as Nilai,
 																		SUM(B.PenyusutanPerTahun) as Ppt,
@@ -3224,7 +3225,7 @@ class core_api_report extends DB {
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
 																		K.Kode, K.Uraian
-																	order by B.kodeKelompok";
+																	order by B.kodeSatker,B.kodeKelompok";
 															
 															$query_03_condt = "select SUM(B.NilaiPerolehan) as Nilai,
 																		SUM(B.PenyusutanPerTahun) as Ppt,
@@ -3248,7 +3249,7 @@ class core_api_report extends DB {
 																		B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
 																		B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
 																		K.Kode, K.Uraian
-																	order by B.kodeKelompok";	
+																	order by B.kodeSatker,B.kodeKelompok";	
 															
 															$query_04 = "select SUM(J.NilaiPerolehan) as Nilai,
 																		SUM(J.PenyusutanPerTahun) as Ppt,
@@ -3272,7 +3273,7 @@ class core_api_report extends DB {
 																		J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
 																		J.kondisi, J.kodeLokasi,J.kondisi,
 																		K.Kode, K.Uraian
-																	order by J.kodeKelompok";	
+																	order by J.kodeSatker,J.kodeKelompok";	
 															
 															$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,
 																		GROUP_CONCAT(AL.noRegister) as noReg,
@@ -3294,7 +3295,7 @@ class core_api_report extends DB {
 																		AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
 																		AL.kondisi, AL.kodeLokasi,AL.kondisi,
 																		K.Kode, K.Uraian
-																	order by AL.kodeKelompok";
+																	order by AL.kodeSatker,AL.kodeKelompok";
 														
 															$query_06 = "select SUM(KDPA.NilaiPerolehan) as Nilai,
 																		GROUP_CONCAT(KDPA.noRegister) as noReg,
@@ -3316,7 +3317,7 @@ class core_api_report extends DB {
 																		KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
 																		KDPA.kondisi, KDPA.kodeLokasi,KDPA.kondisi,
 																		K.Kode, K.Uraian	
-																	order by KDPA.kodeKelompok";	
+																	order by KDPA.kodeSatker,KDPA.kodeKelompok";	
 																	
 															if($thnceck < $thnIntraDefault){
 																// echo "sini aja";
@@ -4740,12 +4741,439 @@ class core_api_report extends DB {
 		if (!$data) {
 			return '';
 		}
-		return $data;
-		
-		
-		
-		
+		return $data;	
 	}
+
+	public function IntraRev($satker_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$TAHUN_AKTIF){
+		
+		//sorting function
+		function sort_subnets ($a, $b) {
+		    $a_arr = explode('.', $a);
+		    $b_arr = explode('.', $b);
+		    foreach (range(0,4) as $i) {
+		        if ( $a_arr[$i] < $b_arr[$i] ) {
+		            return -1;
+		        }
+		        elseif ( $a_arr[$i] > $b_arr[$i] ) {
+		            return 1;
+		        }
+		    }
+		    return -1;
+		}
+		$data = array();
+		$satker = array();
+		$satker2 = array();
+		if($satker_id){
+			$splitKodeSatker = explode ('.',$satker_id);
+				if(count($splitKodeSatker) == 4){	
+					$paramSatker = "kode = '$satker_id'";
+					$paramSatker_rev = "kodeSatker = '$satker_id'";
+				}else{
+					$paramSatker = "kode like '$satker_id%'";
+					$paramSatker_rev = "kodeSatker like '$satker_id%'";
+				}
+			
+			//list satker
+			$qsat = "SELECT kode,NamaSatker FROM satker where $paramSatker and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					$satker[] = $dtrsat->kode;
+					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}
+
+			//list satker yg ada datanya
+			$qsatcmpr = "SELECT kodeSatker FROM aset where $paramSatker_rev and Status_Validasi_Barang = 1 
+						GROUP BY kodeSatker";
+			$rsatcmpr = $this->query($qsatcmpr) or die ($this->error());
+			while($dtrsatcmpr = $this->fetch_object($rsatcmpr)){
+				if($dtrsatcmpr != ''){
+					$satkercmpr[] = $dtrsatcmpr->kodeSatker;
+				}	
+			}
+
+			//list array skpd fix
+			$result=array_intersect($satkercmpr,$satker);
+			
+			//sortir
+			usort($result, 'sort_subnets');
+			
+			foreach ($result as $key => $value) {
+				$qrstker = "SELECT kode,NamaSatker FROM satker where kode = '{$value}' and KodeUnit is not null 
+							and Gudang is not null and Kd_Ruang is NULL";
+				$exeqrstker = $this->query($qrstker) or die ($this->error());
+				$dtrsat = $this->fetch_object($exeqrstker);
+				$satker2[] = $dtrsat->kode;
+			}
+
+		}else{
+			//list all satker
+			$qsat = "SELECT kode,NamaSatker FROM satker where kode is not null and KodeUnit is not null and Gudang is not null and Kd_Ruang is NULL ";
+			$rsat = $this->query($qsat) or die ($this->error());
+			while($dtrsat = $this->fetch_object($rsat)){
+				if($dtrsat != ''){
+					$satker[] = $dtrsat->kode;
+					//$satker[$dtrsat->kode."_".$dtrsat->NamaSatker] = $dtrsat->kode;
+				}	
+			}
+			
+			//list satker yg ada datanya
+			$qsatcmpr = "SELECT kodeSatker FROM aset where Status_Validasi_Barang = 1 GROUP BY kodeSatker";
+			$rsatcmpr = $this->query($qsatcmpr) or die ($this->error());
+			while($dtrsatcmpr = $this->fetch_object($rsatcmpr)){
+				if($dtrsatcmpr != ''){
+					$satkercmpr[] = $dtrsatcmpr->kodeSatker;
+				}	
+			}
+			
+			//list array skpd fix
+			$result=array_intersect($satkercmpr,$satker);
+			
+			//sortir
+			usort($result, 'sort_subnets');
+			foreach ($result as $key => $value) {
+				$qrstker = "SELECT kode,NamaSatker FROM satker where kode = '{$value}' and KodeUnit is not null 
+							and Gudang is not null and Kd_Ruang is NULL";
+				$exeqrstker = $this->query($qrstker) or die ($this->error());
+				$dtrsat = $this->fetch_object($exeqrstker);
+				$satker2[] = $dtrsat->kode;
+			}
+		
+		}
+		
+		$thnIntraDefault ="2008";
+		$tglIntraDefault = "2008-01-01";
+
+		$tglAwalDefault = $tglawalperolehan;
+		$ceckTglAw = explode ('-',$tglAwalDefault);
+		$thnceck = $ceckTglAw[0];
+				
+		$tglAkhirDefault = $tglakhirperolehan;
+		$ceckTgl = explode ('-',$tglAkhirDefault);
+		$thnFix = $ceckTgl[0];
+		
+		/*echo "tahun ceck =".$thnceck; echo "<br/>";
+		echo "tahun Intra Default =".$thnIntraDefault;echo "<br/>";
+		echo "tahun Fix =".$thnFix; echo "<br/>";*/
+
+		if($thnceck < $thnIntraDefault){
+			
+			$extQuery_A_default = "AND T.TglPerolehan >= '$tglAwalDefault' AND T.TglPerolehan <= '$tglAkhirDefault' 
+								   AND T.TglPembukuan >='$tglAwalDefault' AND T.TglPembukuan <='$tglAkhirDefault' ";
+			$extQuery_B_default = "AND M.TglPerolehan >= '$tglAwalDefault' AND M. TglPerolehan < '$tglIntraDefault' 
+								   AND M.TglPembukuan >='$tglAwalDefault' AND M.TglPembukuan <='$tglAkhirDefault' ";
+			$extQuery_B_cndt = "AND M.TglPerolehan >= '$tglIntraDefault' AND M. TglPerolehan <= '$tglAkhirDefault' 
+								 AND M.TglPembukuan >='$tglAwalDefault' AND M.TglPembukuan <='$tglAkhirDefault' ";
+			$extQuery_C_default = "AND B.TglPerolehan >= '$tglAwalDefault' AND B. TglPerolehan < '$tglIntraDefault' 
+			                    AND B.TglPembukuan >='$tglAwalDefault' AND B.TglPembukuan <='$tglAkhirDefault' ";
+			$extQuery_C_cndt = "AND B.TglPerolehan >= '$tglIntraDefault' AND B. TglPerolehan <= '$tglAkhirDefault' 
+			                    AND B.TglPembukuan >='$tglAwalDefault' AND B.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_D_default = "AND J.TglPerolehan >= '$tglAwalDefault' AND J.TglPerolehan <= '$tglAkhirDefault' 
+								   AND J.TglPembukuan >='$tglAwalDefault' AND J.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_E_default = "AND AL.TglPerolehan >= '$tglAwalDefault' AND AL. TglPerolehan <= '$tglAkhirDefault'
+								   AND AL.TglPembukuan >='$tglAwalDefault' AND AL.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_F_default = "AND KDPA.TglPerolehan >= '$tglAwalDefault' AND KDPA. TglPerolehan <= '$tglAkhirDefault'
+								   AND KDPA.TglPembukuan >='$tglAwalDefault' AND KDPA.TglPembukuan <='$tglAkhirDefault'";
+			
+		}elseif($thnceck >= $thnIntraDefault || $thnceck < $thnFix){
+			//2008-01-01 sampe 2009-12-01
+			$extQuery_A_default = "AND T.TglPerolehan >= '$tglAwalDefault' AND T.TglPerolehan <= '$tglAkhirDefault' 
+									AND T.TglPembukuan >='$tglAwalDefault' AND T.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_B_cndt = "AND M.TglPerolehan >= '$tglAwalDefault' AND M. TglPerolehan <='$tglIntraDefault' ";
+			$extQuery_C_cndt = "AND B.TglPerolehan >= '$tglAwalDefault' AND B. TglPerolehan <='$tglIntraDefault' ";
+			$extQuery_D_default = "AND J.TglPerolehan >= '$tglAwalDefault' AND J.TglPerolehan <= '$tglAkhirDefault'
+								   AND J.TglPembukuan >='$tglAwalDefault' AND J.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_E_default = "AND AL.TglPerolehan >= '$tglAwalDefault' AND AL. TglPerolehan <= '$tglAkhirDefault'
+									AND AL.TglPembukuan >='$tglAwalDefault' AND AL.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_F_default = "AND KDPA.TglPerolehan >= '$tglAwalDefault' AND KDPA. TglPerolehan <= '$tglAkhirDefault'
+									AND KDPA.TglPembukuan >='$tglAwalDefault' AND KDPA.TglPembukuan <='$tglAkhirDefault'";
+			
+		}else{
+			$extQuery_A_default = "AND T.TglPerolehan >= '$tglAwalDefault' AND T.TglPerolehan <= '$tglAkhirDefault'
+								   AND T.TglPembukuan >='$tglAwalDefault' AND T.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_B_cndt = "AND M.TglPerolehan >= '$tglAwalDefault' AND M. TglPerolehan <='$tglIntraDefault' ";
+			$extQuery_C_cndt = "AND B.TglPerolehan >= '$tglAwalDefault' AND B. TglPerolehan <='$tglIntraDefault' ";
+			$extQuery_D_default = "AND J.TglPerolehan >= '$tglAwalDefault' AND J.TglPerolehan <= '$tglAkhirDefault'
+									AND J.TglPembukuan >='$tglAwalDefault' AND J.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_E_default = "AND AL.TglPerolehan >= '$tglAwalDefault' AND AL. TglPerolehan <= '$tglAkhirDefault' 
+									AND AL.TglPembukuan >='$tglAwalDefault' AND AL.TglPembukuan <='$tglAkhirDefault'";
+			$extQuery_F_default = "AND KDPA.TglPerolehan >= '$tglAwalDefault' AND KDPA. TglPerolehan <= '$tglAkhirDefault'
+									AND KDPA.TglPembukuan >='$tglAwalDefault' AND KDPA.TglPembukuan <='$tglAkhirDefault'";
+			
+		}
+		if($FlagAset == 1){
+			$kondisiTanah ="";
+			$kondisiMesin = " AND M.kondisi != 3 ";
+			$kondisiBangunan = " AND B.kondisi != 3 ";
+			$kondisiJaringan = " AND J.kondisi != 3 ";
+			$kondisiAsetLain = " AND AL.kondisi != 3 ";
+			$kondisiKDP = "";
+			$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+			$expld = explode('-', $tglakhirperolehan);
+			if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
+				$tahun = $TAHUN_AKTIF;
+				$tableNeracaTanah 		= "neraca_tanah".$tahun;
+				$tableNeracaMesin 		= "neraca_mesin".$tahun;
+				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaKdp 		= "neraca_kdp".$tahun;
+			}else{
+				$tableNeracaTanah 		= "tanahView";
+				$tableNeracaMesin 		= 'mesin_ori';
+				$tableNeracaBangunan 	= 'bangunan_ori';
+				$tableNeracaJaringan 	= "jaringan_ori";
+				$tableNeracaAsetLain	= "asetlain_ori";
+				$tableNeracaKdp 		= "kdp_ori";
+			}	
+		}else{
+
+			$kondisiTanah = " AND T.kondisi = 3 ";
+			$kondisiMesin = " AND M.kondisi = 3 ";
+			$kondisiBangunan = " AND B.kondisi = 3 ";
+			$kondisiJaringan = " AND J.kondisi = 3 ";
+			$kondisiAsetLain = " AND AL.kondisi = 3 ";
+			$kondisiKDP = " AND KDPA.kondisi = 3 ";
+
+			$tableNeracaTanah 		= "tanahView";
+			$tableNeracaMesin 		= 'mesin_ori';
+			$tableNeracaBangunan 	= 'bangunan_ori';
+			$tableNeracaJaringan 	= "jaringan_ori";
+			$tableNeracaAsetLain	= "asetlain_ori";
+			$tableNeracaKdp 		= "kdp_ori"; 
+		}
+		$KodeKa_mesin = "OR M.kodeKA = 1";
+		$KodeKa_bangunan = "OR B.kodeKA = 1";
+		$KodeKaCondt1_mesin = "AND M.kodeKA = 1";
+		$KodeKaCondt1_bangunan = "AND B.kodeKA = 1";
+		
+		foreach ($satker2 as $key => $skpdId) {
+			# code...
+			$query_01 = "select SUM(T.NilaiPerolehan) as Nilai,
+					GROUP_CONCAT(T.noRegister) as noReg,
+					T.kodeSatker,T.kodeKelompok, T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,
+					K.Kode, K.Uraian
+				from 
+					$tableNeracaTanah as T,kelompok as K
+				where
+					T.kodeKelompok=K.Kode  and T.Status_Validasi_Barang =1 and T.StatusTampil =1 AND T.kodeLokasi like '12%'
+					$extQuery_A_default $kondisiTanah AND T.kodeSatker = '$skpdId'
+				group by 
+					T.kodeKelompok, T.kodeSatker,T.Tahun,T.NilaiPerolehan, T.AsalUsul,T.Info, T.TglPerolehan,T.TglPembukuan,T.Alamat,T.LuasTotal,T.HakTanah, T.NoSertifikat, T.TglSertifikat, T.Penggunaan,T.kodeRuangan,T.kodeLokasi,T.kondisi,
+					K.Kode, K.Uraian
+				order by 
+					T.kodeKelompok";
+
+			$query_02_default = "select SUM(M.NilaiPerolehan) as Nilai,
+					SUM(M.PenyusutanPerTahun) as Ppt,
+					SUM(M.AkumulasiPenyusutan) as Ap,SUM(M.NilaiBuku) as Nb,
+					GROUP_CONCAT(M.noRegister) as noReg,
+					M.kodeSatker,
+					M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+					M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
+					M.Silinder,M.kodeLokasi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
+				from 
+					$tableNeracaMesin as M,kelompok as K 
+				where 
+					M.kodeKelompok=K.Kode  
+					 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 AND M.kodeLokasi like '12%'
+					 $extQuery_B_default $KodeKaCondt1_mesin $kondisiMesin AND M.kodeSatker = '$skpdId'
+				group by 
+					M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+					M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+					M.kodeLokasi,M.kondisi, K.Kode, K.Uraian 
+				order by 
+					M.kodeKelompok";	
+
+			$query_02_condt = "select  SUM(M.NilaiPerolehan) as Nilai,
+					SUM(M.PenyusutanPerTahun) as Ppt,
+					SUM(M.AkumulasiPenyusutan) as Ap,SUM(M.NilaiBuku) as Nb,
+					GROUP_CONCAT(M.noRegister) as noReg,
+					M.kodeSatker,
+					M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+					M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.kondisi,
+					M.Silinder,M.kodeLokasi, K.Kode, K.Uraian,M.PenyusutanPerTahun,M.AkumulasiPenyusutan,M.NilaiBuku
+				from 
+					$tableNeracaMesin as M,kelompok as K 
+				where 
+					M.kodeKelompok=K.Kode  
+					 and M.Status_Validasi_Barang =1 and M.StatusTampil =1 and (M.NilaiPerolehan >= 300000 $KodeKa_mesin) AND M.kodeLokasi like '12%'
+				 	$extQuery_B_cndt $kondisiMesin AND M.kodeSatker = '$skpdId'
+				group by 
+					M.kodeSatker,M.kodeKelompok,M.NilaiPerolehan, M.AsalUsul, M.Info, M.TglPerolehan,M.TglPembukuan,
+					M.Tahun,M.Alamat, M.Merk,M.Ukuran,M.Material,M.NoSeri, M.NoRangka,M.NoMesin,M.NoSTNK,M.NoBPKB,M.Silinder,
+					M.kodeLokasi,M.kondisi, K.Kode, K.Uraian 
+				order by 
+					M.kodeKelompok";	
+
+			$query_03_default = "select SUM(B.NilaiPerolehan) as Nilai,
+				SUM(B.PenyusutanPerTahun) as Ppt,
+				SUM(B.AkumulasiPenyusutan) as Ap,SUM(B.NilaiBuku) as Nb,
+				GROUP_CONCAT(B.noRegister) as noReg, 
+				B.kodeSatker,
+				B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+				B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+				B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+				B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+				K.Kode, K.Uraian,B.PenyusutanPerTahun,B.AkumulasiPenyusutan,B.NilaiBuku
+			from 
+				$tableNeracaBangunan as B,kelompok as K  
+			where
+				B.kodeKelompok = K.Kode 
+				and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 AND B.kodeLokasi like '12%'
+				$extQuery_C_default $KodeKaCondt1_bangunan $kondisiBangunan AND B.kodeSatker = '$skpdId'
+			group by 
+				B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+				B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+				B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+				B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
+				K.Kode, K.Uraian
+			order by B.kodeKelompok";				
+
+			$query_03_condt = "select SUM(B.NilaiPerolehan) as Nilai,
+				SUM(B.PenyusutanPerTahun) as Ppt,
+				SUM(B.AkumulasiPenyusutan) as Ap,SUM(B.NilaiBuku) as Nb,
+				GROUP_CONCAT(B.noRegister) as noReg, 
+				B.kodeSatker,
+				B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+				B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+				B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+				B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,B.kondisi,
+				K.Kode, K.Uraian,B.PenyusutanPerTahun,B.AkumulasiPenyusutan,B.NilaiBuku
+			from 
+				$tableNeracaBangunan as B,kelompok as K  
+			where
+				B.kodeKelompok = K.Kode 
+				and B.Status_Validasi_Barang = 1 and B.StatusTampil =1 and (B.NilaiPerolehan >= 10000000 $KodeKa_bangunan) AND B.kodeLokasi like '12%'
+				$extQuery_C_cndt $kondisiBangunan AND B.kodeSatker = '$skpdId'
+			group by 
+				B.kodeSatker,B.kodeKelompok,B.NilaiPerolehan, B.AsalUsul,
+				B.Info, B.TglPerolehan,B.TglPembukuan,B.Tahun,B.Alamat,
+				B.JumlahLantai, B.Beton, B.LuasLantai,B.NoSurat,
+				B.TglSurat,B.StatusTanah,B.kondisi,B.kodeRuangan,B.kodeLokasi,
+				K.Kode, K.Uraian
+			order by B.kodeKelompok";
+
+			$query_04 = "select SUM(J.NilaiPerolehan) as Nilai,
+				SUM(J.PenyusutanPerTahun) as Ppt,
+				SUM(J.AkumulasiPenyusutan) as Ap,SUM(J.NilaiBuku) as Nb,
+				GROUP_CONCAT(J.noRegister) as noReg,
+				J.kodeSatker,
+				J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+				J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+				J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+				J.kondisi, J.kodeLokasi,
+				K.Kode, K.Uraian,J.PenyusutanPerTahun,J.AkumulasiPenyusutan,J.NilaiBuku
+			from 
+				$tableNeracaJaringan as J,kelompok as K  
+			where
+				J.kodeKelompok = K.Kode 
+				 and J.Status_Validasi_Barang =1 and J.StatusTampil =1  AND J.kodeLokasi like '12%'
+				$extQuery_D_default $kondisiJaringan AND J.kodeSatker = '$skpdId'
+			group by 
+				J.kodeSatker,J.kodeKelompok,J.NilaiPerolehan, J.AsalUsul,J.kodeRuangan,
+				J.Info, J.TglPerolehan,J.TglPembukuan,J.Tahun,J.Alamat,
+				J.Konstruksi, J.Panjang, J.Lebar, J.TglDokumen, J.NoDokumen, J.StatusTanah,J.LuasJaringan,
+				J.kondisi, J.kodeLokasi,J.kondisi,
+				K.Kode, K.Uraian
+			order by J.kodeKelompok";	
+
+			$query_05 = "select SUM(AL.NilaiPerolehan) as Nilai,
+				GROUP_CONCAT(AL.noRegister) as noReg,
+				AL.kodeSatker,
+				AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+				AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+				AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+				AL.kondisi, AL.kodeLokasi,
+				K.Kode, K.Uraian
+			from 
+				$tableNeracaAsetLain as AL,kelompok as K  
+			where
+				AL.kodeKelompok = K.Kode 
+				and AL.Status_Validasi_Barang =1 and AL.StatusTampil =1 AND AL.kodeLokasi like '12%'
+				$extQuery_E_default $kondisiAsetLain AND AL.kodeSatker = '$skpdId'
+			group by 
+				AL.kodeSatker,AL.kodeKelompok,AL.NilaiPerolehan, AL.AsalUsul,
+				AL.Info, AL.TglPerolehan,AL.TglPembukuan,AL.Tahun,AL.Alamat,
+				AL.Judul, AL.Spesifikasi, AL.AsalDaerah, AL.Pengarang, AL.Material, AL.Ukuran, AL.TahunTerbit, 
+				AL.kondisi, AL.kodeLokasi,AL.kondisi,
+				K.Kode, K.Uraian
+			order by AL.kodeKelompok";
+
+			$query_06 = "select SUM(KDPA.NilaiPerolehan) as Nilai,
+				GROUP_CONCAT(KDPA.noRegister) as noReg,
+				KDPA.kodeSatker,
+				KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+				KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+				KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+				KDPA.kondisi, KDPA.kodeLokasi,
+				K.Kode, K.Uraian
+			from 
+				$tableNeracaKdp as KDPA,kelompok as K  
+			where
+				KDPA.kodeKelompok = K.Kode  
+				 and KDPA.Status_Validasi_Barang =1 and KDPA.StatusTampil =1
+				 $extQuery_F_default $kondisiKDP AND KDPA.kodeSatker = '$skpdId'
+			group by 
+				KDPA.kodeSatker,KDPA.kodeKelompok,KDPA.KodeRuangan,KDPA.NilaiPerolehan, KDPA.AsalUsul,
+				KDPA.Info, KDPA.TglPerolehan,KDPA.TglPembukuan,KDPA.Tahun,KDPA.Alamat,
+				KDPA.Konstruksi, KDPA.JumlahLantai, KDPA.Beton, KDPA.LuasLantai, KDPA.NoSertifikat, KDPA.TglSertifikat,
+				KDPA.kondisi, KDPA.kodeLokasi,KDPA.kondisi,
+				K.Kode, K.Uraian	
+			order by KDPA.kodeKelompok";
+
+			if($thnceck < $thnIntraDefault){
+				// echo "sini aja";
+				$dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+			}elseif($thnceck >= $thnIntraDefault || $thnceck < $thnFix){
+				// echo "tahun awal tidak sama tahun akhir";
+				$dataQuery = array($query_01,$query_02_condt,$query_03_condt,$query_04,$query_05,$query_06);
+			}else{
+				// echo "tahun awal sama tahun akhir";
+				$dataQuery = array($query_01,$query_02_default,$query_02_condt,$query_03_default,$query_03_condt,$query_04,$query_05,$query_06);
+			}
+
+			if(is_array($dataQuery)){
+				$hit = count($dataQuery);
+				if($hit == 0){
+					$data ='';
+				}else{
+				// echo "array query";
+				// echo "<br>";
+					$x = 0;
+					for ($i = 0; $i < count($dataQuery); $i++)
+						{
+							/*echo "query_$i =".$dataQuery[$i];
+							echo "<br>";
+							echo "<br>";*/
+							// exit;
+							$result_golongan = $this->query($dataQuery[$i]) or die ($this->error('error dataQuery'));
+							if ($result_golongan)
+							{
+							  
+							   while ($dataArr = mysql_fetch_assoc($result_golongan))
+								{
+									$data[] = $dataArr;
+									$register = $dataArr['noReg'];
+									sort($register);
+									$urut = $this->sortirNoReg($register);
+									$data[$x]['noRegister'] = $urut;
+									$x++;
+								}
+							}
+							$result_golongan = '';
+
+						}
+				}	
+			}
+		}
+		if (!$data) {
+			return '';
+		}
+		return $data;
+	}
+
 	//laporan tambahan
 	public function ceckKib ($satker,$tahun,$paramKib,$flag){
 		foreach ($satker as $Satker_ID)
