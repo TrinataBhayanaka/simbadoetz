@@ -4928,6 +4928,7 @@ class core_api_report extends DB {
 				$tableNeracaKdp 		= "kdp_ori";
 			}	
 		}else{
+			$tahun = $TAHUN_AKTIF;
 
 			$kondisiTanah = " AND T.kondisi = 3 ";
 			$kondisiMesin = " AND M.kondisi = 3 ";
@@ -4936,12 +4937,19 @@ class core_api_report extends DB {
 			$kondisiAsetLain = " AND AL.kondisi = 3 ";
 			$kondisiKDP = " AND KDPA.kondisi = 3 ";
 
-			$tableNeracaTanah 		= "tanahView";
+			/*$tableNeracaTanah 		= "tanahView";
 			$tableNeracaMesin 		= 'mesin_ori';
 			$tableNeracaBangunan 	= 'bangunan_ori';
 			$tableNeracaJaringan 	= "jaringan_ori";
 			$tableNeracaAsetLain	= "asetlain_ori";
-			$tableNeracaKdp 		= "kdp_ori"; 
+			$tableNeracaKdp 		= "kdp_ori";*/ 
+
+			$tableNeracaTanah 		= "nasetlainnya_tanah".$tahun;
+			$tableNeracaMesin 		= "nasetlainnya_mesin2017".$tahun;
+			$tableNeracaBangunan 	= "nasetlainnya_bangunan2017".$tahun;
+			$tableNeracaJaringan 	= "nasetlainnya_jaringan2017".$tahun;
+			$tableNeracaAsetLain	= "nasetlainnya_asetlain2017".$tahun;
+			$tableNeracaKdp 		= "nasetlainnya_kdp2017".$tahun;
 		}
 		$KodeKa_mesin = "OR M.kodeKA = 1";
 		$KodeKa_bangunan = "OR B.kodeKA = 1";
