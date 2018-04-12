@@ -8,7 +8,7 @@ include "../../config/config.php";
 	include"$path/header.php";
 	include"$path/menu.php";
 	
-	 $menu_id = 75;
+	 $menu_id = 77;
      $SessionUser = $SESSION->get_session_user();
      ($SessionUser['ses_uid'] != '') ? $Session = $SessionUser : $Session = $SESSION->get_session(array('title' => 'GuestMenu', 'ses_name' => 'menu_without_login'));
      $USERAUTH->FrontEnd_check_akses_menu($menu_id, $Session);
