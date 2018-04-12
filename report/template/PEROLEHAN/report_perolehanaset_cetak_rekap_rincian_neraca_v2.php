@@ -326,7 +326,11 @@ $param_tgl = $tglakhirperolehan ;
 				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 				sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 				Status_Validasi_barang,kodeSatker from $gol m
 				 where $param_where
@@ -343,7 +347,11 @@ $param_tgl = $tglakhirperolehan ;
 				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 				sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 				(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 				Status_Validasi_barang,kodeSatker from $gol m
 				 where $param_where
@@ -369,7 +377,11 @@ $param_tgl = $tglakhirperolehan ;
 					sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 					sum(NilaiPerolehan_Awal)as nilaiAwal,
 					sum(PenyusutanPerTahun_Awal)as PPAwal,
-					sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+					sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+					sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+                    sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+                    sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+                    sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 					Status_Validasi_barang,kodeSatker from $gol m
 					where $param_where
@@ -389,7 +401,11 @@ $param_tgl = $tglakhirperolehan ;
 					sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 					sum(NilaiPerolehan_Awal)as nilaiAwal,
 					sum(PenyusutanPerTahun_Awal)as PPAwal,
-					sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+					sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+					sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+                    sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+                    sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+                    sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 					(select Uraian from kelompok where kode=SUBSTRING_INDEX(kodeKelompok,'.',1)) as Uraian,
 					Status_Validasi_barang,kodeSatker from $gol m
 					where $param_where
@@ -431,25 +447,31 @@ $data=array();
 			$ap_total = $ap_total + $gol[AP];
 			$nb_total = $nb_total + $gol[NB];
 			
+			/*
 			$mutasi = $gol[nilai] - $gol[nilaiAwal];
 			if($mutasi < 0){
 				$mutasiTambah = 0;
 				$mutasiKurang = abs($mutasi);
 			}else{
 				$mutasiTambah = abs($mutasi);
-				$mutasiKurang = 0;	
-			}
+				$mutasiKurang = 0;
+			}*/
+
+            $mutasiTambah = $gol[MutasiTambah];
+            $mutasiKurang = $gol[MutasiKurang];
 			$mutasiTambahTot = $mutasiTambahTot + $mutasiTambah;
 			$mutasiKurangTot = $mutasiKurangTot + $mutasiKurang;
 
-			$mutasiAP = $gol[AP] - $gol[APAwal];
+			/*$mutasiAP = $gol[AP] - $gol[APAwal];
 			if($mutasiAP < 0){
 				$mutasiTambahAP = 0;
 				$mutasiKurangAP = abs($mutasiAP);
 			}else{
 				$mutasiTambahAP = abs($mutasiAP);
-				$mutasiKurangAP = 0;	
-			}
+				$mutasiKurangAP = 0;
+			}*/
+            $mutasiTambahAP=$gol[AkmTambah];
+            $mutasiKurangAP=$gol[AkmKurang];
 			$mutasiTambahTotAP = $mutasiTambahTotAP + $mutasiTambahAP;
 			$mutasiKurangTotAP = $mutasiKurangTotAP + $mutasiKurangAP;
 		$body.="<tr>
@@ -465,11 +487,11 @@ $data=array();
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[APAwal],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[NBAwal],2,",",".")."</td>
 
-					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
-					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[MutasiKurang],2,",",".")."</td>
+					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[MutasiTambah],2,",",".")."</td>
 					
-					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
-					<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
+					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[AkmKurang],2,",",".")."</td>
+					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[AkmTambah],2,",",".")."</td>
 					
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[nilai],2,",",".")."</td>
 					<td style=\"font-weight: bold; text-align: right;\">".number_format($gol[PP],2,",",".")."</td>
@@ -495,7 +517,7 @@ $data=array();
                                 <td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[NB],2,",",".")."</td>
 							</tr>";*/	
 
-					$mutasi = $bidang[nilai] - $bidang[nilaiAwal];
+					/*$mutasi = $bidang[nilai] - $bidang[nilaiAwal];
 					if($mutasi < 0){
 						$mutasiTambah = 0;
 						$mutasiKurang = abs($mutasi);
@@ -510,7 +532,7 @@ $data=array();
 					}else{
 						$mutasiTambahAP = abs($mutasiAP);
 						$mutasiKurangAP = 0;	
-					}
+					}*/
 					$body.="<tr>
 							<td>&nbsp;</td>
 							<td style=\"font-weight: bold;\">{$bidang[Bidang]}</td>
@@ -524,11 +546,11 @@ $data=array();
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[APAwal],2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[NBAwal],2,",",".")."</td>
 
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[MutasiKurang],2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[MutasiTambah],2,",",".")."</td>
 							
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[AkmKurang],2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[AkmTambah],2,",",".")."</td>
 							
 
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($bidang[nilai],2,",",".")."</td>
@@ -555,13 +577,13 @@ $data=array();
 								<td style=\"text-align: right;\">".number_format($Kelompok[AP],2,",",".")."</td>
 								<td style=\"text-align: right;\">".number_format($Kelompok[NB],2,",",".")."</td>
 							</tr>";*/
-					$mutasi = $Kelompok[nilai] - $Kelompok[nilaiAwal];
+					/*$mutasi = $Kelompok[nilai] - $Kelompok[nilaiAwal];
 					if($mutasi < 0){
 						$mutasiTambah = 0;
 						$mutasiKurang = abs($mutasi);
 					}else{
 						$mutasiTambah = abs($mutasi);
-						$mutasiKurang = 0;	
+						$mutasiKurang = 0;
 					}
 
 					$mutasiAP = $Kelompok[AP] - $Kelompok[APAwal];
@@ -570,8 +592,8 @@ $data=array();
 						$mutasiKurangAP = abs($mutasiAP);
 					}else{
 						$mutasiTambahAP = abs($mutasiAP);
-						$mutasiKurangAP = 0;	
-					}
+						$mutasiKurangAP = 0;
+					}*/
 
 					$body.="<tr>
 							<td>&nbsp;</td>
@@ -586,11 +608,11 @@ $data=array();
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[APAwal],2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[NBAwal],2,",",".")."</td>
 
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[MutasiKurang],2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[MutasiTambah],2,",",".")."</td>
 							
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
-							<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[AkmKurang],2,",",".")."</td>
+							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[AkmTambah],2,",",".")."</td>
 							
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[nilai],2,",",".")."</td>
 							<td style=\"font-weight: bold; text-align: right;\">".number_format($Kelompok[PP],2,",",".")."</td>
@@ -615,7 +637,7 @@ $data=array();
 										<td style=\"text-align: right;\">".number_format($Sub[AP],2,",",".")."</td>
 										<td style=\"text-align: right;\">".number_format($Sub[NB],2,",",".")."</td>
 									</tr>";*/
-							$mutasi = $Sub[nilai] - $Sub[nilaiAwal];
+							/*$mutasi = $Sub[nilai] - $Sub[nilaiAwal];
 							if($mutasi < 0){
 								$mutasiTambah = 0;
 								$mutasiKurang = abs($mutasi);
@@ -631,7 +653,7 @@ $data=array();
 							}else{
 								$mutasiTambahAP = abs($mutasiAP);
 								$mutasiKurangAP = 0;	
-							}
+							}*/
 							$body.="<tr>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
@@ -645,11 +667,11 @@ $data=array();
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[APAwal],2,",",".")."</td>
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[NBAwal],2,",",".")."</td>
 
-									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
-									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
+									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[MutasiKurang],2,",",".")."</td>
+									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[MutasiTambah],2,",",".")."</td>
 									
-									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
-									<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
+									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[AkmKurang],2,",",".")."</td>
+									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[AkmTambah],2,",",".")."</td>
 									
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[nilai],2,",",".")."</td>
 									<td style=\"font-weight: bold; text-align: right;\">".number_format($Sub[PP],2,",",".")."</td>
@@ -694,7 +716,7 @@ $data=array();
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
-										<td style=\"font-weight: bold;\">{$SubSub[SubSub]}</td>
+										<td style=\"font-weight: bold;\">{$SubSub[subsub]}</td>
 										<td style=\"font-weight: bold;\">{$SubSub[Uraian]}</td>
 										<td style=\"text-align: center; font-weight: bold;\">{$SubSub[jml]}</td>
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[nilaiAwal],2,",",".")."</td>
@@ -702,11 +724,11 @@ $data=array();
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[APAwal],2,",",".")."</td>
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[NBAwal],2,",",".")."</td>
 
-										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurang,2,",",".")."</td>
-										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambah,2,",",".")."</td>
-
-										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiKurangAP,2,",",".")."</td>
-										<td style=\"font-weight: bold; text-align: right;\">".number_format($mutasiTambahAP,2,",",".")."</td>
+										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[MutasiKurang],2,",",".")."</td>
+										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[MutasiTambah],2,",",".")."</td>
+										
+										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[AkmKurang],2,",",".")."</td>
+										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[AkmTambah],2,",",".")."</td>
 										
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[nilai],2,",",".")."</td>
 										<td style=\"font-weight: bold; text-align: right;\">".number_format($SubSub[PP],2,",",".")."</td>
@@ -783,7 +805,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 		   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 		   sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+			sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+			sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+			sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+			sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 		   (select Uraian from kelompok 
 		   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
 		   ) as Uraian,
@@ -803,7 +829,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 		   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 		   sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 		   (select Uraian from kelompok 
 		   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
 		   ) as Uraian,
@@ -832,7 +862,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			   sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			   (select Uraian from kelompok 
 			   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
 			   ) as Uraian,
@@ -858,7 +892,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			   sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			   (select Uraian from kelompok 
 			   where kode= SUBSTRING_INDEX(kodeKelompok,'.',2) 
 			   ) as Uraian,
@@ -916,7 +954,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			 sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			 (select Uraian from kelompok 
 			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
 			 ) as Uraian,
@@ -936,7 +978,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			 sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			 (select Uraian from kelompok 
 			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
 			 ) as Uraian,
@@ -965,7 +1011,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			 sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			 (select Uraian from kelompok 
 			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
 			 ) as Uraian,
@@ -991,7 +1041,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			 sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			 sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			 (select Uraian from kelompok 
 			 where kode= SUBSTRING_INDEX(kodeKelompok,'.',3) 
 			 ) as Uraian,
@@ -1052,7 +1106,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			(select Uraian from kelompok 
 			where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
 			) as Uraian,
@@ -1071,7 +1129,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			sum(NilaiPerolehan_Awal)as nilaiAwal,
 			sum(PenyusutanPerTahun_Awal)as PPAwal,
-			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+			sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 			(select Uraian from kelompok 
 			where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
 			) as Uraian,
@@ -1100,7 +1162,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 				sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 				(select Uraian from kelompok 
 				where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
 				) as Uraian,
@@ -1126,7 +1192,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 				sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 				sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
 				(select Uraian from kelompok 
 				where kode= SUBSTRING_INDEX(kodeKelompok,'.',4) 
 				) as Uraian,
@@ -1184,7 +1254,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			   sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
                (select Uraian from kelompok 
                where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
                ) as Uraian,
@@ -1203,7 +1277,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			   sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
                (select Uraian from kelompok 
                where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
                ) as Uraian,
@@ -1232,7 +1310,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			   sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
                (select Uraian from kelompok 
                where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
                ) as Uraian,
@@ -1258,7 +1340,11 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			   sum(PenyusutanPerTahun)as PP,sum(AkumulasiPenyusutan)as AP,sum(NilaiBuku)as NB,
 			   sum(NilaiPerolehan_Awal)as nilaiAwal,
 				sum(PenyusutanPerTahun_Awal)as PPAwal,
-				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku)as NBAwal,
+				sum(AkumulasiPenyusutan_Awal)as APAwal,sum(NilaiBuku_Awal)as NBAwal,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)>=0 Then (NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiTambah,
+				sum(case when (NilaiPerolehan-NilaiPerolehan_awal)<0 Then abs(NilaiPerolehan-NilaiPerolehan_awal) else 0 end ) as MutasiKurang,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)>=0 Then (AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmTambah,
+				sum(case when (AkumulasiPenyusutan-AkumulasiPenyusutan_awal)<0 Then abs(AkumulasiPenyusutan-AkumulasiPenyusutan_awal) else 0 end ) as AkmKurang,
                (select Uraian from kelompok 
                where kode= SUBSTRING_INDEX(kodeKelompok,'.',5) 
                ) as Uraian,
