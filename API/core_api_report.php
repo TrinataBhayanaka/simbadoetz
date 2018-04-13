@@ -4945,11 +4945,11 @@ class core_api_report extends DB {
 			$tableNeracaKdp 		= "kdp_ori";*/ 
 
 			$tableNeracaTanah 		= "nasetlainnya_tanah".$tahun;
-			$tableNeracaMesin 		= "nasetlainnya_mesin2017".$tahun;
-			$tableNeracaBangunan 	= "nasetlainnya_bangunan2017".$tahun;
-			$tableNeracaJaringan 	= "nasetlainnya_jaringan2017".$tahun;
-			$tableNeracaAsetLain	= "nasetlainnya_asetlain2017".$tahun;
-			$tableNeracaKdp 		= "nasetlainnya_kdp2017".$tahun;
+			$tableNeracaMesin 		= "nasetlainnya_mesin".$tahun;
+			$tableNeracaBangunan 	= "nasetlainnya_bangunan".$tahun;
+			$tableNeracaJaringan 	= "nasetlainnya_jaringan".$tahun;
+			$tableNeracaAsetLain	= "nasetlainnya_asetlain".$tahun;
+			$tableNeracaKdp 		= "nasetlainnya_kdp".$tahun;
 		}
 		$KodeKa_mesin = "OR M.kodeKA = 1";
 		$KodeKa_bangunan = "OR B.kodeKA = 1";
