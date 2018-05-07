@@ -54,7 +54,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							</li>
 							<li>
 							<?php 
-								selectSatker('kodeSatker','255',true,false,false,true);
+								selectSatker('kodeSatker','255',true,false,false);
 							?>
 							<br/>
 							</li>
@@ -95,7 +95,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 							</li>
 							<li>
 							<?php 
-								selectSatker('kodeSatker2','255',true,false,false,true);
+								selectSatker('kodeSatker2','255',true,false,false);
 							?>
 							<br/>
 							</li>
