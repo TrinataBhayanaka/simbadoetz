@@ -4,7 +4,7 @@ include "../../../config/config.php";
 $USERAUTH = new UserAuth();
 $SESSION = new Session();
 // $menu_id = 64;
-$menu_id = 63;
+$menu_id = 62;
 $SessionUser = $SESSION->get_session_user();
 $USERAUTH->FrontEnd_check_akses_menu($menu_id,$SessionUser);
 ?>
