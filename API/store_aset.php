@@ -3080,7 +3080,7 @@ $id_kapitalisasi_aset=  get_auto_increment("KapitalisasiAset");
          //cek tahun
         if($tblAset['Tahun']==""||$tblAset['Tahun']=="0"){
             $sql = "SELECT Tahun FROM aset WHERE Aset_ID = '{$data['Aset_ID']}'";
-            echo $sql;
+            //echo $sql;
             $tahun_aset = $this->fetch($sql);
             $tblAset['Tahun'] = abs($tahun_aset['Tahun']);
         }

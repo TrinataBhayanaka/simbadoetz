@@ -294,6 +294,8 @@ if (!empty($data)){
 			$kondisi = "Rusak Ringan";
 		}elseif($aRow['kondisi'] == 3){
 			$kondisi = "Rusak Berat";
+		}elseif($aRow['kondisi'] == 4){
+			$kondisi = "Non Aktif";
 		}
 		
 		$checkbox   = "<input type=\"checkbox\" class =\"icheck-input checkbox\" name=\"id_aset[]\" value=\"$id\" onchange=\"return AreAnyCheckboxesChecked();\" $aRow[checked]>";

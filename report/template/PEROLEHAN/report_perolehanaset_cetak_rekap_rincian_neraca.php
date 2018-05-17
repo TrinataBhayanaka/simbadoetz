@@ -288,7 +288,7 @@ $splitKodeSatker = explode ('.',$param_satker);
 // $param_tgl = "2015-01-01";
 $param_tgl = $tglakhirperolehan ;
 	if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
-		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'   and 
 						( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 						(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 						and $paramSatker";
@@ -302,7 +302,7 @@ $param_tgl = $tglakhirperolehan ;
 				group by golongan";	
 
 	}elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
-		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+		$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'  and 
 						( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 						(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 						and $paramSatker";
@@ -320,13 +320,14 @@ $param_tgl = $tglakhirperolehan ;
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%' 
-					 and kondisi != '3'					 
+					 and kondisi != '3' and kondisi != '4'					 
 					 and $paramSatker";
 		else
 		    $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%' 
+					 and kondisi != '3' and kondisi != '4'
 					 and $paramSatker";
 		 
 		 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
@@ -500,7 +501,7 @@ if(count($splitKodeSatker) == 4){
 }
 $param_tgl = $pt;
 if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'  and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 					and $paramSatker";
@@ -517,7 +518,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 		   group by bidang";   
 
 }elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'  and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 					and $paramSatker";
@@ -538,13 +539,14 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%' 
-					 and kondisi != '3'					 
+					 and kondisi != '3' and kondisi != '4'				 
 					 and $paramSatker";
 		else
 		    $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
-					 and kodeLokasi like '12%' 
+					 and kodeLokasi like '12%'
+					 and kondisi != '3' and kondisi != '4' 
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
@@ -601,7 +603,7 @@ if(count($splitKodeSatker) == 4){
 }
 $param_tgl = $pt;
 if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'  and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					(TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 					and $paramSatker";
@@ -618,7 +620,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			 group by kelompok";		 
 
 }elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'   and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
@@ -639,13 +641,14 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%' 
-					 and kondisi != '3'					 
+					 and kondisi != '3' and kondisi != '4' 					 
 					 and $paramSatker";
 		else
 		    $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%' 
+					 and kondisi != '3' and kondisi != '4' 
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
@@ -705,7 +708,7 @@ if(count($splitKodeSatker) == 4){
 }
 $param_tgl = $pt;
 if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'   and 
 					( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 					  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 					 and $paramSatker";
@@ -721,7 +724,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 			 $param_where     
 			group by sub";	
 }elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'   and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
@@ -742,13 +745,14 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%' 
-					 and kondisi != '3'					 
+					 and kondisi != '3' and kondisi != '4' 					 
 					 and $paramSatker";
 		else
 		    $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
-					 and kodeLokasi like '12%' 
+					 and kodeLokasi like '12%'
+					 and kondisi != '3' and kondisi != '4'  
 					 and $paramSatker";
 				 
 	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){
@@ -805,7 +809,7 @@ if(count($splitKodeSatker) == 4){
 }
 $param_tgl = $pt;   
 if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'   and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodeLokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
@@ -821,7 +825,7 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
                  $param_where    
                group by subsub";    
 }elseif($gol == 'bangunan_ori' || $gol == $tableNeracaBangunan){
-	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3'  and 
+	$param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi != '3' and kondisi != '4'   and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodeLokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
@@ -842,13 +846,14 @@ if($gol == 'mesin_ori' || $gol == $tableNeracaMesin){
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodeLokasi like '12%' 
-					 and kondisi != '3'					 
+					 and kondisi != '3' and kondisi != '4' 				 
 					 and $paramSatker";
 		else
 		    $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
-					 and kodeLokasi like '12%' 
+					 and kodeLokasi like '12%'
+					 and kondisi != '3' and kondisi != '4'  
 					 and $paramSatker";
 	 
 	 if($gol == 'jaringan_ori' || $gol == $tableNeracaJaringan){

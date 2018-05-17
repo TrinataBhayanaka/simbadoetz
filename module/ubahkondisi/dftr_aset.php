@@ -24,15 +24,23 @@ include "../../config/config.php";
 		if($kondisi == 1){
 			$select="<option value=>Pilih Kondisi</option>
 					<option value=2>Rusak Ringan</option>
-					<option value=3>Rusak Berat</option>";
+					<option value=3>Rusak Berat</option>
+					<option value=4>Non Aktif</option>";
 		}elseif($kondisi == 2){
 			$select="<option value=>Pilih Kondisi</option>
 					<option value=1>Baik</option>
-					<option value=3>Rusak Berat</option>";
+					<option value=3>Rusak Berat</option>
+					<option value=4>Non Aktif</option>";
 		}elseif($kondisi == 3){
 			$select="<option value=>Pilih Kondisi</option>
 					<option value=1>Baik</option>
-					<option value=2>Rusak Ringan</option>";
+					<option value=2>Rusak Ringan</option>
+					<option value=4>Non Aktif</option>";
+		}elseif($kondisi == 4){
+			$select="<option value=>Pilih Kondisi</option>
+					<option value=1>Baik</option>
+					<option value=2>Rusak Ringan</option>
+					<option value=3>Rusak Berat</option>";
 		}
 
 ?>
@@ -100,7 +108,7 @@ include "../../config/config.php";
 			<ul>
 				<li>
 					<span class="span2">Satker</span>
-					<input type="text" value="<?=$resultSatker['NamaSatker']?>" disabled/>
+					<input type="text" value="<?=$resultSatker['NamaSatker']?>"  disabled/>
 				</li>
 				<li>
 					<span class="span2">Kondisi</span>

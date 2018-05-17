@@ -70,6 +70,7 @@ $USERAUTH->FrontEnd_check_akses_menu($menu_id, $SessionUser);
 						<option value="1">Baik</option>
 						<option value="2">Rusak Ringan</option>
 						<option value="3">Rusak Berat</option>
+						<option value="4">Non Aktif</option>
 					</select>
 				</li>
 				<li>&nbsp;</li>
