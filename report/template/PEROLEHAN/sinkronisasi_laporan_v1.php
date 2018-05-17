@@ -206,12 +206,12 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
                 statusvalidasi='$status_validasi_barang',kodeKa=1,kodelokasi='$kodelokasi',
                 TglPerolehan='$TglPerolehan',TglPembukuan='$TglPembukuan',
                 NilaiPerolehan_awal='$NP_awal',AkumulasiPenyusutan_awal='$ap_awal',NilaiBuku_awal='$nb_awal',
-                PenyusutanPertahun_awal='$pp_awal',kondisi='$kondisi', 
+                PenyusutanPertahun_awal='$pp_awal',kondisi='$kondisi'  
                 $keterangan
                 ";
 
 
-            $resultfinal = mysql_query($query) or die(mysql_error());
+            $resultfinal = mysql_query($query) or die($query." \n".mysql_error());
 
         }
         $i++;
