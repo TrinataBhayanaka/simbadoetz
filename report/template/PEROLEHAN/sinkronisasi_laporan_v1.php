@@ -196,6 +196,7 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
             $pp_awal = $value['pp'];
             $nb_awal = $value['nb'];
 
+            $kondisi = $value['kondisi'];
 
             $query = "replace into $table_neraca set Aset_ID='$Aset_ID', detail_key='$detail_key',
                 NilaiPerolehan='$NP',AkumulasiPenyusutan='$ap',NilaiBuku='$nb',
@@ -205,12 +206,12 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
                 statusvalidasi='$status_validasi_barang',kodeKa=1,kodelokasi='$kodelokasi',
                 TglPerolehan='$TglPerolehan',TglPembukuan='$TglPembukuan',
                 NilaiPerolehan_awal='$NP_awal',AkumulasiPenyusutan_awal='$ap_awal',NilaiBuku_awal='$nb_awal',
-                PenyusutanPertahun_awal='$pp_awal' 
+                PenyusutanPertahun_awal='$pp_awal',kondisi='$kondisi'  
                 $keterangan
                 ";
 
 
-            $resultfinal = mysql_query($query) or die(mysql_error());
+            $resultfinal = mysql_query($query) or die($query." \n".mysql_error());
 
         }
         $i++;
@@ -418,12 +419,12 @@ function subsub_awal($kode, $gol, $ps, $pt)
     }
     $param_tgl = $pt;
     if($gol == 'mesin_ori') {
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi!=3  and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi not in (3,4)  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodelokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
 
-        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,
+        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -435,12 +436,12 @@ function subsub_awal($kode, $gol, $ps, $pt)
                  $param_where    
                order by kelompok asc";
     } elseif($gol == 'bangunan_ori') {
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  and kondisi!=3 and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  and kondisi not in (3,4) and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 
-        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,
+        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -457,17 +458,18 @@ function subsub_awal($kode, $gol, $ps, $pt)
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodelokasi like '12%' 
-					 and kondisi!=3					 
+					 and kondisi not in (3,4)				 
 					 and $paramSatker";
         else
             $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodelokasi like '12%' 
+                     and kondisi not in (3,4)
 					 and $paramSatker";
 
         if($gol == 'jaringan_ori') {
-            $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,
+            $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -479,7 +481,7 @@ function subsub_awal($kode, $gol, $ps, $pt)
                  $param_where    
                order by kelompok asc";
         } else {
-            $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,
+            $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
               (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -519,12 +521,12 @@ function subsub($kode, $gol, $ps, $pt)
     $param_tgl = $pt;
     if($gol == 'mesin_ori') {
         $gol = "mesin";
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi!=3  and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi not in (3,4)  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl'  and kodelokasi like '12%' and (NilaiPerolehan >=300000 or kodeKa=1)))
 				 and $paramSatker";
 
-        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,TahunPenyusutan,
+        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,TahunPenyusutan,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -537,12 +539,12 @@ function subsub($kode, $gol, $ps, $pt)
                order by kelompok asc";
     } elseif($gol == 'bangunan_ori') {
         $gol = "bangunan";
-        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi!=3  and 
+        $param_where = "Status_Validasi_barang=1 and StatusTampil = 1 and kondisi not in (3,4)  and 
 				( (TglPerolehan < '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and kodeKa=1) or 
 				  (TglPerolehan >= '2008-01-01' and TglPembukuan <= '$param_tgl' and kodelokasi like '12%' and (NilaiPerolehan >=10000000  or kodeKa=1)))
 				 and $paramSatker";
 
-        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,TahunPenyusutan,
+        $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,TahunPenyusutan,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -559,18 +561,19 @@ function subsub($kode, $gol, $ps, $pt)
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodelokasi like '12%' 
-					 and kondisi!=3				 
+					 and kondisi not in (3,4)			 
 					 and $paramSatker";
         else
             $param_where = "Status_Validasi_barang=1 and StatusTampil = 1  
 					 and TglPerolehan <= '$param_tgl' 
 					 and TglPembukuan <='$param_tgl' 
 					 and kodelokasi like '12%' 
+                     and kondisi not in (3,4)
 					 and $paramSatker";
 
         if($gol == 'jaringan_ori') {
             $gol = "jaringan";
-            $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,TahunPenyusutan,
+            $sql = "select  kodeKelompok as kelompok,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,TahunPenyusutan,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                PenyusutanPerTahun as PP,Tahun as Tahun, noRegister as noRegister,
                AkumulasiPenyusutan as AP, NilaiBuku as NB,
@@ -588,7 +591,7 @@ function subsub($kode, $gol, $ps, $pt)
                 $gol = "tanah";
             else  $gol = "asetlain";
 
-            $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,
+            $sql = "select  kodeKelompok as kelompok,Tahun as Tahun, noRegister as noRegister,Aset_ID,TglPembukuan,TglPerolehan,kodelokasi,kodeSatker,kondisi,
                NilaiPerolehan as nilai,Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
                where kode= kodeKelompok 
@@ -632,13 +635,13 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
         //cek kapitalisasi
         $kapitalisasi_kondisi = " and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
-        $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi != '3'  and 
+        $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi not in (3,4)  and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and m.kodeKa=1) or 
 				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl'  and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and (m.NilaiPerolehan >=300000 or m.kodeKa=1)))
 				 and $paramSatker";
 
 
-        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,
+        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,m.kondisi as kondisi,
                l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -655,12 +658,12 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
         //cek kapitalisasi
         $kapitalisasi_kondisi = " and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
-        $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi != '3'  and 
+        $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1 and m.kondisi not in (3,4)  and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and m.kodeKa=1) or 
 				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and (m.NilaiPerolehan >=10000000  or m.kodeKa=1)))
 				 and $paramSatker";
 
-        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,
+        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,m.kondisi as kondisi,
                l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -678,13 +681,14 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
 					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and l.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
 					 and m.TglPembukuan <='$param_tgl' 
 					 and m.kodelokasi like '12%' 
-					 and m.kondisi != '3'					 
+					 and m.kondisi not in (3,4)					 
 					 and $paramSatker";
         else
             $param_where = "m.Status_Validasi_barang!=1 and m.StatusTampil != 1  
 					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and l.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
 					 and m.TglPembukuan <='$param_tgl' 
 					 and m.kodelokasi like '12%' 
+                      and m.kondisi not in (3,4)
 					 and $paramSatker";
 
         if($gol == 'jaringan_ori') {
@@ -693,7 +697,7 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
             //cek kapitalisasi
             $kapitalisasi_kondisi = " and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
-            $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,
+            $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,m.kondisi as kondisi,
                l.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -715,7 +719,7 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
             //cek kapitalisasi
             $kapitalisasi_kondisi = " and m.Aset_ID not in(select Aset_ID from log_$gol where  `action` LIKE 'Sukses kapitalisasi Mutasi%') ";
 
-            $sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,
+            $sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,m.kondisi as kondisi,
                     m.Aset_ID,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
@@ -763,13 +767,13 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
         //cek kapitalisasi
         $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
 
-        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and kondisi!=3  and 
+        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and kondisi not in (3,4)  and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and m.kodeKa=1) or 
 				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl'  and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and (m.NilaiPerolehan >=300000 or m.kodeKa=1)))
 				 and $paramSatker";
 
 
-        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,
+        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,m.kondisi as kondisi,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -786,12 +790,12 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
         //cek kapitalisasi
         $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
 
-        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and kondisi!=3  and 
+        $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1 and kondisi not in (3,4) and 
 				( (m.TglPerolehan < '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and m.kodeKa=1) or 
 				  (m.TglPerolehan >= '2008-01-01' and m.TglPembukuan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kodelokasi like '12%' and (m.NilaiPerolehan >=10000000  or m.kodeKa=1)))
 				 and $paramSatker";
 
-        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,
+        $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,m.kondisi as kondisi,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -808,13 +812,14 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
 					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
 					 and m.TglPembukuan <='$param_tgl' 
 					 and m.kodelokasi like '12%' 
-					 and kondisi!=3					 
+					 and kondisi not in (3,4)				 
 					 and $paramSatker";
         else
             $param_where = "m.Status_Validasi_barang=1 and m.StatusTampil =1  
 					 and m.TglPerolehan <= '$param_tgl' and m.TglPembukuan > '$tgl_pem' and m.kd_riwayat=3 and `action` like 'Sukses Mutasi%' 
 					 and m.TglPembukuan <='$param_tgl' 
 					 and m.kodelokasi like '12%' 
+                     and kondisi not in (3,4)
 					 and $paramSatker";
 
         if($gol == 'jaringan_ori') {
@@ -822,7 +827,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
             $gol = "jaringan";
             //cek kapitalisasi
             $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
-            $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,
+            $sql = "select  m.kodeKelompok as kelompok,m.Aset_ID,m.TahunPenyusutan,m.TglPerolehan,m.TglPembukuan,m.kodelokasi,m.kondisi as kondisi,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                m.PenyusutanPerTahun as PP,m.Tahun as Tahun, m.noRegister as noRegister,
                m.AkumulasiPenyusutan as AP, m.NilaiBuku as NB,
@@ -842,7 +847,7 @@ function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_ak
 
             //cek kapitalisasi
             $kondisi_transfer = " and m.Aset_ID not in($not_in_aset_hapus) ";
-            $sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,
+            $sql = "select  m.kodeKelompok as kelompok,m.Tahun as Tahun, m.noRegister as noRegister,m.kondisi as kondisi,
                     m.Aset_ID,
                m.NilaiPerolehan as nilai,m.Status_Validasi_barang as jml,
                 (select Uraian from kelompok 
@@ -903,6 +908,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'jml' ] += 1;
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'noRegister' ] =$arg[ 'noRegister' ];
         $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'kodelokasi' ] =$arg[ 'kodelokasi' ];
+        $data_awal[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'kondisi' ] =$arg[ 'kondisi' ];
     }
 
     $data_akhir = array();
@@ -929,6 +935,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_akhir[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'jml' ] += 1;
         $data_akhir[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'noRegister' ] =$arg[ 'noRegister' ];
         $data_akhir[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'kodelokasi' ] =$arg[ 'kodelokasi' ];
+        $data_akhir[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'kondisi' ] =$arg[ 'kondisi' ];
     }
 
     $data_hapus_tmp = array();
@@ -953,6 +960,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'jml' ] += 1;
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'noRegister' ] =$arg[ 'noRegister' ];
         $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'kodelokasi' ] =$arg[ 'kodelokasi' ];
+        $data_hapus_tmp[ $arg[ 'kelompok' ] . '.' . $arg[ 'Tahun' ] . '-' . $arg[ 'noRegister' ] . '-' . $arg[ 'Aset_ID' ] ][ 'kondisi' ] =$arg[ 'kondisi' ];
     }
 
 
@@ -1086,6 +1094,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_gabungan[ $tipe ][ 'TglPembukuan' ] = $value['TglPembukuan'];
         $data_gabungan[ $tipe ][ 'Aset_ID' ] = $value['Aset_ID'];
         $data_gabungan[ $tipe ][ 'kodelokasi' ] = $value['kodelokasi'];
+        $data_gabungan[ $tipe ][ 'kondisi' ] = $value['kondisi'];
 
     }
 //echo "array gabungan:<br/><pre>";
@@ -1168,6 +1177,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_awal[ $tipe ][ 'TglPembukuan' ] = $value['TglPembukuan'];
         $data_awal[ $tipe ][ 'Aset_ID' ] = $value['Aset_ID'];
         $data_awal[ $tipe ][ 'kodelokasi' ] = $value['kodelokasi'];
+        $data_awal[ $tipe ][ 'kondisi' ] = $value['kondisi'];
 
 
     }
@@ -1299,6 +1309,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_akhir[ $tipe ][ 'TglPembukuan' ] = $value['TglPembukuan'];
         $data_akhir[ $tipe ][ 'Aset_ID' ] = $value['Aset_ID'];
         $data_akhir[ $tipe ][ 'kodelokasi' ] = $value['kodelokasi'];
+        $data_akhir[ $tipe ][ 'kondisi' ] = $value['kondisi'];
 
 
     }
@@ -1384,6 +1395,7 @@ function group_data($data_awal_perolehan, $data_akhir_perolehan, $data_hapus_awa
         $data_hapus[ $tipe ][ 'TglPembukuan' ] = $value['TglPembukuan'];
         $data_hapus[ $tipe ][ 'Aset_ID' ] = $value['Aset_ID'];
         $data_hapus[ $tipe ][ 'kodelokasi' ] = $value['kodelokasi'];
+        $data_hapus[ $tipe ][ 'kondisi' ] = $value['kondisi'];
 
 
     }
