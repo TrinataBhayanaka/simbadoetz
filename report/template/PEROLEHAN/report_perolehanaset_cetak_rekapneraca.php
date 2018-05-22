@@ -54,7 +54,7 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 /*
 Add $TAHUN_AKTIF
 */
-$expld = explode('-', $tglakhirperolehan);
+/*$expld = explode('-', $tglakhirperolehan);
 $tglCmpr = $TAHUN_AKTIF."-"."12-31";
 if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 	$hit = 1;
@@ -70,20 +70,44 @@ if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 	$Info = '';
 	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 	$skpd_id);
+}*/
+
+//revisi
+$expld = explode('-', $tglakhirperolehan);
+$golongan = array('A','B','C','D','E','F');
+$status = $REPORT->status(2,$golongan,$expld[0]);
+$tahunNeraca = $expld[0];
+//exit();
+if($status == 1){
+	//no temp table
+	$hit = 1;
+	$flag = 'Lain';
+	$TypeRprtr = 'Lain';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}else{
+	//temp table
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'neraca';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
 }
-
-
 
 //exit;
 $paramTgl = explode('-', $tglakhirperolehan);
 $TAHUN_AKTIF = $paramTgl[0];
-$resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);	
+//$resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);	
+$resultParamGol = $REPORT->ceckneraca($skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status);	
 // pr($resultParamGol);
 // exit;	
 
 $serviceJson=json_encode($resultParamGol);
 //retrieve html
-$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca,$TAHUN_AKTIF);
+//$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca,$TAHUN_AKTIF);
+$html=$REPORT->retrieve_html_neraca($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahun_neraca,$tahunNeraca,$status);
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {
 		 

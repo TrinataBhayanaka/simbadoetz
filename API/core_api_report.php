@@ -4744,7 +4744,8 @@ class core_api_report extends DB {
 		return $data;	
 	}
 
-	public function IntraRev($satker_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$TAHUN_AKTIF){
+	//public function IntraRev($satker_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$TAHUN_AKTIF){
+	public function IntraRev($satker_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$tahunNeraca,$status){
 		
 		//sorting function
 		function sort_subnets ($a, $b) {
@@ -4909,7 +4910,7 @@ class core_api_report extends DB {
 			$kondisiJaringan = " AND J.kondisi != 3 AND J.kondisi != 4";
 			$kondisiAsetLain = " AND AL.kondisi != 3 AND AL.kondisi != 4 ";
 			$kondisiKDP = "";
-			$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+			/*$tglCmpr = $TAHUN_AKTIF."-"."12-31";
 			$expld = explode('-', $tglakhirperolehan);
 			if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 				$tahun = $TAHUN_AKTIF;
@@ -4926,9 +4927,26 @@ class core_api_report extends DB {
 				$tableNeracaJaringan 	= "jaringan_ori";
 				$tableNeracaAsetLain	= "asetlain_ori";
 				$tableNeracaKdp 		= "kdp_ori";
-			}	
+			}*/
+			if($status == 1){
+				$tahun = $tahunNeraca;
+				$tableNeracaTanah 		= "neraca_tanah".$tahun;
+				$tableNeracaMesin 		= "neraca_mesin".$tahun;
+				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaKdp 		= "neraca_kdp".$tahun;
+			}else{
+				$tableNeracaTanah 		= "tanahView";
+				$tableNeracaMesin 		= 'mesin_ori';
+				$tableNeracaBangunan 	= 'bangunan_ori';
+				$tableNeracaJaringan 	= "jaringan_ori";
+				$tableNeracaAsetLain	= "asetlain_ori";
+				$tableNeracaKdp 		= "kdp_ori";
+			}
+
 		}else{
-			$tahun = $TAHUN_AKTIF;
+			$tahun = $tahunNeraca;
 
 			$kondisiTanah = " AND (T.kondisi = 3 OR T.kondisi = 4) ";
 			$kondisiMesin = " AND (M.kondisi = 3 OR M.kondisi = 4) ";
@@ -5156,7 +5174,7 @@ class core_api_report extends DB {
 							echo "<br>";
 							echo "<br>";*/
 							// exit;
-							//$result_golongan = $this->query($dataQuery[$i]) or die ($this->error('error dataQuery'));
+							$result_golongan = $this->query($dataQuery[$i]) or die ($this->error('error dataQuery'));
 							if ($result_golongan)
 							{
 							  
@@ -5434,7 +5452,8 @@ class core_api_report extends DB {
 	
 	}
 	//revisi laporan penyusutan persatuan
-	public function ceckRekap ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF){
+	//public function ceckRekap ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF){
+	public function ceckRekap ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$tahunNeraca,$status){
 			// echo $satker."-".$tglawalperolehan."-".$tglakhirperolehan."-".$paramGol;
 			// exit;
 			$tgldefault = "2008-01-01";
@@ -5450,7 +5469,8 @@ class core_api_report extends DB {
 			
 			$tglCmpr = $TAHUN_AKTIF."-"."12-31";
 			$expld = explode('-', $tglakhirperolehan);
-			if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+
+			/*if($thnFix < $thnDefault || $thnceck >= $thnDefault){
 					$tableNeracaMesin 		= 'mesin_ori';
 					$tableNeracaBangunan 	= 'bangunan_ori';
 					$tableNeracaJaringan 	= "jaringan_ori";
@@ -5469,8 +5489,29 @@ class core_api_report extends DB {
 					$tableNeracaBangunan2 	= 'bangunan_Rplctn';	
 					$tableNeracaJaringan 	= "jaringan_ori";
 				}	
-			}
+			}*/
 
+			if($status == 1){
+				$tahun = $tahunNeraca;
+				$tableNeracaMesin 		= "neraca_mesin".$tahun;
+				$tableNeracaMesin2 		= "neraca_mesin".$tahun;
+				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+				$tableNeracaBangunan2 	= "neraca_bangunan".$tahun;
+				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+			}else{
+				if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaJaringan 	= "jaringan_ori";
+				}else{
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaMesin2 		= 'mesin_Rplctn';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaBangunan2 	= 'bangunan_Rplctn';	
+					$tableNeracaJaringan 	= "jaringan_ori";
+				}	
+			}
+		
 			$KodeKa_m = "AND M.kodeKA = 1";
 			$KodeKa_m_2 = "OR M.kodeKA = 1";
 			
@@ -5686,7 +5727,8 @@ class core_api_report extends DB {
 	}
 
 
-	public function ceckGol ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF){
+	//public function ceckGol ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF){
+	public function ceckGol ($satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$tahunNeraca,$status){
 			// echo $satker."-".$tglawalperolehan."-".$tglakhirperolehan."-".$paramGol;
 			// exit;
 			if($paramGol != '' && $paramGol != 'Lain' && $paramGol != 'NonAset'){
@@ -5723,7 +5765,7 @@ class core_api_report extends DB {
 			
 			$tglCmpr = $TAHUN_AKTIF."-"."12-31";
 			$expld = explode('-', $tglakhirperolehan);
-			if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+			/*if($thnFix < $thnDefault || $thnceck >= $thnDefault){
 					$tableNeracaTanah 		= "tanahView";
 					$tableNeracaMesin 		= 'mesin_ori';
 					$tableNeracaBangunan 	= 'bangunan_ori';
@@ -5741,6 +5783,36 @@ class core_api_report extends DB {
 					$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
 					$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
 					$tableNeracaKdp 		= "neraca_kdp".$tahun;
+				}else{
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaMesin2 		= 'mesin_Rplctn';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaBangunan2 	= 'bangunan_Rplctn';	
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
+				}	
+			}*/
+
+			if($status == 1){
+				$tahun = $tahunNeraca;
+				$tableNeracaTanah 		= "neraca_tanah".$tahun;
+				$tableNeracaMesin 		= "neraca_mesin".$tahun;
+				$tableNeracaMesin2 		= "neraca_mesin".$tahun;
+				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+				$tableNeracaBangunan2 	= "neraca_bangunan".$tahun;
+				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaKdp 		= "neraca_kdp".$tahun;
+			}else{
+				if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
 				}else{
 					$tableNeracaTanah 		= "tanahView";
 					$tableNeracaMesin 		= 'mesin_ori';
@@ -5941,13 +6013,10 @@ class core_api_report extends DB {
 										 and a.StatusTampil=1 
 										group by a.kodeKelompok";
 						}
-						/*echo "sini";						
-						echo "<br>";
+						/*echo "<br>";
 						echo $queryok; 	
-						//echo "<br>";
-						//echo $queryok_non_2; 	
-						echo "<br>";
-						//exit;*/
+						echo "<br>";*/
+						//exit;
 						
 						
 						if($paramGol != 'NonAset'){
@@ -6027,7 +6096,8 @@ class core_api_report extends DB {
 		return 	$getdata;
 	}
 	
-	public function ceckneraca($Satker_ID,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
+	//public function ceckneraca($Satker_ID,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
+	public function ceckneraca($Satker_ID,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status){
 			
 			$queryparentGol="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where k.Bidang is null and k.Kelompok is null and k.Sub is null and k.SubSub is null  and Kode != '08' order by k.Kode";
 			// echo $queryparentGol;
@@ -6051,7 +6121,7 @@ class core_api_report extends DB {
 
 			$tglCmpr = $TAHUN_AKTIF."-"."12-31";
 			$expld = explode('-', $tglakhirperolehan);
-			if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+			/*if($thnFix < $thnDefault || $thnceck >= $thnDefault){
 					$tableNeracaTanah 		= "tanahView";
 					$tableNeracaMesin 		= 'mesin_ori';
 					$tableNeracaBangunan 	= 'bangunan_ori';
@@ -6079,8 +6149,38 @@ class core_api_report extends DB {
 					$tableNeracaAsetLain	= "asetlain_ori";
 					$tableNeracaKdp 		= "kdp_ori";
 				}	
-			}
+			}*/
 
+			if($status == 1){
+				$tahun = $tahunNeraca;
+				$tableNeracaTanah 		= "neraca_tanah".$tahun;
+				$tableNeracaMesin 		= "neraca_mesin".$tahun;
+				$tableNeracaMesin2 		= "neraca_mesin".$tahun;
+				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+				$tableNeracaBangunan2 	= "neraca_bangunan".$tahun;
+				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaKdp 		= "neraca_kdp".$tahun;
+			}else{
+				if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
+				}else{
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaMesin2 		= 'mesin_Rplctn';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaBangunan2 	= 'bangunan_Rplctn';	
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
+				}	
+			}
+			//exit;
 			// $KodeKa = "AND kodeKA = 1";
 			$KodeKa = "OR kodeKA = 1";
 			$KodeKaCondt1 = "AND kodeKA = 1";
@@ -6616,7 +6716,8 @@ class core_api_report extends DB {
 		return 	$getdata;
 	}
 	
-	public function barangskpd($satker_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
+	//public function barangskpd($satker_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
+	public function barangskpd($satker_id,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status){
 		// echo "satker id =".$satker_id;
 		if($satker_id != ''){
 			$ceck = explode('.', $satker_id);
@@ -6669,7 +6770,7 @@ class core_api_report extends DB {
 		$ceckTgl = explode ('-',$tglAkhirDefault);
 		$thnFix = $ceckTgl[0];
 
-		$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+		/*$tglCmpr = $TAHUN_AKTIF."-"."12-31";
 		$expld = explode('-', $tglakhirperolehan);
 		if($thnFix < $thnDefault || $thnceck >= $thnDefault){
 				$tableNeracaTanah 		= "tanahView";
@@ -6699,8 +6800,38 @@ class core_api_report extends DB {
 				$tableNeracaAsetLain	= "asetlain_ori";
 				$tableNeracaKdp 		= "kdp_ori";
 			}	
-		}
+		}*/
 		
+		if($status == 1){
+				$tahun = $tahunNeraca;
+				$tableNeracaTanah 		= "neraca_tanah".$tahun;
+				$tableNeracaMesin 		= "neraca_mesin".$tahun;
+				$tableNeracaMesin2 		= "neraca_mesin".$tahun;
+				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+				$tableNeracaBangunan2 	= "neraca_bangunan".$tahun;
+				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaKdp 		= "neraca_kdp".$tahun;
+			}else{
+				if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
+				}else{
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaMesin2 		= 'mesin_Rplctn';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaBangunan2 	= 'bangunan_Rplctn';	
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
+				}	
+			}
+
 		$KodeKa = "OR kodeKA = 1";
 		$KodeKaCondt1 = "AND kodeKA = 1";
 		
@@ -6917,7 +7048,8 @@ class core_api_report extends DB {
 	}
 	
 
-	public function barangupb($satker_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
+	//public function barangupb($satker_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF){
+	public function barangupb($satker_id,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status){
 		
 		//sorting function
 		function sort_subnets ($a, $b) {
@@ -7026,7 +7158,7 @@ class core_api_report extends DB {
 		$ceckTgl = explode ('-',$tglAkhirDefault);
 		$thnFix = $ceckTgl[0];
 		
-		$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+		/*$tglCmpr = $TAHUN_AKTIF."-"."12-31";
 		$expld = explode('-', $tglakhirperolehan);
 		if($thnFix < $thnDefault || $thnceck >= $thnDefault){
 				$tableNeracaTanah 		= "tanahView";
@@ -7056,8 +7188,36 @@ class core_api_report extends DB {
 				$tableNeracaAsetLain	= "asetlain_ori";
 				$tableNeracaKdp 		= "kdp_ori";
 			}	
-		}
-
+		}*/
+		if($status == 1){
+				$tahun = $tahunNeraca;
+				$tableNeracaTanah 		= "neraca_tanah".$tahun;
+				$tableNeracaMesin 		= "neraca_mesin".$tahun;
+				$tableNeracaMesin2 		= "neraca_mesin".$tahun;
+				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+				$tableNeracaBangunan2 	= "neraca_bangunan".$tahun;
+				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaKdp 		= "neraca_kdp".$tahun;
+			}else{
+				if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
+				}else{
+					$tableNeracaTanah 		= "tanahView";
+					$tableNeracaMesin 		= 'mesin_ori';
+					$tableNeracaMesin2 		= 'mesin_Rplctn';
+					$tableNeracaBangunan 	= 'bangunan_ori';
+					$tableNeracaBangunan2 	= 'bangunan_Rplctn';	
+					$tableNeracaJaringan 	= "jaringan_ori";
+					$tableNeracaAsetLain	= "asetlain_ori";
+					$tableNeracaKdp 		= "kdp_ori";
+				}	
+			}
 		$KodeKa = "OR kodeKA = 1";
 		$KodeKaCondt1 = "AND kodeKA = 1";
 		
@@ -11239,6 +11399,53 @@ class core_api_report extends DB {
 	return $data;
 	}
 	
+	public function status($flag,$golongan,$tahun){
+		if($flag == 1){
+			$query = "SELECT status FROM status_laporan_neraca WHERE golongan = '$golongan' AND tahun = '$tahun'";	
+			$result = $this->query($query) or die ($this->error('error dataQuery'));
+			if ($result)
+			{
+				$dataArr = mysql_fetch_assoc($result);	
+				if($dataArr['status'] == 1){
+			   		$data = 1;
+			   	}else{
+			   		$data = 0;
+			   	}
+			}
+		}else{
+			//pr($golongan);
+			//exit();
+			$queryA = "SELECT status FROM status_laporan_neraca WHERE golongan = '{$golongan[0]}' AND tahun = '$tahun'";	
+			$queryB = "SELECT status FROM status_laporan_neraca WHERE golongan = '{$golongan[1]}' AND tahun = '$tahun'";	
+			$queryC = "SELECT status FROM status_laporan_neraca WHERE golongan = '{$golongan[2]}' AND tahun = '$tahun'";	
+			$queryD = "SELECT status FROM status_laporan_neraca WHERE golongan = '{$golongan[3]}' AND tahun = '$tahun'";	
+			$queryE = "SELECT status FROM status_laporan_neraca WHERE golongan = '{$golongan[4]}' AND tahun = '$tahun'";	
+			$queryF = "SELECT status FROM status_laporan_neraca WHERE golongan = '{$golongan[5]}' AND tahun = '$tahun'";	
+			
+			$dataQuery = array($queryA,$queryB,$queryC,$queryD,$queryE,$queryF);
+			//$query = $dataQuery;
+			
+			for ($i = 0; $i < count($dataQuery); $i++)
+			{
+				$result = $this->query($dataQuery[$i]) or die ($this->error('error dataQuery'));
+				if ($result)
+				{
+				    
+					$dataArr = mysql_fetch_assoc($result);
+					$data[] = $dataArr['status'];
+
+				}
+			}
+			//pr($data);
+			//pr($dataQuery);
+			if (in_array("1", $data)){
+			  	$data = 1;
+			}else{
+			    $data = 0;
+			}
+		}
+		return $data;
+	}
 }
 
 ?>

@@ -47,7 +47,7 @@ $satker = $skpd_id;
 /*
 Add $TAHUN_AKTIF
 */
-$expld = explode('-', $tglakhirperolehan);
+/*$expld = explode('-', $tglakhirperolehan);
 $tglCmpr = $TAHUN_AKTIF."-"."12-31";
 if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 
@@ -58,12 +58,29 @@ if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 	$Info = '';
 	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 	$skpd_id);
+}*/
+
+//revisi
+$expld = explode('-', $tglakhirperolehan);
+$golongan = 'D';
+$status = $REPORT->status(1,$golongan,$expld[0]);
+$tahunNeraca = $expld[0];
+if($status == 1){
+	//no temp table
+}else{
+	//temp table
+	$hit = 1;
+	$flag = 'D';
+	$TypeRprtr = '';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,$skpd_id);
 }
 // exit;	
 $paramGol = '04';
 $paramTgl = explode('-', $tglakhirperolehan);
 $TAHUN_AKTIF = $paramTgl[0];
-$resultParamGol = $REPORT->ceckRekap($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF);
+//$resultParamGol = $REPORT->ceckRekap($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF);
+$resultParamGol = $REPORT->ceckRekap($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$tahunNeraca,$status);
 //pr($resultParamGol);
 //exit;
 //$serviceJson=json_encode($resultParamGol);

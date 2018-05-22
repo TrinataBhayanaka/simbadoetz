@@ -41,7 +41,7 @@ $gambar = $FILE_GAMBAR_KABUPATEN;
 /*
 Add $TAHUN_AKTIF
 */
-$expld = explode('-', $tglakhirperolehan);
+/*$expld = explode('-', $tglakhirperolehan);
 $tglCmpr = $TAHUN_AKTIF."-"."12-31";
 if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 	$hit = 1;
@@ -66,17 +66,49 @@ if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
 	$skpd_id);
 
+}*/
+//revisi
+$expld = explode('-', $tglakhirperolehan);
+$golongan = array('A','B','C','D','E','F');
+$status = $REPORT->status(2,$golongan,$expld[0]);
+$tahunNeraca = $expld[0];
+//exit();
+if($status == 1){
+	//no temp table
+	$hit = 1;
+	$flag = 'Lain';
+	$TypeRprtr = 'Lain';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'ekstraRev';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}else{
+	//temp table
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'skpd';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
 }
 
 $paramTgl = explode('-', $tglakhirperolehan);
 $TAHUN_AKTIF = $paramTgl[0];
-$result = $REPORT->barangskpd($skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);	
+//$result = $REPORT->barangskpd($skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);	
+$result = $REPORT->barangskpd($skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status);	
 // pr($result);
 // exit;	
 //retrieve html
-$html=$REPORT->retrieve_html_rekap_barang_skpd($result,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
-/*$count = count($html);
-	for ($i = 0; $i < $count; $i++) {
+//$html=$REPORT->retrieve_html_rekap_barang_skpd($result,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
+$html=$REPORT->retrieve_html_rekap_barang_skpd($result,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$count = count($html);
+	/*for ($i = 0; $i < $count; $i++) {
 		 
 		 echo $html[$i];     
 	}
