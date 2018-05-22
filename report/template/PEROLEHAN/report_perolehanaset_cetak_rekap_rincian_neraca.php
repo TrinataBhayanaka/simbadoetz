@@ -53,11 +53,31 @@ if($tipe == 1){
 /*
 Add $TAHUN_AKTIF
 */
-$expld = explode('-', $tglakhirperolehan);
+/*$expld = explode('-', $tglakhirperolehan);
 $tglCmpr = $TAHUN_AKTIF."-"."12-31";
 if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 
 }else{
+	$hit = 2;
+	$flag = '';
+	$TypeRprtr = 'intra';
+	$Info = '';
+	$paramTgl = explode('-', $tglakhirperolehan);
+	$TAHUN_AKTIF = $paramTgl[0];
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}*/
+//revisi
+$expld = explode('-', $tglakhirperolehan);
+$golongan = array('A','B','C','D','E','F');
+$status = $REPORT->status(2,$golongan,$expld[0]);
+$tahunNeraca = $expld[0];
+//exit();
+if($status == 1){
+	//no temp table
+	//pr("no temp table");
+}else{
+	//temp table
 	$hit = 2;
 	$flag = '';
 	$TypeRprtr = 'intra';
@@ -79,7 +99,7 @@ $tglAkhirDefault = $tglakhirperolehan;
 $ceckTgl = explode ('-',$tglAkhirDefault);
 $thnFix = $ceckTgl[0];
 
-$tglCmpr = $TAHUN_AKTIF."-"."12-31";
+/*$tglCmpr = $TAHUN_AKTIF."-"."12-31";
 $expld = explode('-', $tglakhirperolehan);
 if($thnFix < $thnDefault || $thnceck >= $thnDefault){
 		$tableNeracaTanah 		= "tanahView";
@@ -105,8 +125,32 @@ if($thnFix < $thnDefault || $thnceck >= $thnDefault){
 		$tableNeracaAsetLain	= "asetlain_ori";
 		$tableNeracaKdp 		= "kdp_ori";
 	}	
+}*/
+if($status == 1){
+	$tahun = $tahunNeraca;
+	$tableNeracaTanah 		= "neraca_tanah".$tahun;
+	$tableNeracaMesin 		= "neraca_mesin".$tahun;
+	$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
+	$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
+	$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+	$tableNeracaKdp 		= "neraca_kdp".$tahun;
+}else{
+	if($thnFix < $thnDefault || $thnceck >= $thnDefault){
+		$tableNeracaTanah 		= "tanahView";
+		$tableNeracaMesin 		= 'mesin_ori';
+		$tableNeracaBangunan 	= 'bangunan_ori';
+		$tableNeracaJaringan 	= "jaringan_ori";
+		$tableNeracaAsetLain	= "asetlain_ori";
+		$tableNeracaKdp 		= "kdp_ori";
+	}else{
+		$tableNeracaTanah 		= "tanahView";
+		$tableNeracaMesin 		= 'mesin_ori';
+		$tableNeracaBangunan 	= 'bangunan_ori';
+		$tableNeracaJaringan 	= "jaringan_ori";
+		$tableNeracaAsetLain	= "asetlain_ori";
+		$tableNeracaKdp 		= "kdp_ori";
+	}	
 }
-
 //start
 if($tipeAset == 'all'){
 	//$data = array('tanahView','mesin_ori','bangunan_ori','jaringan_ori','asetlain_ori','kdp_ori');
