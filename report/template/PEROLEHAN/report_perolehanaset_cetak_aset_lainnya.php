@@ -58,8 +58,10 @@ $serviceJson=json_encode($resultParamGol);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
+$tahunNeraca = '';
+$status = 0;
 //retrieve html
-$html=$REPORT->retrieve_html_asetLainnya($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan);
+$html=$REPORT->retrieve_html_asetLainnya($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

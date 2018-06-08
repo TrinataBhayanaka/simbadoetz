@@ -8614,7 +8614,8 @@ $html .="
 	return $hasil_html;
 }		
 
-public function retrieve_html_asetLainnya($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF)
+//public function retrieve_html_asetLainnya($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF)
+public function retrieve_html_asetLainnya($dataArr,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status)
 {
 $detailSatker=$this->get_satker($skpd_id);
 // pr($detailSatker);
@@ -8760,7 +8761,7 @@ foreach ($dataArr as $satker_id => $value)
 {
 	$NamaSatker = $this->get_NamaSatker($satker_id);
 	$gol= ' ';
-	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan);
+	$TotalNilai = $this->get_TotalNilai($satker_id,$gol,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status);
 	//pr($TotalNilai);
 	$TotalNilaiFix=number_format($TotalNilai[0],2,",",".");
 	$TotalJmlFix=number_format($TotalNilai[1],0,",",".");
@@ -41935,7 +41936,8 @@ return $hasil_html;
 				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
 				$tableNeracaBangunan2 	= "neraca_bangunan".$tahun;
 				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
-				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				//$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaAsetLain	= "asetlain_ori";
 				$tableNeracaKdp 		= "neraca_kdp".$tahun;
 		}else{
 			if($thnFix < $thnDefault || $thnceck >= $thnDefault){
@@ -41996,7 +41998,7 @@ return $hasil_html;
 			$paramGol2 ="bangunan_ori";
 		}else{
 			$paramGol ="aset_lain_3";
-			$kondisi ="and kondisi = 3";
+			$kondisi ="and (kondisi = 3 or kondisi = 4)";
 		}
 		
 		$KodeKa = "OR kodeKA = 1";

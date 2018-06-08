@@ -5738,7 +5738,9 @@ class core_api_report extends DB {
 					order by k.Kode ";
 			}elseif($paramGol == 'Lain'){
 				// echo "Lain";
-				$query ="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where (k.kode not like '01%' and k.kode not like '07.21%' and k.kode not like '07.22%' and k.kode not like '07.23%' and k.kode not like '08%') and k.Bidang is not null and k.Kelompok is null and k.Sub is null and k.SubSub is null order by k.Kode ";		
+				/*$query ="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where (k.kode not like '01%' and k.kode not like '07.21%' and k.kode not like '07.22%' and k.kode not like '07.23%' and k.kode not like '08%') and k.Bidang is not null and k.Kelompok is null and k.Sub is null and k.SubSub is null order by k.Kode ";*/
+
+				$query ="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where (k.kode not like '07.21%' and k.kode not like '07.22%' and k.kode not like '07.23%' and k.kode not like '08%') and k.Bidang is not null and k.Kelompok is null and k.Sub is null and k.SubSub is null order by k.Kode ";		
 			}elseif($paramGol == 'NonAset'){
 				$query ="select k.Kode, k.Golongan, k.Bidang, k.Uraian from kelompok k where (k.kode like '02%' or k.kode like '03%') and k.Bidang is not null and k.Kelompok is null and k.Sub is null and k.SubSub is null order by k.Kode ";		
 			}	
@@ -5803,7 +5805,8 @@ class core_api_report extends DB {
 				$tableNeracaBangunan 	= "neraca_bangunan".$tahun;
 				$tableNeracaBangunan2 	= "neraca_bangunan".$tahun;
 				$tableNeracaJaringan 	= "neraca_jaringan".$tahun;
-				$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				//$tableNeracaAsetLain 	= "neraca_asetlain".$tahun;
+				$tableNeracaAsetLain	= "asetlain_ori";
 				$tableNeracaKdp 		= "neraca_kdp".$tahun;
 			}else{
 				if($thnFix < $thnDefault || $thnceck >= $thnDefault){
@@ -8938,7 +8941,7 @@ class core_api_report extends DB {
 				$query_asetlain_3="create temporary table aset_lain_3 as
 						  SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan,a.AkumulasiPenyusutan,a.NilaiBuku,a.PenyusutanPerTaun
 						  FROM aset as a, kelompok as k 
-						  WHERE a.kodeKelompok = k.Kode  AND a.kondisi = 3 and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
+						  WHERE a.kodeKelompok = k.Kode  AND (a.kondisi = 3 OR a.kondisi = 4) and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
 						  and $paramKib";
 			      
 				$query_alter_asetlain_3="alter table aset_lain_3 add primary key(Aset_ID)";
@@ -10430,7 +10433,7 @@ class core_api_report extends DB {
 				$query_asetlain_3="create temporary table aset_lain_3 as
 						  SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan,a.AkumulasiPenyusutan,a.NilaiBuku,a.PenyusutanPerTaun
 						  FROM aset as a, kelompok as k 
-						  WHERE a.kodeKelompok = k.Kode  AND a.kondisi = 3 and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
+						  WHERE a.kodeKelompok = k.Kode  AND (a.kondisi = 3 or a.kondisi = 4) and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
 						  and $paramKib";
 			      
 				$query_alter_asetlain_3="alter table aset_lain_3 add primary key(Aset_ID)";
@@ -10825,7 +10828,7 @@ class core_api_report extends DB {
 				$query_asetlain_3="create temporary table aset_lain_3 as
 						  SELECT a.kodeKA,a.kodeKelompok,a.kodeSatker,a.kodeLokasi,a.noRegister, a.Aset_ID, a.NilaiPerolehan ,k.Uraian ,a.Kondisi,a.Status_Validasi_Barang,a.TglPerolehan,a.TglPembukuan,a.AkumulasiPenyusutan,a.NilaiBuku,a.PenyusutanPerTaun
 						  FROM aset as a, kelompok as k 
-						  WHERE a.kodeKelompok = k.Kode  AND a.kondisi = 3 and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
+						  WHERE a.kodeKelompok = k.Kode  AND (a.kondisi = 3 or a.kondisi = 4)  and a.Status_Validasi_Barang = 1 AND a.Aset_ID is not null And a.Aset_ID!=0
 						  and $paramKib";
 			      
 				$query_alter_asetlain_3="alter table aset_lain_3 add primary key(Aset_ID)";
