@@ -154,6 +154,8 @@ $dataArr = $RETRIEVE->retrieve_koreksi_aset($_GET);
 									<option value="1" <?=$dataArr['kib']['kondisi'] == '1' ? 'selected' : ''?>>Baik</option>
 									<option value="2" <?=$dataArr['kib']['kondisi'] == '2' ? 'selected' : ''?>>Rusak Ringan</option>
 									<option value="3" <?=$dataArr['kib']['kondisi'] == '3' ? 'selected' : ''?>>Rusak Berat</option>
+									<option value="4" <?=$dataArr['kib']['kondisi'] == '4' ? 'selected' : ''?>>Non Aktif</option>
+									<option value="5" <?=$dataArr['kib']['kondisi'] == '5' ? 'selected' : ''?>>Dimanfaatkan Pihak Lain</option>
 								</select>
 							</li>
 						</ul>

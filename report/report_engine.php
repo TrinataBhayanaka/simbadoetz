@@ -6619,7 +6619,7 @@ foreach ($dataArr as $satker_id => $value)
 			$nilaiAPFix = ($nilaiAP_1) + ($nilaiAP_2);
 			
 			//cek jika nilai buku 0 diganti sama nilai perolehan
-			if($kode_1_child != '07.01' || $kode_1_child != '07.21' || $kode_1_child != '07.22' || $kode_1_child != '07.23' || $kode_1_child != '07.24'){
+			if($kode_1_child != '07.01' || $kode_1_child != '07.21' || $kode_1_child != '07.22' || $kode_1_child != '07.23' || $kode_1_child != '07.24' || $kode_1_child != '07.25'){
 				if($nilaiNB_1 != 0 && $nilaiNB_2 != 0){
 					$nilaiNBFix = ($nilaiNB_1) + ($nilaiNB_2);
 				}elseif($nilaiNB_1 != 0 && $nilaiNB_2 == 0){
@@ -6666,7 +6666,7 @@ foreach ($dataArr as $satker_id => $value)
 			$nilaiPPFix = $nilaiPP_1;
 			$nilaiAPFix = $nilaiAP_1;
 			//cek jika nilai buku 0 diganti sama nilai perolehan
-			if($kode_1_child == '07.01' || $kode_1_child == '07.21' || $kode_1_child == '07.22' || $kode_1_child == '07.23' || $kode_1_child == '07.24'){
+			if($kode_1_child == '07.01' || $kode_1_child == '07.21' || $kode_1_child == '07.22' || $kode_1_child == '07.23' || $kode_1_child == '07.24' || $kode_1_child != '07.25'){
 				//$nilaiNBFix = 0;// batal penyusutan
                             $batal_nb=0;
                             /*
@@ -41963,42 +41963,42 @@ return $hasil_html;
 			//$paramGol ="tanahView";
 
 			$paramGol = $tableNeracaTanah;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 		}elseif($gol == '02'){
 			/*$paramGol ="mesin_ori";
 			$paramGol2 ="mesin_Rplctn";*/
 
 			$paramGol  = $tableNeracaMesin;
 			$paramGol2 = $tableNeracaMesin2;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 		}elseif($gol == '03'){
 			/*$paramGol ="bangunan_ori";
 			$paramGol2 ="bangunan_Rplctn";*/
 
 			$paramGol  = $tableNeracaBangunan;
 			$paramGol2 = $tableNeracaBangunan2;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 		}elseif($gol == '04'){
 			//$paramGol ="jaringan_ori";
 			
 			$paramGol = $tableNeracaJaringan;
-			$kondisi  = "and kondisi != 3 and kondisi != 4";
+			$kondisi  = "and kondisi != 3 and kondisi != 4 and kondisi != 5";
 		}elseif($gol == '05'){
 			//$paramGol ="asetlain_ori";
 		
 			$paramGol = $tableNeracaAsetLain;
-			$kondisi  ="and kondisi != 3 and kondisi != 4";
+			$kondisi  ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 		}elseif($gol == '06'){
 			//$paramGol ="kdp_ori";
 			
 			$paramGol = $tableNeracaKdp;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 		}elseif($gol == 'NonAset'){
 			$paramGol ="mesin_ori";
 			$paramGol2 ="bangunan_ori";
 		}else{
 			$paramGol ="aset_lain_3";
-			$kondisi ="and (kondisi = 3 or kondisi = 4)";
+			$kondisi ="and (kondisi = 3 or kondisi = 4 or kondisi = 5)";
 		}
 		
 		$KodeKa = "OR kodeKA = 1";
@@ -42248,7 +42248,7 @@ return $hasil_html;
 			//$paramGol ="tanahView";
 
 			$paramGol = $tableNeracaTanah;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 			$kodeKelompok ="kodeKelompok like '01%' and";
 		}elseif($gol == '02'){
 			/*$paramGol ="mesin_ori";
@@ -42256,7 +42256,7 @@ return $hasil_html;
 
 			$paramGol  = $tableNeracaMesin;
 			$paramGol2 = $tableNeracaMesin2;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 			$kodeKelompok ="kodeKelompok like '02%' and";
 		}elseif($gol == '03'){
 			/*$paramGol ="bangunan_ori";
@@ -42264,29 +42264,29 @@ return $hasil_html;
 
 			$paramGol  = $tableNeracaBangunan;
 			$paramGol2 = $tableNeracaBangunan2;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 			$kodeKelompok ="kodeKelompok like '03%' and";
 		}elseif($gol == '04'){
 			//$paramGol ="jaringan_ori";
 
 			$paramGol = $tableNeracaJaringan;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 			$kodeKelompok ="kodeKelompok like '04%' and";
 		}elseif($gol == '05'){
 			//$paramGol ="asetlain_ori";
 
 			$paramGol = $tableNeracaAsetLain;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 			$kodeKelompok ="kodeKelompok like '05%' and";
 		}elseif($gol == '06'){
 			//$paramGol ="kdp_ori";
 
 			$paramGol = $tableNeracaKdp;
-			$kondisi ="and kondisi != 3 and kondisi != 4";
+			$kondisi ="and kondisi != 3 and kondisi != 4 and kondisi != 5";
 			$kodeKelompok ="kodeKelompok like '06%' and";
 		}else{
 			$paramGol ="aset_lain_3";
-			$kondisi ="and (kondisi = 3 or kondisi = 4)";
+			$kondisi ="and (kondisi = 3 or kondisi = 4 or kondisi = 5)";
 			$kodeKelompok ="kodeKelompok like '07%' and";
 		}
 		
