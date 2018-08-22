@@ -48,11 +48,27 @@ $satker = $skpd_id;
 /*
 Add $TAHUN_AKTIF
 */
-$expld = explode('-', $tglakhirperolehan);
+/*$expld = explode('-', $tglakhirperolehan);
 $tglCmpr = $TAHUN_AKTIF."-"."12-31";
 if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 
 }else{
+	$hit = 1;
+	$flag = 'D';
+	$TypeRprtr = '';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}*/
+//revisi
+$expld = explode('-', $tglakhirperolehan);
+$golongan = 'D';
+$status = $REPORT->status(1,$golongan,$expld[0]);
+$tahunNeraca = $expld[0];
+if($status == 1){
+	//no temp table
+}else{
+	//temp table
 	$hit = 1;
 	$flag = 'D';
 	$TypeRprtr = '';
@@ -64,14 +80,16 @@ if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 $paramGol = '04';
 $paramTgl = explode('-', $tglakhirperolehan);
 $TAHUN_AKTIF = $paramTgl[0];
-$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF);
+//$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$TAHUN_AKTIF);
+$resultParamGol = $REPORT->ceckGol($get_satker,$tglawalperolehan,$tglakhirperolehan,$paramGol,$tahunNeraca,$status);
 // pr($resultParamGol);
 $serviceJson=json_encode($resultParamGol);
 //set gambar untuk laporan
 $gambar = $FILE_GAMBAR_KABUPATEN;
 
 //retrieve html
-$html=$REPORT->retrieve_html_asetTetapJaringan($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
+//$html=$REPORT->retrieve_html_asetTetapJaringan($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$TAHUN_AKTIF);
+$html=$REPORT->retrieve_html_asetTetapJaringan($resultParamGol,$gambar,$skpd_id,$tglawalperolehan,$tglakhirperolehan,$tahunNeraca,$status);
 
 /*$count = count($html);
 	for ($i = 0; $i < $count; $i++) {

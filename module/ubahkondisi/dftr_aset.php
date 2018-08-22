@@ -25,22 +25,32 @@ include "../../config/config.php";
 			$select="<option value=>Pilih Kondisi</option>
 					<option value=2>Rusak Ringan</option>
 					<option value=3>Rusak Berat</option>
-					<option value=4>Non Aktif</option>";
+					<option value=4>Non Aktif</option>
+					<option value=5>Dimanfaatkan Pihak Lain</option>";
 		}elseif($kondisi == 2){
 			$select="<option value=>Pilih Kondisi</option>
 					<option value=1>Baik</option>
 					<option value=3>Rusak Berat</option>
-					<option value=4>Non Aktif</option>";
+					<option value=4>Non Aktif</option>
+					<option value=5>Dimanfaatkan Pihak Lain</option>";
 		}elseif($kondisi == 3){
 			$select="<option value=>Pilih Kondisi</option>
 					<option value=1>Baik</option>
 					<option value=2>Rusak Ringan</option>
-					<option value=4>Non Aktif</option>";
+					<option value=4>Non Aktif</option>
+					<option value=5>Dimanfaatkan Pihak Lain</option>";
 		}elseif($kondisi == 4){
 			$select="<option value=>Pilih Kondisi</option>
 					<option value=1>Baik</option>
 					<option value=2>Rusak Ringan</option>
-					<option value=3>Rusak Berat</option>";
+					<option value=3>Rusak Berat</option>
+					<option value=5>Dimanfaatkan Pihak Lain</option>";
+		}elseif($kondisi == 5){
+			$select="<option value=>Pilih Kondisi</option>
+					<option value=1>Baik</option>
+					<option value=2>Rusak Ringan</option>
+					<option value=3>Rusak Berat</option>
+					<option value=4>Non Aktif</option>";
 		}
 
 ?>

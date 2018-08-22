@@ -75,11 +75,29 @@ $query=$REPORT->list_query($data);
 /*
 Add $TAHUN_AKTIF
 */
-$expld = explode('-', $tglakhirperolehan);
+/*$expld = explode('-', $tglakhirperolehan);
 $tglCmpr = $TAHUN."-"."12-31";
 if($TAHUN_AKTIF == $expld[0] && $tglCmpr == $tglakhirperolehan){
 
 }else{
+	$hit = count($query);
+	$flag = '';
+	$TypeRprtr = 'intra';
+	$Info = '';
+	$exeTempTable = $REPORT->TempTable($hit,$flag,$TypeRprtr,$Info,$tglawalperolehan,$tglakhirperolehan,
+	$skpd_id);
+}*/
+//revisi
+$expld = explode('-', $tglakhirperolehan);
+$golongan = array('A','B','C','D','E','F');
+$status = $REPORT->status(2,$golongan,$expld[0]);
+$tahunNeraca = $expld[0];
+//exit();
+if($status == 1){
+	//no temp table
+	//pr("no temp table");
+}else{
+	//temp table
 	$hit = count($query);
 	$flag = '';
 	$TypeRprtr = 'intra';
@@ -108,7 +126,8 @@ if($tglcetak != ''){
 //pr($result);
 
 /*Revisi*/
-$resArr =$REPORT->IntraRev($skpd_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$TAHUN_AKTIF);
+//$resArr =$REPORT->IntraRev($skpd_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$TAHUN_AKTIF);
+$resArr =$REPORT->IntraRev($skpd_id,$tglawalperolehan,$tglakhirperolehan,$FlagAset,$tahunNeraca,$status);
 //pr($res);
 $resultObjt = arrayToObject($resArr);
 
