@@ -32,6 +32,7 @@ if($tglawal != '') {
 $tglawalperolehan = '0000-00-00';
 //$tglakhirperolehan = '2017-12-31';
 $tglakhirperolehan = '2017-01-01';
+$tglakhirperolehan = "$TAHUN_AKTIF-01-01";
 
 /*
 $tglakhirperolehan = $_GET[ 'tglakhirperolehan' ];
@@ -188,7 +189,7 @@ while ($data_skpd = mysql_fetch_object($skpd_data)) {
             $Tahun = $value['Tahun'];
             $Aset_ID = $value['Aset_ID'];
             $keterangan="";
-            list($table_neraca, $param,$keterangan) = show_table_neraca($kodekelompok,$Aset_ID);
+            list($table_neraca, $param,$keterangan) = show_table_neraca($kodekelompok,$Aset_ID,$TAHUN_AKTIF);
             $kodelokasi = $value['kodelokasi'];
 
             $NP_awal = $value['nilai'];
@@ -238,11 +239,11 @@ echo "=================== Process Complete. Thank you ===================\n\n";
 $html = $head . $body . $foot;
 
 
-function show_table_neraca($kodekelompok,$Aset_ID){
+function show_table_neraca($kodekelompok,$Aset_ID,$TAHUN_AKTIF){
     $temp=explode(".",$kodekelompok);
     $param=$temp[0];
     if($param == '01') {
-        $tabel = 'neraca_tanah2017';
+        $tabel = "neraca_tanah$TAHUN_AKTIF";
         $query="select  Alamat, LuasTotal from tanah where Aset_ID='$Aset_ID'  order by Tanah_ID desc limit 1";
         $result=mysql_query($query);
         while($row=mysql_fetch_object($result)){
@@ -251,7 +252,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
             $keterangan=",Alamat='$Alamat',LuasTotal='$LuasTotal'";
         }
     } elseif($param == '02') {
-        $tabel = 'neraca_mesin2017';
+        $tabel = "neraca_mesin$TAHUN_AKTIF";
         $query="select  AsalUsul, Info, TglPerolehan,TglPembukuan,Tahun,UmurEkonomis,MasaManfaat,TahunPenyusutan,
                         Alamat, Merk,Ukuran,Material,
                         NoSeri,NoRangka,NoMesin,NoSTNK,NoBPKB,
@@ -297,7 +298,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
 
     } elseif($param == '03') {
 
-        $tabel = 'neraca_bangunan2017';
+        $tabel = "neraca_bangunan$TAHUN_AKTIF";
         $query="select   AsalUsul, Info, TglPerolehan,TglPembukuan,UmurEkonomis,MasaManfaat,TahunPenyusutan,
                       Tahun,Alamat,JumlahLantai, Beton, LuasLantai,NoSurat,
                       TglSurat,StatusTanah 
@@ -337,7 +338,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
 
     } elseif($param == '04') {
 
-        $tabel = 'neraca_jaringan2017';
+        $tabel = "neraca_jaringan$TAHUN_AKTIF";
         $query="select   AsalUsul,Info, TglPerolehan,TglPembukuan,Tahun,Alamat,Konstruksi,UmurEkonomis,MasaManfaat,TahunPenyusutan,
                       Panjang, Lebar, TglDokumen, NoDokumen,StatusTanah,LuasJaringan
                     from jaringan where Aset_ID='$Aset_ID' order by Jaringan_ID desc limit 1";
@@ -383,12 +384,12 @@ function show_table_neraca($kodekelompok,$Aset_ID){
 
     } elseif($param == '05') {
 
-        $tabel = 'neraca_asetlain2017';
+        $tabel = "neraca_asetlain$TAHUN_AKTIF";
         $keterangan="";
 
     } elseif($param == '06') {
 
-        $tabel = 'neraca_kdp2017';
+        $tabel = "neraca_kdp$TAHUN_AKTIF";
         $query="select  Alamat, LuasLantai from kdp where Aset_ID='$Aset_ID'  order by KDP_ID desc limit 1";
         $result=mysql_query($query);
         while($row=mysql_fetch_object($result)){
@@ -408,7 +409,7 @@ function show_table_neraca($kodekelompok,$Aset_ID){
  * @param $pt == untuk paramater kode golongan
  * @return array == berupa data kode hasil
  */
-function subsub_awal($kode, $gol, $ps, $pt)
+function subsub_awal($kode_sub, $gol, $ps, $pt)
 {
     $param_satker = $ps;
     $splitKodeSatker = explode ('.', $param_satker);
@@ -509,7 +510,7 @@ function subsub_awal($kode, $gol, $ps, $pt)
  * @param $pt == untuk paramater kode golongan
  * @return array == berupa data kode hasil
  */
-function subsub($kode, $gol, $ps, $pt)
+function subsub($kode_sub, $gol, $ps, $pt)
 {
     $param_satker = $ps;
     $splitKodeSatker = explode ('.', $param_satker);
@@ -620,7 +621,7 @@ function subsub($kode, $gol, $ps, $pt)
  * @param $pt == untuk paramater kode golongan
  * @return array == berupa data kode hasil
  */
-function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
+function subsub_hapus($kode_sub, $gol, $ps, $pt, $tgl_pem)
 {
     $param_satker = $ps;
     $splitKodeSatker = explode ('.', $param_satker);
@@ -742,7 +743,7 @@ function subsub_hapus($kode, $gol, $ps, $pt, $tgl_pem)
     return $data;
 }
 
-function subsub_hapus_v2($kode, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_akhir)
+function subsub_hapus_v2($kode_sub, $gol, $ps, $pt, $tgl_pem,$q_data_awal,$q_data_akhir)
 {
     $param_satker = $ps;
     $splitKodeSatker = explode ('.', $param_satker);
