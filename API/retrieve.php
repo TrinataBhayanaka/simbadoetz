@@ -9691,10 +9691,15 @@ $offset = @$_POST['record'];
         }
         $setval = implode(' AND ', $tmpsetval);
         if($setval == "") $setval = 1;
-        //pr("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND toSatker LIKE '{$toSatker}%' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
+        $count = explode($toSatker, '.');
+        if($count == 4){
+            $condition = "AND toSatker = '{$toSatker}%'";
+        }else{
+            $condition = "AND toSatker LIKE '{$toSatker}%'";
+        }
+        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1'  {$condition} AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
+        //pr("SELECT * FROM transfer WHERE {$setval} AND n_status != '1'  {$condition} AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
         //exit();
-        $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND toSatker LIKE '{$toSatker}%' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
-        // pr($sql);exit;
         while ($dataTrs = mysql_fetch_assoc($sql)){
                     if($_SESSION['ses_satkerkode'] != "")
                     {

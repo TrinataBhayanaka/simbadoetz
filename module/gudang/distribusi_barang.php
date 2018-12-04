@@ -38,7 +38,7 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 					</li>-->
 					<li>
 					    <span class="span2">Tahun Distribusi</span>
-						<input type='text' id="Tahun" maxlength="4" name="tglDistribusi" placeholder="" />
+						<input type='text' id="Tahun" maxlength="4" name="tglDistribusi" placeholder="" required="" />
 					</li>
 					<li>
 						<span class="span2">Nomor Dokumen</span>
