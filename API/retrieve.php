@@ -9679,16 +9679,20 @@ $offset = @$_POST['record'];
 
     public function retrieve_distribusiBarang($data)
     {
-        // pr($data);exit;
         $clrdata = array_filter($data);
         $toSatker = $clrdata['toSatker'];
         unset($clrdata['toSatker']);
         foreach ($clrdata as $key => $val) {
-            $tmpsetval[] = $key."='$val'";
+            if($key == 'tglDistribusi'){
+                $tmpsetval[] = "YEAR($key)="."'$val'";    
+            }else{
+                $tmpsetval[] = $key."='$val'";
+            }
         }
         $setval = implode(' AND ', $tmpsetval);
-
         if($setval == "") $setval = 1;
+        //pr("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND toSatker LIKE '{$toSatker}%' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
+        //exit();
         $sql = mysql_query("SELECT * FROM transfer WHERE {$setval} AND n_status != '1' AND toSatker LIKE '{$toSatker}%' AND fromSatker LIKE '{$_SESSION['ses_satkerkode']}%' ORDER BY id DESC");
         // pr($sql);exit;
         while ($dataTrs = mysql_fetch_assoc($sql)){
@@ -9773,7 +9777,7 @@ $offset = @$_POST['record'];
         while ($dataAset = mysql_fetch_assoc($sql)){
                     $aset[] = $dataAset;
                 }
-        // pr($aset);exit;        
+        /*pr("SELECT NilaiPerolehan,Tahun,kodeKelompok,kodeSatker,kodeLokasi,COUNT(*) as kuantitas,MIN(CAST(noRegister AS SIGNED)) as min,MAX(CAST(noRegister AS SIGNED)) as max FROM {$table} WHERE {$setval} AND kodeSatker LIKE '{$kodesatker}%' AND StatusTampil='1' AND (Status_Validasi_Barang IS NULL or Status_Validasi_Barang=0) AND GUID IS NULL GROUP BY  kodeKelompok ,  kodeLokasi, NilaiPerolehan");exit; */       
         if($aset){
             foreach ($aset as $key => $value) {
                 $sqlnmBrg = mysql_query("SELECT Uraian FROM kelompok WHERE Kode = '{$value['kodeKelompok']}' LIMIT 1");

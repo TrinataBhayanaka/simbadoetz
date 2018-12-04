@@ -32,9 +32,13 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 			
 			<form name="myform" method="post" action="distribusi_barang_daftar.php">
 				<ul>
-					<li>
+					<!--<li>
 						<span class="span2">Tanggal Distribusi</span>
 						<input id="datepicker-other" type="text" name="tglDistribusi"value="" style="width:205px;">
+					</li>-->
+					<li>
+					    <span class="span2">Tahun Distribusi</span>
+						<input type='text' id="Tahun" maxlength="4" name="tglDistribusi" placeholder="" />
 					</li>
 					<li>
 						<span class="span2">Nomor Dokumen</span>
@@ -59,7 +63,7 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
 ?>
 
 <script>
-    $(document).on('submit', function(){
+    /*$(document).on('submit', function(){
         var tgl= $("#datepicker-other").val();
 
         if (tgl == "") {
@@ -69,5 +73,8 @@ $resetDataView = $DBVAR->is_table_exists('filter_distribusi_barang_'.$SessionUse
             alert("Tgl Perolehan tidak boleh kosong");
             return false;
         }
-    })
+    })*/
+    $(document).ready(function(){
+        $("#Tahun").mask("9999");
+      });
 </script>
