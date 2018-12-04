@@ -9692,7 +9692,7 @@ $offset = @$_POST['record'];
         $setval = implode(' AND ', $tmpsetval);
         if($setval == "") $setval = 1;
         $count = explode($toSatker, '.');
-        if($count == 4){
+        if(count($count) == 4){
             $condition = "AND toSatker = '{$toSatker}%'";
         }else{
             $condition = "AND toSatker LIKE '{$toSatker}%'";
